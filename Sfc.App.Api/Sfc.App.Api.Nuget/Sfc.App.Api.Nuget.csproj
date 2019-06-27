@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net472;</TargetFrameworks>
+    <ApplicationIcon />
+    <OutputType>Exe</OutputType>
+    <StartupObject />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="sfc.App.contracts" Version="1.0.0" />
+    <PackageReference Include="Sfc.Wms.RestResponse" Version="1.0.3" />
+    <PackageReference Include="Sfc.Wms.UserRbac.Contracts" Version="1.0.5" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.5.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+
+
+    <Reference Include="Microsoft.CSharp" />
+
+    <Reference Include="System.Data" />
+
+    <Reference Include="System.Net.Http" />
+
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+
+</Project>
