@@ -3,18 +3,20 @@ using System.Configuration;
 using System.Runtime.Caching;
 using System.Web.Http;
 using AutoMapper;
+using Sfc.App.Gateways;
+using Sfc.App.Interfaces;
 using Sfc.Wms.Cache.InMemory;
-using Sfc.Wms.UserRbac.App.AutoMapper;
-using Sfc.Wms.UserRbac.App.Gateway;
-using Sfc.Wms.UserRbac.App.Interfaces;
-using Sfc.Wms.UserRbac.App.Services;
-using Sfc.Wms.UserRbac.Contracts.Dtos;
-using Sfc.Wms.UserRbac.Contracts.Dtos.UI;
-using Sfc.Wms.UserRbac.Contracts.Interfaces;
-using Sfc.Wms.UserRbac.Repository.Context;
-using Sfc.Wms.UserRbac.Repository.Dtos;
-using Sfc.Wms.UserRbac.Repository.Gateways;
-using Sfc.Wms.UserRbac.Repository.Interfaces;
+using Sfc.Wms.Security.Rbac.App.AutoMapper;
+using Sfc.Wms.Security.Rbac.App.Gateway;
+using Sfc.Wms.Security.Rbac.App.Interfaces;
+using Sfc.Wms.Security.Rbac.App.Services;
+using Sfc.Wms.Security.Rbac.Contracts.Dtos;
+using Sfc.Wms.Security.Rbac.Contracts.Dtos.UI;
+using Sfc.Wms.Security.Rbac.Contracts.Interfaces;
+using Sfc.Wms.Security.Rbac.Repository.Context;
+using Sfc.Wms.Security.Rbac.Repository.Dtos;
+using Sfc.Wms.Security.Rbac.Repository.Gateways;
+using Sfc.Wms.Security.Rbac.Repository.Interfaces;
 using SimpleInjector;
 using SimpleInjector.Integration.WebApi;
 using SimpleInjector.Lifestyles;
@@ -58,7 +60,7 @@ namespace Sfc.App.Api.App_Start
             container.Register(() =>
                     new SfcRbacContext(ConfigurationManager.ConnectionStrings["SfcOracleDbContext"].ConnectionString)
                 , Lifestyle.Singleton);
-
+            container.Register<IRabcGateway, RbacGateway>();
             container.Register<IUserRabcService, UserRabcService>();
             container.Register<IUserRabcGateway, UserRabcGateway>();
             container.Register<IUserAuthenticationGateway, UserAuthenticationGateway>();
@@ -76,10 +78,10 @@ namespace Sfc.App.Api.App_Start
         public RolesDtoMapping1()
         {
             CreateMap<SwmRoles, RolesDto>();
-            //CreateMap<SwmPermissions, PermissionsDto>()
-            //    .ForMember(d => d.PermissionId, s => s.MapFrom(_ => _.PermissionId))
-            //    .ForMember(d => d.Name, s => s.MapFrom(_ => _.Name))
-            //    .ForAllOtherMembers(el => el.Ignore()); 
+            CreateMap<SwmPermissions, PermissionsDto>()
+                .ForMember(d => d.PermissionId, s => s.MapFrom(_ => _.PermissionId))
+                .ForMember(d => d.Name, s => s.MapFrom(_ => _.Name))
+                .ForAllOtherMembers(el => el.Ignore());
             CreateMap<SwmUserSetting, PreferencesDto>();
 
             CreateMap<SwmMenus, MenusDto>()

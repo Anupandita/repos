@@ -2,21 +2,21 @@
 using System.Web.Http;
 using System.Web.Http.Description;
 using Sfc.App.Contracts.Constants;
+using Sfc.App.Interfaces;
 using Sfc.Wms.Result;
-using Sfc.Wms.UserRbac.Contracts.Dtos;
-using Sfc.Wms.UserRbac.Contracts.Dtos.UI;
-using Sfc.Wms.UserRbac.Contracts.Interfaces;
+using Sfc.Wms.Security.Rbac.Contracts.Dtos;
+using Sfc.Wms.Security.Rbac.Contracts.Dtos.UI;
 
 namespace Sfc.App.Api.Controllers
 {
     [RoutePrefix(Route.User)]
     public class UserRbacController : SfcBaseApiController
     {
-        private readonly IUserRabcGateway _userRabcGateway;
+        private readonly IRabcGateway _rabcGateway;
 
-        public UserRbacController(IUserRabcGateway userRabcGateway)
+        public UserRbacController(IRabcGateway rabcGateway)
         {
-            _userRabcGateway = userRabcGateway;
+            _rabcGateway = rabcGateway;
         }
 
         [HttpPost]
@@ -25,7 +25,7 @@ namespace Sfc.App.Api.Controllers
         [ResponseType(typeof(BaseResult<UserDetailsDto>))]
         public async Task<IHttpActionResult> SignInAsync([FromBody] LoginCredentials loginCredentials)
         {
-            var response = await _userRabcGateway.SignInAsync(loginCredentials).ConfigureAwait(false);
+            var response = await _rabcGateway.SignInAsync(loginCredentials).ConfigureAwait(false);
             return ResponseHandler(response);
         }
     }

@@ -1,8 +1,7 @@
 ﻿using System.Web.Http.Filters;
 using System.Web.Mvc;
 using Sfc.Wms.Aop.Logging;
-using Wms.App.Security.Filters;
-
+using Sfc.Wms.Security.Token.Filters;
 
 namespace Sfc.App.Api.App_Start
 {

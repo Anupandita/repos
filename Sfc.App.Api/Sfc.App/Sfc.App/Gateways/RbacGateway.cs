@@ -1,12 +1,13 @@
 ﻿using System.Threading.Tasks;
+using Sfc.App.Interfaces;
 using Sfc.Wms.Result;
-using Sfc.Wms.UserRbac.Contracts.Dtos;
-using Sfc.Wms.UserRbac.Contracts.Dtos.UI;
-using Sfc.Wms.UserRbac.Contracts.Interfaces;
+using Sfc.Wms.Security.Rbac.Contracts.Dtos;
+using Sfc.Wms.Security.Rbac.Contracts.Dtos.UI;
+using Sfc.Wms.Security.Rbac.Contracts.Interfaces;
 
 namespace Sfc.App.Gateways
 {
-    public class RbacGateway
+    public class RbacGateway : IRbacGateway
     {
         private readonly IUserRabcGateway _userRabcGateway;
 

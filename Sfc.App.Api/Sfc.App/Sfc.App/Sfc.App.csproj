@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFrameworks>net472;</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.2</Version>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -14,11 +15,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Interfaces\" />
     <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Sfc.Wms.UserRbac.App" Version="1.0.2" />
+    <PackageReference Include="Sfc.Wms.Security.Rbac.App" Version="1.0.1" />
   </ItemGroup>
 
 </Project>

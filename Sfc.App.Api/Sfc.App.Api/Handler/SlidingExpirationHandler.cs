@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
-using Wms.App.Security.Jwt;
+using Sfc.Wms.Security.Token.Jwt;
 
 namespace Sfc.App.Api.Handler
 {
