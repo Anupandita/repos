@@ -23,7 +23,7 @@ namespace Sfc.App.Api.Controllers
         [AllowAnonymous]
         [Route(Route.Paths.UserLogin)]
         [ResponseType(typeof(BaseResult<UserDetailsDto>))]
-        public async Task<IHttpActionResult> SignInAsync([FromBody] LoginCredentials loginCredentials)
+        public async Task<IHttpActionResult> SignInAsync( LoginCredentials loginCredentials)
         {
             var response = await _rabcGateway.SignInAsync(loginCredentials).ConfigureAwait(false);
             return ResponseHandler(response);
