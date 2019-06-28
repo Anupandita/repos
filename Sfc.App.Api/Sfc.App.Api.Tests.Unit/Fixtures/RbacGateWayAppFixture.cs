@@ -2,7 +2,7 @@
 using DataGenerator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Sfc.App.Gateways;
+using Sfc.App.App.Gateways;
 using Sfc.Wms.Result;
 using Sfc.Wms.Security.Rbac.Contracts.Dtos;
 using Sfc.Wms.Security.Rbac.Contracts.Dtos.UI;

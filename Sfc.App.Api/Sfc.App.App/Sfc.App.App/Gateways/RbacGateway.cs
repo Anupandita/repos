@@ -1,11 +1,11 @@
 ﻿using System.Threading.Tasks;
-using Sfc.App.Interfaces;
+using Sfc.App.App.Interfaces;
 using Sfc.Wms.Result;
 using Sfc.Wms.Security.Rbac.Contracts.Dtos;
 using Sfc.Wms.Security.Rbac.Contracts.Dtos.UI;
 using Sfc.Wms.Security.Rbac.Contracts.Interfaces;
 
-namespace Sfc.App.Gateways
+namespace Sfc.App.App.Gateways
 {
     public class RbacGateway : IRbacGateway
     {
@@ -19,11 +19,12 @@ namespace Sfc.App.Gateways
         public async Task<BaseResult<UserDetailsDto>> SignInAsync(LoginCredentials loginCredentials)
         {
             var response = new BaseResult<UserDetailsDto>
-                {ResultType = ResultTypes.BadGateway, Payload = new UserDetailsDto()};
+            { ResultType = ResultTypes.BadGateway };
 
             if (!ValidateLoginCredentials(loginCredentials)) return response;
 
             response = await _userRabcGateway.SignInAsync(loginCredentials).ConfigureAwait(false);
+           
             return response;
         }
 

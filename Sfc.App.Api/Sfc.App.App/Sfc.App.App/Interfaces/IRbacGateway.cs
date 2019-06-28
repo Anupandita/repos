@@ -3,7 +3,7 @@ using Sfc.Wms.Result;
 using Sfc.Wms.Security.Rbac.Contracts.Dtos;
 using Sfc.Wms.Security.Rbac.Contracts.Dtos.UI;
 
-namespace Sfc.App.Interfaces
+namespace Sfc.App.App.Interfaces
 {
     public interface IRbacGateway
     {

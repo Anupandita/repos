@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <package>
   <metadata>
-    <id>Sfc.App</id>
-    <version>1.0.5</version>
-    <title>Sfc.App</title>
+    <id>Sfc.App.App</id>
+    <version>1.0.2</version>
+    <title>Sfc.App.App</title>
     <authors>Shamrock Foods (SOWL)</authors>
     <owners>Shamrock Foods Company</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>

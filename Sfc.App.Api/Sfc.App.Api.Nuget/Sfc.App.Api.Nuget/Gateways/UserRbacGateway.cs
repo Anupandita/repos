@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using RestSharp;
+using Sfc.App.Api.Contracts.Constants;
 using Sfc.App.Api.Nuget.Interfaces;
-using Sfc.App.Contracts.Constants;
 using Sfc.Wms.Result;
 using Sfc.Wms.Security.Rbac.Contracts.Dtos;
 using Sfc.Wms.Security.Rbac.Contracts.Dtos.UI;

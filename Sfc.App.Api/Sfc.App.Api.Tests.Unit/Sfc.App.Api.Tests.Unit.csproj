@@ -106,8 +106,11 @@
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.1</Version>
     </PackageReference>
-    <PackageReference Include="sfc.app">
-      <Version>1.0.5</Version>
+    <PackageReference Include="Sfc.App.App">
+      <Version>1.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="Sfc.Wms.BaseController">
+      <Version>1.0.3</Version>
     </PackageReference>
     <PackageReference Include="sfc.wms.restresponse">
       <Version>1.0.3</Version>
@@ -134,7 +137,7 @@
       <Name>Sfc.App.Api.Nuget</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sfc.App.Api\Sfc.App.Api.csproj">
-      <Project>{D64223B7-5EAB-4408-9D8C-759D757F49F3}</Project>
+      <Project>{d64223b7-5eab-4408-9d8c-759d757f49f3}</Project>
       <Name>Sfc.App.Api</Name>
     </ProjectReference>
   </ItemGroup>

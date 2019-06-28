@@ -1,4 +1,4 @@
-﻿namespace Sfc.App.Contracts.Constants
+﻿namespace Sfc.App.Api.Contracts.Constants
 {
     public class Route
     {

@@ -2,8 +2,8 @@
 using System.Runtime.Caching;
 using System.Web.Http;
 using AutoMapper;
-using Sfc.App.Gateways;
-using Sfc.App.Interfaces;
+using Sfc.App.App.Gateways;
+using Sfc.App.App.Interfaces;
 using Sfc.Wms.Cache.InMemory;
 using Sfc.Wms.Security.Rbac.App.AutoMapper;
 using Sfc.Wms.Security.Rbac.App.Gateway;
@@ -41,11 +41,7 @@ namespace Sfc.App.Api.App_Start
         {
             container.RegisterSingleton<IMapper>(() =>
             {
-              
-                var mapper = new Mapper(new MapperConfiguration(c =>
-                {
-                SfcRbacMapper.AddProfiles(c);
-                }));
+                var mapper = new Mapper(new MapperConfiguration(c => { SfcRbacMapper.AddProfiles(c); }));
 #if DEBUG
                 mapper.DefaultContext.ConfigurationProvider.AssertConfigurationIsValid();
 #endif
