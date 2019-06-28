@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net472;</TargetFrameworks>
     <ApplicationIcon />
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <StartupObject />
   </PropertyGroup>
 
