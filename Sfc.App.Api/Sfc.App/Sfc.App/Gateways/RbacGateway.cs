@@ -19,7 +19,7 @@ namespace Sfc.App.Gateways
         public async Task<BaseResult<UserDetailsDto>> SignInAsync(LoginCredentials loginCredentials)
         {
             var response = new BaseResult<UserDetailsDto>
-                {ResultType = ResultTypes.Unauthorized, Payload = new UserDetailsDto()};
+                {ResultType = ResultTypes.BadGateway, Payload = new UserDetailsDto()};
 
             if (!ValidateLoginCredentials(loginCredentials)) return response;
 
