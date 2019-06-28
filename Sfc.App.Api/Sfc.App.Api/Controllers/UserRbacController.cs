@@ -3,6 +3,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Sfc.App.Contracts.Constants;
 using Sfc.App.Interfaces;
+using Sfc.Wms.BaseController;
 using Sfc.Wms.Result;
 using Sfc.Wms.Security.Rbac.Contracts.Dtos;
 using Sfc.Wms.Security.Rbac.Contracts.Dtos.UI;
@@ -10,7 +11,7 @@ using Sfc.Wms.Security.Rbac.Contracts.Dtos.UI;
 namespace Sfc.App.Api.Controllers
 {
     [RoutePrefix(Route.User)]
-    public class UserRbacController : SfcBaseApiController
+    public class UserRbacController : SfcBaseController
     {
         private readonly IRbacGateway _rabcGateway;
 

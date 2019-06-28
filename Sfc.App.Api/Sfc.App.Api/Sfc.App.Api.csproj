@@ -104,6 +104,9 @@
     <Reference Include="Sfc.Wms.Aop, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Aop.1.0.0\lib\net472\Sfc.Wms.Aop.dll</HintPath>
     </Reference>
+    <Reference Include="Sfc.Wms.BaseController, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.BaseController.1.0.3\lib\net472\Sfc.Wms.BaseController.dll</HintPath>
+    </Reference>
     <Reference Include="Sfc.Wms.Cache.InMemory, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Cache.InMemory.1.1.0\lib\net472\Sfc.Wms.Cache.InMemory.dll</HintPath>
     </Reference>
@@ -218,7 +221,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\SfcBaseApiController.cs" />
     <Compile Include="Controllers\UserRbacController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
