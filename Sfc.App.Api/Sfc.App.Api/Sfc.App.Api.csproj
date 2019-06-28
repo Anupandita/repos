@@ -122,18 +122,6 @@
     <Reference Include="Sfc.Wms.Security.Token, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Security.Token.1.0.0\lib\net472\Sfc.Wms.Security.Token.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.SystemCode.Repository, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.SystemCode.Repository.1.0.0\lib\net472\Sfc.Wms.SystemCode.Repository.dll</HintPath>
-    </Reference>
-    <Reference Include="Sfc.Wms.UserRbac.App, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.UserRbac.App.1.0.2\lib\net472\Sfc.Wms.UserRbac.App.exe</HintPath>
-    </Reference>
-    <Reference Include="Sfc.Wms.UserRbac.Contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.UserRbac.Contracts.1.0.5\lib\net472\Sfc.Wms.UserRbac.Contracts.dll</HintPath>
-    </Reference>
-    <Reference Include="Sfc.Wms.UserRbac.Repository, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.UserRbac.Repository.1.0.5\lib\net472\Sfc.Wms.UserRbac.Repository.dll</HintPath>
-    </Reference>
     <Reference Include="SimpleInjector, Version=4.5.1.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
       <HintPath>..\packages\SimpleInjector.4.5.1\lib\net45\SimpleInjector.dll</HintPath>
     </Reference>
