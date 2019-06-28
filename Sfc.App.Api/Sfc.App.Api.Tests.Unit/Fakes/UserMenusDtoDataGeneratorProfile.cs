@@ -9,7 +9,6 @@ namespace Sfc.App.Api.Tests.Unit.Fakes
         public override void Configure()
         {
             Property(el => el.MenuName).DataSource<NameSource>();
-
             Property(el => el.ChildMenus).List<MenuDetailsDto>();
         }
     }

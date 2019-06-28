@@ -27,6 +27,10 @@ namespace Sfc.App.Api.Tests.Unit.Configurations
             Configurator.BatchProcessors.Add(new HtmlReporter(new HtmlReportConfig("UnitTesting",
                 "Sfc_App_Test_Unit.html", "Sfc.App.Api.Tests.Unit.App", "Sfc Wms Tests",
                 "Sfc Wms Scenarios and their Test Results")));
+
+            Configurator.BatchProcessors.Add(new HtmlReporter(new HtmlReportConfig("UnitTesting",
+                "Sfc_App_Api_Nuget_Test_Unit.html", "Sfc.App.Api.Tests.Unit.Nuget", "Sfc Wms Tests",
+                "Sfc Wms Scenarios and their Test Results")));
         }
 
         private static void ApplyFakesDataGeneratorConfiguration()

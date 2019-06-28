@@ -3,8 +3,8 @@ using RestSharp;
 using Sfc.App.Api.Nuget.Interfaces;
 using Sfc.App.Contracts.Constants;
 using Sfc.Wms.Result;
-using Sfc.Wms.UserRbac.Contracts.Dtos;
-using Sfc.Wms.UserRbac.Contracts.Dtos.UI;
+using Sfc.Wms.Security.Rbac.Contracts.Dtos;
+using Sfc.Wms.Security.Rbac.Contracts.Dtos.UI;
 
 namespace Sfc.App.Api.Nuget.Gateways
 {

@@ -8,9 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="sfc.App.contracts" Version="1.0.0" />
+    <PackageReference Include="Sfc.App.Contracts" Version="1.0.0" />
     <PackageReference Include="Sfc.Wms.RestResponse" Version="1.0.3" />
-    <PackageReference Include="Sfc.Wms.UserRbac.Contracts" Version="1.0.5" />
+    <PackageReference Include="Sfc.Wms.Security.Rbac.Contracts" Version="1.0.1" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>

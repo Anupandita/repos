@@ -14,10 +14,10 @@ namespace Sfc.App.Api.Tests.Unit.Fixtures
     {
         private readonly Mock<IUserRabcGateway> _mock;
         private readonly RbacGateway _rbacGateway;
-        private bool _isValid;
+        private bool isValid;
 
-        private LoginCredentials _request;
-        private Task<BaseResult<UserDetailsDto>> _testResponse;
+        private LoginCredentials request;
+        private Task<BaseResult<UserDetailsDto>> testResponse;
 
         protected RbacGateWayAppFixture()
         {
@@ -27,14 +27,14 @@ namespace Sfc.App.Api.Tests.Unit.Fixtures
 
         protected void InvalidDataInRequest()
         {
-            _isValid = false;
-            _request = Generator.Default.Single<LoginCredentials>();
+            isValid = false;
+            request = Generator.Default.Single<LoginCredentials>();
         }
 
         protected void ValidInputDataInRequest()
         {
-            _isValid = true;
-            _request = Generator.Default.Single<LoginCredentials>();
+            isValid = true;
+            request = Generator.Default.Single<LoginCredentials>();
         }
 
         protected void InvokeSignInUser()
@@ -42,27 +42,27 @@ namespace Sfc.App.Api.Tests.Unit.Fixtures
             var userDetails = new BaseResult<UserDetailsDto>
             {
                 Payload = Generator.Default.Single<UserDetailsDto>(),
-                ResultType = _isValid ? ResultTypes.Ok : ResultTypes.Unauthorized
+                ResultType = isValid ? ResultTypes.Ok : ResultTypes.Unauthorized
             };
 
-            _mock.Setup(_ => _.SignInAsync(_request)).Returns(Task.FromResult(userDetails));
+            _mock.Setup(_ => _.SignInAsync(request)).Returns(Task.FromResult(userDetails));
 
-            _testResponse = _rbacGateway.SignInAsync(_request);
+            testResponse = _rbacGateway.SignInAsync(request);
         }
 
 
         protected void TheReturnedResponseStatusIsOk()
         {
-            Assert.IsNotNull(_testResponse);
-            Assert.IsNotNull(_testResponse.Result);
-            Assert.AreEqual(_testResponse.Result.ResultType, ResultTypes.Ok);
+            Assert.IsNotNull(testResponse);
+            Assert.IsNotNull(testResponse.Result);
+            Assert.AreEqual(testResponse.Result.ResultType, ResultTypes.Ok);
         }
 
         protected void TheReturnedResponseStatusIsUnauthorized()
         {
-            Assert.IsNotNull(_testResponse);
-            Assert.IsNotNull(_testResponse.Result);
-            Assert.AreEqual(_testResponse.Result.ResultType, ResultTypes.Unauthorized);
+            Assert.IsNotNull(testResponse);
+            Assert.IsNotNull(testResponse.Result);
+            Assert.AreEqual(testResponse.Result.ResultType, ResultTypes.Unauthorized);
         }
     }
 }

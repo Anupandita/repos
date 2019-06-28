@@ -5,7 +5,6 @@ using DataGenerator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Sfc.App.Api.Controllers;
-using Sfc.App.Gateways;
 using Sfc.App.Interfaces;
 using Sfc.Wms.Result;
 using Sfc.Wms.Security.Rbac.Contracts.Dtos;
@@ -17,10 +16,10 @@ namespace Sfc.App.Api.Tests.Unit.Fixtures
     {
         private readonly Mock<IRbacGateway> _rabcGateway;
         private readonly UserRbacController _userRbacController;
-        private bool _isValid;
-        
-        private LoginCredentials _request;
-        private Task<IHttpActionResult> _testResponse;
+        private bool isValid;
+
+        private LoginCredentials request;
+        private Task<IHttpActionResult> testResponse;
 
         protected UserRbacControllerFixture()
         {
@@ -30,14 +29,14 @@ namespace Sfc.App.Api.Tests.Unit.Fixtures
 
         protected void InvalidDataInRequest()
         {
-            _isValid = false;
-            _request = Generator.Default.Single<LoginCredentials>();
+            isValid = false;
+            request = Generator.Default.Single<LoginCredentials>();
         }
 
         protected void ValidInputDataInRequest()
         {
-            _isValid = true;
-            _request = Generator.Default.Single<LoginCredentials>();
+            isValid = true;
+            request = Generator.Default.Single<LoginCredentials>();
         }
 
         protected void InvokeSignInUser()
@@ -45,19 +44,19 @@ namespace Sfc.App.Api.Tests.Unit.Fixtures
             var userDetails = new BaseResult<UserDetailsDto>
             {
                 Payload = Generator.Default.Single<UserDetailsDto>(),
-                ResultType = _isValid ? ResultTypes.Ok : ResultTypes.Unauthorized
+                ResultType = isValid ? ResultTypes.Ok : ResultTypes.Unauthorized
             };
 
-            _rabcGateway.Setup(_ => _.SignInAsync(_request)).Returns(Task.FromResult(userDetails));
+            _rabcGateway.Setup(_ => _.SignInAsync(request)).Returns(Task.FromResult(userDetails));
 
-            _testResponse = _userRbacController.SignInAsync(_request);
+            testResponse = _userRbacController.SignInAsync(request);
         }
 
 
         protected void TheReturnedResponseStatusIsAuthorized()
         {
-            Assert.IsNotNull(_testResponse);
-            var result = _testResponse.Result as OkNegotiatedContentResult<BaseResult<UserDetailsDto>>;
+            Assert.IsNotNull(testResponse);
+            var result = testResponse.Result as OkNegotiatedContentResult<BaseResult<UserDetailsDto>>;
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Content);
             Assert.AreEqual(result.Content.ResultType, ResultTypes.Ok);
@@ -65,13 +64,11 @@ namespace Sfc.App.Api.Tests.Unit.Fixtures
 
         protected void TheReturnedResponseStatusIsUnauthorized()
         {
-            Assert.IsNotNull(_testResponse);
-            var result = _testResponse.Result as NegotiatedContentResult<BaseResult<UserDetailsDto>>;
+            Assert.IsNotNull(testResponse);
+            var result = testResponse.Result as NegotiatedContentResult<BaseResult<UserDetailsDto>>;
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Content);
             Assert.AreEqual(result.Content.ResultType, ResultTypes.Unauthorized);
         }
-
-
     }
 }

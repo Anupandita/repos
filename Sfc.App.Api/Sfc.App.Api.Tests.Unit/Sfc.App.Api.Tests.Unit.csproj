@@ -51,6 +51,7 @@
     <Compile Include="App\RbacGateWayTest.cs" />
     <Compile Include="Configurations\HtmlReportConfig.cs" />
     <Compile Include="Configurations\Setup.cs" />
+    <Compile Include="Controllers\UserRbacControllerTest.cs" />
     <Compile Include="Fakes\LoginCredentialsDataGeneratorProfile.cs" />
     <Compile Include="Fakes\MenusDtoDataGeneratorProfile.cs" />
     <Compile Include="Fakes\PermissionDataGeneratorProfile.cs" />
@@ -60,6 +61,9 @@
     <Compile Include="Fakes\UserInfoDtoDataGeneratorProfile.cs" />
     <Compile Include="Fakes\UserMenusDtoDataGeneratorProfile.cs" />
     <Compile Include="Fixtures\RbacGateWayAppFixture.cs" />
+    <Compile Include="Fixtures\UserRbacControllerFixture.cs" />
+    <Compile Include="Fixtures\UserRbacGatewayFixture.cs" />
+    <Compile Include="Nuget\UserRbacGatewayTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -102,8 +106,11 @@
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.1</Version>
     </PackageReference>
-    <PackageReference Include="Sfc.App">
-      <Version>1.0.2</Version>
+    <PackageReference Include="Sfc.app">
+      <Version>1.0.4</Version>
+    </PackageReference>
+    <PackageReference Include="sfc.wms.restresponse">
+      <Version>1.0.3</Version>
     </PackageReference>
     <PackageReference Include="Sfc.Wms.Result">
       <Version>1.0.7</Version>
@@ -122,14 +129,16 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Sfc.App.Api.Nuget\Sfc.App.Api.Nuget\Sfc.App.Api.Nuget.csproj">
+      <Project>{3d162faf-1167-4b0d-8379-4dbfb28981b1}</Project>
+      <Name>Sfc.App.Api.Nuget</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sfc.App.Api\Sfc.App.Api.csproj">
       <Project>{D64223B7-5EAB-4408-9D8C-759D757F49F3}</Project>
       <Name>Sfc.App.Api</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

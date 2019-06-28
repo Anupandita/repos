@@ -6,9 +6,9 @@ namespace Sfc.App.Api.Tests.Unit.App
 {
     [TestClass]
     [Story(
-        AsA = "",
-        IWant = "",
-        SoThat = ""
+        AsA = "To do user Role based authentication",
+        IWant = "User to get authenticated",
+        SoThat = "Authenticated user can access the restricted resources"
     )]
     public class RbacGateWayTest : RbacGateWayAppFixture
     {
@@ -16,9 +16,9 @@ namespace Sfc.App.Api.Tests.Unit.App
         [TestCategory("UNIT")]
         public void Should_Return_Unauthorized_As_Response_When_InValid_Login_Credentials_Are_Passed()
         {
-            this.Given(_ => _.InvalidDataInRequest())
-                .When(_ => _.InvokeSignInUser())
-                .Then(_ => _.TheReturnedResponseStatusIsUnauthorized())
+            this.Given(el => InvalidDataInRequest())
+                .When(el => InvokeSignInUser())
+                .Then(el => TheReturnedResponseStatusIsUnauthorized())
                 .BDDfy();
         }
 
@@ -26,9 +26,9 @@ namespace Sfc.App.Api.Tests.Unit.App
         [TestCategory("UNIT")]
         public void Should_Return_Ok_As_Response_When_Valid_Login_Credentials_Are_Passed()
         {
-            this.Given(_ => _.ValidInputDataInRequest())
-                .When(_ => _.InvokeSignInUser())
-                .Then(_ => _.TheReturnedResponseStatusIsOk())
+            this.Given(el => ValidInputDataInRequest())
+                .When(el => InvokeSignInUser())
+                .Then(el => TheReturnedResponseStatusIsOk())
                 .BDDfy();
         }
     }

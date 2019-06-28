@@ -12,9 +12,9 @@ namespace Sfc.App.Api.Controllers
     [RoutePrefix(Route.User)]
     public class UserRbacController : SfcBaseApiController
     {
-        private readonly IRabcGateway _rabcGateway;
+        private readonly IRbacGateway _rabcGateway;
 
-        public UserRbacController(IRabcGateway rabcGateway)
+        public UserRbacController(IRbacGateway rabcGateway)
         {
             _rabcGateway = rabcGateway;
         }
