@@ -5,10 +5,10 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Sfc.App.Api")]
-[assembly: AssemblyDescription("SFC API standard template for API")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Shamrock foods")]
-[assembly: AssemblyProduct("Sfc.App.Api")]
+[assembly: AssemblyCompany("Shamrock Foods Company")]
+[assembly: AssemblyProduct("WMS")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
