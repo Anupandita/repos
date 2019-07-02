@@ -25,19 +25,19 @@ namespace Sfc.App.Api.Tests.Unit.Fixtures
             _rbacGateway = new RbacGateway(_mock.Object);
         }
 
-        protected void InvalidDataInRequest()
+        protected void InvalidCredentials()
         {
             isValid = false;
             request = Generator.Default.Single<LoginCredentials>();
         }
 
-        protected void ValidInputDataInRequest()
+        protected void ValidCredentials()
         {
             isValid = true;
             request = Generator.Default.Single<LoginCredentials>();
         }
 
-        protected void InvokeSignInUser()
+        protected void UserLogsIn()
         {
             var userDetails = new BaseResult<UserDetailsDto>
             {

@@ -36,7 +36,7 @@ namespace Sfc.App.Api.Tests.Unit.Nuget
         [TestCategory("UNIT")]
         public void Should_Return_BadRequest_As_Response_When_Empty_Login_Credentials_Are_Passed()
         {
-            this.Given(el => EmptyValidLoginCredentials())
+            this.Given(el => EmptyLoginCredentials())
                 .When(el => UserAuthenticationServiceIsInvoked())
                 .Then(el => TheServiceCallReturnedBadRequestAsResponseStatus())
                 .BDDfy();

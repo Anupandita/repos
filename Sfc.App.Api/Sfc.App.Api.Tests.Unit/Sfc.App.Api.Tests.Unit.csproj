@@ -48,7 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App\RbacGateWayTest.cs" />
+    <Compile Include="App\RbacGatewayTest.cs" />
     <Compile Include="Configurations\HtmlReportConfig.cs" />
     <Compile Include="Configurations\Setup.cs" />
     <Compile Include="Controllers\UserRbacControllerTest.cs" />

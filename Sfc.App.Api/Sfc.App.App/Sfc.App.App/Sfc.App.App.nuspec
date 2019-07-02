@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+
 <package>
   <metadata>
     <id>Sfc.App.App</id>
@@ -12,7 +13,7 @@
     <copyright>Copyright 2019</copyright>
     <dependencies>
       <group targetFramework=".NETFramework4.7.2">
-        <dependency id="sfc.wms.security.rbac.app" Version="1.0.4"  exclude="Build,Analyzers"/>
+        <dependency id="sfc.wms.security.rbac.app" Version="1.0.4" exclude="Build,Analyzers" />
       </group>
     </dependencies>
   </metadata>

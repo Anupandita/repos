@@ -10,14 +10,14 @@ namespace Sfc.App.Api.Tests.Unit.App
         IWant = "User to get authenticated",
         SoThat = "Authenticated user can access the restricted resources"
     )]
-    public class RbacGateWayTest : RbacGateWayAppFixture
+    public class RbacGatewayTest : RbacGateWayAppFixture
     {
         [TestMethod]
         [TestCategory("UNIT")]
         public void Should_Return_Unauthorized_As_Response_When_InValid_Login_Credentials_Are_Passed()
         {
-            this.Given(el => InvalidDataInRequest())
-                .When(el => InvokeSignInUser())
+            this.Given(el => InvalidCredentials())
+                .When(el => UserLogsIn())
                 .Then(el => TheReturnedResponseStatusIsUnauthorized())
                 .BDDfy();
         }
@@ -26,8 +26,8 @@ namespace Sfc.App.Api.Tests.Unit.App
         [TestCategory("UNIT")]
         public void Should_Return_Ok_As_Response_When_Valid_Login_Credentials_Are_Passed()
         {
-            this.Given(el => ValidInputDataInRequest())
-                .When(el => InvokeSignInUser())
+            this.Given(el => ValidCredentials())
+                .When(el => UserLogsIn())
                 .Then(el => TheReturnedResponseStatusIsOk())
                 .BDDfy();
         }

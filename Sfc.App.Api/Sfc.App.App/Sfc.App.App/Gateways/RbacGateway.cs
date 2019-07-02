@@ -19,12 +19,12 @@ namespace Sfc.App.App.Gateways
         public async Task<BaseResult<UserDetailsDto>> SignInAsync(LoginCredentials loginCredentials)
         {
             var response = new BaseResult<UserDetailsDto>
-            { ResultType = ResultTypes.BadGateway };
+                {ResultType = ResultTypes.BadGateway};
 
             if (!ValidateLoginCredentials(loginCredentials)) return response;
 
             response = await _userRabcGateway.SignInAsync(loginCredentials).ConfigureAwait(false);
-           
+
             return response;
         }
 

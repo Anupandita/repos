@@ -63,7 +63,7 @@ namespace Sfc.App.Api.Tests.Unit.Fixtures
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
-        protected void EmptyValidLoginCredentials()
+        protected void EmptyLoginCredentials()
         {
             loginCredentials = new LoginCredentials();
             var result = new BaseResult<UserDetailsDto>
