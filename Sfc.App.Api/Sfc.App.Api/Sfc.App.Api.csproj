@@ -98,8 +98,8 @@
     <Reference Include="Sfc.App.Api.Contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.App.Api.Contracts.1.0.0\lib\net472\Sfc.App.Api.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.App.App, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.App.App.1.0.1\lib\net472\Sfc.App.App.dll</HintPath>
+    <Reference Include="Sfc.App.App, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.App.App.1.0.3\lib\net472\Sfc.App.App.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Aop, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Aop.1.0.0\lib\net472\Sfc.Wms.Aop.dll</HintPath>
@@ -113,6 +113,9 @@
     <Reference Include="Sfc.Wms.Result, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Result.1.0.7\lib\net472\Sfc.Wms.Result.dll</HintPath>
     </Reference>
+    <Reference Include="Sfc.Wms.Security.Rbac, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Security.Rbac.1.0.0\lib\net472\Sfc.Wms.Security.Rbac.dll</HintPath>
+    </Reference>
     <Reference Include="Sfc.Wms.Security.Rbac.App, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Security.Rbac.App.1.0.5\lib\net472\Sfc.Wms.Security.Rbac.App.dll</HintPath>
     </Reference>
@@ -124,6 +127,9 @@
     </Reference>
     <Reference Include="Sfc.Wms.Security.Token, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Security.Token.1.0.0\lib\net472\Sfc.Wms.Security.Token.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Security.Token.Jwt, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Security.Token.Jwt.1.0.0\lib\net472\Sfc.Wms.Security.Token.Jwt.dll</HintPath>
     </Reference>
     <Reference Include="SimpleInjector, Version=4.5.1.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
       <HintPath>..\packages\SimpleInjector.4.5.1\lib\net45\SimpleInjector.dll</HintPath>
@@ -185,7 +191,7 @@
     </Reference>
     <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
-    </Reference>  
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
