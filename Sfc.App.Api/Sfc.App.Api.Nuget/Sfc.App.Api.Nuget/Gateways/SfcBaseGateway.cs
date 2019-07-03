@@ -14,17 +14,7 @@ namespace Sfc.App.Api.Nuget.Gateways
         {
             RestClient = restClient;
             var baseUrl = ConfigurationManager.AppSettings["BaseUrl"];
-            var uriBuilder = new UriBuilder
-            {
-                Host = baseUrl,
-                Path = path
-            };
-#if DEBUG
-            if (int.TryParse(ConfigurationManager.AppSettings["Port"], out var port))
-                uriBuilder.Port = port;
-#endif
-
-            RestClient.BaseUrl = uriBuilder.Uri;
+            RestClient.BaseUrl =new Uri($"{baseUrl}/{path}");
         }
 
         protected string GetQueryString(params string[] parameters)

@@ -11,6 +11,7 @@ namespace Sfc.App.Api.App_Start
             filters.Add(new IdentityJwtAuthenticationAttribute());
             filters.Add(new LogActionWebApiFilter());
             filters.Add(new LogExceptionWebApiFilter());
+            
         }
     }
 }

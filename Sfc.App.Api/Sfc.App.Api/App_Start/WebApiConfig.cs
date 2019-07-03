@@ -10,10 +10,7 @@ namespace Sfc.App.Api
             config.MapHttpAttributeRoutes();
             FilterConfig.RegisterHttpFilters(GlobalConfiguration.Configuration.Filters);
             DependencyConfig.Register();
-            config.Routes.MapHttpRoute(
-                "DefaultApi",
-                "api/{controller}/{id}"
-            );
+            config.Routes.MapHttpRoute("DefaultApi","api/{controller}/{id}");
         }
     }
 }
