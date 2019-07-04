@@ -1,0 +1,1 @@
+﻿<%@ Application Codebehind="Global.asax.cs" Inherits="Sfc.App.Api.WebApiApplication" Language="C#" %>

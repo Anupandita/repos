@@ -286,3 +286,5 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+/Sfc.App.Api/Sfc.App.Api.Nuget/Program.cs
+/Sfc.App.Api/Sfc.App.Api.Nuget/Sfc.App.Api.Nuget/Program.cs
