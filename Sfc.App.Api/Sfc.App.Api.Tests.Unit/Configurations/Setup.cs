@@ -38,12 +38,10 @@ namespace Sfc.App.Api.Tests.Unit.Configurations
             Generator.Default.Configure(c => c.Profile<LoginCredentialsDataGeneratorProfile>());
             Generator.Default.Configure(c => c.Profile<RolesDataGeneratorProfile>());
             Generator.Default.Configure(c => c.Profile<MenusDtoDataGeneratorProfile>());
-            Generator.Default.Configure(c => c.Profile<UserMenusDtoDataGeneratorProfile>());
             Generator.Default.Configure(c => c.Profile<PreferencesDataGeneratorProfile>());
             Generator.Default.Configure(c => c.Profile<PermissionDataGeneratorProfile>());
             Generator.Default.Configure(c => c.Profile<UserInfoDtoDataGeneratorProfile>());
             Generator.Default.Configure(c => c.Profile<MenuDetailsDtoDataGeneratorProfile>());
-            Generator.Default.Configure(c => c.Profile<UserDetailsDtoDataGeneratorProfile>());
         }
     }
 }

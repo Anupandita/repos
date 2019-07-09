@@ -3,8 +3,7 @@ using RestSharp;
 using Sfc.App.Api.Contracts.Constants;
 using Sfc.App.Api.Nuget.Interfaces;
 using Sfc.Wms.Result;
-using Sfc.Wms.Security.Rbac.Contracts.Dtos;
-using Sfc.Wms.Security.Rbac.Contracts.Dtos.UI;
+using Sfc.Wms.Security.Contracts.Dtos;
 
 namespace Sfc.App.Api.Nuget.Gateways
 {
@@ -14,14 +13,14 @@ namespace Sfc.App.Api.Nuget.Gateways
         {
         }
 
-        public async Task<BaseResult<UserDetailsDto>> SignInAsync(LoginCredentials loginCredentials)
+        public async Task<BaseResult<UserInfoDto>> SignInAsync(LoginCredentials loginCredentials)
         {
             var request = new RestRequest(Route.Paths.UserLogin, Method.POST);
             request.AddJsonBody(loginCredentials);
             var result = await RestClient
-                .ExecuteTaskAsync<BaseResult<UserDetailsDto>>(request)
+                .ExecuteTaskAsync<BaseResult<UserInfoDto>>(request)
                 .ConfigureAwait(false);
-            return GetBaseResult<UserDetailsDto>(result);
+            return GetBaseResult<UserInfoDto>(result);
         }
     }
 }

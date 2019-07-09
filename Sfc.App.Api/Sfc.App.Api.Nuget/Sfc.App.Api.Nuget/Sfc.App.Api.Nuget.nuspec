@@ -13,9 +13,9 @@
     <copyright>Copyright 2019</copyright>
     <dependencies>
       <group targetFramework=".NETFramework4.7.2">
-        <dependency id="Sfc.App.Api.Contracts" Version="1.0.0" exclude="Build,Analyzers"/>
-        <dependency id="Sfc.Wms.RestResponse" Version="1.0.3" exclude="Build,Analyzers"/>
-        <dependency id="Sfc.Wms.Security.Rbac.Contracts" Version="1.0.4" exclude="Build,Analyzers"/>
+        <dependency id="Sfc.App.Api.Contracts" Version="1.*" exclude="Build,Analyzers"/>
+        <dependency id="Sfc.Wms.RestResponse" Version="1.*" exclude="Build,Analyzers"/>
+        <dependency id="Sfc.Wms.Security.Contracts" Version="1.*" exclude="Build,Analyzers"/>
         <dependency id="System.Configuration.ConfigurationManager" Version="4.5.0" exclude="Build,Analyzers"/>
       </group>
     </dependencies>
