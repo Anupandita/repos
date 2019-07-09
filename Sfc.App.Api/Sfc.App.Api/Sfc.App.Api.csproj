@@ -43,11 +43,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=8.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.8.0.0\lib\net461\AutoMapper.dll</HintPath>
+    <Reference Include="AutoMapper, Version=8.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.8.1.1\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.Functions, Version=1.3.1.0, Culture=neutral, PublicKeyToken=dbe58f97a0872a64, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.Functions.1.4.1\lib\net471\EntityFramework.Functions.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
@@ -98,29 +101,38 @@
     <Reference Include="Sfc.App.Api.Contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.App.Api.Contracts.1.0.0\lib\net472\Sfc.App.Api.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.App.App, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.App.App.1.0.3\lib\net472\Sfc.App.App.dll</HintPath>
+    <Reference Include="Sfc.App.App, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.App.App.1.0.6\lib\net472\Sfc.App.App.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.AutoMapper.Package, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.AutoMapper.Package.1.0.1\lib\net472\Sfc.AutoMapper.Package.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Core.BaseApiController, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Core.BaseApiController.1.0.0\lib\net472\Sfc.Core.BaseApiController.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Core.Cache.InMemory, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Core.Cache.InMemory.1.0.0\lib\net472\Sfc.Core.Cache.InMemory.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Aop, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Aop.1.0.0\lib\net472\Sfc.Wms.Aop.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.BaseController, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.BaseController.1.0.3\lib\net472\Sfc.Wms.BaseController.dll</HintPath>
+    <Reference Include="Sfc.Wms.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Data.1.0.2\lib\net472\Sfc.Wms.Data.exe</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Cache.InMemory, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Cache.InMemory.1.1.0\lib\net472\Sfc.Wms.Cache.InMemory.dll</HintPath>
+    <Reference Include="Sfc.Wms.RestResponse, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.RestResponse.1.0.3\lib\net472\Sfc.Wms.RestResponse.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Result, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Result.1.0.7\lib\net472\Sfc.Wms.Result.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Security.Rbac, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Security.Rbac.1.0.0\lib\net472\Sfc.Wms.Security.Rbac.dll</HintPath>
+    <Reference Include="Sfc.Wms.Security.Contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Security.Contracts.1.0.1\lib\net472\Sfc.Wms.Security.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Security.Rbac.Contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Security.Rbac.Contracts.1.0.4\lib\net472\Sfc.Wms.Security.Rbac.Contracts.dll</HintPath>
+    <Reference Include="Sfc.Wms.Security.Rbac, Version=1.0.9.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Security.Rbac.1.0.9\lib\net472\Sfc.Wms.Security.Rbac.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Security.Rbac.Repository, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Security.Rbac.Repository.1.0.5\lib\net472\Sfc.Wms.Security.Rbac.Repository.dll</HintPath>
+      <HintPath>..\packages\Sfc.Wms.Security.Rbac.Repository.1.0.12\lib\net472\Sfc.Wms.Security.Rbac.Repository.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Security.Token.Jwt, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Security.Token.Jwt.1.0.0\lib\net472\Sfc.Wms.Security.Token.Jwt.dll</HintPath>
@@ -157,8 +169,8 @@
     <Reference Include="System.Security.Permissions, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.Permissions.4.5.0\lib\net461\System.Security.Permissions.dll</HintPath>
     </Reference>
-    <Reference Include="System.Security.Principal.Windows, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Principal.Windows.4.5.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+    <Reference Include="System.Security.Principal.Windows, Version=4.1.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Principal.Windows.4.5.1\lib\net461\System.Security.Principal.Windows.dll</HintPath>
     </Reference>
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Transactions" />

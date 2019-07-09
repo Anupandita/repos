@@ -7,8 +7,7 @@ using Moq;
 using Sfc.App.Api.Controllers;
 using Sfc.App.App.Interfaces;
 using Sfc.Wms.Result;
-using Sfc.Wms.Security.Rbac.Contracts.Dtos;
-using Sfc.Wms.Security.Rbac.Contracts.Dtos.UI;
+using Sfc.Wms.Security.Contracts.Dtos;
 
 namespace Sfc.App.Api.Tests.Unit.Fixtures
 {
@@ -41,9 +40,9 @@ namespace Sfc.App.Api.Tests.Unit.Fixtures
 
         protected void UserLogsIn()
         {
-            var userDetails = new BaseResult<UserDetailsDto>
+            var userDetails = new BaseResult<UserInfoDto>
             {
-                Payload = Generator.Default.Single<UserDetailsDto>(),
+                Payload = Generator.Default.Single<UserInfoDto>(),
                 ResultType = isValid ? ResultTypes.Ok : ResultTypes.Unauthorized
             };
 
@@ -56,7 +55,7 @@ namespace Sfc.App.Api.Tests.Unit.Fixtures
         protected void TheReturnedResponseStatusIsAuthorized()
         {
             Assert.IsNotNull(testResponse);
-            var result = testResponse.Result as OkNegotiatedContentResult<BaseResult<UserDetailsDto>>;
+            var result = testResponse.Result as OkNegotiatedContentResult<BaseResult<UserInfoDto>>;
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Content);
             Assert.AreEqual(result.Content.ResultType, ResultTypes.Ok);
@@ -65,7 +64,7 @@ namespace Sfc.App.Api.Tests.Unit.Fixtures
         protected void TheReturnedResponseStatusIsUnauthorized()
         {
             Assert.IsNotNull(testResponse);
-            var result = testResponse.Result as NegotiatedContentResult<BaseResult<UserDetailsDto>>;
+            var result = testResponse.Result as NegotiatedContentResult<BaseResult<UserInfoDto>>;
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Content);
             Assert.AreEqual(result.Content.ResultType, ResultTypes.Unauthorized);

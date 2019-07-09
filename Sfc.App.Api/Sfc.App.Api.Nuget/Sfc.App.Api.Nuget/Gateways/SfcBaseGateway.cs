@@ -2,7 +2,7 @@
 using System.Configuration;
 using System.Linq;
 using RestSharp;
-using Sfc.Wms.RestResponse;
+using Sfc.Core.RestResponse;
 
 namespace Sfc.App.Api.Nuget.Gateways
 {

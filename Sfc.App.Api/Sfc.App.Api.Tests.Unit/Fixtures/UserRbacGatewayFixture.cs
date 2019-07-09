@@ -8,8 +8,7 @@ using Newtonsoft.Json;
 using RestSharp;
 using Sfc.App.Api.Nuget.Gateways;
 using Sfc.Wms.Result;
-using Sfc.Wms.Security.Rbac.Contracts.Dtos;
-using Sfc.Wms.Security.Rbac.Contracts.Dtos.UI;
+using Sfc.Wms.Security.Contracts.Dtos;
 
 namespace Sfc.App.Api.Tests.Unit.Fixtures
 {
@@ -18,7 +17,7 @@ namespace Sfc.App.Api.Tests.Unit.Fixtures
         private readonly Mock<IRestClient> _restClient;
         private readonly UserRbacGateway _userRbacGateway;
         private LoginCredentials loginCredentials;
-        private BaseResult<UserDetailsDto> signInBaseResult;
+        private BaseResult<UserInfoDto> signInBaseResult;
 
         public UserRbacGatewayFixture()
         {
@@ -44,9 +43,9 @@ namespace Sfc.App.Api.Tests.Unit.Fixtures
         protected void InValidLoginCredentials()
         {
             loginCredentials = Generator.Default.Single<LoginCredentials>();
-            var result = new BaseResult<UserDetailsDto>
+            var result = new BaseResult<UserInfoDto>
             {
-                Payload = Generator.Default.Single<UserDetailsDto>(),
+                Payload = Generator.Default.Single<UserInfoDto>(),
                 ResultType = ResultTypes.Unauthorized
             };
             GetRestResponse(result, HttpStatusCode.Unauthorized, ResponseStatus.Completed);
@@ -55,9 +54,9 @@ namespace Sfc.App.Api.Tests.Unit.Fixtures
         protected void ValidLoginCredentials()
         {
             loginCredentials = Generator.Default.Single<LoginCredentials>();
-            var result = new BaseResult<UserDetailsDto>
+            var result = new BaseResult<UserInfoDto>
             {
-                Payload = Generator.Default.Single<UserDetailsDto>(),
+                Payload = Generator.Default.Single<UserInfoDto>(),
                 ResultType = ResultTypes.Ok
             };
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
@@ -66,9 +65,9 @@ namespace Sfc.App.Api.Tests.Unit.Fixtures
         protected void EmptyLoginCredentials()
         {
             loginCredentials = new LoginCredentials();
-            var result = new BaseResult<UserDetailsDto>
+            var result = new BaseResult<UserInfoDto>
             {
-                Payload = Generator.Default.Single<UserDetailsDto>(),
+                Payload = Generator.Default.Single<UserInfoDto>(),
                 ResultType = ResultTypes.BadRequest
             };
             GetRestResponse(result, HttpStatusCode.BadRequest, ResponseStatus.Completed);
