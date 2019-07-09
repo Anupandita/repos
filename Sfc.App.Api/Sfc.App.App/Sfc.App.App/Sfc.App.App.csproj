@@ -3,6 +3,7 @@
     <TargetFrameworks>net472;</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>1.0.6</Version>
+    <Configurations>Debug;Release;QA;UAT;PROD</Configurations>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Services\**" />
