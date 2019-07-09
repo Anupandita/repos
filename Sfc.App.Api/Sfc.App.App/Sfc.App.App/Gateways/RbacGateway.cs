@@ -36,9 +36,9 @@ namespace Sfc.App.App.Gateways
             var roles = await _userRabcService.GetRolesByUserNameAsync(loginCredentials.UserName)
                 .ConfigureAwait(false);
 
-            var userDetails =
-                await _userRabcService.GetUserDetails(loginCredentials.UserName).ConfigureAwait(false);
-            var rolesCollec = roles.Payload.Select(el => el.RoleName).ToList();
+            var userDetails = await _userRabcService.GetUserDetails(loginCredentials.UserName)
+                .ConfigureAwait(false);
+
             userDetails.Payload.Token = JwtManager.GenerateToken(loginCredentials.UserName, result.Payload,
                 roles.Payload.Select(el => el.RoleName).ToList());
 

@@ -23,19 +23,19 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
           <li class='storySummary'>
             <div class='summaryLine'>
               <div class='summaryLabel'>Stories</div>
-              <span class='summaryCount'>0</span>
+              <span class='summaryCount'>1</span>
             </div>
           </li>
           <li class='scenarioSummary'>
             <div class='summaryLine'>
               <div class='summaryLabel'>Scenarios</div>
-              <span class='summaryCount'>0</span>
+              <span class='summaryCount'>2</span>
             </div>
           </li>
           <li class='Passed'>
             <div class='summaryLine'>
               <div class='summaryLabel'>Passed</div>
-              <span class='summaryCount'>0</span>
+              <span class='summaryCount'>2</span>
             </div>
           </li>
           <li class='Inconclusive'>
@@ -67,8 +67,50 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
           </div>
         </div>
         <ul class='testResult'>
+          <li>
+            <div class='story Passed'>
+              <div class='storyMetadata'>
+                <div class='storyTitle'>Story: Rbac gateway test</div>
+                <ul class='storyNarrative'>
+                  <li>As a To do user Role based authentication</li>
+                  <li>I want User to get authenticated</li>
+                  <li>So that Authenticated user can access the restricted resources</li>
+                </ul>
+              </div>
+              <div class='scenarios'>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-7'>Should Return Ok As Response When Valid Login Credentials Are Passed</div>
+                  <ul class='steps' id='scenario-7'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-7-1' >
+                      <span>Given valid credentials</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-7-2' >
+                      <span>When user logs in</span>
+                    </li>
+                    <li class='step Passed  Assertion ' data-toggle-target='step-7-3' >
+                      <span>Then the returned response status is ok</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-3'>Should Return Unauthorized As Response When InValid Login Credentials Are Passed</div>
+                  <ul class='steps' id='scenario-3'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-3-1' >
+                      <span>Given invalid credentials</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-3-2' >
+                      <span>When user logs in</span>
+                    </li>
+                    <li class='step Passed  Assertion ' data-toggle-target='step-3-3' >
+                      <span>Then the returned response status is unauthorized</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </li>
         </ul>
-        <p><span>Tested at: 09-07-2019 11:13:01</span></p>
+        <p><span>Tested at: 09-07-2019 11:50:25</span></p>
       </div>
     </div>
     <div class='footer'>Powered by <a href='https://github.com/TestStack/TestStack.BDDfy'>BDDfy</a> framework</div>

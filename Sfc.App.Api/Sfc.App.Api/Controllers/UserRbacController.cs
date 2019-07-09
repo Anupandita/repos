@@ -3,7 +3,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Sfc.App.Api.Contracts.Constants;
 using Sfc.App.App.Interfaces;
-using Sfc.Wms.BaseController;
+using Sfc.Core.BaseApiController;
 using Sfc.Wms.Result;
 using Sfc.Wms.Security.Contracts.Dtos;
 

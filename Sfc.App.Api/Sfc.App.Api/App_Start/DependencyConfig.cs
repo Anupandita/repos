@@ -4,7 +4,6 @@ using System.Web.Http;
 using AutoMapper;
 using Sfc.App.App.Gateways;
 using Sfc.App.App.Interfaces;
-using Sfc.Wms.Cache.InMemory;
 using Sfc.Wms.Security.Rbac.AutoMapper;
 using Sfc.Wms.Security.Rbac.Services;
 using Sfc.Wms.Security.Contracts.Interfaces;
@@ -16,6 +15,7 @@ using SimpleInjector.Lifestyles;
 using Sfc.Wms.Data.Context;
 using Sfc.Wms.Security.Rbac.UnitOfWork;
 using Sfc.Wms.Security.Rbac.Interface;
+using Sfc.Core.Cache.InMemory;
 
 namespace Sfc.App.Api.App_Start
 {

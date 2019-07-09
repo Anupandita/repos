@@ -101,20 +101,20 @@
     <Reference Include="Sfc.App.Api.Contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.App.Api.Contracts.1.0.0\lib\net472\Sfc.App.Api.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.App.App, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.App.App.1.0.5\lib\net472\Sfc.App.App.dll</HintPath>
+    <Reference Include="Sfc.App.App, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.App.App.1.0.6\lib\net472\Sfc.App.App.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.AutoMapper.Package, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.AutoMapper.Package.1.0.1\lib\net472\Sfc.AutoMapper.Package.dll</HintPath>
     </Reference>
+    <Reference Include="Sfc.Core.BaseApiController, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Core.BaseApiController.1.0.0\lib\net472\Sfc.Core.BaseApiController.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Core.Cache.InMemory, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Core.Cache.InMemory.1.0.0\lib\net472\Sfc.Core.Cache.InMemory.dll</HintPath>
+    </Reference>
     <Reference Include="Sfc.Wms.Aop, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Aop.1.0.0\lib\net472\Sfc.Wms.Aop.dll</HintPath>
-    </Reference>
-    <Reference Include="Sfc.Wms.BaseController, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.BaseController.1.0.3\lib\net472\Sfc.Wms.BaseController.dll</HintPath>
-    </Reference>
-    <Reference Include="Sfc.Wms.Cache.InMemory, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Cache.InMemory.1.1.0\lib\net472\Sfc.Wms.Cache.InMemory.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Data.1.0.2\lib\net472\Sfc.Wms.Data.exe</HintPath>
@@ -128,8 +128,8 @@
     <Reference Include="Sfc.Wms.Security.Contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Security.Contracts.1.0.1\lib\net472\Sfc.Wms.Security.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Security.Rbac, Version=1.0.8.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Security.Rbac.1.0.8\lib\net472\Sfc.Wms.Security.Rbac.dll</HintPath>
+    <Reference Include="Sfc.Wms.Security.Rbac, Version=1.0.9.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Security.Rbac.1.0.9\lib\net472\Sfc.Wms.Security.Rbac.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Security.Rbac.Repository, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Security.Rbac.Repository.1.0.12\lib\net472\Sfc.Wms.Security.Rbac.Repository.dll</HintPath>
