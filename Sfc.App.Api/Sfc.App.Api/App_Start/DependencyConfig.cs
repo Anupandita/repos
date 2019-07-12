@@ -1,24 +1,7 @@
 ﻿using System;
-using System.Configuration;
-using System.Data.Entity;
-using System.Linq.Expressions;
-using System.Runtime.Caching;
-using System.Web.Http;
 using AutoMapper;
-using RestSharp;
 using Sfc.App.App.Gateways;
 using Sfc.App.App.Interfaces;
-using Sfc.Wms.Security.Rbac.AutoMapper;
-using Sfc.Wms.Security.Rbac.Services;
-using Sfc.Wms.Security.Contracts.Interfaces;
-using Sfc.Wms.Security.Rbac.Repository.Gateways;
-using Sfc.Wms.Security.Rbac.Repository.Interfaces;
-using SimpleInjector;
-using SimpleInjector.Integration.WebApi;
-using SimpleInjector.Lifestyles;
-using Sfc.Wms.Data.Context;
-using Sfc.Wms.Security.Rbac.UnitOfWork;
-using Sfc.Wms.Security.Rbac.Interface;
 using Sfc.Core.Cache.InMemory;
 using Sfc.Wms.Asrs.App.Interfaces;
 using Sfc.Wms.Asrs.App.Mappers;
@@ -30,35 +13,54 @@ using Sfc.Wms.Asrs.Shamrock.App.Interfaces;
 using Sfc.Wms.Asrs.Shamrock.App.UnitOfWork;
 using Sfc.Wms.Asrs.Shamrock.Contracts.Dtos;
 using Sfc.Wms.Asrs.Shamrock.Repository.Gateways;
+using Sfc.Wms.Asrs.Shamrock.Repository.Interfaces;
+using Sfc.Wms.Builder.MessageBuilder;
+using Sfc.Wms.Data.Context;
 using Sfc.Wms.Data.Interfaces;
 using Sfc.Wms.InboundLpn.App.Services;
-using Entities=Sfc.Wms.Data.Entities;
 using Sfc.Wms.InboundLpn.Contracts.Dtos;
 using Sfc.Wms.InboundLpn.Contracts.Interfaces;
 using Sfc.Wms.InboundLpn.Repository.Gateways;
 using Sfc.Wms.InboundLpn.Repository.Interfaces;
 using Sfc.Wms.Interface.Asrs.Interfaces;
+using Sfc.Wms.NextUpCounter.App.Services;
 using Sfc.Wms.NextUpCounter.Contracts.Interfaces;
 using Sfc.Wms.NextUpCounter.Repository.Context;
 using Sfc.Wms.NextUpCounter.Repository.Gateways;
 using Sfc.Wms.NextUpCounter.Repository.Interfaces;
 using Sfc.Wms.Parser.Parsers;
+using Sfc.Wms.ParserAndTranslator.Contracts.Interfaces;
+using Sfc.Wms.ParserAndTranslator.Contracts.Validation;
+using Sfc.Wms.Security.Contracts.Interfaces;
+using Sfc.Wms.Security.Rbac.AutoMapper;
+using Sfc.Wms.Security.Rbac.Interface;
+using Sfc.Wms.Security.Rbac.Repository.Gateways;
+using Sfc.Wms.Security.Rbac.Repository.Interfaces;
+using Sfc.Wms.Security.Rbac.Services;
+using Sfc.Wms.Security.Rbac.UnitOfWork;
 using Sfc.Wms.TransitionalInventory.App.Services;
 using Sfc.Wms.TransitionalInventory.Contracts.Dtos;
 using Sfc.Wms.TransitionalInventory.Contracts.Interfaces;
 using Sfc.Wms.TransitionalInventory.Repository.Context;
 using Sfc.Wms.TransitionalInventory.Repository.Gateways;
 using Sfc.Wms.TransitionalInventory.Repository.Interfaces;
-using Sfc.Wms.ParserAndTranslator.Contracts.Interfaces;
-using Sfc.Wms.ParserAndTranslator.Contracts.Validation;
 using Sfc.Wms.Translator.Interface;
 using Sfc.Wms.Translator.Translators;
-using Sfc.Wms.Asrs.Shamrock.Repository.Interfaces;
-using Sfc.Wms.Builder.MessageBuilder;
-using Sfc.Wms.NextUpCounter.App.Interfaces;
-using Sfc.Wms.NextUpCounter.App.Services;
-using Sfc.Wms.NextUpCounter.App.UnitOfWork;
 using Sfc.Wms.UnitOfWork;
+using SimpleInjector;
+using SimpleInjector.Integration.WebApi;
+using SimpleInjector.Lifestyles;
+using System.Configuration;
+using System.Data.Entity;
+using System.Linq.Expressions;
+using System.Runtime.Caching;
+using System.Web.Http;
+using AutoMapper.Extensions.ExpressionMapping;
+using Sfc.Wms.InboundLpn.App.Interfaces;
+using Sfc.Wms.InboundLpn.App.UnitOfWork;
+using Entities = Sfc.Wms.Data.Entities;
+using RepoEntities = Sfc.Wms.TransitionalInventory.Repository.Dtos;
+
 
 namespace Sfc.App.Api.App_Start
 {
@@ -70,6 +72,7 @@ namespace Sfc.App.Api.App_Start
             container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
             RegisterTypes(container);
             container.RegisterWebApiControllers(GlobalConfiguration.Configuration);
+            SfcMapper.Initialize();
 #if DEBUG
             container.Verify();
 #endif
@@ -79,7 +82,6 @@ namespace Sfc.App.Api.App_Start
             return container;
         }
 
-
         private static void RegisterTypes(Container container)
         {
             container.RegisterSingleton<IMapper>(() =>
@@ -87,6 +89,7 @@ namespace Sfc.App.Api.App_Start
                 var mapper = new Mapper(new MapperConfiguration(c =>
                 {
                     SfcRbacMapper.CreateMaps(c);
+                    c.AddExpressionMapping();
                     c.CreateMap<Entities.SwmToMhe, SwmToMheDto>().ReverseMap();
                     c.CreateMap<Entities.SwmFromMhe, SwmFromMheDto>().ReverseMap();
                     c.CreateMap<Entities.WmsToEms, WmsToEmsDto>().ReverseMap();
@@ -94,8 +97,11 @@ namespace Sfc.App.Api.App_Start
                     c.CreateMap<Entities.SwmMessageSource, SwmMessageSourceDto>(MemberList.None).ReverseMap();
                     c.CreateMap<Entities.CaseHeader, CaseHeaderDto>().ReverseMap();
                     c.CreateMap<Entities.CaseDetail, CaseDetailDto>().ReverseMap();
-                    c.CreateMap<Entities.TransitionalInventory, TransitionalInventoryDto>().ReverseMap();
+                    c.CreateMap<Entities.TransitionalInventory, TransitionalInventoryDto>(MemberList.None).ReverseMap();
                     c.CreateMap<Entities.AllocationInventoryDetail, AllocationInventoryDetailDto>().ReverseMap();
+                    c.CreateMap<RepoEntities.TransitionalInventory, TransitionalInventoryDto>(MemberList.None).ReverseMap();
+                    c.CreateMap<Expression<Func<CaseHeaderDto, bool>>, Expression<Func<Entities.CaseHeader, bool>>>(MemberList.None).ReverseMap();
+                    c.CreateMap<Expression<Func<CaseDetailDto, bool>>, Expression<Func<Entities.CaseDetail, bool>>>(MemberList.None).ReverseMap();
                 }));
 #if DEBUG
                 mapper.DefaultContext.ConfigurationProvider.AssertConfigurationIsValid();
@@ -117,13 +123,8 @@ namespace Sfc.App.Api.App_Start
 
             container.Register(typeof(IShamrockGateway<>), typeof(IShamrockGateway<>).Assembly);
             container.Register(typeof(ISwmMessageSourceGateway<>), typeof(ISwmMessageSourceGateway<>).Assembly);
-            container.Register(typeof(IGenericRepository<>), typeof(IGenericRepository<>).Assembly);
-
-           
-
             container.Register(() => new TransitionalInventoryContext(
                       ConfigurationManager.ConnectionStrings["SfcOracleDbContext"].ConnectionString) as DbContext, Lifestyle.Singleton);
-            
 
             container.Register<IMappingFixture>(() => new MappingFixture(), Lifestyle.Singleton);
             container.Register(typeof(IEmsToWmsService), typeof(EmsToWmsService));
@@ -155,13 +156,11 @@ namespace Sfc.App.Api.App_Start
             container.Register(typeof(IHaveDataTypeValidation), typeof(DataTypeValidation));
             container.Register(typeof(IGenericMessageBuilder), typeof(GenericMessageBuilder));
             container.Register(typeof(ISfcUnitOfWork<,>), typeof(SfcUnitOfWork<,>));
-            container.Register(typeof(IShamrockService<,>), typeof(ShamrockService<,>));
             container.Register(typeof(INextUpCounterService), typeof(NextUpCounterService));
             container.Register(typeof(INextUpCounterGateway), typeof(NextUpCounterGateway));
             container.Register(typeof(INextUpCounterRepository), typeof(NextUpCounterRepository));
-            container.Register(typeof(INextUpCounterUnitOfWork), typeof(NextUpCounterUnitOfWork));
             container.Register(typeof(IAsrsUnitOfWork), typeof(AsrsUnitOfWork));
-
+            container.Register(typeof(IInboundLpnUnitOfWork), typeof(InboundLpnUnitOfWork));
         }
     }
 }

@@ -10,6 +10,8 @@
     <None Remove="Services\**" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Sfc.Wms.NextUpCounter.App" Version="1.0.6" />
+    <PackageReference Include="Sfc.Wms.NextUpCounter.Contracts" Version="1.0.9" />
     <PackageReference Include="Sfc.Wms.Security.Rbac" Version="1.0.9" />
     <PackageReference Include="Sfc.Wms.Security.Token.Jwt" Version="1.0.0" />
   </ItemGroup>

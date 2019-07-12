@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.645
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sfc.App.Api", "Sfc.App.Api\Sfc.App.Api.csproj", "{D64223B7-5EAB-4408-9D8C-759D757F49F3}"
 EndProject
@@ -14,6 +14,16 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfc.App.Api.Contracts", "Sfc.App.Api.Contracts\Sfc.App.Api.Contracts\Sfc.App.Api.Contracts.csproj", "{91E24ED1-6337-42F4-8875-0D4AD8758ACD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfc.App.App", "Sfc.App.App\Sfc.App.App\Sfc.App.App.csproj", "{871E639A-1AA1-489C-806B-3F2678ACDD0E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sfc.Wms.Asrs.App", "..\..\Wms.Interface\Asrs\Sfc.Wms.Asrs.App\Sfc.Wms.Asrs.App\Sfc.Wms.Asrs.App.csproj", "{42146049-DA25-4DCD-A209-ADFD8D0F13FA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfc.Wms.Asrs.Dematic.Contracts", "..\..\Wms.Interface\Dematic\Sfc.Wms.Asrs.Dematic.Contracts\Sfc.Wms.Asrs.Dematic.Contracts\Sfc.Wms.Asrs.Dematic.Contracts.csproj", "{A690BE5E-27C5-41B4-8837-D3FEFD4FC535}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sfc.Wms.Parser", "..\..\Wms.Interface\ParserAndTranslator\Sfc.Wms.Parser\Sfc.Wms.Parser\Sfc.Wms.Parser.csproj", "{FA4236FF-967A-4A72-9CF9-34719E5F9497}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfc.Wms.Translator", "..\..\Wms.Interface\ParserAndTranslator\Sfc.Wms.Translator\Sfc.Wms.Translator\Sfc.Wms.Translator.csproj", "{F57C5E65-0A51-4A99-A6C0-F3524DF69B05}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfc.Wms.ParserAndTranslator.Contracts", "..\..\Sfc.Core.Onprem\Sfc.Wms.ParserAndTranslator.Contracts\Sfc.Wms.ParserAndTranslator.Contracts\Sfc.Wms.ParserAndTranslator.Contracts.csproj", "{BD7E6E97-D4B1-4527-837B-0B10BBFA55B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +51,26 @@ Global
 		{871E639A-1AA1-489C-806B-3F2678ACDD0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{871E639A-1AA1-489C-806B-3F2678ACDD0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{871E639A-1AA1-489C-806B-3F2678ACDD0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42146049-DA25-4DCD-A209-ADFD8D0F13FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42146049-DA25-4DCD-A209-ADFD8D0F13FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42146049-DA25-4DCD-A209-ADFD8D0F13FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42146049-DA25-4DCD-A209-ADFD8D0F13FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A690BE5E-27C5-41B4-8837-D3FEFD4FC535}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A690BE5E-27C5-41B4-8837-D3FEFD4FC535}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A690BE5E-27C5-41B4-8837-D3FEFD4FC535}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A690BE5E-27C5-41B4-8837-D3FEFD4FC535}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA4236FF-967A-4A72-9CF9-34719E5F9497}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA4236FF-967A-4A72-9CF9-34719E5F9497}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA4236FF-967A-4A72-9CF9-34719E5F9497}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA4236FF-967A-4A72-9CF9-34719E5F9497}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F57C5E65-0A51-4A99-A6C0-F3524DF69B05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F57C5E65-0A51-4A99-A6C0-F3524DF69B05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F57C5E65-0A51-4A99-A6C0-F3524DF69B05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F57C5E65-0A51-4A99-A6C0-F3524DF69B05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD7E6E97-D4B1-4527-837B-0B10BBFA55B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD7E6E97-D4B1-4527-837B-0B10BBFA55B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD7E6E97-D4B1-4527-837B-0B10BBFA55B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD7E6E97-D4B1-4527-837B-0B10BBFA55B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

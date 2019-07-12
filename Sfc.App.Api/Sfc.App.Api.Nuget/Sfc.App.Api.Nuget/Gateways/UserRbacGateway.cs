@@ -9,13 +9,13 @@ namespace Sfc.App.Api.Nuget.Gateways
 {
     public class UserRbacGateway : SfcBaseGateway, IUserRbacGateway
     {
-        public UserRbacGateway(IRestClient restClient) : base(restClient, Route.User)
+        public UserRbacGateway(IRestClient restClient) : base(restClient)
         {
         }
 
         public async Task<BaseResult<UserInfoDto>> SignInAsync(LoginCredentials loginCredentials)
         {
-            var request = new RestRequest(Route.Paths.UserLogin, Method.POST);
+            var request = new RestRequest($"{Route.User}/{Route.Paths.UserLogin}", Method.POST);
             request.AddJsonBody(loginCredentials);
             var result = await RestClient
                 .ExecuteTaskAsync<BaseResult<UserInfoDto>>(request)

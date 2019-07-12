@@ -27,8 +27,6 @@ namespace Sfc.Wms.Asrs.Api.Controllers.Dematic
         [AllowAnonymous]
         public async Task<IHttpActionResult> CreateAsync([FromBody]ComtTriggerInputDto comtTriggerInput)
         {
-           
-
             var response = await _wmsToEmsMessageProcessorService.GetComtMessageAsync(comtTriggerInput)
                 .ConfigureAwait(false);
             return ResponseHandler(response);

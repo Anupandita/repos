@@ -51,6 +51,9 @@
     <Compile Include="App\RbacGatewayTest.cs" />
     <Compile Include="Configurations\HtmlReportConfig.cs" />
     <Compile Include="Configurations\Setup.cs" />
+    <Compile Include="Controllers\ComtControllerTest.cs" />
+    <Compile Include="Controllers\EmsToWmsMessageControllerTest.cs" />
+    <Compile Include="Controllers\IvmtControllerTest.cs" />
     <Compile Include="Controllers\UserRbacControllerTest.cs" />
     <Compile Include="Fakes\LoginCredentialsDataGeneratorProfile.cs" />
     <Compile Include="Fakes\MenusDtoDataGeneratorProfile.cs" />
@@ -58,9 +61,18 @@
     <Compile Include="Fakes\PreferencesDataGeneratorProfile.cs" />
     <Compile Include="Fakes\RolesDataGeneratorProfile.cs" />
     <Compile Include="Fakes\UserInfoDtoDataGeneratorProfile.cs" />
+    <Compile Include="Fixtures\ComtFixture.cs" />
+    <Compile Include="Fixtures\ComtGatewayFixture.cs" />
+    <Compile Include="Fixtures\EmsToWmsMessageFixture.cs" />
+    <Compile Include="Fixtures\IvmtFixture.cs" />
+    <Compile Include="Fixtures\EmsToWmsMessageGatewayFixture.cs" />
+    <Compile Include="Fixtures\IvmtGatewayFixture.cs" />
     <Compile Include="Fixtures\RbacGateWayAppFixture.cs" />
     <Compile Include="Fixtures\UserRbacControllerFixture.cs" />
     <Compile Include="Fixtures\UserRbacGatewayFixture.cs" />
+    <Compile Include="Nuget\ComtGatewayTest.cs" />
+    <Compile Include="Nuget\EmsToWmsMessageGatewayTest.cs" />
+    <Compile Include="Nuget\IvmtGatewayTest.cs" />
     <Compile Include="Nuget\UserRbacGatewayTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

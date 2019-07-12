@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Configuration;
 using System.Linq;
+using Newtonsoft.Json;
 using RestSharp;
 using Sfc.Core.RestResponse;
+using Sfc.Wms.Result;
 
 namespace Sfc.App.Api.Nuget.Gateways
 {
@@ -10,16 +12,21 @@ namespace Sfc.App.Api.Nuget.Gateways
     {
         protected readonly IRestClient RestClient;
 
-        protected SfcBaseGateway(IRestClient restClient, string path)
+        protected SfcBaseGateway(IRestClient client)
         {
-            RestClient = restClient;
+            RestClient = client;
             var baseUrl = ConfigurationManager.AppSettings["BaseUrl"];
-            RestClient.BaseUrl =new Uri($"{baseUrl}/{path}");
+            RestClient.BaseUrl =new Uri($"{baseUrl}");
         }
 
         protected string GetQueryString(params string[] parameters)
         {
             return string.Join("/", parameters.Where(p => !string.IsNullOrEmpty(p)));
+        }
+
+        protected BaseResult ToBaseResult(IRestResponse response)
+        {
+            return JsonConvert.DeserializeObject<BaseResult>(response.Content);
         }
     }
 }
