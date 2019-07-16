@@ -2,11 +2,11 @@
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.7</Version>
+    <Version>1.0.8</Version>
     <Configurations>Debug;Release;QA;UAT;PROD</Configurations>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Sfc.Wms.Security.Rbac" Version="1.0.10" />
+    <PackageReference Include="Sfc.Wms.Security.Rbac" Version="1.0.11" />
     <PackageReference Include="Sfc.Wms.Security.Token.Jwt" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
