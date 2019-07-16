@@ -11,18 +11,18 @@ using Sfc.Wms.Security.Contracts.Interfaces;
 
 namespace Sfc.App.Api.Tests.Unit.Fixtures
 {
-    public class RbacGateWayAppFixture
+    public class RbacGatewayFixture
     {
-        private readonly Mock<IUserRabcService> _mock;
+        private readonly Mock<IUserRbacService> _mock;
         private readonly RbacGateway _rbacGateway;
         private bool isValid;
 
         private LoginCredentials request;
         private Task<BaseResult<UserInfoDto>> testResponse;
 
-        protected RbacGateWayAppFixture()
+        protected RbacGatewayFixture()
         {
-            _mock = new Mock<IUserRabcService>(MockBehavior.Default);
+            _mock = new Mock<IUserRbacService>(MockBehavior.Default);
             _rbacGateway = new RbacGateway(_mock.Object);
         }
 

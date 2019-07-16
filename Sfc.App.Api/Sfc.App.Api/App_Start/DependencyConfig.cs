@@ -56,7 +56,7 @@ namespace Sfc.App.Api.App_Start
                 , Lifestyle.Singleton);
             container.Register<IRbacGateway, RbacGateway>();
             container.Register<IUserRbacUnitOfWork, UserRbacUnitOfWork>();
-            container.Register<IUserRabcService, UserRabcService>();
+            container.Register<IUserRbacService, UserRbacService>();
             container.Register<IUserAuthenticationGateway, UserAuthenticationGateway>();
             container.Register<ISfcInMemoryCache>(() => new SfcInMemoryCache(MemoryCache.Default));
         }

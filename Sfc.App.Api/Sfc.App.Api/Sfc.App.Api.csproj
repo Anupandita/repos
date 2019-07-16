@@ -101,8 +101,8 @@
     <Reference Include="Sfc.App.Api.Contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.App.Api.Contracts.1.0.0\lib\net472\Sfc.App.Api.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.App.App, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.App.App.1.0.6\lib\net472\Sfc.App.App.dll</HintPath>
+    <Reference Include="Sfc.App.App, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.App.App.1.0.7\lib\net472\Sfc.App.App.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.AutoMapper.Package, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.AutoMapper.Package.1.0.1\lib\net472\Sfc.AutoMapper.Package.dll</HintPath>
@@ -125,14 +125,14 @@
     <Reference Include="Sfc.Wms.Result, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Result.1.0.7\lib\net472\Sfc.Wms.Result.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Security.Contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Security.Contracts.1.0.1\lib\net472\Sfc.Wms.Security.Contracts.dll</HintPath>
+    <Reference Include="Sfc.Wms.Security.Contracts, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Security.Contracts.1.0.2\lib\net472\Sfc.Wms.Security.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Security.Rbac, Version=1.0.9.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Security.Rbac.1.0.9\lib\net472\Sfc.Wms.Security.Rbac.dll</HintPath>
+    <Reference Include="Sfc.Wms.Security.Rbac, Version=1.0.10.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Security.Rbac.1.0.10\lib\net472\Sfc.Wms.Security.Rbac.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Security.Rbac.Repository, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Security.Rbac.Repository.1.0.12\lib\net472\Sfc.Wms.Security.Rbac.Repository.dll</HintPath>
+    <Reference Include="Sfc.Wms.Security.Rbac.Repository, Version=1.0.13.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Security.Rbac.Repository.1.0.13\lib\net472\Sfc.Wms.Security.Rbac.Repository.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Security.Token.Jwt, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Security.Token.Jwt.1.0.0\lib\net472\Sfc.Wms.Security.Token.Jwt.dll</HintPath>
