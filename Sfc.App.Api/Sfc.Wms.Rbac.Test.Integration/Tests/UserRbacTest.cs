@@ -32,7 +32,7 @@ namespace Sfc.Wms.UserRbac.Test.Integrated.Tests
                 .When(x => x.SignInIsCalledOkIsReturned())
                 .Then(x => x.ReadTokenValue())
                 .When(x => x.UserRbacApiIsCalledOkIsReturned())          
-               // .Then(x => x.ReadTheMenusFromMenuResult())               
+                .Then(x => x.ReadTheMenusFromMenuResult())               
                 .And(x => x.ValidateUserAssociatedMenuCounts())
                 .And(x => x.ValidateUserAssociatedMenuIdValues())
                 .BDDfy();
