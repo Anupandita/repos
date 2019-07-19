@@ -141,13 +141,12 @@ namespace Sfc.Wms.UserRbac.Test.Integrated.Fixtures
         {
             var response = SignInIsCalledOkIsReturned();
             var permission = JsonConvert.DeserializeObject<Core.OnPrem.Result.BaseResult<UserInfoDto>>(response.Content.ToString());
-           
+            permissionCount = permission.Payload.Permissions.Count;
             permissionsIds = new List<string>();
             foreach (var p in permission.Payload.Permissions.Select(p=>p.PermissionId))
             {              
                 permissionsIds.Add(p.ToString());              
-            }
-            permissionCount = permissionsIds.Count;
+            }                      
         }
 
         protected void ReadThePermissionsFromPermissionResult()
@@ -171,8 +170,7 @@ namespace Sfc.Wms.UserRbac.Test.Integrated.Fixtures
             foreach (var pr in preferences.Payload.Preferences.Select(pr=>pr.SettingId))
             {              
                 preferencesIds.Add(pr.ToString());
-            }
-           
+            }          
         }
 
         protected void ReadThePreferencesFromPreferenceResult()
@@ -216,14 +214,12 @@ namespace Sfc.Wms.UserRbac.Test.Integrated.Fixtures
                     Assert.IsTrue(dbPermissions.Contains(permissionList), $"{permissionList} doesn't exist.");
                 }
         }
-
          
         protected void ValidateUserAssociatedPreferenceCounts()
         {
             Assert.AreEqual(dbPreferenceCount, preferenceCount);
         }
-
-       
+      
         protected void ValidateUserAssociatedPreferenceIdValues()
         {                         
                 foreach (var preferenceList in preferencesIds)
