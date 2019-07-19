@@ -1,0 +1,28 @@
+﻿using DataGenerator;
+using DataGenerator.Sources;
+using Sfc.Wms.Asrs.Dematic.Contract.DataTransferObjects;
+using Sfc.Wms.Asrs.Dematic.Contract.EnumsAndConstants;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Sfc.Wms.Asrs.Test.Unit.Fakes
+{
+  public  class WmsToEmsDtoMappingProfile : MappingProfile<WmsToEmsDto>
+    {
+        public override void Configure()
+        {
+            Property(p => p.Process).DataSource<NameSource>();
+            Property(p => p.MessageKey).DataSource<IntegerSource>();
+            Property(p => p.AddDate).DataSource<DateTimeSource>();
+            Property(p => p.AddWho).DataSource<NameSource>();
+            Property(p => p.MessageText).DataSource<NameSource>();
+            Property(p => p.ProcessedDate).DataSource<DateTimeSource>();
+            Property(p => p.ResponseCode).DataSource<IntegerSource>();
+            Property(p => p.Status).DataSource(new[] { RecordStatus.Ready.ToString(), RecordStatus.Processed.ToString(), RecordStatus.Error.ToString() });
+            Property(p => p.Transaction).DataSource<NameSource>();
+        }
+    }
+}
