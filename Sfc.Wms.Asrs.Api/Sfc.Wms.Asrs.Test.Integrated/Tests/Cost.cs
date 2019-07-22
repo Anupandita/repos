@@ -19,7 +19,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void ComtAndIvmtTest()
+        public void VerifyForValidCostMessageScenarios()
         {
             this.Given(x => x.SetCurrentMsgKey())
                 .And(x => x.AValidNewCostMessageRecord())                
@@ -33,7 +33,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Tests
         }
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void TestForInvalidMessageKey()
+        public void VerifyForInvalidMessageKey()
         {
             this.Given(x => x.SetInvalidMsgKey())
                 .And(x => x.AValidNewCostMessageRecord())
@@ -44,7 +44,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void TestForErrorLogNoCaseFound()
+        public void VerifyForErrorLogNoCaseFound()
         {
             this.Given(x => x.SetForInvalidCaseMsgKey())
            .And(x => x.AValidNewCostMessageRecord())
