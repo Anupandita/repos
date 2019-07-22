@@ -74,28 +74,28 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual("Created", result.ResultType);
         }
 
-        protected void ResultForInvalidMessageKey()
+        protected void ValidateResultForInvalidMessageKey()
         {
             var response = CostApiIsCalled();
             var result = JsonConvert.DeserializeObject<BaseResult>(response.Content.ToString());
             Assert.AreEqual("Invalid msgKey",result.ValidationMessages.ToString());
         }
 
-        protected void ResultForInvalidCaseNumber()
+        protected void ValidateResultForInvalidCaseNumber()
         {
             var response = CostApiIsCalled();
             var result = JsonConvert.DeserializeObject<BaseResult>(response.Content.ToString());
             Assert.AreEqual("No Case Found", result.ValidationMessages.ToString());
         }
 
-        protected void ResultForInvalidCaseStatus()
+        protected void ValidateResultForInvalidCaseStatus()
         {
             var response = CostApiIsCalled();
             var result = JsonConvert.DeserializeObject<BaseResult>(response.Content.ToString());
             Assert.AreEqual("Invalid Case Status", result.ValidationMessages.ToString());
         }
 
-        protected void ResultForTransInventoryNotExist()
+        protected void ValidateResultForTransInventoryNotExist()
         {
             var response = CostApiIsCalled();
             var result = JsonConvert.DeserializeObject<BaseResult>(response.Content.ToString());
@@ -127,13 +127,13 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(caseHdr.PoNumber,swmFromMhe.PoNumber);
         }
 
-        protected void VerifyTheQuantityIsDecreasedInToTransInventory()
+        protected void VerifyTheQuantityWasDecreasedInToTransInventory()
         {
             Assert.AreEqual(trn.ActualInventoryUnits - Convert.ToDecimal(cost.StorageClassAttribute2), transInvn.ActualInventoryUnits);
             Assert.AreEqual(trn.ActualInventoryUnits - (unitWeight * Convert.ToDecimal(cost.StorageClassAttribute2)), transInvn.ActualWeight);
         }
 
-        protected void VerifyTheQuantityIsIncreasedIntoPickLocationTable()
+        protected void VerifyTheQuantityWasIncreasedIntoPickLocationTable()
         {
             Assert.AreEqual(pickLcnDtl.ActualQty + Convert.ToDecimal(cost.StorageClassAttribute2), pickLocnDtl.ActualQty);
             Assert.AreEqual(pickLcnDtl.ToBeFilledQty - Convert.ToDecimal(cost.StorageClassAttribute2), pickLocnDtl.ToBeFilledQty);

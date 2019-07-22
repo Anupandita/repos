@@ -14,8 +14,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Tests
         [TestCategory("FUNCTIONAL")]
         public void AValidTestData()
         {
-            GetValidDataBeforeTrigger();
-            NegativeCases();
+            GetValidDataBeforeTrigger();           
         }
 
         [TestMethod()]
@@ -26,10 +25,10 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Tests
                 .And(x => x.AValidNewCostMessageRecord())                
                 .When(x => x.CostApiIsCalled())
                 .Then(x => x.ResultTypeCreatedIsReturned())
-                .Then(x => x.GetValidDataAfterTrigger())
+                .And(x => x.GetValidDataAfterTrigger())
                 .And(x => x.VerifyCostMessageWasInsertedIntoSwmFromMhe())
-                .And(x => x.VerifyTheQuantityIsDecreasedInToTransInventory())
-                .And(x => x.VerifyTheQuantityIsIncreasedIntoPickLocationTable())
+                .And(x => x.VerifyTheQuantityWasDecreasedInToTransInventory())
+                .And(x => x.VerifyTheQuantityWasIncreasedIntoPickLocationTable())
                 .BDDfy();              
         }
         [TestMethod()]
@@ -39,7 +38,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Tests
             this.Given(x => x.SetInvalidMsgKey())
                 .And(x => x.AValidNewCostMessageRecord())
                 .When(x => x.CostApiIsCalled())
-                .Then(x => x.ResultForInvalidMessageKey())
+                .Then(x => x.ValidateResultForInvalidMessageKey())
                 .BDDfy();
         }
 
@@ -50,7 +49,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Tests
             this.Given(x => x.SetForInvalidCaseMsgKey())
            .And(x => x.AValidNewCostMessageRecord())
            .When(x => x.CostApiIsCalled())
-           .Then(x => x.ResultForInvalidCaseNumber())
+           .Then(x => x.ValidateResultForInvalidCaseNumber())
            .BDDfy();
         }
 
@@ -61,7 +60,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Tests
             this.Given(x => x.SetForInvalidCaseStatusMsgKey())
            .And(x => x.AValidNewCostMessageRecord())
            .When(x => x.CostApiIsCalled())
-           .Then(x => x.ResultForInvalidCaseStatus())
+           .Then(x => x.ValidateResultForInvalidCaseStatus())
            .BDDfy();
         }
 
@@ -72,7 +71,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Tests
             this.Given(x => x.SetForTransInvnNotExistsMsgKey())
            .And(x => x.AValidNewCostMessageRecord())
            .When(x => x.CostApiIsCalled())
-           .Then(x => x.ResultForTransInventoryNotExist())
+           .Then(x => x.ValidateResultForTransInventoryNotExist())
            .BDDfy();
         }
     }
