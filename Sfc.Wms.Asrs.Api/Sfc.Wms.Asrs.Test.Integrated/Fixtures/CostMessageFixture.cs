@@ -6,8 +6,7 @@ using Sfc.Wms.Amh.Dematic.Contracts.Dtos;
 using Newtonsoft.Json;
 using DefaultPossibleValue = Sfc.Wms.DematicMessage.Contracts.Constants;
 using Sfc.Wms.Result;
-using Sfc.Wms.Asrs.Test.Integrated.Fixtures;
-using System.Diagnostics;
+
 
 namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
 {
@@ -17,9 +16,8 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
         protected string currentCaseNbr;
         protected string CostUrl = "http://localhost:59351/api/cost";
         protected CaseDetailDto caseDetailDto;
-        protected CostParams CostParameters;
+        protected CostParams Parameters;
         protected IRestResponse Response;
-        private dynamic testResult;
         protected Int64 currentMsgKey;
 
         protected void GetValidDataBeforeTrigger()
@@ -50,23 +48,12 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
         {
             currentMsgKey = transInvnNotExistKey;
         }
-
         protected void AValidNewCostMessageRecord()
         {
-            CostParameters = new CostParams
+            Parameters = new CostParams
             {
                 MsgKey = currentMsgKey
             };
-        }
-
-        protected void VerifyMessageKeyExistsInEmsToWms()
-        {
-            Assert.AreEqual(swmToMhe.SourceMessageKey, emsToWms.MessageKey);
-        }
-
-        protected void VerifyStatusIsReadyInEmsToWms()
-        {
-            Assert.AreEqual("Ready",emsToWms.Status);
         }
 
         protected IRestResponse CostApiIsCalled()
@@ -80,7 +67,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
             return Response;
         }
 
-        protected void ResultCreatedIsReturned()
+        protected void ResultTypeCreatedIsReturned()
         {
             var response = CostApiIsCalled();
             var result = JsonConvert.DeserializeObject<BaseResult>(response.Content.ToString());
@@ -92,13 +79,6 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
             var response = CostApiIsCalled();
             var result = JsonConvert.DeserializeObject<BaseResult>(response.Content.ToString());
             Assert.AreEqual("Invalid msgKey",result.ValidationMessages.ToString());
-        }
-
-        protected void ResultForInvalidMessageText()
-        {
-            var response = CostApiIsCalled();
-            var result = JsonConvert.DeserializeObject<BaseResult>(response.Content.ToString());
-            Assert.AreEqual("Invalid Message Format", result.ValidationMessages.ToString());
         }
 
         protected void ResultForInvalidCaseNumber()
@@ -147,7 +127,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(caseHdr.PoNumber,swmFromMhe.PoNumber);
         }
 
-        protected void VerifyTheQuantityIsDecreasedToTransInventory()
+        protected void VerifyTheQuantityIsDecreasedInToTransInventory()
         {
             Assert.AreEqual(trn.ActualInventoryUnits - Convert.ToDecimal(cost.StorageClassAttribute2), transInvn.ActualInventoryUnits);
             Assert.AreEqual(trn.ActualInventoryUnits - (unitWeight * Convert.ToDecimal(cost.StorageClassAttribute2)), transInvn.ActualWeight);
