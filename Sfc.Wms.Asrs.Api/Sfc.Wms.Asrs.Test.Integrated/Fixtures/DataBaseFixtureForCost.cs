@@ -49,7 +49,11 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
         public string transInvnNotExistError;
         public string validCaseNumber;
         public string validSkuId;
-        public string validActlInvnUnits;
+        public string validQty;
+        public string invalidStsCase;
+        public string invalidStsSku;
+        public string invalidStsQty;
+
 
         public DataBaseFixtureForCost()
         {
@@ -69,50 +73,28 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
             {
                 db.Open();
                 transaction = db.BeginTransaction();
-                sql1 = $"select ch.CASE_NBR,ch.STAT_CODE,cd.SKU_ID,tn.ACTL_INVN_UNITS from CASE_HDR ch INNER JOIN CASE_DTL cd  on ch.CASE_NBR = cd.CASE_NBR INNER JOIN TRANS_INVN tn on cd.SKU_ID = tn.SKU_ID and ch.STAT_CODE = 96 and tn.ACTL_INVN_UNITS >1";
+                sql1 = $"select tn.SKU_ID,tn.ACTL_INVN_UNITS,cd.SKU_ID,ch.CASE_NBR,ch.STAT_CODE from  TRANS_INVN tn INNER JOIN CASE_DTL cd  on tn.SKU_ID = cd.SKU_ID INNER JOIN CASE_HDR ch on cd.CASE_NBR = ch.CASE_NBR and ch.STAT_CODE = 96 and tn.ACTL_INVN_UNITS >1 and trans_invn_type = '18'";
                 command = new OracleCommand(sql1, db);
                 var dr15 = command.ExecuteReader();
                 if (dr15.Read())
                 {
                     validCaseNumber = dr15["CASE_NBR"].ToString();
                     validSkuId = dr15["SKU_ID"].ToString();
-                    validActlInvnUnits = dr15["ACTL_INVN_UNITS"].ToString();
+                    validQty = dr15["ACTL_INVN_UNITS"].ToString();
                 }
 
-                sql1 = $"select unit_wt from item_master where sku_id = '{swmToMhe.SkuId}'";
+                sql1 = $"select unit_wt from item_master where sku_id = '{validSkuId}'";
                 command = new OracleCommand(sql1, db);
                 var dr12 = command.ExecuteReader();
                 if (dr12.Read())
                 {
                     unitWeight = Convert.ToDecimal(dr12["UNIT_WT"].ToString());
                 }
-                CostParameters = new CostDto
-                {
-                    ActionCode = "Create",
-                    ContainerReasonCodeMap = DefaultPossibleValue.ReasonCode.Success,
-                    ContainerId = validCaseNumber,
-                    ContainerType = "Case",
-                    PhysicalContainerId = swmToMhe.ContainerId,
-                    CurrentLocationId = "123",
-                    StorageClassAttribute1 = validSkuId,
-                    StorageClassAttribute2 = validActlInvnUnits,
-                    StorageClassAttribute3 = "",
-                    StorageClassAttribute4 = "",
-                    StorageClassAttribute5 = "",
-                    PalletLpn = "08019279187",
-                    TransactionCode = DefaultPossibleValue.TransactionCode.Cost,
-                    MessageLength = DefaultPossibleValue.MessageLength.Cost,
-                    ReasonCode = DefaultPossibleValue.ReasonCode.Success
-                };
-                GenericMessageBuilder gm = new GenericMessageBuilder(_dataTypeValidation);
-                var testResult = gm.BuildMessage<CostDto, CostValidationRule>(CostParameters, TransactionCode.Cost);
-                Assert.AreEqual(testResult.ResultType, ResultTypes.Ok);
-                Assert.IsNotNull(testResult.Payload);
 
+                var CostResult = CreateCostMessage(validCaseNumber,validSkuId,validQty);               
                 sql1 = $"select WMSTOEMS_MSGKEY_SEQ.nextval from dual";
                 command = new OracleCommand(sql1, db);
                 validMsgKey = Convert.ToInt64(command.ExecuteScalar().ToString());
-
                 emsToWmsParameters = new EmsToWmsDto
                 {
                     Process = "EMS",
@@ -125,7 +107,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
                     ProcessedDate = DateTime.Now
                 };
 
-                var validsql = $"insert into emstowms values ('{emsToWmsParameters.Process}','{emsToWmsParameters.MessageKey}','{emsToWmsParameters.Status}','{emsToWmsParameters.Transaction}','{testResult.Payload}','{emsToWmsParameters.AddWho}','{emsToWmsParameters.AddDate}','{emsToWmsParameters.ProcessedDate}')";
+                var validsql = $"insert into emstowms values ('{emsToWmsParameters.Process}','{emsToWmsParameters.MessageKey}','{emsToWmsParameters.Status}','{emsToWmsParameters.Transaction}','{CostResult}','{emsToWmsParameters.AddWho}','{emsToWmsParameters.AddDate}','{emsToWmsParameters.ProcessedDate}')";
                 command = new OracleCommand(validsql, db);
                 command.ExecuteNonQuery();
                 transaction.Commit();
@@ -137,7 +119,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
                 {
                     emsToWms.MessageKey = Convert.ToInt64(dr["MSGKEY"].ToString());
                     emsToWms.Process = dr["PRC"].ToString();
-                    // emsToWms.ResponseCode = dr["RSN"].ToString();
+                    //emsToWms.ResponseCode = dr["RSN"].ToString();
                     emsToWms.Status = dr["STS"].ToString();
                     emsToWms.Transaction = dr["TRX"].ToString();
                     emsToWms.AddWho = dr["ADDWHO"].ToString();
@@ -174,6 +156,34 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
             }
         }
 
+        public string CreateCostMessage(string containerNbr, string skuId, string qty)
+        {
+            CostParameters = new CostDto
+            {
+                ActionCode = "Create",
+                ContainerReasonCodeMap = DefaultPossibleValue.ReasonCode.Success,
+                ContainerId = containerNbr,
+                ContainerType = "Case",
+                PhysicalContainerId = "",
+                CurrentLocationId = "123",
+                StorageClassAttribute1 = skuId,
+                StorageClassAttribute2 = qty,
+                StorageClassAttribute3 = "",
+                StorageClassAttribute4 = "",
+                StorageClassAttribute5 = "",
+                PalletLpn = "08019279187",
+                TransactionCode = DefaultPossibleValue.TransactionCode.Cost,
+                MessageLength = DefaultPossibleValue.TransactionCode.Cost,
+                ReasonCode = DefaultPossibleValue.ReasonCode.Success
+            };
+            GenericMessageBuilder gm = new GenericMessageBuilder(_dataTypeValidation);
+            var testResult = gm.BuildMessage<CostDto, CostValidationRule>(CostParameters, TransactionCode.Cost);
+            Assert.AreEqual(testResult.ResultType, ResultTypes.Ok);
+            Assert.IsNotNull(testResult.Payload);
+            return testResult.Payload;
+        }
+        
+
         public void NegativeCases()
         {
             OracleCommand command;
@@ -186,31 +196,51 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
             })
             {
                 db.Open();
+                
                 transaction = db.BeginTransaction();
-                command = new OracleCommand(sql1, db);                
+                sql1 = $"select tn.SKU_ID,tn.ACTL_INVN_UNITS,cd.SKU_ID,ch.CASE_NBR,ch.STAT_CODE from  TRANS_INVN tn INNER JOIN CASE_DTL cd  on tn.SKU_ID = cd.SKU_ID INNER JOIN CASE_HDR ch on cd.CASE_NBR = ch.CASE_NBR and ch.STAT_CODE = 96 and tn.ACTL_INVN_UNITS >1 and trans_invn_type = '18'";
+                command = new OracleCommand(sql1, db);
+                var dr15 = command.ExecuteReader();
+                if (dr15.Read())
+                {
+                    validCaseNumber = dr15["CASE_NBR"].ToString();
+                    validSkuId = dr15["SKU_ID"].ToString();
+                    validQty = dr15["ACTL_INVN_UNITS"].ToString();
+                }
+                var invalidCostMessage = CreateCostMessage("00000283000804736790  ",validSkuId,validQty);              
                 invalidMsgTextKey = GetSeqNbr(command, db);
-
-                var invalidMsgSql = $"insert into emstowms values ('{emsToWmsParameters.Process}','{invalidMsgTextKey}','{emsToWmsParameters.Status}','{emsToWmsParameters.Transaction}','COST00269Arrival             0000                                            00100283000796449241Case                                     001002830008154374718954171             11                  *                   *                   *                   00100283000815614230','00000 ','{emsToWmsParameters.AddWho}','{emsToWmsParameters.AddDate}','{emsToWmsParameters.ProcessedDate}')";
+                var invalidMsgSql = $"insert into emstowms values ('{emsToWmsParameters.Process}','{invalidMsgTextKey}','{emsToWmsParameters.Status}','{emsToWmsParameters.Transaction}','{invalidCostMessage}','{emsToWmsParameters.AddWho}','{emsToWmsParameters.AddDate}','{emsToWmsParameters.ProcessedDate}')";
                 command = new OracleCommand(invalidMsgSql, db);
                 command.ExecuteNonQuery();
                 transaction.Commit();
 
+                var invalidCaseNumber = CreateCostMessage("00000283000804736790",validSkuId,validQty);
                 invalidCaseNumberKey = GetSeqNbr(command, db);
-                var invalidCaseSql = $"insert into emstowms values ('{emsToWmsParameters.Process}','{invalidCaseNumberKey}','{emsToWmsParameters.Status}','{emsToWmsParameters.Transaction}','COST00268Arrival             0000                                            00100283000111111119Case                                    001002830008145091623689001             10                  *                   *                   *                   00100283000815614230','00000 ','{emsToWmsParameters.AddWho}','{emsToWmsParameters.AddDate}','{emsToWmsParameters.ProcessedDate}')";
+                var invalidCaseSql = $"insert into emstowms values ('{emsToWmsParameters.Process}','{invalidCaseNumberKey}','{emsToWmsParameters.Status}','{emsToWmsParameters.Transaction}','{invalidCaseNumber}','{emsToWmsParameters.AddWho}','{emsToWmsParameters.AddDate}','{emsToWmsParameters.ProcessedDate}')";
                 command = new OracleCommand(invalidCaseSql, db);
                 command.ExecuteNonQuery();
                 transaction.Commit();
-
                 invalidStsKey = GetSeqNbr(command, db);
 
-                var invalidStsSql = $"insert into emstowms values ('{emsToWmsParameters.Process}','{invalidStsKey}','{emsToWmsParameters.Status}','{emsToWmsParameters.Transaction}','COST00268Arrival             0000                                            00100283000111111119Case                                    001002830008132083562127021             48                  *                   *                   *                   00100283000815614230','00000 ','{emsToWmsParameters.AddWho}','{emsToWmsParameters.AddDate}','{emsToWmsParameters.ProcessedDate}')";
+                sql1 = $"select tn.SKU_ID,tn.ACTL_INVN_UNITS,cd.SKU_ID,ch.CASE_NBR,ch.STAT_CODE from  TRANS_INVN tn INNER JOIN CASE_DTL cd  on tn.SKU_ID = cd.SKU_ID INNER JOIN CASE_HDR ch on cd.CASE_NBR = ch.CASE_NBR and ch.STAT_CODE = 50 and tn.ACTL_INVN_UNITS >1 and trans_invn_type = '18'";
+                command = new OracleCommand(sql1, db);
+                var dr16 = command.ExecuteReader();
+                if (dr16.Read())
+                {
+                    invalidStsCase = dr16["CASE_NBR"].ToString();
+                    invalidStsSku  = dr16["SKU_ID"].ToString();
+                    invalidStsQty = dr16["ACTL_INVN_UNITS"].ToString();
+                }
+
+                var invalidstatusCostMsg = CreateCostMessage(invalidStsCase,invalidStsSku,invalidStsQty);
+                var invalidStsSql = $"insert into emstowms values ('{emsToWmsParameters.Process}','{invalidStsKey}','{emsToWmsParameters.Status}','{emsToWmsParameters.Transaction}','{invalidstatusCostMsg}','{emsToWmsParameters.AddWho}','{emsToWmsParameters.AddDate}','{emsToWmsParameters.ProcessedDate}')";
                 command = new OracleCommand(invalidStsSql, db);
                 command.ExecuteNonQuery();
                 transaction.Commit();
-
                 transInvnNotExistKey = GetSeqNbr(command, db);
 
-                var transInvnNotExistSql = $"insert into emstowms values ('{emsToWmsParameters.Process}','{transInvnNotExistKey}','{emsToWmsParameters.Status}','{emsToWmsParameters.Transaction}','COST00268Arrival             0000                                            00100283000811431022Case                                    001002830008132083561951031             2                   *                   *                   *                   00100283000815614230','{emsToWmsParameters.AddWho}','{emsToWmsParameters.AddDate}','{emsToWmsParameters.ProcessedDate}')";
+                var transInvnNotExistMsg = CreateCostMessage("00100283000808166555", "3970291","27");
+                var transInvnNotExistSql = $"insert into emstowms values ('{emsToWmsParameters.Process}','{transInvnNotExistKey}','{emsToWmsParameters.Status}','{emsToWmsParameters.Transaction}','{transInvnNotExistMsg}','{emsToWmsParameters.AddWho}','{emsToWmsParameters.AddDate}','{emsToWmsParameters.ProcessedDate}')";
                 command = new OracleCommand(invalidStsSql, db);
                 command.ExecuteNonQuery();
                 transaction.Commit();
