@@ -23,6 +23,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
         protected void GetValidDataBeforeTrigger()
         {
             GetDataBeforeTrigger();
+            NegativeCases();
         }
         protected void SetCurrentMsgKey()
         {

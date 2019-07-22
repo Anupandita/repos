@@ -203,7 +203,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
                 var invalidCaseSql = $"insert into emstowms values ('{emsToWmsParameters.Process}','{invalidCaseNumberKey}','{emsToWmsParameters.Status}','{emsToWmsParameters.Transaction}','{invalidCaseNumber}','0','{emsToWmsParameters.AddWho}','22-JUL-19','22-JUL-19')";
                 command = new OracleCommand(invalidCaseSql, db);
                 command.ExecuteNonQuery();
-                //transaction.Commit();
+                transaction.Commit();
                 invalidStsKey = GetSeqNbr(command, db);
 
                 sql1 = $"select tn.SKU_ID,tn.ACTL_INVN_UNITS,cd.SKU_ID,ch.CASE_NBR,ch.STAT_CODE from  TRANS_INVN tn INNER JOIN CASE_DTL cd  on tn.SKU_ID = cd.SKU_ID INNER JOIN CASE_HDR ch on cd.CASE_NBR = ch.CASE_NBR and ch.STAT_CODE = 50 and tn.ACTL_INVN_UNITS >1 and trans_invn_type = '18'";
@@ -216,19 +216,20 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
                     invalidStsQty = dr16["ACTL_INVN_UNITS"].ToString();
                 }
 
+                transaction = db.BeginTransaction();
                 var invalidstatusCostMsg = CreateCostMessage(invalidStsCase,invalidStsSku,invalidStsQty);
                 var invalidStsSql = $"insert into emstowms values ('{emsToWmsParameters.Process}','{invalidStsKey}','{emsToWmsParameters.Status}','{emsToWmsParameters.Transaction}','{invalidstatusCostMsg}','0','{emsToWmsParameters.AddWho}','22-JUL-19','22-JUL-19')";
                 command = new OracleCommand(invalidStsSql, db);
                 command.ExecuteNonQuery();
-                // transaction.Commit();
+                transaction.Commit();
 
+                transaction = db.BeginTransaction();
                 transInvnNotExistKey = GetSeqNbr(command, db);
-
                 var transInvnNotExistMsg = CreateCostMessage("00100283000803374979", "3970291","27");
                 var transInvnNotExistSql = $"insert into emstowms values ('{emsToWmsParameters.Process}','{transInvnNotExistKey}','{emsToWmsParameters.Status}','{emsToWmsParameters.Transaction}','{transInvnNotExistMsg}','0','{emsToWmsParameters.AddWho}','22-JUL-19','22-JUL-19')";
                 command = new OracleCommand(transInvnNotExistSql, db);
                 command.ExecuteNonQuery();
-                // transaction.Commit();
+                transaction.Commit();
             }
         }
     
