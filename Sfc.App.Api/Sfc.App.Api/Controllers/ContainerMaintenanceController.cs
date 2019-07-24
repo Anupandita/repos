@@ -1,4 +1,5 @@
 ﻿using Sfc.Core.BaseApiController;
+using Sfc.Wms.Interface.Asrs.Dtos;
 using Sfc.Wms.Interface.Asrs.Interfaces;
 using Sfc.Wms.Result;
 using System;
@@ -10,22 +11,23 @@ using Routes = Sfc.Wms.Interface.Asrs.Constants.Routes;
 
 namespace Sfc.App.Api.Controllers
 {
-    public class EmsToWmsMessageController : SfcBaseController
+    [RoutePrefix(Routes.DematicMessageComtPrefix)]
+    public class ContainerMaintenanceController : SfcBaseController
     {
-        private readonly IEmsToWmsMessageProcessorSevice _emsToWmsMessageProcessorService;
+        private readonly IWmsToEmsMessageProcessorService _wmsToEmsMessageProcessorService;
 
-        public EmsToWmsMessageController(IEmsToWmsMessageProcessorSevice wmsToEmsMessageProcessorService)
+        public ContainerMaintenanceController(IWmsToEmsMessageProcessorService wmsToEmsMessageProcessorService)
         {
-            _emsToWmsMessageProcessorService = wmsToEmsMessageProcessorService;
+            _wmsToEmsMessageProcessorService = wmsToEmsMessageProcessorService;
         }
 
         [HttpPost]
-        [Route(Routes.EmsToWmsMessagePrefix)]
+        [Route]
         [ResponseType(typeof(BaseResult))]
         [Authorize]
-        public async Task<IHttpActionResult> CreateAsync([FromBody]long msgKey)
+        public async Task<IHttpActionResult> CreateAsync([FromBody]ComtTriggerInputDto comtTriggerInput)
         {
-            var result = await _emsToWmsMessageProcessorService.GetMessageAsync(msgKey)
+            var result = await _wmsToEmsMessageProcessorService.GetComtMessageAsync(comtTriggerInput)
                 .ConfigureAwait(false);
 
             return Content(Enum.TryParse(result.ResultType.ToString(), out HttpStatusCode statusCode)

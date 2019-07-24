@@ -17,8 +17,15 @@ namespace Sfc.App.Api
                 .EnableSwagger(c =>
                     {
                         c.SingleApiVersion("v1", "Sfc.App.Api");
+                        c.ApiKey("Token")
+                            .Description("Filling bearer token here")
+                            .Name("Authorization")
+                            .In("header");
                     })
-                .EnableSwaggerUi(c => { });
+                .EnableSwaggerUi(c =>
+                {
+                    c.EnableApiKeySupport("Authorization", "header");
+                });
         }
     }
 }

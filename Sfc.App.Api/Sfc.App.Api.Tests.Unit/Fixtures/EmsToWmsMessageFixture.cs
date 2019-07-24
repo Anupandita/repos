@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Sfc.Wms.Asrs.Api.Controllers.Dematic;
+using Sfc.App.Api.Controllers;
 using Sfc.Wms.Interface.Asrs.Interfaces;
 using Sfc.Wms.Result;
 using System.Threading.Tasks;
@@ -25,7 +25,7 @@ namespace Sfc.App.Api.Tests.Unit.Fixtures
         {
             var response = new BaseResult()
             {
-                ResultType = ResultTypes.Ok
+                ResultType = ResultTypes.Created
             };
 
             _emsToWmsMessageProcessorService.Setup(el => el.GetMessageAsync(It.IsAny<long>()))
@@ -50,9 +50,9 @@ namespace Sfc.App.Api.Tests.Unit.Fixtures
 
         protected void EmsToWmsMessageShouldBeProcessed()
         {
-            var result = testResult.Result as OkNegotiatedContentResult<BaseResult>;
+            var result = testResult.Result as NegotiatedContentResult<BaseResult>;
             Assert.IsNotNull(result);
-            Assert.AreEqual(result.Content.ResultType, ResultTypes.Ok);
+            Assert.AreEqual(result.Content.ResultType, ResultTypes.Created);
         }
 
         protected void EmsToWmsMessageShouldNotBeProcessed()

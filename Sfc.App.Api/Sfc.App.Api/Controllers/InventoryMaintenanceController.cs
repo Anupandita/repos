@@ -1,4 +1,6 @@
-﻿using Sfc.Wms.Asrs.App.Interfaces;
+﻿using System;
+using System.Net;
+using Sfc.Wms.Asrs.App.Interfaces;
 using Sfc.Wms.Result;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -8,14 +10,14 @@ using Sfc.Wms.Interface.Asrs.Dtos;
 using Sfc.Wms.Interface.Asrs.Interfaces;
 using Routes = Sfc.Wms.Interface.Asrs.Constants.Routes;
 
-namespace Sfc.Wms.Asrs.Api.Controllers.Dematic
+namespace Sfc.App.Api.Controllers
 {
     [RoutePrefix(Routes.DematicMessageIvmtPrefix)]
-    public class IvmtController : SfcBaseController
+    public class InventoryMaintenanceController : SfcBaseController
     {
         private readonly IWmsToEmsMessageProcessorService _wmsToEmsMessageProcessorService;
 
-        public IvmtController(IWmsToEmsMessageProcessorService wmsToEmsMessageProcessorService)
+        public InventoryMaintenanceController(IWmsToEmsMessageProcessorService wmsToEmsMessageProcessorService)
         {
             _wmsToEmsMessageProcessorService = wmsToEmsMessageProcessorService;
         }
@@ -28,9 +30,11 @@ namespace Sfc.Wms.Asrs.Api.Controllers.Dematic
         {
            
 
-            var response = await _wmsToEmsMessageProcessorService.GetIvmtMessageAsync(ivmtTriggerInput)
+            var result = await _wmsToEmsMessageProcessorService.GetIvmtMessageAsync(ivmtTriggerInput)
                 .ConfigureAwait(false);
-            return ResponseHandler(response);
+            return Content(Enum.TryParse(result.ResultType.ToString(), out HttpStatusCode statusCode)
+                ? statusCode
+                : HttpStatusCode.ExpectationFailed, result);
         }
     }
 }
