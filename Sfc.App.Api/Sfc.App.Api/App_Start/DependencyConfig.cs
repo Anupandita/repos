@@ -61,7 +61,15 @@ using System.Configuration;
 using System.Linq.Expressions;
 using System.Runtime.Caching;
 using System.Web.Http;
+using Sfc.Wms.MessageSource.Repository.Gateways;
+using Sfc.Wms.MessageSource.Repository.Interfaces;
 using Entities = Sfc.Wms.Data.Entities;
+using Sfc.Wms.Asrs.Dematic.Contracts.Interfaces;
+using Sfc.Wms.Asrs.Shamrock.Contracts.Interfaces;
+using Sfc.Wms.MessageSource.App.Interfaces;
+using Sfc.Wms.MessageSource.App.Services;
+using Sfc.Wms.MessageSource.App.UnitOfWork;
+using Sfc.Wms.MessageSource.Contracts.Interfaces;
 
 namespace Sfc.App.Api.App_Start
 {
@@ -99,10 +107,13 @@ namespace Sfc.App.Api.App_Start
                     c.CreateMap<Entities.CaseHeader, CaseHeaderDto>(MemberList.None).ReverseMap();
                     c.CreateMap<Entities.CaseDetail, CaseDetailDto>(MemberList.None).ReverseMap();
                     c.CreateMap<InboundMessage, InboundMessageDto>(MemberList.None).ReverseMap();
-                    c.CreateMap<Entities.AllocationInventoryDetail, AllocationInventoryDetailDto>(MemberList.None).ReverseMap();
+                    c.CreateMap<Entities.AllocationInventoryDetail, AllocationInventoryDetailDto>(MemberList.None)
+                        .ReverseMap();
                     c.CreateMap<Entities.TransitionalInventory, TransitionalInventoryDto>(MemberList.None).ReverseMap();
-                    c.CreateMap<Expression<Func<CaseHeaderDto, bool>>, Expression<Func<Entities.CaseHeader, bool>>>(MemberList.None).ReverseMap();
-                    c.CreateMap<Expression<Func<CaseDetailDto, bool>>, Expression<Func<Entities.CaseDetail, bool>>>(MemberList.None).ReverseMap();
+                    c.CreateMap<Expression<Func<CaseHeaderDto, bool>>, Expression<Func<Entities.CaseHeader, bool>>>(
+                        MemberList.None).ReverseMap();
+                    c.CreateMap<Expression<Func<CaseDetailDto, bool>>, Expression<Func<Entities.CaseDetail, bool>>>(
+                        MemberList.None).ReverseMap();
                 }));
 #if DEBUG
                 mapper.DefaultContext.ConfigurationProvider.AssertConfigurationIsValid();
@@ -125,11 +136,13 @@ namespace Sfc.App.Api.App_Start
             container.Register(typeof(IGenericRepository<>), typeof(GenericRepository<>).Assembly);
 
             container.Register(typeof(IShamrockGateway<>), typeof(IShamrockGateway<>).Assembly);
-            container.Register(typeof(ISwmMessageSourceGateway<>), typeof(ISwmMessageSourceGateway<>).Assembly);
+            container.Register(typeof(IMessageSourceGateway<>), typeof(IMessageSourceGateway<>).Assembly);
 
             container.Register<IMappingFixture>(() => new MappingFixture(), Lifestyle.Singleton);
             container.Register(typeof(IEmsToWmsService), typeof(EmsToWmsService));
             container.Register(typeof(ICaseHeaderService), typeof(CaseHeaderService));
+            container.Register(typeof(ISwmMessageSourceService), typeof(SwmMessageSourceService));
+
             container.Register(typeof(ICaseDetailService), typeof(CaseDetailService));
             container.Register(typeof(IWmsToEmsService), typeof(WmsToEmsService));
             container.Register(typeof(IDematicGateway<>), typeof(DematicGateway<>));
@@ -139,7 +152,7 @@ namespace Sfc.App.Api.App_Start
             container.Register(typeof(IInboundLpnGateway<>), typeof(InboundLpnGateway<>));
             container.Register(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             container.Register(typeof(IShamrockGateway<>), typeof(ShamrockRepository<>));
-            container.Register(typeof(ISwmMessageSourceGateway<>), typeof(SwmMessageSourceRepository<>));
+            container.Register(typeof(IMessageSourceGateway<>), typeof(MessageSourceGateway<>));
             container.Register(typeof(IWmsToEmsMessageProcessorService), typeof(WmsToEmsMessageProcessorService));
             container.Register(typeof(IEmsToWmsMessageProcessorSevice), typeof(EmsToWmsMessageProcessorService));
             container.Register(typeof(ITransitionalInventoryService), typeof(TransitionalInventoryService));
@@ -163,6 +176,7 @@ namespace Sfc.App.Api.App_Start
             container.Register(typeof(IAsrsUnitOfWork), typeof(AsrsUnitOfWork));
             container.Register(typeof(IInboundLpnUnitOfWork), typeof(InboundLpnUnitOfWork));
             container.Register(typeof(ITransitionalInventoryUnitOfWork), typeof(TransitionalInventoryUnitOfWork));
+            container.Register(typeof(IMessageSourceUnitOfWork), typeof(MessageSourceUnitOfWork));
         }
     }
 }

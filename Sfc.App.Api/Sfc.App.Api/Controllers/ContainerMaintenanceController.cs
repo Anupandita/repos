@@ -24,7 +24,7 @@ namespace Sfc.App.Api.Controllers
         [HttpPost]
         [Route]
         [ResponseType(typeof(BaseResult))]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IHttpActionResult> CreateAsync([FromBody]ComtTriggerInputDto comtTriggerInput)
         {
             var result = await _wmsToEmsMessageProcessorService.GetComtMessageAsync(comtTriggerInput)
