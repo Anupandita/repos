@@ -113,6 +113,9 @@
     <PackageReference Include="Sfc.Wms.DematicMessage.Contracts">
       <Version>1.0.8</Version>
     </PackageReference>
+    <PackageReference Include="Sfc.Wms.Parser">
+      <Version>1.0.2</Version>
+    </PackageReference>
     <PackageReference Include="Sfc.Wms.ParserAndTranslator.Contracts">
       <Version>1.0.0</Version>
     </PackageReference>

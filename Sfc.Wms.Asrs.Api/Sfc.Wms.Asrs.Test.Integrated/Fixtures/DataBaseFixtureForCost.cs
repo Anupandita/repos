@@ -16,6 +16,7 @@ using Sfc.Wms.Result;
 using DefaultPossibleValue = Sfc.Wms.DematicMessage.Contracts.Constants;
 using System.Diagnostics;
 
+
 namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
 {
     public class DataBaseFixtureForCost
@@ -65,7 +66,6 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
             using (db = new OracleConnection
             {
                 ConnectionString = ConfigurationManager.ConnectionStrings["SfcRbacContextModel"].ConnectionString
-
             })
             {
                 db.Open();
@@ -160,16 +160,16 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
             {
                 ActionCode = "Arrival",
                 ContainerReasonCodeMap = DefaultPossibleValue.ReasonCode.Success,
-                ContainerId = containerNbr,
+                ContainerId = "6546553453432",
                 ContainerType = "Case",
-                PhysicalContainerId = containerNbr,
+                PhysicalContainerId = "",
                 CurrentLocationId = "123",
                 StorageClassAttribute1 = skuId,
                 StorageClassAttribute2 = qty,
                 StorageClassAttribute3 = "",
                 StorageClassAttribute4 = "",
                 StorageClassAttribute5 = "",
-                PalletLpn = "08019279187",
+                PalletLpn = containerNbr,
                 TransactionCode = DefaultPossibleValue.TransactionCode.Cost,
                 MessageLength = DefaultPossibleValue.MessageLength.Cost,
                 ReasonCode = DefaultPossibleValue.ReasonCode.Success

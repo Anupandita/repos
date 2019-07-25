@@ -11,6 +11,12 @@ using Sfc.Wms.TransitionalInventory.Contracts.Dtos;
 using System.Diagnostics;
 using System.Collections.Generic;
 using Sfc.Wms.DematicMessage.Contracts.Constants;
+using Sfc.Wms.ParserAndTranslator.Contracts;
+using Sfc.Wms.Parser.Parsers;
+using Sfc.Wms.ParserAndTranslator.Contracts.Validation;
+using Sfc.Wms.ParserAndTranslator.Contracts.Interfaces;
+using DefaultPossibleValue = Sfc.Wms.DematicMessage.Contracts.Constants;
+using Sfc.Wms.Result;
 
 namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
 {
@@ -19,6 +25,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
         public decimal unitWeight;
         public string caseNumberSingleSku;
         public string caseNumberMultiSku;
+        protected CaseHeaderDto caseNbr = new CaseHeaderDto();
         protected CaseHeaderDto caseHeader = new CaseHeaderDto();
         protected SwmToMheDto swmToMhe = new SwmToMheDto();
         protected ComtDto comt = new ComtDto();
@@ -45,8 +52,14 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
         protected TransitionalInventoryDto trn1 = new TransitionalInventoryDto();
         protected WmsToEmsDto wte1 = new WmsToEmsDto();
         protected TransitionalInventoryDto transInvn1 = new TransitionalInventoryDto();
+        private readonly IHaveDataTypeValidation _dataTypeValidation;
         protected string sql1 = "";
-        
+      
+        public DataBaseFixture()
+        {
+            _dataTypeValidation = new DataTypeValidation();
+        }
+
         public void GetDataBeforeBeforeTriggerComt() 
         {                    
             OracleCommand command;
@@ -57,14 +70,15 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
             })
             {
                 db.Open();
-                var sql1 = $"select CASE_NBR from CASE_HDR where STAT_CODE = 50 and CASE_NBR in (select CASE_NBR from CASE_DTL where ACTL_QTY >1 and CASE_SEQ_NBR = 1)";
-                command = new OracleCommand(sql1, db);
-                caseNumberSingleSku = command.ExecuteScalar().ToString();               
-
-                var sql2 = $"select CASE_HDR.CASE_NBR from  CASE_HDR inner join CASE_DTL on CASE_HDR.CASE_NBR = CASE_DTL.CASE_NBR and CASE_DTL.ACTL_QTY > 1 and CASE_DTL.CASE_SEQ_NBR = 2";
+                var sql2 = $"select CASE_HDR.CASE_NBR from  CASE_HDR inner join CASE_DTL on CASE_HDR.CASE_NBR = CASE_DTL.CASE_NBR and CASE_DTL.ACTL_QTY >11 and CASE_DTL.CASE_SEQ_NBR = 2";
                 command = new OracleCommand(sql2, db);
-                caseNumberMultiSku = command.ExecuteScalar().ToString();               
-                             
+                caseNumberMultiSku = command.ExecuteScalar().ToString();
+
+                var sql29 = $"select CASE_NBR from CASE_HDR where STAT_CODE = 50 and CASE_NBR in (select CASE_NBR from CASE_DTL where ACTL_QTY >1 and CASE_SEQ_NBR = 1)";
+                command = new OracleCommand(sql29, db);
+                caseNumberSingleSku = command.ExecuteScalar().ToString();
+
+
                 var sql3 = $"select case_nbr,locn_id,actl_wt,mfg_date,ship_by_date,xpire_date,po_nbr,stat_code,prev_locn_id,mod_date_time,user_id from case_hdr where case_nbr = '{caseNumberSingleSku}'";
                 command = new OracleCommand(sql3, db);
                 var dr21 = command.ExecuteReader();
@@ -87,6 +101,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
                     cd.TotalAllocQty = Convert.ToInt32(dr2["TOTAL_ALLOC_QTY"].ToString());
                 }
 
+
                 try
                 {
                    var sql5 = $"select sku_id,locn_id,actl_invn_units,actl_wt,trans_invn_type,user_id,mod_date_time from trans_invn where sku_id = '{cd.SkuId}' and trans_invn_type = '18' order by mod_date_time desc";
@@ -105,13 +120,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
                     Debug.Print("There are no records");
                 }
 
-                var sql6 = $"select CASE_NBR from CASE_HDR where STAT_CODE = 50 and CASE_NBR in (select CASE_NBR from CASE_DTL where ACTL_QTY >1 and CASE_SEQ_NBR = 1)";
-                command = new OracleCommand(sql6, db);
-                var dr0 = command.ExecuteReader();
-                if (dr0.Read())
-                {
-                    caseNumberMultiSku = dr0["CASE_NBR"].ToString();
-                }
+               
 
                 var sql7 = $"select case_nbr,locn_id,actl_wt,mfg_date,ship_by_date,xpire_date,po_nbr,stat_code,prev_locn_id,mod_date_time,user_id from case_hdr where case_nbr = '{caseNumberMultiSku}'";
                 command = new OracleCommand(sql7, db);
@@ -176,6 +185,10 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
                     swmToMhe.ContainerType = dr15["CONTAINER_TYPE"].ToString();
                     swmToMhe.MessageJson = dr15["MSG_JSON"].ToString();
                     swmToMhe.LocationId = dr15["LOCN_ID"].ToString();
+                    swmToMhe.SourceMessageText = dr15["SOURCE_MSG_TEXT"].ToString();                 
+                    //var comtMsgParseTest = _mainParser.ParseMessage("COMT", swmToMhe.SourceMessageText);
+                    //Assert.AreEqual(comtMsgParseTest.ResultType, ResultTypes.Ok);
+                    //Assert.IsNotNull(comtMsgParseTest.Payload);
                     var msgDto = JsonConvert.DeserializeObject<ComtDto>(swmToMhe.MessageJson);
                     comt.Weight = msgDto.Weight;
                     comt.Fullness = msgDto.Fullness;
@@ -212,6 +225,10 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
                     stm.Quantity = Convert.ToInt16(dr9["QTY"].ToString());
                     stm.MessageJson = dr9["MSG_JSON"].ToString();
                     stm.SourceMessageProcess = dr9["SOURCE_MSG_PROCESS"].ToString();
+                    stm.SourceMessageText = dr9["SOURCE_MSG_TEXT"].ToString();
+                    //var ivmtMsgParseTest = _mainParser.ParseMessage("COMT", swmToMhe.SourceMessageText);
+                    //Assert.AreEqual(ivmtMsgParseTest.ResultType, ResultTypes.Ok);
+                    //Assert.IsNotNull(ivmtMsgParseTest.Payload);
                     var msgDto = JsonConvert.DeserializeObject<IvmtDto>(stm.MessageJson);
                     ivmt.TransactionCode = msgDto.TransactionCode;
                     ivmt.MessageLength = msgDto.MessageLength;
@@ -294,7 +311,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
             })
             {
                 db.Open();
-                var sql19 = $"select source_msg_key,source_msg_status,source_msg_trans_code,source_msg_rsn_code,error_msg,error_code,msg_status,msg_json,container_id,container_type,locn_id,lot_id,po_nbr,sku_id,staging_locn,qty,created_date_time from SWM_TO_MHE where container_id = '{caseNumberMultiSku}' and source_msg_trans_code = 'COMT'";
+                var sql19 = $"select * from SWM_TO_MHE where container_id = '{caseNumberMultiSku}' and source_msg_trans_code = 'COMT'";
                 command = new OracleCommand(sql19, db);
                 var dr15 = command.ExecuteReader();
                 if (dr15.Read())
@@ -307,6 +324,24 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
                     swmToMhe1.ContainerType = dr15["CONTAINER_TYPE"].ToString();
                     swmToMhe1.MessageJson = dr15["MSG_JSON"].ToString();
                     swmToMhe1.LocationId = dr15["LOCN_ID"].ToString();
+                    swmToMhe1.SourceMessageText = dr15["SOURCE_MSG_TEXT"].ToString();
+                    //var comtMsgParseTest = _mainParser.ParseMessage("COMT", swmToMhe.SourceMessageText);
+                    //Assert.AreEqual(comtMsgParseTest.ResultType, ResultTypes.Ok);
+
+                    var result = new BaseResult<ParserAndTranslator.Contracts.Dto.DematicMessageBaseDto>
+                    {
+                        Payload = new ParserAndTranslator.Contracts.Dto.DematicMessageBaseDto
+                        {
+                            MessageLength = "00241",
+                            ReasonCode = "00000",
+                            TransactionCode = "COMT"
+                        }
+                    };
+
+                    MessageParser mp = new MessageParser(_dataTypeValidation);
+                   // var testRes = mp.ParseMessage<ParserAndTranslator.Contracts.Dto.ComtDto, ComtValidationRule>(swmToMhe1.SourceMessageText, result);
+
+                    //Assert.IsNotNull(comtMsgParseTest.Payload);
                     var msgDto = JsonConvert.DeserializeObject<ComtDto>(swmToMhe1.MessageJson);
                     comt1.Weight = msgDto.Weight;
                     comt1.Fullness = msgDto.Fullness;
@@ -346,6 +381,10 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
                         stm1.SkuId = dr9["SKU_ID"].ToString();
                         stm1.Quantity = Convert.ToInt16(dr9["QTY"].ToString());
                         stm1.MessageJson = dr9["MSG_JSON"].ToString();
+                        stm1.SourceMessageText = dr9["SOURCE_MSG_TEXT"].ToString();
+                        //var ivmtMsgParseTest = _mainParser.ParseMessage("COMT", swmToMhe.SourceMessageText);
+                        //Assert.AreEqual(ivmtMsgParseTest.ResultType, ResultTypes.Ok);
+                        //Assert.IsNotNull(ivmtMsgParseTest.Payload);
                         var msgDto = JsonConvert.DeserializeObject<IvmtDto>(stm1.MessageJson);
                         ivmt1.TransactionCode = msgDto.TransactionCode;
                         ivmt1.MessageLength = msgDto.MessageLength;
@@ -422,7 +461,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
                         cd.TotalAllocQty = Convert.ToInt32(dr2["TOTAL_ALLOC_QTY"].ToString());
                         caseList.Add(cd);
                     }
-         
+        
             }
         }
         protected void VerifyComtMessageWasInsertedIntoSwmToMhe(ComtDto comt, SwmToMheDto swmToMhe)

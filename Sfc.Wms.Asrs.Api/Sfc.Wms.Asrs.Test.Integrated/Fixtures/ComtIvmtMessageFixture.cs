@@ -6,6 +6,7 @@ using Sfc.Wms.Amh.Dematic.Contracts.Dtos;
 using Newtonsoft.Json;
 using DefaultPossibleValue = Sfc.Wms.DematicMessage.Contracts.Constants;
 using Sfc.Wms.Result;
+using Sfc.Wms.ParserAndTranslator.Contracts.Interfaces;
 
 namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
 {
@@ -17,9 +18,9 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
         protected ComtParams ComtParameters;
         protected IRestResponse Response;
         private dynamic testResult;
-
+       
         protected void GetDataBeforeCallingComtApi() 
-        { 
+        {
             GetDataBeforeBeforeTriggerComt();
         }
         

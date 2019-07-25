@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sfc.Wms.Asrs.Test.Integrated.Fixtures;
+using Sfc.Wms.ParserAndTranslator.Contracts.Interfaces;
 using TestStack.BDDfy;
 
 namespace Sfc.Wms.Asrs.Test.Integrated.Tests
@@ -17,6 +18,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Tests
        )]
     public class SampleTest : ComtIvmtMessageFixture
     {
+       
         [TestInitialize]
         [TestCategory("FUNCTIONAL")]
         public void AValidTestData()
