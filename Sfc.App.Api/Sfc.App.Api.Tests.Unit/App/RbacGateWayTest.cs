@@ -10,7 +10,7 @@ namespace Sfc.App.Api.Tests.Unit.App
         IWant = "User to get authenticated",
         SoThat = "Authenticated user can access the restricted resources"
     )]
-    public class RbacGatewayTest : RbacGateWayAppFixture
+    public class RbacGatewayTest : RbacGatewayFixture
     {
         [TestMethod]
         [TestCategory("UNIT")]

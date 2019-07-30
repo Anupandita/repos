@@ -10,11 +10,11 @@ namespace Sfc.App.App.Gateways
 {
     public class RbacGateway : IRbacGateway
     {
-        private readonly IUserRabcService _userRabcService;
+        private readonly IUserRbacService _userRbacService;
 
-        public RbacGateway(IUserRabcService userRabcService)
+        public RbacGateway(IUserRbacService userRabcService)
         {
-            _userRabcService = userRabcService;
+            _userRbacService = userRabcService;
         }
 
         public async Task<BaseResult<UserInfoDto>> SignInAsync(LoginCredentials loginCredentials)
@@ -24,7 +24,7 @@ namespace Sfc.App.App.Gateways
 
             if (!ValidateLoginCredentials(loginCredentials)) return response;
 
-            var result = await _userRabcService.SignInAsync(loginCredentials).ConfigureAwait(false);
+            var result = await _userRbacService.SignInAsync(loginCredentials).ConfigureAwait(false);
 
             if (result.ResultType != ResultTypes.Ok)
                 return new BaseResult<UserInfoDto>
@@ -33,10 +33,10 @@ namespace Sfc.App.App.Gateways
                     ValidationMessages = result.ValidationMessages
                 };
 
-            var roles = await _userRabcService.GetRolesByUserNameAsync(loginCredentials.UserName)
+            var roles = await _userRbacService.GetRolesByUserNameAsync(loginCredentials.UserName)
                 .ConfigureAwait(false);
 
-            var userDetails = await _userRabcService.GetUserDetails(loginCredentials.UserName)
+            var userDetails = await _userRbacService.GetUserDetails(loginCredentials.UserName)
                 .ConfigureAwait(false);
 
             userDetails.Payload.Token = JwtManager.GenerateToken(loginCredentials.UserName, result.Payload,

@@ -16,6 +16,7 @@ using Sfc.Wms.Data.Context;
 using Sfc.Wms.Security.Rbac.UnitOfWork;
 using Sfc.Wms.Security.Rbac.Interface;
 using Sfc.Core.Cache.InMemory;
+using Sfc.Wms.Security.Contracts.Extensions;
 
 namespace Sfc.App.Api.App_Start
 {
@@ -36,7 +37,6 @@ namespace Sfc.App.Api.App_Start
             return container;
         }
 
-
         private static void RegisterTypes(Container container)
         {
             container.RegisterSingleton<IMapper>(() =>
@@ -54,9 +54,12 @@ namespace Sfc.App.Api.App_Start
             container.Register(() =>
                     new ShamrockContext(ConfigurationManager.ConnectionStrings["SfcOracleDbContext"].ConnectionString)
                 , Lifestyle.Singleton);
+            container.Register(() =>
+                    ConfigurationManager.AppSettings["db:encryptionKey"].ToSecureString()
+                , Lifestyle.Singleton);
             container.Register<IRbacGateway, RbacGateway>();
             container.Register<IUserRbacUnitOfWork, UserRbacUnitOfWork>();
-            container.Register<IUserRabcService, UserRabcService>();
+            container.Register<IUserRbacService, UserRbacService>();
             container.Register<IUserAuthenticationGateway, UserAuthenticationGateway>();
             container.Register<ISfcInMemoryCache>(() => new SfcInMemoryCache(MemoryCache.Default));
         }
