@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
+using Sfc.Core.OnPrem.Security.Contracts.Dtos;
 using Sfc.Wms.Result;
-using Sfc.Wms.Security.Contracts.Dtos;
 
 namespace Sfc.App.Api.Nuget.Interfaces
 {

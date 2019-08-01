@@ -13,14 +13,21 @@
     <copyright>Copyright 2019</copyright>
     <dependencies>
       <group targetFramework=".NETFramework4.7.2">
-        <dependency id="Sfc.App.Api.Contracts" Version="1.*" exclude="Build,Analyzers"/>
-        <dependency id="Sfc.Wms.RestResponse" Version="1.*" exclude="Build,Analyzers"/>
-        <dependency id="Sfc.Wms.Security.Contracts" Version="1.*" exclude="Build,Analyzers"/>
-        <dependency id="System.Configuration.ConfigurationManager" Version="4.5.0" exclude="Build,Analyzers"/>
+        <dependency id="RestSharp" version="106.6.10" exclude="Build,Analyzers" />
+        <dependency id="Sfc.App.Api.Contracts" version="[1.1.4, 1.2.0)" exclude="Build,Analyzers" />
+        <dependency id="Sfc.Core.RestResponse" version="[1.1.17,1.2.0)" exclude="Build,Analyzers" />
+        <dependency id="Sfc.Wms.Security.Contracts" version="[1.1.12,1.2.0)" exclude="Build,Analyzers" />
+        <dependency id="System.Configuration.ConfigurationManager" version="4.5.0" exclude="Build,Analyzers" />
+        <dependency id="System.IdentityModel.Tokens.Jwt" version="5.5.0" exclude="Build,Analyzers" />
       </group>
     </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Data.DataSetExtensions" targetFramework=".NETFramework4.7.2" />
+      <frameworkAssembly assemblyName="System.Net.Http" targetFramework=".NETFramework4.7.2" />
+      <frameworkAssembly assemblyName="System.Xml.Linq" targetFramework=".NETFramework4.7.2" />
+    </frameworkAssemblies>
   </metadata>
   <files>
-    <file src="bin\Debug\net472\Sfc.App.Api.Nuget.dll" target="lib\net472" />
+    <file src="bin\release\net472\Sfc.App.Api.Nuget.dll" target="lib\net472" />
   </files>
 </package>

@@ -1,9 +1,10 @@
 ﻿using System.Threading.Tasks;
+
 using RestSharp;
 using Sfc.App.Api.Contracts.Constants;
 using Sfc.App.Api.Nuget.Interfaces;
+using Sfc.Core.OnPrem.Security.Contracts.Dtos;
 using Sfc.Wms.Result;
-using Sfc.Wms.Security.Contracts.Dtos;
 
 namespace Sfc.App.Api.Nuget.Gateways
 {
@@ -22,5 +23,6 @@ namespace Sfc.App.Api.Nuget.Gateways
                 .ConfigureAwait(false);
             return GetBaseResult<UserInfoDto>(result);
         }
+
     }
 }
