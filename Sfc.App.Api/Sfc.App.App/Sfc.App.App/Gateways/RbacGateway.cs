@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Sfc.App.App.Interfaces;
+﻿using Sfc.App.App.Interfaces;
 using Sfc.Wms.Result;
 using Sfc.Wms.Security.Contracts.Dtos;
 using Sfc.Wms.Security.Contracts.Dtos.UI;
@@ -13,12 +12,10 @@ namespace Sfc.App.App.Gateways
     public class RbacGateway : IRbacGateway
     {
         private readonly IUserRbacService _userRbacService;
-        private readonly IMapper _mapper;
 
-        public RbacGateway(IUserRbacService userRabcService, IMapper mapper)
+        public RbacGateway(IUserRbacService userRabcService)
         {
             _userRbacService = userRabcService;
-            _mapper = mapper;
         }
 
         public async Task<BaseResult<UserDetailsDto>> SignInAsync(LoginCredentials loginCredentials)
@@ -43,12 +40,10 @@ namespace Sfc.App.App.Gateways
             var userDetails = await _userRbacService.GetUserDetails(loginCredentials.UserName)
                 .ConfigureAwait(false);
 
-            userDetails.Payload.Token = JwtManager.GenerateToken(loginCredentials.UserName, result.Payload,
+            userDetails.Payload.token = JwtManager.GenerateToken(loginCredentials.UserName, result.Payload,
                 roles.Payload.Select(el => el.RoleName).ToList());
 
-            var uiResponse = GetUserDetailsDtoFromUserInfoDto(userDetails);
-
-            return uiResponse;
+            return userDetails;
         }
 
         #region Private Methods
@@ -58,16 +53,6 @@ namespace Sfc.App.App.Gateways
             return !(string.IsNullOrWhiteSpace(loginCredentials.UserName) ||
                      string.IsNullOrWhiteSpace(loginCredentials.Password));
         }
-        private BaseResult<UserDetailsDto> GetUserDetailsDtoFromUserInfoDto(BaseResult<UserInfoDto> response)
-        {
-
-            return new BaseResult<UserDetailsDto>
-            {
-                Payload = _mapper.Map<UserDetailsDto>(response.Payload),
-                ResultType = response.ResultType
-            };
-        }
-
         #endregion
     }
 }

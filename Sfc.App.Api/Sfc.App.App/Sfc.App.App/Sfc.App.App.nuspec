@@ -3,7 +3,7 @@
 <package>
   <metadata>
     <id>Sfc.App.App</id>
-    <version>1.0.9</version>
+    <version>1.1.0</version>
     <title>Sfc.App.App</title>
     <authors>Shamrock Foods (SOWL)</authors>
     <owners>Shamrock Foods Company</owners>
@@ -13,7 +13,7 @@
     <copyright>Copyright 2019</copyright>
     <dependencies>
       <group targetFramework=".NETFramework4.7.2">
-        <dependency id="Sfc.Wms.Security.Rbac" version="[1.0.15,2.0.0)" exclude="Build,Analyzers" />
+        <dependency id="Sfc.Wms.Security.Rbac" version="[1.1.0,2.0.0)" exclude="Build,Analyzers" />
         <dependency id="Sfc.Wms.Security.Token.Jwt" version="[1.0.0,2.0.0)" exclude="Build,Analyzers" />
       </group>
     </dependencies>
