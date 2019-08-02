@@ -1,25 +1,29 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using AutoMapper;
 using Sfc.App.App.Interfaces;
 using Sfc.Wms.Result;
 using Sfc.Wms.Security.Contracts.Dtos;
+using Sfc.Wms.Security.Contracts.Dtos.UI;
 using Sfc.Wms.Security.Contracts.Interfaces;
 using Sfc.Wms.Security.Token.Jwt.Jwt;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Sfc.App.App.Gateways
 {
     public class RbacGateway : IRbacGateway
     {
         private readonly IUserRbacService _userRbacService;
+        private readonly IMapper _mapper;
 
-        public RbacGateway(IUserRbacService userRabcService)
+        public RbacGateway(IUserRbacService userRabcService, IMapper mapper)
         {
             _userRbacService = userRabcService;
+            _mapper = mapper;
         }
 
-        public async Task<BaseResult<UserInfoDto>> SignInAsync(LoginCredentials loginCredentials)
+        public async Task<BaseResult<UserDetailsDto>> SignInAsync(LoginCredentials loginCredentials)
         {
-            var response = new BaseResult<UserInfoDto>
+            var response = new BaseResult<UserDetailsDto>
             { ResultType = ResultTypes.BadGateway };
 
             if (!ValidateLoginCredentials(loginCredentials)) return response;
@@ -27,7 +31,7 @@ namespace Sfc.App.App.Gateways
             var result = await _userRbacService.SignInAsync(loginCredentials).ConfigureAwait(false);
 
             if (result.ResultType != ResultTypes.Ok)
-                return new BaseResult<UserInfoDto>
+                return new BaseResult<UserDetailsDto>
                 {
                     ResultType = result.ResultType,
                     ValidationMessages = result.ValidationMessages
@@ -42,7 +46,9 @@ namespace Sfc.App.App.Gateways
             userDetails.Payload.Token = JwtManager.GenerateToken(loginCredentials.UserName, result.Payload,
                 roles.Payload.Select(el => el.RoleName).ToList());
 
-            return userDetails;
+            var uiResponse = GetUserDetailsDtoFromUserInfoDto(userDetails);
+
+            return uiResponse;
         }
 
         #region Private Methods
@@ -51,6 +57,15 @@ namespace Sfc.App.App.Gateways
         {
             return !(string.IsNullOrWhiteSpace(loginCredentials.UserName) ||
                      string.IsNullOrWhiteSpace(loginCredentials.Password));
+        }
+        private BaseResult<UserDetailsDto> GetUserDetailsDtoFromUserInfoDto(BaseResult<UserInfoDto> response)
+        {
+
+            return new BaseResult<UserDetailsDto>
+            {
+                Payload = _mapper.Map<UserDetailsDto>(response.Payload),
+                ResultType = response.ResultType
+            };
         }
 
         #endregion
