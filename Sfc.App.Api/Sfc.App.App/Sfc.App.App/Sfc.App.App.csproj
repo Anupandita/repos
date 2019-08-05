@@ -6,7 +6,7 @@
     <Configurations>Debug;Release;QA;UAT;PROD</Configurations>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Sfc.Wms.Security.Rbac" Version="1.1.2" />
+    <PackageReference Include="Sfc.Wms.Security.Rbac" Version="1.1.3" />
     <PackageReference Include="Sfc.Wms.Security.Token.Jwt" Version="1.0.2" />
   </ItemGroup>
   <ItemGroup>
