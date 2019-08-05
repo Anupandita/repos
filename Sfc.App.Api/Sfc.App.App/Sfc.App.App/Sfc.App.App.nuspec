@@ -19,6 +19,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Debug\net472\Sfc.App.App.dll" target="lib\NET472" />
+    <file src="bin\Release\net472\Sfc.App.App.dll" target="lib\NET472" />
   </files>
 </package>
