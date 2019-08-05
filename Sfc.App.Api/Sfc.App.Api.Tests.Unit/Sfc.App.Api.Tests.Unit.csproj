@@ -80,6 +80,7 @@
     <Compile Include="Configurations\Setup.cs" />
     <Compile Include="Controllers\UserRbacControllerTest.cs" />
     <Compile Include="Fakes\LoginCredentialsDataGeneratorProfile.cs" />
+    <Compile Include="Fakes\MenuDetailsDtoDataGeneratorProfile.cs" />
     <Compile Include="Fakes\MenusDtoDataGeneratorProfile.cs" />
     <Compile Include="Fakes\PermissionDataGeneratorProfile.cs" />
     <Compile Include="Fakes\PreferencesDataGeneratorProfile.cs" />
