@@ -40,7 +40,7 @@ namespace Sfc.App.App.Gateways
             var userDetails = await _userRbacService.GetUserDetails(loginCredentials.UserName)
                 .ConfigureAwait(false);
 
-            userDetails.Payload.token = JwtManager.GenerateToken(loginCredentials.UserName, result.Payload,
+            userDetails.Payload.Token = JwtManager.GenerateToken(loginCredentials.UserName, result.Payload,
                 roles.Payload.Select(el => el.RoleName).ToList());
 
             return userDetails;
