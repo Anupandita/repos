@@ -9,92 +9,91 @@ using RestSharp;
 using Sfc.App.Api.Nuget.Gateways;
 using Sfc.Wms.Result;
 using Sfc.Wms.Security.Contracts.Dtos;
+using Sfc.Wms.Security.Contracts.Dtos.UI;
 
 namespace Sfc.App.Api.Tests.Unit.Fixtures
 {
     public class UserRbacGatewayFixture
     {
-        private readonly Mock<IRestClient> _restClient;
+        private readonly Mock<IRestClient> _mockRestClient;
         private readonly UserRbacGateway _userRbacGateway;
         private LoginCredentials loginCredentials;
-        private BaseResult<UserInfoDto> signInBaseResult;
+        private BaseResult<UserDetailsDto> signInResponse;
+        private BaseResult<UserDetailsDto> userDetails;
 
-        public UserRbacGatewayFixture()
+        protected UserRbacGatewayFixture()
         {
-            _restClient = new Mock<IRestClient>(MockBehavior.Default);
-            _userRbacGateway = new UserRbacGateway(_restClient.Object);
+            _mockRestClient = new Mock<IRestClient>(MockBehavior.Default);
+            _userRbacGateway = new UserRbacGateway(_mockRestClient.Object);
         }
 
         private void GetRestResponse<T>(T entity, HttpStatusCode statusCode, ResponseStatus responseStatus)
             where T : new()
         {
             var response = new Mock<IRestResponse<T>>();
-            response.Setup(_ => _.StatusCode).Returns(statusCode);
-            response.Setup(_ => _.ResponseStatus).Returns(responseStatus);
-            response.Setup(_ => _.Headers).Returns(new List<Parameter>
+            response.Setup(el => el.StatusCode).Returns(statusCode);
+            response.Setup(el => el.ResponseStatus).Returns(responseStatus);
+            response.Setup(el => el.Headers).Returns(new List<Parameter>
                 {new Parameter("Bearer", "Bearer Value", ParameterType.HttpHeader)});
-            response.Setup(_ => _.Content).Returns(JsonConvert.SerializeObject(entity));
-            _restClient.Setup(x => x.ExecuteTaskAsync<T>(It.IsAny<IRestRequest>()))
+            response.Setup(el => el.Content).Returns(JsonConvert.SerializeObject(entity));
+            _mockRestClient.Setup(el => el.ExecuteTaskAsync<T>(It.IsAny<IRestRequest>()))
                 .Returns(Task.FromResult(response.Object));
         }
 
         #region Sign In
 
+        private void SetUserDetails(ResultTypes resultTypes)
+        {
+            userDetails = new BaseResult<UserDetailsDto>
+            {
+                Payload = Generator.Default.Single<UserDetailsDto>(),
+                ResultType = resultTypes
+            };
+        }
+
         protected void InValidLoginCredentials()
         {
             loginCredentials = Generator.Default.Single<LoginCredentials>();
-            var result = new BaseResult<UserInfoDto>
-            {
-                Payload = Generator.Default.Single<UserInfoDto>(),
-                ResultType = ResultTypes.Unauthorized
-            };
-            GetRestResponse(result, HttpStatusCode.Unauthorized, ResponseStatus.Completed);
+            SetUserDetails(ResultTypes.Unauthorized);
+            GetRestResponse(userDetails, HttpStatusCode.Unauthorized, ResponseStatus.Completed);
         }
 
         protected void ValidLoginCredentials()
         {
             loginCredentials = Generator.Default.Single<LoginCredentials>();
-            var result = new BaseResult<UserInfoDto>
-            {
-                Payload = Generator.Default.Single<UserInfoDto>(),
-                ResultType = ResultTypes.Ok
-            };
-            GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
+            SetUserDetails(ResultTypes.Ok);
+            GetRestResponse(userDetails, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
         protected void EmptyLoginCredentials()
         {
             loginCredentials = new LoginCredentials();
-            var result = new BaseResult<UserInfoDto>
-            {
-                Payload = Generator.Default.Single<UserInfoDto>(),
-                ResultType = ResultTypes.BadRequest
-            };
-            GetRestResponse(result, HttpStatusCode.BadRequest, ResponseStatus.Completed);
+            SetUserDetails(ResultTypes.BadRequest);
+            GetRestResponse(userDetails, HttpStatusCode.BadRequest, ResponseStatus.Completed);
         }
 
         protected void UserAuthenticationServiceIsInvoked()
         {
-            signInBaseResult = _userRbacGateway.SignInAsync(loginCredentials).Result;
+            signInResponse = _userRbacGateway.SignInAsync(loginCredentials).Result;
         }
 
         protected void TheServiceCallReturnedBadRequestAsResponseStatus()
         {
-            Assert.IsNotNull(signInBaseResult);
-            Assert.AreEqual(signInBaseResult.ResultType, ResultTypes.BadRequest);
+            Assert.IsNotNull(signInResponse);
+            Assert.AreEqual(signInResponse.ResultType, ResultTypes.BadRequest);
         }
 
         protected void TheServiceCallReturnedUnAuthorizesAsResponseStatus()
         {
-            Assert.IsNotNull(signInBaseResult);
-            Assert.AreEqual(signInBaseResult.ResultType, ResultTypes.Unauthorized);
+            Assert.IsNotNull(signInResponse);
+            Assert.AreEqual(signInResponse.ResultType, ResultTypes.Unauthorized);
         }
 
         protected void TheServiceCallReturnedAuthorizedAsResponseStatus()
         {
-            Assert.IsNotNull(signInBaseResult);
-            Assert.IsNotNull(signInBaseResult.Payload);
-            Assert.AreEqual(signInBaseResult.ResultType, ResultTypes.Ok);
+            Assert.IsNotNull(signInResponse);
+            Assert.IsNotNull(signInResponse.Payload);
+            Assert.AreEqual(signInResponse.ResultType, ResultTypes.Ok);
         }
 
         #endregion

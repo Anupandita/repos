@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using Newtonsoft.Json.Serialization;
 using Sfc.App.Api.App_Start;
 
 namespace Sfc.App.Api
@@ -11,6 +12,8 @@ namespace Sfc.App.Api
             FilterConfig.RegisterHttpFilters(GlobalConfiguration.Configuration.Filters);
             DependencyConfig.Register();
             config.Routes.MapHttpRoute("DefaultApi","api/{controller}/{id}");
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
         }
     }
 }

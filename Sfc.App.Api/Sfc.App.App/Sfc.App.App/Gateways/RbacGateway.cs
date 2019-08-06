@@ -1,10 +1,12 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Sfc.App.App.Interfaces;
+﻿using Sfc.App.App.Interfaces;
 using Sfc.Wms.Result;
 using Sfc.Wms.Security.Contracts.Dtos;
+using Sfc.Wms.Security.Contracts.Dtos.UI;
 using Sfc.Wms.Security.Contracts.Interfaces;
 using Sfc.Wms.Security.Token.Jwt.Jwt;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace Sfc.App.App.Gateways
 {
@@ -12,26 +14,21 @@ namespace Sfc.App.App.Gateways
     {
         private readonly IUserRbacService _userRbacService;
 
-        public RbacGateway(IUserRbacService userRabcService)
+        public RbacGateway(IUserRbacService userRbacService)
         {
-            _userRbacService = userRabcService;
+            _userRbacService = userRbacService;
         }
 
-        public async Task<BaseResult<UserInfoDto>> SignInAsync(LoginCredentials loginCredentials)
+        public async Task<BaseResult<UserDetailsDto>> SignInAsync(LoginCredentials loginCredentials)
         {
-            var response = new BaseResult<UserInfoDto>
+            var response = new BaseResult<UserDetailsDto>
             { ResultType = ResultTypes.BadGateway };
 
             if (!ValidateLoginCredentials(loginCredentials)) return response;
 
             var result = await _userRbacService.SignInAsync(loginCredentials).ConfigureAwait(false);
 
-            if (result.ResultType != ResultTypes.Ok)
-                return new BaseResult<UserInfoDto>
-                {
-                    ResultType = result.ResultType,
-                    ValidationMessages = result.ValidationMessages
-                };
+            if (result.ResultType != ResultTypes.Ok) return GetBaseResult(result);
 
             var roles = await _userRbacService.GetRolesByUserNameAsync(loginCredentials.UserName)
                 .ConfigureAwait(false);
@@ -47,12 +44,22 @@ namespace Sfc.App.App.Gateways
 
         #region Private Methods
 
+        private BaseResult<UserDetailsDto> GetBaseResult(BaseResult<int> result, [CallerMemberName] string callerName = "")
+        {
+            var response = new BaseResult<UserDetailsDto> { ResultType = result.ResultType };
+            if (!(result.ValidationMessages?.Count > 0))
+                response.ValidationMessages?.Add(new ValidationMessage(callerName,
+                    ValidationMessages.InvalidUsernameOrPassword));
+            else
+                response.ValidationMessages.AddRange(result.ValidationMessages);
+            return response;
+        }
+
         private bool ValidateLoginCredentials(LoginCredentials loginCredentials)
         {
             return !(string.IsNullOrWhiteSpace(loginCredentials.UserName) ||
                      string.IsNullOrWhiteSpace(loginCredentials.Password));
         }
-
         #endregion
     }
 }
