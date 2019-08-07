@@ -2,11 +2,11 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sfc.Wms.Asrs.Test.Integrated.TestData;
 using RestSharp;
-using Sfc.Wms.Amh.Dematic.Contracts.Dtos;
 using Newtonsoft.Json;
-using DefaultPossibleValue = Sfc.Wms.DematicMessage.Contracts.Constants;
+using DefaultPossibleValue = Sfc.Wms.ParserAndTranslator.Contracts.Constants;
 using Sfc.Wms.Result;
 using System.Configuration;
+using Sfc.Wms.InboundLpn.Contracts.Dtos;
 
 namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
 {
@@ -72,6 +72,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
         {
             var response = CostApiIsCalled();
             var result = JsonConvert.DeserializeObject<BaseResult>(response.Content.ToString());
+            Assert.AreEqual("Not Found",result.ResultType.ToString());
             Assert.AreEqual("!0",result.ValidationMessages.Count);
         }
 
@@ -128,8 +129,8 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
 
         protected void VerifyTheQuantityWasIncreasedIntoPickLocationTable()
         {
-            Assert.AreEqual(pickLcnDtl.ActualQty + Convert.ToDecimal(cost.StorageClassAttribute2), pickLocnDtl.ActualQty);
-            Assert.AreEqual(pickLcnDtl.ActualQty - Convert.ToDecimal(cost.StorageClassAttribute2), pickLocnDtl.ToBeFilledQty);
+            Assert.AreEqual(pickLcnDtl.ActualInventoryQuantity + Convert.ToDecimal(cost.StorageClassAttribute2), pickLocnDtl.ActualInventoryQuantity);
+            Assert.AreEqual(pickLcnDtl.ActualInventoryQuantity - Convert.ToDecimal(cost.StorageClassAttribute2), pickLocnDtl.ToBeFilledQty);
            // Assert.AreEqual("COSTProcessor", pickLocnDtl.UserId);     
         }
     }

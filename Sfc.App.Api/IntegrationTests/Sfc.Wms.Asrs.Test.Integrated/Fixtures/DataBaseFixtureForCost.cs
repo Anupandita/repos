@@ -5,7 +5,6 @@ using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using Sfc.Wms.Asrs.Dematic.Contracts.Dtos;
 using Sfc.Wms.Asrs.Shamrock.Contracts.Dtos;
-using Sfc.Wms.Amh.Dematic.Contracts.Dtos;
 using Sfc.Wms.Builder.MessageBuilder;
 using Sfc.Wms.TransitionalInventory.Contracts.Dtos;
 using Sfc.Wms.ParserAndTranslator.Contracts.Interfaces;
@@ -13,9 +12,10 @@ using Sfc.Wms.ParserAndTranslator.Contracts.Dto;
 using Sfc.Wms.ParserAndTranslator.Contracts.Validation;
 using Sfc.Wms.Result;
 using Sfc.Wms.Asrs.Test.Integrated.TestData;
-using DefaultPossibleValue = Sfc.Wms.DematicMessage.Contracts.Constants;
+using DefaultPossibleValue = Sfc.Wms.ParserAndTranslator.Contracts.Constants;
 using System.Diagnostics;
-
+using Sfc.Wms.PickLocationDetail.Contracts.Dtos;
+using Sfc.Wms.InboundLpn.Contracts.Dtos;
 
 namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
 {
@@ -27,7 +27,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
         protected IvmtDto ivmt = new IvmtDto();
         protected TransitionalInventoryDto trn = new TransitionalInventoryDto();
         protected TransitionalInventoryDto transInvn = new TransitionalInventoryDto();
-        protected AllocationInventoryDetailDto ai = new AllocationInventoryDetailDto();
+       // protected AllocationInventoryDetailDto ai = new AllocationInventoryDetailDto();
         protected CostDto CostParameters;
         protected Cost costData = new Cost();
         protected EmsToWmsDto emsToWmsParameters;
@@ -88,7 +88,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
                     MessageKey = Convert.ToInt64(costData.ValidMsgKey),
                     Status = "Ready",
                     Transaction = DefaultPossibleValue.TransactionCode.Cost,
-                   // ResponseCode = DefaultPossibleValue.ReasonCode.Success,                    
+                    ResponseCode =(short)int.Parse(DefaultPossibleValue.ReasonCode.Success),                    
                 };
 
                 var validsql = $"insert into emstowms values ('{emsToWmsParameters.Process}','{emsToWmsParameters.MessageKey}','{emsToWmsParameters.Status}','{emsToWmsParameters.Transaction}','{CostResult}','0','TestUser','22-JUL-19','22-JUL-19')";
@@ -103,7 +103,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
                 {
                     emsToWms.MessageKey = Convert.ToInt64(dr["MSGKEY"].ToString());
                     emsToWms.Process = dr["PRC"].ToString();
-                    //emsToWms.ResponseCode = dr["RSN"].ToString();
+                    emsToWms.ResponseCode = (short)int.Parse(dr["RSN"].ToString());
                     emsToWms.Status = dr["STS"].ToString();
                     emsToWms.Transaction = dr["TRX"].ToString();                   
                 }
@@ -115,7 +115,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
                 {
                     trn.ActualInventoryUnits = Convert.ToDecimal(dr3["ACTL_INVN_UNITS"].ToString());
                     Assert.AreNotEqual(0, trn.ActualInventoryUnits);
-                    pickLcnDtl.ActualQty = Convert.ToDecimal(dr3["ACTL_INVN_QTY"].ToString());
+                    pickLcnDtl.ActualInventoryQuantity = Convert.ToDecimal(dr3["ACTL_INVN_QTY"].ToString());
                     pickLcnDtl.ToBeFilledQty = Convert.ToDecimal(dr3["TO_BE_FILLD_QTY"].ToString());
                     pickLcnDtl.LocationId = dr3["LOCN_ID"].ToString();
                 }
@@ -162,9 +162,9 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
             {
                 db.Open();                
                 transaction = db.BeginTransaction();
+
                 sql1 = $"select tn.SKU_ID,tn.ACTL_INVN_UNITS,cd.SKU_ID,ch.CASE_NBR,ch.STAT_CODE from  TRANS_INVN tn INNER JOIN CASE_DTL cd  on tn.SKU_ID = cd.SKU_ID INNER JOIN CASE_HDR ch on cd.CASE_NBR = ch.CASE_NBR and ch.STAT_CODE = 96 and tn.ACTL_INVN_UNITS >1 and trans_invn_type = '18'";
                 command = new OracleCommand(sql1, db);
-               
                 var invalidCaseNumber = CreateCostMessage("00000283000804736790", costData.ValidSkuId, costData.ValidQty, costData.ValidLocnId);
                 costData.InvalidCaseNumberKey = GetSeqNbr(command, db);
                 var invalidCaseSql = $"insert into emstowms values ('{emsToWmsParameters.Process}','{costData.InvalidCaseNumberKey}','{emsToWmsParameters.Status}','{emsToWmsParameters.Transaction}','{invalidCaseNumber}','0','TestUser','22-JUL-19','22-JUL-19')";
@@ -172,6 +172,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
                 command.ExecuteNonQuery();
                 transaction.Commit();
                 costData.InvalidStsKey = GetSeqNbr(command, db);
+
 
                 sql1 = $"select tn.SKU_ID,tn.ACTL_INVN_UNITS,cd.SKU_ID,ch.CASE_NBR,ch.STAT_CODE from  TRANS_INVN tn INNER JOIN CASE_DTL cd  on tn.SKU_ID = cd.SKU_ID INNER JOIN CASE_HDR ch on cd.CASE_NBR = ch.CASE_NBR and ch.STAT_CODE = 50 and tn.ACTL_INVN_UNITS >1 and trans_invn_type = '18'";
                 command = new OracleCommand(sql1, db);
@@ -182,6 +183,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
                     costData.InvalidStsSku = dr16["SKU_ID"].ToString();
                     costData.InvalidStsQty = dr16["ACTL_INVN_UNITS"].ToString();
                 }
+
                 transaction = db.BeginTransaction();
                 var invalidstatusCostMsg = CreateCostMessage(costData.InvalidStsCase, costData.InvalidStsSku, costData.InvalidStsQty, costData.ValidLocnId);
                 var invalidStsSql = $"insert into emstowms values ('{emsToWmsParameters.Process}','{costData.InvalidStsKey}','{emsToWmsParameters.Status}','{emsToWmsParameters.Transaction}','{invalidstatusCostMsg}','0','TestUser','22-JUL-19','22-JUL-19')";
@@ -189,10 +191,39 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
                 command.ExecuteNonQuery();
                 transaction.Commit();
 
+
+                
+                sql1 = $"select cd.SKU_ID,ch.CASE_NBR,tn.ACTL_INVN_UNITS,ch.STAT_CODE from  CASE_HDR ch  inner join  case_dtl cd on cd.CASE_NBR = ch.CASE_NBR  inner join pick_locn_dtl on pick_locn_dtl.sku_id = cd.sku_id left join trans_invn tn on tn.SKU_ID = cd.SKU_ID and ch.STAT_CODE = 50 and tn.ACTL_INVN_UNITS >1 and trans_invn_type = '18' and tn.SKU_ID = null";
+                command = new OracleCommand(sql1,db);
+                var dr17 = command.ExecuteReader();
+                if(dr17.Read())
+                {
+                    costData.TransInvnNotExistCase = dr17["CASE_NBR"].ToString();
+                    costData.TransInvnNotExistSku = dr17["SKU_ID"].ToString();
+                    costData.TransInvnNotExistQty = dr17["ACTL_INVN_UNITS"].ToString();
+                }
                 transaction = db.BeginTransaction();
                 costData.TransInvnNotExistKey = GetSeqNbr(command, db);
-                var transInvnNotExistMsg = CreateCostMessage("00100283000803374979", "3970291","27", costData.ValidLocnId);
+                var transInvnNotExistMsg = CreateCostMessage(costData.TransInvnNotExistCase, costData.TransInvnNotExistSku, costData.TransInvnNotExistQty, costData.ValidLocnId);
                 var transInvnNotExistSql = $"insert into emstowms values ('{emsToWmsParameters.Process}','{costData.TransInvnNotExistKey}','{emsToWmsParameters.Status}','{emsToWmsParameters.Transaction}','{transInvnNotExistMsg}','0','TestUser','22-JUL-19','22-JUL-19')";
+                command = new OracleCommand(transInvnNotExistSql, db);
+                command.ExecuteNonQuery();
+                transaction.Commit();
+
+
+                sql1 = $"select tn.ACTL_INVN_UNITS,cd.SKU_ID,ch.CASE_NBR,ch.STAT_CODE from  CASE_HDR ch  inner join  case_dtl cd on cd.CASE_NBR = ch.CASE_NBR  inner join trans_invn tn on tn.SKU_ID = cd.SKU_ID  left join pick_locn_dtl on pick_locn_dtl.sku_id = tn.sku_id  and ch.STAT_CODE = 96 and tn.ACTL_INVN_UNITS >1 and trans_invn_type = '18' and pick_locn_dtl.LOCN_ID = 0";
+                command = new OracleCommand(sql1, db);
+                var dr18 = command.ExecuteReader();
+                if (dr18.Read())
+                {
+                    costData.PickLocnDtlNotExistCase = dr18["CASE_NBR"].ToString();
+                    costData.PickLocnDtlNotExistSku= dr18["SKU_ID"].ToString();
+                    costData.PickLocnDtlNotExistQty = dr18["ACTL_INVN_UNITS"].ToString();
+                }
+                transaction = db.BeginTransaction();
+                costData.TransInvnNotExistKey = GetSeqNbr(command, db);
+                var pickLnInvnNotExistMsg = CreateCostMessage(costData.TransInvnNotExistCase, costData.TransInvnNotExistSku, costData.TransInvnNotExistQty, costData.ValidLocnId);
+                var pickLnInvnNotExistSql = $"insert into emstowms values ('{emsToWmsParameters.Process}','{costData.TransInvnNotExistKey}','{emsToWmsParameters.Status}','{emsToWmsParameters.Transaction}','{transInvnNotExistMsg}','0','TestUser','22-JUL-19','22-JUL-19')";
                 command = new OracleCommand(transInvnNotExistSql, db);
                 command.ExecuteNonQuery();
                 transaction.Commit();
@@ -251,7 +282,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
                 {
                     transInvn.ActualInventoryUnits = Convert.ToDecimal(dr3["ACTL_INVN_UNITS"].ToString());
                     transInvn.ActualWeight = Convert.ToDecimal(dr3["ACTL_WT"].ToString());
-                    pickLocnDtl.ActualQty = Convert.ToDecimal(dr3["ACTL_INVN_QTY"].ToString());
+                    pickLocnDtl.ActualInventoryQuantity = Convert.ToDecimal(dr3["ACTL_INVN_QTY"].ToString());
                     pickLocnDtl.ToBeFilledQty = Convert.ToDecimal(dr3["TO_BE_FILLD_QTY"].ToString());
                     pickLocnDtl.LocationId = dr3["LOCN_ID"].ToString();
                 }

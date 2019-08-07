@@ -36,16 +36,15 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Tests
                 .And(x => x.VerifyTheQuantityWasIncreasedIntoPickLocationTable())
                 .BDDfy();              
         }
-        //[TestMethod()]
-        //[TestCategory("FUNCTIONAL")]
-        //public void VerifyForInvalidMessageKey()
-        //{
-        //    this.Given(x => x.SetInvalidMsgKey())
-        //        .And(x => x.AValidNewCostMessageRecord())
-        //        .When(x => x.CostApiIsCalled())
-        //        .Then(x => x.ValidateResultForInvalidMessageKey())
-        //        .BDDfy();
-        //}
+        [TestMethod()]
+        [TestCategory("FUNCTIONAL")]
+        public void VerifyForInvalidMessageKey()
+        {
+            this.Given(x => x.SetInvalidMsgKey())
+                .When(x => x.CostApiIsCalled())
+                .Then(x => x.ValidateResultForInvalidMessageKey())
+                .BDDfy();
+        }
 
         //[TestMethod()]
         //[TestCategory("FUNCTIONAL")]

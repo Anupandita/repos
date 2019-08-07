@@ -19,5 +19,11 @@ namespace Sfc.Wms.Asrs.Test.Integrated.TestData
         public string InvalidStsCase;
         public string InvalidStsSku;
         public string InvalidStsQty;
+        public string TransInvnNotExistCase;
+        public string TransInvnNotExistSku;
+        public string TransInvnNotExistQty;
+        public string PickLocnDtlNotExistCase;
+        public string PickLocnDtlNotExistSku;
+        public string PickLocnDtlNotExistQty;
     }
 }

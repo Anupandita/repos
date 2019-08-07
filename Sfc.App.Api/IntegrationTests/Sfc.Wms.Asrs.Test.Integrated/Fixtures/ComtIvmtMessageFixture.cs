@@ -1,16 +1,13 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Sfc.Wms.Asrs.Test.Integrated.TestData;
-using RestSharp;
-using Sfc.Wms.Amh.Dematic.Contracts.Dtos;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
-using DefaultPossibleValue = Sfc.Wms.DematicMessage.Contracts.Constants;
+using RestSharp;
+using Sfc.Wms.Asrs.Test.Integrated.TestData;
+using Sfc.Wms.InboundLpn.Contracts.Dtos;
 using Sfc.Wms.Result;
-using System.Diagnostics;
+using System;
 using System.Configuration;
-using Sfc.Wms.ParserAndTranslator.Contracts.Dto;
-using Sfc.Wms.Asrs.Shamrock.Contracts.Dtos;
-using Sfc.Wms.ParserAndTranslator.Contracts.Constants;
+using System.Diagnostics;
+using DefaultPossibleValue = Sfc.Wms.ParserAndTranslator.Contracts.Constants;
 
 namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
 {
@@ -41,7 +38,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
         {
             ComtParameters = new ComtParams
             {
-                ActionCode = DefaultPossibleValue.ActionCodeConstants.create,
+                ActionCode = DefaultPossibleValue.ActionCodeConstants.Create,
                 CurrentLocationId = "123",
                 ContainerId = currentCaseNbr,
                 ContainerType = DefaultValues.ContainerType,
@@ -74,7 +71,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
 
         protected void VerifyComtMessageWasInsertedIntoSwmToMhe()
         {
-            VerifyIvmtMessageWasInsertedIntoSwmToMhe(ivmt, cd, cd.SkuId, cd.ActlQty);
+            VerifyIvmtMessageWasInsertedIntoSwmToMhe(ivmt, cd, cd.SkuId, Convert.ToDouble(cd.ActualQuantity));
         }
         protected void VerifyComtMessageWasInsertedIntoWmsToEms() 
         {
@@ -97,11 +94,11 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
         }
         protected void VerifyQuantityisReducedIntoCaseDetail()
         {
-            Assert.AreEqual(0, caseDtl.ActlQty);        
+            Assert.AreEqual(0, caseDtl.ActualQuantity);        
         }
         protected void VerifyStatusIsUpdatedIntoCaseHeader()
         {
-            VerifyStatusIsUpdatedIntoCaseHeader(caseHdr.StatCode);
+            VerifyStatusIsUpdatedIntoCaseHeader(caseHdr.StatusCode);
         }
         
         protected void VerifyStatusIsUpdatedIntoTaskHeader()
@@ -123,7 +120,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
 
         protected void ValidateForCaseHeaderForStatusCode()
         {
-            VerifyStatusIsUpdatedIntoCaseHeader(caseHeader.StatCode);
+            VerifyStatusIsUpdatedIntoCaseHeader(caseHeader.StatusCode);
         }
     }
 }
