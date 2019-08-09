@@ -167,6 +167,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Sfc.App.Api.Contracts\Sfc.App.Api.Contracts\Sfc.App.Api.Contracts.csproj">
+      <Project>{91e24ed1-6337-42f4-8875-0d4ad8758acd}</Project>
+      <Name>Sfc.App.Api.Contracts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sfc.App.Api.Nuget\Sfc.App.Api.Nuget\Sfc.App.Api.Nuget.csproj">
       <Project>{3d162faf-1167-4b0d-8379-4dbfb28981b1}</Project>
       <Name>Sfc.App.Api.Nuget</Name>
@@ -176,11 +180,10 @@
       <Name>Sfc.App.Api</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sfc.App.App\Sfc.App.App\Sfc.App.App.csproj">
-      <Project>{871E639A-1AA1-489C-806B-3F2678ACDD0E}</Project>
+      <Project>{871e639a-1aa1-489c-806b-3f2678acdd0e}</Project>
       <Name>Sfc.App.App</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
