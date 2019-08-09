@@ -14,7 +14,7 @@ namespace Sfc.App.Api.Nuget.Gateways
         {
             RestClient = restClient;
             var baseUrl = ConfigurationManager.AppSettings["BaseUrl"];
-            RestClient.BaseUrl =new Uri($"{baseUrl}/{path}");
+            RestClient.BaseUrl = new Uri($"{baseUrl}/{path}");
         }
 
         protected string GetQueryString(params string[] parameters)

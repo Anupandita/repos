@@ -1,14 +1,14 @@
-﻿using Sfc.App.App.Interfaces;
+﻿using System.Threading.Tasks;
+using System.Web;
+using System.Web.Http;
+using System.Web.Http.Description;
+using Sfc.App.Api.Contracts.Constants;
+using Sfc.App.App.Interfaces;
 using Sfc.Core.BaseApiController;
 using Sfc.Wms.Result;
 using Sfc.Wms.Security.Contracts.Dtos;
 using Sfc.Wms.Security.Contracts.Dtos.UI;
 using Sfc.Wms.Security.Token.Jwt.Jwt;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http;
-using System.Web.Http.Description;
-using Route = Sfc.App.Api.Contracts.Constants.Route;
 
 namespace Sfc.App.Api.Controllers
 {
@@ -29,13 +29,10 @@ namespace Sfc.App.Api.Controllers
         public async Task<IHttpActionResult> SignInAsync(LoginCredentials loginCredentials)
         {
             var response = await _rbacGateway.SignInAsync(loginCredentials).ConfigureAwait(false);
-            if (response.ResultType == ResultTypes.Ok)
-            {
-                HttpContext.Current.Response.Headers.Add(Constants.Authorization,
-                    $"{Constants.Bearer} {response.Payload.Token}");
-                response.Payload.Token = string.Empty;
-            }
-
+            if (response.ResultType != ResultTypes.Ok) return ResponseHandler(response);
+            HttpContext.Current?.Response.Headers.Add(Constants.Authorization,
+                $"{Constants.Bearer} {response.Payload.Token}");
+            response.Payload.Token = string.Empty;
             return ResponseHandler(response);
         }
     }

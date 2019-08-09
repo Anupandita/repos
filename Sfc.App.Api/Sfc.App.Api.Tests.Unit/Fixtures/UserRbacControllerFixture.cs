@@ -14,7 +14,7 @@ namespace Sfc.App.Api.Tests.Unit.Fixtures
 {
     public abstract class UserRbacControllerFixture
     {
-        private readonly Mock<IRbacGateway> _mockRabcGateway;
+        private readonly Mock<IRbacGateway> _mockRbacGateway;
         private readonly UserRbacController _userRbacController;
         private bool isValid;
 
@@ -23,8 +23,8 @@ namespace Sfc.App.Api.Tests.Unit.Fixtures
 
         protected UserRbacControllerFixture()
         {
-            _mockRabcGateway = new Mock<IRbacGateway>(MockBehavior.Default);
-            _userRbacController = new UserRbacController(_mockRabcGateway.Object);
+            _mockRbacGateway = new Mock<IRbacGateway>(MockBehavior.Default);
+            _userRbacController = new UserRbacController(_mockRbacGateway.Object);
         }
 
         protected void InvalidCredentials()
@@ -47,7 +47,7 @@ namespace Sfc.App.Api.Tests.Unit.Fixtures
                 ResultType = isValid ? ResultTypes.Ok : ResultTypes.Unauthorized
             };
 
-            _mockRabcGateway.Setup(m => m.SignInAsync(request)).Returns(Task.FromResult(userDetails));
+            _mockRbacGateway.Setup(m => m.SignInAsync(request)).Returns(Task.FromResult(userDetails));
 
             testResponse = _userRbacController.SignInAsync(request);
         }

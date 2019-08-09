@@ -133,7 +133,7 @@
       <Version>12.0.2</Version>
     </PackageReference>
     <PackageReference Include="Sfc.App.App">
-      <Version>1.1.5</Version>
+      <Version>1.1.8</Version>
     </PackageReference>
     <PackageReference Include="Sfc.Core.BaseApiController">
       <Version>1.0.0</Version>
@@ -148,10 +148,7 @@
       <Version>1.0.7</Version>
     </PackageReference>
     <PackageReference Include="Sfc.Wms.Security.Contracts">
-      <Version>1.1.1</Version>
-    </PackageReference>
-    <PackageReference Include="Sfc.Wms.Security.Rbac">
-      <Version>1.1.2</Version>
+      <Version>1.1.3</Version>
     </PackageReference>
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
       <Version>4.5.2</Version>
@@ -178,10 +175,6 @@
     <ProjectReference Include="..\Sfc.App.Api\Sfc.App.Api.csproj">
       <Project>{d64223b7-5eab-4408-9d8c-759d757f49f3}</Project>
       <Name>Sfc.App.Api</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sfc.App.App\Sfc.App.App\Sfc.App.App.csproj">
-      <Project>{871e639a-1aa1-489c-806b-3f2678acdd0e}</Project>
-      <Name>Sfc.App.App</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

@@ -13,9 +13,9 @@ namespace Sfc.App.Api
             config.MessageHandlers.Add(new SlidingExpirationHandler());
             FilterConfig.RegisterHttpFilters(GlobalConfiguration.Configuration.Filters);
             DependencyConfig.Register();
-            config.Routes.MapHttpRoute("DefaultApi","api/{controller}/{id}");
-            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-
+            config.Routes.MapHttpRoute("DefaultApi", "api/{controller}/{id}");
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver =
+                new CamelCasePropertyNamesContractResolver();
         }
     }
 }
