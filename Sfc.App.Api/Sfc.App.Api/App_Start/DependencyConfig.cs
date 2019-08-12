@@ -4,19 +4,19 @@ using System.Web.Http;
 using AutoMapper;
 using Sfc.App.App.Gateways;
 using Sfc.App.App.Interfaces;
-using Sfc.Wms.Security.Rbac.AutoMapper;
-using Sfc.Wms.Security.Rbac.Services;
+using Sfc.Core.Cache.InMemory;
+using Sfc.Wms.Data.Context;
+using Sfc.Wms.Security.Contracts.Extensions;
 using Sfc.Wms.Security.Contracts.Interfaces;
+using Sfc.Wms.Security.Rbac.AutoMapper;
+using Sfc.Wms.Security.Rbac.Interface;
 using Sfc.Wms.Security.Rbac.Repository.Gateways;
 using Sfc.Wms.Security.Rbac.Repository.Interfaces;
+using Sfc.Wms.Security.Rbac.Services;
+using Sfc.Wms.Security.Rbac.UnitOfWork;
 using SimpleInjector;
 using SimpleInjector.Integration.WebApi;
 using SimpleInjector.Lifestyles;
-using Sfc.Wms.Data.Context;
-using Sfc.Wms.Security.Rbac.UnitOfWork;
-using Sfc.Wms.Security.Rbac.Interface;
-using Sfc.Core.Cache.InMemory;
-using Sfc.Wms.Security.Contracts.Extensions;
 
 namespace Sfc.App.Api.App_Start
 {
@@ -41,10 +41,7 @@ namespace Sfc.App.Api.App_Start
         {
             container.RegisterSingleton<IMapper>(() =>
             {
-                var mapper = new Mapper(new MapperConfiguration(c =>
-                {
-                    SfcRbacMapper.CreateMaps(c);
-                }));
+                var mapper = new Mapper(new MapperConfiguration(c => { SfcRbacMapper.CreateMaps(c); }));
 #if DEBUG
                 mapper.DefaultContext.ConfigurationProvider.AssertConfigurationIsValid();
 #endif

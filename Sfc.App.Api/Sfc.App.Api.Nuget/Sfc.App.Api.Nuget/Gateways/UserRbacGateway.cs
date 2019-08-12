@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-
 using RestSharp;
 using Sfc.App.Api.Contracts.Constants;
 using Sfc.App.Api.Nuget.Interfaces;
@@ -24,6 +23,5 @@ namespace Sfc.App.Api.Nuget.Gateways
                 .ConfigureAwait(false);
             return GetBaseResult<UserDetailsDto>(result);
         }
-
     }
 }

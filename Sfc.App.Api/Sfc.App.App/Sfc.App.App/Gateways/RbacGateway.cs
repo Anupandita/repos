@@ -1,12 +1,11 @@
-﻿using Sfc.App.App.Interfaces;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Sfc.App.App.Interfaces;
 using Sfc.Wms.Result;
 using Sfc.Wms.Security.Contracts.Dtos;
 using Sfc.Wms.Security.Contracts.Dtos.UI;
 using Sfc.Wms.Security.Contracts.Interfaces;
 using Sfc.Wms.Security.Token.Jwt.Jwt;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 
 namespace Sfc.App.App.Gateways
 {
@@ -22,7 +21,7 @@ namespace Sfc.App.App.Gateways
         public async Task<BaseResult<UserDetailsDto>> SignInAsync(LoginCredentials loginCredentials)
         {
             var response = new BaseResult<UserDetailsDto>
-            { ResultType = ResultTypes.BadGateway };
+                {ResultType = ResultTypes.BadGateway};
 
             if (!ValidateLoginCredentials(loginCredentials)) return response;
 
@@ -44,13 +43,10 @@ namespace Sfc.App.App.Gateways
 
         #region Private Methods
 
-        private BaseResult<UserDetailsDto> GetBaseResult(BaseResult<int> result, [CallerMemberName] string callerName = "")
+        private BaseResult<UserDetailsDto> GetBaseResult(BaseResult<int> result)
         {
-            var response = new BaseResult<UserDetailsDto> { ResultType = result.ResultType };
-            if (!(result.ValidationMessages?.Count > 0))
-                response.ValidationMessages?.Add(new ValidationMessage(callerName,
-                    ValidationMessages.InvalidUsernameOrPassword));
-            else
+            var response = new BaseResult<UserDetailsDto> {ResultType = result.ResultType};
+            if (result.ValidationMessages?.Count > 0)
                 response.ValidationMessages.AddRange(result.ValidationMessages);
             return response;
         }
@@ -60,6 +56,7 @@ namespace Sfc.App.App.Gateways
             return !(string.IsNullOrWhiteSpace(loginCredentials.UserName) ||
                      string.IsNullOrWhiteSpace(loginCredentials.Password));
         }
+
         #endregion
     }
 }

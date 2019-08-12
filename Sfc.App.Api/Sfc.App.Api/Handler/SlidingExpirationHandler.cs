@@ -15,14 +15,23 @@ namespace Sfc.App.Api.Handler
         {
             var response = await base.SendAsync(request, cancellationToken);
 
-            if (response.StatusCode == HttpStatusCode.Unauthorized ||
-                !(request.GetRequestContext().Principal is ClaimsPrincipal claimsPrincipal))
+            if (IsToGenerateNewToken(request, response, out var claimsPrincipal))
                 return response;
 
             var token = JwtManager.GenerateToken(claimsPrincipal.Claims.ToArray());
-            response.Headers.Add("Bearer", token);
+            response.Headers.Add(Constants.Authorization, $"{Constants.Bearer} {token}");
 
             return response;
+        }
+
+        private static bool IsToGenerateNewToken(HttpRequestMessage request, HttpResponseMessage response,
+            out ClaimsPrincipal claimsPrincipal)
+        {
+            claimsPrincipal = (ClaimsPrincipal) request.GetRequestContext().Principal;
+            return response.StatusCode == HttpStatusCode.Unauthorized ||
+                   !request.Headers.TryGetValues(Constants.Authorization, out var values) ||
+                   values == null || !values.Any() ||
+                   claimsPrincipal == null || !claimsPrincipal.Claims.Any();
         }
     }
 }

@@ -133,7 +133,7 @@
       <Version>12.0.2</Version>
     </PackageReference>
     <PackageReference Include="Sfc.App.App">
-      <Version>1.1.5</Version>
+      <Version>1.1.8</Version>
     </PackageReference>
     <PackageReference Include="Sfc.Core.BaseApiController">
       <Version>1.0.0</Version>
@@ -148,10 +148,7 @@
       <Version>1.0.7</Version>
     </PackageReference>
     <PackageReference Include="Sfc.Wms.Security.Contracts">
-      <Version>1.1.1</Version>
-    </PackageReference>
-    <PackageReference Include="Sfc.Wms.Security.Rbac">
-      <Version>1.1.2</Version>
+      <Version>1.1.3</Version>
     </PackageReference>
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
       <Version>4.5.2</Version>
@@ -167,6 +164,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Sfc.App.Api.Contracts\Sfc.App.Api.Contracts\Sfc.App.Api.Contracts.csproj">
+      <Project>{91e24ed1-6337-42f4-8875-0d4ad8758acd}</Project>
+      <Name>Sfc.App.Api.Contracts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sfc.App.Api.Nuget\Sfc.App.Api.Nuget\Sfc.App.Api.Nuget.csproj">
       <Project>{3d162faf-1167-4b0d-8379-4dbfb28981b1}</Project>
       <Name>Sfc.App.Api.Nuget</Name>
@@ -175,12 +176,7 @@
       <Project>{d64223b7-5eab-4408-9d8c-759d757f49f3}</Project>
       <Name>Sfc.App.Api</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Sfc.App.App\Sfc.App.App\Sfc.App.App.csproj">
-      <Project>{871E639A-1AA1-489C-806B-3F2678ACDD0E}</Project>
-      <Name>Sfc.App.App</Name>
-    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
