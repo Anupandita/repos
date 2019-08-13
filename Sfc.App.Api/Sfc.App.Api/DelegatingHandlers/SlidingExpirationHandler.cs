@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Sfc.Wms.Security.Token.Jwt.Jwt;
 
-namespace Sfc.App.Api.Handler
+namespace Sfc.App.Api.DelegatingHandlers
 {
     public class SlidingExpirationHandler : DelegatingHandler
     {
