@@ -15,7 +15,7 @@ namespace Sfc.App.Api.DelegatingHandlers
         {
             var response = await base.SendAsync(request, cancellationToken);
 
-            if (IsToGenerateNewToken(request, response, out var claimsPrincipal))
+            if (DoesGenerateNewToken(request, response, out var claimsPrincipal))
                 return response;
 
             var token = JwtManager.GenerateToken(claimsPrincipal.Claims.ToArray());
@@ -24,7 +24,7 @@ namespace Sfc.App.Api.DelegatingHandlers
             return response;
         }
 
-        private static bool IsToGenerateNewToken(HttpRequestMessage request, HttpResponseMessage response,
+        private static bool DoesGenerateNewToken(HttpRequestMessage request, HttpResponseMessage response,
             out ClaimsPrincipal claimsPrincipal)
         {
             claimsPrincipal = (ClaimsPrincipal) request.GetRequestContext().Principal;
