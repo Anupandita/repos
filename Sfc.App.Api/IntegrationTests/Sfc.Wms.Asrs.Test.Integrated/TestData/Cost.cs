@@ -16,6 +16,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.TestData
         public Int64 InvalidCaseNumberKey;
         public Int64 InvalidStsKey;
         public Int64 TransInvnNotExistKey;
+        public Int64 PickLocationNotExistKey;
         public string InvalidStsCase;
         public string InvalidStsSku;
         public string InvalidStsQty;

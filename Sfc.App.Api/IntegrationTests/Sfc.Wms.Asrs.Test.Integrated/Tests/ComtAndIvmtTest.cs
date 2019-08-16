@@ -52,9 +52,11 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Tests
             this.Given(x => x.SetCurrentCaseNumberToMultiSku())
                 .And(x => x.AValidNewComtMessageRecord())
                 .When(x => x.ComtApiIsCalled())
-                .Then(x => x.GetDataFromDbForMultiSkuAndValidateForData())
-                .And(x => x.ValidateForCaseDetailForQuantity())
-                .And(x => x.ValidateForCaseHeaderForStatusCode())
+                .Then(x => x.GetDataAndValidateForIvmtMessageHasInsertedIntoBothTables())
+                .And(x=>x.VerifyComtMessageWasInsertedIntoSwmToMheForMultiSku())
+                .And(x=>x.VerifyComtMessageWasInsertedIntoWmsToEmsForMultiSku())
+                .And(x => x.VerifyQuantityisReducedIntoCaseDetailTable())
+                .And(x => x.VerifyStatusIsUpdatedIntoCaseHeaderTable())
                 .BDDfy();
         }      
     }

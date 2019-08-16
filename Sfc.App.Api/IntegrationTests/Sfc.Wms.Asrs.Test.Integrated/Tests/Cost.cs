@@ -46,37 +46,38 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Tests
                 .BDDfy();
         }
 
-        //[TestMethod()]
-        //[TestCategory("FUNCTIONAL")]
-        //public void VerifyForErrorLogNoCaseFound()
-        //{
-        //    this.Given(x => x.SetForInvalidCaseMsgKey())
-        //   .And(x => x.AValidNewCostMessageRecord())
-        //   .When(x => x.CostApiIsCalled())
-        //   .Then(x => x.ValidateResultForInvalidCaseNumber())
-        //   .BDDfy();
-        //}
+        [TestMethod()]
+        [TestCategory("FUNCTIONAL")]
+        public void VerifyForErrorLogNoCaseFound()
+        {
+            this.Given(x => x.SetForInvalidCaseMsgKey())         
+           .When(x => x.CostApiIsCalled())
+           .Then(x => x.ValidateResultForInvalidCaseNumber())
+           .BDDfy();
+        }
 
-        //[TestMethod()]
-        //[TestCategory("FUNCTIONAL")]
-        //public void VerifyForErrorLogInvalidCaseStatus()
-        //{
-        //    this.Given(x => x.SetForInvalidCaseStatusMsgKey())
-        //   .And(x => x.AValidNewCostMessageRecord())
-        //   .When(x => x.CostApiIsCalled())
-        //   .Then(x => x.ValidateResultForInvalidCaseStatus())
-        //   .BDDfy();
-        //}
 
-        //[TestMethod()]
-        //[TestCategory("FUNCTIONAL")]
-        //public void VerifyForErrorNotEnoughInv()
-        //{
-        //    this.Given(x => x.SetForTransInvnNotExistsMsgKey())
-        //   .And(x => x.AValidNewCostMessageRecord())
-        //   .When(x => x.CostApiIsCalled())
-        //   .Then(x => x.ValidateResultForTransInventoryNotExist())
-        //   .BDDfy();
-        //}
+
+        [TestMethod()]
+        [TestCategory("FUNCTIONAL")]
+        public void VerifyForErrorNotEnoughInv()
+        {
+            this.Given(x => x.SetForTransInvnNotExistsMsgKey())
+           .When(x => x.CostApiIsCalled())
+           .Then(x => x.ValidateResultForTransInventoryNotExist())
+           .BDDfy();
+        }
+
+        
+
+        [TestMethod()]
+        [TestCategory("FUNCTIONAL")]
+        public void VerifyForErrorPickLocationNotFound()
+        {
+            this.Given(x => x.SetForPickLocationNotExistKey())
+           .When(x => x.CostApiIsCalled())
+           .Then(x => x.ValidateResultForPickLocationNotExist())
+           .BDDfy();
+        }
     }
 }
