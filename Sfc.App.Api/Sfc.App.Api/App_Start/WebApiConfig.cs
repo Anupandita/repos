@@ -1,7 +1,7 @@
 ﻿using System.Web.Http;
 using Newtonsoft.Json.Serialization;
 using Sfc.App.Api.App_Start;
-using Sfc.App.Api.Handler;
+using Sfc.App.Api.DelegatingHandlers;
 
 namespace Sfc.App.Api
 {
