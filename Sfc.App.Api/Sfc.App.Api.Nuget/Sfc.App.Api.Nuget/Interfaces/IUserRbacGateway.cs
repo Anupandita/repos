@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Sfc.Wms.Result;
-using Sfc.Wms.Security.Contracts.Dtos;
-using Sfc.Wms.Security.Contracts.Dtos.UI;
+using Sfc.Core.OnPrem.Result;
+using Sfc.Core.OnPrem.Security.Contracts.Dtos;
+using Sfc.Core.OnPrem.Security.Contracts.Dtos.Ui;
 
 namespace Sfc.App.Api.Nuget.Interfaces
 {

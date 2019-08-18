@@ -1,10 +1,12 @@
 ﻿using System.Threading.Tasks;
+using System.Web.Routing;
 using RestSharp;
-using Sfc.App.Api.Contracts.Constants;
 using Sfc.App.Api.Nuget.Interfaces;
-using Sfc.Wms.Result;
-using Sfc.Wms.Security.Contracts.Dtos;
-using Sfc.Wms.Security.Contracts.Dtos.UI;
+using Sfc.App.Api.Contracts.Constants;
+using Sfc.Core.OnPrem.Result;
+using Sfc.Core.OnPrem.Security.Contracts.Dtos;
+using Sfc.Core.OnPrem.Security.Contracts.Dtos.Ui;
+using Route = Sfc.App.Api.Contracts.Constants.Route;
 
 namespace Sfc.App.Api.Nuget.Gateways
 {
