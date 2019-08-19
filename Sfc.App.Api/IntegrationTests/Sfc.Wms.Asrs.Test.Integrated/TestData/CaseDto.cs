@@ -10,11 +10,11 @@ namespace Sfc.Wms.Asrs.Test.Integrated
     {
         public string CaseNumber { get; set; }
         public string LocationId { get; set; }
-        public short StatusCode { get; set; }
+        public int StatusCode { get; set; }
         public string SkuId { get; set; }
         public int ActlQty { get; set; }
         public int TotalAllocQty { get; set; }
-        public int ActualInventoryUnits { get; set; }
+        public decimal ActualInventoryUnits { get; set; }
         public decimal ActualWeight { get; set; }
     }
 }

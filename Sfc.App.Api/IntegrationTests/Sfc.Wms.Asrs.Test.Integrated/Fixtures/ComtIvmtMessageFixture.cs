@@ -72,7 +72,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
 
         protected void VerifyComtMessageWasInsertedIntoSwmToMhe()
         {
-            Assert.AreEqual(DefaultValues.Status, stm.SourceMessageStatus);
+            Assert.AreEqual(DefaultValues.Status, swmToMheIvmt.SourceMessageStatus);
             Assert.AreEqual(TransactionCode.Ivmt, ivmt.TransactionCode);
             Assert.AreEqual(MessageLength.Ivmt, ivmt.MessageLength);
             Assert.AreEqual(ActionCodeConstants.Create, ivmt.ActionCode);
@@ -84,23 +84,23 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
 
         protected void VerifyComtMessageWasInsertedIntoSwmToMheForMultiSku()
         {
-            VerifyComtMessageWasInsertedIntoSwmToMhe(comt1, swmToMhe1, caseHdrMultiSku.CaseNumber);
+            VerifyComtMessageWasInsertedIntoSwmToMhe(comt, swmToMheComt, caseHdrMultiSku.CaseNumber);
         }
         protected void VerifyComtMessageWasInsertedIntoWmsToEms() 
         {
-            VerifyComtMessageWasInsertedIntoWmsToEms(wte1);      
+            VerifyComtMessageWasInsertedIntoWmsToEms(wmsToEmsComt);      
         }
         protected void VerifyComtMessageWasInsertedIntoWmsToEmsForMultiSku()
         {
-            VerifyComtMessageWasInsertedIntoWmsToEms(wte1);
+            VerifyComtMessageWasInsertedIntoWmsToEms(wmsToEmsComt);
         }
         protected void VerifyIvmtMessageWasInsertedIntoSwmToMhe()
         {
-            VerifyComtMessageWasInsertedIntoSwmToMhe(comt, swmToMhe1, singleSkuCase.CaseNumber);
+            VerifyComtMessageWasInsertedIntoSwmToMhe(comt, swmToMheComt, singleSkuCase.CaseNumber);
         }
         protected void VerifyIvmtMessageWasInsertedIntoWmsToEms()
         {
-            VerifyIvmtMessageWasInsertedIntoWmsToEms(wmsToEms);
+            VerifyIvmtMessageWasInsertedIntoWmsToEms(wmsToEmsIvmt);
         }       
 
         protected void VerifyTheQuantityIsIncreasedToTransInventory()
@@ -121,7 +121,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
         {
             try
             {
-                 VerifyStatusIsUpdatedIntoTaskHeader(task.StatusCode);
+                 VerifyStatusIsUpdatedIntoTaskHeader(taskSingleSku.StatusCode);
             }
             catch
             {

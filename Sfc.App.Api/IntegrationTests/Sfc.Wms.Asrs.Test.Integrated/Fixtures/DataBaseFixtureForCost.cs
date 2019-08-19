@@ -23,8 +23,8 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
     public class DataBaseFixtureForCost :DataBaseFixture
     {       
         protected SwmFromMheDto swmFromMhe = new SwmFromMheDto();
-        protected TransitionalInventoryDto trn3 = new TransitionalInventoryDto();
-        protected TransitionalInventoryDto transInvn  = new TransitionalInventoryDto();
+        protected CaseDto trnInvBeforeApi = new CaseDto();
+        protected CaseDto trnInvAfterApi  = new CaseDto();
         protected CostDto CostParameters;
         protected Cost costData = new Cost();
         protected EmsToWmsDto emsToWmsParameters;
@@ -38,6 +38,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
         protected OracleTransaction transaction;
         protected OracleCommand command;
         public decimal unitweight1;
+       
 
         public DataBaseFixtureForCost()
         {
@@ -73,31 +74,24 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
                 transaction = db.BeginTransaction();
                 GetCaseDetailsForInsertingCostMessage(db);
                 InsertCostMessageInToEmsTable(db);
-
-                sql1 = $"select * from emstowms where msgkey = '{emsToWmsParameters.MessageKey}'";
-                command = new OracleCommand(sql1, db);
-                var dr = command.ExecuteReader();
-                if (dr.Read())
-                {
-                    emsToWms.MessageKey = Convert.ToInt64(dr["MSGKEY"].ToString());
-                    emsToWms.Process = dr["PRC"].ToString();
-                    emsToWms.ResponseCode = (short)int.Parse(dr["RSNRCODE"].ToString());
-                    emsToWms.Status = dr["STS"].ToString();
-                    emsToWms.Transaction = dr["TRX"].ToString();                   
-                }
-                
-                sql1 = $"select tn.ACTL_INVN_UNITS,pl.ACTL_INVN_QTY,pl.TO_BE_FILLD_QTY,pl.LOCN_ID from trans_invn tn inner join  pick_locn_dtl pl on tn.sku_id = pl.sku_id and tn.trans_invn_type= 18 and tn.sku_id = '{costData.ValidSkuId}' order by tn.mod_date_time desc";
-                command = new OracleCommand(sql1, db);
-                var dr3 = command.ExecuteReader();
-                if (dr3.Read())
-                {
-                    trn3.ActualInventoryUnits = Convert.ToDecimal(dr3["ACTL_INVN_UNITS"].ToString());
-                    Assert.AreNotEqual(0, trn3.ActualInventoryUnits);
-                    pickLcnDtl.ActualInventoryQuantity = Convert.ToDecimal(dr3["ACTL_INVN_QTY"].ToString());
-                    pickLcnDtl.ToBeFilledQty = Convert.ToDecimal(dr3["TO_BE_FILLD_QTY"].ToString());
-                    pickLcnDtl.LocationId = dr3["LOCN_ID"].ToString();
-                }
+                trnInvBeforeApi = FetchTransInvn(db, costData.ValidSkuId);
+                pickLcnDtl = PickLocnData(db, costData.ValidSkuId);
             }
+        }
+         
+        public PickLocationDtlDto PickLocnData(OracleConnection db,string skuId)
+        {
+            var pickLocn = new PickLocationDtlDto();
+            sql1 = $"select tn.ACTL_INVN_UNITS,pl.ACTL_INVN_QTY,pl.TO_BE_FILLD_QTY,pl.LOCN_ID from trans_invn tn inner join  pick_locn_dtl pl on tn.sku_id = pl.sku_id and tn.trans_invn_type= 18 and tn.sku_id = '{skuId}' order by tn.mod_date_time desc";
+            command = new OracleCommand(sql1, db);
+            var dr3 = command.ExecuteReader();
+            if (dr3.Read())
+            {
+                pickLocn.ActualInventoryQuantity = Convert.ToDecimal(dr3["ACTL_INVN_QTY"].ToString());
+                pickLocn.ToBeFilledQty = Convert.ToDecimal(dr3["TO_BE_FILLD_QTY"].ToString());
+                pickLocn.LocationId = dr3["LOCN_ID"].ToString();
+            }
+            return pickLocn;
         }
          
         public void InsertCostMessageInToEmsTable(OracleConnection db)
@@ -126,7 +120,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
             {
                 ActionCode = "Arrival",
                 ContainerReasonCodeMap = ReasonCode.Success,
-                ContainerId = "00100283000815502000",
+                ContainerId = containerNbr,
                 ContainerType = "Case",
                 PhysicalContainerId = "",
                 CurrentLocationId = locnId,
@@ -243,36 +237,8 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
             }
             return swmFromMheData;
         }
-        public void SwmFromMheForCostData(OracleConnection db, string caseNbr, string trx, string skuId)
-        {
-            swmFromMhe = SwmFromMhe(db, caseNbr, trx, skuId);
-            var msgDto = JsonConvert.DeserializeObject<CostDto>(swmFromMhe.MessageJson);
-            cost.TransactionCode = msgDto.TransactionCode;
-            cost.ActionCode = msgDto.ActionCode;
-            cost.MessageLength = msgDto.MessageLength;
-            cost.ContainerReasonCodeMap = msgDto.ContainerReasonCodeMap;
-            cost.ContainerId = msgDto.ContainerId;
-            cost.StorageClassAttribute1 = msgDto.StorageClassAttribute1;
-            cost.StorageClassAttribute2 = msgDto.StorageClassAttribute2;
-            cost.CurrentLocationId = msgDto.CurrentLocationId;
-            cost.ContainerType = msgDto.ContainerType;
-            cost.PalletLpn = msgDto.PalletLpn;
-        }
-
-        public void TransInvnPickLocnDataAfterTrigger(OracleConnection db)
-        {
-            sql1 = $"select tn.ACTL_INVN_UNITS,tn.Actl_wt,pl.ACTL_INVN_QTY,pl.TO_BE_FILLD_QTY,pl.LOCN_ID from trans_invn tn inner join  pick_locn_dtl pl on tn.sku_id = pl.sku_id and tn.trans_invn_type= 18 and tn.sku_id = '{cost.StorageClassAttribute1}' order by tn.mod_date_time desc";
-            command = new OracleCommand(sql1, db);
-            var dr3 = command.ExecuteReader();
-            if (dr3.Read())
-            {
-                transInvn.ActualInventoryUnits = Convert.ToDecimal(dr3["ACTL_INVN_UNITS"].ToString());
-                transInvn.ActualWeight = Convert.ToDecimal(dr3["ACTL_WT"].ToString());
-                pickLocnDtl.ActualInventoryQuantity = Convert.ToDecimal(dr3["ACTL_INVN_QTY"].ToString());
-                pickLocnDtl.ToBeFilledQty = Convert.ToDecimal(dr3["TO_BE_FILLD_QTY"].ToString());
-                pickLocnDtl.LocationId = dr3["LOCN_ID"].ToString();
-            }
-        }
+        
+       
         public void GetDataAfterTrigger()
         {
             OracleConnection db;
@@ -282,8 +248,10 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
             })
             {
                 db.Open();
-                SwmFromMheForCostData(db, costData.ValidCaseNumber, TransactionCode.Cost, costData.ValidSkuId);
-                TransInvnPickLocnDataAfterTrigger(db);
+                swmFromMhe = SwmFromMhe(db, costData.ValidCaseNumber, TransactionCode.Cost, costData.ValidSkuId);
+                cost = JsonConvert.DeserializeObject<CostDto>(swmFromMhe.MessageJson);
+                trnInvAfterApi = FetchTransInvn(db, cost.StorageClassAttribute1);
+                pickLocnDtl = PickLocnData(db, cost.StorageClassAttribute1);
             }
         }     
     }

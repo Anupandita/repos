@@ -31,17 +31,17 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Tests
         public void ComtAndIvmtTest() 
         {
             this.Given(x => x.SetCurrentCaseNumberToSingleSku())
-                .And(x => x.AValidNewComtMessageRecord())              
+                .And(x => x.AValidNewComtMessageRecord())
                 .When(x => x.ComtApiIsCalled())
                 .Then(x => x.GetDataFromDbForSingleSku())
                 .And(x => x.VerifyComtMessageWasInsertedIntoSwmToMhe())
                 .And(x => x.VerifyComtMessageWasInsertedIntoWmsToEms())
                 .And(x => x.VerifyIvmtMessageWasInsertedIntoSwmToMhe())
                 .And(x => x.VerifyIvmtMessageWasInsertedIntoWmsToEms())
-                .And(x=>x.VerifyTheQuantityIsIncreasedToTransInventory())                  
-                .And(x=>x.VerifyQuantityisReducedIntoCaseDetail())
-                .And(x=>x.VerifyStatusIsUpdatedIntoCaseHeader())
-                .And(x=>x.VerifyStatusIsUpdatedIntoTaskHeader())
+                .And(x => x.VerifyTheQuantityIsIncreasedToTransInventory())
+                .And(x => x.VerifyQuantityisReducedIntoCaseDetail())
+                .And(x => x.VerifyStatusIsUpdatedIntoCaseHeader())
+                .And(x => x.VerifyStatusIsUpdatedIntoTaskHeader())
                 .BDDfy();
         }
 
@@ -53,8 +53,8 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Tests
                 .And(x => x.AValidNewComtMessageRecord())
                 .When(x => x.ComtApiIsCalled())
                 .Then(x => x.GetDataAndValidateForIvmtMessageHasInsertedIntoBothTables())
-                .And(x=>x.VerifyComtMessageWasInsertedIntoSwmToMheForMultiSku())
-                .And(x=>x.VerifyComtMessageWasInsertedIntoWmsToEmsForMultiSku())
+                .And(x => x.VerifyComtMessageWasInsertedIntoSwmToMheForMultiSku())
+                .And(x => x.VerifyComtMessageWasInsertedIntoWmsToEmsForMultiSku())
                 .And(x => x.VerifyQuantityisReducedIntoCaseDetailTable())
                 .And(x => x.VerifyStatusIsUpdatedIntoCaseHeaderTable())
                 .BDDfy();
