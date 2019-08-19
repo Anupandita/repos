@@ -27,7 +27,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
         
         protected void SetCurrentCaseNumberToSingleSku()
         {
-            currentCaseNbr = caseSingleSku.CaseNumber;
+            currentCaseNbr = singleSkuCase.CaseNumber;
         }
 
         protected void SetCurrentCaseNumberToMultiSku()
@@ -51,7 +51,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
 
         protected void GetDataFromDbForSingleSku()
         {
-            GetDataAfterTriggerForComtForSingleSku();
+            GetDataAfterTriggerOfComtForSingleSku();
         }
 
         protected void GetDataAndValidateForIvmtMessageHasInsertedIntoBothTables()
@@ -76,8 +76,8 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(TransactionCode.Ivmt, ivmt.TransactionCode);
             Assert.AreEqual(MessageLength.Ivmt, ivmt.MessageLength);
             Assert.AreEqual(ActionCodeConstants.Create, ivmt.ActionCode);
-            Assert.AreEqual(cd.SkuId, ivmt.Sku);
-            Assert.AreEqual(cd.TotalAllocatedQuantity, Convert.ToDouble(ivmt.Quantity));
+            Assert.AreEqual(singleSkuCase.SkuId, ivmt.Sku);
+            Assert.AreEqual(singleSkuCase.TotalAllocQty, Convert.ToDouble(ivmt.Quantity));
             Assert.AreEqual(DefaultValues.ContainerType, ivmt.UnitOfMeasure);
             Assert.AreEqual(DefaultValues.DataControl, ivmt.DateControl);
         }
@@ -96,7 +96,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
         }
         protected void VerifyIvmtMessageWasInsertedIntoSwmToMhe()
         {
-            VerifyComtMessageWasInsertedIntoSwmToMhe(comt, swmToMhe1, caseSingleSku.CaseNumber);
+            VerifyComtMessageWasInsertedIntoSwmToMhe(comt, swmToMhe1, singleSkuCase.CaseNumber);
         }
         protected void VerifyIvmtMessageWasInsertedIntoWmsToEms()
         {
@@ -105,8 +105,8 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
 
         protected void VerifyTheQuantityIsIncreasedToTransInventory()
         {
-           Assert.AreEqual(transInvn.ActualInventoryUnits + Convert.ToDecimal(ivmt.Quantity), trn.ActualInventoryUnits);
-           //Assert.AreEqual((Math.Round(unitWeight) * Convert.ToDecimal(ivmt.Quantity))+ Convert.ToInt16(transInvn.ActualWeight), Math.Round(Convert.ToDecimal(trn.ActualWeight)));
+           Assert.AreEqual(singleSkuCase.ActualInventoryUnits + Convert.ToDecimal(ivmt.Quantity), trn.ActualInventoryUnits);
+           Assert.AreEqual((Math.Round(unitWeight) * Convert.ToDecimal(ivmt.Quantity))+ Convert.ToInt16(singleSkuCase.ActualWeight), Math.Round(Convert.ToDecimal(trn.ActualWeight)));
         }
         protected void VerifyQuantityisReducedIntoCaseDetail()
         {

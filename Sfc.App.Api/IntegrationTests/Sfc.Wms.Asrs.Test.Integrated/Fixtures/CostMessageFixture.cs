@@ -99,7 +99,6 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
         {
             var response = CostApiIsCalled();
             var result = JsonConvert.DeserializeObject<BaseResult>(response.Content.ToString());
-           // Assert.AreEqual("!0", result.ValidationMessages.ToString());
         }
 
         protected void ValidateResultForPickLocationNotExist()
@@ -123,9 +122,6 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(emsToWms.Status,swmFromMhe.SourceMessageStatus);
             Assert.AreEqual(emsToWms.Transaction, swmFromMhe.SourceMessageTransactionCode);
             Assert.AreEqual(emsToWms.ResponseCode,swmFromMhe.SourceMessageResponseCode);
-           // Assert.AreEqual(emsToWms.AddWho, swmFromMhe.SourceMessageUpdatedBy);
-           // Assert.AreEqual(emsToWms.AddDate, swmFromMhe.SourceMessageCreatedDateTime);
-           // Assert.AreEqual(emsToWms.ProcessedDate, swmFromMhe.SourceMessageUpdatedDateTime);
             Assert.AreEqual(emsToWms.MessageText, swmFromMhe.SourceMessageText);            
             Assert.AreEqual("Case", swmFromMhe.ContainerType);
             Assert.AreEqual(DefaultPossibleValue.TransactionCode.Cost, cost.TransactionCode);
@@ -137,14 +133,13 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
         protected void VerifyTheQuantityWasDecreasedInToTransInventory()
         {
             Assert.AreEqual(trn3.ActualInventoryUnits - Convert.ToDecimal(cost.StorageClassAttribute2), transInvn.ActualInventoryUnits);
-            //Assert.AreEqual(trn.ActualInventoryUnits - (unitWeight * Convert.ToDecimal(cost.StorageClassAttribute2)), transInvn.ActualWeight);
+            Assert.AreEqual(trn.ActualInventoryUnits - (unitWeight * Convert.ToDecimal(cost.StorageClassAttribute2)), transInvn.ActualWeight);
         }
 
         protected void VerifyTheQuantityWasIncreasedIntoPickLocationTable()
         {
             Assert.AreEqual(pickLcnDtl.ActualInventoryQuantity + Convert.ToDecimal(cost.StorageClassAttribute2), pickLocnDtl.ActualInventoryQuantity);
             Assert.AreEqual(pickLocnDtl.ActualInventoryQuantity - Convert.ToDecimal(cost.StorageClassAttribute2), pickLocnDtl.ToBeFilledQty);
-           // Assert.AreEqual("COSTProcessor", pickLocnDtl.UserId);     
         }
     }
 }

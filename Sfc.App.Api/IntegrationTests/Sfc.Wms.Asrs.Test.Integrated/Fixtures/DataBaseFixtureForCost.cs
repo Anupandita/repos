@@ -24,6 +24,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
     {       
         protected SwmFromMheDto swmFromMhe = new SwmFromMheDto();
         protected TransitionalInventoryDto trn3 = new TransitionalInventoryDto();
+        protected TransitionalInventoryDto transInvn  = new TransitionalInventoryDto();
         protected CostDto CostParameters;
         protected Cost costData = new Cost();
         protected EmsToWmsDto emsToWmsParameters;
@@ -110,7 +111,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
                 Process = "EMS",
                 MessageKey = Convert.ToInt64(costData.ValidMsgKey),
                 Status = "Ready",
-                Transaction = DefaultPossibleValue.TransactionCode.Cost,
+                Transaction = TransactionCode.Cost,
                 ResponseCode = (short)int.Parse(DefaultPossibleValue.ReasonCode.Success),
             };
             var validsql = $"insert into emstowms values ('{emsToWmsParameters.Process}','{emsToWmsParameters.MessageKey}','{emsToWmsParameters.Status}','{emsToWmsParameters.Transaction}','{CostResult}','0','TestUser','22-JUL-19','22-JUL-19')";
@@ -124,7 +125,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
             CostParameters = new CostDto
             {
                 ActionCode = "Arrival",
-                ContainerReasonCodeMap = DefaultPossibleValue.ReasonCode.Success,
+                ContainerReasonCodeMap = ReasonCode.Success,
                 ContainerId = "00100283000815502000",
                 ContainerType = "Case",
                 PhysicalContainerId = "",
@@ -135,9 +136,9 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
                 StorageClassAttribute4 = "",
                 StorageClassAttribute5 = "",
                 PalletLpn = containerNbr,
-                TransactionCode = DefaultPossibleValue.TransactionCode.Cost,
-                MessageLength = DefaultPossibleValue.MessageLength.Cost,
-                ReasonCode = DefaultPossibleValue.ReasonCode.Success
+                TransactionCode = TransactionCode.Cost,
+                MessageLength = MessageLength.Cost,
+                ReasonCode = ReasonCode.Success
             };
             GenericMessageBuilder gm = new GenericMessageBuilder(_dataTypeValidation);
             var testResult = gm.BuildMessage<CostDto, CostValidationRule>(CostParameters, DefaultPossibleValue.TransactionCode.Cost);         
