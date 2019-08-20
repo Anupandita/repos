@@ -12,7 +12,5 @@ namespace Sfc.Wms.Asrs.Test.Integrated.TestData
         public string SkuId { get; set; }
         public string Qty { get; set; }
         public string LocnId { get; set; }
-
-
     }
 }

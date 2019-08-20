@@ -22,7 +22,6 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
     public class DataBaseFixture
     {
         public decimal unitWeight;
-        public decimal unitWeight2;
         protected CaseDto singleSkuCase = new CaseDto();
         protected CaseHeaderDto caseHdrMultiSku = new CaseHeaderDto();
         protected SwmToMheDto swmToMhe = new SwmToMheDto();
@@ -124,7 +123,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
 
         public void MultiSkuData(OracleConnection db)
         {
-            caseHdrMultiSku = ValidQueryToFetchCaseData(db,2);
+            caseHdrMultiSku = ValidQueryToFetchCaseData(db,1);
             caseDtoList = GetCaseDtlData(db, caseHdrMultiSku.CaseNumber);
             FetchTransInvnDataForMultiSku(db);
         }
@@ -145,8 +144,6 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
             }
         }
        
-       
-
         public void GetDataAfterTriggerOfComtForSingleSku()
         {
             OracleConnection db;
@@ -189,12 +186,8 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
         {
             var sql14 = $"select unit_wt from item_master where sku_id = '{skuId}'";
             command = new OracleCommand(sql14, db);
-            var dr12 = command.ExecuteReader();
-            if (dr12.Read())
-            {
-               unitWeight2 = Convert.ToDecimal(dr12["UNIT_WT"].ToString());
-            }
-            return unitWeight2;
+            var unitWeight = Convert.ToDecimal(command.ExecuteScalar().ToString());
+            return unitWeight;
         }
 
         protected void FetchTaskDetails(OracleConnection db,string skuId)
@@ -387,6 +380,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
         protected void VerifyQuantityIsIncreasedIntoTransInvn(TransitionalInventoryDto trnInvnAfterApi, TransitionalInventoryDto trnInvnBeforeApi)
         {
             Assert.AreEqual(transInvnBeforeTrigger.ActualInventoryUnits + Convert.ToDecimal(ivmt.Quantity), transInvnAfterTrigger.ActualInventoryUnits);
+            //* the bellow line of code is tested after new build release.
             //Assert.AreEqual((unitWeight * Convert.ToDecimal(ivmt.Quantity)) + Convert.ToInt16(transInvnBeforeApi.ActualWeight), Math.Round(Convert.ToDecimal(transInvnAfterApi.ActualWeight)));
         }
         protected void VerifyQuantityisReducedIntoCaseDetailForMultiSku()

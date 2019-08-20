@@ -60,44 +60,45 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
             return Response;
         }
 
-        protected void CostApiIsCalledWithValidMsgKey()
+        protected BaseResult CostResult()
         {
             var response = CostApiIsCalled();
             var result = JsonConvert.DeserializeObject<BaseResult>(response.Content.ToString());
+            return result;
+        }
+
+        protected void CostApiIsCalledWithValidMsgKey()
+        {
+            var result = CostResult();
             Assert.AreEqual("Created", result.ResultType.ToString());
         }
 
         protected void ValidateResultForInvalidMessageKey()
         {
-            var response = CostApiIsCalled();
-            var result = JsonConvert.DeserializeObject<BaseResult>(response.Content.ToString());
+            var result = CostResult();
             Assert.AreEqual("NotFound",result.ResultType.ToString());
             Assert.AreEqual(0,result.ValidationMessages.Count);
         }
 
         protected void ValidateResultForInvalidCaseNumber()
         {
-            var response = CostApiIsCalled();
-            var result = JsonConvert.DeserializeObject<BaseResult>(response.Content.ToString());
+            var result = CostResult();
             Assert.AreEqual("NotFound", result.ResultType.ToString());
         }
 
         protected void ValidateResultForInvalidCaseStatus()
         {
-            var response = CostApiIsCalled();
-            var result = JsonConvert.DeserializeObject<BaseResult>(response.Content.ToString());
+            var result = CostResult();          
         }
 
         protected void ValidateResultForTransInventoryNotExist()
         {
-            var response = CostApiIsCalled();
-            var result = JsonConvert.DeserializeObject<BaseResult>(response.Content.ToString());
+            var result = CostResult();
         }
 
         protected void ValidateResultForPickLocationNotExist()
         {
-            var response = CostApiIsCalled();
-            var result = JsonConvert.DeserializeObject<BaseResult>(response.Content.ToString());         
+            var result = CostResult();
             Assert.AreEqual("PickLocationDtl", result.ValidationMessages[0].FieldName);
             Assert.AreEqual("Not Found", result.ValidationMessages[0].Message);
         }
@@ -119,18 +120,19 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(DefaultPossibleValue.TransactionCode.Cost, cost.TransactionCode);
             Assert.AreEqual("268", cost.MessageLength);
             Assert.AreEqual("Arrival", cost.ActionCode);           
-            Assert.AreEqual(caseHdr1.PoNumber, swmFromMhe.PoNumber);
+            Assert.AreEqual(caseHeaderDto.PoNumber, swmFromMhe.PoNumber);
         }
 
         protected void VerifyTheQuantityWasDecreasedInToTransInventory()
         {
             Assert.AreEqual(trnInvBeforeApi.ActualInventoryUnits - Convert.ToDecimal(cost.StorageClassAttribute2), trnInvAfterApi.ActualInventoryUnits);
+            //* the bellow line of code is tested after new build release.
             //Assert.AreEqual(trn3.ActualWeight - (unitweight1 * Convert.ToDecimal(cost.StorageClassAttribute2)), transInvn.ActualWeight);
         }
 
         protected void VerifyTheQuantityWasIncreasedIntoPickLocationTable()
         {
-            Assert.AreEqual(pickLcnDtlBegoreApi.ActualInventoryQuantity + Convert.ToDecimal(cost.StorageClassAttribute2), pickLocnDtlAfterApi.ActualInventoryQuantity);
+            Assert.AreEqual(pickLcnDtlBeforeApi.ActualInventoryQuantity + Convert.ToDecimal(cost.StorageClassAttribute2), pickLocnDtlAfterApi.ActualInventoryQuantity);
             Assert.AreEqual(pickLocnDtlAfterApi.ActualInventoryQuantity - Convert.ToDecimal(cost.StorageClassAttribute2), pickLocnDtlAfterApi.ToBeFilledQty);
         }
     }

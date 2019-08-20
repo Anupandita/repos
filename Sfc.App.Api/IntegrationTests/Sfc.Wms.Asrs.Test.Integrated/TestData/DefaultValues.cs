@@ -13,8 +13,5 @@ namespace Sfc.Wms.Asrs.Test.Integrated.TestData
         public const int CaseHdrStatCode = 96;
         public const byte TaskStatusCode = 90;
         public const string ResultType = "Created";
-        
-
-
     }
 }

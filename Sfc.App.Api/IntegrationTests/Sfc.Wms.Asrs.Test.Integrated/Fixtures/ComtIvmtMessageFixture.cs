@@ -8,7 +8,6 @@ using Sfc.Wms.Result;
 using System;
 using System.Configuration;
 using System.Diagnostics;
-using DefaultPossibleValue = Sfc.Wms.ParserAndTranslator.Contracts.Constants;
 
 namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
 {
@@ -39,13 +38,13 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
         {
             ComtParameters = new ComtParams
             {
-                ActionCode = DefaultPossibleValue.ActionCodeConstants.Create,
-                CurrentLocationId = "123",
+                ActionCode = ActionCodeConstants.Create,
+                CurrentLocationId = "000192818",
                 ContainerId = currentCaseNbr,
                 ContainerType = DefaultValues.ContainerType,
                 ParentContainerId = currentCaseNbr,
                 AttributeBitmap = "",
-                QuantityToInduct = "30"
+                QuantityToInduct = "1"
             };
         }
 

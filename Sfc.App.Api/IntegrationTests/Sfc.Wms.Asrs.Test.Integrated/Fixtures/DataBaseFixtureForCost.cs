@@ -1,22 +1,20 @@
-﻿using System;
-using System.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using Sfc.Wms.Asrs.Dematic.Contracts.Dtos;
 using Sfc.Wms.Asrs.Shamrock.Contracts.Dtos;
-using Sfc.Wms.Builder.MessageBuilder;
-using Sfc.Wms.TransitionalInventory.Contracts.Dtos;
-using Sfc.Wms.ParserAndTranslator.Contracts.Interfaces;
-using Sfc.Wms.ParserAndTranslator.Contracts.Dto;
-using Sfc.Wms.ParserAndTranslator.Contracts.Validation;
-using Sfc.Wms.Result;
 using Sfc.Wms.Asrs.Test.Integrated.TestData;
-using DefaultPossibleValue = Sfc.Wms.ParserAndTranslator.Contracts.Constants;
-using System.Diagnostics;
-using Sfc.Wms.PickLocationDetail.Contracts.Dtos;
+using Sfc.Wms.Builder.MessageBuilder;
 using Sfc.Wms.InboundLpn.Contracts.Dtos;
 using Sfc.Wms.ParserAndTranslator.Contracts.Constants;
+using Sfc.Wms.ParserAndTranslator.Contracts.Dto;
+using Sfc.Wms.ParserAndTranslator.Contracts.Interfaces;
+using Sfc.Wms.ParserAndTranslator.Contracts.Validation;
+using Sfc.Wms.PickLocationDetail.Contracts.Dtos;
+using Sfc.Wms.Result;
+using System;
+using System.Configuration;
+using DefaultPossibleValue = Sfc.Wms.ParserAndTranslator.Contracts.Constants;
 
 namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
 {
@@ -30,11 +28,10 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
         protected Cost costDataForTransInvnNotExist = new Cost();
         protected Cost costDataForPickLocnNotExist = new Cost();
         protected EmsToWmsDto emsToWmsParameters;
-        protected EmsToWmsDto emsToWms = new EmsToWmsDto();
         private readonly IHaveDataTypeValidation _dataTypeValidation;
         protected PickLocationDtlDto pickLocnDtlAfterApi = new PickLocationDtlDto();
-        protected PickLocationDtlDto pickLcnDtlBegoreApi = new PickLocationDtlDto();
-        protected CaseHeaderDto caseHdr1 = new CaseHeaderDto();
+        protected PickLocationDtlDto pickLcnDtlBeforeApi = new PickLocationDtlDto();
+        protected CaseHeaderDto caseHeaderDto = new CaseHeaderDto();
         protected CostDto cost = new CostDto();  
         protected string sqlStatements = "";
         protected OracleTransaction transaction;
@@ -77,7 +74,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
                 GetCaseDetailsForInsertingCostMessage(db);
                 InsertCostMessageInToEmsTable(db);
                 trnInvBeforeApi = FetchTransInvn(db, costData.SkuId);
-                pickLcnDtlBegoreApi = PickLocnData(db, costData.SkuId);
+                pickLcnDtlBeforeApi = PickLocnData(db, costData.SkuId);
             }
         }
          
