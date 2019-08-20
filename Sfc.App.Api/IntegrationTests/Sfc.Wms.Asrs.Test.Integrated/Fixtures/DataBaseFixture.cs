@@ -34,8 +34,8 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
         protected WmsToEmsDto wmsToEmsComt = new WmsToEmsDto();
         protected TransitionalInventoryDto trn = new TransitionalInventoryDto(); 
         protected CaseHeaderDto caseHdr = new CaseHeaderDto();
-        protected CaseHeaderDto caseHeader = new CaseHeaderDto();
-        protected CaseDetailDto caseDtl = new CaseDetailDto();      
+        protected CaseHeaderDto caseHeaderAfterTrigger = new CaseHeaderDto();
+        protected CaseDetailDto caseDtlAfterTrigger = new CaseDetailDto();      
         protected List<CaseDetailDto> CaseDetailList = new List<CaseDetailDto>();
         protected List<TransitionalInventoryDto> transInvnList = new List<TransitionalInventoryDto>();
         protected List<TransitionalInventoryDto> trnList = new List<TransitionalInventoryDto>();
@@ -43,10 +43,10 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
         protected List<CaseDto> caseDtoList = new List<CaseDto>();           
         protected TaskHeaderDto taskMultiSku= new TaskHeaderDto();
         protected TaskDetailDto taskSingleSku = new TaskDetailDto();
-        protected TransitionalInventoryDto transInvnAfterApi = new TransitionalInventoryDto();
-        protected TransitionalInventoryDto transInvnBeforeApi  = new TransitionalInventoryDto();
+        protected TransitionalInventoryDto transInvnAfterTrigger = new TransitionalInventoryDto();
+        protected TransitionalInventoryDto transInvnBeforeTrigger  = new TransitionalInventoryDto();
         private readonly MessageHeaderParser _canParseMessage;
-        protected string sql1 = "";
+        protected string sqlStatement = "";
         protected dynamic trnInvnBeforeCallingApi;
         protected OracleCommand command;
 
@@ -138,9 +138,9 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
                 var dr13 = command.ExecuteReader();
                 if (dr13.Read())
                 {
-                    transInvnBeforeApi.ActualInventoryUnits = Convert.ToDecimal(dr13["ACTL_INVN_UNITS"].ToString());
-                    transInvnBeforeApi.ActualWeight = Convert.ToDecimal(dr13["ACTL_WT"].ToString());
-                    trnList.Add(transInvnBeforeApi);
+                    transInvnBeforeTrigger.ActualInventoryUnits = Convert.ToDecimal(dr13["ACTL_INVN_UNITS"].ToString());
+                    transInvnBeforeTrigger.ActualWeight = Convert.ToDecimal(dr13["ACTL_WT"].ToString());
+                    trnList.Add(transInvnBeforeTrigger);
                 }
             }
         }
@@ -181,8 +181,8 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
                 caseHdr.StatusCode = Convert.ToInt16(dr13["STAT_CODE"].ToString());
                 trn.ActualInventoryUnits = Convert.ToDecimal(dr13["ACTL_INVN_UNITS"].ToString());
                 trn.ActualWeight = Convert.ToDecimal(dr13["ACTL_WT"].ToString());
-                caseDtl.ActualQuantity = Convert.ToInt32(dr13["ACTL_QTY"].ToString());
-                caseDtl.TotalAllocatedQuantity = Convert.ToInt32(dr13["TOTAL_ALLOC_QTY"].ToString());
+                caseDtlAfterTrigger.ActualQuantity = Convert.ToInt32(dr13["ACTL_QTY"].ToString());
+                caseDtlAfterTrigger.TotalAllocatedQuantity = Convert.ToInt32(dr13["TOTAL_ALLOC_QTY"].ToString());
             }
         }
         protected decimal FetchUnitWeight(OracleConnection db, string skuId)
@@ -315,9 +315,9 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
             var dr13 = command.ExecuteReader();
             if (dr13.Read())
             {
-                transInvnAfterApi.ActualInventoryUnits = Convert.ToDecimal(dr13["ACTL_INVN_UNITS"].ToString());
-                transInvnAfterApi.ActualWeight = Convert.ToDecimal(dr13["ACTL_WT"].ToString());
-                transInvnList.Add(transInvnAfterApi);
+                transInvnAfterTrigger.ActualInventoryUnits = Convert.ToDecimal(dr13["ACTL_INVN_UNITS"].ToString());
+                transInvnAfterTrigger.ActualWeight = Convert.ToDecimal(dr13["ACTL_WT"].ToString());
+                transInvnList.Add(transInvnAfterTrigger);
             }
         }
 
@@ -328,10 +328,10 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
             var dr29 = command.ExecuteReader();
             if (dr29.Read())
             {
-                caseHeader.StatusCode = Convert.ToInt16(dr29["STAT_CODE"].ToString());
+                caseHeaderAfterTrigger.StatusCode = Convert.ToInt16(dr29["STAT_CODE"].ToString());
             }
-            sql1 = $"select * from case_dtl where case_nbr = '{caseHdrMultiSku.CaseNumber}'";
-            command = new OracleCommand(sql1, db);
+            sqlStatement = $"select * from case_dtl where case_nbr = '{caseHdrMultiSku.CaseNumber}'";
+            command = new OracleCommand(sqlStatement, db);
             var dr2 = command.ExecuteReader();
             while (dr2.Read())
             {
@@ -386,7 +386,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
         }
         protected void VerifyQuantityIsIncreasedIntoTransInvn(TransitionalInventoryDto trnInvnAfterApi, TransitionalInventoryDto trnInvnBeforeApi)
         {
-            Assert.AreEqual(transInvnBeforeApi.ActualInventoryUnits + Convert.ToDecimal(ivmt.Quantity), transInvnAfterApi.ActualInventoryUnits);
+            Assert.AreEqual(transInvnBeforeTrigger.ActualInventoryUnits + Convert.ToDecimal(ivmt.Quantity), transInvnAfterTrigger.ActualInventoryUnits);
             //Assert.AreEqual((unitWeight * Convert.ToDecimal(ivmt.Quantity)) + Convert.ToInt16(transInvnBeforeApi.ActualWeight), Math.Round(Convert.ToDecimal(transInvnAfterApi.ActualWeight)));
         }
         protected void VerifyQuantityisReducedIntoCaseDetailForMultiSku()

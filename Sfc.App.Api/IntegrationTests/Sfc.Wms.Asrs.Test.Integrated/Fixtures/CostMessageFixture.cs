@@ -33,26 +33,20 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
         {
             currentMsgKey = 5;
         }
-        protected void SetForInvalidMessageTextMsgKey()
-        {
-            currentMsgKey = costData.InvalidMsgTextKey;
-        }
+       
         protected void SetForInvalidCaseMsgKey()
         {
-            currentMsgKey = costData.InvalidCaseNumberKey;
+            currentMsgKey = costData.InvalidKey;
         }
-        protected void SetForInvalidCaseStatusMsgKey()
-        {
-            currentMsgKey = costData.InvalidStsKey;
-        }
+        
         protected void SetForTransInvnNotExistsMsgKey()
         {
-            currentMsgKey = costData.TransInvnNotExistKey;
+            currentMsgKey = costDataForTransInvnNotExist.MsgKey;
         }
 
         protected void SetForPickLocationNotExistKey()
         {
-            currentMsgKey = costData.PickLocationNotExistKey;
+            currentMsgKey = costDataForPickLocnNotExist.MsgKey;
         }
         
         protected IRestResponse CostApiIsCalled()
@@ -92,7 +86,6 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
         {
             var response = CostApiIsCalled();
             var result = JsonConvert.DeserializeObject<BaseResult>(response.Content.ToString());
-            Assert.AreEqual("!0", result.ValidationMessages.ToString());
         }
 
         protected void ValidateResultForTransInventoryNotExist()
@@ -108,7 +101,6 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual("PickLocationDtl", result.ValidationMessages[0].FieldName);
             Assert.AreEqual("Not Found", result.ValidationMessages[0].Message);
         }
-
 
         protected void GetValidDataAfterTrigger()
         {
@@ -138,8 +130,8 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
 
         protected void VerifyTheQuantityWasIncreasedIntoPickLocationTable()
         {
-            Assert.AreEqual(pickLcnDtl.ActualInventoryQuantity + Convert.ToDecimal(cost.StorageClassAttribute2), pickLocnDtl.ActualInventoryQuantity);
-            Assert.AreEqual(pickLocnDtl.ActualInventoryQuantity - Convert.ToDecimal(cost.StorageClassAttribute2), pickLocnDtl.ToBeFilledQty);
+            Assert.AreEqual(pickLcnDtlBegoreApi.ActualInventoryQuantity + Convert.ToDecimal(cost.StorageClassAttribute2), pickLocnDtlAfterApi.ActualInventoryQuantity);
+            Assert.AreEqual(pickLocnDtlAfterApi.ActualInventoryQuantity - Convert.ToDecimal(cost.StorageClassAttribute2), pickLocnDtlAfterApi.ToBeFilledQty);
         }
     }
 }

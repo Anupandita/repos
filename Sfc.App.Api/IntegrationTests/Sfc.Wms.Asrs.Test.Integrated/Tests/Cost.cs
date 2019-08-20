@@ -57,7 +57,6 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Tests
         }
 
 
-
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
         public void VerifyForErrorNotEnoughInv()
@@ -67,8 +66,6 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Tests
            .Then(x => x.ValidateResultForTransInventoryNotExist())
            .BDDfy();
         }
-
-        
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]

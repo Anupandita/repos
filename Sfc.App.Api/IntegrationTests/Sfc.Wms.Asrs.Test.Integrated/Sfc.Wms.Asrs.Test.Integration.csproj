@@ -59,7 +59,6 @@
     <Compile Include="TestData\DefaultValues.cs" />
     <Compile Include="Tests\ComtAndIvmtTest.cs" />
     <Compile Include="Tests\Cost.cs" />
-    <Compile Include="Tests\Comt.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Castle.Core">

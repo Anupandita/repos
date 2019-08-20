@@ -110,7 +110,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
         }
         protected void VerifyQuantityisReducedIntoCaseDetail()
         {
-            Assert.AreEqual(0, caseDtl.TotalAllocatedQuantity);        
+            Assert.AreEqual(0, caseDtlAfterTrigger.TotalAllocatedQuantity);        
         }
         protected void VerifyStatusIsUpdatedIntoCaseHeader()
         {
@@ -135,7 +135,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
 
         protected void VerifyStatusIsUpdatedIntoCaseHeaderTable()
         {
-            VerifyStatusIsUpdatedIntoCaseHeader(caseHeader.StatusCode);
+            VerifyStatusIsUpdatedIntoCaseHeader(caseHeaderAfterTrigger.StatusCode);
         }
     }
 }

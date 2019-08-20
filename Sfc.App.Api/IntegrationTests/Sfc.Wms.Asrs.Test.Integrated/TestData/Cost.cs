@@ -6,25 +6,13 @@ namespace Sfc.Wms.Asrs.Test.Integrated.TestData
     [TestClass]
     public class Cost
     {
-        public long msgKey { get; set; }
-        public string ValidCaseNumber { get; set; }
-        public string ValidSkuId { get; set; }
-        public string ValidQty { get; set; }
-        public string ValidLocnId { get; set; }
-        public Int64 ValidMsgKey;
-        public Int64 InvalidMsgTextKey;
-        public Int64 InvalidCaseNumberKey;
-        public Int64 InvalidStsKey;
-        public Int64 TransInvnNotExistKey;
-        public Int64 PickLocationNotExistKey;
-        public string InvalidStsCase;
-        public string InvalidStsSku;
-        public string InvalidStsQty;
-        public string TransInvnNotExistCase;
-        public string TransInvnNotExistSku;
-        public string TransInvnNotExistQty;
-        public string PickLocnDtlNotExistCase;
-        public string PickLocnDtlNotExistSku;
-        public string PickLocnDtlNotExistQty;
+        public long MsgKey { get; set; }
+        public long InvalidKey { get; set; }
+        public string CaseNumber { get; set; }
+        public string SkuId { get; set; }
+        public string Qty { get; set; }
+        public string LocnId { get; set; }
+
+
     }
 }
