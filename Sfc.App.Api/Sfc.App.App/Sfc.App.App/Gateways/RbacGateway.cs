@@ -1,10 +1,9 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Sfc.App.App.Interfaces;
-using Sfc.Wms.Result;
-using Sfc.Wms.Security.Contracts.Dtos;
-using Sfc.Wms.Security.Contracts.Dtos.UI;
-using Sfc.Wms.Security.Contracts.Interfaces;
+using Sfc.Core.OnPrem.Result;
+using Sfc.Core.OnPrem.Security.Contracts.Dtos;
+using Sfc.Core.OnPrem.Security.Contracts.Interfaces;
 using Sfc.Wms.Security.Token.Jwt.Jwt;
 
 namespace Sfc.App.App.Gateways
@@ -18,9 +17,9 @@ namespace Sfc.App.App.Gateways
             _userRbacService = userRbacService;
         }
 
-        public async Task<BaseResult<UserDetailsDto>> SignInAsync(LoginCredentials loginCredentials)
+        public async Task<BaseResult<UserInfoDto>> SignInAsync(LoginCredentials loginCredentials)
         {
-            var response = new BaseResult<UserDetailsDto>
+            var response = new BaseResult<UserInfoDto>
                 {ResultType = ResultTypes.BadGateway};
 
             if (!ValidateLoginCredentials(loginCredentials)) return response;
@@ -32,7 +31,7 @@ namespace Sfc.App.App.Gateways
             var roles = await _userRbacService.GetRolesByUserNameAsync(loginCredentials.UserName)
                 .ConfigureAwait(false);
 
-            var userDetails = await _userRbacService.GetUserDetails(loginCredentials.UserName)
+            var userDetails = await _userRbacService.GetUserDetailsAsync(loginCredentials.UserName)
                 .ConfigureAwait(false);
 
             userDetails.Payload.Token = JwtManager.GenerateToken(loginCredentials.UserName, result.Payload,
@@ -43,9 +42,9 @@ namespace Sfc.App.App.Gateways
 
         #region Private Methods
 
-        private BaseResult<UserDetailsDto> GetBaseResult(BaseResult<int> result)
+        private BaseResult<UserInfoDto> GetBaseResult(BaseResult<int> result)
         {
-            var response = new BaseResult<UserDetailsDto> {ResultType = result.ResultType};
+            var response = new BaseResult<UserInfoDto> {ResultType = result.ResultType};
             if (result.ValidationMessages?.Count > 0)
                 response.ValidationMessages.AddRange(result.ValidationMessages);
             return response;

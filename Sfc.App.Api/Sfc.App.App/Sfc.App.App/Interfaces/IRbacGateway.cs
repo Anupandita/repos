@@ -1,12 +1,11 @@
 ﻿using System.Threading.Tasks;
-using Sfc.Wms.Result;
-using Sfc.Wms.Security.Contracts.Dtos;
-using Sfc.Wms.Security.Contracts.Dtos.UI;
+using Sfc.Core.OnPrem.Result;
+using Sfc.Core.OnPrem.Security.Contracts.Dtos;
 
 namespace Sfc.App.App.Interfaces
 {
     public interface IRbacGateway
     {
-        Task<BaseResult<UserDetailsDto>> SignInAsync(LoginCredentials loginCredentials);
+        Task<BaseResult<UserInfoDto>> SignInAsync(LoginCredentials loginCredentials);
     }
 }
