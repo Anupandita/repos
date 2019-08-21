@@ -7,9 +7,8 @@ using Moq;
 using Newtonsoft.Json;
 using RestSharp;
 using Sfc.App.Api.Nuget.Gateways;
-using Sfc.Wms.Result;
-using Sfc.Wms.Security.Contracts.Dtos;
-using Sfc.Wms.Security.Contracts.Dtos.UI;
+using Sfc.Core.OnPrem.Result;
+using Sfc.Core.OnPrem.Security.Contracts.Dtos;
 
 namespace Sfc.App.Api.Tests.Unit.Fixtures
 {
@@ -18,8 +17,8 @@ namespace Sfc.App.Api.Tests.Unit.Fixtures
         private readonly Mock<IRestClient> _mockRestClient;
         private readonly UserRbacGateway _userRbacGateway;
         private LoginCredentials loginCredentials;
-        private BaseResult<UserDetailsDto> signInResponse;
-        private BaseResult<UserDetailsDto> userDetails;
+        private BaseResult<UserInfoDto> signInResponse;
+        private BaseResult<UserInfoDto> userDetails;
 
         protected UserRbacGatewayFixture()
         {
@@ -44,9 +43,9 @@ namespace Sfc.App.Api.Tests.Unit.Fixtures
 
         private void SetUserDetails(ResultTypes resultTypes)
         {
-            userDetails = new BaseResult<UserDetailsDto>
+            userDetails = new BaseResult<UserInfoDto>
             {
-                Payload = Generator.Default.Single<UserDetailsDto>(),
+                Payload = Generator.Default.Single<UserInfoDto>(),
                 ResultType = resultTypes
             };
         }

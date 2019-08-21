@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Sfc.App.Api.Tests.Unit.Constants;
 using Sfc.App.Api.Tests.Unit.Fixtures;
 using TestStack.BDDfy;
 
@@ -13,7 +14,7 @@ namespace Sfc.App.Api.Tests.Unit.App
     public class RbacGatewayTest : RbacGatewayFixture
     {
         [TestMethod]
-        [TestCategory("UNIT")]
+        [TestCategory(TestCategories.Unit)]
         public void Should_Return_Unauthorized_As_Response_When_InValid_Login_Credentials_Are_Passed()
         {
             this.Given(el => InvalidCredentials())
@@ -23,7 +24,7 @@ namespace Sfc.App.Api.Tests.Unit.App
         }
 
         [TestMethod]
-        [TestCategory("UNIT")]
+        [TestCategory(TestCategories.Unit)]
         public void Should_Return_Ok_As_Response_When_Valid_Login_Credentials_Are_Passed()
         {
             this.Given(el => ValidCredentials())

@@ -5,10 +5,9 @@ using DataGenerator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Sfc.App.App.Gateways;
-using Sfc.Wms.Result;
-using Sfc.Wms.Security.Contracts.Dtos;
-using Sfc.Wms.Security.Contracts.Dtos.UI;
-using Sfc.Wms.Security.Contracts.Interfaces;
+using Sfc.Core.OnPrem.Result;
+using Sfc.Core.OnPrem.Security.Contracts.Dtos;
+using Sfc.Core.OnPrem.Security.Contracts.Interfaces;
 
 namespace Sfc.App.Api.Tests.Unit.Fixtures
 {
@@ -18,7 +17,7 @@ namespace Sfc.App.Api.Tests.Unit.Fixtures
         private readonly RbacGateway _rbacGateway;
         private bool isValid;
         private LoginCredentials loginRequest;
-        private Task<BaseResult<UserDetailsDto>> userDetailsResponse;
+        private Task<BaseResult<UserInfoDto>> userDetailsResponse;
 
         protected RbacGatewayFixture()
         {
@@ -52,14 +51,14 @@ namespace Sfc.App.Api.Tests.Unit.Fixtures
                 ResultType = ResultTypes.Ok
             };
 
-            var userDetails = new BaseResult<UserDetailsDto>
+            var userDetails = new BaseResult<UserInfoDto>
             {
-                Payload = Generator.Default.Single<UserDetailsDto>(),
+                Payload = Generator.Default.Single<UserInfoDto>(),
                 ResultType = ResultTypes.Ok
             };
             _mockUserRbacService.Setup(m => m.GetRolesByUserNameAsync(loginRequest.UserName))
                 .Returns(Task.FromResult(roles));
-            _mockUserRbacService.Setup(m => m.GetUserDetails(loginRequest.UserName))
+            _mockUserRbacService.Setup(m => m.GetUserDetailsAsync(loginRequest.UserName))
                 .Returns(Task.FromResult(userDetails));
 
 
