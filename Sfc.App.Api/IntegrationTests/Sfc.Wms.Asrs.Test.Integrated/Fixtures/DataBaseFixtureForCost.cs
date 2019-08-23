@@ -107,8 +107,9 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
         public long InsertEmsToWMS (OracleConnection db, EmsToWmsDto emsToWmsDto)
         {
             transaction = db.BeginTransaction();
-            var MsgKey = GetSeqNbrEmsToWms(db);   
-            var validsql = $"insert into emstowms values ('{emsToWmsDto.Process}','{MsgKey}','{emsToWmsDto.Status}','{emsToWmsDto.Transaction}','{emsToWmsDto.MessageText}','{emsToWmsDto.ResponseCode}','TestUser','22-JUL-19','22-JUL-19')";
+            var MsgKey = GetSeqNbrEmsToWms(db);
+            command.Parameters.Add(new OracleParameter("dateParam", OracleDbType.Date)).Value = DateTime.Now;
+            var validsql = $"insert into emstowms values ('{emsToWmsDto.Process}','{MsgKey}','{emsToWmsDto.Status}','{emsToWmsDto.Transaction}','{emsToWmsDto.MessageText}','{emsToWmsDto.ResponseCode}','TestUser','{DateTime.Now.ToString("dd-MMM-yy")}','{DateTime.Now.ToString("dd-MMM-yy")}')";
             command = new OracleCommand(validsql, db);
             command.ExecuteNonQuery();
             transaction.Commit();

@@ -35,7 +35,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
           <li class='Passed'>
             <div class='summaryLine'>
               <div class='summaryLabel'>Passed</div>
-              <span class='summaryCount'>5</span>
+              <span class='summaryCount'>6</span>
             </div>
           </li>
           <li class='Inconclusive'>
@@ -53,7 +53,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
           <li class='Failed'>
             <div class='summaryLine'>
               <div class='summaryLabel'>Failed</div>
-              <span class='summaryCount'>2</span>
+              <span class='summaryCount'>1</span>
             </div>
           </li>
         </ul>
@@ -184,7 +184,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
             </div>
           </li>
           <li>
-            <div class='story Failed'>
+            <div class='story Passed'>
               <div class='storyMetadata'>
                 <div class='storyTitle'>Story: Sample test</div>
                 <ul class='storyNarrative'>
@@ -195,7 +195,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
               </div>
               <div class='scenarios'>
                 <div class='scenario'>
-                  <div class='Failed canToggle scenarioTitle' data-toggle-target='scenario-1'>Comt and ivmt test</div>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-1'>Comt and ivmt test</div>
                   <ul class='steps' id='scenario-1'>
                     <li class='step Passed  SetupState ' data-toggle-target='step-1-1' >
                       <span>Given set current case number to single sku</span>
@@ -221,24 +221,8 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
                     <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-1-8' >
                       <span>And verify ivmt message was inserted into wms to ems</span>
                     </li>
-                    <li class='step Failed  ConsecutiveAssertion canToggle' data-toggle-target='step-1-9' >
-                      <span>And verify the quantity is increased to trans inventory [Exception Message: 'Assert.AreEqual failed. Expected:<985.44>. Actual:<984>. ']</span>
-                      <div class='step FailedException' id='step-1-9'>
-                        <code>   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.HandleFail(String assertionName, String message, Object[] parameters)
-   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual[T](T expected, T actual, String message, Object[] parameters)
-   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual[T](T expected, T actual)
-   at Sfc.Wms.Asrs.Test.Integrated.Fixtures.ComtIvmtMessageFixture.VerifyTheQuantityIsIncreasedToTransInventory() in D:\wmspoc\Wms.App.Api\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Fixtures\ComtIvmtMessageFixture.cs:line 109
-   at lambda_method(Closure , SampleTest )
-   at TestStack.BDDfy.StepActionFactory.<>c__DisplayClass1_0`1.<GetStepAction>b__0(Object o)
-   at TestStack.BDDfy.StepExecutor.Execute(Step step, Object testObject)
-   at TestStack.BDDfy.Processors.ScenarioExecutor.<>c__DisplayClass3_0.<ExecuteStep>b__0()
-   at TestStack.BDDfy.Processors.AsyncTestRunner.Run(Func`1 performStep)
-   at TestStack.BDDfy.Processors.ScenarioExecutor.ExecuteStep(Step step)
-   at TestStack.BDDfy.Processors.ExceptionProcessor.Process(Story story)
-   at TestStack.BDDfy.Engine.Run()
-   at TestStack.BDDfy.BDDfyExtensions.BDDfy(Object testObject, String scenarioTitle)
-   at Sfc.Wms.Asrs.Test.Integrated.Tests.SampleTest.ComtAndIvmtTest() in D:\wmspoc\Wms.App.Api\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Tests\ComtAndIvmtTest.cs:line 33</code>
-                      </div>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-1-9' >
+                      <span>And verify the quantity is increased to trans inventory</span>
                     </li>
                     <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-1-10' >
                       <span>And verify quantityis reduced into case detail</span>
@@ -284,7 +268,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
             </div>
           </li>
         </ul>
-        <p><span>Tested at: 8/23/2019 4:44:28 PM</span></p>
+        <p><span>Tested at: 8/23/2019 5:15:05 PM</span></p>
       </div>
     </div>
     <div class='footer'>Powered by <a href='https://github.com/TestStack/TestStack.BDDfy'>BDDfy</a> framework</div>
