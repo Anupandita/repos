@@ -25,26 +25,26 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
             GetDataBeforeTrigger();
             GetDataForNegativeCases();
         }
-        protected void SetCurrentMsgKey()
+        protected void AValidMsgKey()
         {
             currentMsgKey = costData.MsgKey;
         }
-        protected void SetInvalidMsgKey()
+        protected void InvalidMsgKey()
         {
             currentMsgKey = 5;
         }
        
-        protected void SetForInvalidCaseMsgKey()
+        protected void InvalidCaseMsgKey()
         {
             currentMsgKey = costData.InvalidKey;
         }
         
-        protected void SetForTransInvnNotExistsMsgKey()
+        protected void TransInvnNotExistsMsgKey()
         {
             currentMsgKey = costDataForTransInvnNotExist.MsgKey;
         }
 
-        protected void SetForPickLocationNotExistKey()
+        protected void PickLocationNotExistKey()
         {
             currentMsgKey = costDataForPickLocnNotExist.MsgKey;
         }
@@ -84,11 +84,6 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
         {
             var result = CostResult();
             Assert.AreEqual("NotFound", result.ResultType.ToString());
-        }
-
-        protected void ValidateResultForInvalidCaseStatus()
-        {
-            var result = CostResult();          
         }
 
         protected void ValidateResultForTransInventoryNotExist()

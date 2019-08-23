@@ -30,10 +30,10 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Tests
         [TestCategory("FUNCTIONAL")]
         public void ComtAndIvmtTest() 
         {
-            this.Given(x => x.SetCurrentCaseNumberToSingleSku())
+            this.Given(x => x.CurrentCaseNumberForSingleSku())
                 .And(x => x.AValidNewComtMessageRecord())
                 .When(x => x.ComtApiIsCalled())
-                .Then(x => x.GetDataFromDbForSingleSku())
+                .Then(x => x.GetDataFromDataBaseForSingleSkuScenarios())
                 .And(x => x.VerifyComtMessageWasInsertedIntoSwmToMhe())
                 .And(x => x.VerifyComtMessageWasInsertedIntoWmsToEms())
                 .And(x => x.VerifyIvmtMessageWasInsertedIntoSwmToMhe())
@@ -49,7 +49,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Tests
         [TestCategory("FUNCTIONAL")]
         public void ComtAndIvmtTestForMultiSku()
         {
-            this.Given(x => x.SetCurrentCaseNumberToMultiSku())
+            this.Given(x => x.CurrentCaseNumberForMultiSku())
                 .And(x => x.AValidNewComtMessageRecord())
                 .When(x => x.ComtApiIsCalled())
                 .Then(x => x.GetDataAndValidateForIvmtMessageHasInsertedIntoBothTables())

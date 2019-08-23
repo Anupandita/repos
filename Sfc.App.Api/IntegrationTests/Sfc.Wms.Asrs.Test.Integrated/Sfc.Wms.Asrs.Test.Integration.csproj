@@ -53,12 +53,11 @@
     <Compile Include="Fixtures\CostMessageFixture.cs" />
     <Compile Include="TestData\CaseDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestData\Content.cs" />
     <Compile Include="TestData\ComtParams.cs" />
     <Compile Include="TestData\Cost.cs" />
     <Compile Include="TestData\DefaultValues.cs" />
     <Compile Include="Tests\ComtAndIvmtTest.cs" />
-    <Compile Include="Tests\Cost.cs" />
+    <Compile Include="Tests\CostMessageTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Castle.Core">

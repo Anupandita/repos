@@ -1,7 +1,6 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TestStack.BDDfy;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sfc.Wms.Asrs.Test.Integrated.Fixtures;
+using TestStack.BDDfy;
 
 namespace Sfc.Wms.Asrs.Test.Integrated.Tests
 {
@@ -15,7 +14,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Tests
        SoThat = "I can validate for message fields in COST message, in Internal Table SWM_FROM_MHE" +
         " and validate the quantity,weight,statuscode in the caseheader, casedetail, task header tables"
         )]
-    public class Cost : CostMessageFixture
+    public class CostMessageTest : CostMessageFixture
     {        
         [TestInitialize]
         [TestCategory("FUNCTIONAL")]
@@ -28,7 +27,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Tests
         [TestCategory("FUNCTIONAL")]
         public void VerifyForValidCostMessageScenarios()
         {
-            this.Given(x => x.SetCurrentMsgKey())
+            this.Given(x => x.AValidMsgKey())
                 .When(x => x.CostApiIsCalledWithValidMsgKey())
                 .And(x => x.GetValidDataAfterTrigger())
                 .And(x => x.VerifyCostMessageWasInsertedIntoSwmFromMhe())
@@ -40,7 +39,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Tests
         [TestCategory("FUNCTIONAL")]
         public void VerifyForInvalidMessageKey()
         {
-            this.Given(x => x.SetInvalidMsgKey())
+            this.Given(x => x.InvalidMsgKey())
                 .When(x => x.CostApiIsCalled())
                 .Then(x => x.ValidateResultForInvalidMessageKey())
                 .BDDfy();
@@ -50,10 +49,10 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Tests
         [TestCategory("FUNCTIONAL")]
         public void VerifyForErrorLogNoCaseFound()
         {
-            this.Given(x => x.SetForInvalidCaseMsgKey())         
-           .When(x => x.CostApiIsCalled())
-           .Then(x => x.ValidateResultForInvalidCaseNumber())
-           .BDDfy();
+                this.Given(x => x.InvalidCaseMsgKey())         
+               .When(x => x.CostApiIsCalled())
+               .Then(x => x.ValidateResultForInvalidCaseNumber())
+               .BDDfy();
         }
 
 
@@ -61,20 +60,20 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Tests
         [TestCategory("FUNCTIONAL")]
         public void VerifyForErrorNotEnoughInv()
         {
-            this.Given(x => x.SetForTransInvnNotExistsMsgKey())
-           .When(x => x.CostApiIsCalled())
-           .Then(x => x.ValidateResultForTransInventoryNotExist())
-           .BDDfy();
+                this.Given(x => x.TransInvnNotExistsMsgKey())
+               .When(x => x.CostApiIsCalled())
+               .Then(x => x.ValidateResultForTransInventoryNotExist())
+               .BDDfy();
         }
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
         public void VerifyForErrorPickLocationNotFound()
         {
-            this.Given(x => x.SetForPickLocationNotExistKey())
-           .When(x => x.CostApiIsCalled())
-           .Then(x => x.ValidateResultForPickLocationNotExist())
-           .BDDfy();
+                this.Given(x => x.PickLocationNotExistKey())
+               .When(x => x.CostApiIsCalled())
+               .Then(x => x.ValidateResultForPickLocationNotExist())
+               .BDDfy();
         }
     }
 }

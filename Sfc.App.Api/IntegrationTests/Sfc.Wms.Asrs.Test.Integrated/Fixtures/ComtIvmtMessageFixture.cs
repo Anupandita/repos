@@ -24,12 +24,12 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
             GetDataBeforeTriggerComt();
         }
         
-        protected void SetCurrentCaseNumberToSingleSku()
+        protected void CurrentCaseNumberForSingleSku()
         {
             currentCaseNbr = singleSkuCase.CaseNumber;
         }
 
-        protected void SetCurrentCaseNumberToMultiSku()
+        protected void CurrentCaseNumberForMultiSku()
         {
             currentCaseNbr =  caseHdrMultiSku.CaseNumber;
         }
@@ -48,7 +48,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
             };
         }
 
-        protected void GetDataFromDbForSingleSku()
+        protected void GetDataFromDataBaseForSingleSkuScenarios()
         {
             GetDataAfterTriggerOfComtForSingleSku();
         }
@@ -101,7 +101,6 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
         {
             VerifyIvmtMessageWasInsertedIntoWmsToEms(wmsToEmsIvmt);
         }       
-
         protected void VerifyTheQuantityIsIncreasedToTransInventory()
         {
            Assert.AreEqual(singleSkuCase.ActualInventoryUnits + Convert.ToDecimal(ivmt.Quantity), caseDtlAfterApi.ActualInventoryUnits);

@@ -70,7 +70,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
           <li>
             <div class='story Failed'>
               <div class='storyMetadata'>
-                <div class='storyTitle'>Story: Cost</div>
+                <div class='storyTitle'>Story: Cost message test</div>
                 <ul class='storyNarrative'>
                   <li>As a Authorized User test for cost message from emstowms</li>
                   <li>I want To Verify COST message is inserted in to SWM_FROM_MHE table with appropriate data And verify COST message is inserted in to swm_from_mhe table with appropriate data  Verify in TransInventory table for Allocation Inventory units and actual weight Verify in Case Detail table for Quantity, CaseHeader and task detail table for status code </li>
@@ -82,7 +82,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
                   <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-5'>Verify for error log no case found</div>
                   <ul class='steps' id='scenario-5'>
                     <li class='step Passed  SetupState ' data-toggle-target='step-5-1' >
-                      <span>Given set for invalid case msg key</span>
+                      <span>Given invalid case msg key</span>
                     </li>
                     <li class='step Passed  Transition ' data-toggle-target='step-5-2' >
                       <span>When cost api is called</span>
@@ -96,7 +96,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
                   <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-6'>Verify for error not enough inv</div>
                   <ul class='steps' id='scenario-6'>
                     <li class='step Passed  SetupState ' data-toggle-target='step-6-1' >
-                      <span>Given set for trans invn not exists msg key</span>
+                      <span>Given trans invn not exists msg key</span>
                     </li>
                     <li class='step Passed  Transition ' data-toggle-target='step-6-2' >
                       <span>When cost api is called</span>
@@ -110,7 +110,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
                   <div class='Failed canToggle scenarioTitle' data-toggle-target='scenario-7'>Verify for error pick location not found</div>
                   <ul class='steps' id='scenario-7'>
                     <li class='step Passed  SetupState ' data-toggle-target='step-7-1' >
-                      <span>Given set for pick location not exist key</span>
+                      <span>Given pick location not exist key</span>
                     </li>
                     <li class='step Passed  Transition ' data-toggle-target='step-7-2' >
                       <span>When cost api is called</span>
@@ -128,8 +128,8 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
    at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
    at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
    at Sfc.Wms.Asrs.Test.Integrated.Fixtures.CostMessageFixture.CostResult() in D:\wmspoc\Wms.App.Api\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Fixtures\CostMessageFixture.cs:line 66
-   at Sfc.Wms.Asrs.Test.Integrated.Fixtures.CostMessageFixture.ValidateResultForPickLocationNotExist() in D:\wmspoc\Wms.App.Api\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Fixtures\CostMessageFixture.cs:line 101
-   at lambda_method(Closure , Cost )
+   at Sfc.Wms.Asrs.Test.Integrated.Fixtures.CostMessageFixture.ValidateResultForPickLocationNotExist() in D:\wmspoc\Wms.App.Api\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Fixtures\CostMessageFixture.cs:line 96
+   at lambda_method(Closure , CostMessageTest )
    at TestStack.BDDfy.StepActionFactory.<>c__DisplayClass1_0`1.<GetStepAction>b__0(Object o)
    at TestStack.BDDfy.StepExecutor.Execute(Step step, Object testObject)
    at TestStack.BDDfy.Processors.ScenarioExecutor.<>c__DisplayClass3_0.<ExecuteStep>b__0()
@@ -138,7 +138,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
    at TestStack.BDDfy.Processors.ExceptionProcessor.Process(Story story)
    at TestStack.BDDfy.Engine.Run()
    at TestStack.BDDfy.BDDfyExtensions.BDDfy(Object testObject, String scenarioTitle)
-   at Sfc.Wms.Asrs.Test.Integrated.Tests.Cost.VerifyForErrorPickLocationNotFound() in D:\wmspoc\Wms.App.Api\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Tests\Cost.cs:line 74</code>
+   at Sfc.Wms.Asrs.Test.Integrated.Tests.CostMessageTest.VerifyForErrorPickLocationNotFound() in D:\wmspoc\Wms.App.Api\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Tests\CostMessageTest.cs:line 73</code>
                       </div>
                     </li>
                   </ul>
@@ -147,7 +147,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
                   <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-4'>Verify for invalid message key</div>
                   <ul class='steps' id='scenario-4'>
                     <li class='step Passed  SetupState ' data-toggle-target='step-4-1' >
-                      <span>Given set invalid msg key</span>
+                      <span>Given invalid msg key</span>
                     </li>
                     <li class='step Passed  Transition ' data-toggle-target='step-4-2' >
                       <span>When cost api is called</span>
@@ -161,7 +161,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
                   <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-3'>Verify for valid cost message scenarios</div>
                   <ul class='steps' id='scenario-3'>
                     <li class='step Passed  SetupState ' data-toggle-target='step-3-1' >
-                      <span>Given set current msg key</span>
+                      <span>Given a valid msg key</span>
                     </li>
                     <li class='step Passed  Transition ' data-toggle-target='step-3-2' >
                       <span>When cost api is called with valid msg key</span>
@@ -198,7 +198,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
                   <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-1'>Comt and ivmt test</div>
                   <ul class='steps' id='scenario-1'>
                     <li class='step Passed  SetupState ' data-toggle-target='step-1-1' >
-                      <span>Given set current case number to single sku</span>
+                      <span>Given current case number for single sku</span>
                     </li>
                     <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-1-2' >
                       <span>And a valid new comt message record</span>
@@ -207,7 +207,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
                       <span>When comt api is called</span>
                     </li>
                     <li class='step Passed  Assertion ' data-toggle-target='step-1-4' >
-                      <span>Then get data from db for single sku</span>
+                      <span>Then get data from data base for single sku scenarios</span>
                     </li>
                     <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-1-5' >
                       <span>And verify comt message was inserted into swm to mhe</span>
@@ -239,7 +239,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
                   <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-2'>Comt and ivmt test for multi sku</div>
                   <ul class='steps' id='scenario-2'>
                     <li class='step Passed  SetupState ' data-toggle-target='step-2-1' >
-                      <span>Given set current case number to multi sku</span>
+                      <span>Given current case number for multi sku</span>
                     </li>
                     <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-2-2' >
                       <span>And a valid new comt message record</span>
@@ -268,7 +268,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
             </div>
           </li>
         </ul>
-        <p><span>Tested at: 8/23/2019 5:15:05 PM</span></p>
+        <p><span>Tested at: 8/23/2019 6:09:05 PM</span></p>
       </div>
     </div>
     <div class='footer'>Powered by <a href='https://github.com/TestStack/TestStack.BDDfy'>BDDfy</a> framework</div>
