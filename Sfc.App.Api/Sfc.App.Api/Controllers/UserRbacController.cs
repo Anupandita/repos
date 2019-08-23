@@ -5,9 +5,8 @@ using System.Web.Http.Description;
 using Sfc.App.Api.Contracts.Constants;
 using Sfc.App.App.Interfaces;
 using Sfc.Core.BaseApiController;
-using Sfc.Wms.Result;
-using Sfc.Wms.Security.Contracts.Dtos;
-using Sfc.Wms.Security.Contracts.Dtos.UI;
+using Sfc.Core.OnPrem.Result;
+using Sfc.Core.OnPrem.Security.Contracts.Dtos;
 using Sfc.Wms.Security.Token.Jwt.Jwt;
 
 namespace Sfc.App.Api.Controllers
@@ -25,7 +24,7 @@ namespace Sfc.App.Api.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route(Route.Paths.UserLogin)]
-        [ResponseType(typeof(BaseResult<UserDetailsDto>))]
+        [ResponseType(typeof(BaseResult<UserInfoDto>))]
         public async Task<IHttpActionResult> SignInAsync(LoginCredentials loginCredentials)
         {
             var response = await _rbacGateway.SignInAsync(loginCredentials).ConfigureAwait(false);

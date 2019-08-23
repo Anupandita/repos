@@ -1,6 +1,6 @@
 ﻿using DataGenerator;
 using DataGenerator.Sources;
-using Sfc.Wms.Security.Contracts.Dtos;
+using Sfc.Core.OnPrem.Security.Contracts.Dtos;
 
 namespace Sfc.App.Api.Tests.Unit.Fakes
 {

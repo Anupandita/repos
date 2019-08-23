@@ -13,10 +13,9 @@
     <copyright>Copyright 2019</copyright>
     <dependencies>
       <group targetFramework=".NETFramework4.7.2">
-        <dependency id="RestSharp" version="106.6.10" exclude="Build,Analyzers" />
-        <dependency id="Sfc.App.Api.Contracts" version="1.1.11" exclude="Build,Analyzers" />
-        <dependency id="Sfc.Core.OnPrem.Security.Contracts" version="1.1.36" exclude="Build,Analyzers" />
-        <dependency id="Sfc.Core.RestResponse" version="1.1.37" exclude="Build,Analyzers" />
+        <dependency id="Sfc.App.Api.Contracts" version="1.0.0" exclude="Build,Analyzers" />
+        <dependency id="Sfc.Core.OnPrem.Security.Contracts" version="2.0.4" exclude="Build,Analyzers" />
+        <dependency id="Sfc.Core.RestResponse" version="2.0.1" exclude="Build,Analyzers" />
         <dependency id="System.Configuration.ConfigurationManager" version="4.5.0" exclude="Build,Analyzers" />
         <dependency id="System.IdentityModel.Tokens.Jwt" version="5.5.0" exclude="Build,Analyzers" />
       </group>
