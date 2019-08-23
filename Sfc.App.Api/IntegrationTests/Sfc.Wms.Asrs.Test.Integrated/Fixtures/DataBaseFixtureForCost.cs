@@ -44,8 +44,9 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
             _dataTypeValidation = new DataTypeValidation();
         }
 
-        public void GetCaseDetailsForInsertingCostMessage(OracleConnection db)
+        public Cost GetCaseDetailsForInsertingCostMessage(OracleConnection db)
         {
+            var CostDataDto = new Cost();
             sqlStatements = $"select swm_to_mhe.container_id,swm_to_mhe.sku_id,pick_locn_dtl.locn_id,swm_to_mhe.qty from swm_to_mhe inner join trans_invn" +
                 $" on trans_invn.sku_id = swm_to_mhe.sku_id inner join  pick_locn_dtl on swm_to_mhe.sku_id = pick_locn_dtl.sku_id  " +
                 $"inner join case_hdr on swm_to_mhe.container_id = case_hdr.case_nbr and swm_to_mhe.source_msg_status = 'Ready' and swm_to_mhe.qty!= 0 and case_hdr.stat_code = 96";
@@ -53,12 +54,12 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
             var dr15 = command.ExecuteReader();
             if (dr15.Read())
             {
-                costData.CaseNumber = dr15["CONTAINER_ID"].ToString();
-                costData.SkuId = dr15["SKU_ID"].ToString();
-                costData.Qty = dr15["QTY"].ToString();
-                costData.LocnId = dr15["LOCN_ID"].ToString();
+                CostDataDto.CaseNumber = dr15["CONTAINER_ID"].ToString();
+                CostDataDto.SkuId = dr15["SKU_ID"].ToString();
+                CostDataDto.Qty = dr15["QTY"].ToString();
+                CostDataDto.LocnId = dr15["LOCN_ID"].ToString();
             }
-            unitweight1 = FetchUnitWeight(db, costData.SkuId);            
+            return CostDataDto;                 
         }
 
         public void GetDataBeforeTrigger()
@@ -70,9 +71,19 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
             })
             {
                 db.Open();
-                transaction = db.BeginTransaction();
-                GetCaseDetailsForInsertingCostMessage(db);
-                InsertCostMessageInToEmsTable(db);
+                costData = GetCaseDetailsForInsertingCostMessage(db);
+                unitweight1 = FetchUnitWeight(db, costData.SkuId);
+                var CostResult = CreateCostMessage(costData.CaseNumber, costData.SkuId, costData.Qty, costData.LocnId);
+                emsToWmsParameters = new EmsToWmsDto
+                {
+                    Process = "EMS",
+                    MessageKey = Convert.ToInt64(costData.MsgKey),
+                    Status = "Ready",
+                    Transaction = TransactionCode.Cost,
+                    ResponseCode = (short)int.Parse(ReasonCode.Success),
+                    MessageText = CostResult,
+                };
+                costData.MsgKey = InsertEmsToWMS(db,emsToWmsParameters);
                 trnInvBeforeApi = FetchTransInvn(db, costData.SkuId);
                 pickLcnDtlBeforeApi = PickLocnData(db, costData.SkuId);
             }
@@ -92,23 +103,16 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
             }
             return pickLocn;
         }
-         
-        public void InsertCostMessageInToEmsTable(OracleConnection db)
+
+        public long InsertEmsToWMS (OracleConnection db, EmsToWmsDto emsToWmsDto)
         {
-            var CostResult = CreateCostMessage(costData.CaseNumber, costData.SkuId, costData.Qty, costData.LocnId);
-            costData.MsgKey = GetSeqNbr(db);
-            emsToWmsParameters = new EmsToWmsDto
-            {
-                Process = "EMS",
-                MessageKey = Convert.ToInt64(costData.MsgKey),
-                Status = "Ready",
-                Transaction = TransactionCode.Cost,
-                ResponseCode = (short)int.Parse(DefaultPossibleValue.ReasonCode.Success),
-            };
-            var validsql = $"insert into emstowms values ('{emsToWmsParameters.Process}','{emsToWmsParameters.MessageKey}','{emsToWmsParameters.Status}','{emsToWmsParameters.Transaction}','{CostResult}','0','TestUser','22-JUL-19','22-JUL-19')";
+            transaction = db.BeginTransaction();
+            var MsgKey = GetSeqNbrEmsToWms(db);   
+            var validsql = $"insert into emstowms values ('{emsToWmsDto.Process}','{MsgKey}','{emsToWmsDto.Status}','{emsToWmsDto.Transaction}','{emsToWmsDto.MessageText}','{emsToWmsDto.ResponseCode}','TestUser','22-JUL-19','22-JUL-19')";
             command = new OracleCommand(validsql, db);
             command.ExecuteNonQuery();
             transaction.Commit();
+            return MsgKey;
         }
 
         public string CreateCostMessage(string containerNbr, string skuId, string qty, string locationId)
@@ -154,70 +158,83 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
         }
         
         public void InvalidCaseData(OracleConnection db)
-        {
-            transaction = db.BeginTransaction();
+        {   
             command = new OracleCommand(sqlStatements, db);
-            var invalidCaseNumber = CreateCostMessage("00000283000804736790", costData.SkuId, costData.Qty, costData.LocnId);
-            costData.InvalidKey = GetSeqNbr(db);
-            var invalidCaseSql = $"insert into emstowms values ('{emsToWmsParameters.Process}','{costData.InvalidKey}','{emsToWmsParameters.Status}','{emsToWmsParameters.Transaction}','{invalidCaseNumber}','0','TestUser','22-JUL-19','22-JUL-19')";
-            command = new OracleCommand(invalidCaseSql, db);
-            command.ExecuteNonQuery();
-            transaction.Commit();
+            var costmsg = CreateCostMessage("00000283000804736790", costData.SkuId, costData.Qty, costData.LocnId);
+             var emsToWms = new EmsToWmsDto
+            {
+                Process = "EMS",
+                Status = "Ready",
+                Transaction = TransactionCode.Cost,
+                ResponseCode = (short)int.Parse(ReasonCode.Success),
+                MessageText = costmsg
+            };
+            costData.InvalidKey = InsertEmsToWMS(db, emsToWms);
         }
 
         public void TransInvnDoesNotExistData(OracleConnection db)
         {
+            costDataForTransInvnNotExist = FetchCaseNumberWithoutTransInventry(db);
+            var costmsg = CreateCostMessage(costDataForTransInvnNotExist.CaseNumber, costDataForTransInvnNotExist.SkuId, costDataForTransInvnNotExist.Qty, costData.LocnId);
+            var emsToWms = new EmsToWmsDto
+            {
+                Process = "EMS",
+                Status = "Ready",
+                Transaction = TransactionCode.Cost,
+                ResponseCode = (short)int.Parse(ReasonCode.Success),
+                MessageText = costmsg
+            };
+            costDataForTransInvnNotExist.InvalidKey = InsertEmsToWMS(db, emsToWms);
+        }
+
+        public Cost FetchCaseNumberWithoutTransInventry (OracleConnection db)
+        {
+            var CostTransData = new Cost();
             sqlStatements = $"select cd.SKU_ID,ch.CASE_NBR,tn.ACTL_INVN_UNITS,ch.STAT_CODE from  CASE_HDR ch  inner join  case_dtl cd on cd.CASE_NBR = ch.CASE_NBR  inner join pick_locn_dtl on pick_locn_dtl.sku_id = cd.sku_id left join trans_invn tn on tn.SKU_ID = cd.SKU_ID and ch.STAT_CODE = 50 and tn.ACTL_INVN_UNITS >1 and trans_invn_type = '18' and tn.SKU_ID = null";
             command = new OracleCommand(sqlStatements, db);
             var dr17 = command.ExecuteReader();
             if (dr17.Read())
             {
-                costDataForTransInvnNotExist.CaseNumber = dr17["CASE_NBR"].ToString();
-                costDataForTransInvnNotExist.SkuId = dr17["SKU_ID"].ToString();
-                costDataForTransInvnNotExist.Qty = dr17["ACTL_INVN_UNITS"].ToString();
+                CostTransData.CaseNumber = dr17["CASE_NBR"].ToString();
+                CostTransData.SkuId = dr17["SKU_ID"].ToString();
+                CostTransData.Qty = dr17["ACTL_INVN_UNITS"].ToString();
             }
-            InsertCostMsgForTransInvnNotExistData(db);
-        }
-
-        public void InsertCostMsgForTransInvnNotExistData(OracleConnection db)
-        {
-            transaction = db.BeginTransaction();
-            costDataForTransInvnNotExist.MsgKey = GetSeqNbr(db);
-            var transInvnNotExistMsg = CreateCostMessage(costDataForTransInvnNotExist.CaseNumber, costDataForTransInvnNotExist.SkuId, costDataForTransInvnNotExist.Qty, costData.LocnId);
-            var transInvnNotExistSql = $"insert into emstowms values ('{emsToWmsParameters.Process}','{ costDataForTransInvnNotExist.MsgKey}','{emsToWmsParameters.Status}','{emsToWmsParameters.Transaction}','{transInvnNotExistMsg}','0','TestUser','22-JUL-19','22-JUL-19')";
-            command = new OracleCommand(transInvnNotExistSql, db);
-            command.ExecuteNonQuery();
-            transaction.Commit();
+            return CostTransData;
         }
 
         public void PickLocnDoesNotExistData(OracleConnection db)
         {
+            costDataForPickLocnNotExist = FetchPickLocnDoesNotExistData(db);
+            var pickLnInvnNotExistMsg = CreateCostMessage(costDataForPickLocnNotExist.CaseNumber, costDataForPickLocnNotExist.SkuId, costDataForPickLocnNotExist.Qty, costData.LocnId);
+            var emsToWms = new EmsToWmsDto
+            {
+                Process = "EMS",
+                Status = "Ready",
+                Transaction = TransactionCode.Cost,
+                ResponseCode = (short)int.Parse(ReasonCode.Success),
+                MessageText = pickLnInvnNotExistMsg
+            };
+            costDataForPickLocnNotExist.MsgKey = InsertEmsToWMS(db, emsToWms);
+        }
+
+        public Cost FetchPickLocnDoesNotExistData(OracleConnection db)
+        {
+            var CostTransData = new Cost();
             sqlStatements = $"select tn.ACTL_INVN_UNITS,cd.SKU_ID,ch.CASE_NBR,ch.STAT_CODE from  CASE_HDR ch  inner join  case_dtl cd on cd.CASE_NBR = ch.CASE_NBR  inner join trans_invn tn on tn.SKU_ID = cd.SKU_ID  left join pick_locn_dtl on pick_locn_dtl.sku_id = tn.sku_id  and ch.STAT_CODE = 96 and tn.ACTL_INVN_UNITS >1 and trans_invn_type = '18' and pick_locn_dtl.LOCN_ID = 0";
             command = new OracleCommand(sqlStatements, db);
             var dr18 = command.ExecuteReader();
             if (dr18.Read())
             {
-                costDataForPickLocnNotExist.CaseNumber = dr18["CASE_NBR"].ToString();
-                costDataForPickLocnNotExist.SkuId = dr18["SKU_ID"].ToString();
-                costDataForPickLocnNotExist.Qty = dr18["ACTL_INVN_UNITS"].ToString();
+                CostTransData.CaseNumber = dr18["CASE_NBR"].ToString();
+                CostTransData.SkuId = dr18["SKU_ID"].ToString();
+                CostTransData.Qty = dr18["ACTL_INVN_UNITS"].ToString();
             }
-            InsertCostMsgForPickLocnDoesNotExistData(db);
+            return CostTransData;
         }
 
-        public void InsertCostMsgForPickLocnDoesNotExistData(OracleConnection db)
+        public Int64 GetSeqNbrEmsToWms(OracleConnection db)
         {
-            transaction = db.BeginTransaction();
-            costDataForPickLocnNotExist.MsgKey = GetSeqNbr(db);
-            var pickLnInvnNotExistMsg = CreateCostMessage(costDataForPickLocnNotExist.CaseNumber, costDataForPickLocnNotExist.SkuId, costDataForPickLocnNotExist.Qty, costData.LocnId);
-            var pickLnInvnNotExistSql = $"insert into emstowms values ('{emsToWmsParameters.Process}','{costDataForPickLocnNotExist.MsgKey}','{emsToWmsParameters.Status}','{emsToWmsParameters.Transaction}','{pickLnInvnNotExistMsg}','0','TestUser','22-JUL-19','22-JUL-19')";
-            command = new OracleCommand(pickLnInvnNotExistSql, db);
-            command.ExecuteNonQuery();
-            transaction.Commit();
-        }
-
-        public Int64 GetSeqNbr(OracleConnection db)
-        {
-            sqlStatements = $"select WMSTOEMS_MSGKEY_SEQ.nextval from dual";
+            sqlStatements = $"select EMSTOWMS_MSGKEY_SEQ.nextval from dual";
             command = new OracleCommand(sqlStatements, db);
             var key = Convert.ToInt64(command.ExecuteScalar().ToString());
             return key;
@@ -239,6 +256,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
                 swmFromMheData.ContainerId = dr1["CONTAINER_ID"].ToString();
                 swmFromMheData.ContainerType = dr1["CONTAINER_TYPE"].ToString();
                 swmFromMheData.MessageJson = dr1["MSG_JSON"].ToString();
+                swmFromMheData.SourceMessageText = dr1["SOURCE_MSG_TEXT"].ToString();
                 swmFromMheData.LocationId = dr1["LOCN_ID"].ToString();
             }
             return swmFromMheData;

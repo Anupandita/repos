@@ -27,7 +27,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
         }
         protected void SetCurrentMsgKey()
         {
-            currentMsgKey = emsToWmsParameters.MessageKey;
+            currentMsgKey = costData.MsgKey;
         }
         protected void SetInvalidMsgKey()
         {
@@ -111,7 +111,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
         protected void VerifyCostMessageWasInsertedIntoSwmFromMhe()
         {
             Assert.AreEqual(emsToWmsParameters.Process, swmFromMhe.SourceMessageProcess);
-            Assert.AreEqual(emsToWmsParameters.MessageKey, swmFromMhe.SourceMessageKey);
+            Assert.AreEqual(costData.MsgKey, swmFromMhe.SourceMessageKey);
             Assert.AreEqual(emsToWmsParameters.Status,swmFromMhe.SourceMessageStatus);
             Assert.AreEqual(emsToWmsParameters.Transaction, swmFromMhe.SourceMessageTransactionCode);
             Assert.AreEqual(emsToWmsParameters.ResponseCode,swmFromMhe.SourceMessageResponseCode);
@@ -119,10 +119,10 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual("Case", swmFromMhe.ContainerType);
             Assert.AreEqual(DefaultPossibleValue.TransactionCode.Cost, cost.TransactionCode);
             Assert.AreEqual("268", cost.MessageLength);
-            Assert.AreEqual("Arrival", cost.ActionCode);           
+            Assert.AreEqual("Arrival", cost.ActionCode);
             Assert.AreEqual(caseHeaderDto.PoNumber, swmFromMhe.PoNumber);
         }
-
+        
         protected void VerifyTheQuantityWasDecreasedInToTransInventory()
         {
             Assert.AreEqual(trnInvBeforeApi.ActualInventoryUnits - Convert.ToDecimal(cost.StorageClassAttribute2), trnInvAfterApi.ActualInventoryUnits);

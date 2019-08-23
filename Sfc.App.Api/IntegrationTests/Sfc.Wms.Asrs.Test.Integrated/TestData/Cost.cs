@@ -13,4 +13,10 @@ namespace Sfc.Wms.Asrs.Test.Integrated.TestData
         public string Qty { get; set; }
         public string LocnId { get; set; }
     }
+
+    public class EmsToWms
+    {
+        
+    }
+
 }
