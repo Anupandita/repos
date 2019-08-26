@@ -141,6 +141,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
             Assert.IsNotNull(testResult.Payload);
             return testResult.Payload;
         }
+
         
         public void GetDataForNegativeCases()
         {
@@ -175,7 +176,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
         public void TransInvnDoesNotExistData(OracleConnection db)
         {
             costDataForTransInvnNotExist = FetchCaseNumberWithoutTransInventry(db);
-            var costmsg = CreateCostMessage(costDataForTransInvnNotExist.CaseNumber, costDataForTransInvnNotExist.SkuId, costDataForTransInvnNotExist.Qty, costData.LocnId);
+            var costmsg = CreateCostMessage(costDataForTransInvnNotExist.CaseNumber, costDataForTransInvnNotExist.SkuId, costDataForTransInvnNotExist.Qty, costDataForTransInvnNotExist.LocnId);
             var emsToWms = new EmsToWmsDto
             {
                 Process = "EMS",
@@ -184,13 +185,13 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
                 ResponseCode = (short)int.Parse(ReasonCode.Success),
                 MessageText = costmsg
             };
-            costDataForTransInvnNotExist.InvalidKey = InsertEmsToWMS(db, emsToWms);
+            costDataForTransInvnNotExist.MsgKey = InsertEmsToWMS(db, emsToWms);
         }
 
         public Cost FetchCaseNumberWithoutTransInventry (OracleConnection db)
         {
             var CostTransData = new Cost();
-            sqlStatements = $"select cd.SKU_ID,ch.CASE_NBR,tn.ACTL_INVN_UNITS,ch.STAT_CODE from  CASE_HDR ch  inner join  case_dtl cd on cd.CASE_NBR = ch.CASE_NBR  inner join pick_locn_dtl on pick_locn_dtl.sku_id = cd.sku_id left join trans_invn tn on tn.SKU_ID = cd.SKU_ID and ch.STAT_CODE = 50 and tn.ACTL_INVN_UNITS >1 and trans_invn_type = '18' and tn.SKU_ID = null";
+            sqlStatements = $"select cd.SKU_ID,ch.CASE_NBR,tn.ACTL_INVN_UNITS,ch.STAT_CODE,pick_locn_dtl.locn_id from  CASE_HDR ch  inner join  case_dtl cd on cd.CASE_NBR = ch.CASE_NBR  inner join pick_locn_dtl on pick_locn_dtl.sku_id = cd.sku_id left join trans_invn tn on tn.SKU_ID = cd.SKU_ID and ch.STAT_CODE = 50 and tn.ACTL_INVN_UNITS >1 and trans_invn_type = '18' and tn.SKU_ID = null";
             command = new OracleCommand(sqlStatements, db);
             var dr17 = command.ExecuteReader();
             if (dr17.Read())
@@ -198,6 +199,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
                 CostTransData.CaseNumber = dr17["CASE_NBR"].ToString();
                 CostTransData.SkuId = dr17["SKU_ID"].ToString();
                 CostTransData.Qty = dr17["ACTL_INVN_UNITS"].ToString();
+                CostTransData.LocnId = dr17["LOCN_ID"].ToString();
             }
             return CostTransData;
         }

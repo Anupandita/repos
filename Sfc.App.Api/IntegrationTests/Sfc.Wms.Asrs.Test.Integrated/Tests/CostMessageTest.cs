@@ -40,7 +40,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Tests
         public void VerifyForInvalidMessageKey()
         {
             this.Given(x => x.InvalidMsgKey())
-                .When(x => x.CostApiIsCalled())
+                .When(x => x.CostApiIsCalledForInvalidMessageKey())
                 .Then(x => x.ValidateResultForInvalidMessageKey())
                 .BDDfy();
         }
@@ -50,7 +50,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Tests
         public void VerifyForErrorLogNoCaseFound()
         {
                 this.Given(x => x.InvalidCaseMsgKey())         
-               .When(x => x.CostApiIsCalled())
+               .When(x => x.CostApiIsCalledForInvalidCaseNumber())
                .Then(x => x.ValidateResultForInvalidCaseNumber())
                .BDDfy();
         }
@@ -61,7 +61,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Tests
         public void VerifyForErrorNotEnoughInv()
         {
                 this.Given(x => x.TransInvnNotExistsMsgKey())
-               .When(x => x.CostApiIsCalled())
+               .When(x => x.CostApiIsCalledForTransInvnNotFound())
                .Then(x => x.ValidateResultForTransInventoryNotExist())
                .BDDfy();
         }
@@ -71,9 +71,11 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Tests
         public void VerifyForErrorPickLocationNotFound()
         {
                 this.Given(x => x.PickLocationNotExistKey())
-               .When(x => x.CostApiIsCalled())
-               .Then(x => x.ValidateResultForPickLocationNotExist())
+               .When(x => x.CostApiIsCalledForPickLocnNotFound())
+               .Then(x => x.ValidateResultForPickLocnNotFound())
                .BDDfy();
         }
+
+        
     }
 }
