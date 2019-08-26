@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using Sfc.Wms.Asrs.Dematic.Contracts.Dtos;
 using Sfc.Wms.Asrs.Shamrock.Contracts.Dtos;
-using Sfc.Wms.Asrs.Test.Integrated.TestData;
+using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
 using Sfc.Wms.Builder.MessageBuilder;
 using Sfc.Wms.InboundLpn.Contracts.Dtos;
 using Sfc.Wms.ParserAndTranslator.Contracts.Constants;
@@ -15,7 +15,7 @@ using Sfc.Wms.Result;
 using System;
 using System.Configuration;
 
-namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
+namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
     public class DataBaseFixtureForCost :DataBaseFixture
     {       
@@ -260,6 +260,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
                 swmFromMheData.MessageJson = dr1["MSG_JSON"].ToString();
                 swmFromMheData.SourceMessageText = dr1["SOURCE_MSG_TEXT"].ToString();
                 swmFromMheData.LocationId = dr1["LOCN_ID"].ToString();
+                swmFromMheData.CreatedOn = Convert.ToDateTime(dr1["CREATED_DATE_TIME"].ToString());
             }
             return swmFromMheData;
         }

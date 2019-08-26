@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Sfc.Wms.Asrs.Test.Integrated.TestData
+namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
 {
     [TestClass]
     public class ComtParams

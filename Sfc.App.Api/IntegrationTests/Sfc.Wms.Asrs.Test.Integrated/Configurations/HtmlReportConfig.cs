@@ -4,7 +4,7 @@ using TestStack.BDDfy.Reporters.Html;
 using System.Configuration;
 
 
-namespace Sfc.Wms.UserRbac.Test.Integrated.Configurations
+namespace Sfc.Wms.Api.Asrs.Test.Integrated.Configurations
 {
     class HtmlReportConfig : DefaultHtmlReportConfiguration
     {

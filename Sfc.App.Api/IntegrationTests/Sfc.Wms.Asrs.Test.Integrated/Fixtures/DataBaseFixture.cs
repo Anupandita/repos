@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using Sfc.Wms.Asrs.Dematic.Contracts.Dtos;
 using Sfc.Wms.Asrs.Shamrock.Contracts.Dtos;
-using Sfc.Wms.Asrs.Test.Integrated.TestData;
+using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
 using Sfc.Wms.InboundLpn.Contracts.Dtos;
 using Sfc.Wms.Parser.Parsers;
 using Sfc.Wms.ParserAndTranslator.Contracts.Constants;
@@ -17,7 +17,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
 
-namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
+namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
     public class DataBaseFixture
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Sfc.Wms.Asrs.Test.Integrated.TestData;
+using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
 using RestSharp;
 using Newtonsoft.Json;
 using DefaultPossibleValue = Sfc.Wms.ParserAndTranslator.Contracts.Constants;
@@ -8,7 +8,7 @@ using Sfc.Wms.Result;
 using System.Configuration;
 using Sfc.Wms.InboundLpn.Contracts.Dtos;
 
-namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
+namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
     [TestClass]
     public class CostMessageFixture : DataBaseFixtureForCost

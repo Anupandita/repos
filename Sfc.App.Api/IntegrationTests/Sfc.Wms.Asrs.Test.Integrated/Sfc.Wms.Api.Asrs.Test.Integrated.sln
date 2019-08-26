@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sfc.Wms.Asrs.Test.Integration", "Sfc.Wms.Asrs.Test.Integration.csproj", "{39F2A7CE-5843-48CC-B840-099CF51C8EBA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sfc.Wms.Api.Asrs.Test.Integrated", "Sfc.Wms.Api.Asrs.Test.Integrated.csproj", "{39F2A7CE-5843-48CC-B840-099CF51C8EBA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

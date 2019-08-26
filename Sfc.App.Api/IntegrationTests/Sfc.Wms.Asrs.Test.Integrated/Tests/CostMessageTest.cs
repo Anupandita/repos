@@ -1,8 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Sfc.Wms.Asrs.Test.Integrated.Fixtures;
+using Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures;
 using TestStack.BDDfy;
 
-namespace Sfc.Wms.Asrs.Test.Integrated.Tests
+namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 {
     [TestClass]
     [Story(
@@ -58,7 +58,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void VerifyForErrorNotEnoughInv()
+        public void VerifyForErrorNotEnoughInventory()
         {
                 this.Given(x => x.TransInvnNotExistsMsgKey())
                .When(x => x.CostApiIsCalledForTransInvnNotFound())

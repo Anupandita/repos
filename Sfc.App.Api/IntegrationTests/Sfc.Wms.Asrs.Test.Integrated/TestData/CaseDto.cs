@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sfc.Wms.Asrs.Test.Integrated
+namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
 {
     public class CaseDto
     {

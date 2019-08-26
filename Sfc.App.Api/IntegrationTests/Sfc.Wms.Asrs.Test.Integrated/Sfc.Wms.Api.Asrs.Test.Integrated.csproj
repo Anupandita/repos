@@ -7,8 +7,8 @@
     <ProjectGuid>{39F2A7CE-5843-48CC-B840-099CF51C8EBA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sfc.Wms.Asrs.Test.Integrated</RootNamespace>
-    <AssemblyName>Sfc.Wms.Asrs.Test.Integrated</AssemblyName>
+    <RootNamespace>Sfc.Wms.Api.Asrs.Test.Integrated</RootNamespace>
+    <AssemblyName>Sfc.Wms.Api.Asrs.Test.Integrated</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -51,7 +51,6 @@
     <Compile Include="Fixtures\ComtIvmtMessageFixture.cs" />
     <Compile Include="Fixtures\DataBaseFixtureForCost.cs" />
     <Compile Include="Fixtures\CostMessageFixture.cs" />
-    <Compile Include="Fixtures\OrstFixture.cs" />
     <Compile Include="TestData\CaseDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestData\ComtParams.cs" />

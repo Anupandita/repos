@@ -1,10 +1,10 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Sfc.Wms.Asrs.Test.Integrated.Fixtures;
+using Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures;
 using Sfc.Wms.ParserAndTranslator.Contracts.Interfaces;
 using TestStack.BDDfy;
 
-namespace Sfc.Wms.Asrs.Test.Integrated.Tests
+namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 {
     [TestClass]
     [Story(
