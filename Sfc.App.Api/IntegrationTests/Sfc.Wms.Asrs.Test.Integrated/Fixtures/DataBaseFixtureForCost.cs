@@ -92,7 +92,7 @@ namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
         public PickLocationDtlDto PickLocnData(OracleConnection db,string skuId)
         {
             var pickLocn = new PickLocationDtlDto();
-            sqlStatements = $"select tn.ACTL_INVN_UNITS,pl.ACTL_INVN_QTY,pl.TO_BE_FILLD_QTY,pl.LOCN_ID from trans_invn tn inner join  pick_locn_dtl pl on tn.sku_id = pl.sku_id and tn.trans_invn_type= 18 and tn.sku_id = '{skuId}' order by tn.mod_date_time desc";
+            sqlStatements = $"select * from pick_locn_dtl where sku_id = '{skuId}' and locn_id = '{costData.LocnId}' order by mod_date_time desc";
             command = new OracleCommand(sqlStatements, db);
             var dr3 = command.ExecuteReader();
             if (dr3.Read())
