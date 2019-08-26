@@ -14,7 +14,6 @@ using Sfc.Wms.PickLocationDetail.Contracts.Dtos;
 using Sfc.Wms.Result;
 using System;
 using System.Configuration;
-using DefaultPossibleValue = Sfc.Wms.ParserAndTranslator.Contracts.Constants;
 
 namespace Sfc.Wms.Asrs.Test.Integrated.Fixtures
 {
