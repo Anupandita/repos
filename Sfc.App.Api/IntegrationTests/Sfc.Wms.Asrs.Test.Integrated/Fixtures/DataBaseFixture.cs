@@ -60,13 +60,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
            
         }
 
-        public void GetDataBeforeTriggerComt()
+        public OracleConnection GetOracleConnection()
         {
-            OracleConnection db;
-            using (db = new OracleConnection
-            {
-                ConnectionString = ConfigurationManager.ConnectionStrings["SfcRbacContextModel"].ConnectionString
-            })
+            return new OracleConnection(ConfigurationManager.ConnectionStrings["SfcRbacContextModel"].ConnectionString);        
+        }
+
+        public void GetDataBeforeTriggerComt()
+        {        
+            using (var db = GetOracleConnection())
             {
                 db.Open();          
                 var caseheader = ValidQueryToFetchCaseData(db, 1);
@@ -149,11 +150,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
        
         public void GetDataAfterTriggerOfComtForSingleSku()
         {
-            OracleConnection db;
-            using (db = new OracleConnection
-            {
-                ConnectionString = ConfigurationManager.ConnectionStrings["SfcRbacContextModel"].ConnectionString
-            })
+            using (var db = GetOracleConnection())
             {
                 db.Open();
                 command = new OracleCommand();
@@ -256,11 +253,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public void GetDataAfterTriggerForMultiSkuAndValidateData()
         {     
             OracleCommand command;
-            OracleConnection db;
-            using (db = new OracleConnection
-            {
-                ConnectionString = ConfigurationManager.ConnectionStrings["SfcRbacContextModel"].ConnectionString
-            })
+            using (var db = GetOracleConnection())
             {
                 db.Open();
                 command = new OracleCommand();

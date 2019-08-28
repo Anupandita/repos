@@ -63,11 +63,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         public void GetDataBeforeTrigger()
         {           
-            OracleConnection db;        
-            using (db = new OracleConnection
-            {
-                ConnectionString = ConfigurationManager.ConnectionStrings["SfcRbacContextModel"].ConnectionString
-            })
+            using (var db = GetOracleConnection())
             {
                 db.Open();
                 costData = GetCaseDetailsForInsertingCostMessage(db);
@@ -107,7 +103,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             transaction = db.BeginTransaction();
             var MsgKey = GetSeqNbrEmsToWms(db);
-            command.Parameters.Add(new OracleParameter("dateParam", OracleDbType.Date)).Value = DateTime.Now;
             var insertQuery = $"insert into emstowms values ('{emsToWmsDto.Process}','{MsgKey}','{emsToWmsDto.Status}','{emsToWmsDto.Transaction}','{emsToWmsDto.MessageText}','{emsToWmsDto.ResponseCode}','TestUser','{DateTime.Now.ToString("dd-MMM-yy")}','{DateTime.Now.ToString("dd-MMM-yy")}')";
             command = new OracleCommand(insertQuery, db);
             command.ExecuteNonQuery();
@@ -144,12 +139,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         
         public void GetDataForNegativeCases()
-        {
-            OracleConnection db;       
-            using (db = new OracleConnection
-            {
-                ConnectionString = ConfigurationManager.ConnectionStrings["SfcRbacContextModel"].ConnectionString
-            })
+        {     
+            using (var db = GetOracleConnection())
             {
                 db.Open();
                 InvalidCaseData(db);
@@ -267,11 +258,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
        
         public void GetDataAfterTrigger()
         {
-            OracleConnection db;
-            using (db = new OracleConnection
-            {
-                ConnectionString = ConfigurationManager.ConnectionStrings["SfcRbacContextModel"].ConnectionString
-            })
+            using (var db = GetOracleConnection())
             {
                 db.Open();
                 swmFromMhe = SwmFromMhe(db, costData.CaseNumber, TransactionCode.Cost, costData.SkuId);
