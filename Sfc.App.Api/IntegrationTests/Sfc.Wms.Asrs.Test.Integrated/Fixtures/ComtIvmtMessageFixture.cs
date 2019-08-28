@@ -19,7 +19,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected ComtParams ComtParameters;
         protected IRestResponse Response;
         
-        protected void GetDataBeforeCallingComtApi() 
+        protected void InitializeTestData() 
         {
             GetDataBeforeTriggerComt();
         }
@@ -39,12 +39,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             ComtParameters = new ComtParams
             {
                 ActionCode = ActionCodeConstants.Create,
-                CurrentLocationId = "000192818",
+                CurrentLocationId = DefaultValues.CurrentlocnId,
                 ContainerId = currentCaseNbr,
                 ContainerType = DefaultValues.ContainerType,
                 ParentContainerId = currentCaseNbr,
-                AttributeBitmap = "",
-                QuantityToInduct = "1"
+                AttributeBitmap = DefaultValues.AttributeBitMap,
+                QuantityToInduct = DefaultValues.QuantityToInduct
             };
         }
 
@@ -66,7 +66,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             request.RequestFormat = DataFormat.Json;
             Response = client.Execute(request);          
             var result = JsonConvert.DeserializeObject<BaseResult>(Response.Content.ToString());
-            Assert.AreEqual(DefaultValues.ResultType,result.ResultType.ToString());         
+            Assert.AreEqual(ResultType.Created,result.ResultType.ToString());         
         }
 
         protected void VerifyComtMessageWasInsertedIntoSwmToMhe()

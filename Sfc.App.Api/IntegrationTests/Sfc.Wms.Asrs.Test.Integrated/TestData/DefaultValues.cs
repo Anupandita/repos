@@ -12,6 +12,18 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
         public const string Owner = "Warehouse";
         public const int CaseHdrStatCode = 96;
         public const byte TaskStatusCode = 90;
-        public const string ResultType = "Created";
+        public const string CurrentlocnId = "000192818";
+        public const string AttributeBitMap = "";
+        public const string QuantityToInduct = "1";
+        public const string Process = "EMS";
+        public const string ActionCodeCost = "Arrival";
+        public const string InvalidCase = "00000283000804736790";
+        public const string MessageLengthCost = "268";
+    }
+
+    public class ResultType
+    {
+        public const string Created = "Created";
+        public const string NotFound = "NotFound";
     }
 }

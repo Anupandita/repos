@@ -56,6 +56,8 @@
     <Compile Include="TestData\ComtParams.cs" />
     <Compile Include="TestData\Cost.cs" />
     <Compile Include="TestData\DefaultValues.cs" />
+    <Compile Include="TestData\FieldNames.cs" />
+    <Compile Include="TestData\ValidationMessage.cs" />
     <Compile Include="Tests\ComtAndIvmtTest.cs" />
     <Compile Include="Tests\CostMessageTest.cs" />
   </ItemGroup>

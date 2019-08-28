@@ -50,13 +50,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 $" on trans_invn.sku_id = swm_to_mhe.sku_id inner join  pick_locn_dtl on swm_to_mhe.sku_id = pick_locn_dtl.sku_id  " +
                 $"inner join case_hdr on swm_to_mhe.container_id = case_hdr.case_nbr and swm_to_mhe.source_msg_status = 'Ready' and swm_to_mhe.qty!= 0 and case_hdr.stat_code = 96";
             command = new OracleCommand(sqlStatements, db);
-            var dr15 = command.ExecuteReader();
-            if (dr15.Read())
+            var validData = command.ExecuteReader();
+            if (validData.Read())
             {
-                CostDataDto.CaseNumber = dr15["CONTAINER_ID"].ToString();
-                CostDataDto.SkuId = dr15["SKU_ID"].ToString();
-                CostDataDto.Qty = dr15["QTY"].ToString();
-                CostDataDto.LocnId = dr15["LOCN_ID"].ToString();
+                CostDataDto.CaseNumber = validData[SwmAndMhe.ContainerId].ToString();
+                CostDataDto.SkuId = validData[SwmAndMhe.SkuId].ToString();
+                CostDataDto.Qty = validData[SwmAndMhe.Qty].ToString();
+                CostDataDto.LocnId = validData[PickLocationDtl.LocnId].ToString();
             }
             return CostDataDto;                 
         }
@@ -75,9 +75,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 var CostResult = CreateCostMessage(costData.CaseNumber, costData.SkuId, costData.Qty, costData.LocnId);
                 emsToWmsParameters = new EmsToWmsDto
                 {
-                    Process = "EMS",
+                    Process = DefaultValues.Process,
                     MessageKey = Convert.ToInt64(costData.MsgKey),
-                    Status = "Ready",
+                    Status = DefaultValues.Status,
                     Transaction = TransactionCode.Cost,
                     ResponseCode = (short)int.Parse(ReasonCode.Success),
                     MessageText = CostResult,
@@ -93,12 +93,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var pickLocn = new PickLocationDtlDto();
             sqlStatements = $"select * from pick_locn_dtl where sku_id = '{skuId}' and locn_id = '{costData.LocnId}' order by mod_date_time desc";
             command = new OracleCommand(sqlStatements, db);
-            var dr3 = command.ExecuteReader();
-            if (dr3.Read())
+            var pickLocnReader = command.ExecuteReader();
+            if (pickLocnReader.Read())
             {
-                pickLocn.ActualInventoryQuantity = Convert.ToDecimal(dr3["ACTL_INVN_QTY"].ToString());
-                pickLocn.ToBeFilledQty = Convert.ToDecimal(dr3["TO_BE_FILLD_QTY"].ToString());
-                pickLocn.LocationId = dr3["LOCN_ID"].ToString();
+                pickLocn.ActualInventoryQuantity = Convert.ToDecimal(pickLocnReader[PickLocationDtl.ActlInvnQty].ToString());
+                pickLocn.ToBeFilledQty = Convert.ToDecimal(pickLocnReader[PickLocationDtl.ToBeFilledQty].ToString());
+                pickLocn.LocationId = pickLocnReader[PickLocationDtl.LocnId].ToString();
             }
             return pickLocn;
         }
@@ -108,8 +108,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             transaction = db.BeginTransaction();
             var MsgKey = GetSeqNbrEmsToWms(db);
             command.Parameters.Add(new OracleParameter("dateParam", OracleDbType.Date)).Value = DateTime.Now;
-            var validsql = $"insert into emstowms values ('{emsToWmsDto.Process}','{MsgKey}','{emsToWmsDto.Status}','{emsToWmsDto.Transaction}','{emsToWmsDto.MessageText}','{emsToWmsDto.ResponseCode}','TestUser','{DateTime.Now.ToString("dd-MMM-yy")}','{DateTime.Now.ToString("dd-MMM-yy")}')";
-            command = new OracleCommand(validsql, db);
+            var insertQuery = $"insert into emstowms values ('{emsToWmsDto.Process}','{MsgKey}','{emsToWmsDto.Status}','{emsToWmsDto.Transaction}','{emsToWmsDto.MessageText}','{emsToWmsDto.ResponseCode}','TestUser','{DateTime.Now.ToString("dd-MMM-yy")}','{DateTime.Now.ToString("dd-MMM-yy")}')";
+            command = new OracleCommand(insertQuery, db);
             command.ExecuteNonQuery();
             transaction.Commit();
             return MsgKey;
@@ -119,10 +119,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             CostParameters = new CostDto
             {
-                ActionCode = "Arrival",
+                ActionCode = DefaultValues.ActionCodeCost,
                 ContainerReasonCodeMap = ReasonCode.Success,
                 ContainerId = containerNbr,
-                ContainerType = "Case",
+                ContainerType = DefaultValues.ContainerType,
                 PhysicalContainerId = "",
                 CurrentLocationId = locationId,
                 StorageClassAttribute1 = skuId,
@@ -161,11 +161,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public void InvalidCaseData(OracleConnection db)
         {   
             command = new OracleCommand(sqlStatements, db);
-            var costmsg = CreateCostMessage("00000283000804736790", costData.SkuId, costData.Qty, costData.LocnId);
+            var costmsg = CreateCostMessage(DefaultValues.InvalidCase, costData.SkuId, costData.Qty, costData.LocnId);
              var emsToWms = new EmsToWmsDto
             {
-                Process = "EMS",
-                Status = "Ready",
+                Process = DefaultValues.Process,
+                Status = DefaultValues.Status,
                 Transaction = TransactionCode.Cost,
                 ResponseCode = (short)int.Parse(ReasonCode.Success),
                 MessageText = costmsg
@@ -179,8 +179,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var costmsg = CreateCostMessage(costDataForTransInvnNotExist.CaseNumber, costDataForTransInvnNotExist.SkuId, costDataForTransInvnNotExist.Qty, costDataForTransInvnNotExist.LocnId);
             var emsToWms = new EmsToWmsDto
             {
-                Process = "EMS",
-                Status = "Ready",
+                Process = DefaultValues.Process,
+                Status = DefaultValues.Status,
                 Transaction = TransactionCode.Cost,
                 ResponseCode = (short)int.Parse(ReasonCode.Success),
                 MessageText = costmsg
@@ -193,13 +193,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var CostTransData = new Cost();
             sqlStatements = $"select cd.SKU_ID,ch.CASE_NBR,tn.ACTL_INVN_UNITS,ch.STAT_CODE,pick_locn_dtl.locn_id from  CASE_HDR ch  inner join  case_dtl cd on cd.CASE_NBR = ch.CASE_NBR  inner join pick_locn_dtl on pick_locn_dtl.sku_id = cd.sku_id left join trans_invn tn on tn.SKU_ID = cd.SKU_ID and ch.STAT_CODE = 50 and tn.ACTL_INVN_UNITS >1 and trans_invn_type = '18' and tn.SKU_ID = null";
             command = new OracleCommand(sqlStatements, db);
-            var dr17 = command.ExecuteReader();
-            if (dr17.Read())
+            var Reader = command.ExecuteReader();
+            if (Reader.Read())
             {
-                CostTransData.CaseNumber = dr17["CASE_NBR"].ToString();
-                CostTransData.SkuId = dr17["SKU_ID"].ToString();
-                CostTransData.Qty = dr17["ACTL_INVN_UNITS"].ToString();
-                CostTransData.LocnId = dr17["LOCN_ID"].ToString();
+                CostTransData.CaseNumber = Reader[CaseHeader.CaseNumber].ToString();
+                CostTransData.SkuId = Reader[CaseDetail.SkuId].ToString();
+                CostTransData.Qty = Reader[TransInventory.ActualInventoryUnits].ToString();
+                CostTransData.LocnId = Reader[PickLocationDtl.LocnId].ToString();
             }
             return CostTransData;
         }
@@ -210,8 +210,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var pickLnInvnNotExistMsg = CreateCostMessage(costDataForPickLocnNotExist.CaseNumber, costDataForPickLocnNotExist.SkuId, costDataForPickLocnNotExist.Qty, costData.LocnId);
             var emsToWms = new EmsToWmsDto
             {
-                Process = "EMS",
-                Status = "Ready",
+                Process = DefaultValues.Process,
+                Status = DefaultValues.Status,
                 Transaction = TransactionCode.Cost,
                 ResponseCode = (short)int.Parse(ReasonCode.Success),
                 MessageText = pickLnInvnNotExistMsg
@@ -224,12 +224,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var CostTransData = new Cost();
             sqlStatements = $"select tn.ACTL_INVN_UNITS,cd.SKU_ID,ch.CASE_NBR,ch.STAT_CODE from  CASE_HDR ch  inner join  case_dtl cd on cd.CASE_NBR = ch.CASE_NBR  inner join trans_invn tn on tn.SKU_ID = cd.SKU_ID  left join pick_locn_dtl on pick_locn_dtl.sku_id = tn.sku_id  and ch.STAT_CODE = 96 and tn.ACTL_INVN_UNITS >1 and trans_invn_type = '18' and pick_locn_dtl.LOCN_ID = 0";
             command = new OracleCommand(sqlStatements, db);
-            var dr18 = command.ExecuteReader();
-            if (dr18.Read())
+            var Reader = command.ExecuteReader();
+            if (Reader.Read())
             {
-                CostTransData.CaseNumber = dr18["CASE_NBR"].ToString();
-                CostTransData.SkuId = dr18["SKU_ID"].ToString();
-                CostTransData.Qty = dr18["ACTL_INVN_UNITS"].ToString();
+                CostTransData.CaseNumber = Reader[CaseHeader.CaseNumber].ToString();
+                CostTransData.SkuId = Reader[CaseDetail.SkuId].ToString();
+                CostTransData.Qty = Reader[TransInventory.ActualInventoryUnits].ToString();
             }
             return CostTransData;
         }
@@ -247,20 +247,19 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var swmFromMheData = new SwmFromMheDto();
             sqlStatements = $"select * from swm_from_mhe where container_id = '{caseNbr}' and source_msg_trans_code = '{trx}' and sku_id = '{skuId}' order by created_date_time desc";
             command = new OracleCommand(sqlStatements, db);
-            var dr1 = command.ExecuteReader();
-            if (dr1.Read())
+            var swmFromMheReader = command.ExecuteReader();
+            if (swmFromMheReader.Read())
             {
-                swmFromMheData.SourceMessageKey = Convert.ToInt16(dr1["SOURCE_MSG_KEY"].ToString());
-                swmFromMheData.SourceMessageResponseCode = Convert.ToInt16(dr1["SOURCE_MSG_RSN_CODE"].ToString());
-                swmFromMheData.SourceMessageStatus = dr1["SOURCE_MSG_STATUS"].ToString();
-                swmFromMheData.SourceMessageProcess = dr1["SOURCE_MSG_PROCESS"].ToString();
-                swmFromMheData.SourceMessageTransactionCode = dr1["SOURCE_MSG_TRANS_CODE"].ToString();
-                swmFromMheData.ContainerId = dr1["CONTAINER_ID"].ToString();
-                swmFromMheData.ContainerType = dr1["CONTAINER_TYPE"].ToString();
-                swmFromMheData.MessageJson = dr1["MSG_JSON"].ToString();
-                swmFromMheData.SourceMessageText = dr1["SOURCE_MSG_TEXT"].ToString();
-                swmFromMheData.LocationId = dr1["LOCN_ID"].ToString();
-                swmFromMheData.CreatedOn = Convert.ToDateTime(dr1["CREATED_DATE_TIME"].ToString());
+                swmFromMheData.SourceMessageKey = Convert.ToInt16(swmFromMheReader[SwmAndMhe.SourceMsgKey].ToString());
+                swmFromMheData.SourceMessageResponseCode = Convert.ToInt16(swmFromMheReader[SwmAndMhe.SourceMsgRsnCode].ToString());
+                swmFromMheData.SourceMessageStatus = swmFromMheReader[SwmAndMhe.SourceMsgStatus].ToString();
+                swmFromMheData.SourceMessageProcess = swmFromMheReader[SwmAndMhe.SourceMsgProcess].ToString();
+                swmFromMheData.SourceMessageTransactionCode = swmFromMheReader[SwmAndMhe.SourceMsgTransCode].ToString();
+                swmFromMheData.ContainerId = swmFromMheReader[SwmAndMhe.ContainerId].ToString();
+                swmFromMheData.ContainerType = swmFromMheReader[SwmAndMhe.ContainerType].ToString();
+                swmFromMheData.MessageJson = swmFromMheReader[SwmAndMhe.MsgJson].ToString();
+                swmFromMheData.SourceMessageText = swmFromMheReader[SwmAndMhe.SourceMsgText].ToString();
+                swmFromMheData.LocationId = swmFromMheReader[SwmAndMhe.LocnId].ToString();
             }
             return swmFromMheData;
         }

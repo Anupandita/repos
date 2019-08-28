@@ -7,6 +7,7 @@ using DefaultPossibleValue = Sfc.Wms.ParserAndTranslator.Contracts.Constants;
 using Sfc.Wms.Result;
 using System.Configuration;
 using Sfc.Wms.InboundLpn.Contracts.Dtos;
+using ValidationMessage = Sfc.Wms.Api.Asrs.Test.Integrated.TestData.ValidationMessage;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
@@ -68,7 +69,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected void CostApiIsCalledWithValidMsgKey()
         {
             var result = CostResult();
-            Assert.AreEqual("Created", result.ResultType.ToString());
+            Assert.AreEqual(ResultType.Created, result.ResultType.ToString());
         }
         protected void CostApiIsCalledForInvalidMessageKey()
         {
@@ -103,10 +104,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(emsToWmsParameters.Transaction, swmFromMhe.SourceMessageTransactionCode);
             Assert.AreEqual(emsToWmsParameters.ResponseCode,swmFromMhe.SourceMessageResponseCode);
             Assert.AreEqual(emsToWmsParameters.MessageText, swmFromMhe.SourceMessageText);            
-            Assert.AreEqual("Case", swmFromMhe.ContainerType);
+            Assert.AreEqual(DefaultValues.ContainerType, swmFromMhe.ContainerType);
             Assert.AreEqual(DefaultPossibleValue.TransactionCode.Cost, cost.TransactionCode);
-            Assert.AreEqual("268", cost.MessageLength);
-            Assert.AreEqual("Arrival", cost.ActionCode);
+            Assert.AreEqual(DefaultValues.MessageLengthCost, cost.MessageLength);
+            Assert.AreEqual(DefaultValues.ActionCodeCost, cost.ActionCode);
             Assert.AreEqual(caseHeaderDto.PoNumber, swmFromMhe.PoNumber);
         }
         
@@ -124,18 +125,18 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         }
         protected void ValidateResultForInvalidMessageKey()
         {
-            Assert.AreEqual("NotFound", negativecase1.ResultType.ToString());
+            Assert.AreEqual(ResultType.NotFound, negativecase1.ResultType.ToString());
             Assert.AreEqual(1, negativecase1.ValidationMessages.Count);
-            Assert.AreEqual("EmsToWms", negativecase1.ValidationMessages[0].FieldName);
-            Assert.AreEqual("Invalid Message Key", negativecase1.ValidationMessages[0].Message);
+            Assert.AreEqual(ValidationMessage.EmsToWms, negativecase1.ValidationMessages[0].FieldName);
+            Assert.AreEqual(ValidationMessage.InvalidMessageKey, negativecase1.ValidationMessages[0].Message);
         }
         protected void ValidateResultForInvalidCaseNumber()
         {
             Assert.AreEqual(2, negativecase2.ValidationMessages.Count);
-            Assert.AreEqual("Container Id", negativecase2.ValidationMessages[0].FieldName);
-            Assert.AreEqual("Invalid", negativecase2.ValidationMessages[0].Message);
-            Assert.AreEqual("SKU", negativecase2.ValidationMessages[1].FieldName);
-            Assert.AreEqual("Invalid", negativecase2.ValidationMessages[1].Message);
+            Assert.AreEqual(ValidationMessage.ContainerId, negativecase2.ValidationMessages[0].FieldName);
+            Assert.AreEqual(ValidationMessage.Invalid, negativecase2.ValidationMessages[0].Message);
+            Assert.AreEqual(ValidationMessage.Sku, negativecase2.ValidationMessages[1].FieldName);
+            Assert.AreEqual(ValidationMessage.Invalid, negativecase2.ValidationMessages[1].Message);
         }
 
         protected void ValidateResultForTransInventoryNotExist()
@@ -145,8 +146,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected void ValidateResultForPickLocnNotFound()
         {
             Assert.AreEqual(1, negativeCase4.ValidationMessages.Count);
-            Assert.AreEqual("PickLocationDtl", negativeCase4.ValidationMessages[0].FieldName);
-            Assert.AreEqual("Not Found", negativeCase4.ValidationMessages[0].Message);
+            Assert.AreEqual(ValidationMessage.PickLocationDtl, negativeCase4.ValidationMessages[0].FieldName);
+            Assert.AreEqual(ValidationMessage.NotFound, negativeCase4.ValidationMessages[0].Message);
         }
     }
 }

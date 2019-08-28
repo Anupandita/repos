@@ -1,7 +1,5 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures;
-using Sfc.Wms.ParserAndTranslator.Contracts.Interfaces;
 using TestStack.BDDfy;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
@@ -16,19 +14,18 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
        SoThat = "I can validate for message fields in COMT and IVMT message, in Internal Table SWM_TO_MHE"+
         " and validate the quantity,weight,statuscode in the caseheader, casedetail, task header tables"
        )]
-    public class SampleTest : ComtIvmtMessageFixture
-    {
-       
+    public class ComtAndIvmtTest : ComtIvmtMessageFixture
+    {     
         [TestInitialize]
         [TestCategory("FUNCTIONAL")]
         public void AValidTestData()
         {
-            GetDataBeforeCallingComtApi();           
+            InitializeTestData();           
         }
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void ComtAndIvmtTest() 
+        public void ComtAndIvmtMessageTestScenarios() 
         {
             this.Given(x => x.CurrentCaseNumberForSingleSku())
                 .And(x => x.AValidNewComtMessageRecord())
@@ -47,7 +44,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod]
         [TestCategory("FUNCTIONAL")]
-        public void ComtAndIvmtTestForMultiSku()
+        public void ComtAndIvmtTestForMultiSkuScenarios()
         {
             this.Given(x => x.CurrentCaseNumberForMultiSku())
                 .And(x => x.AValidNewComtMessageRecord())
