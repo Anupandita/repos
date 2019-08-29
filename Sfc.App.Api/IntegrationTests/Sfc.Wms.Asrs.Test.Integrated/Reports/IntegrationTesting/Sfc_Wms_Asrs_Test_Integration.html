@@ -9,7 +9,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
 /*If you drop a custom stylesheet named BDDfyCustom.css in your output folder it gets embedded here. This way you can apply some custom styles over your html report.*/
 
     </style>
-    <title>BDDfy Test Result 8/28/2019</title>
+    <title>BDDfy Test Result 8/29/2019</title>
   </head>
   <body>
     <div id='main'>
@@ -29,13 +29,13 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
           <li class='scenarioSummary'>
             <div class='summaryLine'>
               <div class='summaryLabel'>Scenarios</div>
-              <span class='summaryCount'>7</span>
+              <span class='summaryCount'>8</span>
             </div>
           </li>
           <li class='Passed'>
             <div class='summaryLine'>
               <div class='summaryLabel'>Passed</div>
-              <span class='summaryCount'>7</span>
+              <span class='summaryCount'>8</span>
             </div>
           </li>
           <li class='Inconclusive'>
@@ -88,7 +88,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
                       <span>And a valid new comt message record</span>
                     </li>
                     <li class='step Passed  Transition ' data-toggle-target='step-1-3' >
-                      <span>When comt api is called</span>
+                      <span>When comt api is called created is returned</span>
                     </li>
                     <li class='step Passed  Assertion ' data-toggle-target='step-1-4' >
                       <span>Then get data from data base for single sku scenarios</span>
@@ -129,7 +129,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
                       <span>And a valid new comt message record</span>
                     </li>
                     <li class='step Passed  Transition ' data-toggle-target='step-2-3' >
-                      <span>When comt api is called</span>
+                      <span>When comt api is called created is returned</span>
                     </li>
                     <li class='step Passed  Assertion ' data-toggle-target='step-2-4' >
                       <span>Then get data and validate for ivmt message has inserted into both tables</span>
@@ -148,6 +148,23 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
                     </li>
                   </ul>
                 </div>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-3'>Comt ivmt message test case for no enough inventory in case</div>
+                  <ul class='steps' id='scenario-3'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-3-1' >
+                      <span>Given current case number for not enough inventory in case</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-3-2' >
+                      <span>And a valid new comt message record</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-3-3' >
+                      <span>When comt api is called for not enough inventory in case</span>
+                    </li>
+                    <li class='step Passed  Assertion ' data-toggle-target='step-3-4' >
+                      <span>Then validate for not enough inventory in case</span>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </li>
@@ -163,80 +180,80 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
               </div>
               <div class='scenarios'>
                 <div class='scenario'>
-                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-5'>Verify for error log no case found</div>
-                  <ul class='steps' id='scenario-5'>
-                    <li class='step Passed  SetupState ' data-toggle-target='step-5-1' >
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-6'>Verify for error log no case found</div>
+                  <ul class='steps' id='scenario-6'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-6-1' >
                       <span>Given invalid case msg key</span>
                     </li>
-                    <li class='step Passed  Transition ' data-toggle-target='step-5-2' >
+                    <li class='step Passed  Transition ' data-toggle-target='step-6-2' >
                       <span>When cost api is called for invalid case number</span>
                     </li>
-                    <li class='step Passed  Assertion ' data-toggle-target='step-5-3' >
+                    <li class='step Passed  Assertion ' data-toggle-target='step-6-3' >
                       <span>Then validate result for invalid case number</span>
                     </li>
                   </ul>
                 </div>
                 <div class='scenario'>
-                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-6'>Verify for error not enough inventory</div>
-                  <ul class='steps' id='scenario-6'>
-                    <li class='step Passed  SetupState ' data-toggle-target='step-6-1' >
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-7'>Verify for error not enough inventory</div>
+                  <ul class='steps' id='scenario-7'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-7-1' >
                       <span>Given trans invn not exists msg key</span>
                     </li>
-                    <li class='step Passed  Transition ' data-toggle-target='step-6-2' >
+                    <li class='step Passed  Transition ' data-toggle-target='step-7-2' >
                       <span>When cost api is called for trans invn not found</span>
                     </li>
-                    <li class='step Passed  Assertion ' data-toggle-target='step-6-3' >
+                    <li class='step Passed  Assertion ' data-toggle-target='step-7-3' >
                       <span>Then validate result for trans inventory not exist</span>
                     </li>
                   </ul>
                 </div>
                 <div class='scenario'>
-                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-7'>Verify for error pick location not found</div>
-                  <ul class='steps' id='scenario-7'>
-                    <li class='step Passed  SetupState ' data-toggle-target='step-7-1' >
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-8'>Verify for error pick location not found</div>
+                  <ul class='steps' id='scenario-8'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-8-1' >
                       <span>Given pick location not exist key</span>
                     </li>
-                    <li class='step Passed  Transition ' data-toggle-target='step-7-2' >
+                    <li class='step Passed  Transition ' data-toggle-target='step-8-2' >
                       <span>When cost api is called for pick locn not found</span>
                     </li>
-                    <li class='step Passed  Assertion ' data-toggle-target='step-7-3' >
+                    <li class='step Passed  Assertion ' data-toggle-target='step-8-3' >
                       <span>Then validate result for pick locn not found</span>
                     </li>
                   </ul>
                 </div>
                 <div class='scenario'>
-                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-4'>Verify for invalid message key</div>
-                  <ul class='steps' id='scenario-4'>
-                    <li class='step Passed  SetupState ' data-toggle-target='step-4-1' >
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-5'>Verify for invalid message key</div>
+                  <ul class='steps' id='scenario-5'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-5-1' >
                       <span>Given invalid msg key</span>
                     </li>
-                    <li class='step Passed  Transition ' data-toggle-target='step-4-2' >
+                    <li class='step Passed  Transition ' data-toggle-target='step-5-2' >
                       <span>When cost api is called for invalid message key</span>
                     </li>
-                    <li class='step Passed  Assertion ' data-toggle-target='step-4-3' >
+                    <li class='step Passed  Assertion ' data-toggle-target='step-5-3' >
                       <span>Then validate result for invalid message key</span>
                     </li>
                   </ul>
                 </div>
                 <div class='scenario'>
-                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-3'>Verify for valid cost message scenarios</div>
-                  <ul class='steps' id='scenario-3'>
-                    <li class='step Passed  SetupState ' data-toggle-target='step-3-1' >
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-4'>Verify for valid cost message scenarios</div>
+                  <ul class='steps' id='scenario-4'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-4-1' >
                       <span>Given a valid msg key</span>
                     </li>
-                    <li class='step Passed  Transition ' data-toggle-target='step-3-2' >
+                    <li class='step Passed  Transition ' data-toggle-target='step-4-2' >
                       <span>When cost api is called with valid msg key</span>
                     </li>
-                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-3-3' >
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-4-3' >
                       <span>And get valid data after trigger</span>
                     </li>
-                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-3-4' >
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-4-4' >
                       <span>And verify cost message was inserted into swm from mhe</span>
                     </li>
-                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-3-5' >
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-4-5' >
                       <span>And verify the quantity was decreased in to trans inventory</span>
                     </li>
-                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-3-6' >
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-4-6' >
                       <span>And verify the quantity was increased into pick location table</span>
                     </li>
                   </ul>
@@ -245,7 +262,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
             </div>
           </li>
         </ul>
-        <p><span>Tested at: 8/28/2019 4:26:39 PM</span></p>
+        <p><span>Tested at: 8/29/2019 5:37:07 PM</span></p>
       </div>
     </div>
     <div class='footer'>Powered by <a href='https://github.com/TestStack/TestStack.BDDfy'>BDDfy</a> framework</div>

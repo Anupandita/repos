@@ -29,7 +29,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         {
             this.Given(x => x.CurrentCaseNumberForSingleSku())
                 .And(x => x.AValidNewComtMessageRecord())
-                .When(x => x.ComtApiIsCalled())
+                .When(x => x.ComtApiIsCalledCreatedIsReturned())
                 .Then(x => x.GetDataFromDataBaseForSingleSkuScenarios())
                 .And(x => x.VerifyComtMessageWasInsertedIntoSwmToMhe())
                 .And(x => x.VerifyComtMessageWasInsertedIntoWmsToEms())
@@ -48,14 +48,26 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         {
             this.Given(x => x.CurrentCaseNumberForMultiSku())
                 .And(x => x.AValidNewComtMessageRecord())
-                .When(x => x.ComtApiIsCalled())
+                .When(x => x.ComtApiIsCalledCreatedIsReturned())
                 .Then(x => x.GetDataAndValidateForIvmtMessageHasInsertedIntoBothTables())
                 .And(x => x.VerifyComtMessageWasInsertedIntoSwmToMheForMultiSku())
                 .And(x => x.VerifyComtMessageWasInsertedIntoWmsToEmsForMultiSku())
                 .And(x => x.VerifyQuantityisReducedIntoCaseDetailTable())
                 .And(x => x.VerifyStatusIsUpdatedIntoCaseHeaderTable())
                 .BDDfy();
-        }      
+        }
+
+        [TestMethod()]
+        [TestCategory("FUNCTIONAL")]
+        public void ComtIvmtMessageTestCaseForNoEnoughInventoryInCase()
+        {
+            this.Given(x => x.CurrentCaseNumberForNotEnoughInventoryInCase())
+                .And(x => x.AValidNewComtMessageRecord())
+                .When(x => x.ComtApiIsCalledForNotEnoughInventoryInCase())
+                .Then(x => x.ValidateForNotEnoughInventoryInCase())  
+                .BDDfy();
+        }
+
     }
 }
  

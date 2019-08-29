@@ -8,6 +8,7 @@ using Sfc.Wms.Result;
 using System;
 using System.Configuration;
 using System.Diagnostics;
+using ValidationMessage = Sfc.Wms.Api.Asrs.Test.Integrated.TestData.ValidationMessage;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
@@ -18,7 +19,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected CaseDetailDto caseDetailDto;
         protected ComtParams ComtParameters;
         protected IRestResponse Response;
-        
+        protected BaseResult Result;
+        protected BaseResult ResultForNegativeCase;
+
         protected void InitializeTestData() 
         {
             GetDataBeforeTriggerComt();
@@ -32,6 +35,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected void CurrentCaseNumberForMultiSku()
         {
             currentCaseNbr =  caseHdrMultiSku.CaseNumber;
+        }
+        protected void CurrentCaseNumberForNotEnoughInventoryInCase()
+        {
+            currentCaseNbr = NotEnoughInvCase.CaseNumber;
         }
 
         protected void AValidNewComtMessageRecord()
@@ -48,6 +55,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             };
         }
 
+
         protected void GetDataFromDataBaseForSingleSkuScenarios()
         {
             GetDataAfterTriggerOfComtForSingleSku();
@@ -57,16 +65,38 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             GetDataAfterTriggerForMultiSkuAndValidateData();
         }
-        protected void ComtApiIsCalled() 
+        protected IRestResponse ApiIsCalled() 
         {
             var client = new RestClient(ComtUrl);
             var request = new RestRequest(Method.POST);
             request.AddHeader("content-type", Content.ContentType);
             request.AddJsonBody(ComtParameters);
             request.RequestFormat = DataFormat.Json;
-            Response = client.Execute(request);          
-            var result = JsonConvert.DeserializeObject<BaseResult>(Response.Content.ToString());
-            Assert.AreEqual(ResultType.Created,result.ResultType.ToString());         
+            Response = client.Execute(request);
+            return Response;
+        }
+        protected BaseResult ComtIvmtResult()
+        {
+            var response = ApiIsCalled();
+            var result = JsonConvert.DeserializeObject<BaseResult>(response.Content.ToString());
+            return result;
+        }
+        protected void ComtApiIsCalledCreatedIsReturned()
+        {
+            Result = ComtIvmtResult();
+            Assert.AreEqual(ResultType.Created, Result.ResultType.ToString());
+        }
+
+        protected void ComtApiIsCalledForNotEnoughInventoryInCase()
+        {
+            ResultForNegativeCase = ComtIvmtResult();
+        }
+
+        protected void ValidateForNotEnoughInventoryInCase()
+        {
+            Assert.AreEqual(ValidationMessage.InboundLpn, ResultForNegativeCase.ValidationMessages[0].FieldName);
+            Assert.AreEqual(ValidationMessage.NotEnoughInventoryInCase, ResultForNegativeCase.ValidationMessages[0].Message);
+
         }
 
         protected void VerifyComtMessageWasInsertedIntoSwmToMhe()

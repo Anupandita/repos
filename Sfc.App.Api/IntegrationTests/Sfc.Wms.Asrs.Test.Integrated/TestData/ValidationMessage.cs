@@ -12,6 +12,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
         public const string Sku = "SKU";
         public const string PickLocationDtl = "PickLocationDtl";
         public const string NotFound = "Not Found";
+        public const string InboundLpn = "InboundLpn";
+        public const string NotEnoughInventoryInCase = "Not Enough Inventory in Case";
     }
 
 }

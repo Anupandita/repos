@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
 {
-    public class CaseDto
+    public class CaseViewDto
     {
         public string CaseNumber { get; set; }
         public string LocationId { get; set; }

@@ -17,12 +17,13 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
 
+
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
     public class DataBaseFixture
     {
         public decimal unitWeight;
-        protected CaseDto singleSkuCase = new CaseDto();
+        protected CaseViewDto singleSkuCase = new CaseViewDto();
         protected CaseHeaderDto caseHdrMultiSku = new CaseHeaderDto();
         protected SwmToMheDto swmToMhe = new SwmToMheDto();
         protected SwmToMheDto swmToMheComt = new SwmToMheDto();
@@ -38,8 +39,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected List<CaseDetailDto> CaseDetailList = new List<CaseDetailDto>();
         protected List<TransitionalInventoryDto> transInvnList = new List<TransitionalInventoryDto>();
         protected List<TransitionalInventoryDto> trnList = new List<TransitionalInventoryDto>();
-        protected List<CaseDto> caseList = new List<CaseDto>();
-        protected List<CaseDto> caseDtoList = new List<CaseDto>();           
+        protected List<CaseViewDto> caseList = new List<CaseViewDto>();
+        protected List<CaseViewDto> caseDtoList = new List<CaseViewDto>();           
         protected TaskHeaderDto taskMultiSku= new TaskHeaderDto();
         protected TaskHeaderDto taskSingleSku = new TaskHeaderDto();
         protected TransitionalInventoryDto transInvnAfterTrigger = new TransitionalInventoryDto();
@@ -48,8 +49,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected string sqlStatement = "";
         protected dynamic trnInvnBeforeCallingApi;
         protected OracleCommand command;
-        protected CaseDto caseDtlAfterApi  = new CaseDto();
-        protected CaseDto caseHdrDtl = new CaseDto();
+        protected CaseViewDto caseDtlAfterApi  = new CaseViewDto();
+        protected CaseViewDto caseHdrDtl = new CaseViewDto();
+        protected CaseHeaderDto NotEnoughInvCase = new CaseHeaderDto();
 
 
         public DataBaseFixture()
@@ -79,13 +81,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 singleSkuCase.SkuId =caseDto[0].SkuId;
                 singleSkuCase.TotalAllocQty = Convert.ToInt32(caseDto[0].TotalAllocQty);
                 MultiSkuData(db);
+                NotEnoughInvCase = QueryForNotEnoughInventoryInCase(db, 1);
             }
         }
         public CaseHeaderDto ValidQueryToFetchCaseData(OracleConnection db, int SeqNumber)
         {
             var caseheader = new CaseHeaderDto();
-            var multiSkuQuery = $"select CASE_HDR.CASE_NBR,CASE_HDR.LOCN_ID,CASE_HDR.STAT_CODE from  CASE_HDR inner join CASE_DTL on CASE_HDR.CASE_NBR = CASE_DTL.CASE_NBR and CASE_DTL.total_alloc_qty >1 and actl_qty>1 and CASE_DTL.CASE_SEQ_NBR = {SeqNumber} and stat_code = '50' and CASE_HDR.po_nbr!= 'null'";
-            var command = new OracleCommand(multiSkuQuery, db);
+            var Query = $"select CASE_HDR.CASE_NBR,CASE_HDR.LOCN_ID,CASE_HDR.STAT_CODE from  CASE_HDR inner join CASE_DTL on CASE_HDR.CASE_NBR = CASE_DTL.CASE_NBR and CASE_DTL.total_alloc_qty >1 and actl_qty>1 and CASE_DTL.CASE_SEQ_NBR = {SeqNumber} and stat_code = '50' and CASE_HDR.po_nbr!= 'null'";
+            var command = new OracleCommand(Query, db);
             var caseHeaderReader = command.ExecuteReader();
             if (caseHeaderReader.Read())
             {
@@ -95,24 +98,36 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
             return caseheader;
         }
-         public List<CaseDto> GetCaseDtlData(OracleConnection db, string caseNumber)
+        public CaseHeaderDto QueryForNotEnoughInventoryInCase(OracleConnection db, int SeqNumber)
         {
-            var caseDtl = new List<CaseDto>();
+            var caseheader = new CaseHeaderDto();
+            var Query = $"select CASE_HDR.CASE_NBR,CASE_HDR.LOCN_ID,CASE_HDR.STAT_CODE from  CASE_HDR inner join CASE_DTL on CASE_HDR.CASE_NBR = CASE_DTL.CASE_NBR and CASE_DTL.total_alloc_qty <=0  and CASE_DTL.CASE_SEQ_NBR = 1 and stat_code = '50' and CASE_HDR.po_nbr!= 'null'";
+            var command = new OracleCommand(Query, db);
+            var caseHeaderReader = command.ExecuteReader();
+            if (caseHeaderReader.Read())
+            {
+                caseheader.CaseNumber = caseHeaderReader[CaseHeader.CaseNumber].ToString();
+            }
+            return caseheader;
+        }
+        public List<CaseViewDto> GetCaseDtlData(OracleConnection db, string caseNumber)
+        {
+            var caseDtl = new List<CaseViewDto>();
             var singleSkuQuery = $"Select * from case_dtl where case_nbr = '{caseNumber}'";
             var command = new OracleCommand(singleSkuQuery, db);
             var caseDetailReader = command.ExecuteReader();
             while (caseDetailReader.Read())
             {
-                var set = new CaseDto();
+                var set = new CaseViewDto();
                 set.SkuId = caseDetailReader[CaseDetail.SkuId].ToString();               
                 set.TotalAllocQty = Convert.ToInt32(caseDetailReader[CaseDetail.TotalAllocQty].ToString());
                 caseDtl.Add(set);
             }
             return caseDtl;
         }
-        public CaseDto FetchTransInvn(OracleConnection db , string skuId)
+        public CaseViewDto FetchTransInvn(OracleConnection db , string skuId)
         {
-            var singleSkulocal = new CaseDto();
+            var singleSkulocal = new CaseViewDto();
             var query  = $"Select * from trans_invn where sku_id = '{skuId}' and  trans_invn_type = '18'";
             command = new OracleCommand(query, db);
             var transInvnReader = command.ExecuteReader();
@@ -168,9 +183,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        protected CaseDto FetchCaseDetailsAfterTriger(OracleConnection db)
+        protected CaseViewDto FetchCaseDetailsAfterTriger(OracleConnection db)
         {
-            var caseDtl = new CaseDto();
+            var caseDtl = new CaseViewDto();
             var query = $"select TRANS_INVN.MOD_DATE_TIME, CASE_HDR.STAT_CODE,CASE_DTL.ACTL_QTY,CASE_DTL.TOTAL_ALLOC_QTY,TRANS_INVN.ACTL_INVN_UNITS,TRANS_INVN.ACTL_WT from CASE_HDR inner join CASE_DTL on CASE_HDR.CASE_NBR = CASE_DTL.CASE_NBR  inner join TRANS_INVN on CASE_DTL.SKU_ID = TRANS_INVN.SKU_ID  and TRANS_INVN.TRANS_INVN_TYPE = '18'  and CASE_HDR.CASE_NBR ='{singleSkuCase.CaseNumber}' order by TRANS_INVN.MOD_DATE_TIME desc";
             command = new OracleCommand(query, db);
             var CaseHdrDtlTrnReader = command.ExecuteReader();
@@ -211,11 +226,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var wmsToEmsReader = command.ExecuteReader();
             if (wmsToEmsReader.Read())
             {
-                WmsToEms.Status = wmsToEmsReader[WmsAndEms.Status].ToString();
-                WmsToEms.ResponseCode = Convert.ToInt16(wmsToEmsReader[WmsAndEms.ReasonCode].ToString());
-                WmsToEms.MessageKey = Convert.ToUInt16(wmsToEmsReader[WmsAndEms.MsgKey].ToString());
-                WmsToEms.Transaction = wmsToEmsReader[WmsAndEms.Trx].ToString();
-                WmsToEms.MessageText = wmsToEmsReader[WmsAndEms.MsgTxt].ToString();      
+                WmsToEms.Status = wmsToEmsReader[TestData.WmsToEms.Status].ToString();
+                WmsToEms.ResponseCode = Convert.ToInt16(wmsToEmsReader[TestData.WmsToEms.ReasonCode].ToString());
+                WmsToEms.MessageKey = Convert.ToUInt16(wmsToEmsReader[TestData.WmsToEms.MsgKey].ToString());
+                WmsToEms.Transaction = wmsToEmsReader[TestData.WmsToEms.Trx].ToString();
+                WmsToEms.MessageText = wmsToEmsReader[TestData.WmsToEms.MsgTxt].ToString();      
             }
             return WmsToEms;       
         }
@@ -238,14 +253,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var swmToMheReader = command.ExecuteReader();
             if (swmToMheReader.Read())
             {
-                swmtomhedata.SourceMessageKey = Convert.ToInt16(swmToMheReader[SwmAndMhe.SourceMsgKey].ToString());
-                swmtomhedata.SourceMessageResponseCode = Convert.ToInt16(swmToMheReader[SwmAndMhe.SourceMsgRsnCode].ToString());
-                swmtomhedata.SourceMessageStatus = swmToMheReader[SwmAndMhe.SourceMsgStatus].ToString();
-                swmtomhedata.ContainerId = swmToMheReader[SwmAndMhe.ContainerId].ToString();
-                swmtomhedata.ContainerType = swmToMheReader[SwmAndMhe.ContainerType].ToString();
-                swmtomhedata.MessageJson = swmToMheReader[SwmAndMhe.MsgJson].ToString();
-                swmtomhedata.LocationId = swmToMheReader[SwmAndMhe.LocnId].ToString();
-                swmtomhedata.SourceMessageText = swmToMheReader[SwmAndMhe.SourceMsgText].ToString();    
+                swmtomhedata.SourceMessageKey = Convert.ToInt16(swmToMheReader[TestData.SwmToMhe.SourceMsgKey].ToString());
+                swmtomhedata.SourceMessageResponseCode = Convert.ToInt16(swmToMheReader[TestData.SwmToMhe.SourceMsgRsnCode].ToString());
+                swmtomhedata.SourceMessageStatus = swmToMheReader[TestData.SwmToMhe.SourceMsgStatus].ToString();
+                swmtomhedata.ContainerId = swmToMheReader[TestData.SwmToMhe.ContainerId].ToString();
+                swmtomhedata.ContainerType = swmToMheReader[TestData.SwmToMhe.ContainerType].ToString();
+                swmtomhedata.MessageJson = swmToMheReader[TestData.SwmToMhe.MsgJson].ToString();
+                swmtomhedata.LocationId = swmToMheReader[TestData.SwmToMhe.LocnId].ToString();
+                swmtomhedata.SourceMessageText = swmToMheReader[TestData.SwmToMhe.SourceMsgText].ToString();    
             }
             return swmtomhedata;
         }      
@@ -305,9 +320,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return transInvn;
         }
 
-        protected CaseDto CaseHdrAndDtlDataAfterCallingApi(OracleConnection db)
+        protected CaseViewDto CaseHdrAndDtlDataAfterCallingApi(OracleConnection db)
         {
-            var caseHdrDtl = new CaseDto();
+            var caseHdrDtl = new CaseViewDto();
             var query = $"select case_hdr.stat_code,case_dtl.total_alloc_qty from case_hdr inner join case_dtl on case_hdr.case_nbr = case_dtl.case_nbr and case_hdr.case_nbr ='{caseHdrMultiSku.CaseNumber}'";
             command = new OracleCommand(query, db);
             var caseReader = command.ExecuteReader();
@@ -345,7 +360,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(Convert.ToInt16(swmToMheComt.SourceMessageResponseCode), wte1.ResponseCode);
         }
 
-        public void VerifyIvmtMessageWasInsertedIntoSwmToMhe(IvmtDto ivmt,CaseDto caseDtl)
+        public void VerifyIvmtMessageWasInsertedIntoSwmToMhe(IvmtDto ivmt,CaseViewDto caseDtl)
         {
             Assert.AreEqual(DefaultValues.Status, swmToMheIvmt.SourceMessageStatus);  
             Assert.AreEqual(TransactionCode.Ivmt, ivmt.TransactionCode);

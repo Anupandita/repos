@@ -20,8 +20,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
     public class DataBaseFixtureForCost :DataBaseFixture
     {       
         protected SwmFromMheDto swmFromMhe = new SwmFromMheDto();
-        protected CaseDto trnInvBeforeApi = new CaseDto();
-        protected CaseDto trnInvAfterApi  = new CaseDto();
+        protected CaseViewDto trnInvBeforeApi = new CaseViewDto();
+        protected CaseViewDto trnInvAfterApi  = new CaseViewDto();
         protected CostDto CostParameters;
         protected Cost costData = new Cost();
         protected Cost costDataForTransInvnNotExist = new Cost();
@@ -53,9 +53,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var validData = command.ExecuteReader();
             if (validData.Read())
             {
-                CostDataDto.CaseNumber = validData[SwmAndMhe.ContainerId].ToString();
-                CostDataDto.SkuId = validData[SwmAndMhe.SkuId].ToString();
-                CostDataDto.Qty = validData[SwmAndMhe.Qty].ToString();
+                CostDataDto.CaseNumber = validData[TestData.SwmToMhe.ContainerId].ToString();
+                CostDataDto.SkuId = validData[TestData.SwmToMhe.SkuId].ToString();
+                CostDataDto.Qty = validData[TestData.SwmToMhe.Qty].ToString();
                 CostDataDto.LocnId = validData[PickLocationDtl.LocnId].ToString();
             }
             return CostDataDto;                 
@@ -241,16 +241,16 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var swmFromMheReader = command.ExecuteReader();
             if (swmFromMheReader.Read())
             {
-                swmFromMheData.SourceMessageKey = Convert.ToInt16(swmFromMheReader[SwmAndMhe.SourceMsgKey].ToString());
-                swmFromMheData.SourceMessageResponseCode = Convert.ToInt16(swmFromMheReader[SwmAndMhe.SourceMsgRsnCode].ToString());
-                swmFromMheData.SourceMessageStatus = swmFromMheReader[SwmAndMhe.SourceMsgStatus].ToString();
-                swmFromMheData.SourceMessageProcess = swmFromMheReader[SwmAndMhe.SourceMsgProcess].ToString();
-                swmFromMheData.SourceMessageTransactionCode = swmFromMheReader[SwmAndMhe.SourceMsgTransCode].ToString();
-                swmFromMheData.ContainerId = swmFromMheReader[SwmAndMhe.ContainerId].ToString();
-                swmFromMheData.ContainerType = swmFromMheReader[SwmAndMhe.ContainerType].ToString();
-                swmFromMheData.MessageJson = swmFromMheReader[SwmAndMhe.MsgJson].ToString();
-                swmFromMheData.SourceMessageText = swmFromMheReader[SwmAndMhe.SourceMsgText].ToString();
-                swmFromMheData.LocationId = swmFromMheReader[SwmAndMhe.LocnId].ToString();
+                swmFromMheData.SourceMessageKey = Convert.ToInt16(swmFromMheReader[TestData.SwmFromMhe.SourceMsgKey].ToString());
+                swmFromMheData.SourceMessageResponseCode = Convert.ToInt16(swmFromMheReader[TestData.SwmFromMhe.SourceMsgRsnCode].ToString());
+                swmFromMheData.SourceMessageStatus = swmFromMheReader[TestData.SwmFromMhe.SourceMsgStatus].ToString();
+                swmFromMheData.SourceMessageProcess = swmFromMheReader[TestData.SwmFromMhe.SourceMsgProcess].ToString();
+                swmFromMheData.SourceMessageTransactionCode = swmFromMheReader[TestData.SwmFromMhe.SourceMsgTransCode].ToString();
+                swmFromMheData.ContainerId = swmFromMheReader[TestData.SwmFromMhe.ContainerId].ToString();
+                swmFromMheData.ContainerType = swmFromMheReader[TestData.SwmFromMhe.ContainerType].ToString();
+                swmFromMheData.MessageJson = swmFromMheReader[TestData.SwmFromMhe.MsgJson].ToString();
+                swmFromMheData.SourceMessageText = swmFromMheReader[TestData.SwmFromMhe.SourceMsgText].ToString();
+                swmFromMheData.LocationId = swmFromMheReader[TestData.SwmFromMhe.LocnId].ToString();
             }
             return swmFromMheData;
         }
