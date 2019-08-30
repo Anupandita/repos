@@ -25,7 +25,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected BaseResult negativeCase3;
         protected BaseResult negativeCase4;
 
-        protected void GetValidDataBeforeTrigger()
+        protected void TestInitialize()
         {
             GetDataBeforeTrigger();
             GetDataForNegativeCases();

@@ -17,7 +17,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
     public class ComtAndIvmtTest : ComtIvmtMessageFixture
     {     
         [TestInitialize]
-        [TestCategory("FUNCTIONAL")]
         public void AValidTestData()
         {
             InitializeTestData();           

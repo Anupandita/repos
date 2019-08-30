@@ -17,10 +17,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
     public class CostMessageTest : CostMessageFixture
     {        
         [TestInitialize]
-        [TestCategory("FUNCTIONAL")]
-        public void AValidTestData()
+        public void TestData()
         {
-            GetValidDataBeforeTrigger();           
+            TestInitialize();           
         }
 
         [TestMethod()]
