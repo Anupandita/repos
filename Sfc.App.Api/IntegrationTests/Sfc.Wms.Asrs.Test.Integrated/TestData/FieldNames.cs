@@ -72,4 +72,33 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
     {
         public const string StatCode = "STAT_CODE";
     }
+
+    public class PickHeader
+    {
+        public const string PickTktCtrlNbr = "PKT_CTRL_NBR";
+        public const string Whse ="WHSE";
+        public const string Co ="CO";
+        public const string Div ="DIV";
+
+    }
+
+    public class PickDetail
+    {
+        public const string PktSeqNbr ="PKT_SEQ_NBR";
+        public const string SkuId ="SKU_ID";
+        public const string PktQty ="PKT_QTY";
+    }
+
+    public class CartonHeader
+    {
+        public const string cartonNbr = "CARTON_NBR";
+        public const string statCode = "STAT_CODE";
+        public const string waveNbr = "WAVE_NBR";
+    }
+    
+    public class ItemMaster
+    {
+        public const string SplInstrCode1 ="SPL_INSTR_CODE_1";
+        public const string SplInstrCode5 ="SPL_INSTR_CODE_5";
+    }
 }

@@ -41,7 +41,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             currentCaseNbr = NotEnoughInvCase.CaseNumber;
         }
 
-        protected void AValidNewComtMessageRecord()
+        public void AValidNewComtMessageRecord()
         {
             ComtParameters = new ComtParams
             {
@@ -65,19 +65,19 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             GetDataAfterTriggerForMultiSkuAndValidateData();
         }
-        protected IRestResponse ApiIsCalled() 
+        protected IRestResponse ApiIsCalled(string url,ComtParams parameters) 
         {
-            var client = new RestClient(ComtUrl);
+            var client = new RestClient(url);
             var request = new RestRequest(Method.POST);
             request.AddHeader("content-type", Content.ContentType);
-            request.AddJsonBody(ComtParameters);
+            request.AddJsonBody(parameters);
             request.RequestFormat = DataFormat.Json;
             Response = client.Execute(request);
             return Response;
         }
         protected BaseResult ComtIvmtResult()
         {
-            var response = ApiIsCalled();
+            var response = ApiIsCalled(ComtUrl, ComtParameters);
             var result = JsonConvert.DeserializeObject<BaseResult>(response.Content.ToString());
             return result;
         }

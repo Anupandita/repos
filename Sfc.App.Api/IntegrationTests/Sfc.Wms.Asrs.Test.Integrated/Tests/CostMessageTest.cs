@@ -73,8 +73,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                .When(x => x.CostApiIsCalledForPickLocnNotFound())
                .Then(x => x.ValidateResultForPickLocnNotFound())
                .BDDfy();
-        }
-
-        
+        }       
     }
 }
