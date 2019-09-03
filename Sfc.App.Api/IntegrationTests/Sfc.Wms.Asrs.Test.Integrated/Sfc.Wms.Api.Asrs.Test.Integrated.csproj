@@ -53,6 +53,7 @@
     <Compile Include="Fixtures\CostMessageFixture.cs" />
     <Compile Include="Fixtures\DataBaseFixtureForOrmt.cs" />
     <Compile Include="Fixtures\OrmtMessageFixture.cs" />
+    <Compile Include="Fixtures\ZplFixture.cs" />
     <Compile Include="TestData\CaseViewDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestData\ComtParams.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Tests\ComtAndIvmtTest.cs" />
     <Compile Include="Tests\CostMessageTest.cs" />
     <Compile Include="Tests\OrmtMessageTest.cs" />
+    <Compile Include="Tests\ZplTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Castle.Core">

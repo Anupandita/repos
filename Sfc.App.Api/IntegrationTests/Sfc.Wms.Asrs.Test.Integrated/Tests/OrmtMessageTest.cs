@@ -12,6 +12,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
        " Verify in PickLocnDtlExt table for Ormt Count",
       SoThat = "I can validate for message fields in ORMT message, in Internal Table SWM_TO_MHE and in wmstoems"
        )]
+    
     public class OrmtMessageTest : OrmtMessageFixture
     {
         [TestMethod]

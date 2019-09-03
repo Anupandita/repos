@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
 {
-    [TestClass]
+    
     public class ComtParams
     {
        public string ActionCode { get; set; }
