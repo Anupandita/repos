@@ -53,6 +53,7 @@
     <Compile Include="Fixtures\CostMessageFixture.cs" />
     <Compile Include="Fixtures\DataBaseFixtureForOrmt.cs" />
     <Compile Include="Fixtures\OrmtMessageFixture.cs" />
+    <Compile Include="Fixtures\DataBaseFixtureForOrst.cs" />
     <Compile Include="Fixtures\ZplFixture.cs" />
     <Compile Include="TestData\CaseViewDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

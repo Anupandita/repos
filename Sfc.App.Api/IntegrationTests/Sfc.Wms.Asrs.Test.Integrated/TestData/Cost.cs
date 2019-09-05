@@ -16,4 +16,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
     {
         public const string ContentType = "application/json";
     }
+
+    public class Orst
+    {
+        public long MsgKey { get; set; }
+    }
 }
