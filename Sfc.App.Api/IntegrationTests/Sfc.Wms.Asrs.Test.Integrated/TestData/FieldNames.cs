@@ -21,13 +21,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
         public const string ActualInventoryUnits = "ACTL_INVN_UNITS";
         public const string ActlWt = "ACTL_WT";
     }
-  public class PickLocationDtl
-    {
-        public const string LocnId = "LOCN_ID";
-        public const string ToBeFilledQty = "TO_BE_FILLD_QTY";
-        public const string ActlInvnQty = "ACTL_INVN_QTY";
-    }
-   
+  
   public class WmsToEms
     {
         public const string Status = "STS";
@@ -73,27 +67,45 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
         public const string StatCode = "STAT_CODE";
     }
 
-    public class PickHeader
+    public class PickTicketHeader
     {
+        public const string CartonNumber = "CARTON_NBR";
         public const string PickTktCtrlNbr = "PKT_CTRL_NBR";
         public const string Whse ="WHSE";
         public const string Co ="CO";
         public const string Div ="DIV";
-
+        public const string PktStatCode = "PKT_STAT_CODE";
+        public const string ModDateTime = "MOD_DATE_TIME";
+        public const string UserId = "USER_ID";
     }
 
-    public class PickDetail
+    public class PickLocationDetail
     {
         public const string PktSeqNbr ="PKT_SEQ_NBR";
         public const string SkuId ="SKU_ID";
         public const string PktQty ="PKT_QTY";
+        public const string ToBePickedQuantity="TO_BE_PIKD_QTY";
+        public const string ModDateTime = "MOD_DATE_TIME";
+        public const string UserId = "USER_ID";
+        public const string PickLocnDtlId = "PICK_LOCN_DTL_ID";
+        public const string LocnId = "LOCN_ID";
+        public const string ToBeFilledQty = "TO_BE_FILLD_QTY";
+        public const string ActlInvnQty = "ACTL_INVN_QTY";
     }
 
     public class CartonHeader
     {
-        public const string cartonNbr = "CARTON_NBR";
-        public const string statCode = "STAT_CODE";
-        public const string waveNbr = "WAVE_NBR";
+        public const string CartonNbr = "CARTON_NBR";
+        public const string StatCode = "STAT_CODE";
+        public const string WaveNbr = "WAVE_NBR";
+        public const string CurrentLocationId = "CURR_LOCN_ID";
+        public const string DestinationLocnId = "DEST_LOCN_ID";
+        public const string ModificationDateTime = "MOD_DATE_TIME";
+        public const string UserId = "USER_ID";
+        public const string Pikr = "PIKR";
+        public const string Pakr = "PAKR";
+        public const string PickLocationId = "PICK_LOCN_ID";
+        public const string MiscInstrCode5 = "MISC_INSTR_CODE_5";
     }
     
     public class ItemMaster
@@ -101,4 +113,43 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
         public const string SplInstrCode1 ="SPL_INSTR_CODE_1";
         public const string SplInstrCode5 ="SPL_INSTR_CODE_5";
     }
+
+    public class PickLocnDtlExt
+    {
+        public const string ActiveOrmtCount  = "ACTIVE_ORMT_COUNT";
+        public const string SkuId = "SKU_ID";
+        public const string LocnId = "LOCN_ID";
+        public const string UpdatedDateTime = "UPDATED_DATE_TIME";
+        public const string UpdatedBy = "UPDATED_BY";
+    }
+
+    public class CartonDetail
+    {
+        public const string CartonNumber = "CARTON_NBR";
+        public const string UnitsPakd = "UNITS_PAKD";
+        public const string ModificationDateTime = "MOD_DATE_TIME";
+        public const string UserId = "USER_ID";
+        public const string ToBePackdUnits = "TO_BE_PAKD_UNITS";
+    }
+
+    public class PickTicketDetail
+    {
+        public const string UnitsPacked = "UNITS_PAKD";
+        public const string VerfAsPakd = "VERF_AS_PAKD";
+        public const string ModificationDateTime = "MOD_DATE_TIME";
+        public const string PickTktCtrlNbr = "PKT_CTRL_NBR";
+        public const string CartonNumber = "CARTON_NBR";
+        public const string PickTicketSeqNbr = "PKT_SEQ_NBR";
+        public const string UserId = "USER_ID";
+    }
+
+    public class AllocInvnDetail 
+    {
+        public const string QtyPulled = "QTY_PULLD";
+        public const string CntrNbr = "CNTR_NBR";
+        public const string ModificationDateTime = "MOD_DATE_TIME";
+        public const string UserId = "USER_ID";
+        public const string StatCode = "STAT_CODE";
+    }
+
 }

@@ -98,9 +98,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var printingCartonReader = command.ExecuteReader();
             if (printingCartonReader.Read())
             {
-                ch.CartonNbr = printingCartonReader[TestData.CartonHeader.cartonNbr].ToString();
-                ch.StatusCode = printingCartonReader[CartonHeader.statCode].ToString();
-                ch.WaveNbr = printingCartonReader[CartonHeader.waveNbr].ToString();
+                ch.CartonNbr = printingCartonReader[TestData.CartonHeader.CartonNbr].ToString();
+                ch.StatusCode = printingCartonReader[CartonHeader.StatCode].ToString();
+                ch.WaveNbr = printingCartonReader[CartonHeader.WaveNbr].ToString();
             }
             return ch;
         }
@@ -113,8 +113,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var cancelledCartonReader = command.ExecuteReader();
             if (cancelledCartonReader.Read())
             {
-                cd.CartonNbr = cancelledCartonReader[CartonHeader.cartonNbr].ToString();
-                cd.StatusCode = cancelledCartonReader[CartonHeader.statCode].ToString();
+                cd.CartonNbr = cancelledCartonReader[CartonHeader.CartonNbr].ToString();
+                cd.StatusCode = cancelledCartonReader[CartonHeader.StatCode].ToString();
             }
             return cd;
         }
@@ -127,8 +127,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var ePickCartonReader = command.ExecuteReader();
             if (ePickCartonReader.Read())
             {
-                cd.CartonNbr = ePickCartonReader[CartonHeader.cartonNbr].ToString();
-                cd.StatusCode = ePickCartonReader[CartonHeader.statCode].ToString();
+                cd.CartonNbr = ePickCartonReader[CartonHeader.CartonNbr].ToString();
+                cd.StatusCode = ePickCartonReader[CartonHeader.StatCode].ToString();
             }
             return cd;
         }
@@ -145,13 +145,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var Reader = command.ExecuteReader();
             if (Reader.Read())
             {
-                cartonView.PickTktCtrlNbr = Reader[PickHeader.PickTktCtrlNbr].ToString();
-                cartonView.PickTktSeqNbr = Reader[PickDetail.PktSeqNbr].ToString();
-                cartonView.SkuId = Reader[PickDetail.SkuId].ToString();
-                cartonView.Whse = Reader[PickHeader.Whse].ToString();
-                cartonView.Co = Reader[PickHeader.Co].ToString();
-                cartonView.Div = Reader[PickHeader.Div].ToString();
-                cartonView.PickTktQty = Reader[PickDetail.PktQty].ToString();
+                cartonView.PickTktCtrlNbr = Reader[PickTicketHeader.PickTktCtrlNbr].ToString();
+                cartonView.PickTktSeqNbr = Reader[TestData.PickLocationDetail.PktSeqNbr].ToString();
+                cartonView.SkuId = Reader[TestData.PickLocationDetail.SkuId].ToString();
+                cartonView.Whse = Reader[PickTicketHeader.Whse].ToString();
+                cartonView.Co = Reader[PickTicketHeader.Co].ToString();
+                cartonView.Div = Reader[PickTicketHeader.Div].ToString();
+                cartonView.PickTktQty = Reader[TestData.PickLocationDetail.PktQty].ToString();
                 cartonView.SplInstrCode1 = Reader[ItemMaster.SplInstrCode1].ToString();
                 cartonView.SplInstrCode5 = Reader[ItemMaster.SplInstrCode5].ToString();
             }
@@ -170,13 +170,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var Reader = command.ExecuteReader();
             if (Reader.Read())
             {
-                cartonView.PickTktCtrlNbr = Reader[PickHeader.PickTktCtrlNbr].ToString();
-                cartonView.PickTktSeqNbr = Reader[PickDetail.PktSeqNbr].ToString();
-                cartonView.SkuId = Reader[PickDetail.SkuId].ToString();
-                cartonView.Whse = Reader[PickHeader.Whse].ToString();
-                cartonView.Co = Reader[PickHeader.Co].ToString();
-                cartonView.Div = Reader[PickHeader.Div].ToString();
-                cartonView.PickTktQty = Reader[PickDetail.PktQty].ToString();
+                cartonView.PickTktCtrlNbr = Reader[PickTicketHeader.PickTktCtrlNbr].ToString();
+                cartonView.PickTktSeqNbr = Reader[TestData.PickLocationDetail.PktSeqNbr].ToString();
+                cartonView.SkuId = Reader[TestData.PickLocationDetail.SkuId].ToString();
+                cartonView.Whse = Reader[PickTicketHeader.Whse].ToString();
+                cartonView.Co = Reader[PickTicketHeader.Co].ToString();
+                cartonView.Div = Reader[PickTicketHeader.Div].ToString();
+                cartonView.PickTktQty = Reader[TestData.PickLocationDetail.PktQty].ToString();
                 cartonView.SplInstrCode1 = Reader[ItemMaster.SplInstrCode1].ToString();
                 cartonView.SplInstrCode5 = Reader[ItemMaster.SplInstrCode5].ToString();
             }

@@ -56,7 +56,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 CostDataDto.CaseNumber = validData[TestData.SwmToMhe.ContainerId].ToString();
                 CostDataDto.SkuId = validData[TestData.SwmToMhe.SkuId].ToString();
                 CostDataDto.Qty = validData[TestData.SwmToMhe.Qty].ToString();
-                CostDataDto.LocnId = validData[PickLocationDtl.LocnId].ToString();
+                CostDataDto.LocnId = validData[TestData.PickLocationDetail.LocnId].ToString();
             }
             return CostDataDto;                 
         }
@@ -92,9 +92,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var pickLocnReader = command.ExecuteReader();
             if (pickLocnReader.Read())
             {
-                pickLocn.ActualInventoryQuantity = Convert.ToDecimal(pickLocnReader[PickLocationDtl.ActlInvnQty].ToString());
-                pickLocn.ToBeFilledQty = Convert.ToDecimal(pickLocnReader[PickLocationDtl.ToBeFilledQty].ToString());
-                pickLocn.LocationId = pickLocnReader[PickLocationDtl.LocnId].ToString();
+                pickLocn.ActualInventoryQuantity = Convert.ToDecimal(pickLocnReader[TestData.PickLocationDetail.ActlInvnQty].ToString());
+                pickLocn.ToBeFilledQty = Convert.ToDecimal(pickLocnReader[TestData.PickLocationDetail.ToBeFilledQty].ToString());
+                pickLocn.LocationId = pickLocnReader[TestData.PickLocationDetail.LocnId].ToString();
             }
             return pickLocn;
         }
@@ -190,7 +190,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 CostTransData.CaseNumber = Reader[CaseHeader.CaseNumber].ToString();
                 CostTransData.SkuId = Reader[CaseDetail.SkuId].ToString();
                 CostTransData.Qty = Reader[TransInventory.ActualInventoryUnits].ToString();
-                CostTransData.LocnId = Reader[PickLocationDtl.LocnId].ToString();
+                CostTransData.LocnId = Reader[TestData.PickLocationDetail.LocnId].ToString();
             }
             return CostTransData;
         }

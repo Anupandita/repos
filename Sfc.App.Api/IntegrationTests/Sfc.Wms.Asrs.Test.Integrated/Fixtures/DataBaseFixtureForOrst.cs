@@ -1,6 +1,4 @@
-﻿using System;
-using System.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
@@ -12,6 +10,7 @@ using Sfc.Wms.ParserAndTranslator.Contracts.Dto;
 using Sfc.Wms.ParserAndTranslator.Contracts.Interfaces;
 using Sfc.Wms.ParserAndTranslator.Contracts.Validation;
 using Sfc.Wms.Result;
+using System;
 
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
@@ -22,17 +21,19 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected SwmToMheDto case2 = new SwmToMheDto();
         protected SwmToMheDto case3 = new SwmToMheDto();
         protected SwmToMheDto case4 = new SwmToMheDto();
+        protected SwmFromMheDto swmToMheCase1 = new SwmFromMheDto();
         protected OrstDto OrstParameters;
         private readonly IHaveDataTypeValidation _dataTypeValidation;
         protected OrmtDto OrmtCase1 = new OrmtDto();
         protected OrmtDto OrmtCase2 = new OrmtDto();
         protected OrmtDto OrmtCase3 = new OrmtDto();
         protected OrmtDto OrmtCase4 = new OrmtDto();
-        // case1 = allocated status
-        // case2 = completed status
-        //case3 = Deallocate status
-        
+        protected Orst msgKeyForCase1 = new Orst();
+        protected Orst msgKeyForCase2 = new Orst();
+        protected Orst msgKeyForCase3 = new Orst();
+        protected Orst msgKeyForCase4 = new Orst();
 
+        
 
         public DataBaseFixtureForOrst()
         {
@@ -68,6 +69,17 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 OrmtCase3 = JsonConvert.DeserializeObject<OrmtDto>(case3.MessageJson);
                 case4 = GetCartonDetailsForInsertingOrstMessage(db, 30);
                 OrmtCase4 = JsonConvert.DeserializeObject<OrmtDto>(case4.MessageJson);
+
+            }
+        }
+
+        public void GetDataAfterTriggerOrst()
+        {
+            using (var db = GetOracleConnection())
+            {
+                db.Open();
+                swmToMheCase1 = SwmFromMhe(db,case1.ContainerId,"ORST",case1.SkuId);
+
             }
         }
 
@@ -90,7 +102,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 DestinationLocationId = OrmtCase1.DestinationLocationId,
                 CurrentLocationId = "asrsLocation",
                 Priority = "",
-                OrderReasonCodeMap = "",
+                OrderReasonCodeMap = "0",
                 WaveId = waveNbr
             };
             GenericMessageBuilder gm = new GenericMessageBuilder(_dataTypeValidation);
@@ -111,7 +123,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 ResponseCode = (short)int.Parse(ReasonCode.Success),
                 MessageText = orstmsg
             };
-            var msgKey = InsertEmsToWMS(db, emsToWms);
+            msgKeyForCase1.MsgKey = InsertEmsToWMS(db, emsToWms);
         }
 
         public void OrstMessageCreatedForCompletedStatus(OracleConnection db)
@@ -125,7 +137,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 ResponseCode = (short)int.Parse(ReasonCode.Success),
                 MessageText = orstmsg
             };
-            var msgKey = InsertEmsToWMS(db, emsToWms);
+            msgKeyForCase2.MsgKey = InsertEmsToWMS(db, emsToWms);
         }
 
         public void OrstMessageCreatedForDeallocateStatus(OracleConnection db)
@@ -139,7 +151,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 ResponseCode = (short)int.Parse(ReasonCode.Success),
                 MessageText = orstmsg
             };
-            var msgKey = InsertEmsToWMS(db, emsToWms);
+            msgKeyForCase3.MsgKey = InsertEmsToWMS(db, emsToWms);
         }
 
         public void OrstMessageCreatedForCancelledStatus(OracleConnection db)
@@ -153,20 +165,128 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 ResponseCode = (short)int.Parse(ReasonCode.Success),
                 MessageText = orstmsg
             };
-            var msgKey = InsertEmsToWMS(db, emsToWms);
+            msgKeyForCase4.MsgKey = InsertEmsToWMS(db, emsToWms);
+        }
+  
+        public CartonHdr GetCartonHeaderDetails(OracleConnection db,string cartonNumber)
+        {
+            var cartonHeader = new CartonHdr();
+            var query = $"select CURR_LOCN_ID, DEST_LOCN_ID,MOD_DATE_TIME, USER_ID, STAT_CODE from CARTON_HDR where CARTON_NBR='{cartonNumber}'";
+            command = new OracleCommand(query,db);
+            var cartonHeaderReader = command.ExecuteReader();
+            if (cartonHeaderReader.Read())
+            {
+                cartonHeader.StatCode = cartonHeaderReader[CartonHeader.StatCode].ToString();
+                cartonHeader.ModificationDateTime = cartonHeaderReader[CartonHeader.ModificationDateTime].ToString();
+                cartonHeader.UserId = cartonHeaderReader[CartonHeader.UserId].ToString();
+                cartonHeader.CurrentLocationId = cartonHeaderReader[CartonHeader.CurrentLocationId].ToString();
+                cartonHeader.Pikr = cartonHeaderReader[CartonHeader.Pikr].ToString();
+                cartonHeader.Pakr = cartonHeaderReader[CartonHeader.Pakr].ToString();
+                cartonHeader.CartonNbr = cartonHeaderReader[CartonHeader.CartonNbr].ToString();
+                cartonHeader.PickLocationId = cartonHeaderReader[CartonHeader.PickLocationId].ToString();
+                cartonHeader.MiscInstrCode5 = cartonHeaderReader[CartonHeader.MiscInstrCode5].ToString();
+            }
+            return cartonHeader;
         }
 
-        
+        public CartonDtl GetCartonDetails(OracleConnection db, string cartonNumber)
+        {
+            var cartonDtl = new CartonDtl();
+            var query = $"select * from carton_dtl where carton_nbr = '{cartonNumber}'";
+            command = new OracleCommand(query, db);
+            var cartonReader = command.ExecuteReader();
+            if(cartonReader.Read())
+            {
+                cartonDtl.CartonNumber = cartonReader[CartonDetail.CartonNumber].ToString();
+                cartonDtl.ToBePackdUnits = cartonReader[CartonDetail.ToBePackdUnits].ToString();
+                cartonDtl.ModificationDateTime = cartonReader[CartonDetail.ModificationDateTime].ToString();
+                cartonDtl.UnitsPakd = cartonReader[CartonDetail.UnitsPakd].ToString();
+                cartonDtl.UserId = cartonReader[CartonDetail.UserId].ToString();
+            }
+            return cartonDtl;
+        }
+
+        public PickTktHdr GetPickTktHeaderDetails(OracleConnection db,string cartonNumber)
+        {
+            var pkTktHeader = new PickTktHdr();
+            var query = $"select PKT_HDR.PKT_STAT_CODE,PKT_HDR.MOD_DATE_TIME,PKT_HDR.USER_ID from PKT_HDR WHERE PKT_CTRL_NBR = (SELECT PKT_CTRL_NBR FROM CARTON_HDR WHERE CARTON_NBR = '{cartonNumber}')";
+            command = new OracleCommand(query,db);
+            var pickTktHeaderReader = command.ExecuteReader();
+            if (pickTktHeaderReader.Read())
+            {
+                pkTktHeader.CartonNbr = pickTktHeaderReader[PickTicketHeader.CartonNumber].ToString();
+                pkTktHeader.PktStatCode = pickTktHeaderReader[PickTicketHeader.PktStatCode].ToString();
+                pkTktHeader.ModDateTime = pickTktHeaderReader[PickTicketHeader.ModDateTime].ToString();
+                pkTktHeader.UserId = pickTktHeaderReader[PickTicketHeader.UserId].ToString();
+            }
+            return pkTktHeader;
+        }
 
 
+        public PickLocnDtl GetPickLocationDetails(OracleConnection db, string locnId, string skuId)
+        {
+            var pickLocnDtl = new PickLocnDtl();
+            var query = $"select TO_BE_PIKD_QTY,MOD_DATE_TIME,USER_ID,LOCN_ID, SKU_ID from PICK_LOCN_DTL where LOCN_ID= '{locnId}' AND SKU_ID='{skuId}'";
+            command = new OracleCommand(query, db);
+            var pickLocnDtlReader = command.ExecuteReader();
+            if(pickLocnDtlReader.Read())
+            {
+                pickLocnDtl.ToBePickedQuantity = pickLocnDtlReader[TestData.PickLocationDetail.ToBePickedQuantity].ToString();
+                pickLocnDtl.ModDateTime = pickLocnDtlReader[TestData.PickLocationDetail.ModDateTime].ToString();
+                pickLocnDtl.UserId = pickLocnDtlReader[TestData.PickLocationDetail.UserId].ToString();
+            }
+            return pickLocnDtl;
+        }
 
+        public PkLcnDtlExt GetPickLocnDtlExt(OracleConnection db,string locnId,string skuId)
+        {
+            var pickLocnDtlExt = new PkLcnDtlExt();
+            var query = $"select ACTIVE_ORMT_COUNT,UPDATED_BY,UPDATED_DATE_TIME from PICK_LOCN_DTL_EXT WHERE LOCN_ID= '{locnId}' AND SKU_ID= '{skuId}')";
+            command = new OracleCommand(query, db);
+            var pickLocnDtlExtReader = command.ExecuteReader();
+            if(pickLocnDtlExtReader.Read())
+            {
+                pickLocnDtlExt.ActiveOrmtCount = pickLocnDtlExtReader[TestData.PickLocnDtlExt.ActiveOrmtCount].ToString();
+                pickLocnDtlExt.UpdatedBy = pickLocnDtlExtReader[TestData.PickLocnDtlExt.UpdatedBy].ToString();
+                pickLocnDtlExt.UpdatedDateTime = pickLocnDtlExtReader[TestData.PickLocnDtlExt.UpdatedDateTime].ToString();
+            }
+            return pickLocnDtlExt;
+        }
 
+        public PickTktDtl GetPickTicketDetailData(OracleConnection db,string cartonNbr,string pktSeqNbr)
+        {
+            var pickTktDtl = new PickTktDtl();
+            var query = $"select PKT_DTL.UNITS_PAKD,PKT_DTL.MOD_DATE_TIME,PKT_DTL.USER_ID ,PKT_DTL.VERF_AS_PAKD,PKT_DTL.PKT_CTRL_NBR from PKT_DTL where PKT_DTL.PKT_CTRL_NBR = (SELECT PKT_CTRL_NBR FROM CARTON_HDR WHERE CARTON_NBR= '{cartonNbr}') AND PKT_SEQ_NBR= '{pktSeqNbr}'";
+            command = new OracleCommand(query, db);
+            var pickTktDtlReader = command.ExecuteReader();
+            if(pickTktDtlReader.Read())
+            {
+                pickTktDtl.CartonNumber = pickTktDtlReader[TestData.PickTicketDetail.CartonNumber].ToString();
+                pickTktDtl.ModificationDateTime = pickTktDtlReader[PickTicketDetail.ModificationDateTime].ToString();
+                pickTktDtl.PickTicketSeqNbr = pickTktDtlReader[PickTicketDetail.PickTicketSeqNbr].ToString();
+                pickTktDtl.PickTktCtrlNbr = pickTktDtlReader[PickTicketDetail.PickTktCtrlNbr].ToString();
+                pickTktDtl.UnitsPacked = pickTktDtlReader[PickTicketDetail.UnitsPacked].ToString();
+                pickTktDtl.UserId = pickTktDtlReader[PickTicketDetail.UserId].ToString();
+                pickTktDtl.VerfAsPakd = pickTktDtlReader[PickTicketDetail.VerfAsPakd].ToString();
+            }
+            return pickTktDtl;
+        }
 
-
-
-
-
-
+        public AllocInvnDtl GetAllocInvnDetails(OracleConnection db,string CntrNbr)
+        {
+            var allocInvnDtl = new AllocInvnDtl();
+            var query = $"select * from ALLOC_INVN_DTL WHERE CNTR_NBR='{CntrNbr}'";
+            command = new OracleCommand(query,db);
+            var allocInvnDtlReader = command.ExecuteReader();
+            if(allocInvnDtlReader.Read())
+            {
+                allocInvnDtl.CntrNbr = allocInvnDtlReader[TestData.AllocInvnDetail.CntrNbr].ToString();
+                allocInvnDtl.QtyPulled = allocInvnDtlReader[AllocInvnDetail.QtyPulled].ToString();
+                allocInvnDtl.StatCode = allocInvnDtlReader[AllocInvnDetail.StatCode].ToString();
+                allocInvnDtl.UserId = allocInvnDtlReader[AllocInvnDetail.UserId].ToString();
+            }
+            return allocInvnDtl;
+        }
 
 
     }
