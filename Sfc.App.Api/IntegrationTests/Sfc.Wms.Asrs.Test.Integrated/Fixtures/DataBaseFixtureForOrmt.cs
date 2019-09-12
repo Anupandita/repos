@@ -108,7 +108,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public CartonView GetValidDataForOnCancellationOfCarton(OracleConnection db)
         {
             var cd = new CartonView();
-            var query = $"select * from carton_hdr where stat_code = 99";
+            var query = $"select * from carton_hdr where stat_code BETWEEN 6 AND 29";
             var command = new OracleCommand(query, db);
             var cancelledCartonReader = command.ExecuteReader();
             if (cancelledCartonReader.Read())

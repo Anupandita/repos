@@ -30,7 +30,16 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
         public const string Trx = "TRX";
         public const string MsgTxt = "MSGTEXT";
     }
-  public class SwmToMhe
+    public class EmsToWms
+    {
+        public const string Status = "STS";
+        public const string prc = "PRC";
+        public const string ReasonCode = "RSNRCODE";
+        public const string MsgKey = "MSGKEY";
+        public const string Trx = "TRX";
+        public const string MsgTxt = "MSGTEXT";
+    }
+    public class SwmToMhe
     {
         public const string SourceMsgKey = "SOURCE_MSG_KEY";
         public const string SourceMsgRsnCode = "SOURCE_MSG_RSN_CODE";

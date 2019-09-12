@@ -84,6 +84,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 NotEnoughInvCase = QueryForNotEnoughInventoryInCase(db, 1);
             }
         }
+       
+
         public CaseHeaderDto ValidQueryToFetchCaseData(OracleConnection db, int SeqNumber)
         {
             var caseheader = new CaseHeaderDto();

@@ -151,9 +151,19 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         }
 
-        protected void VerifyForStatusCodeinCartonHdr()
+        protected void VerifyForStatusCodeinCartonHdrForAddRelease()
         {
 
         }
+        
+        protected void VerifyForStatusCodeInCartonHdrForCancel()
+        {
+
+        }
+        protected void VerifyForStatusCodeInCartonHdrForEPick()
+        {
+
+        }
+
     }
 }

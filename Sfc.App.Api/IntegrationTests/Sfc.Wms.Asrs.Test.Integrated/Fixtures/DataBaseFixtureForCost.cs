@@ -233,10 +233,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return key;
         }
 
-        public SwmFromMheDto SwmFromMhe(OracleConnection db, string caseNbr, string trx, string skuId)
+        public SwmFromMheDto SwmFromMhe(OracleConnection db, long msgKey, string trx)
         {
             var swmFromMheData = new SwmFromMheDto();
-            sqlStatements = $"select * from swm_from_mhe where container_id = '{caseNbr}' and source_msg_trans_code = '{trx}' and sku_id = '{skuId}' order by created_date_time desc";
+            sqlStatements = $"select * from swm_from_mhe where SourceMessageKey = {msgKey} and source_msg_trans_code = '{trx}'  order by created_date_time desc";
             command = new OracleCommand(sqlStatements, db);
             var swmFromMheReader = command.ExecuteReader();
             if (swmFromMheReader.Read())
@@ -253,15 +253,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 swmFromMheData.LocationId = swmFromMheReader[TestData.SwmFromMhe.LocnId].ToString();
             }
             return swmFromMheData;
-        }
-        
+        }       
        
         public void GetDataAfterTrigger()
         {
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                swmFromMhe = SwmFromMhe(db, costData.CaseNumber, TransactionCode.Cost, costData.SkuId);
+                swmFromMhe = SwmFromMhe(db, costData.MsgKey, TransactionCode.Cost);
                 cost = JsonConvert.DeserializeObject<CostDto>(swmFromMhe.MessageJson);
                 trnInvAfterApi = FetchTransInvn(db, cost.StorageClassAttribute1);
                 pickLocnDtlAfterApi = PickLocnData(db, cost.StorageClassAttribute1);
