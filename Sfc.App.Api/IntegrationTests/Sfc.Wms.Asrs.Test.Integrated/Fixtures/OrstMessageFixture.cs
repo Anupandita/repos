@@ -208,6 +208,27 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(pickLcnExtCase2BeforeApi.ActiveOrmtCount - 1, pickLcnExtCase2.ActiveOrmtCount);
         }
 
+        protected void CartonHeaderForActionCodeDeAllocate()
+        {
+            Assert.AreEqual("5", cartonHdrCase3.StatusCode);
+        }
+
+        protected void CartonHeaderForActionCodeCancel()
+        {
+            Assert.AreEqual("5", cartonHdrCase4.StatusCode);
+        }
+
+        protected void PickLocnDtlForActionCodeCancel()
+        {
+            Assert.AreEqual(pickLcnCase4BeforeApi.ToBePickedQty - Convert.ToDecimal(orstCase4.QuantityDelivered), pickLcnCase4.ToBePickedQty);
+        }
+
+        protected void PickLocnDtlExtForActionCodeCancel()
+        {
+            Assert.AreEqual(pickLcnExtCase4BeforeApi.ActiveOrmtCount - 1, pickLcnExtCase4.ActiveOrmtCount);
+
+        }
+
 
     }
 }
