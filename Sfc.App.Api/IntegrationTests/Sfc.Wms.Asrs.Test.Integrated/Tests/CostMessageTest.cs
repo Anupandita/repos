@@ -26,7 +26,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         [TestCategory("FUNCTIONAL")]
         public void VerifyForValidCostMessageScenarios()
         {
-            this.Given(x => x.AValidMsgKey())
+            this.Given(x => x.TestInitializeForValidMessage())
+                .And(x => x.AValidMsgKey())
                 .When(x => x.CostApiIsCalledWithValidMsgKey())
                 .And(x => x.GetValidDataAfterTrigger())
                 .And(x => x.VerifyCostMessageWasInsertedIntoSwmFromMhe())
@@ -38,7 +39,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         [TestCategory("FUNCTIONAL")]
         public void VerifyForInvalidMessageKey()
         {
-            this.Given(x => x.InvalidMsgKey())
+            this.Given(x =>x.TestInitializeForInvalidCase())
+                .And(x => x.InvalidMsgKey())
                 .When(x => x.CostApiIsCalledForInvalidMessageKey())
                 .Then(x => x.ValidateResultForInvalidMessageKey())
                 .BDDfy();
@@ -48,7 +50,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         [TestCategory("FUNCTIONAL")]
         public void VerifyForErrorLogNoCaseFound()
         {
-                this.Given(x => x.InvalidCaseMsgKey())         
+                this.Given(x => x.TestInitializeForInvalidCase())
+               .And(x => x.InvalidCaseMsgKey())         
                .When(x => x.CostApiIsCalledForInvalidCaseNumber())
                .Then(x => x.ValidateResultForInvalidCaseNumber())
                .BDDfy();
@@ -59,7 +62,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         [TestCategory("FUNCTIONAL")]
         public void VerifyForErrorNotEnoughInventory()
         {
-                this.Given(x => x.TransInvnNotExistsMsgKey())
+                this.Given(x => x.TestInitializeForTransInvnDoesNotExist())
+               .And(x => x.TransInvnNotExistsMsgKey())
                .When(x => x.CostApiIsCalledForTransInvnNotFound())
                .Then(x => x.ValidateResultForTransInventoryNotExist())
                .BDDfy();
@@ -69,7 +73,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         [TestCategory("FUNCTIONAL")]
         public void VerifyForErrorPickLocationNotFound()
         {
-                this.Given(x => x.PickLocationNotExistKey())
+                this.Given(x => x.TestInitializeForPickLocnDoesNotExist())
+               .And(x => x.PickLocationNotExistKey())
                .When(x => x.CostApiIsCalledForPickLocnNotFound())
                .Then(x => x.ValidateResultForPickLocnNotFound())
                .BDDfy();

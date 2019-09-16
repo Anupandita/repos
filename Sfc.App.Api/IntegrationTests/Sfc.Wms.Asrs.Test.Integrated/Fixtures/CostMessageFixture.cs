@@ -27,9 +27,29 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         protected void TestInitialize()
         {
-            GetDataBeforeTrigger();
-            GetDataForNegativeCases();
+            GetValidData();
         }
+
+        protected void TestInitializeForValidMessage()
+        {
+            GetDataBeforeTrigger();        
+        }
+
+        protected void  TestInitializeForInvalidCase()
+        {
+            InsertCostMessageForInValidCase();
+        }
+
+        protected void TestInitializeForTransInvnDoesNotExist()
+        {
+            InsertCostMessageForTransInvnDoesNotExist();
+        }
+
+        protected void TestInitializeForPickLocnDoesNotExist()
+        {
+            InsertCostMessageForPickLocnDoesNotExist();
+        }
+
         protected void AValidMsgKey()
         {
             currentMsgKey = costData.MsgKey;
@@ -115,13 +135,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             Assert.AreEqual(trnInvBeforeApi.ActualInventoryUnits - Convert.ToDecimal(cost.StorageClassAttribute2), trnInvAfterApi.ActualInventoryUnits);
             //* the bellow line of code is tested after new build release.
-            //Assert.AreEqual(trn3.ActualWeight - (unitweight1 * Convert.ToDecimal(cost.StorageClassAttribute2)), transInvn.ActualWeight);
+            //Assert.AreEqual(trnInvBeforeApi.ActualWeight - (unitweight1 * Convert.ToDecimal(cost.StorageClassAttribute2)), trnInvAfterApi.ActualWeight);
         }
 
         protected void VerifyTheQuantityWasIncreasedIntoPickLocationTable()
         {
             Assert.AreEqual(pickLcnDtlBeforeApi.ActualInventoryQuantity + Convert.ToDecimal(cost.StorageClassAttribute2), pickLocnDtlAfterApi.ActualInventoryQuantity);
-            Assert.AreEqual(pickLocnDtlAfterApi.ActualInventoryQuantity - Convert.ToDecimal(cost.StorageClassAttribute2), pickLocnDtlAfterApi.ToBeFilledQty);
+            Assert.AreEqual(pickLocnDtlAfterApi.ToBeFilledQty - Convert.ToDecimal(cost.StorageClassAttribute2), pickLocnDtlAfterApi.ToBeFilledQty);
         }
         protected void ValidateResultForInvalidMessageKey()
         {

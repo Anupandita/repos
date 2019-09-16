@@ -1,26 +1,18 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
-using Oracle.ManagedDataAccess.Client;
+﻿using Oracle.ManagedDataAccess.Client;
+using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
 using Sfc.Wms.Asrs.Dematic.Contracts.Dtos;
 using Sfc.Wms.Asrs.Shamrock.Contracts.Dtos;
-using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
-using Sfc.Wms.InboundLpn.Contracts.Dtos;
-using Sfc.Wms.Parser.Parsers;
+using Sfc.Wms.Data.Entities;
 using Sfc.Wms.ParserAndTranslator.Contracts.Constants;
-using Sfc.Wms.ParserAndTranslator.Contracts.Dto;
-using Sfc.Wms.ParserAndTranslator.Contracts.Validation;
-using Sfc.Wms.Result;
-using Sfc.Wms.TaskDetail.Contracts.Dtos;
 using Sfc.Wms.TransitionalInventory.Contracts.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Diagnostics;
-using Sfc.Wms.Data.Entities;
+using Sfc.Wms.Foundation.Location.Contracts.Dtos;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
-  
+
     public class CommonFunction
     {
         protected OracleCommand command;
@@ -31,6 +23,52 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return new OracleConnection(ConfigurationManager.ConnectionStrings["SfcRbacContextModel"].ConnectionString);
         }
 
+        protected WmsToEmsDto WmsToEmsData(OracleConnection db, int msgKey, string trx)
+        {
+            var WmsToEms = new WmsToEmsDto();
+            var query = $"select * from WMSTOEMS where TRX = '{trx}' and MSGKEY = '{msgKey}'";
+            command = new OracleCommand(query, db);
+            var wmsToEmsReader = command.ExecuteReader();
+            if (wmsToEmsReader.Read())
+            {
+                WmsToEms.Status = wmsToEmsReader[TestData.WmsToEms.Status].ToString();
+                WmsToEms.ResponseCode = Convert.ToInt16(wmsToEmsReader[TestData.WmsToEms.ReasonCode].ToString());
+                WmsToEms.MessageKey = Convert.ToUInt16(wmsToEmsReader[TestData.WmsToEms.MsgKey].ToString());
+                WmsToEms.Transaction = wmsToEmsReader[TestData.WmsToEms.Trx].ToString();
+                WmsToEms.MessageText = wmsToEmsReader[TestData.WmsToEms.MsgTxt].ToString();
+            }
+            return WmsToEms;
+        }
+
+        protected SwmToMheDto SwmToMhe(OracleConnection db, string caseNbr, string trx, string skuId)
+        {
+            var swmtomhedata = new SwmToMheDto();
+            var t = $"and sku_id = '{skuId}' ";
+            var query = $"select * from SWM_TO_MHE where container_id = '{caseNbr}' and source_msg_trans_code = '{trx}' ";
+            var orderBy = "order by created_date_time desc";
+            if (trx == TransactionCode.Ivmt)
+            {
+                query = query + t + orderBy;
+            }
+            else
+            {
+                query = query + orderBy;
+            }
+            command = new OracleCommand(query, db);
+            var swmToMheReader = command.ExecuteReader();
+            if (swmToMheReader.Read())
+            {
+                swmtomhedata.SourceMessageKey = Convert.ToInt16(swmToMheReader[TestData.SwmToMhe.SourceMsgKey].ToString());
+                swmtomhedata.SourceMessageResponseCode = Convert.ToInt16(swmToMheReader[TestData.SwmToMhe.SourceMsgRsnCode].ToString());
+                swmtomhedata.SourceMessageStatus = swmToMheReader[TestData.SwmToMhe.SourceMsgStatus].ToString();
+                swmtomhedata.ContainerId = swmToMheReader[TestData.SwmToMhe.ContainerId].ToString();
+                swmtomhedata.ContainerType = swmToMheReader[TestData.SwmToMhe.ContainerType].ToString();
+                swmtomhedata.MessageJson = swmToMheReader[TestData.SwmToMhe.MsgJson].ToString();
+                swmtomhedata.LocationId = swmToMheReader[TestData.SwmToMhe.LocnId].ToString();
+                swmtomhedata.SourceMessageText = swmToMheReader[TestData.SwmToMhe.SourceMsgText].ToString();
+            }
+            return swmtomhedata;
+        }
         public CaseViewDto FetchTransInvn(OracleConnection db, string skuId)
         {
             var singleSkulocal = new CaseViewDto();
@@ -156,19 +194,33 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return MsgKey;
         }
 
-        public PickLocationDtlDto PickLocnData(OracleConnection db, string skuId)
+        public PickLocationDetailsDto GetPickLocationDetails(OracleConnection db, string skuId,string LocnId)
         {
-            var pickLocn = new PickLocationDtlDto();
-            sqlStatements = $"select * from pick_locn_dtl where sku_id = '{skuId}' and locn_id = '{costData.LocnId}' order by mod_date_time desc";
-            command = new OracleCommand(sqlStatements, db);
-            var pickLocnReader = command.ExecuteReader();
-            if (pickLocnReader.Read())
+            var pickLocnDtl = new PickLocationDetailsDto();
+            var pickLocnView = $"select * from pick_locn_dtl where sku_id = '{skuId}' and locn_id = '{LocnId}' order by mod_date_time desc";
+            command = new OracleCommand(pickLocnView, db);
+            var pickLocnDtlReader = command.ExecuteReader();
+            if (pickLocnDtlReader.Read())
             {
-                pickLocn.ActualInventoryQuantity = Convert.ToDecimal(pickLocnReader[TestData.PickLocationDetail.ActlInvnQty].ToString());
-                pickLocn.ToBeFilledQty = Convert.ToDecimal(pickLocnReader[TestData.PickLocationDetail.ToBeFilledQty].ToString());
-                pickLocn.LocationId = pickLocnReader[TestData.PickLocationDetail.LocnId].ToString();
+                pickLocnDtl.ActualInventoryQuantity = Convert.ToDecimal(pickLocnDtlReader[TestData.PickLocationDetail.ActlInvnQty].ToString());
+                pickLocnDtl.ToBeFilledQty = Convert.ToDecimal(pickLocnDtlReader[TestData.PickLocationDetail.ToBeFilledQty].ToString());
+                pickLocnDtl.LocationId = pickLocnDtlReader[TestData.PickLocationDetail.LocnId].ToString();
+                pickLocnDtl.ToBePickedQty = Convert.ToDecimal(pickLocnDtlReader[TestData.PickLocationDetail.ToBePickedQuantity].ToString());
             }
-            return pickLocn;
+            return pickLocnDtl;
+        }
+
+        public PickLocationDetailsExtenstionDto GetPickLocnDtlExt(OracleConnection db, string locnId, string skuId)
+        {
+            var pickLocnDtlExt = new PickLocationDetailsExtenstionDto();
+            var query = $"select ACTIVE_ORMT_COUNT,UPDATED_BY,UPDATED_DATE_TIME from PICK_LOCN_DTL_EXT WHERE PICK_LOCN_DTL_ID==(SELECT PICK_LOCN_DTL_ID FROM PICK_LOCN_DTL WHERE LOCN_ID= '{locnId}' AND SKU_ID='{skuId}'))";
+            command = new OracleCommand(query, db);
+            var pickLocnDtlExtReader = command.ExecuteReader();
+            if (pickLocnDtlExtReader.Read())
+            {
+                pickLocnDtlExt.ActiveOrmtCount = Convert.ToInt16(pickLocnDtlExtReader[TestData.PickLocnDtlExt.ActiveOrmtCount].ToString());
+            }
+            return pickLocnDtlExt;
         }
 
     }

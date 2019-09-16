@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
-    public class DataBaseFixtureForOrmt : DataBaseFixture
+    public class DataBaseFixtureForOrmt : CommonFunction
     {
         protected WmsToEmsDto wmsToEmsAddRelease = new WmsToEmsDto();
         protected SwmToMheDto swmToMheAddRelease = new SwmToMheDto();
@@ -188,20 +188,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return cartonView;
         }
 
-        public CartonView PickLocnDtlExt(OracleConnection db)
-        {
-            var cartonview = new CartonView();
-            var query = $"Select PLD.ACTL_QTY-NVL(PLDE.ACTIVE_ORMT_COUNT,0) as AVAILABLE_QTY From Pick_Locn_Dtl PLD Left Outer Join  Pick_Locn_Dtl_Ext PLDE On PLD.Pick_Locn_Dtl_Id = PLDE.Pick_Locn_Dtl_Id";
-            var command = new OracleCommand(query, db);
-            var dr7 = command.ExecuteReader();
-            if (dr7.Read())
-            {
-            }
-            return cartonview;
-        }
-
        
-
 
 
     }

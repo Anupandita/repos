@@ -90,7 +90,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 swmToMheView.ContainerId = swmToMheReader["CONTAINER_ID"].ToString();
                 swmToMheView.SkuId = swmToMheReader["SKU_ID"].ToString();
                 swmToMheView.Quantity = Convert.ToInt16(swmToMheReader["QTY"].ToString());
-                swmToMheView.MessageJson = swmToMheReader["MSG_JSON"].ToString();         
+                swmToMheView.MessageJson = swmToMheReader["MSG_JSON"].ToString();   
+                
             }
             return swmToMheView;
         }
@@ -331,21 +332,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 pkTktHeader.PickTicketStatusCode = Convert.ToInt16(pickTktHeaderReader[TestData.PickTicketHeader.PktStatCode].ToString());
             }
             return pkTktHeader;
-        }
-
-
-        public PickLocationDetailsDto GetPickLocationDetails(OracleConnection db, string locnId, string skuId)
-        {
-            var pickLocnDtl = new PickLocationDetailsDto();
-            var query = $"select TO_BE_PIKD_QTY,MOD_DATE_TIME,USER_ID,LOCN_ID, SKU_ID from PICK_LOCN_DTL where LOCN_ID= '{locnId}' AND SKU_ID='{skuId}'";
-            command = new OracleCommand(query, db);
-            var pickLocnDtlReader = command.ExecuteReader();
-            if(pickLocnDtlReader.Read())
-            {
-                pickLocnDtl.ToBePickedQty = Convert.ToDecimal(pickLocnDtlReader[TestData.PickLocationDetail.ToBePickedQuantity].ToString());
-                
-            }
-            return pickLocnDtl;
         }
 
         public PickLocationDetailsExtenstionDto GetPickLocnDtlExt(OracleConnection db,string locnId,string skuId)
