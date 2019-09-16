@@ -5,6 +5,7 @@ using Oracle.ManagedDataAccess.Client;
 using Sfc.Wms.ParserAndTranslator.Contracts.Dto;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
 using Sfc.Wms.ParserAndTranslator.Contracts.Constants;
+using Sfc.Wms.Data.Entities;
 using Newtonsoft.Json;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
@@ -33,9 +34,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             })
             {
                 db.Open();
-
-                var cartonHdr = GetValidDataForOnPrintingOfCarton(db);
+                var tempzone = GetTempZone(db, "sku");
+                var grpAttr = TempZoneRelate(tempzone.TempZone);
+                var locnId = GetLocnId(db, ch.SkuId, grpAttr);
+                var cartonHdr = GetValidDataForOnPrintingOfCarton(db, locnId.LocationId);
                 ch = OnWaveReleaseOrderDetails(db, cartonHdr.WaveNbr);
+                var tempzone1 = GetTempZone(db, ch.SkuId);
+                var grpAttr1 = TempZoneRelate(tempzone1.TempZone);
+                var locnId1 = GetLocnId(db, ch.SkuId, grpAttr);
                 var co = GetValidDataForOnCancellationOfCarton(db);
                 cancelOrder = OnCancellationAndEPickOrdersFetchData(db, co.CartonNbr);
                 var epick = GetValidDataForEPick(db);
@@ -54,7 +60,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             {
                 db.Open();
             }
-
             swmToMheAddRelease = SwmToMhe(db, ch.CartonNbr, TransactionCode.Ormt, ch.SkuId);
             ormt = JsonConvert.DeserializeObject<OrmtDto>(swmToMheAddRelease.MessageJson);
             wmsToEmsAddRelease = WmsToEmsData(db, swmToMheAddRelease.SourceMessageKey, TransactionCode.Ormt);
@@ -90,17 +95,17 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             wmsToEmsEPick = WmsToEmsData(db, swmToMheEPick.SourceMessageKey, TransactionCode.Ormt);
         }
 
-        public CartonView GetValidDataForOnPrintingOfCarton(OracleConnection db)
+        public CartonView GetValidDataForOnPrintingOfCarton(OracleConnection db, string locnId)
         {
             var ch = new CartonView();
-            var query = $"select * from carton_hdr where stat_code = 5 and MISC_INSTR_CODE_5 is null";
+            var query = $"select * from carton_hdr where stat_code = 5 and MISC_INSTR_CODE_5 is null and Pick_locn_id = '{locnId}'";
             var command = new OracleCommand(query, db);
             var printingCartonReader = command.ExecuteReader();
             if (printingCartonReader.Read())
             {
                 ch.CartonNbr = printingCartonReader[TestData.CartonHeader.CartonNbr].ToString();
-                ch.StatusCode = printingCartonReader[CartonHeader.StatCode].ToString();
-                ch.WaveNbr = printingCartonReader[CartonHeader.WaveNbr].ToString();
+                ch.StatusCode = printingCartonReader[TestData.CartonHeader.StatCode].ToString();
+                ch.WaveNbr = printingCartonReader[TestData.CartonHeader.WaveNbr].ToString();
             }
             return ch;
         }
@@ -113,8 +118,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var cancelledCartonReader = command.ExecuteReader();
             if (cancelledCartonReader.Read())
             {
-                cd.CartonNbr = cancelledCartonReader[CartonHeader.CartonNbr].ToString();
-                cd.StatusCode = cancelledCartonReader[CartonHeader.StatCode].ToString();
+                cd.CartonNbr = cancelledCartonReader[TestData.CartonHeader.CartonNbr].ToString();
+                cd.StatusCode = cancelledCartonReader[TestData.CartonHeader.StatCode].ToString();
             }
             return cd;
         }
@@ -127,8 +132,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var ePickCartonReader = command.ExecuteReader();
             if (ePickCartonReader.Read())
             {
-                cd.CartonNbr = ePickCartonReader[CartonHeader.CartonNbr].ToString();
-                cd.StatusCode = ePickCartonReader[CartonHeader.StatCode].ToString();
+                cd.CartonNbr = ePickCartonReader[TestData.CartonHeader.CartonNbr].ToString();
+                cd.StatusCode = ePickCartonReader[TestData.CartonHeader.StatCode].ToString();
             }
             return cd;
         }
@@ -145,15 +150,15 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var Reader = command.ExecuteReader();
             if (Reader.Read())
             {
-                cartonView.PickTktCtrlNbr = Reader[PickTicketHeader.PickTktCtrlNbr].ToString();
+                cartonView.PickTktCtrlNbr = Reader[TestData.PickTicketHeader.PickTktCtrlNbr].ToString();
                 cartonView.PickTktSeqNbr = Reader[TestData.PickLocationDetail.PktSeqNbr].ToString();
                 cartonView.SkuId = Reader[TestData.PickLocationDetail.SkuId].ToString();
-                cartonView.Whse = Reader[PickTicketHeader.Whse].ToString();
-                cartonView.Co = Reader[PickTicketHeader.Co].ToString();
-                cartonView.Div = Reader[PickTicketHeader.Div].ToString();
+                cartonView.Whse = Reader[TestData.PickTicketHeader.Whse].ToString();
+                cartonView.Co = Reader[TestData.PickTicketHeader.Co].ToString();
+                cartonView.Div = Reader[TestData.PickTicketHeader.Div].ToString();
                 cartonView.PickTktQty = Reader[TestData.PickLocationDetail.PktQty].ToString();
-                cartonView.SplInstrCode1 = Reader[ItemMaster.SplInstrCode1].ToString();
-                cartonView.SplInstrCode5 = Reader[ItemMaster.SplInstrCode5].ToString();
+                cartonView.SplInstrCode1 = Reader[TestData.ItemMaster.SplInstrCode1].ToString();
+                cartonView.SplInstrCode5 = Reader[TestData.ItemMaster.SplInstrCode5].ToString();
             }
             return cartonView;
         }
@@ -170,15 +175,15 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var Reader = command.ExecuteReader();
             if (Reader.Read())
             {
-                cartonView.PickTktCtrlNbr = Reader[PickTicketHeader.PickTktCtrlNbr].ToString();
+                cartonView.PickTktCtrlNbr = Reader[TestData.PickTicketHeader.PickTktCtrlNbr].ToString();
                 cartonView.PickTktSeqNbr = Reader[TestData.PickLocationDetail.PktSeqNbr].ToString();
                 cartonView.SkuId = Reader[TestData.PickLocationDetail.SkuId].ToString();
-                cartonView.Whse = Reader[PickTicketHeader.Whse].ToString();
-                cartonView.Co = Reader[PickTicketHeader.Co].ToString();
-                cartonView.Div = Reader[PickTicketHeader.Div].ToString();
+                cartonView.Whse = Reader[TestData.PickTicketHeader.Whse].ToString();
+                cartonView.Co = Reader[TestData.PickTicketHeader.Co].ToString();
+                cartonView.Div = Reader[TestData.PickTicketHeader.Div].ToString();
                 cartonView.PickTktQty = Reader[TestData.PickLocationDetail.PktQty].ToString();
-                cartonView.SplInstrCode1 = Reader[ItemMaster.SplInstrCode1].ToString();
-                cartonView.SplInstrCode5 = Reader[ItemMaster.SplInstrCode5].ToString();
+                cartonView.SplInstrCode1 = Reader[TestData.ItemMaster.SplInstrCode1].ToString();
+                cartonView.SplInstrCode5 = Reader[TestData.ItemMaster.SplInstrCode5].ToString();
             }
             return cartonView;
         }
@@ -194,5 +199,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
             return cartonview;
         }
+
+       
+
+
+
     }
 }

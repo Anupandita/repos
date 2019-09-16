@@ -17,7 +17,7 @@ using System.Configuration;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
-    public class DataBaseFixtureForCost :DataBaseFixture
+    public class DataBaseFixtureForCost :CommonFunction
     {       
         protected SwmFromMheDto swmFromMhe = new SwmFromMheDto();
         protected CaseViewDto trnInvBeforeApi = new CaseViewDto();
@@ -33,7 +33,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected CaseHeaderDto caseHeaderDto = new CaseHeaderDto();
         protected CostDto cost = new CostDto();  
         protected string sqlStatements = "";
-        protected OracleTransaction transaction;
         protected OracleCommand oracleCommand;
         public decimal unitweight1;
        
@@ -80,34 +79,38 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 };
                 costData.MsgKey = InsertEmsToWMS(db,emsToWmsParameters);
                 trnInvBeforeApi = FetchTransInvn(db, costData.SkuId);
-                pickLcnDtlBeforeApi = PickLocnData(db, costData.SkuId);
+                pickLcnDtlBeforeApi = PickLocnData(db, costData.SkuId,costData.SkuId);
             }
-        }
-         
-        public PickLocationDtlDto PickLocnData(OracleConnection db,string skuId)
-        {
-            var pickLocn = new PickLocationDtlDto();
-            sqlStatements = $"select * from pick_locn_dtl where sku_id = '{skuId}' and locn_id = '{costData.LocnId}' order by mod_date_time desc";
-            command = new OracleCommand(sqlStatements, db);
-            var pickLocnReader = command.ExecuteReader();
-            if (pickLocnReader.Read())
-            {
-                pickLocn.ActualInventoryQuantity = Convert.ToDecimal(pickLocnReader[TestData.PickLocationDetail.ActlInvnQty].ToString());
-                pickLocn.ToBeFilledQty = Convert.ToDecimal(pickLocnReader[TestData.PickLocationDetail.ToBeFilledQty].ToString());
-                pickLocn.LocationId = pickLocnReader[TestData.PickLocationDetail.LocnId].ToString();
-            }
-            return pickLocn;
         }
 
-        public long InsertEmsToWMS (OracleConnection db, EmsToWmsDto emsToWmsDto)
+        protected SwmToMheDto SwmToMhe(OracleConnection db, string caseNbr, string trx, string skuId)
         {
-            transaction = db.BeginTransaction();
-            var MsgKey = GetSeqNbrEmsToWms(db);
-            var insertQuery = $"insert into emstowms values ('{emsToWmsDto.Process}','{MsgKey}','{emsToWmsDto.Status}','{emsToWmsDto.Transaction}','{emsToWmsDto.MessageText}','{emsToWmsDto.ResponseCode}','TestUser','{DateTime.Now.ToString("dd-MMM-yy")}','{DateTime.Now.ToString("dd-MMM-yy")}')";
-            command = new OracleCommand(insertQuery, db);
-            command.ExecuteNonQuery();
-            transaction.Commit();
-            return MsgKey;
+            var swmtomhedata = new SwmToMheDto();
+            var t = $"and sku_id = '{skuId}' ";
+            var query = $"select * from SWM_TO_MHE where container_id = '{caseNbr}' and source_msg_trans_code = '{trx}' ";
+            var orderBy = "order by created_date_time desc";
+            if (trx == TransactionCode.Ivmt)
+            {
+                query = query + t + orderBy;
+            }
+            else
+            {
+                query = query + orderBy;
+            }
+            command = new OracleCommand(query, db);
+            var swmToMheReader = command.ExecuteReader();
+            if (swmToMheReader.Read())
+            {
+                swmtomhedata.SourceMessageKey = Convert.ToInt16(swmToMheReader[TestData.SwmToMhe.SourceMsgKey].ToString());
+                swmtomhedata.SourceMessageResponseCode = Convert.ToInt16(swmToMheReader[TestData.SwmToMhe.SourceMsgRsnCode].ToString());
+                swmtomhedata.SourceMessageStatus = swmToMheReader[TestData.SwmToMhe.SourceMsgStatus].ToString();
+                swmtomhedata.ContainerId = swmToMheReader[TestData.SwmToMhe.ContainerId].ToString();
+                swmtomhedata.ContainerType = swmToMheReader[TestData.SwmToMhe.ContainerType].ToString();
+                swmtomhedata.MessageJson = swmToMheReader[TestData.SwmToMhe.MsgJson].ToString();
+                swmtomhedata.LocationId = swmToMheReader[TestData.SwmToMhe.LocnId].ToString();
+                swmtomhedata.SourceMessageText = swmToMheReader[TestData.SwmToMhe.SourceMsgText].ToString();
+            }
+            return swmtomhedata;
         }
 
         public string CreateCostMessage(string containerNbr, string skuId, string qty, string locationId)
@@ -224,36 +227,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
             return CostTransData;
         }
-
-        public Int64 GetSeqNbrEmsToWms(OracleConnection db)
-        {
-            sqlStatements = $"select EMSTOWMS_MSGKEY_SEQ.nextval from dual";
-            command = new OracleCommand(sqlStatements, db);
-            var key = Convert.ToInt64(command.ExecuteScalar().ToString());
-            return key;
-        }
-
-        public SwmFromMheDto SwmFromMhe(OracleConnection db, long msgKey, string trx)
-        {
-            var swmFromMheData = new SwmFromMheDto();
-            sqlStatements = $"select * from swm_from_mhe where Source_MSg_Key = {msgKey} and source_msg_trans_code = '{trx}'  order by created_date_time desc";
-            command = new OracleCommand(sqlStatements, db);
-            var swmFromMheReader = command.ExecuteReader();
-            if (swmFromMheReader.Read())
-            {
-                swmFromMheData.SourceMessageKey = Convert.ToInt16(swmFromMheReader[TestData.SwmFromMhe.SourceMsgKey].ToString());
-                swmFromMheData.SourceMessageResponseCode = Convert.ToInt16(swmFromMheReader[TestData.SwmFromMhe.SourceMsgRsnCode].ToString());
-                swmFromMheData.SourceMessageStatus = swmFromMheReader[TestData.SwmFromMhe.SourceMsgStatus].ToString();
-                swmFromMheData.SourceMessageProcess = swmFromMheReader[TestData.SwmFromMhe.SourceMsgProcess].ToString();
-                swmFromMheData.SourceMessageTransactionCode = swmFromMheReader[TestData.SwmFromMhe.SourceMsgTransCode].ToString();
-                swmFromMheData.ContainerId = swmFromMheReader[TestData.SwmFromMhe.ContainerId].ToString();
-                swmFromMheData.ContainerType = swmFromMheReader[TestData.SwmFromMhe.ContainerType].ToString();
-                swmFromMheData.MessageJson = swmFromMheReader[TestData.SwmFromMhe.MsgJson].ToString();
-                swmFromMheData.SourceMessageText = swmFromMheReader[TestData.SwmFromMhe.SourceMsgText].ToString();
-                swmFromMheData.LocationId = swmFromMheReader[TestData.SwmFromMhe.LocnId].ToString();
-            }
-            return swmFromMheData;
-        }       
+     
        
         public void GetDataAfterTrigger()
         {
@@ -263,7 +237,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 swmFromMhe = SwmFromMhe(db, costData.MsgKey, TransactionCode.Cost);
                 cost = JsonConvert.DeserializeObject<CostDto>(swmFromMhe.MessageJson);
                 trnInvAfterApi = FetchTransInvn(db, cost.StorageClassAttribute1);
-                pickLocnDtlAfterApi = PickLocnData(db, cost.StorageClassAttribute1);
+                pickLocnDtlAfterApi = PickLocnData(db, cost.StorageClassAttribute1,cost.CurrentLocationId);
             }
         }     
     }

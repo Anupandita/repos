@@ -20,7 +20,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
     /*Case1,Case2,Case3,Case4 are defined in story*/
 
-    public class DataBaseFixtureForOrst : DataBaseFixtureForCost
+    public class DataBaseFixtureForOrst : CommonFunction
     {
         protected SwmToMheDto case1 = new SwmToMheDto();
         protected SwmToMheDto case2 = new SwmToMheDto();
@@ -141,7 +141,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 pickLcnExtCase4BeforeApi = GetPickLocnDtlExt(db, "asrs locn", pickLcnCase4BeforeApi.SkuId);
             }
         }
-
 
         public void GetDataAfterTriggerOrstCase1()
         {

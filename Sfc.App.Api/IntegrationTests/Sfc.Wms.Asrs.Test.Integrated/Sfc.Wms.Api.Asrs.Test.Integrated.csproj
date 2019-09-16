@@ -55,6 +55,7 @@
     <Compile Include="Fixtures\OrmtMessageFixture.cs" />
     <Compile Include="Fixtures\DataBaseFixtureForOrst.cs" />
     <Compile Include="Fixtures\OrstMessageFixture.cs" />
+    <Compile Include="Fixtures\CommonFunction.cs" />
     <Compile Include="Fixtures\ZplFixture.cs" />
     <Compile Include="TestData\CaseViewDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
