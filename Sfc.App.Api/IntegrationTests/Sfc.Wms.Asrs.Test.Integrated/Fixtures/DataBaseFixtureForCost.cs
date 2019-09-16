@@ -236,7 +236,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public SwmFromMheDto SwmFromMhe(OracleConnection db, long msgKey, string trx)
         {
             var swmFromMheData = new SwmFromMheDto();
-            sqlStatements = $"select * from swm_from_mhe where SourceMessageKey = {msgKey} and source_msg_trans_code = '{trx}'  order by created_date_time desc";
+            sqlStatements = $"select * from swm_from_mhe where Source_MSg_Key = {msgKey} and source_msg_trans_code = '{trx}'  order by created_date_time desc";
             command = new OracleCommand(sqlStatements, db);
             var swmFromMheReader = command.ExecuteReader();
             if (swmFromMheReader.Read())

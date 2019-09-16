@@ -17,7 +17,37 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         protected void InitializeTestData()
         {
-            GetDataBeforeTrigger();
+            GetDataBeforeTriggerOrst();
+        }
+
+        protected void TestDataForActionCodeComplete()
+        {
+            GetDataBeforeCallingApiForActionCodeComplete();
+        }
+
+        protected void TestDataForActionCodeCancel()
+        {
+            GetDataBeforeCallingApiForActionCodeCancel();
+        }
+
+        protected void ReadDataAfterApiForActionCodeAllocated()
+        {
+            GetDataAfterTriggerOrstCase1();
+        }
+
+        protected void ReadDataAfterApiForActionCodeComplete()
+        {
+            GetDataAfterTriggerOrstCase2();
+        }
+
+        protected void ReadDataAfterApiForActionCodeDeAllocate()
+        {
+            GetDataAfterTriggerOrstCase3();
+        }
+
+        protected void ReadDataAfterApiForActionCodeCancel()
+        {
+            GetDataAfterTriggerOrstCase4();
         }
 
         protected void MsgKeyForCase1()
@@ -57,6 +87,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var result = JsonConvert.DeserializeObject<BaseResult>(response.Content.ToString());
             return result;
         }
+
 
         protected void OrstApiIsCalledCreatedIsReturned()
         {
@@ -142,30 +173,30 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         }
 
-        protected void PickTicketHeaderForActionCodeAllocated()
+        protected void VerifyPickTicketStatusHasChangedToInPickingForActionCodeAllocated()
         {
             Assert.AreEqual("35", pickTktHdrCase1.PickTicketStatusCode);
         }
 
-        protected void CartonHeaderStatusForActionCodeAllocated()
+        protected void VerifyCartonStatusHasChangedToInPackingForActionCodeAllocated()
         {
             Assert.AreEqual("15", cartonHdrCase1.StatusCode);
             Assert.AreEqual(cartonHdrCase1.CurrentLocationId,orstCase1.CurrentLocationId);
             Assert.AreEqual(cartonHdrCase1.DestinationLocationId,orstCase1.DestinationLocationId);
         }
 
-        protected void ReduceQtyInPickLocationDtlForActionCodeAllocated()
+        protected void VerifyToBePickedQuantityHasReducedInToPickLocationForActionCodeAllocated()
         {
             Assert.AreEqual(pickLcnCase1BeforeApi.ToBePickedQty - Convert.ToDecimal(orstCase1.QuantityDelivered), pickLcnCase1.ToBePickedQty);
         }
 
-        protected void ValidateForOrmtCountForActionCodeAllocated()
+        protected void VerifyActiveOrmtCountShouldBeReducedForActionCodeAllocated()
         {
             Assert.AreEqual(pickLcnExtCase1BeforeApi.ActiveOrmtCount -1 ,pickLcnExtCase1.ActiveOrmtCount);
         }
 
 
-        protected void CartonHeaderStatusForActionCodeComplete()
+        protected void VerifyCartonStatusHasChangedToPickedForActionCodeComplete()
         {
             Assert.AreEqual("30",cartonHdrCase2.StatusCode);
             Assert.AreEqual("", cartonHdrCase2.Picker);
@@ -173,60 +204,59 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual("",cartonHdrCase2.PickLocationId);
         }
 
-        protected  void CartonDtlForActionCodeComplete()
+        protected  void ValidateForQuantitiesInTocartonDetailTableForActionCodeComplete()
         {
             Assert.AreEqual(cartonDtlCase2BeforeApi.UnitsPacked + Convert.ToDecimal(orstCase2.QuantityDelivered), cartonDtlCase2AfterApi.UnitsPacked);
             Assert.AreEqual(cartonDtlCase2BeforeApi.ToBePackedUnits - Convert.ToDecimal(orstCase2.QuantityDelivered), cartonDtlCase2AfterApi.ToBePackedUnits);
         }
 
-        protected void PickTktDtlForActionCodeComplete()
+        protected void ValidateForQuantitiesInToPickTicketDetailTableForActionCodeComplete()
         {
             Assert.AreEqual(pickTktDtlCase2BeforeApi.UnitsPacked + orstCase2.QuantityDelivered, pickTktDtlCase2AfterApi.UnitsPacked);
             Assert.AreEqual(pickTktDtlCase2BeforeApi.VerifiedAsPacked + orstCase2.QuantityDelivered, pickTktDtlCase2AfterApi.VerifiedAsPacked);
         }
 
-        protected void PickTicketHeaderForActionCodeComplete()
+        protected void VerifyPickTicketStatusHasChangedToWeighedForStatusCodeComplete()
         {
             Assert.AreEqual("50", pickTktHdrCase2.PickTicketStatusCode);
         }
 
 
-        protected void AllocationInventoryForActionCodeComplete()
+        protected void VerifyAllocationStatusHasChangedToCompleteForActionCodeComplete()
         {
             Assert.AreEqual(allocInvnDtlCase2BeforeApi.QtyPulled + orstCase2.QuantityDelivered, allocInvnDtlCase2AfterApi.QtyPulled);
             Assert.AreEqual("90", allocInvnDtlCase2AfterApi.StatCode);
         }
 
-        protected void PickLocnDtlForActionCodeComplete()
+        protected void ValidateForQuantitiesInToPickLocationTableForActionCodeComplete()
         {
             Assert.AreEqual(pickLcnCase2BeforeApi.ActualInventoryQuantity - Convert.ToDecimal(orstCase2.QuantityDelivered),pickLcnCase2.ActualInventoryQuantity);
             Assert.AreEqual(pickLcnCase2BeforeApi.ToBePickedQty - Convert.ToDecimal(orstCase2.QuantityDelivered), pickLcnCase2.ToBePickedQty);
         }
 
-        protected void PickLocnDtlExtForActionCodeComplete()
+        protected void ValidateForOrmtCountHasReducedForActionCodeComplete()
         {
             Assert.AreEqual(pickLcnExtCase2BeforeApi.ActiveOrmtCount - 1, pickLcnExtCase2.ActiveOrmtCount);
         }
 
-        protected void CartonHeaderForActionCodeDeAllocate()
+        protected void VerifyCartonStatusHasUpdatedToAllocatedOrWaitingForActionCodeDeAllocate()
         {
             Assert.AreEqual("5", cartonHdrCase3.StatusCode);
         }
 
-        protected void CartonHeaderForActionCodeCancel()
+        protected void VerifyCartonStatusHasUpdatedToAllocatedOrWaitingForActionCodeCancel()
         {
             Assert.AreEqual("5", cartonHdrCase4.StatusCode);
         }
 
-        protected void PickLocnDtlForActionCodeCancel()
+        protected void ValidateForQuantitiesInToPickLocationTableForActionCodeCancel()
         {
             Assert.AreEqual(pickLcnCase4BeforeApi.ToBePickedQty - Convert.ToDecimal(orstCase4.QuantityDelivered), pickLcnCase4.ToBePickedQty);
         }
 
-        protected void PickLocnDtlExtForActionCodeCancel()
+        protected void ValidateForOrmtCountHasReducedForActionCodeCancel()
         {
             Assert.AreEqual(pickLcnExtCase4BeforeApi.ActiveOrmtCount - 1, pickLcnExtCase4.ActiveOrmtCount);
-
         }
 
 

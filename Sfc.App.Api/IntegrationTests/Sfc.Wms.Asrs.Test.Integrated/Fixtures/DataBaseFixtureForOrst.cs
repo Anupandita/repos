@@ -13,9 +13,13 @@ using Sfc.Wms.Foundation.Location.Contracts.Dtos;
 using Sfc.Wms.Result;
 using Sfc.Wms.Foundation.Carton.Contracts.Dtos;
 using System;
+using Sfc.Wms.Data.Entities;
+using PickTicketDetail = Sfc.Wms.Data.Entities.PickTicketDetail;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
+    /*Case1,Case2,Case3,Case4 are defined in story*/
+
     public class DataBaseFixtureForOrst : DataBaseFixtureForCost
     {
         protected SwmToMheDto case1 = new SwmToMheDto();
@@ -63,8 +67,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected PickLocationDetailsExtenstionDto pickLcnExtCase2 = new PickLocationDetailsExtenstionDto();
         protected PickLocationDetailsExtenstionDto pickLcnExtCase4BeforeApi = new PickLocationDetailsExtenstionDto();
         protected PickLocationDetailsExtenstionDto pickLcnExtCase4 = new PickLocationDetailsExtenstionDto();
-        protected PickTicketDetailDto pickTktDtlCase2BeforeApi = new PickTicketDetailDto();
-        protected PickTicketDetailDto pickTktDtlCase2AfterApi  = new PickTicketDetailDto();
+        protected PickTicketDetail pickTktDtlCase2BeforeApi = new PickTicketDetail();
+        protected PickTicketDetail pickTktDtlCase2AfterApi  = new PickTicketDetail();
         protected CartonDetailDto cartonDtlCase2AfterApi = new CartonDetailDto();
         protected AllocInvnDtl allocInvnDtlCase2BeforeApi = new AllocInvnDtl();
         protected AllocInvnDtl allocInvnDtlCase2AfterApi = new AllocInvnDtl();
@@ -103,8 +107,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 emsToWmsCase1 = GetEmsToWmsData(db, msgKeyForCase1.MsgKey);   
                 emsToWmsCase3 = GetEmsToWmsData(db, msgKeyForCase3.MsgKey);   
                 pickLcnCase1BeforeApi = GetPickLocationDetails(db,"asrs locn","carton_dtl.sku");
-                pickLcnExtCase1BeforeApi = GetPickLocnDtlExt(db,"asrs locn", pickLcnCase1BeforeApi.SkuId);
-               
+                pickLcnExtCase1BeforeApi = GetPickLocnDtlExt(db,"asrs locn", pickLcnCase1BeforeApi.SkuId);            
             }
         }
 
@@ -290,14 +293,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var cartonHeaderReader = command.ExecuteReader();
             if (cartonHeaderReader.Read())
             {
-                cartonHeader.StatusCode = Convert.ToInt16(cartonHeaderReader[CartonHeader.StatCode].ToString());
+                cartonHeader.StatusCode = Convert.ToInt16(cartonHeaderReader[TestData.CartonHeader.StatCode].ToString());
                 //cartonHeader.ModificationDateTime = cartonHeaderReader[CartonHeader.ModificationDateTime].ToString();
-                cartonHeader.CurrentLocationId = cartonHeaderReader[CartonHeader.CurrentLocationId].ToString();
-                cartonHeader.Picker = cartonHeaderReader[CartonHeader.Pikr].ToString();
-                cartonHeader.Packer = cartonHeaderReader[CartonHeader.Pakr].ToString();
-                cartonHeader.CartonNumber = cartonHeaderReader[CartonHeader.CartonNbr].ToString();
-                cartonHeader.PickLocationId = cartonHeaderReader[CartonHeader.PickLocationId].ToString();
-                cartonHeader.MiscellaneousInstructionCode5 = cartonHeaderReader[CartonHeader.MiscInstrCode5].ToString();
+                cartonHeader.CurrentLocationId = cartonHeaderReader[TestData.CartonHeader.CurrentLocationId].ToString();
+                cartonHeader.Picker = cartonHeaderReader[TestData.CartonHeader.Pikr].ToString();
+                cartonHeader.Packer = cartonHeaderReader[TestData.CartonHeader.Pakr].ToString();
+                cartonHeader.CartonNumber = cartonHeaderReader[TestData.CartonHeader.CartonNbr].ToString();
+                cartonHeader.PickLocationId = cartonHeaderReader[TestData.CartonHeader.PickLocationId].ToString();
+                cartonHeader.MiscellaneousInstructionCode5 = cartonHeaderReader[TestData.CartonHeader.MiscInstrCode5].ToString();
             }
             return cartonHeader;
         }
@@ -310,9 +313,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var cartonReader = command.ExecuteReader();
             if(cartonReader.Read())
             {
-                cartonDtl.CartonNumber = cartonReader[CartonDetail.CartonNumber].ToString();
-                cartonDtl.ToBePackedUnits = Convert.ToDecimal(cartonReader[CartonDetail.ToBePackdUnits].ToString());
-                cartonDtl.UnitsPacked = Convert.ToDecimal(cartonReader[CartonDetail.UnitsPakd].ToString());
+                cartonDtl.CartonNumber = cartonReader[TestData.CartonDetail.CartonNumber].ToString();
+                cartonDtl.ToBePackedUnits = Convert.ToDecimal(cartonReader[TestData.CartonDetail.ToBePackdUnits].ToString());
+                cartonDtl.UnitsPacked = Convert.ToDecimal(cartonReader[TestData.CartonDetail.UnitsPakd].ToString());
             }
             return cartonDtl;
         }
@@ -325,8 +328,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var pickTktHeaderReader = command.ExecuteReader();
             if (pickTktHeaderReader.Read())
             {
-                pkTktHeader.CartonNumber = pickTktHeaderReader[PickTicketHeader.CartonNumber].ToString();
-                pkTktHeader.PickTicketStatusCode = Convert.ToInt16(pickTktHeaderReader[PickTicketHeader.PktStatCode].ToString());
+                pkTktHeader.CartonNumber = pickTktHeaderReader[TestData.PickTicketHeader.CartonNumber].ToString();
+                pkTktHeader.PickTicketStatusCode = Convert.ToInt16(pickTktHeaderReader[TestData.PickTicketHeader.PktStatCode].ToString());
             }
             return pkTktHeader;
         }
@@ -341,7 +344,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             if(pickLocnDtlReader.Read())
             {
                 pickLocnDtl.ToBePickedQty = Convert.ToDecimal(pickLocnDtlReader[TestData.PickLocationDetail.ToBePickedQuantity].ToString());
-                //pickLocnDtl.ModDateTime = pickLocnDtlReader[TestData.PickLocationDetail.ModDateTime].ToString();          
+                
             }
             return pickLocnDtl;
         }
@@ -359,18 +362,19 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return pickLocnDtlExt;
         }
 
-        public PickTicketDetailDto GetPickTicketDetailData(OracleConnection db,string cartonNbr,string pktSeqNbr)
+        public PickTicketDetail GetPickTicketDetailData(OracleConnection db,string cartonNbr,string pktSeqNbr)
         {
-            var pickTktDtl = new PickTicketDetailDto();
+            var pickTktDtl = new PickTicketDetail();
             var query = $"select PKT_DTL.UNITS_PAKD,PKT_DTL.MOD_DATE_TIME,PKT_DTL.USER_ID ,PKT_DTL.VERF_AS_PAKD,PKT_DTL.PKT_CTRL_NBR from PKT_DTL where PKT_DTL.PKT_CTRL_NBR = (SELECT PKT_CTRL_NBR FROM CARTON_HDR WHERE CARTON_NBR= '{cartonNbr}') AND PKT_SEQ_NBR= '{pktSeqNbr}'";
             command = new OracleCommand(query, db);
             var pickTktDtlReader = command.ExecuteReader();
             if(pickTktDtlReader.Read())
             {
-                pickTktDtl.PickTicketSequenceNumber = Convert.ToInt16(pickTktDtlReader[PickTicketDetail.PickTicketSeqNbr].ToString());
-                pickTktDtl.PickTicketControlNumber = pickTktDtlReader[PickTicketDetail.PickTktCtrlNbr].ToString();
-                pickTktDtl.UnitsPacked = Convert.ToDecimal(pickTktDtlReader[PickTicketDetail.UnitsPacked].ToString());            
-                pickTktDtl.VerifiedAsPacked = Convert.ToDecimal(pickTktDtlReader[PickTicketDetail.VerfAsPakd].ToString());
+                pickTktDtl.PickTicketSequenceNumber = Convert.ToInt16(pickTktDtlReader[TestData.PickTicketDetail.PickTicketSeqNbr].ToString());
+                pickTktDtl.PickTicketControlNumber = pickTktDtlReader[TestData.PickTicketDetail.PickTktCtrlNbr].ToString();
+                pickTktDtl.UnitsPacked = Convert.ToDecimal(pickTktDtlReader[TestData.PickTicketDetail.UnitsPacked].ToString());            
+                pickTktDtl.VerifiedAsPacked = Convert.ToDecimal(pickTktDtlReader[TestData.PickTicketDetail.VerfAsPakd].ToString());
+                pickTktDtl.UpdatedOn = Convert.ToDateTime(pickTktDtlReader[TestData.PickTicketDetail.ModificationDateTime].ToString());
             }
             return pickTktDtl;
         }
@@ -383,7 +387,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var allocInvnDtlReader = command.ExecuteReader();
             if(allocInvnDtlReader.Read())
             {
-                allocInvnDtl.CntrNbr = allocInvnDtlReader[TestData.AllocInvnDetail.CntrNbr].ToString();
+                allocInvnDtl.CntrNbr = allocInvnDtlReader[AllocInvnDetail.CntrNbr].ToString();
                 allocInvnDtl.QtyPulled = allocInvnDtlReader[AllocInvnDetail.QtyPulled].ToString();
                 allocInvnDtl.StatCode = allocInvnDtlReader[AllocInvnDetail.StatCode].ToString();
                 allocInvnDtl.UserId = allocInvnDtlReader[AllocInvnDetail.UserId].ToString();
@@ -408,9 +412,5 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
             return EmsToWms;
         }
-
-
-
-
     }
 }
