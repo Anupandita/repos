@@ -2,9 +2,9 @@
 using Sfc.Wms.Asrs.Shamrock.Contracts.Dtos;
 using System.Configuration;
 using Oracle.ManagedDataAccess.Client;
-using Sfc.Wms.ParserAndTranslator.Contracts.Dto;
+using Sfc.Wms.Interface.ParserAndTranslator.Contracts.Constants;
+using Sfc.Wms.Interface.ParserAndTranslator.Contracts.Dto;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
-using Sfc.Wms.ParserAndTranslator.Contracts.Constants;
 using Sfc.Wms.Data.Entities;
 using Newtonsoft.Json;
 

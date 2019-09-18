@@ -4,15 +4,15 @@ using Oracle.ManagedDataAccess.Client;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
 using Sfc.Wms.Asrs.Dematic.Contracts.Dtos;
 using Sfc.Wms.Asrs.Shamrock.Contracts.Dtos;
-using Sfc.Wms.Builder.MessageBuilder;
-using Sfc.Wms.ParserAndTranslator.Contracts.Constants;
-using Sfc.Wms.ParserAndTranslator.Contracts.Dto;
+using Sfc.Wms.Interface.ParserAndTranslator.Contracts.Constants;
+using Sfc.Wms.Interface.ParserAndTranslator.Contracts.Dto;
 using Sfc.Wms.ParserAndTranslator.Contracts.Interfaces;
 using Sfc.Wms.ParserAndTranslator.Contracts.Validation;
 using Sfc.Wms.Foundation.Location.Contracts.Dtos;
 using Sfc.Wms.Result;
 using Sfc.Wms.Foundation.Carton.Contracts.Dtos;
 using System;
+using Sfc.Wms.Interface.Builder.MessageBuilder;
 using Sfc.Wms.Data.Entities;
 using PickTicketDetail = Sfc.Wms.Data.Entities.PickTicketDetail;
 
@@ -74,10 +74,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected AllocInvnDtl allocInvnDtlCase2AfterApi = new AllocInvnDtl();
          
 
-        public DataBaseFixtureForOrst()
-        {
-            _dataTypeValidation = new DataTypeValidation();
-        }
 
         public SwmToMheDto GetCartonDetailsForInsertingOrstMessage(OracleConnection db,int statusCode)
         {
@@ -221,8 +217,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 OrderReasonCodeMap = orderReasonCodeMap,
                 WaveId = waveNbr
             };
-            GenericMessageBuilder gm = new GenericMessageBuilder(_dataTypeValidation);
-            var testResult = gm.BuildMessage<OrstDto, OrstValidationRule>(OrstParameters, TransactionCode.Orst);
+            var buildMessage = new MessageHeaderBuilder();
+            var testResult = buildMessage.BuildMessage<OrstDto, OrstValidationRule>(OrstParameters, TransactionCode.Cost);
             Assert.AreEqual(testResult.ResultType, ResultTypes.Ok);
             Assert.IsNotNull(testResult.Payload);
             return testResult.Payload;
@@ -334,19 +330,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return pkTktHeader;
         }
 
-        public PickLocationDetailsExtenstionDto GetPickLocnDtlExt(OracleConnection db,string locnId,string skuId)
-        {
-            var pickLocnDtlExt = new PickLocationDetailsExtenstionDto();
-            var query = $"select ACTIVE_ORMT_COUNT,UPDATED_BY,UPDATED_DATE_TIME from PICK_LOCN_DTL_EXT WHERE PICK_LOCN_DTL_ID==(SELECT PICK_LOCN_DTL_ID FROM PICK_LOCN_DTL WHERE LOCN_ID= '{locnId}' AND SKU_ID='{skuId}'))";
-            command = new OracleCommand(query, db);
-            var pickLocnDtlExtReader = command.ExecuteReader();
-            if(pickLocnDtlExtReader.Read())
-            {
-                pickLocnDtlExt.ActiveOrmtCount = Convert.ToInt16(pickLocnDtlExtReader[TestData.PickLocnDtlExt.ActiveOrmtCount].ToString());                    
-            }
-            return pickLocnDtlExt;
-        }
-
+        
         public PickTicketDetail GetPickTicketDetailData(OracleConnection db,string cartonNbr,string pktSeqNbr)
         {
             var pickTktDtl = new PickTicketDetail();

@@ -1,9 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using RestSharp;
+using Sfc.Core.OnPrem.ParserAndTranslator.Constants;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
 using Sfc.Wms.InboundLpn.Contracts.Dtos;
-using Sfc.Wms.ParserAndTranslator.Contracts.Constants;
+using Sfc.Wms.Interface.ParserAndTranslator.Contracts.Constants;
 using Sfc.Wms.Result;
 using System;
 using System.Configuration;

@@ -4,16 +4,14 @@ using Oracle.ManagedDataAccess.Client;
 using Sfc.Wms.Asrs.Dematic.Contracts.Dtos;
 using Sfc.Wms.Asrs.Shamrock.Contracts.Dtos;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
-using Sfc.Wms.Builder.MessageBuilder;
 using Sfc.Wms.InboundLpn.Contracts.Dtos;
-using Sfc.Wms.ParserAndTranslator.Contracts.Constants;
-using Sfc.Wms.ParserAndTranslator.Contracts.Dto;
-using Sfc.Wms.ParserAndTranslator.Contracts.Interfaces;
+using Sfc.Wms.Interface.Builder.MessageBuilder;
+using Sfc.Wms.Interface.ParserAndTranslator.Contracts.Constants;
+using Sfc.Wms.Interface.ParserAndTranslator.Contracts.Dto;
 using Sfc.Wms.ParserAndTranslator.Contracts.Validation;
-using Sfc.Wms.PickLocationDetail.Contracts.Dtos;
+using Sfc.Wms.Foundation.Location.Contracts.Dtos;
 using Sfc.Wms.Result;
 using System;
-using System.Configuration;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
@@ -27,20 +25,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected Cost costDataForTransInvnNotExist = new Cost();
         protected Cost costDataForPickLocnNotExist = new Cost();
         protected EmsToWmsDto emsToWmsParameters;
-        private readonly IHaveDataTypeValidation _dataTypeValidation;
-        protected PickLocationDtlDto pickLocnDtlAfterApi = new PickLocationDtlDto();
-        protected PickLocationDtlDto pickLcnDtlBeforeApi = new PickLocationDtlDto();
+        protected PickLocationDetailsDto pickLocnDtlAfterApi = new PickLocationDetailsDto();
+        protected PickLocationDetailsDto pickLcnDtlBeforeApi = new PickLocationDetailsDto();
         protected CaseHeaderDto caseHeaderDto = new CaseHeaderDto();
         protected CostDto cost = new CostDto();
         protected string sqlStatements = "";
         protected OracleCommand oracleCommand;
         public decimal unitweight1;
 
-
-        public DataBaseFixtureForCost()
-        {
-            _dataTypeValidation = new DataTypeValidation();
-        }
 
         public Cost GetCaseDetailsForInsertingCostMessage(OracleConnection db)
         {
@@ -82,7 +74,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                     Process = DefaultValues.Process,
                     MessageKey = Convert.ToInt64(costData.MsgKey),
                     Status = DefaultValues.Status,
-                    Transaction = TransactionCode.Cost,
+                    Transaction = Interface.ParserAndTranslator.Contracts.Constants.TransactionCode.Cost,
                     ResponseCode = (short)int.Parse(ReasonCode.Success),
                     MessageText = CostResult,
                 };
@@ -91,8 +83,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 pickLcnDtlBeforeApi = GetPickLocationDetails(db, costData.SkuId, costData.LocnId);
             }
         }
-
-
 
         public string CreateCostMessage(string containerNbr, string skuId, string qty, string locationId)
         {
@@ -114,8 +104,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 MessageLength = MessageLength.Cost,
                 ReasonCode = ReasonCode.Success
             };
-            GenericMessageBuilder gm = new GenericMessageBuilder(_dataTypeValidation);
-            var testResult = gm.BuildMessage<CostDto, CostValidationRule>(CostParameters, TransactionCode.Cost);
+            var buildMessage = new MessageHeaderBuilder();
+            var testResult = buildMessage.BuildMessage<CostDto, CostValidationRule>(CostParameters, TransactionCode.Cost);
             Assert.AreEqual(testResult.ResultType, ResultTypes.Ok);
             Assert.IsNotNull(testResult.Payload);
             return testResult.Payload;

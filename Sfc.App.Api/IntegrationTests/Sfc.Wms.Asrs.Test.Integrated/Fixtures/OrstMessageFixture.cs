@@ -1,11 +1,13 @@
-﻿using System;
-using System.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using RestSharp;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
-using Sfc.Wms.ParserAndTranslator.Contracts.Constants;
 using Sfc.Wms.Result;
+using System;
+using System.Configuration;
+using Sfc.Wms.Data.Entities;
+using Sfc.Wms.Interface.ParserAndTranslator.Contracts.Constants;
+using Sfc.Core.OnPrem.ParserAndTranslator.Constants;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
@@ -126,8 +128,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual("CASE", swmFromMheCase1.ContainerType);
             Assert.AreEqual("ORST", orstCase1.TransactionCode);
             Assert.AreEqual("00370", orstCase1.MessageLength);
-            Assert.AreEqual("Allocated", orstCase1.ActionCode);
-           
+            Assert.AreEqual("Allocated", orstCase1.ActionCode);        
         }
 
         protected void VerifyOrstMessageWasInsertedIntoSwmFromMheForActionCodeComplete()
@@ -152,8 +153,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(emsToWmsCase4.Transaction, swmFromMheCase4.SourceMessageTransactionCode);
             Assert.AreEqual(emsToWmsCase4.ResponseCode, swmFromMheCase4.SourceMessageResponseCode);
             Assert.AreEqual(emsToWmsCase4.MessageText, swmFromMheCase4.SourceMessageText);
-            Assert.AreEqual("CASE", swmFromMheCase4.ContainerType);
-            Assert.AreEqual("ORST", orstCase4.TransactionCode);
+            Assert.AreEqual(DefaultValues.ContainerType, swmFromMheCase4.ContainerType);
+            Assert.AreEqual(TransactionCode.Orst, orstCase4.TransactionCode);
             Assert.AreEqual("00370", orstCase4.MessageLength);
             Assert.AreEqual("Deallocate", orstCase4.ActionCode);
         }
@@ -166,8 +167,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(emsToWmsCase3.Transaction, swmFromMheCase3.SourceMessageTransactionCode);
             Assert.AreEqual(emsToWmsCase3.ResponseCode, swmFromMheCase3.SourceMessageResponseCode);
             Assert.AreEqual(emsToWmsCase3.MessageText, swmFromMheCase3.SourceMessageText);
-            Assert.AreEqual("CASE", swmFromMheCase3.ContainerType);
-            Assert.AreEqual("ORST", orstCase3.TransactionCode);
+            Assert.AreEqual(DefaultValues.ContainerType, swmFromMheCase3.ContainerType);
+            Assert.AreEqual(TransactionCode.Orst, orstCase3.TransactionCode);
             Assert.AreEqual("00370", orstCase3.MessageLength);
             Assert.AreEqual("Canceled", orstCase3.ActionCode);
 
