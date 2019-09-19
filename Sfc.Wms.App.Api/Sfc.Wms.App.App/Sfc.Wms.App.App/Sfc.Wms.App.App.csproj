@@ -10,8 +10,8 @@
     <Product>Sfc.Wms.App.Api</Product>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Sfc.Wms.Security.Rbac" Version="2.0.1" />
-    <PackageReference Include="Sfc.Wms.Security.Token.Jwt" Version="1.0.4" />
+    <PackageReference Include="Sfc.Wms.Framework.Security.Rbac" Version="4.0.0" />
+    <PackageReference Include="Sfc.Wms.Framework.Security.Token.Jwt" Version="3.0.1" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

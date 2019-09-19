@@ -2,7 +2,7 @@
 using Sfc.Core.OnPrem.Result;
 using Sfc.Core.OnPrem.Security.Contracts.Dtos;
 
-namespace Sfc.App.App.Interfaces
+namespace Sfc.Wms.App.App.Interfaces
 {
     public interface IRbacGateway
     {

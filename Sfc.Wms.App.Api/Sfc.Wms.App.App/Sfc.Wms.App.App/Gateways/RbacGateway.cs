@@ -1,13 +1,13 @@
-﻿using Sfc.App.App.Interfaces;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Core.OnPrem.Security.Contracts.Dtos;
 using Sfc.Core.OnPrem.Security.Contracts.Interfaces;
-using Sfc.Wms.Security.Token.Jwt.Jwt;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
+using Sfc.Wms.App.App.Interfaces;
+using Sfc.Wms.Framework.Security.Token.Jwt.Jwt;
 
-namespace Sfc.App.App.Gateways
+namespace Sfc.Wms.App.App.Gateways
 {
     public class RbacGateway : BaseResultBuilder, IRbacGateway
     {
