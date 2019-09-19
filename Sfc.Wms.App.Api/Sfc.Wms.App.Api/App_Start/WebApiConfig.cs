@@ -1,5 +1,6 @@
 ﻿using System.Web.Http;
 using Newtonsoft.Json.Serialization;
+using Sfc.Wms.App.Api.DelegatingHandlers;
 
 namespace Sfc.Wms.App.Api
 {

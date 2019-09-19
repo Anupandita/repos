@@ -1,6 +1,6 @@
 ﻿using System.Web.Http.Filters;
-using Sfc.Wms.Aop.Logging;
-using Sfc.Wms.Security.Token.Jwt.Filters;
+using Sfc.Core.Aop.WebApi.Logging;
+using Sfc.Wms.Framework.Security.Token.Jwt.Filters;
 
 namespace Sfc.Wms.App.Api
 {
