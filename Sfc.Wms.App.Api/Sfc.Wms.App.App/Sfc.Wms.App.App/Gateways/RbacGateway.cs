@@ -26,17 +26,17 @@ namespace Sfc.Wms.App.App.Gateways
        
         public IEnumerable<SfcPrinterSelectList> GetPrinterValuesAsyc()
         {
-            SfcPrinterSelectList printerList = new SfcPrinterSelectList();
             List<SfcPrinterSelectList> sfcPrinterSelectLists = new List<SfcPrinterSelectList>();
             IEnumerable<SysCodeDto> printerValues = (IEnumerable<SysCodeDto>)_systemCodeService.GetSystemCodeAsync("C", "205", "", "CodeDesc", false);
             foreach(var printer in printerValues)
             {
+                SfcPrinterSelectList printerList = new SfcPrinterSelectList();
                 printerList.Id = printer.CodeId;
                 printerList.Description = printer.CodeDesc;
                 printerList.DisplayName = printer.MiscFlag;
                 sfcPrinterSelectLists.Add(printerList);
             }
-            return (IEnumerable<SfcPrinterSelectList>)sfcPrinterSelectLists.ToList();
+            return sfcPrinterSelectLists.ToList();
         }
 
         public async Task<BaseResult<UserInfoDto>> SignInAsync(LoginCredentials loginCredentials)
