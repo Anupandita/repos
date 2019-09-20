@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Core.OnPrem.Security.Contracts.Dtos;
 using Sfc.Core.OnPrem.Security.Contracts.Interfaces;
 using Sfc.Wms.App.App.Interfaces;
+using Sfc.Wms.Configuration.SystemCode.Contracts.Dtos;
+using Sfc.Wms.Configuration.SystemCode.Contracts.Interfaces;
 using Sfc.Wms.Framework.Security.Token.Jwt.Jwt;
 
 namespace Sfc.Wms.App.App.Gateways
@@ -12,10 +15,28 @@ namespace Sfc.Wms.App.App.Gateways
     public class RbacGateway : BaseResultBuilder, IRbacGateway
     {
         private readonly IUserRbacService _userRbacService;
+        private readonly ISystemCodeService _systemCodeService; 
 
-        public RbacGateway(IUserRbacService userRbacService)
+        public RbacGateway(IUserRbacService userRbacService, ISystemCodeService systemCodeService)
         {
             _userRbacService = userRbacService;
+            _systemCodeService = systemCodeService;
+        }
+
+       
+        public IEnumerable<SfcPrinterSelectList> GetPrinterValuesAsyc()
+        {
+            SfcPrinterSelectList printerList = new SfcPrinterSelectList();
+            List<SfcPrinterSelectList> sfcPrinterSelectLists = new List<SfcPrinterSelectList>();
+            IEnumerable<SysCodeDto> printerValues = (IEnumerable<SysCodeDto>)_systemCodeService.GetSystemCodeAsync("C", "205", "", "CodeDesc", false);
+            foreach(var printer in printerValues)
+            {
+                printerList.Id = printer.CodeId;
+                printerList.Description = printer.CodeDesc;
+                printerList.DisplayName = printer.MiscFlag;
+                sfcPrinterSelectLists.Add(printerList);
+            }
+            return (IEnumerable<SfcPrinterSelectList>)sfcPrinterSelectLists.ToList();
         }
 
         public async Task<BaseResult<UserInfoDto>> SignInAsync(LoginCredentials loginCredentials)

@@ -9,9 +9,6 @@ using Sfc.Wms.App.App.Interfaces;
 using Sfc.Core.BaseApiController;
 using JwtConstants = Sfc.Wms.Framework.Security.Token.Jwt.Jwt.Constants;
 
-
-
-
 namespace Sfc.Wms.App.Api.Controllers
 {
     [RoutePrefix(Routes.Prefixes.User)]
@@ -34,6 +31,7 @@ namespace Sfc.Wms.App.Api.Controllers
             if (response.ResultType != ResultTypes.Ok) return ResponseHandler(response);
             HttpContext.Current?.Response.Headers.Add(Constants.Token,
                 $"{JwtConstants.Bearer} {response.Payload.Token}");
+            response.Payload.PrinterList = _rbacGateway.GetPrinterValuesAsyc();
             response.Payload.Token = string.Empty;
             return ResponseHandler(response);
         }
