@@ -19,45 +19,47 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         [TestInitialize]
         public void TestData()
         {
-            InitializeTestData();
+             InitializeTestData();
         }
-        //* commented code will be tested after endpoint is released
+        
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
         public void VerifyForOrmtMessageWithActionCodeAddRelease()
         {
             this.Given(x => x.CartonNumberForAddRelease())
-           .And(x => x.AValidNewOrmtMessageRecord())
-          // .When(x=>x.OrmtApiIsCalledCreatedIsReturned())
-           //.Then(x => x.VerifyOrmtMessageWasInsertedInToSwmToMhe())
-           //.And(x=>x.VerifyOrmtMessageWasInsertedInToWmsToEms())
-           //.And(x=>x.VerifyForOrmtCountInPickLocnDtlExt())
+          //  .And(x => x.AValidNewOrmtMessageRecord())
+            .When(x => x.OrmtApiIsCalledCreatedIsReturned())
+            .And(x => x.ReadDataAfterApiForPrintingOfCarton())
+            .Then(x => x.VerifyOrmtMessageWasInsertedInToSwmToMhe())
+            .And(x => x.VerifyOrmtMessageWasInsertedInToWmsToEms())
+            .And(x => x.VerifyForOrmtCountInPickLocnDtlExt())
+            .And(x=>x.VerifyForStatusCodeinCartonHdrForAddRelease())
            .BDDfy();
         }
 
-        [TestMethod()]
-        [TestCategory("FUNCTIONAL")]
-        public void VerifyForOrmtMessageWithActionCodeCancel()
-        {
-            this.Given(x => x.CartonNumberForCancel())
-           .And(x=>x.AValidNewOrmtMessageRecord())
-           //.When(x => x.OrmtApiIsCalledCreatedIsReturned())
-           //.Then(x => x.VerifyOrmtMessageWasInsertedInToSwmToMheForCancelOrders())
-           //.And(x=>x.VerifyOrmtMessageWasInsertedInToWmsToEms())
-           .BDDfy();
-        }
+        //[TestMethod()]
+        //[TestCategory("FUNCTIONAL")]
+        //public void VerifyForOrmtMessageWithActionCodeCancel()
+        //{
+        //    this.Given(x => x.CartonNumberForCancel())
+        //   .And(x=>x.AValidNewOrmtMessageRecord())
+        //   //.When(x => x.OrmtApiIsCalledCreatedIsReturned())
+        //   //.Then(x => x.VerifyOrmtMessageWasInsertedInToSwmToMheForCancelOrders())
+        //   //.And(x=>x.VerifyOrmtMessageWasInsertedInToWmsToEms())
+        //   .BDDfy();
+        //}
 
-        [TestMethod()]
-        [TestCategory("FUNCTIONAL")]
-        public void VerifyForOrmtMessageWithActionCodeEPick()
-        {
-            this.Given(x => x.CartonNumberForEPick())
-           .And(x=>x.AValidNewOrmtMessageRecord())
-           //.When(x => x.OrmtApiIsCalledCreatedIsReturned())
-           //.Then(x => x.VerifyOrmtMessageWasInsertedInToSwmToMheForEpick())
-           //.And(x => x.VerifyOrmtMessageWasInsertedInToWmsToEms())
-           .BDDfy();
-        }
+        //[TestMethod()]
+        //[TestCategory("FUNCTIONAL")]
+        //public void VerifyForOrmtMessageWithActionCodeEPick()
+        //{
+        //    this.Given(x => x.CartonNumberForEPick())
+        //   .And(x=>x.AValidNewOrmtMessageRecord())
+        //   //.When(x => x.OrmtApiIsCalledCreatedIsReturned())
+        //   //.Then(x => x.VerifyOrmtMessageWasInsertedInToSwmToMheForEpick())
+        //   //.And(x => x.VerifyOrmtMessageWasInsertedInToWmsToEms())
+        //   .BDDfy();
+        //}
 
 
     }

@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using Sfc.Wms.Foundation.Location.Contracts.Dtos;
+using Sfc.Wms.Foundation.Carton.Contracts.Dtos;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
@@ -67,6 +68,15 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 swmtomhedata.MessageJson = swmToMheReader[TestData.SwmToMhe.MsgJson].ToString();
                 swmtomhedata.LocationId = swmToMheReader[TestData.SwmToMhe.LocnId].ToString();
                 swmtomhedata.SourceMessageText = swmToMheReader[TestData.SwmToMhe.SourceMsgText].ToString();
+                swmtomhedata.SourceMessageTransactionCode = swmToMheReader["SOURCE_MSG_TRANS_CODE"].ToString();
+                swmtomhedata.MessageStatus = Convert.ToInt32(swmToMheReader["MSG_STATUS"].ToString());
+                swmtomhedata.LocationId = swmToMheReader["LOCN_ID"].ToString();
+                swmtomhedata.LotId = swmToMheReader["LOT_ID"].ToString();
+                swmtomhedata.OrderId = swmToMheReader["ORDER_ID"].ToString();
+                swmtomhedata.OrderLineId = Convert.ToInt32(swmToMheReader["ORDER_LINE_ID"].ToString());
+                swmtomhedata.PoNumber = swmToMheReader["PO_NBR"].ToString();
+                swmtomhedata.Quantity = Convert.ToInt32(swmToMheReader["QTY"].ToString());
+                swmtomhedata.WaveNumber = swmToMheReader["WAVE_NBR"].ToString();
             }
             return swmtomhedata;
         }
@@ -211,10 +221,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return pickLocnDtl;
         }
 
-        public PickLocationDetailsExtenstionDto GetPickLocnDtlExt(OracleConnection db, string locnId, string skuId)
+        public PickLocationDetailsExtenstionDto GetPickLocnDtlExt(OracleConnection db, string skuId)
         {
             var pickLocnDtlExt = new PickLocationDetailsExtenstionDto();
-            var query = $"select ACTIVE_ORMT_COUNT,UPDATED_BY,UPDATED_DATE_TIME from PICK_LOCN_DTL_EXT WHERE PICK_LOCN_DTL_ID==(SELECT PICK_LOCN_DTL_ID FROM PICK_LOCN_DTL WHERE LOCN_ID= '{locnId}' AND SKU_ID='{skuId}'))";
+            var query = $"select * from pick_locn_dtl_ext WHERE  SKU_ID='{skuId}'";
             command = new OracleCommand(query, db);
             var pickLocnDtlExtReader = command.ExecuteReader();
             if (pickLocnDtlExtReader.Read())
@@ -222,6 +232,19 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 pickLocnDtlExt.ActiveOrmtCount = Convert.ToInt16(pickLocnDtlExtReader[TestData.PickLocnDtlExt.ActiveOrmtCount].ToString());
             }
             return pickLocnDtlExt;
+        }
+
+        public CartonHeaderDto GetStatusCodeFromCartonHdr(OracleConnection db,string cartonNbr)
+        {
+            var cartonHdr = new CartonHeaderDto();
+            var query = $"Select * from carton_hdr where carton_nbr = '{cartonNbr}'";
+            command = new OracleCommand(query, db);
+            var cartonHdrReader = command.ExecuteReader();
+            if(cartonHdrReader.Read())
+            {
+                cartonHdr.StatusCode = Convert.ToInt16(cartonHdrReader["STAT_CODE"].ToString());
+            }
+            return cartonHdr;
         }
 
     }

@@ -260,17 +260,24 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected void VerifyComtMessageWasInsertedIntoSwmToMhe(ComtDto comt, SwmToMheDto swmToMhe,string caseNbr)
         {
             Assert.AreEqual(DefaultValues.Status, swmToMheComt.SourceMessageStatus);
+            Assert.AreEqual("0", swmToMheComt.SourceMessageResponseCode);
             Assert.AreEqual(DefaultValues.ContainerType, swmToMheComt.ContainerType);
             Assert.AreEqual(TransactionCode.Comt, comt.TransactionCode);
             Assert.AreEqual(MessageLength.Comt, comt.MessageLength);
             Assert.AreEqual(ActionCodeConstants.Create, comt.ActionCode);
             Assert.AreEqual(caseNbr, swmToMheComt.ContainerId);
             Assert.AreEqual(DefaultValues.ContainerType, swmToMheComt.ContainerType);
+            Assert.AreEqual("1", swmToMheComt.MessageStatus);
         }
 
         protected void VerifyComtMessageWasInsertedIntoWmsToEms(WmsToEmsDto wte1)
         {
+            Assert.AreEqual(swmToMheComt.SourceMessageProcess, wte1.Process);
+            Assert.AreEqual(swmToMheComt.SourceMessageKey,wte1.MessageKey);
+            Assert.AreEqual(swmToMheComt.SourceMessageTransactionCode, wte1.Transaction);
+            Assert.AreEqual(swmToMheComt.SourceMessageText,wte1.MessageText);
             Assert.AreEqual(swmToMheComt.SourceMessageStatus, wte1.Status);
+            Assert.AreEqual(swmToMheComt.SourceMessageResponseCode,wte1.ResponseCode);
             Assert.AreEqual(TransactionCode.Comt, wte1.Transaction);
             Assert.AreEqual(Convert.ToInt16(swmToMheComt.SourceMessageResponseCode), wte1.ResponseCode);
         }
@@ -284,7 +291,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(caseDtl.SkuId, ivmt.Sku);
             Assert.AreEqual(caseDtl.TotalAllocQty, Convert.ToDouble(ivmt.Quantity));
             Assert.AreEqual(DefaultValues.ContainerType, ivmt.UnitOfMeasure);          
-            Assert.AreEqual(DefaultValues.DataControl, ivmt.DateControl); 
+            Assert.AreEqual(DefaultValues.DataControl, ivmt.DateControl);
+            Assert.AreEqual(DefaultValues.InBoundPallet,ivmt.InboundPallet);
+            Assert.AreEqual("0", swmToMheIvmt.SourceMessageResponseCode);
+            Assert.AreEqual("PONumber", swmToMheIvmt.PoNumber);
         }
 
         protected void VerifyIvmtMessageWasInsertedIntoWmsToEms(WmsToEmsDto wmsToEms)

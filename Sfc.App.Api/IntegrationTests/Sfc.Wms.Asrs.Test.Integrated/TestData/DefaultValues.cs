@@ -19,6 +19,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
         public const string ActionCodeCost = "Arrival";
         public const string InvalidCase = "00000283000804736790";
         public const string MessageLengthCost = "268";
+        public const string InBoundPallet = "Y";
     }
 
     public class ResultType

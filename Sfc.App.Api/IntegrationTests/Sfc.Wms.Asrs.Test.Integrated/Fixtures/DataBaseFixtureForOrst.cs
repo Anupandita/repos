@@ -104,7 +104,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 emsToWmsCase1 = GetEmsToWmsData(db, msgKeyForCase1.MsgKey);   
                 emsToWmsCase3 = GetEmsToWmsData(db, msgKeyForCase3.MsgKey);   
                 pickLcnCase1BeforeApi = GetPickLocationDetails(db,"asrs locn","carton_dtl.sku");
-                pickLcnExtCase1BeforeApi = GetPickLocnDtlExt(db,"asrs locn", pickLcnCase1BeforeApi.SkuId);            
+                pickLcnExtCase1BeforeApi = GetPickLocnDtlExt(db, pickLcnCase1BeforeApi.SkuId);            
             }
         }
 
@@ -121,7 +121,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 pickTktDtlCase2BeforeApi = GetPickTicketDetailData(db, cartonHdr.CartonNumber, "1");
                 allocInvnDtlCase2BeforeApi = GetAllocInvnDetails(db, case2.ContainerId);
                 pickLcnCase2BeforeApi = GetPickLocationDetails(db, "asrs locn", "carton_dtl.sku");
-                pickLcnExtCase2BeforeApi = GetPickLocnDtlExt(db, "asrs locn", pickLcnCase2BeforeApi.SkuId);
+                pickLcnExtCase2BeforeApi = GetPickLocnDtlExt(db,  pickLcnCase2BeforeApi.SkuId);
             }
         }
 
@@ -135,7 +135,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 OrmtCase4 = JsonConvert.DeserializeObject<OrmtDto>(case4.MessageJson);
                 emsToWmsCase4 = GetEmsToWmsData(db, msgKeyForCase4.MsgKey);
                 pickLcnCase4BeforeApi = GetPickLocationDetails(db, "asrs locn", "carton_dtl.sku");
-                pickLcnExtCase4BeforeApi = GetPickLocnDtlExt(db, "asrs locn", pickLcnCase4BeforeApi.SkuId);
+                pickLcnExtCase4BeforeApi = GetPickLocnDtlExt(db, pickLcnCase4BeforeApi.SkuId);
             }
         }
 
@@ -149,7 +149,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 pickTktHdrCase1 = GetPickTktHeaderDetails(db, orstCase1.OrderId);
                 cartonHdrCase1 = GetCartonHeaderDetails(db, orstCase1.OrderId);
                 pickLcnCase1 = GetPickLocationDetails(db,"asrs locn","carton_dtl.sku");              
-                pickLcnExtCase1 = GetPickLocnDtlExt(db, "asrs locn", pickLcnCase1BeforeApi.SkuId);
+                pickLcnExtCase1 = GetPickLocnDtlExt(db, pickLcnCase1BeforeApi.SkuId);
 
             }
         }
@@ -167,7 +167,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 pickTktHdrCase2 = GetPickTktHeaderDetails(db, orstCase2.OrderId);
                 allocInvnDtlCase2BeforeApi = GetAllocInvnDetails(db, orstCase2.OrderId);
                 pickLcnCase2 = GetPickLocationDetails(db, "asrs locn", "carton_dtl.sku");
-                pickLcnExtCase2 = GetPickLocnDtlExt(db, "asrs locn", pickLcnCase1BeforeApi.SkuId);
+                pickLcnExtCase2 = GetPickLocnDtlExt(db, pickLcnCase1BeforeApi.SkuId);
             }
         }
 
@@ -191,7 +191,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 orstCase4 = JsonConvert.DeserializeObject<OrstDto>(swmFromMheCase4.MessageJson);
                 cartonHdrCase4 = GetCartonHeaderDetails(db, orstCase3.OrderId);
                 pickLcnCase4 = GetPickLocationDetails(db, "asrs locn", "carton_dtl.sku");
-                pickLcnExtCase4  = GetPickLocnDtlExt(db, "asrs locn", pickLcnCase1BeforeApi.SkuId);
+                pickLcnExtCase4  = GetPickLocnDtlExt(db, pickLcnCase1BeforeApi.SkuId);
             }
         }
 

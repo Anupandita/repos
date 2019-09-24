@@ -15,18 +15,30 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected BaseResult Result;
         protected string currentCartonNbr;
         protected string currentActionCode;
-        protected string ComtUrl = @ConfigurationManager.AppSettings["ComtUrl"];
+        protected string baseUrl = "http://localhost:59665/api/order-maintenance/carton-number";
         protected CaseDetailDto caseDetailDto;
         protected ComtParams OrmtParameters;
         protected ComtIvmtMessageFixture  comtIvmtMessageFixture;
         protected IRestResponse Response;
-        
+        protected string url;
 
         protected void InitializeTestData()
         {
             GetDataBeforeTriggerOrmt();
         }
 
+        protected void ReadDataAfterApiForPrintingOfCarton()
+        {
+            GetDataAfterCallingOrmtApiForAddRelease();
+        }
+        protected void ReadDataAfterApiForCancelOfCarton()
+        {
+            GetDataAfterCallingApiForCancellationOfOrders();
+        }
+        protected void ReadDataAfterApiForEPickOfCarton()
+        {
+            GetDataAfterCallingApiForEPickOrders();
+        }
         protected void CartonNumberForAddRelease()
         {
             currentCartonNbr = ch.CartonNbr;
@@ -56,19 +68,20 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             };
         }
 
-        protected IRestResponse ApiIsCalled(string url, ComtParams parameters)
+        protected IRestResponse ApiIsCalled()
         {
+            url = $"{baseUrl}? {"cartonNumber"}={ch.CartonNbr}&{"actionCode"}={"AddRelease"}";
             var client = new RestClient(url);
             var request = new RestRequest(Method.POST);
             request.AddHeader("content-type", Content.ContentType);
-            request.AddJsonBody(parameters);
+            request.AddParameter(currentCartonNbr, currentActionCode);
             request.RequestFormat = DataFormat.Json;
             Response = client.Execute(request);
             return Response;
         }
         protected BaseResult OrmtResult()
         {
-            var response = ApiIsCalled("", OrmtParameters);
+            var response = ApiIsCalled();
             var result = JsonConvert.DeserializeObject<BaseResult>(response.Content.ToString());
             return result;
         }
@@ -143,27 +156,22 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         protected void VerifyForOrmtCountInPickLocnDtlExt()
         {
-
+            Assert.AreEqual(pickLcnDtlExtBeforeApi.ToString() + 1, pickLcnDtlExtBeforeApi);
         }
 
-        protected void VerifyForQtyInCartonDtl()
-        {
-
-        }
+        
 
         protected void VerifyForStatusCodeinCartonHdrForAddRelease()
         {
-
+            Assert.AreEqual(12, cartonHdr.StatusCode);
         }
         
-        protected void VerifyForStatusCodeInCartonHdrForCancel()
-        {
-
-        }
+       
         protected void VerifyForStatusCodeInCartonHdrForEPick()
         {
-
+            Assert.AreEqual(12, cartonHdr.StatusCode);
         }
 
+        
     }
 }
