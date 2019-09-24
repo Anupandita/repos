@@ -141,20 +141,18 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
             else if (tempZone == "F")
             {
-                return "";
+                return "Freezer";
             }
 
             return tempZone;
         }
 
-
-
-        public Data.Entities.LocationGroup GetLocnId(OracleConnection db, string skuId, string tempZone)
+        public Data.Entities.LocationGroup GetLocnId(OracleConnection db,string skuId)
         {
-            var tempzone = GetTempZone(db, "");
+            var tempzone = GetTempZone(db, skuId);
             var temp = TempZoneRelate(tempzone.TempZone);
             var locnGrp = new LocationGroup();
-            var query = $"select lh.locn_id,lg.grp_attr from locn_hdr lh inner join locn_grp lg on lg.locn_id = lh.locn_id and lg.grp_attr = '{tempZone}' inner join sys_code sc on sc.code_id = lg.grp_type and sc.code_type = '740' and code_id = '18' select TEMP_ZONE  from item_master where sku_id = '{skuId}'";
+            var query = $"select lh.locn_id,lg.grp_attr from locn_hdr lh inner join locn_grp lg on lg.locn_id = lh.locn_id and lg.grp_attr = '{temp}' inner join sys_code sc on sc.code_id = lg.grp_type and sc.code_type = '740' and code_id = '18'";
             var command = new OracleCommand(query, db);
             var locnGrpReader = command.ExecuteReader();
             if (locnGrpReader.Read())

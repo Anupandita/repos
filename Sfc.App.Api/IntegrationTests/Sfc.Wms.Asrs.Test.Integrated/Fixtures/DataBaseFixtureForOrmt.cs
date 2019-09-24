@@ -24,12 +24,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected OrmtDto ormt = new OrmtDto();
         protected OrmtDto ormtCancel = new OrmtDto();
         protected OrmtDto ormtEPick = new OrmtDto();
-        protected CartonView ch = new CartonView();
+        protected CartonView printCarton = new CartonView();
         protected CartonView cancelOrder = new CartonView();
         protected CartonView ePick = new CartonView();
         protected PickLocationDetailsExtenstionDto pickLcnDtlExtBeforeApi = new PickLocationDetailsExtenstionDto();
         protected PickLocationDetailsExtenstionDto pickLcnDtlExtAfterApi = new PickLocationDetailsExtenstionDto();
         protected CartonHeaderDto cartonHdr = new CartonHeaderDto();
+        protected string asrsLocnId;
 
         public void GetDataBeforeTriggerOrmt()
         {
@@ -40,10 +41,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             })
             {
                 db.Open();     
-                ch = GetValidOrderDetails(db,5,0);
+                printCarton = GetValidOrderDetails(db,5,0);              
+                asrsLocnId = GetLocnId(db, printCarton.SkuId).ToString();
                 cancelOrder = GetValidOrderDetails(db,12, 0);
                 ePick = GetValidOrderDetails(db,12,1);
-                pickLcnDtlExtBeforeApi = GetPickLocnDtlExt(db, ch.SkuId);
+                pickLcnDtlExtBeforeApi = GetPickLocnDtlExt(db, printCarton.SkuId);
             }
         }
 
@@ -56,11 +58,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             })
             {
                 db.Open();
-                swmToMheAddRelease = SwmToMhe(db, ch.CartonNbr, TransactionCode.Ormt, ch.SkuId);
+                swmToMheAddRelease = SwmToMhe(db, printCarton.CartonNbr, TransactionCode.Ormt, printCarton.SkuId);
                 ormt = JsonConvert.DeserializeObject<OrmtDto>(swmToMheAddRelease.MessageJson);
                 wmsToEmsAddRelease = WmsToEmsData(db, swmToMheAddRelease.SourceMessageKey, TransactionCode.Ormt);
-                cartonHdr = GetStatusCodeFromCartonHdr(db,ch.CartonNbr);
-                pickLcnDtlExtAfterApi = GetPickLocnDtlExt(db,ch.SkuId);
+                cartonHdr = GetStatusCodeFromCartonHdr(db,printCarton.CartonNbr);
+                pickLcnDtlExtAfterApi = GetPickLocnDtlExt(db,printCarton.SkuId);
             }
         }
 
@@ -112,18 +114,19 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 var command = new OracleCommand(query, db);
                 var printingCartonReader = command.ExecuteNonQuery();
                 Debug.Print(System.DateTime.Now.ToString());
-
             }
-
         }
-
        
-        public CartonView GetValidOrderDetails(OracleConnection db, int statCode, int miscNum1 )
+        public CartonView GetValidOrderDetails(OracleConnection db, int statCode, int miscNum1)
         {
             var cartonView = new CartonView();
-            var query = $"select ch.carton_nbr,ch.sku_id, ch.total_qty, ch.stat_code,ch.DEST_LOCN_ID,ch.MISC_NUM_1,ph.PKT_CTRL_NBR,ph.SHIP_W_CTRL_NBR,ph.Whse,ph.CO,ph.DIV, " +
-                $"im.spl_instr_code_1, im.spl_instr_code_5 from CARTON_HDR ch inner join PKT_HDR ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr inner join Pick_Locn_dtl pl" +
-                $" ON  pl.sku_id = ch.sku_id  inner join ITEM_MASTER im ON pl.sku_id = im.sku_id inner join locn_hdr lh ON pl.locn_id = lh.locn_id where ch.stat_code = {statCode} and ch.MISC_INSTR_CODE_5 is null";
+            var query = $"select ch.carton_nbr,ch.sku_id,ch.MISC_NUM_1, ch.total_qty, ch.stat_code,ch.DEST_LOCN_ID,ph.PKT_CTRL_NBR,ph.SHIP_W_CTRL_NBR,ph.Whse,ph.CO,ph.DIV, im.spl_instr_code_1, im.spl_instr_code_5 from  CARTON_HDR ch " +
+                $"innerjoin PKT_HDR ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr innerjoin Pick_Locn_dtl pl ON  pl.sku_id = ch.sku_id " +
+                $"innerjoin ITEM_MASTER im ON pl.sku_id = im.sku_id " +
+                $"innerjoin locn_hdr lh ON pl.locn_id = lh.locn_id " +
+                $"innerjoin locn_grp lg ON lg.locn_id = lh.locn_id " +
+                $"innerjoin sys_code sc ON sc.code_id = lg.grp_type " +
+                $"where ch.stat_code = 5 and ch.MISC_NUM_1 = 0 and ch.MISC_INSTR_CODE_5 is null and sc.code_type = '740' and code_id = '18'and lg.grp_attr = DECODE(im.temp_zone, 'D', 'Dry', 'Freezer') and pick_locn_id = lh.locn_id";
             var command = new OracleCommand(query, db);
             var Reader = command.ExecuteReader();
             if (Reader.Read())
@@ -141,10 +144,5 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
             return cartonView;
         }
-
-        
-
-
-
     }
 }

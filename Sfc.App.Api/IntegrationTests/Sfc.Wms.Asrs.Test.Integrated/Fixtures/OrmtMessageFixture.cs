@@ -41,7 +41,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         }
         protected void CartonNumberForAddRelease()
         {
-            currentCartonNbr = ch.CartonNbr;
+            currentCartonNbr = printCarton.CartonNbr;
             currentActionCode = "AddRelease";
         }
 
@@ -70,12 +70,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         protected IRestResponse ApiIsCalled()
         {
-            url = $"{baseUrl}? {"cartonNumber"}={ch.CartonNbr}&{"actionCode"}={"AddRelease"}";
+            url = $"{baseUrl}?{"cartonNumber"}={"00000999994081749031"}&{"actionCode"}={"AddRelease"}";
             var client = new RestClient(url);
             var request = new RestRequest(Method.POST);
-            request.AddHeader("content-type", Content.ContentType);
-            request.AddParameter(currentCartonNbr, currentActionCode);
-            request.RequestFormat = DataFormat.Json;
             Response = client.Execute(request);
             return Response;
         }
@@ -93,26 +90,26 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         }
         protected void VerifyOrmtMessageWasInsertedInToSwmToMhe()
         {
-            Assert.AreEqual("", swmToMheAddRelease.SourceMessageStatus);
+            Assert.AreEqual("Ready", swmToMheAddRelease.SourceMessageStatus);
             Assert.AreEqual(TransactionCode.Ormt, ormt.TransactionCode);
             Assert.AreEqual(MessageLength.Ormt, ormt.MessageLength);
             Assert.AreEqual("AddRelease", ormt.ActionCode);
-            Assert.AreEqual(ch.SkuId, ormt.Sku);
-            Assert.AreEqual(ch.PickTktQty, ormt.Quantity);
+            Assert.AreEqual(printCarton.SkuId, ormt.Sku);
+            Assert.AreEqual(printCarton.PickTktQty, ormt.Quantity);
             Assert.AreEqual("Case", ormt.UnitOfMeasure);
-            Assert.AreEqual(ch.CartonNbr, ormt.OrderId);
+            Assert.AreEqual(printCarton.CartonNbr, ormt.OrderId);
             Assert.AreEqual("1",ormt.OrderLineId);
             Assert.AreEqual("Shipment",ormt.OrderType);
-            Assert.AreEqual(ch.WaveNbr,ormt.WaveId);
+            Assert.AreEqual(printCarton.WaveNbr,ormt.WaveId);
             Assert.AreEqual("N",ormt.EndOfWaveFlag);
-            Assert.AreEqual(ch.DestLocnId+"-"+ch.ShipWCtrlNbr,ormt.DestinationLocationId);
-            Assert.AreEqual(ch.Whse + ch.Co+ch.Div,ormt.Owner);
+            Assert.AreEqual(printCarton.DestLocnId+"-"+printCarton.ShipWCtrlNbr,ormt.DestinationLocationId);
+            Assert.AreEqual(printCarton.Whse + printCarton.Co+printCarton.Div,ormt.Owner);
             Assert.AreEqual("FIFO",ormt.OpRule);
         }
 
         protected void VerifyOrmtMessageWasInsertedInToSwmToMheForCancelOrders()
         {
-            Assert.AreEqual("", swmToMheAddRelease.SourceMessageStatus);
+            Assert.AreEqual("Ready", swmToMheAddRelease.SourceMessageStatus);
             Assert.AreEqual(TransactionCode.Ormt, ormtCancel.TransactionCode);
             Assert.AreEqual(MessageLength.Ormt, ormtCancel.MessageLength);
             Assert.AreEqual("Cancel", ormtCancel.ActionCode);
@@ -124,13 +121,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual("Shipment", ormtCancel.OrderType);
             Assert.AreEqual(cancelOrder.WaveNbr, ormtCancel.WaveId);
             Assert.AreEqual("N", ormtCancel.EndOfWaveFlag);
-            Assert.AreEqual(cancelOrder.DestLocnId + "-" + ch.ShipWCtrlNbr, ormtCancel.DestinationLocationId);
+            Assert.AreEqual(cancelOrder.DestLocnId + "-" + printCarton.ShipWCtrlNbr, ormtCancel.DestinationLocationId);
             Assert.AreEqual(cancelOrder.Whse + cancelOrder.Co + cancelOrder.Div, ormt.Owner);
             Assert.AreEqual("FIFO", ormt.OpRule);
         }
         protected void VerifyOrmtMessageWasInsertedInToSwmToMheForEpick()
         {
-            Assert.AreEqual("", swmToMheAddRelease.SourceMessageStatus);
+            Assert.AreEqual("Ready", swmToMheAddRelease.SourceMessageStatus);
             Assert.AreEqual(TransactionCode.Ormt, ormtEPick.TransactionCode);
             Assert.AreEqual(MessageLength.Ormt, ormtEPick.MessageLength);
             Assert.AreEqual("AddRelease", ormtEPick.ActionCode);
@@ -142,7 +139,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual("Shipment", ormtEPick.OrderType);
             Assert.AreEqual(ePick.WaveNbr, ormtEPick.WaveId);
             Assert.AreEqual("N", ormtEPick.EndOfWaveFlag);
-            Assert.AreEqual(ePick.DestLocnId + "-" + ch.ShipWCtrlNbr, ormtEPick.DestinationLocationId);
+            Assert.AreEqual(ePick.DestLocnId + "-" + printCarton.ShipWCtrlNbr, ormtEPick.DestinationLocationId);
             Assert.AreEqual(ePick.Whse + ePick.Co + ePick.Div, ormtEPick.Owner);
             Assert.AreEqual("FIFO", ormtEPick.OpRule);
         }
@@ -159,19 +156,15 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(pickLcnDtlExtBeforeApi.ToString() + 1, pickLcnDtlExtBeforeApi);
         }
 
-        
-
         protected void VerifyForStatusCodeinCartonHdrForAddRelease()
         {
             Assert.AreEqual(12, cartonHdr.StatusCode);
         }
-        
-       
+           
         protected void VerifyForStatusCodeInCartonHdrForEPick()
         {
             Assert.AreEqual(12, cartonHdr.StatusCode);
         }
 
-        
     }
 }
