@@ -32,33 +32,45 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected CartonHeaderDto cartonHdr = new CartonHeaderDto();
         protected string asrsLocnId;
 
-        public void GetDataBeforeTriggerOrmt()
+        public void GetDataBeforeTriggerOrmtForPrintingOfCartons()
         {
             OracleConnection db;
-            using (db = new OracleConnection
-            {
-                ConnectionString = ConfigurationManager.ConnectionStrings["SfcRbacContextModel"].ConnectionString
-            })
+            using (db = GetOracleConnection())
             {
                 db.Open();     
-                printCarton = GetValidOrderDetails(db,5,0);              
-                asrsLocnId = GetLocnId(db, printCarton.SkuId).ToString();
-                cancelOrder = GetValidOrderDetails(db,12, 0);
-                ePick = GetValidOrderDetails(db,12,1);
+                printCarton = GetValidOrderDetails(db,5,0);
                 pickLcnDtlExtBeforeApi = GetPickLocnDtlExt(db, printCarton.SkuId);
             }
         }
 
+        public void GetDataBeforeTriggerOrmtForCancellationOfOrders()
+        {
+            OracleConnection db;
+            using (db = GetOracleConnection())
+            {
+                db.Open();
+                cancelOrder = GetValidOrderDetails(db, 99, 0);
+                pickLcnDtlExtBeforeApi = GetPickLocnDtlExt(db, printCarton.SkuId);
+            }
+        }
+        
+        public void GetDataBeforeCallingApiForEpickOfOrders()
+        {
+            OracleConnection db;
+            using (db = GetOracleConnection())
+            {
+                db.Open();
+                ePick = GetValidOrderDetails(db, 5, 1);
+                pickLcnDtlExtBeforeApi = GetPickLocnDtlExt(db, printCarton.SkuId);
+            }
+        }
         public void GetDataAfterCallingOrmtApiForAddRelease()
         {
             OracleConnection db;
-            using (db = new OracleConnection
-            {
-                ConnectionString = ConfigurationManager.ConnectionStrings["SfcRbacContextModel"].ConnectionString
-            })
+            using (db = GetOracleConnection())
             {
                 db.Open();
-                swmToMheAddRelease = SwmToMhe(db, printCarton.CartonNbr, TransactionCode.Ormt, printCarton.SkuId);
+                swmToMheAddRelease = SwmToMhe(db, TransactionCode.Ormt, printCarton.SkuId);
                 ormt = JsonConvert.DeserializeObject<OrmtDto>(swmToMheAddRelease.MessageJson);
                 wmsToEmsAddRelease = WmsToEmsData(db, swmToMheAddRelease.SourceMessageKey, TransactionCode.Ormt);
                 cartonHdr = GetStatusCodeFromCartonHdr(db,printCarton.CartonNbr);
@@ -69,13 +81,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public void GetDataAfterCallingApiForCancellationOfOrders()
         {
             OracleConnection db;
-            using (db = new OracleConnection
-            {
-                ConnectionString = ConfigurationManager.ConnectionStrings["SfcRbacContextModel"].ConnectionString
-            })
+            using (db = GetOracleConnection())
             {
                 db.Open();
-                swmToMheCancelation = SwmToMhe(db, cancelOrder.CartonNbr, TransactionCode.Ormt, cancelOrder.SkuId);
+                swmToMheCancelation = SwmToMhe(db, TransactionCode.Ormt, cancelOrder.SkuId);
                 ormtCancel = JsonConvert.DeserializeObject<OrmtDto>(swmToMheCancelation.MessageJson);
                 wmsToEmsCancelation = WmsToEmsData(db, swmToMheCancelation.SourceMessageKey, TransactionCode.Ormt);
                 cartonHdr = GetStatusCodeFromCartonHdr(db, cancelOrder.CartonNbr);
@@ -86,13 +95,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public void GetDataAfterCallingApiForEPickOrders()
         {
             OracleConnection db;
-            using (db = new OracleConnection
-            {
-                ConnectionString = ConfigurationManager.ConnectionStrings["SfcRbacContextModel"].ConnectionString
-            })
+            using (db = GetOracleConnection())
             {
                 db.Open();
-                swmToMheEPick = SwmToMhe(db, ePick.CartonNbr, TransactionCode.Ormt, ePick.SkuId);
+                swmToMheEPick = SwmToMhe(db,TransactionCode.Ormt, ePick.SkuId);
                 ormtEPick = JsonConvert.DeserializeObject<OrmtDto>(swmToMheEPick.MessageJson);
                 wmsToEmsEPick = WmsToEmsData(db, swmToMheEPick.SourceMessageKey, TransactionCode.Ormt);
                 cartonHdr = GetStatusCodeFromCartonHdr(db, ePick.CartonNbr);
@@ -103,10 +109,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public void GetDataAfterCallingApiForEPickOrdersTest()
         {
             OracleConnection db;
-            using (db = new OracleConnection
-            {
-                ConnectionString = ConfigurationManager.ConnectionStrings["SfcRbacContextModel"].ConnectionString
-            })
+            using (db = GetOracleConnection())
             {
                 db.Open();
                 Debug.Print(System.DateTime.Now.ToString());
@@ -120,20 +123,20 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public CartonView GetValidOrderDetails(OracleConnection db, int statCode, int miscNum1)
         {
             var cartonView = new CartonView();
-            var query = $"select ch.carton_nbr,ch.sku_id,ch.MISC_NUM_1, ch.total_qty, ch.stat_code,ch.DEST_LOCN_ID,ph.PKT_CTRL_NBR,ph.SHIP_W_CTRL_NBR,ph.Whse,ph.CO,ph.DIV, im.spl_instr_code_1, im.spl_instr_code_5 from  CARTON_HDR ch " +
-                $"innerjoin PKT_HDR ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr innerjoin Pick_Locn_dtl pl ON  pl.sku_id = ch.sku_id " +
-                $"innerjoin ITEM_MASTER im ON pl.sku_id = im.sku_id " +
-                $"innerjoin locn_hdr lh ON pl.locn_id = lh.locn_id " +
-                $"innerjoin locn_grp lg ON lg.locn_id = lh.locn_id " +
-                $"innerjoin sys_code sc ON sc.code_id = lg.grp_type " +
-                $"where ch.stat_code = 5 and ch.MISC_NUM_1 = 0 and ch.MISC_INSTR_CODE_5 is null and sc.code_type = '740' and code_id = '18'and lg.grp_attr = DECODE(im.temp_zone, 'D', 'Dry', 'Freezer') and pick_locn_id = lh.locn_id";
+            var query = $"select ch.carton_nbr,ch.wave_nbr,ch.sku_id,ch.MISC_NUM_1, ch.total_qty, ch.stat_code,ch.DEST_LOCN_ID,ph.PKT_CTRL_NBR,ph.SHIP_W_CTRL_NBR,ph.Whse,ph.CO,ph.DIV, im.spl_instr_code_1, im.spl_instr_code_5 from CARTON_HDR ch " +
+                $"inner join PKT_HDR ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr " +
+                $"inner join Pick_Locn_dtl pl ON  pl.sku_id = ch.sku_id  " +
+                $"inner join ITEM_MASTER im ON pl.sku_id = im.sku_id " +
+                $"inner join locn_hdr lh ON pl.locn_id = lh.locn_id " +
+                $"inner join locn_grp lg ON lg.locn_id=lh.locn_id " +
+                $"inner join sys_code sc ON sc.code_id=lg.grp_type where ch.stat_code = 12 and ch.MISC_NUM_1 = 0 and ch.MISC_INSTR_CODE_5 is null and sc.code_type='740' and code_id ='18'and lg.grp_attr = DECODE(im.temp_zone,'D','Dry','Freezer') and pick_locn_id = lh.locn_id";
             var command = new OracleCommand(query, db);
             var Reader = command.ExecuteReader();
             if (Reader.Read())
             {
                 cartonView.PickTktCtrlNbr = Reader[TestData.PickTicketHeader.PickTktCtrlNbr].ToString();
-               // cartonView.PickTktSeqNbr = Reader[TestData.PickLocationDetail.PktSeqNbr].ToString();
                 cartonView.SkuId = Reader["SKU_ID"].ToString();
+                cartonView.WaveNbr = Reader["WAVE_NBR"].ToString();
                 cartonView.Whse = Reader[TestData.PickTicketHeader.Whse].ToString();
                 cartonView.Co = Reader[TestData.PickTicketHeader.Co].ToString();
                 cartonView.Div = Reader[TestData.PickTicketHeader.Div].ToString();    
@@ -141,6 +144,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 cartonView.SplInstrCode5 = Reader[TestData.ItemMaster.SplInstrCode5].ToString();
                 cartonView.TotalQty = Reader["TOTAL_QTY"].ToString();
                 cartonView.CartonNbr = Reader["CARTON_NBR"].ToString();
+                cartonView.DestLocnId = Reader["DEST_LOCN_ID"].ToString();
+                cartonView.ShipWCtrlNbr = Reader["SHIP_W_CTRL_NBR"].ToString();
             }
             return cartonView;
         }

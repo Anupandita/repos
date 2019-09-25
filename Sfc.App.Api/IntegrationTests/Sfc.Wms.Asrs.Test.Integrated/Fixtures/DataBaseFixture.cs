@@ -151,11 +151,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             {
                 db.Open();
                 command = new OracleCommand();
-                swmToMheComt = SwmToMhe(db, singleSkuCase.CaseNumber, TransactionCode.Comt, null);
+                swmToMheComt = SwmToMhe(db, TransactionCode.Comt, null);
                 comt = JsonConvert.DeserializeObject<ComtDto>(swmToMheComt.MessageJson);
                 var parsrtest = ParserTestforMsgText(TransactionCode.Comt, swmToMheComt.SourceMessageText);
                 wmsToEmsComt = WmsToEmsData(db, swmToMheComt.SourceMessageKey,TransactionCode.Comt);
-                swmToMheIvmt = SwmToMhe(db, singleSkuCase.CaseNumber, TransactionCode.Ivmt, singleSkuCase.SkuId);
+                swmToMheIvmt = SwmToMhe(db,TransactionCode.Ivmt, singleSkuCase.SkuId);
                 ivmt = JsonConvert.DeserializeObject<IvmtDto>(swmToMheIvmt.MessageJson);
                 var parsertest =ParserTestforMsgText(TransactionCode.Ivmt, swmToMheIvmt.SourceMessageText);
                 wmsToEmsIvmt = WmsToEmsData(db, swmToMheIvmt.SourceMessageKey, TransactionCode.Ivmt);
@@ -202,13 +202,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             {
                 db.Open();
                 command = new OracleCommand();
-                swmToMheComt = SwmToMhe(db, caseHdrMultiSku.CaseNumber, TransactionCode.Comt, null);
+                swmToMheComt = SwmToMhe(db, TransactionCode.Comt, null);
                 comt = JsonConvert.DeserializeObject<ComtDto>(swmToMheComt.MessageJson);
                 var parserTestForComtMsg = ParserTestforMsgText(TransactionCode.Comt, swmToMheComt.SourceMessageText);
                 wmsToEmsComt = WmsToEmsData(db, swmToMheComt.SourceMessageKey, TransactionCode.Comt);               
                 for (var i = 0; i < caseDtoList.Count; i++)
                 {
-                    swmToMheIvmt = SwmToMhe(db, caseHdrMultiSku.CaseNumber, TransactionCode.Ivmt, caseDtoList[i].SkuId);
+                    swmToMheIvmt = SwmToMhe(db, TransactionCode.Ivmt, caseDtoList[i].SkuId);
                     ivmt = JsonConvert.DeserializeObject<IvmtDto>(swmToMheIvmt.MessageJson);
                     var parserTestForIvmtMsg = ParserTestforMsgText(TransactionCode.Ivmt, swmToMheIvmt.SourceMessageText);
                     var caseDtl = caseDtoList[i];
