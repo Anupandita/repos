@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Core.OnPrem.Security.Contracts.Dtos;
 using Sfc.Core.OnPrem.Security.Contracts.Interfaces;
+using Sfc.Wms.App.App.Constants;
 using Sfc.Wms.App.App.Interfaces;
 using Sfc.Wms.Configuration.SystemCode.Contracts.Dtos;
 using Sfc.Wms.Configuration.SystemCode.Contracts.Interfaces;
@@ -26,7 +27,7 @@ namespace Sfc.Wms.App.App.Gateways
 
         public async Task<BaseResult<IEnumerable<SysCodeDto>>> GetPrinterValuesAsyc()
         { 
-            return await _systemCodeService.GetSystemCodeAsync("C", "205", "", "CodeDesc", "ASC");
+            return await _systemCodeService.GetSystemCodeAsync(PrinterDropDown.RecType,PrinterDropDown.CodeType,PrinterDropDown.CodeId,PrinterDropDown.OrderByColumn,PrinterDropDown.OrderBy);
         }
 
         public async Task<BaseResult<UserInfoDto>> SignInAsync(LoginCredentials loginCredentials)
