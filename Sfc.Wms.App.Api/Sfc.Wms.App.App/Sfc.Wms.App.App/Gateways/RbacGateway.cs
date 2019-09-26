@@ -24,7 +24,6 @@ namespace Sfc.Wms.App.App.Gateways
             _systemCodeService = systemCodeService;
         }
 
-
         public async Task<BaseResult<IEnumerable<SysCodeDto>>> GetPrinterValuesAsyc()
         { 
             return await _systemCodeService.GetSystemCodeAsync(PrinterDropDown.RecType,PrinterDropDown.CodeType,PrinterDropDown.CodeId,PrinterDropDown.OrderByColumn,PrinterDropDown.OrderBy);
