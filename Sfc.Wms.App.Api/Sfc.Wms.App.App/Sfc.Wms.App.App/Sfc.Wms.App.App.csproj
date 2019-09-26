@@ -13,6 +13,7 @@
     <PackageReference Include="Sfc.Wms.Configuration.SystemCode.Contracts" Version="2.0.1" />
     <PackageReference Include="Sfc.Wms.Framework.Security.Rbac" Version="4.0.0" />
     <PackageReference Include="Sfc.Wms.Framework.Security.Token.Jwt" Version="3.0.1" />
+    <PackageReference Include="Sfc.Wms.Framework.SystemCode.App" Version="2.1.0" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
