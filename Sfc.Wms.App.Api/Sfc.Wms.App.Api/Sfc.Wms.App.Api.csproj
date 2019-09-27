@@ -125,9 +125,8 @@
     <Reference Include="Sfc.Wms.App.Api.Contracts, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.App.Api.Contracts.2.0.1\lib\net472\Sfc.Wms.App.Api.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.App.App, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Sfc.Wms.App.App\Sfc.Wms.App.App\bin\Debug\net472\Sfc.Wms.App.App.dll</HintPath>
+    <Reference Include="Sfc.Wms.App.App, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.App.App.3.0.1\lib\net472\Sfc.Wms.App.App.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Configuration.MessageTypes.Contracts, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.MessageTypes.Contracts.4.0.0\lib\net472\Sfc.Wms.Configuration.MessageTypes.Contracts.dll</HintPath>
