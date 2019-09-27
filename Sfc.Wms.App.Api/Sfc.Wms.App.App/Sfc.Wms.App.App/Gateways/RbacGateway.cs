@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Core.OnPrem.Security.Contracts.Dtos;
 using Sfc.Core.OnPrem.Security.Contracts.Interfaces;
+using Sfc.Wms.App.App.Constants;
 using Sfc.Wms.App.App.Interfaces;
+using Sfc.Wms.Configuration.SystemCode.Contracts.Dtos;
+using Sfc.Wms.Configuration.SystemCode.Contracts.Interfaces;
 using Sfc.Wms.Framework.Security.Token.Jwt.Jwt;
 
 namespace Sfc.Wms.App.App.Gateways
@@ -12,10 +16,17 @@ namespace Sfc.Wms.App.App.Gateways
     public class RbacGateway : BaseResultBuilder, IRbacGateway
     {
         private readonly IUserRbacService _userRbacService;
+        private readonly ISystemCodeService _systemCodeService; 
 
-        public RbacGateway(IUserRbacService userRbacService)
+        public RbacGateway(IUserRbacService userRbacService, ISystemCodeService systemCodeService)
         {
             _userRbacService = userRbacService;
+            _systemCodeService = systemCodeService;
+        }
+
+        public async Task<BaseResult<IEnumerable<SysCodeDto>>> GetPrinterValuesAsyc()
+        { 
+            return await _systemCodeService.GetSystemCodeAsync(PrinterDropDown.RecType,PrinterDropDown.CodeType,PrinterDropDown.CodeId,PrinterDropDown.OrderByColumn,PrinterDropDown.OrderBy);
         }
 
         public async Task<BaseResult<UserInfoDto>> SignInAsync(LoginCredentials loginCredentials)
