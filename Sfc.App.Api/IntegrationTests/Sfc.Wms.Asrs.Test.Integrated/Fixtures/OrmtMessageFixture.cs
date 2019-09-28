@@ -21,6 +21,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected ComtIvmtMessageFixture  comtIvmtMessageFixture;
         protected IRestResponse Response;
         protected string url;
+        protected BaseResult negativecase1;
+        protected BaseResult negativecase2;
+        protected BaseResult negativeCase3;
+        protected BaseResult negativeCase4;
+        protected BaseResult negativeCase5;
 
         protected void InitializeTestDataForPrintingOfCartons()
         {
@@ -43,6 +48,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             GetDataAfterCallingApiForCancellationOfOrders();
         }
+
+        protected void InitializeTestDataForNegativeCases()
+        {
+            GetDataForNegativeCases();
+        }
+
         protected void ReadDataAfterApiForEPickOfCarton()
         {
             GetDataAfterCallingApiForEPickOrders();
@@ -65,6 +76,35 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             currentActionCode = "AddRelease";
         }
 
+        protected void CartonNumberForOrmtCountNotFound()
+        {
+            currentCartonNbr = activeOrmtCountNotFound.CartonNbr;
+            currentActionCode = "AddRelease";
+        }
+
+        protected void CartonNumberForPickLocnNotFound()
+        {
+            currentCartonNbr = pickLocnNotFound.CartonNbr;
+            currentActionCode = "AddRelease";
+        }
+
+        protected void CartonNumberForActiveLocnNotFound()
+        {
+            currentCartonNbr = ActiveLocnNotFound.CartonNbr;
+            currentActionCode = "AddRelease";
+        }
+
+        protected void CartonNumberForInvalidCartonNumber()
+        {
+            currentCartonNbr = "90888678904567890456";
+            currentActionCode = "AddRelease";
+        }
+
+        protected void TestForInValidActionCode()
+        {
+            currentCartonNbr = pickLocnNotFound.CartonNbr;
+            currentActionCode = "Adddd";
+        }
         protected void AValidNewOrmtMessageRecord()
         {
             OrmtParameters = new ComtParams
@@ -95,6 +135,57 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             Result = OrmtResult();
             Assert.AreEqual("Created", Result.ResultType.ToString());
+        }
+
+        protected void OrmtApiIsCalledForNotEnoughInventory()
+        {
+            negativecase1 = OrmtResult();         
+        }
+
+        protected void OrmtApiIsCalledForPickLocationNotFound()
+        {
+            negativecase2 = OrmtResult();     
+        }
+
+        protected void OrmtApiIsCalledForActiveLocationNotFound()
+        {
+            negativeCase3 = OrmtResult();   
+        }
+
+        protected void OrmtApiIsCalledForInvalidCartonNumber()
+        {
+            negativeCase4 = OrmtResult();   
+        }
+        protected void OrmtApiIsCalledForInvalidActionCode()
+        {
+            negativeCase5 = OrmtResult();   
+        }
+
+        protected void ValidateResultForActiveOrmtNotFound()
+        {
+            Assert.AreEqual(ResultType.NotFound, negativecase1.ResultType.ToString());
+            Assert.AreEqual("CheckPickLocationDetailExtensionAddValidationMessage", negativecase1.ValidationMessages[1].FieldName);
+            Assert.AreEqual("Not Enough Inventory in Case", negativecase1.ValidationMessages[1].Message);
+        }
+        protected void ValidateResultForPickLocationNotFound()
+        {
+            Assert.AreEqual("PickLocationDetail", negativecase2.ValidationMessages[1].FieldName);
+            Assert.AreEqual("Not Found", negativecase2.ValidationMessages[1].Message);
+        }
+        protected void ValidateResultForActiveLocationNotFound()
+        {
+            Assert.AreEqual("ActiveLocationDto", negativeCase3.ValidationMessages[1].FieldName);
+            Assert.AreEqual("Not Found", negativeCase3.ValidationMessages[1].Message);
+        }
+        protected void ValidateResultForInvalidCartonNumber()
+        {
+            Assert.AreEqual("OrderDetailsDto", negativeCase4.ValidationMessages[1].FieldName);
+            Assert.AreEqual("Not Found", negativeCase4.ValidationMessages[1].Message);
+        }
+        protected void ValidateResultForInvalidActionCode()
+        {
+            Assert.AreEqual("ActionCode", Result.ValidationMessages[1].FieldName);
+            Assert.AreEqual("Invalid ActionCode ", Result.ValidationMessages[1].Message);
         }
         protected void VerifyOrmtMessageWasInsertedInToSwmToMhe()
         {
