@@ -2,9 +2,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Wms.App.Contracts.Enums;
+using Sfc.Wms.App.Api.Contracts.Enums;
 
-namespace Wms.App.Contracts.Result
+namespace Sfc.Wms.App.Api.Contracts.Result
 {
     public class BaseResult<T>
     {

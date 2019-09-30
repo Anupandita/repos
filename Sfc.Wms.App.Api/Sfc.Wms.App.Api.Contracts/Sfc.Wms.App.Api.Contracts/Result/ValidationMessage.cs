@@ -1,4 +1,4 @@
-﻿namespace Wms.App.Contracts.Result
+﻿namespace Sfc.Wms.App.Api.Contracts.Result
 {
     public class ValidationMessage
     {

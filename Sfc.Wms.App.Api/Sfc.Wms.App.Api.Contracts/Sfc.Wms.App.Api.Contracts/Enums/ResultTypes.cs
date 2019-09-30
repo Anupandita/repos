@@ -1,4 +1,4 @@
-﻿namespace Wms.App.Contracts.Enums
+﻿namespace Sfc.Wms.App.Api.Contracts.Enums
 {
     public enum ResultTypes
     {

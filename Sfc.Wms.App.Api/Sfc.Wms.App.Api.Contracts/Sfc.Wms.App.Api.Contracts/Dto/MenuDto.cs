@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Wms.App.Contracts.Dto
+namespace Sfc.Wms.App.Api.Contracts.Dto
 {
     public class MenuDto
     {

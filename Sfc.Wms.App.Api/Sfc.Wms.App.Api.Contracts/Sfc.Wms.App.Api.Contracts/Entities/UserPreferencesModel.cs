@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Wms.App.Contracts.Entities
+namespace Sfc.Wms.App.Api.Contracts.Entities
 {
     public class UserPreferencesModel
     {

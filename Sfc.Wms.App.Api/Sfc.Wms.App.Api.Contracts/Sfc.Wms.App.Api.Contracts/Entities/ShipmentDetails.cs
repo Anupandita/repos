@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Wms.App.Contracts.Entities
+namespace Sfc.Wms.App.Api.Contracts.Entities
 {
     public class ShipmentDetails
     {

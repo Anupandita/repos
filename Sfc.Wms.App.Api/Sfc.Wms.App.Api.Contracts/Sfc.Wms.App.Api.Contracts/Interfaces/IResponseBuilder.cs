@@ -1,7 +1,7 @@
 ﻿using RestSharp;
-using Wms.App.Contracts.Result;
+using Sfc.Wms.App.Api.Contracts.Result;
 
-namespace Wms.App.Contracts.Interfaces
+namespace Sfc.Wms.App.Api.Contracts.Interfaces
 {
     public interface IResponseBuilder
     {

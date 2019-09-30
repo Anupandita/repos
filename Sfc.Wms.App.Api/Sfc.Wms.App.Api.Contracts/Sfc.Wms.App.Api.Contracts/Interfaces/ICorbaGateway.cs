@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Wms.App.Contracts.Entities;
-using Wms.App.Contracts.Result;
+using Sfc.Wms.App.Api.Contracts.Entities;
+using Sfc.Wms.App.Api.Contracts.Result;
 
 namespace Wms.App.Contracts.Interfaces
 {
