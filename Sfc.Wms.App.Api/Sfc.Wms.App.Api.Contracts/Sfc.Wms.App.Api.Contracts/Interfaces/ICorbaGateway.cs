@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Sfc.Wms.App.Api.Contracts.Entities;
 using Sfc.Wms.App.Api.Contracts.Result;
 
-namespace Wms.App.Contracts.Interfaces
+namespace Sfc.Wms.App.Api.Contracts.Interfaces
 {
     public interface ICorbaGateway
     {
