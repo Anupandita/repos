@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
-using Sfc.Wms.App.Api.Contracts.Entities;
+﻿using Sfc.Wms.App.Api.Contracts.Entities;
 using Sfc.Wms.App.Api.Contracts.Result;
+using System.Threading.Tasks;
 
 namespace Sfc.Wms.App.Api.Contracts.Interfaces
 {
