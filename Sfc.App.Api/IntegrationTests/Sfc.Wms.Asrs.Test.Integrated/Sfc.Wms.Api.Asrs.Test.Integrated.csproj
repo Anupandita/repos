@@ -72,6 +72,7 @@
     <Compile Include="Tests\OrmtMessageTest.cs" />
     <Compile Include="Tests\OrstMessageTest.cs" />
     <Compile Include="Tests\OrmtNegativeCases.cs" />
+    <Compile Include="Tests\OrmtWaveReleaseTest.cs" />
     <Compile Include="Tests\ZplTest.cs" />
   </ItemGroup>
   <ItemGroup>

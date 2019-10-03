@@ -26,6 +26,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected BaseResult negativeCase3;
         protected BaseResult negativeCase4;
         protected BaseResult negativeCase5;
+        protected string waveUrl = "http://localhost:59665/api/order-maintenance/wave-number?waveNumber=20190804052";
 
         protected void InitializeTestDataForPrintingOfCartons()
         {
@@ -39,6 +40,15 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected void InitializeTestDataForEpickOfCarton()
         {
             GetDataBeforeCallingApiForEpickOfOrders();
+        }
+
+        protected void InitializeTestDataForWaveRelease()
+        {
+            GetValidDataBeforeTriggerOrmtForPrintingOfCartonsThroughWaveNumber();
+        }
+        protected void ReadDataAndValidateTheFieldsInInternalTables()
+        {
+            GetDataAfterCallingOrmtApiAfterWaveRelease();
         }
         protected void ReadDataAfterApiForPrintingOfCarton()
         {
@@ -105,28 +115,23 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             currentCartonNbr = pickLocnNotFound.CartonNbr;
             currentActionCode = "Adddd";
         }
-        protected void AValidNewOrmtMessageRecord()
-        {
-            OrmtParameters = new ComtParams
-            {
-                ActionCode = currentActionCode,
-                CurrentLocationId = "",
-                ContainerId = currentCartonNbr,
-                ContainerType = DefaultValues.ContainerType,  
-            };
-        }
 
-        protected IRestResponse ApiIsCalled()
+        protected void ValidUrl()
         {
             url = $"{baseUrl}?{"cartonNumber"}={printCarton.CartonNbr}&{"actionCode"}={currentActionCode}";
+            
+        }
+        protected IRestResponse ApiIsCalled(string url)
+        {
             var client = new RestClient(url);
             var request = new RestRequest(Method.POST);     
             Response = client.Execute(request);
             return Response;
         }
+
         protected BaseResult OrmtResult()
         {
-            var response = ApiIsCalled();
+            var response = ApiIsCalled(url);
             var result = JsonConvert.DeserializeObject<BaseResult>(response.Content.ToString());
             return result;
         }
@@ -137,6 +142,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual("Created", Result.ResultType.ToString());
         }
 
+        protected void OrmtApiIsCalledCreatedIsReturnedForWaveRelease()
+        {
+            var response = ApiIsCalled(waveUrl);
+            var result = JsonConvert.DeserializeObject<BaseResult>(response.Content.ToString());
+            Assert.AreEqual("Created", result.ResultType.ToString());
+        }
         protected void OrmtApiIsCalledForNotEnoughInventory()
         {
             negativecase1 = OrmtResult();         

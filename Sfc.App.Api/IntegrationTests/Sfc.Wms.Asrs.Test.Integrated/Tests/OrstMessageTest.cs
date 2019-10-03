@@ -23,7 +23,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         "Validate for AllocationStatus for the Task Completion"
         )]
 
-
     public class OrstMessageTest : OrstMessageFixture
     {
         [TestMethod]
@@ -32,7 +31,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         {
             InitializeTestData();
         }
-
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
@@ -50,50 +48,50 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
              .BDDfy();
         }
 
-        [TestMethod()]
-        [TestCategory("FUNCTIONAL")]
-        public void OrstMessageTestForActionCodeCompleted()
-        {
-            this.Given(x => x.TestDataForActionCodeComplete())
-                .And(x => x.MsgKeyForCase2())
-                .When(x => x.OrstApiIsCalledCreatedIsReturned())
-                .Then(x => x.ReadDataAfterApiForActionCodeComplete())
-                .And(x => x.VerifyOrstMessageWasInsertedIntoSwmFromMheForActionCodeComplete())
-                .And(x => x.VerifyCartonStatusHasChangedToPickedForActionCodeComplete())
-                .And(x => x.ValidateForQuantitiesInTocartonDetailTableForActionCodeComplete())
-                .And(x =>x.ValidateForQuantitiesInToPickTicketDetailTableForActionCodeComplete())
-                .And(x =>x.VerifyPickTicketStatusHasChangedToWeighedForStatusCodeComplete())
-                .And(x =>x.ValidateForQuantitiesInToPickLocationTableForActionCodeComplete())
-                .And(x =>x.ValidateForOrmtCountHasReducedForActionCodeComplete())
-                .And(x =>x.VerifyAllocationStatusHasChangedToCompleteForActionCodeComplete())
-             .BDDfy();
-        }
+        //[TestMethod()]
+        //[TestCategory("FUNCTIONAL")]
+        //public void OrstMessageTestForActionCodeCompleted()
+        //{
+        //    this.Given(x => x.TestDataForActionCodeComplete())
+        //        .And(x => x.MsgKeyForCase2())
+        //        .When(x => x.OrstApiIsCalledCreatedIsReturned())
+        //        .Then(x => x.ReadDataAfterApiForActionCodeComplete())
+        //        .And(x => x.VerifyOrstMessageWasInsertedIntoSwmFromMheForActionCodeComplete())
+        //        .And(x => x.VerifyCartonStatusHasChangedToPickedForActionCodeComplete())
+        //        .And(x => x.ValidateForQuantitiesInTocartonDetailTableForActionCodeComplete())
+        //        .And(x =>x.ValidateForQuantitiesInToPickTicketDetailTableForActionCodeComplete())
+        //        .And(x =>x.VerifyPickTicketStatusHasChangedToWeighedForStatusCodeComplete())
+        //        .And(x =>x.ValidateForQuantitiesInToPickLocationTableForActionCodeComplete())
+        //        .And(x =>x.ValidateForOrmtCountHasReducedForActionCodeComplete())
+        //        .And(x =>x.VerifyAllocationStatusHasChangedToCompleteForActionCodeComplete())
+        //     .BDDfy();
+        //}
 
-        [TestMethod()]
-        [TestCategory("FUNCTIONAL")]
-        public void OrstMessageTestForActionCodeDeAllocate()
-        {
-            this.Given(x => x.MsgKeyForCase3())
-                .When(x => x.OrstApiIsCalledCreatedIsReturned())
-                .Then(x => x.ReadDataAfterApiForActionCodeDeAllocate())
-                .And(x => x.VerifyOrstMessageWasInsertedIntoSwmFromMheForActionCodeDeAllocate())
-                .And(x => x.VerifyCartonStatusHasUpdatedToAllocatedOrWaitingForActionCodeDeAllocate())
-                .BDDfy();
-        }
+        //[TestMethod()]
+        //[TestCategory("FUNCTIONAL")]
+        //public void OrstMessageTestForActionCodeDeAllocate()
+        //{
+        //    this.Given(x => x.MsgKeyForCase3())
+        //        .When(x => x.OrstApiIsCalledCreatedIsReturned())
+        //        .Then(x => x.ReadDataAfterApiForActionCodeDeAllocate())
+        //        .And(x => x.VerifyOrstMessageWasInsertedIntoSwmFromMheForActionCodeDeAllocate())
+        //        .And(x => x.VerifyCartonStatusHasUpdatedToAllocatedOrWaitingForActionCodeDeAllocate())
+        //        .BDDfy();
+        //}
 
-        [TestMethod()]
-        [TestCategory("FUNCTIONAL")]
-        public void OrstMessageTestForActionCodeCancel()
-        {
-            this.Given(x => x.TestDataForActionCodeCancel())
-                .And(x =>x.MsgKeyForCase4())
-                .When(x => x.OrstApiIsCalledCreatedIsReturned())
-                .Then(x =>x.ReadDataAfterApiForActionCodeCancel())
-                .And(x =>x.VerifyCartonStatusHasUpdatedToAllocatedOrWaitingForActionCodeCancel())
-                .And(x => x.ValidateForQuantitiesInToPickLocationTableForActionCodeCancel())
-                .And(x=>x.ValidateForOrmtCountHasReducedForActionCodeCancel())
-                .BDDfy();
-        }
+        //[TestMethod()]
+        //[TestCategory("FUNCTIONAL")]
+        //public void OrstMessageTestForActionCodeCancel()
+        //{
+        //    this.Given(x => x.TestDataForActionCodeCancel())
+        //        .And(x =>x.MsgKeyForCase4())
+        //        .When(x => x.OrstApiIsCalledCreatedIsReturned())
+        //        .Then(x =>x.ReadDataAfterApiForActionCodeCancel())
+        //        .And(x =>x.VerifyCartonStatusHasUpdatedToAllocatedOrWaitingForActionCodeCancel())
+        //        .And(x => x.ValidateForQuantitiesInToPickLocationTableForActionCodeCancel())
+        //        .And(x=>x.ValidateForOrmtCountHasReducedForActionCodeCancel())
+        //        .BDDfy();
+        //}
 
 
 

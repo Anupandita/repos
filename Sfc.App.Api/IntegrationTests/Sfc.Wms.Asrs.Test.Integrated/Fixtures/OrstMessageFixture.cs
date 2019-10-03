@@ -14,7 +14,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
     public class OrstMessageFixture : DataBaseFixtureForOrst
     {
         protected Int64 currentMsgKey;
-        protected string CostUrl = @ConfigurationManager.AppSettings["CostUrl"];
+        protected string CostUrl = @ConfigurationManager.AppSettings["EmsToWmsUrl"];
         protected IRestResponse Response;
 
         protected void InitializeTestData()

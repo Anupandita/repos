@@ -80,7 +80,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 };
                 costData.MsgKey = InsertEmsToWMS(db, emsToWmsParameters);
                 trnInvBeforeApi = FetchTransInvn(db, costData.SkuId);
-                pickLcnDtlBeforeApi = GetPickLocationDetails(db, costData.SkuId, costData.LocnId);
+              //  pickLcnDtlBeforeApi = GetPickLocationDetails(db, costData.SkuId, costData.LocnId);
             }
         }
 
@@ -226,7 +226,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 swmFromMhe = SwmFromMhe(db, costData.MsgKey, TransactionCode.Cost);
                 cost = JsonConvert.DeserializeObject<CostDto>(swmFromMhe.MessageJson);
                 trnInvAfterApi = FetchTransInvn(db, cost.StorageClassAttribute1);
-                pickLocnDtlAfterApi = GetPickLocationDetails(db, cost.StorageClassAttribute1,cost.CurrentLocationId);
+                //pickLocnDtlAfterApi = GetPickLocationDetails(db, cost.StorageClassAttribute1,cost.CurrentLocationId);
             }
         }     
     }

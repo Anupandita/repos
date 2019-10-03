@@ -15,7 +15,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
     public class CostMessageFixture : DataBaseFixtureForCost
     {
         protected string currentCaseNbr;
-        protected string CostUrl = @ConfigurationManager.AppSettings["CostUrl"];
+        protected string CostUrl = @ConfigurationManager.AppSettings["EmsToWmsUrl"];
         protected CaseDetailDto caseDetailDto;
         protected Cost Parameters;
         protected IRestResponse Response;

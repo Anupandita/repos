@@ -295,6 +295,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(DefaultValues.InBoundPallet,ivmt.InboundPallet);
             Assert.AreEqual("0", swmToMheIvmt.SourceMessageResponseCode);
             Assert.AreEqual("PONumber", swmToMheIvmt.PoNumber);
+           
         }
 
         protected void VerifyIvmtMessageWasInsertedIntoWmsToEms(WmsToEmsDto wmsToEms)
@@ -324,7 +325,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             try
             {
-                Assert.AreEqual(DefaultValues.TaskStatusCode, statcode);
+                Assert.AreEqual(DefaultValues.TaskStatusCode, statcode);              
             }
             catch
             {

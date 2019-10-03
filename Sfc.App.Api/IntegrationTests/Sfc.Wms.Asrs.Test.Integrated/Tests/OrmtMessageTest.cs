@@ -36,8 +36,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         public void VerifyForOrmtMessageWithActionCodeCancel()
         {
             this.Given(x => x.InitializeTestDataForCancelOfCarton())
-           .And(x => x.CartonNumberForCancel())
-           .And(x => x.AValidNewOrmtMessageRecord())
+           .And(x => x.CartonNumberForCancel()) 
            .When(x => x.OrmtApiIsCalledCreatedIsReturned())
            .And(x => x.ReadDataAfterApiForCancelOfCarton())
            .Then(x => x.VerifyOrmtMessageWasInsertedInToSwmToMheForCancelOrders())
@@ -52,7 +51,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         {
             this.Given(x=>x.InitializeTestDataForEpickOfCarton())
            .And(x => x.CartonNumberForEPick())
-           .And(x => x.AValidNewOrmtMessageRecord())
            .When(x => x.OrmtApiIsCalledCreatedIsReturned())
            .And(x => x.ReadDataAfterApiForEPickOfCarton())
            .Then(x => x.VerifyOrmtMessageWasInsertedInToSwmToMheForEpick())
