@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Net;
-using System.Threading.Tasks;
-using DataGenerator;
+﻿using DataGenerator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Newtonsoft.Json;
 using RestSharp;
-using Sfc.App.Api.Nuget.Gateways;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Core.OnPrem.Security.Contracts.Dtos;
+using Sfc.Wms.App.Api.Nuget.Gateways;
+using System.Collections.Generic;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace Sfc.App.Api.Tests.Unit.Fixtures
 {
@@ -95,6 +95,6 @@ namespace Sfc.App.Api.Tests.Unit.Fixtures
             Assert.AreEqual(signInResponse.ResultType, ResultTypes.Ok);
         }
 
-        #endregion
+        #endregion Sign In
     }
 }

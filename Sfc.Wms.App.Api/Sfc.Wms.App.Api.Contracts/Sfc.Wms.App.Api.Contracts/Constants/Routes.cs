@@ -37,6 +37,10 @@
             public const string ChangePassword = "change-password";
             public const string UserRoles = "user-roles";
             public const string UserPreferences = "userPreferences";
+            public const string DematicMessageIvmt = "api/inventory-maintenance";
+            public const string DematicMessageComt = "api/container-maintenance";
+            public const string DematicMessageOrmt = "api/order-maintenance";
+            public const string EmsToWmsMessage = "api/emstowms-message";
 
 
         }
@@ -105,6 +109,9 @@
 
             public const string RoleMenus = "role-menus";
             public const string RolePermissions = "role-permissions";
+
+            public const string OrmtByCartonNumber = "carton-number";
+            public const string OrmtByWaveNumber = "wave-number";
         }
 
         public static class Params

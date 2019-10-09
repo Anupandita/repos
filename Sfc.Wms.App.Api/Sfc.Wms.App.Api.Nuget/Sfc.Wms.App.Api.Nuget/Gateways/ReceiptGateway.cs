@@ -1,12 +1,11 @@
-﻿using RestSharp;
+﻿using System.Threading.Tasks;
+using RestSharp;
 using Sfc.Wms.App.Api.Contracts.Constants;
 using Sfc.Wms.App.Api.Contracts.Entities;
 using Sfc.Wms.App.Api.Contracts.Interfaces;
 using Sfc.Wms.App.Api.Contracts.Result;
-using Sfc.Wms.App.Api.Nuget.Gateways;
-using System.Threading.Tasks;
 
-namespace sfc.Wms.App.Api.Nuget.Gateways
+namespace Sfc.Wms.App.Api.Nuget.Gateways
 {
     public class ReceiptGateway : SfcBaseGateway, IReceiptGateway
     {

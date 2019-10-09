@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DataGenerator;
+﻿using DataGenerator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Sfc.App.App.Gateways;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Core.OnPrem.Security.Contracts.Dtos;
 using Sfc.Core.OnPrem.Security.Contracts.Interfaces;
+using Sfc.Wms.App.App.Gateways;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Sfc.App.Api.Tests.Unit.Fixtures
 {
@@ -61,12 +61,10 @@ namespace Sfc.App.Api.Tests.Unit.Fixtures
             _mockUserRbacService.Setup(m => m.GetUserDetailsAsync(loginRequest.UserName))
                 .Returns(Task.FromResult(userDetails));
 
-
             _mockUserRbacService.Setup(m => m.SignInAsync(loginRequest)).Returns(Task.FromResult(authenticate));
 
             userDetailsResponse = _rbacGateway.SignInAsync(loginRequest);
         }
-
 
         protected void TheReturnedResponseStatusIsOk()
         {

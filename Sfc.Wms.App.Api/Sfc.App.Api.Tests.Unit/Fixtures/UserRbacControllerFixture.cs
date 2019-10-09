@@ -1,19 +1,20 @@
-﻿using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Results;
-using DataGenerator;
+﻿using DataGenerator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Sfc.App.Api.Controllers;
-using Sfc.App.App.Interfaces;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Core.OnPrem.Security.Contracts.Dtos;
+using Sfc.Wms.App.Api.Controllers;
+using Sfc.Wms.App.App.Interfaces;
+using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Results;
+using Sfc.Wms.App.Api.Interfaces;
 
 namespace Sfc.App.Api.Tests.Unit.Fixtures
 {
     public abstract class UserRbacControllerFixture
     {
-        private readonly Mock<IRbacGateway> _mockRbacGateway;
+        private readonly Mock<IRbacService> _mockRbacGateway;
         private readonly UserRbacController _userRbacController;
         private bool isValid;
 
@@ -22,7 +23,7 @@ namespace Sfc.App.Api.Tests.Unit.Fixtures
 
         protected UserRbacControllerFixture()
         {
-            _mockRbacGateway = new Mock<IRbacGateway>(MockBehavior.Default);
+            _mockRbacGateway = new Mock<IRbacService>(MockBehavior.Default);
             _userRbacController = new UserRbacController(_mockRbacGateway.Object);
         }
 
@@ -50,7 +51,6 @@ namespace Sfc.App.Api.Tests.Unit.Fixtures
 
             testResponse = _userRbacController.SignInAsync(request);
         }
-
 
         protected void TheReturnedResponseStatusIsAuthorized()
         {

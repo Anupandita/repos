@@ -46,6 +46,9 @@
     <Reference Include="AutoMapper, Version=8.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.8.1.1\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="AutoMapper.Extensions.ExpressionMapping, Version=2.0.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.Extensions.ExpressionMapping.2.0.2\lib\net461\AutoMapper.Extensions.ExpressionMapping.dll</HintPath>
+    </Reference>
     <Reference Include="DataGenerator, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DataGenerator.4.0.0.31\lib\net45\DataGenerator.dll</HintPath>
     </Reference>
@@ -58,8 +61,11 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="Humanizer, Version=2.6.0.0, Culture=neutral, PublicKeyToken=979442b78dfc278e, processorArchitecture=MSIL">
-      <HintPath>..\packages\Humanizer.Core.2.6.2\lib\netstandard2.0\Humanizer.dll</HintPath>
+    <Reference Include="FluentValidation, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.8.4.0\lib\net45\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="Humanizer, Version=2.7.0.0, Culture=neutral, PublicKeyToken=979442b78dfc278e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Humanizer.Core.2.7.9\lib\netstandard2.0\Humanizer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
@@ -81,7 +87,7 @@
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Oracle.ManagedDataAccess, Version=4.122.19.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
-      <HintPath>..\packages\Oracle.ManagedDataAccess.19.3.0\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+      <HintPath>..\packages\Oracle.ManagedDataAccess.19.3.1\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
     </Reference>
     <Reference Include="Oracle.ManagedDataAccess.EntityFramework, Version=6.122.19.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
       <HintPath>..\packages\Oracle.ManagedDataAccess.EntityFramework.19.3.0\lib\net45\Oracle.ManagedDataAccess.EntityFramework.dll</HintPath>
@@ -104,17 +110,23 @@
     <Reference Include="Serilog.Sinks.RollingFile, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\packages\Serilog.Sinks.RollingFile.3.2.0\lib\net45\Serilog.Sinks.RollingFile.dll</HintPath>
     </Reference>
+    <Reference Include="SFC.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SFC.Core.3.0.1\lib\net472\SFC.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Sfc.Core.Aop.WebApi, Version=1.1.30.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Core.Aop.WebApi.1.1.30\lib\net472\Sfc.Core.Aop.WebApi.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Core.BaseApiController, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Core.BaseApiController.2.0.1\lib\net472\Sfc.Core.BaseApiController.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Core.Cache.InMemory, Version=1.1.29.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Core.Cache.InMemory.1.1.29\lib\net472\Sfc.Core.Cache.InMemory.dll</HintPath>
+    <Reference Include="Sfc.Core.Cache.Contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Core.Cache.Contracts.1.0.0\lib\net472\Sfc.Core.Cache.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Core.OnPrem.AutoMapping, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Core.OnPrem.AutoMapping.2.0.1\lib\net472\Sfc.Core.OnPrem.AutoMapping.dll</HintPath>
+    <Reference Include="Sfc.Core.Cache.InMemory, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Core.Cache.InMemory.1.2.1\lib\net472\Sfc.Core.Cache.InMemory.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Core.OnPrem.AutoMapping, Version=1.1.29.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Core.OnPrem.AutoMapping.1.1.29\lib\net472\Sfc.Core.OnPrem.AutoMapping.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Core.OnPrem.LabelGenerator, Version=1.1.31.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Core.OnPrem.LabelGenerator.1.1.31\lib\net472\Sfc.Core.OnPrem.LabelGenerator.dll</HintPath>
@@ -128,14 +140,14 @@
     <Reference Include="Sfc.Core.OnPrem.Security.Contracts, Version=2.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Core.OnPrem.Security.Contracts.2.1.2\lib\net472\Sfc.Core.OnPrem.Security.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Core.RestResponse, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Core.RestResponse.1.2.1\lib\net472\Sfc.Core.RestResponse.dll</HintPath>
+    <Reference Include="Sfc.Core.RestResponse, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Core.RestResponse.2.0.1\lib\net472\Sfc.Core.RestResponse.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms..Configuration.Security.Rbac.Repository, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Configuration.Security.Rbac.Repository.3.0.0\lib\net472\Sfc.Wms..Configuration.Security.Rbac.Repository.dll</HintPath>
+    <Reference Include="Sfc.Wms..Configuration.Security.Rbac.Repository, Version=4.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Configuration.Security.Rbac.Repository.4.0.1\lib\net472\Sfc.Wms..Configuration.Security.Rbac.Repository.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.App.Api.Contracts, Version=2.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.App.Api.Contracts.2.0.4\lib\net472\Sfc.Wms.App.Api.Contracts.dll</HintPath>
+    <Reference Include="Sfc.Wms.App.Api.Contracts, Version=2.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.App.Api.Contracts.2.0.5\lib\net472\Sfc.Wms.App.Api.Contracts.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.App.App, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.App.App.3.0.1\lib\net472\Sfc.Wms.App.App.dll</HintPath>
@@ -143,8 +155,20 @@
     <Reference Include="Sfc.Wms.Configuration.DockDoor.Contracts, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.DockDoor.Contracts.2.0.0\lib\net472\Sfc.Wms.Configuration.DockDoor.Contracts.dll</HintPath>
     </Reference>
+    <Reference Include="Sfc.Wms.Configuration.DockDoor.Repository, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Configuration.DockDoor.Repository.2.0.0\lib\net472\Sfc.Wms.Configuration.DockDoor.Repository.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Configuration.MessageType.Contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Configuration.MessageType.Contracts.1.0.0\lib\net472\Sfc.Wms.Configuration.MessageType.Contracts.dll</HintPath>
+    </Reference>
     <Reference Include="Sfc.Wms.Configuration.MessageTypes.Contracts, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.MessageTypes.Contracts.4.0.0\lib\net472\Sfc.Wms.Configuration.MessageTypes.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Configuration.NextUpCounter.Contracts, Version=4.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Configuration.NextUpCounter.Contracts.4.0.2\lib\net472\Sfc.Wms.Configuration.NextUpCounter.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Configuration.NextUpCounter.Repository, Version=4.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Configuration.NextUpCounter.Repository.4.0.2\lib\net472\Sfc.Wms.Configuration.NextUpCounter.Repository.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Configuration.SystemCode.Contracts, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.SystemCode.Contracts.2.0.1\lib\net472\Sfc.Wms.Configuration.SystemCode.Contracts.dll</HintPath>
@@ -159,47 +183,110 @@
       <HintPath>..\packages\Sfc.Wms.Data.4.0.5\lib\net472\Sfc.Wms.Data.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Sfc.Wms.Foundation.AllocationInventory.App, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.AllocationInventory.App.2.0.0\lib\net472\Sfc.Wms.Foundation.AllocationInventory.App.dll</HintPath>
+    </Reference>
     <Reference Include="Sfc.Wms.Foundation.AllocationInventory.Contracts, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.AllocationInventory.Contracts.2.0.0\lib\net472\Sfc.Wms.Foundation.AllocationInventory.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Foundation.AllocationInventory.Repository, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.AllocationInventory.Repository.2.0.0\lib\net472\Sfc.Wms.Foundation.AllocationInventory.Repository.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Foundation.Carton.App, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.Carton.App.2.0.0\lib\net472\Sfc.Wms.Foundation.Carton.App.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Foundation.Carton.Contracts, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.Carton.Contracts.2.0.0\lib\net472\Sfc.Wms.Foundation.Carton.Contracts.dll</HintPath>
     </Reference>
+    <Reference Include="Sfc.Wms.Foundation.Carton.Repository, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.Carton.Repository.2.0.1\lib\net472\Sfc.Wms.Foundation.Carton.Repository.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Foundation.InboundLpn.Repository, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.InboundLpn.Repository.1.1.0\lib\net472\Sfc.Wms.Foundation.InboundLpn.Repository.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Foundation.Location.App, Version=2.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.Location.App.2.1.2\lib\net472\Sfc.Wms.Foundation.Location.App.dll</HintPath>
+    </Reference>
     <Reference Include="Sfc.Wms.Foundation.Location.Contracts, Version=2.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.Location.Contracts.2.1.2\lib\net472\Sfc.Wms.Foundation.Location.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Foundation.Location.Repository, Version=2.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.Location.Repository.2.1.2\lib\net472\Sfc.Wms.Foundation.Location.Repository.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Foundation.Message.Contracts, Version=4.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.Message.Contracts.4.0.1\lib\net472\Sfc.Wms.Foundation.Message.Contracts.dll</HintPath>
     </Reference>
+    <Reference Include="Sfc.Wms.Foundation.Message.Repository, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.Message.Repository.2.0.0\lib\net472\Sfc.Wms.Foundation.Message.Repository.dll</HintPath>
+    </Reference>
     <Reference Include="Sfc.Wms.Foundation.MessageSource.Contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.MessageSource.Contracts.1.0.0\lib\net472\Sfc.Wms.Foundation.MessageSource.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Foundation.MessageSource.Repository, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.MessageSource.Repository.1.0.1\lib\net472\Sfc.Wms.Foundation.MessageSource.Repository.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Foundation.PixTransaction.Contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.PixTransaction.Contracts.1.0.0\lib\net472\Sfc.Wms.Foundation.PixTransaction.Contracts.dll</HintPath>
     </Reference>
+    <Reference Include="Sfc.Wms.Foundation.PixTransaction.Repository, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.PixTransaction.Repository.1.0.0\lib\net472\Sfc.Wms.Foundation.PixTransaction.Repository.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Foundation.SkuInventory.App, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.SkuInventory.App.4.0.0\lib\net472\Sfc.Wms.Foundation.SkuInventory.App.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Foundation.SkuInventory.Contracts, Version=4.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.SkuInventory.Contracts.4.0.1\lib\net472\Sfc.Wms.Foundation.SkuInventory.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Foundation.SkuInventory.Repository, Version=4.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.SkuInventory.Repository.4.0.1\lib\net472\Sfc.Wms.Foundation.SkuInventory.Repository.dll</HintPath>
+    </Reference>
     <Reference Include="Sfc.Wms.Foundation.Tasks.Contracts, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.Tasks.Contracts.4.0.0\lib\net472\Sfc.Wms.Foundation.Tasks.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Foundation.Tasks.Repository, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.Tasks.Repository.4.0.0\lib\net472\Sfc.Wms.Foundation.Tasks.Repository.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Foundation.TransitionalInventory.Contracts, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.TransitionalInventory.Contracts.1.0.1\lib\net472\Sfc.Wms.Foundation.TransitionalInventory.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Framework.Security.Rbac, Version=4.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Framework.Security.Rbac.4.0.4\lib\net472\Sfc.Wms.Framework.Security.Rbac.dll</HintPath>
+    <Reference Include="Sfc.Wms.Foundation.TransitionalInventory.Repository, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.TransitionalInventory.Repository.1.0.0\lib\net472\Sfc.Wms.Foundation.TransitionalInventory.Repository.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Framework.DockDoor.App, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.DockDoor.App.2.1.0\lib\net472\Sfc.Wms.Framework.DockDoor.App.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Framework.NextUpCounter.App, Version=4.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.NextUpCounter.App.4.0.1\lib\net472\Sfc.Wms.Framework.NextUpCounter.App.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Framework.PixTransaction.App, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.PixTransaction.App.2.0.0\lib\net472\Sfc.Wms.Framework.PixTransaction.App.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Framework.Security.Rbac, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.Security.Rbac.5.0.0\lib\net472\Sfc.Wms.Framework.Security.Rbac.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Framework.Security.Token.Jwt, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.Security.Token.Jwt.3.0.1\lib\net472\Sfc.Wms.Framework.Security.Token.Jwt.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Framework.SystemCode.App, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Framework.SystemCode.App.2.1.0\lib\net472\Sfc.Wms.Framework.SystemCode.App.dll</HintPath>
+    <Reference Include="Sfc.Wms.Framework.SystemCode.App, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.SystemCode.App.3.0.0\lib\net472\Sfc.Wms.Framework.SystemCode.App.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Framework.UnitOfWork, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.UnitOfWork.4.0.1\lib\net472\Sfc.Wms.Framework.UnitOfWork.dll</HintPath>
     </Reference>
+    <Reference Include="Sfc.Wms.Inbound.Tasks.App, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Inbound.Tasks.App.1.0.1\lib\net472\Sfc.Wms.Inbound.Tasks.App.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Inbound.TransitionalInventory.App, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Inbound.TransitionalInventory.App.1.0.0\lib\net472\Sfc.Wms.Inbound.TransitionalInventory.App.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.InboundLpn.App, Version=5.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.InboundLpn.App.5.0.1\lib\net472\Sfc.Wms.InboundLpn.App.dll</HintPath>
+    </Reference>
     <Reference Include="Sfc.Wms.InboundLpn.Contracts, Version=5.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.InboundLpn.Contracts.5.0.1\lib\net472\Sfc.Wms.InboundLpn.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Interfaces.Asrs.App, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Interfaces.Asrs.App.1.0.1\lib\net472\Sfc.Wms.Interfaces.Asrs.App.dll</HintPath>
+    <Reference Include="Sfc.Wms.InboundLpn.Repos, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.InboundLpn.Repos.5.0.0\lib\net472\Sfc.Wms.InboundLpn.Repos.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Interfaces.Asrs.Contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Interfaces.Asrs.Contracts.1.0.0\lib\net472\Sfc.Wms.Interfaces.Asrs.Contracts.dll</HintPath>
@@ -216,8 +303,23 @@
     <Reference Include="Sfc.Wms.Interfaces.Asrs.Shamrock.Repository, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Interfaces.Asrs.Shamrock.Repository.1.0.0\lib\net472\Sfc.Wms.Interfaces.Asrs.Shamrock.Repository.dll</HintPath>
     </Reference>
+    <Reference Include="Sfc.Wms.Interfaces.Builder, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Interfaces.Builder.1.0.1\lib\net472\Sfc.Wms.Interfaces.Builder.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Interfaces.Message.App, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Interfaces.Message.App.1.0.0\lib\net472\Sfc.Wms.Interfaces.Message.App.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Interfaces.MessageSource.App, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Interfaces.MessageSource.App.1.0.1\lib\net472\Sfc.Wms.Interfaces.MessageSource.App.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Interfaces.Parser, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Interfaces.Parser.1.0.1\lib\net472\Sfc.Wms.Interfaces.Parser.dll</HintPath>
+    </Reference>
     <Reference Include="Sfc.Wms.Interfaces.ParserAndTranslator.Contracts, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.1.0.2\lib\net472\Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Interfaces.Translator, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Interfaces.Translator.1.0.2\lib\net472\Sfc.Wms.Interfaces.Translator.dll</HintPath>
     </Reference>
     <Reference Include="SimpleInjector, Version=4.7.1.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
       <HintPath>..\packages\SimpleInjector.4.7.1\lib\net45\SimpleInjector.dll</HintPath>
@@ -309,6 +411,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ContainerMaintenanceController.cs" />
+    <Compile Include="Controllers\EmsToWmsMessageController.cs" />
+    <Compile Include="Controllers\InventoryMaintenanceController.cs" />
+    <Compile Include="Controllers\OrderMaintenanceController.cs" />
     <Compile Include="Controllers\UserRbacController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -341,6 +447,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Wms.Interface\Asrs\Sfc.Wms.Interface.Asrs.App\Sfc.Wms.Interfaces.Asrs.App\Sfc.Wms.Interfaces.Asrs.App.csproj">
+      <Project>{eabcfacc-9855-4f03-b2b3-4aae7191584f}</Project>
+      <Name>Sfc.Wms.Interfaces.Asrs.App</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
