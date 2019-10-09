@@ -20,7 +20,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             _restClient = restClient;
         }
 
-        public async Task<BaseResult<string>> codeIds(string isWhseSysCode, string recType, string codeType, bool isNumber, string orderByColumn, string token)
+        public async Task<BaseResult<string>> CodeIds(string isWhseSysCode, string recType, string codeType, bool isNumber, string orderByColumn, string token)
         {
             return await Proxy().ExecuteAsync(async () =>
             {

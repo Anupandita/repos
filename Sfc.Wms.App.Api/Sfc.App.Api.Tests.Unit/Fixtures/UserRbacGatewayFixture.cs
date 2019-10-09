@@ -9,6 +9,7 @@ using Sfc.Wms.App.Api.Nuget.Gateways;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Sfc.Core.RestResponse;
 
 namespace Sfc.App.Api.Tests.Unit.Fixtures
 {
@@ -23,7 +24,8 @@ namespace Sfc.App.Api.Tests.Unit.Fixtures
         protected UserRbacGatewayFixture()
         {
             _mockRestClient = new Mock<IRestClient>(MockBehavior.Default);
-            _userRbacGateway = new UserRbacGateway(_mockRestClient.Object);
+            var reponseBuilder = new ResponseBuilder();
+            _userRbacGateway = new UserRbacGateway(_mockRestClient.Object, reponseBuilder);
         }
 
         private void GetRestResponse<T>(T entity, HttpStatusCode statusCode, ResponseStatus responseStatus)

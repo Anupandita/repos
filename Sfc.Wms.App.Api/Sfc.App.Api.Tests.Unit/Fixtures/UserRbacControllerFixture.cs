@@ -48,7 +48,7 @@ namespace Sfc.App.Api.Tests.Unit.Fixtures
             };
 
             _mockRbacGateway.Setup(m => m.SignInAsync(request)).Returns(Task.FromResult(userDetails));
-
+            _mockRbacGateway.Setup(m => m.GetPrinterValuesAsyc(It.IsAny<UserInfoDto>())).Returns(Task.FromResult(userDetails));
             testResponse = _userRbacController.SignInAsync(request);
         }
 

@@ -8,6 +8,8 @@ using Sfc.Wms.App.App.Gateways;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Sfc.Wms.Configuration.SystemCode.Contracts.Interfaces;
+using Sfc.Wms.SystemCode.App.Interfaces;
 
 namespace Sfc.App.Api.Tests.Unit.Fixtures
 {
@@ -22,7 +24,8 @@ namespace Sfc.App.Api.Tests.Unit.Fixtures
         protected RbacGatewayFixture()
         {
             _mockUserRbacService = new Mock<IUserRbacService>(MockBehavior.Default);
-            _rbacGateway = new RbacGateway(_mockUserRbacService.Object);
+            var sysCode = new Mock<ISystemCodeService>(MockBehavior.Default);
+            _rbacGateway = new RbacGateway(_mockUserRbacService.Object, sysCode.Object);
         }
 
         protected void InvalidCredentials()
