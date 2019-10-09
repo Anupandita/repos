@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.Extensions.ExpressionMapping;
+using Sfc.Core.Cache.Contracts;
 using Sfc.Core.Cache.InMemory;
 using Sfc.Core.OnPrem.LabelGenerator.Interfaces;
 using Sfc.Core.OnPrem.LabelGenerator.LabelGenerators;
@@ -90,6 +91,9 @@ using Sfc.Wms.Framework.Security.Rbac.AutoMapper;
 using Sfc.Wms.Framework.Security.Rbac.Interface;
 using Sfc.Wms.Framework.Security.Rbac.Services;
 using Sfc.Wms.Framework.Security.Rbac.UnitOfWork;
+using Sfc.Wms.Framework.SystemCode.App.Interfaces;
+using Sfc.Wms.Framework.SystemCode.App.Services;
+using Sfc.Wms.Framework.SystemCode.App.UnitOfWork;
 using Sfc.Wms.Inbound.Tasks.App.Interfaces;
 using Sfc.Wms.Inbound.Tasks.App.Services;
 using Sfc.Wms.Inbound.Tasks.App.UnitOfWork;
@@ -129,16 +133,12 @@ using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Interfaces;
 using Sfc.Wms.Interfaces.Translator.Interface;
 using Sfc.Wms.Interfaces.Translator.Translators;
 using Sfc.Wms.SystemCode.App.AutoMapper;
-using Sfc.Wms.SystemCode.App.Interfaces;
-using Sfc.Wms.SystemCode.App.Services;
-using Sfc.Wms.SystemCode.App.UnitOfWork;
 using SimpleInjector;
 using SimpleInjector.Integration.WebApi;
 using SimpleInjector.Lifestyles;
 using System.Configuration;
 using System.Runtime.Caching;
 using System.Web.Http;
-using Sfc.Core.Cache.Contracts;
 
 namespace Sfc.Wms.App.Api
 {
