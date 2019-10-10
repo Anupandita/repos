@@ -3,7 +3,7 @@ using System.IO;
 using TestStack.BDDfy;
 using TestStack.BDDfy.Reporters.Html;
 
-namespace Sfc.App.Api.Tests.Unit.Configurations
+namespace Sfc.Wms.App.Api.Tests.Unit.Configurations
 {
     internal class HtmlReportConfig : DefaultHtmlReportConfiguration
     {

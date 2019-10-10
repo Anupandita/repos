@@ -8,8 +8,8 @@
     <ProjectGuid>{C6B3CBF6-46F1-4366-BA6C-2498F2D4FE20}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sfc.App.Api.Tests.Unit</RootNamespace>
-    <AssemblyName>Sfc.App.Api.Tests.Unit</AssemblyName>
+    <RootNamespace>Sfc.Wms.App.Api.Tests.Unit</RootNamespace>
+    <AssemblyName>Sfc.Wms.App.Api.Tests.Unit</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -92,12 +92,20 @@
     <Compile Include="Fakes\RolesDataGeneratorProfile.cs" />
     <Compile Include="Fakes\UserInfoDtoDataGeneratorProfile.cs" />
     <Compile Include="Fixtures\ComtFixture.cs" />
+    <Compile Include="Fixtures\ComtGatewayFixture.cs" />
     <Compile Include="Fixtures\EmsToWmsMessageFixture.cs" />
+    <Compile Include="Fixtures\EmsToWmsMessageGatewayFixture.cs" />
     <Compile Include="Fixtures\IvmtFixture.cs" />
+    <Compile Include="Fixtures\IvmtGatewayFixture.cs" />
     <Compile Include="Fixtures\OrmtFixture.cs" />
+    <Compile Include="Fixtures\OrmtGatewayFixture.cs" />
     <Compile Include="Fixtures\RbacGatewayFixture.cs" />
     <Compile Include="Fixtures\UserRbacControllerFixture.cs" />
     <Compile Include="Fixtures\UserRbacGatewayFixture.cs" />
+    <Compile Include="Nuget\ComtGatewayTest.cs" />
+    <Compile Include="Nuget\EmsToWmsMessageGatewayTest.cs" />
+    <Compile Include="Nuget\IvmtGatewayTest.cs" />
+    <Compile Include="Nuget\OrmtGatewayTest.cs" />
     <Compile Include="Nuget\UserRbacGatewayTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

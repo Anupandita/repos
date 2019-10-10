@@ -13,7 +13,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
         private readonly IRestClient _restClient;
         private readonly ResponseBuilder _responseBuilder;
 
-        public EmsToWmsMessageGateway(IRestClient restClient, ResponseBuilder responseBuilder) : base()
+        public EmsToWmsMessageGateway(IRestClient restClient, ResponseBuilder responseBuilder) 
         {
             _restClient = restClient;
             _responseBuilder = responseBuilder;

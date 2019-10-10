@@ -1,16 +1,15 @@
-﻿using DataGenerator;
+﻿using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Results;
+using DataGenerator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Core.OnPrem.Security.Contracts.Dtos;
 using Sfc.Wms.App.Api.Controllers;
-using Sfc.Wms.App.App.Interfaces;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Results;
 using Sfc.Wms.App.Api.Interfaces;
 
-namespace Sfc.App.Api.Tests.Unit.Fixtures
+namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 {
     public abstract class UserRbacControllerFixture
     {

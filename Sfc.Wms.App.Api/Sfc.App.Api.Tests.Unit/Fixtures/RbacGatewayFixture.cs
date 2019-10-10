@@ -1,17 +1,16 @@
-﻿using DataGenerator;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using DataGenerator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Core.OnPrem.Security.Contracts.Dtos;
 using Sfc.Core.OnPrem.Security.Contracts.Interfaces;
 using Sfc.Wms.App.App.Gateways;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Sfc.Wms.Configuration.SystemCode.Contracts.Interfaces;
-using Sfc.Wms.SystemCode.App.Interfaces;
 
-namespace Sfc.App.Api.Tests.Unit.Fixtures
+namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 {
     public class RbacGatewayFixture
     {

@@ -1,5 +1,5 @@
 ﻿
-namespace Sfc.App.Api.Tests.Unit.Constants
+namespace Sfc.Wms.App.Api.Tests.Unit.Constants
 {
     public static class TestCategories
     {

@@ -1,17 +1,17 @@
-﻿using DataGenerator;
+﻿using System.Collections.Generic;
+using System.Net;
+using System.Threading.Tasks;
+using DataGenerator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Newtonsoft.Json;
 using RestSharp;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Core.OnPrem.Security.Contracts.Dtos;
-using Sfc.Wms.App.Api.Nuget.Gateways;
-using System.Collections.Generic;
-using System.Net;
-using System.Threading.Tasks;
 using Sfc.Core.RestResponse;
+using Sfc.Wms.App.Api.Nuget.Gateways;
 
-namespace Sfc.App.Api.Tests.Unit.Fixtures
+namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 {
     public class UserRbacGatewayFixture
     {

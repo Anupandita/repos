@@ -2,7 +2,7 @@
 using DataGenerator.Sources;
 using Sfc.Core.OnPrem.Security.Contracts.Dtos;
 
-namespace Sfc.App.Api.Tests.Unit.Fakes
+namespace Sfc.Wms.App.Api.Tests.Unit.Fakes
 {
     public class RolesDataGeneratorProfile : MappingProfile<RolesDto>
     {

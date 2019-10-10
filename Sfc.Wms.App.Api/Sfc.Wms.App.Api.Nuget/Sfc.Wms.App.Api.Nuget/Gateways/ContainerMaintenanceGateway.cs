@@ -13,14 +13,15 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
         private readonly IRestClient _restClient;
         private readonly ResponseBuilder _responseBuilder;
 
-        public ContainerMaintenanceGateway(IRestClient restClient, ResponseBuilder responseBuilder) : base()
+        public ContainerMaintenanceGateway(IRestClient restClient, ResponseBuilder responseBuilder) 
         {
             _restClient = restClient;
             _responseBuilder = responseBuilder;
         }
         public async Task<BaseResult> CreateAsync(ComtTriggerInputDto comtTriggerInput)
         {
-            var request = new RestRequest($"{Routes.Prefixes.DematicMessageComt}", Method.POST).AddJsonBody(comtTriggerInput);
+            var request = new RestRequest($"{Routes.Prefixes.DematicMessageComt}", Method.POST)
+                .AddJsonBody(comtTriggerInput);
             var result = await _restClient
                 .ExecuteTaskAsync<BaseResult>(request).ConfigureAwait(false);
 

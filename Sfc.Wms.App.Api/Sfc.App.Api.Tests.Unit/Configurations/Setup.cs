@@ -1,10 +1,10 @@
 ﻿using DataGenerator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Sfc.App.Api.Tests.Unit.Fakes;
+using Sfc.Wms.App.Api.Tests.Unit.Fakes;
 using TestStack.BDDfy.Configuration;
 using TestStack.BDDfy.Reporters.Html;
 
-namespace Sfc.App.Api.Tests.Unit.Configurations
+namespace Sfc.Wms.App.Api.Tests.Unit.Configurations
 {
     [TestClass]
     public class Setup

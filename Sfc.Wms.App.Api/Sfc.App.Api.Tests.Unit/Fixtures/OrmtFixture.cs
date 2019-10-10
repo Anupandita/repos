@@ -1,13 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using Sfc.Wms.App.Api.Controllers;
-using Sfc.Core.OnPrem.Result;
-using Sfc.Wms.Interfaces.Asrs.Contracts.Interfaces;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Results;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using Sfc.Core.OnPrem.Result;
+using Sfc.Wms.App.Api.Controllers;
+using Sfc.Wms.Interfaces.Asrs.Contracts.Interfaces;
 
-namespace Sfc.App.Api.Tests.Unit.Fixtures
+namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 {
     public abstract class OrmtFixture
     {

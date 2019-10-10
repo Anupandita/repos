@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "!Test", "!Test", "{9433D67C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sfc.Wms.App.Api", "Sfc.Wms.App.Api\Sfc.Wms.App.Api.csproj", "{D64223B7-5EAB-4408-9D8C-759D757F49F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sfc.App.Api.Tests.Unit", "Sfc.App.Api.Tests.Unit\Sfc.App.Api.Tests.Unit.csproj", "{C6B3CBF6-46F1-4366-BA6C-2498F2D4FE20}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sfc.Wms.App.Api.Tests.Unit", "Sfc.App.Api.Tests.Unit\Sfc.Wms.App.Api.Tests.Unit.csproj", "{C6B3CBF6-46F1-4366-BA6C-2498F2D4FE20}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfc.Wms.App.Api.Nuget", "Sfc.Wms.App.Api.Nuget\Sfc.Wms.App.Api.Nuget\Sfc.Wms.App.Api.Nuget.csproj", "{FEAE3C59-5397-4F06-BC62-933D31D58991}"
 EndProject

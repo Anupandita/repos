@@ -1,15 +1,15 @@
-﻿using DataGenerator;
+﻿using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Results;
+using DataGenerator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.App.Api.Controllers;
 using Sfc.Wms.Interfaces.Asrs.Contracts.Dtos;
 using Sfc.Wms.Interfaces.Asrs.Contracts.Interfaces;
-using Sfc.Core.OnPrem.Result;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Results;
 
-namespace Sfc.App.Api.Tests.Unit.Fixtures
+namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 {
     public abstract class IvmtFixture
     {

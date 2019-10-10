@@ -1,8 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Sfc.App.Api.Tests.Unit.Fixtures;
+using Sfc.Wms.App.Api.Tests.Unit.Fixtures;
 using TestStack.BDDfy;
 
-namespace Sfc.App.Api.Tests.Unit.Controllers
+namespace Sfc.Wms.App.Api.Tests.Unit.Controllers
 {
     [TestClass]
     [Story(

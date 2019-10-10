@@ -13,7 +13,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
         private readonly IRestClient _restClient;
         private readonly ResponseBuilder _responseBuilder;
 
-        public InventoryMaintenanceGateway(IRestClient restClient, ResponseBuilder responseBuilder) : base()
+        public InventoryMaintenanceGateway(IRestClient restClient, ResponseBuilder responseBuilder) 
         {
             _restClient = restClient;
             _responseBuilder = responseBuilder;
@@ -21,7 +21,8 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
 
         public async Task<BaseResult> CreateAsync(IvmtTriggerInputDto ivmtTriggerInput)
         {
-            var request = new RestRequest(Routes.Prefixes.DematicMessageIvmt, Method.POST).AddJsonBody(ivmtTriggerInput);
+            var request = new RestRequest(Routes.Prefixes.DematicMessageIvmt, Method.POST)
+                .AddJsonBody(ivmtTriggerInput);
             var result = await _restClient
                 .ExecuteTaskAsync<BaseResult>(request).ConfigureAwait(false);
 
