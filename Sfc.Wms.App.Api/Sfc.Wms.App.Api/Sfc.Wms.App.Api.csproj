@@ -288,6 +288,9 @@
     <Reference Include="Sfc.Wms.InboundLpn.Repos, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.InboundLpn.Repos.5.0.0\lib\net472\Sfc.Wms.InboundLpn.Repos.dll</HintPath>
     </Reference>
+    <Reference Include="Sfc.Wms.Interfaces.Asrs.App, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Interfaces.Asrs.App.1.0.1\lib\net472\Sfc.Wms.Interfaces.Asrs.App.dll</HintPath>
+    </Reference>
     <Reference Include="Sfc.Wms.Interfaces.Asrs.Contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Interfaces.Asrs.Contracts.1.0.0\lib\net472\Sfc.Wms.Interfaces.Asrs.Contracts.dll</HintPath>
     </Reference>
@@ -447,12 +450,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Wms.Interface\Asrs\Sfc.Wms.Interface.Asrs.App\Sfc.Wms.Interfaces.Asrs.App\Sfc.Wms.Interfaces.Asrs.App.csproj">
-      <Project>{eabcfacc-9855-4f03-b2b3-4aae7191584f}</Project>
-      <Name>Sfc.Wms.Interfaces.Asrs.App</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
