@@ -32,7 +32,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
                 IRestResponse<UserInfoDto> CResponse = await _restClient.ExecuteTaskAsync<UserInfoDto>(CRequest).ConfigureAwait(false);
                 RestRequest Noderequest = SignInRequest(loginCredentials, _restClient.BaseUrl.ToString());
                 IRestResponse<UserInfoDto> Noderesponse = await _restClient.ExecuteTaskAsync<UserInfoDto>(Noderequest).ConfigureAwait(false);
-                var TokenHeaderParameter = new Parameter(Constants.Token, Noderesponse.Data.Token, ParameterType.HttpHeader);
+                var TokenHeaderParameter = new Parameter(Constants.NodeToken, Noderesponse.Data.Token, ParameterType.HttpHeader);
                 CResponse.Headers.Add(TokenHeaderParameter);
                 return _responseBuilder.GetCResponseData<UserInfoDto>(CResponse);
             }).ConfigureAwait(false);
