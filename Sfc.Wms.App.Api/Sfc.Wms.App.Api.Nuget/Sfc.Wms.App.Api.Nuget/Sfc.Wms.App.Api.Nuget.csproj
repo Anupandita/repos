@@ -9,7 +9,7 @@
     <Description>Nuget package containing the calls for Wms.App.Api</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>Sfc.Wms.App.Api.Nuget</PackageId>
-    <Version>3.0.2</Version>
+    <Version>3.0.3</Version>
     <PackageReleaseNotes>Namespace changes</PackageReleaseNotes>
     <Copyright>2019</Copyright>
   </PropertyGroup>
@@ -18,7 +18,7 @@
     <PackageReference Include="Polly" Version="7.1.1" />
     <PackageReference Include="Sfc.Core.OnPrem.Security.Contracts" Version="2.1.2" />
     <PackageReference Include="Sfc.Core.RestResponse" Version="1.2.1" />
-    <PackageReference Include="Sfc.Wms.App.Api.Contracts" Version="2.0.5" />
+    <PackageReference Include="Sfc.Wms.App.Api.Contracts" Version="2.0.6" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.5.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.5.0" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
