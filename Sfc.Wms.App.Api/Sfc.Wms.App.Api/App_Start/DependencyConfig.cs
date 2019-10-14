@@ -120,6 +120,7 @@ using SimpleInjector.Lifestyles;
 using System.Configuration;
 using System.Runtime.Caching;
 using System.Web.Http;
+using Sfc.Wms.Configuration.SystemCode.Repository.Context;
 
 namespace Sfc.Wms.App.Api
 {
@@ -170,6 +171,7 @@ namespace Sfc.Wms.App.Api
             container.Register<ISfcCache>(() => new SfcInMemoryCache(MemoryCache.Default));
 
             container.Register(typeof(ISystemCodeService), typeof(SystemCodeService));
+            container.Register(typeof(ISystemCodeRepository), typeof(SystemCodeRepository));
             container.Register(typeof(ISystemCodeUnitOfWork), typeof(SystemCodeUnitOfWork));
             container.Register(typeof(ISystemCodeRepositoryGateway), typeof(SystemCodeRepositoryGateway));
             container.Register(typeof(IRbacService), typeof(RbacService));
