@@ -18,13 +18,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
         public const string Process = "EMS";
         public const string ActionCodeCost = "Arrival";
         public const string InvalidCase = "00000283000804736790";
-        public const string MessageLengthCost = "268";
+        public const string MessageLengthCost = "00268";
         public const string InBoundPallet = "Y";
     }
 
     public class ResultType
     {
         public const string Created = "Created";
-        public const string NotFound = "NotFound";
+        public const string NotFound = "Conflict";
     }
 }

@@ -5,18 +5,17 @@ using Sfc.Wms.Asrs.Dematic.Contracts.Dtos;
 using Sfc.Wms.Asrs.Shamrock.Contracts.Dtos;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
 using Sfc.Wms.InboundLpn.Contracts.Dtos;
-using Sfc.Wms.Parser.Parsers;
-//using Sfc.Wms.Interface.Parser.Parsers;
-using Sfc.Wms.ParserAndTranslator.Contracts.Validation;
-using Sfc.Wms.Interface.ParserAndTranslator.Contracts.Constants;
-using Sfc.Wms.Interface.ParserAndTranslator.Contracts.Dto;
-using Sfc.Wms.Result;
+using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Constants;
+using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Dto;
+using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.TaskDetail.Contracts.Dtos;
 using Sfc.Wms.TransitionalInventory.Contracts.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Sfc.Core.OnPrem.ParserAndTranslator.Constants;
+using Sfc.Wms.Interfaces.Parser.Parsers;
+using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Validation;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
@@ -55,8 +54,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public DataBaseFixture()
         {
              var dataTypeValidation = new DataTypeValidation();
-             var messageHeaderParser = new MessageParser(dataTypeValidation);
-             _canParseMessage = new MessageHeaderParser(messageHeaderParser);         
+             //var messageHeaderParser = new MessageParser();
+             _canParseMessage = new MessageHeaderParser();         
         }
 
         public void GetDataBeforeTriggerComt()
@@ -165,6 +164,23 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
+        public void GetDataAfterTriggerOfIvmtForSingleSku()
+        {
+            using (var db = GetOracleConnection())
+            {
+                db.Open();
+                command = new OracleCommand();
+                swmToMheIvmt = SwmToMhe(db, singleSkuCase.CaseNumber, TransactionCode.Ivmt, singleSkuCase.SkuId);
+                ivmt = JsonConvert.DeserializeObject<IvmtDto>(swmToMheIvmt.MessageJson);
+                var parsertest = ParserTestforMsgText(TransactionCode.Ivmt, swmToMheIvmt.SourceMessageText);
+                wmsToEmsIvmt = WmsToEmsData(db, swmToMheIvmt.SourceMessageKey, TransactionCode.Ivmt);
+                caseDtlAfterApi = FetchCaseDetailsAfterTriger(db);
+                unitWeight = FetchUnitWeight(db, singleSkuCase.SkuId);
+                taskSingleSku = FetchTaskDetails(db, singleSkuCase.SkuId);
+            }
+
+            }
+
         protected CaseViewDto FetchCaseDetailsAfterTriger(OracleConnection db)
         {
             var caseDtl = new CaseViewDto();
@@ -260,14 +276,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected void VerifyComtMessageWasInsertedIntoSwmToMhe(ComtDto comt, SwmToMheDto swmToMhe,string caseNbr)
         {
             Assert.AreEqual(DefaultValues.Status, swmToMheComt.SourceMessageStatus);
-            Assert.AreEqual("0", swmToMheComt.SourceMessageResponseCode);
+            Assert.AreEqual(0, swmToMheComt.SourceMessageResponseCode);
             Assert.AreEqual(DefaultValues.ContainerType, swmToMheComt.ContainerType);
             Assert.AreEqual(TransactionCode.Comt, comt.TransactionCode);
             Assert.AreEqual(MessageLength.Comt, comt.MessageLength);
             Assert.AreEqual(ActionCodeConstants.Create, comt.ActionCode);
             Assert.AreEqual(caseNbr, swmToMheComt.ContainerId);
             Assert.AreEqual(DefaultValues.ContainerType, swmToMheComt.ContainerType);
-            Assert.AreEqual("1", swmToMheComt.MessageStatus);
+            Assert.AreEqual(1, swmToMheComt.MessageStatus);
         }
 
         protected void VerifyComtMessageWasInsertedIntoWmsToEms(WmsToEmsDto wte1)
@@ -293,8 +309,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(DefaultValues.ContainerType, ivmt.UnitOfMeasure);          
             Assert.AreEqual(DefaultValues.DataControl, ivmt.DateControl);
             Assert.AreEqual(DefaultValues.InBoundPallet,ivmt.InboundPallet);
-            Assert.AreEqual("0", swmToMheIvmt.SourceMessageResponseCode);
-            Assert.AreEqual("PONumber", swmToMheIvmt.PoNumber);
+            //Assert.AreEqual("0", swmToMheIvmt.SourceMessageResponseCode);
+            //Assert.AreEqual("PONumber", swmToMheIvmt.PoNumber);
         }
 
         protected void VerifyIvmtMessageWasInsertedIntoWmsToEms(WmsToEmsDto wmsToEms)

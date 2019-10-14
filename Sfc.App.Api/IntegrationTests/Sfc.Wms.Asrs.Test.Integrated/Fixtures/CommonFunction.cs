@@ -4,8 +4,8 @@ using Sfc.Wms.Asrs.Dematic.Contracts.Dtos;
 using Sfc.Wms.Asrs.Shamrock.Contracts.Dtos;
 using Sfc.Wms.Data.Entities;
 using Sfc.Wms.TransitionalInventory.Contracts.Dtos;
-using Sfc.Wms.Interface.ParserAndTranslator.Contracts.Constants;
-using Sfc.Wms.Interface.ParserAndTranslator.Contracts.Dto;
+using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Constants;
+using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Dto;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -90,6 +90,20 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             {
                 singleSkulocal.ActualInventoryUnits = Convert.ToInt16(transInvnReader[TransInventory.ActualInventoryUnits].ToString());
                 singleSkulocal.ActualWeight = Convert.ToDecimal(transInvnReader[TransInventory.ActlWt].ToString());
+            }
+            return singleSkulocal;
+        }
+
+        public TransitionalInventoryDto FetchTransInvnentory(OracleConnection db, string skuId)
+        {
+            var singleSkulocal = new TransitionalInventoryDto();
+            var query = $"Select * from trans_invn where sku_id = '{skuId}' and  trans_invn_type = '18'";
+            command = new OracleCommand(query, db);
+            var transInvnReader = command.ExecuteReader();
+            if (transInvnReader.Read())
+            {
+                singleSkulocal.ActualInventoryUnits = Convert.ToInt16(transInvnReader[TestData.FieldName.ActualInventoryUnits].ToString());
+                singleSkulocal.ActualWeight = Convert.ToDecimal(transInvnReader[TestData.FieldName.ActlWt].ToString());
             }
             return singleSkulocal;
         }

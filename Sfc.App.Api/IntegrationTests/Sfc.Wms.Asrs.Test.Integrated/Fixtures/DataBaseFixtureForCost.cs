@@ -5,13 +5,13 @@ using Sfc.Wms.Asrs.Dematic.Contracts.Dtos;
 using Sfc.Wms.Asrs.Shamrock.Contracts.Dtos;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
 using Sfc.Wms.InboundLpn.Contracts.Dtos;
-using Sfc.Wms.Interface.Builder.MessageBuilder;
-using Sfc.Wms.Interface.ParserAndTranslator.Contracts.Constants;
-using Sfc.Wms.Interface.ParserAndTranslator.Contracts.Dto;
-using Sfc.Wms.ParserAndTranslator.Contracts.Validation;
+using Sfc.Wms.Interfaces.Builder.MessageBuilder;
+using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Constants;
+using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Dto;
 using Sfc.Wms.Foundation.Location.Contracts.Dtos;
-using Sfc.Wms.Result;
+using Sfc.Core.OnPrem.Result;
 using System;
+using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Validation;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
@@ -74,7 +74,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                     Process = DefaultValues.Process,
                     MessageKey = Convert.ToInt64(costData.MsgKey),
                     Status = DefaultValues.Status,
-                    Transaction = Interface.ParserAndTranslator.Contracts.Constants.TransactionCode.Cost,
+                    Transaction = TransactionCode.Cost,
                     ResponseCode = (short)int.Parse(ReasonCode.Success),
                     MessageText = CostResult,
                 };
