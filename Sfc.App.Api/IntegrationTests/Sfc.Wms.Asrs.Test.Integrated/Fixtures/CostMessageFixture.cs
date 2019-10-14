@@ -4,10 +4,10 @@ using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
 using RestSharp;
 using Newtonsoft.Json;
 using DefaultPossibleValue = Sfc.Wms.ParserAndTranslator.Contracts.Constants;
-using Sfc.Wms.Result;
 using System.Configuration;
 using Sfc.Wms.InboundLpn.Contracts.Dtos;
 using ValidationMessage = Sfc.Wms.Api.Asrs.Test.Integrated.TestData.ValidationMessage;
+using Sfc.Core.OnPrem.Result;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
