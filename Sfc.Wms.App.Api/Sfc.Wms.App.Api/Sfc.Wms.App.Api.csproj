@@ -177,8 +177,8 @@
     <Reference Include="Sfc.Wms.Configuration.SystemCode.Contracts, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.SystemCode.Contracts.2.0.1\lib\net472\Sfc.Wms.Configuration.SystemCode.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Configuration.SystemCode.Repository, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Configuration.SystemCode.Repository.3.1.0\lib\net472\Sfc.Wms.Configuration.SystemCode.Repository.dll</HintPath>
+    <Reference Include="Sfc.Wms.Configuration.SystemCode.Repository, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Configuration.SystemCode.Repository.2.0.1\lib\net472\Sfc.Wms.Configuration.SystemCode.Repository.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Configuration.WarehouseMaster.Contracts, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.WarehouseMaster.Contracts.2.0.2\lib\net472\Sfc.Wms.Configuration.WarehouseMaster.Contracts.dll</HintPath>
