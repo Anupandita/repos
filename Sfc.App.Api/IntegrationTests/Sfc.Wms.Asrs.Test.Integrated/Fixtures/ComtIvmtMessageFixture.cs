@@ -56,7 +56,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             };
         }
 
-
         protected void GetDataFromDataBaseForSingleSkuScenarios()
         {
             GetDataAfterTriggerOfComtForSingleSku();
@@ -66,19 +65,19 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             GetDataAfterTriggerForMultiSkuAndValidateData();
         }
-        protected IRestResponse ApiIsCalled(string url,ComtParams parameters) 
+        protected IRestResponse ApiIsCalled() 
         {
-            var client = new RestClient(url);
+            var client = new RestClient(ComtUrl);
             var request = new RestRequest(Method.POST);
             request.AddHeader("content-type", Content.ContentType);
-            request.AddJsonBody(parameters);
+            request.AddJsonBody(ComtParameters);
             request.RequestFormat = DataFormat.Json;
             Response = client.Execute(request);
             return Response;
         }
         protected BaseResult ComtIvmtResult()
         {
-            var response = ApiIsCalled(ComtUrl, ComtParameters);
+            var response = ApiIsCalled();
             var result = JsonConvert.DeserializeObject<BaseResult>(response.Content.ToString());
             return result;
         }

@@ -206,10 +206,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return MsgKey;
         }
 
-        public PickLocationDetailsDto GetPickLocationDetails(OracleConnection db, string skuId)
+        public PickLocationDetailsDto GetPickLocationDetails(OracleConnection db, string skuId, string LocnId)
         {
             var pickLocnDtl = new PickLocationDetailsDto();
-            var pickLocnView = $"select * from pick_locn_dtl where sku_id = '{skuId}' order by mod_date_time desc";
+            var pickLocnView = $"select * from pick_locn_dtl where sku_id = '{skuId}' and locn_id = '{LocnId}' order by mod_date_time desc";
             command = new OracleCommand(pickLocnView, db);
             var pickLocnDtlReader = command.ExecuteReader();
             if (pickLocnDtlReader.Read())
