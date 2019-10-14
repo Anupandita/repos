@@ -144,11 +144,11 @@
     <Reference Include="Sfc.Core.OnPrem.UnitOfWork.Contracts, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Core.OnPrem.UnitOfWork.Contracts.1.0.1\lib\net472\Sfc.Core.OnPrem.UnitOfWork.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Core.RestResponse, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Core.RestResponse.2.0.1\lib\net472\Sfc.Core.RestResponse.dll</HintPath>
+    <Reference Include="Sfc.Core.RestResponse, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Core.RestResponse.1.2.1\lib\net472\Sfc.Core.RestResponse.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms..Configuration.Security.Rbac.Repository, Version=4.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Configuration.Security.Rbac.Repository.4.0.1\lib\net472\Sfc.Wms..Configuration.Security.Rbac.Repository.dll</HintPath>
+    <Reference Include="Sfc.Wms..Configuration.Security.Rbac.Repository, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Configuration.Security.Rbac.Repository.4.0.0\lib\net472\Sfc.Wms..Configuration.Security.Rbac.Repository.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.App.Api.Contracts, Version=2.0.9.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.App.Api.Contracts.2.0.9\lib\net472\Sfc.Wms.App.Api.Contracts.dll</HintPath>
@@ -235,11 +235,11 @@
     <Reference Include="Sfc.Wms.Foundation.PixTransaction.Repository, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.PixTransaction.Repository.1.0.0\lib\net472\Sfc.Wms.Foundation.PixTransaction.Repository.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Foundation.SkuInventory.Contracts, Version=4.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Foundation.SkuInventory.Contracts.4.0.1\lib\net472\Sfc.Wms.Foundation.SkuInventory.Contracts.dll</HintPath>
+    <Reference Include="Sfc.Wms.Foundation.SkuInventory.Contracts, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.SkuInventory.Contracts.2.0.1\lib\net472\Sfc.Wms.Foundation.SkuInventory.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Foundation.SkuInventory.Repository, Version=4.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Foundation.SkuInventory.Repository.4.0.1\lib\net472\Sfc.Wms.Foundation.SkuInventory.Repository.dll</HintPath>
+    <Reference Include="Sfc.Wms.Foundation.SkuInventory.Repository, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.SkuInventory.Repository.2.0.1\lib\net472\Sfc.Wms.Foundation.SkuInventory.Repository.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Foundation.Tasks.Contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.Tasks.Contracts.1.0.0\lib\net472\Sfc.Wms.Foundation.Tasks.Contracts.dll</HintPath>
