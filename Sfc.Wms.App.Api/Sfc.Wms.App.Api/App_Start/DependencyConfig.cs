@@ -11,7 +11,6 @@ using Sfc.Wms.App.Api.Services;
 using Sfc.Wms.App.App.AutoMapper;
 using Sfc.Wms.App.App.Gateways;
 using Sfc.Wms.App.App.Interfaces;
-using Sfc.Wms.Configuration.DockDoor.Contracts.Dtos;
 using Sfc.Wms.Configuration.DockDoor.Contracts.Interfaces;
 using Sfc.Wms.Configuration.DockDoor.Repository.Gateway;
 using Sfc.Wms.Configuration.DockDoor.Repository.Interfaces;
@@ -24,49 +23,41 @@ using Sfc.Wms.Configuration.SystemCode.Contracts.Interfaces;
 using Sfc.Wms.Configuration.SystemCode.Repository.Gateways;
 using Sfc.Wms.Configuration.SystemCode.Repository.Interfaces;
 using Sfc.Wms.Data.Context;
-using Sfc.Wms.Data.Entities;
 using Sfc.Wms.Data.Interfaces;
 using Sfc.Wms.Foundation.AllocationInventory.App.Interfaces;
 using Sfc.Wms.Foundation.AllocationInventory.App.Services;
 using Sfc.Wms.Foundation.AllocationInventory.App.UnitOfWork;
-using Sfc.Wms.Foundation.AllocationInventory.Contracts.Dtos;
 using Sfc.Wms.Foundation.AllocationInventory.Contracts.Interfaces;
 using Sfc.Wms.Foundation.AllocationInventory.Repository.Gateway;
 using Sfc.Wms.Foundation.AllocationInventory.Repository.Interfaces;
-using Sfc.Wms.Foundation.Carton.Contracts.Dtos;
 using Sfc.Wms.Foundation.Carton.Contracts.Interfaces;
 using Sfc.Wms.Foundation.Carton.Repository.Gateway;
 using Sfc.Wms.Foundation.Carton.Repository.Interfaces;
+using Sfc.Wms.Foundation.InboundLpn.Contracts.Interfaces;
+using Sfc.Wms.Foundation.InboundLpn.Repository.Context;
 using Sfc.Wms.Foundation.InboundLpn.Repository.Gateways;
 using Sfc.Wms.Foundation.InboundLpn.Repository.Interfaces;
 using Sfc.Wms.Foundation.Location.App.Interfaces;
 using Sfc.Wms.Foundation.Location.App.Services;
 using Sfc.Wms.Foundation.Location.App.UnitOfWork;
-using Sfc.Wms.Foundation.Location.Contracts.Dtos;
 using Sfc.Wms.Foundation.Location.Contracts.Interfaces;
 using Sfc.Wms.Foundation.Location.Repository.Gateway;
 using Sfc.Wms.Foundation.Location.Repository.Interfaces;
-using Sfc.Wms.Foundation.Message.Contracts.Dtos;
 using Sfc.Wms.Foundation.Message.Contracts.Interfaces;
 using Sfc.Wms.Foundation.Message.Repository.Gateway;
 using Sfc.Wms.Foundation.Message.Repository.Interfaces;
-using Sfc.Wms.Foundation.MessageSource.Contracts.Dtos;
 using Sfc.Wms.Foundation.MessageSource.Contracts.Interfaces;
 using Sfc.Wms.Foundation.MessageSource.Repository.Gateways;
 using Sfc.Wms.Foundation.MessageSource.Repository.Interfaces;
-using Sfc.Wms.Foundation.PixTransaction.Contracts.Dtos;
 using Sfc.Wms.Foundation.PixTransaction.Contracts.Interfaces;
 using Sfc.Wms.Foundation.PixTransaction.Repository.Gateway;
 using Sfc.Wms.Foundation.PixTransaction.Repository.Interfaces;
-using Sfc.Wms.Foundation.SkuInventory.Contracts.Dtos;
 using Sfc.Wms.Foundation.SkuInventory.Contracts.Interfaces;
 using Sfc.Wms.Foundation.SkuInventory.Repository.Gateway;
 using Sfc.Wms.Foundation.SkuInventory.Repository.Interfaces;
-using Sfc.Wms.Foundation.Tasks.Contracts.Dtos;
 using Sfc.Wms.Foundation.Tasks.Contracts.Interfaces;
 using Sfc.Wms.Foundation.Tasks.Repository.Gateways;
 using Sfc.Wms.Foundation.Tasks.Repository.Interfaces;
-using Sfc.Wms.Foundation.TransitionalInventory.Contracts.Dtos;
 using Sfc.Wms.Foundation.TransitionalInventory.Contracts.Interfaces;
 using Sfc.Wms.Foundation.TransitionalInventory.Repository.Gateways;
 using Sfc.Wms.Foundation.TransitionalInventory.Repository.Interfaces;
@@ -98,18 +89,14 @@ using Sfc.Wms.Inbound.TransitionalInventory.App.UnitOfWork;
 using Sfc.Wms.InboundLpn.App.Interfaces;
 using Sfc.Wms.InboundLpn.App.Services;
 using Sfc.Wms.InboundLpn.App.UnitOfWork;
-using Sfc.Wms.InboundLpn.Contracts.Dtos;
-using Sfc.Wms.InboundLpn.Contracts.Interfaces;
 using Sfc.Wms.Interfaces.Asrs.App.Interfaces;
 using Sfc.Wms.Interfaces.Asrs.App.Mappers;
 using Sfc.Wms.Interfaces.Asrs.App.Services;
 using Sfc.Wms.Interfaces.Asrs.App.UnitOfWork;
 using Sfc.Wms.Interfaces.Asrs.Contracts.Interfaces;
-using Sfc.Wms.Interfaces.Asrs.Dematic.Contracts.Dtos;
 using Sfc.Wms.Interfaces.Asrs.Dematic.Contracts.Interfaces;
 using Sfc.Wms.Interfaces.Asrs.Dematic.Repository.Gateways;
 using Sfc.Wms.Interfaces.Asrs.Dematic.Repository.Interfaces;
-using Sfc.Wms.Interfaces.Asrs.Shamrock.Contracts.Dtos;
 using Sfc.Wms.Interfaces.Asrs.Shamrock.Contracts.Interfaces;
 using Sfc.Wms.Interfaces.Asrs.Shamrock.Repository.Gateways;
 using Sfc.Wms.Interfaces.Asrs.Shamrock.Repository.Interfaces;
@@ -127,14 +114,12 @@ using Sfc.Wms.Interfaces.Translator.Translators;
 using Sfc.Wms.Outbound.Carton.App.Interfaces;
 using Sfc.Wms.Outbound.Carton.App.Services;
 using Sfc.Wms.Outbound.Carton.App.UnitOfWork;
-using Sfc.Wms.SystemCode.App.AutoMapper;
 using SimpleInjector;
 using SimpleInjector.Integration.WebApi;
 using SimpleInjector.Lifestyles;
 using System.Configuration;
 using System.Runtime.Caching;
 using System.Web.Http;
-using Sfc.Wms.Foundation.InboundLpn.Repository.Context;
 
 namespace Sfc.Wms.App.Api
 {
@@ -144,7 +129,6 @@ namespace Sfc.Wms.App.Api
         {
             var container = new Container();
             container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
-            Mapper.Reset(); SfcMapper.Initialize();
             RegisterTypes(container);
             container.RegisterWebApiControllers(GlobalConfiguration.Configuration);
 #if DEBUG
@@ -161,36 +145,12 @@ namespace Sfc.Wms.App.Api
             container.RegisterSingleton<IMapper>(() =>
             {
                 var mapper = new Mapper(new MapperConfiguration(cfg =>
-                    {
-                        SfcRbacMapper.CreateMaps(cfg);
-                        SystemCodeAutoMapper.CreateMaps(cfg);
-                        PrinterValuesMapper.CreateMaps(cfg);
-                        cfg.AddExpressionMapping();
-                        cfg.CreateMap<TaskHeader, TaskHeaderDto>(MemberList.None).ReverseMap();
-                        cfg.CreateMap<TaskDetail, TaskDetailDto>(MemberList.None).ReverseMap();
-                        cfg.CreateMap<SwmToMhe, SwmToMheDto>(MemberList.None).ReverseMap();
-                        cfg.CreateMap<SwmFromMhe, SwmFromMheDto>(MemberList.None).ReverseMap();
-                        cfg.CreateMap<WmsToEms, WmsToEmsDto>(MemberList.None).ReverseMap();
-                        cfg.CreateMap<EmsToWms, EmsToWmsDto>(MemberList.None).ReverseMap();
-                        cfg.CreateMap<SwmMessageSource, SwmMessageSourceDto>(MemberList.None).ReverseMap();
-                        cfg.CreateMap<CaseHeader, CaseHeaderDto>(MemberList.None).ReverseMap();
-                        cfg.CreateMap<PickLocationDetail, PickLocationDetailsDto>(MemberList.None).ReverseMap();
-                        cfg.CreateMap<CaseDetail, CaseDetailDto>(MemberList.None).ReverseMap();
-                        cfg.CreateMap<TransitionalInventory, TransitionalInventoryDto>(MemberList.None).ReverseMap();
-                        cfg.CreateMap<PixTransaction, PixTransactionDto>(MemberList.None).ReverseMap();
-                        cfg.CreateMap<SkuInventory, SkuInventoryDto>(MemberList.None).ReverseMap();
-                        cfg.CreateMap<LocationGroup, LocationGroupDto>(MemberList.None).ReverseMap();
-                        cfg.CreateMap<CartonHeader, CartonHeaderDto>(MemberList.None).ReverseMap();
-                        cfg.CreateMap<PickLocationDetailsExtenstion, PickLocationDetailsExtenstionDto>(MemberList.None).ReverseMap();
-                        cfg.CreateMap<PickLocationDetailsExtenstion, PickLocationDetailsDto>(MemberList.None).ReverseMap();
-                        cfg.CreateMap<DockDoorMaster, DockDoorMasterDto>(MemberList.None).ReverseMap();
-                        cfg.CreateMap<LocationHeader, LocationHeaderDto>(MemberList.None).ReverseMap();
-                        cfg.CreateMap<PickTicketDetail, PickTicketDetailDto>(MemberList.None).ReverseMap();
-                        cfg.CreateMap<PickTicketHeader, PickTicketHeaderDto>(MemberList.None).ReverseMap();
-                        cfg.CreateMap<CartonDetail, CartonDetailDto>(MemberList.None).ReverseMap();
-                        cfg.CreateMap<AllocationInventoryDetail, AllocationInventoryDetailDto>(MemberList.None).ReverseMap();
-                        cfg.CreateMap<MessageToSortView, MessageToSortViewDto>(MemberList.None).ReverseMap();
-                    }));
+                {
+                    cfg.AddExpressionMapping();
+                    SfcRbacMapper.CreateMaps(cfg);
+                    PrinterValuesMapper.CreateMaps(cfg);
+                    SfcAsrsMapper.CreateMaps(cfg);
+                }));
 #if DEBUG
                 mapper.DefaultContext.ConfigurationProvider.AssertConfigurationIsValid();
 #endif
@@ -228,7 +188,7 @@ namespace Sfc.Wms.App.Api
             container.Register(typeof(ISwmToMheService), typeof(SwmToMheService));
             container.Register(typeof(IShamrockGateway<>), typeof(ShamrockRepository<>));
             container.Register(typeof(IWmsToEmsMessageProcessorService), typeof(WmsToEmsMessageProcessorService));
-            container.Register(typeof(IEmsToWmsMessageProcessorSevice), typeof(EmsToWmsMessageProcessorService));
+            container.Register(typeof(IEmsToWmsMessageProcessorService), typeof(EmsToWmsMessageProcessorService));
 
             container.Register(typeof(IBuildMessage), typeof(MainMessageBuilder));
             container.Register(typeof(IParseMessage), typeof(MainParser));

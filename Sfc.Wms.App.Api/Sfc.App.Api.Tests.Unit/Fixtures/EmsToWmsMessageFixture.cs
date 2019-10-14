@@ -12,12 +12,12 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
     public abstract class EmsToWmsMessageFixture
     {
         private readonly EmsToWmsMessageController _emsToWmsMessageController;
-        private readonly Mock<IEmsToWmsMessageProcessorSevice> _emsToWmsMessageProcessorService;
+        private readonly Mock<IEmsToWmsMessageProcessorService> _emsToWmsMessageProcessorService;
         private Task<IHttpActionResult> testResult;
 
         protected EmsToWmsMessageFixture()
         {
-            _emsToWmsMessageProcessorService = new Mock<IEmsToWmsMessageProcessorSevice>(MockBehavior.Default);
+            _emsToWmsMessageProcessorService = new Mock<IEmsToWmsMessageProcessorService>(MockBehavior.Default);
             _emsToWmsMessageController = new EmsToWmsMessageController(_emsToWmsMessageProcessorService.Object);
         }
 

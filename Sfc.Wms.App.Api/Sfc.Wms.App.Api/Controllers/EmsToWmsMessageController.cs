@@ -12,9 +12,9 @@ namespace Sfc.Wms.App.Api.Controllers
 {
     public class EmsToWmsMessageController : SfcBaseController
     {
-        private readonly IEmsToWmsMessageProcessorSevice _emsToWmsMessageProcessorService;
+        private readonly IEmsToWmsMessageProcessorService _emsToWmsMessageProcessorService;
 
-        public EmsToWmsMessageController(IEmsToWmsMessageProcessorSevice wmsToEmsMessageProcessorService)
+        public EmsToWmsMessageController(IEmsToWmsMessageProcessorService wmsToEmsMessageProcessorService)
         {
             _emsToWmsMessageProcessorService = wmsToEmsMessageProcessorService;
         }
