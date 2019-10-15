@@ -161,7 +161,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected void VerifyTheQuantityForInventoryShortageExceptionIntoTransInventoryTable()
         {
             Assert.AreEqual(trnsInvBeforeApi.ActualInventoryUnits - Convert.ToDecimal(Ivst.Quantity), trnsInvAfterApi.ActualInventoryUnits);
-            Assert.AreEqual(Convert.ToInt16(trnsInvBeforeApi.ActualWeight) - (unitWeight * Convert.ToDecimal(Ivst.Quantity)), Math.Round(Convert.ToDecimal(trnsInvAfterApi.ActualWeight)));
+            Assert.AreEqual(Convert.ToInt16(trnsInvBeforeApi.ActualWeight) - (unitWeight * Convert.ToDecimal(Ivst.Quantity)), Convert.ToDecimal(trnsInvAfterApi.ActualWeight));
         }
 
         protected void VerifyTheRecordInsertedIntoPixTransactionTablereasonCodeForInventoryShortageException()
@@ -181,7 +181,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected void VerifyTheQuantityForWrongSkuExceptionIntoTransInventoryTable()
         {
             Assert.AreEqual(trnsInvBeforeApi.ActualInventoryUnits - Convert.ToDecimal(Ivst.Quantity), trnsInvAfterApi.ActualInventoryUnits);
-            Assert.AreEqual(Convert.ToInt16(trnsInvBeforeApi.ActualWeight) - (unitWeight * Convert.ToDecimal(Ivst.Quantity)), Math.Round(Convert.ToDecimal(trnsInvAfterApi.ActualWeight)));
+            Assert.AreEqual(Convert.ToInt16(trnsInvBeforeApi.ActualWeight) - (unitWeight * Convert.ToDecimal(Ivst.Quantity)), Convert.ToDecimal(trnsInvAfterApi.ActualWeight));
         }
         protected void VerifyTheRecordInsertedIntoPixTransactionTablereasonCodeForWrongSkuException()
         {
