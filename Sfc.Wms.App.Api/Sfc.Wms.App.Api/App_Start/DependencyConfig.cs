@@ -20,6 +20,7 @@ using Sfc.Wms.Configuration.NextUpCounter.Repository.Interfaces;
 using Sfc.Wms.Configuration.Security.Rbac.Repository.Gateways;
 using Sfc.Wms.Configuration.Security.Rbac.Repository.Interfaces;
 using Sfc.Wms.Configuration.SystemCode.Contracts.Interfaces;
+using Sfc.Wms.Configuration.SystemCode.Repository.Context;
 using Sfc.Wms.Configuration.SystemCode.Repository.Gateways;
 using Sfc.Wms.Configuration.SystemCode.Repository.Interfaces;
 using Sfc.Wms.Data.Context;
@@ -120,7 +121,6 @@ using SimpleInjector.Lifestyles;
 using System.Configuration;
 using System.Runtime.Caching;
 using System.Web.Http;
-using Sfc.Wms.Configuration.SystemCode.Repository.Context;
 
 namespace Sfc.Wms.App.Api
 {

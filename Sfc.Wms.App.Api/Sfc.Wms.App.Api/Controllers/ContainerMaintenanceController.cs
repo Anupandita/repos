@@ -27,19 +27,12 @@ namespace Sfc.Wms.App.Api.Controllers
         [AllowAnonymous]
         public async Task<IHttpActionResult> CreateAsync([FromBody]ComtTriggerInputDto comtTriggerInput)
         {
-            try
-            {
-                var result = await _wmsToEmsMessageProcessorService.GetComtMessageAsync(comtTriggerInput)
-                    .ConfigureAwait(false);
+            var result = await _wmsToEmsMessageProcessorService.GetComtMessageAsync(comtTriggerInput)
+                .ConfigureAwait(false);
 
-                return Content(Enum.TryParse(result.ResultType.ToString(), out HttpStatusCode statusCode)
-                    ? statusCode
-                    : HttpStatusCode.ExpectationFailed, result);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            return Content(Enum.TryParse(result.ResultType.ToString(), out HttpStatusCode statusCode)
+                ? statusCode
+                : HttpStatusCode.ExpectationFailed, result);
         }
     }
 }
