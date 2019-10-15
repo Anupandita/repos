@@ -7,7 +7,6 @@ namespace Sfc.Wms.App.Api.Interfaces
     public interface IRbacService
     {
         Task<BaseResult<UserInfoDto>> SignInAsync(LoginCredentials loginCredentials);
-
         Task<BaseResult<UserInfoDto>> GetPrinterValuesAsyc(UserInfoDto userInfoDto);
     }
 }

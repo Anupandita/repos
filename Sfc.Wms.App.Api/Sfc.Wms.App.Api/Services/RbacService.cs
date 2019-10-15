@@ -36,7 +36,7 @@ namespace Sfc.Wms.App.Api.Services
         public async Task<BaseResult<UserInfoDto>> GetPrinterValuesAsyc(UserInfoDto userInfoDto)
         {
             var result = await _rbacGateway.GetPrinterValuesAsyc().ConfigureAwait(false);
-            userInfoDto.PrinterList = _mapper.Map<IEnumerable<SysCodeDto>, IEnumerable<SfcPrinterSelectList>>(result.Payload);
+            userInfoDto.PrinterList = _mapper.Map<IEnumerable<SysCodeDto> ,IEnumerable<SfcPrinterSelectList>> (result.Payload);
             return new BaseResult<UserInfoDto>
             {
                 ValidationMessages = result.ValidationMessages,
