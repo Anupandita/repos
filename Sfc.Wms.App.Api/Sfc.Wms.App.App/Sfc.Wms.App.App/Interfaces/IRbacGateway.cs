@@ -8,7 +8,7 @@ namespace Sfc.Wms.App.App.Interfaces
 {
     public interface IRbacGateway
     {
-        Task<BaseResult<UserInfoDto>> SignInAsync(LoginCredentials loginCredentials);
         Task<BaseResult<IEnumerable<SysCodeDto>>> GetPrinterValuesAsyc();
+        Task<BaseResult<UserInfoDto>> SignInAsync(LoginCredentials loginCredentials);
     }
 }

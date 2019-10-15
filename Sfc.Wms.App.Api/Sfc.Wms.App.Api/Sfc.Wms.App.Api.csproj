@@ -437,6 +437,7 @@
     <Compile Include="Controllers\ContainerMaintenanceController.cs" />
     <Compile Include="Controllers\EmsToWmsMessageController.cs" />
     <Compile Include="Controllers\InventoryMaintenanceController.cs" />
+    <Compile Include="Controllers\LpnController.cs" />
     <Compile Include="Controllers\OrderMaintenanceController.cs" />
     <Compile Include="Controllers\UserRbacController.cs" />
     <Compile Include="Global.asax.cs">

@@ -260,6 +260,8 @@ namespace Sfc.Wms.App.Api
             container.Register(typeof(IAllocationInventoryUnitOfWork), typeof(AllocationInventoryUnitOfWork));
 
             container.Register(typeof(ICanGenerateLabel), typeof(LabelGenerator));
+            container.Register(typeof(IFindLpnService), typeof(FindLpnService));
+            container.Register(typeof(ILpnHistoryService), typeof(LpnHistoryService));
         }
     }
 }

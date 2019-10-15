@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AutoMapper;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Core.OnPrem.Security.Contracts.Dtos;
 using Sfc.Core.OnPrem.Security.Contracts.Interfaces;
@@ -10,13 +7,17 @@ using Sfc.Wms.App.App.Interfaces;
 using Sfc.Wms.Configuration.SystemCode.Contracts.Dtos;
 using Sfc.Wms.Configuration.SystemCode.Contracts.Interfaces;
 using Sfc.Wms.Framework.Security.Token.Jwt.Jwt;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Sfc.Wms.App.App.Gateways
 {
     public class RbacGateway : BaseResultBuilder, IRbacGateway
     {
+        private readonly ISystemCodeService _systemCodeService;
         private readonly IUserRbacService _userRbacService;
-        private readonly ISystemCodeService _systemCodeService; 
 
         public RbacGateway(IUserRbacService userRbacService, ISystemCodeService systemCodeService)
         {
@@ -24,9 +25,10 @@ namespace Sfc.Wms.App.App.Gateways
             _systemCodeService = systemCodeService;
         }
 
+
         public async Task<BaseResult<IEnumerable<SysCodeDto>>> GetPrinterValuesAsyc()
-        { 
-            return await _systemCodeService.GetSystemCodeAsync(PrinterDropDown.RecType,PrinterDropDown.CodeType,PrinterDropDown.CodeId,PrinterDropDown.OrderByColumn,PrinterDropDown.OrderBy);
+        {
+            return await _systemCodeService.GetSystemCodeAsync(PrinterDropdown.RecType,PrinterDropdown.CodeType,PrinterDropdown.CodeId,PrinterDropdown.OrderByColumn,PrinterDropdown.OrderBy);
         }
 
         public async Task<BaseResult<UserInfoDto>> SignInAsync(LoginCredentials loginCredentials)
@@ -59,8 +61,6 @@ namespace Sfc.Wms.App.App.Gateways
             }
         }
 
-        #region Private Methods
-
         private BaseResult<UserInfoDto> GetBaseResult(BaseResult<int> result)
         {
             var response = new BaseResult<UserInfoDto> { ResultType = result.ResultType };
@@ -74,7 +74,5 @@ namespace Sfc.Wms.App.App.Gateways
             return !(string.IsNullOrWhiteSpace(loginCredentials.UserName) ||
                      string.IsNullOrWhiteSpace(loginCredentials.Password));
         }
-
-        #endregion
     }
 }
