@@ -158,6 +158,12 @@
     <PackageReference Include="Sfc.Core.Cache.InMemory">
       <Version>1.2.1</Version>
     </PackageReference>
+    <PackageReference Include="Sfc.Wms.App.Api.Nuget">
+      <Version>3.0.4</Version>
+    </PackageReference>
+    <PackageReference Include="Sfc.Wms.App.App">
+      <Version>3.0.2</Version>
+    </PackageReference>
     <PackageReference Include="Sfc.Wms.Data">
       <Version>4.0.5</Version>
     </PackageReference>
@@ -178,17 +184,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Sfc.Wms.App.Api.Nuget\Sfc.Wms.App.Api.Nuget\Sfc.Wms.App.Api.Nuget.csproj">
-      <Project>{feae3c59-5397-4f06-bc62-933d31d58991}</Project>
-      <Name>Sfc.Wms.App.Api.Nuget</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Sfc.Wms.App.Api\Sfc.Wms.App.Api.csproj">
       <Project>{d64223b7-5eab-4408-9d8c-759d757f49f3}</Project>
       <Name>Sfc.Wms.App.Api</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sfc.Wms.App.App\Sfc.Wms.App.App\Sfc.Wms.App.App.csproj">
-      <Project>{cd1c9cfd-4058-4874-9d99-3eea9577aff6}</Project>
-      <Name>Sfc.Wms.App.App</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
