@@ -22,7 +22,7 @@ namespace Sfc.Wms.App.Api.Controllers
             _rbacService = rbacService;
         }
 
-        [HttpGet]
+        [HttpPost]
         [AllowAnonymous]
         [Route(Routes.Paths.UserLogin)]
         [ResponseType(typeof(BaseResult<UserInfoDto>))]
