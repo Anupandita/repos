@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>3.0.1</Version>
+    <Version>3.0.2</Version>
     <Configurations>Debug;Release;QA;UAT;PROD</Configurations>
     <PackageId>Sfc.Wms.App.App</PackageId>
     <Company>Shamrock Foods Company</Company>
@@ -11,15 +11,11 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Sfc.Wms.Configuration.SystemCode.Contracts" Version="2.0.1" />
-    <PackageReference Include="Sfc.Wms.Configuration.SystemCode.Repository" Version="2.0.1" />
-    <PackageReference Include="Sfc.Wms.Framework.Security.Rbac" Version="4.0.0" />
-    <PackageReference Include="Sfc.Wms.Framework.Security.Token.Jwt" Version="3.0.1" />
-    <PackageReference Include="Sfc.Wms.Framework.SystemCode.App" Version="2.1.0" />
+    <PackageReference Include="Sfc.Wms.Framework.Security.Rbac" Version="5.0.1" />
+    <PackageReference Include="Sfc.Wms.Framework.Security.Token.Jwt" Version="3.0.2" />
+    <PackageReference Include="Sfc.Wms.Framework.SystemCode.App" Version="3.1.1" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Sfc.Wms.Configuration.SystemCode.Contracts">
-      <HintPath>..\..\..\..\..\..\WMS\WMS.Configuration\Wms.Configuration\Sfc.Wms.SystemCode\Sfc.Wms.SystemCode.Contracts\Sfc.Wms.SystemCode.Contracts\bin\Debug\net472\Sfc.Wms.Configuration.SystemCode.Contracts.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

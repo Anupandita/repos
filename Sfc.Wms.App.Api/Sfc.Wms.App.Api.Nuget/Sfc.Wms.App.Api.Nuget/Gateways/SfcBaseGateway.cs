@@ -5,10 +5,11 @@ using System;
 using System.Configuration;
 using Sfc.Wms.App.Api.Contracts.Constants;
 using System.Net.Http;
+using Sfc.Core.OnPrem.Result;
 
 namespace Sfc.Wms.App.Api.Nuget.Gateways
 {
-    public class SfcBaseGateway
+    public class SfcBaseGateway:BaseResultBuilder
     {
         protected  string _serviceBaseUrl;
         private readonly int _maxRetryAttempts;

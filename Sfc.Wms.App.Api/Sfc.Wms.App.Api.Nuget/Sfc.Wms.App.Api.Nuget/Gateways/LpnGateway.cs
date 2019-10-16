@@ -6,7 +6,7 @@ using Sfc.Wms.App.Api.Contracts.Result;
 using System;
 using System.Configuration;
 using System.Threading.Tasks;
-using Wms.App.Api.Nuget.Builders;
+using Sfc.Wms.App.Api.Nuget.Builders;
 
 namespace Sfc.Wms.App.Api.Nuget.Gateways
 {

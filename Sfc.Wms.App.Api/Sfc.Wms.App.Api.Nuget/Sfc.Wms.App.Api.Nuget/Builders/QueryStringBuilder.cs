@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Sfc.Wms.App.Api.Contracts.Constants;
 
-using Sfc.Wms.App.Api.Contracts.Constants;
-
-namespace Wms.App.Api.Nuget.Builders
+namespace Sfc.Wms.App.Api.Nuget.Builders
 {
     class QueryStringBuilder
     {
