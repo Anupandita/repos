@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.0.9</Version>
+    <Version>2.1.1</Version>
     <Authors>Shamrock Foods (SOWL)</Authors>
     <Company>Shamrock Foods Company</Company>
     <Product>Wms.App</Product>
@@ -12,6 +12,6 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Restsharp" Version="106.6.10" />
-    <PackageReference Include="Sfc.Core.OnPrem.Result" Version="2.1.1" />
+    <PackageReference Include="Sfc.Core.OnPrem.Result" Version="2.1.2" />
   </ItemGroup>
  </Project>
