@@ -227,34 +227,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return pickLocn;
         }
 
-        public SwmFromMheDto SwmFromMhe(OracleConnection db, string caseNbr, string trx, string skuId)
-        {
-            var swmFromMheData = new SwmFromMheDto();
-            Query = $"select * from swm_from_mhe where container_id = '{caseNbr}' and source_msg_trans_code = '{trx}' and sku_id = '{skuId}' order by created_date_time desc";
-            command = new OracleCommand(Query, db);
-            var swmFromMheReader = command.ExecuteReader();
-            if (swmFromMheReader.Read())
-            {
-                swmFromMheData.SourceMessageKey = Convert.ToInt16(swmFromMheReader[TestData.FieldName.SourceMsgKey].ToString());
-                swmFromMheData.SourceMessageResponseCode = Convert.ToInt16(swmFromMheReader[TestData.FieldName.SourceMsgRsnCode].ToString());
-                swmFromMheData.SourceMessageStatus = swmFromMheReader[TestData.FieldName.SourceMsgStatus].ToString();
-                swmFromMheData.SourceMessageProcess = swmFromMheReader[TestData.FieldName.SourceMsgProcess].ToString();
-                swmFromMheData.SourceMessageTransactionCode = swmFromMheReader[TestData.FieldName.SourceMsgTransCode].ToString();
-                swmFromMheData.ContainerId = swmFromMheReader[TestData.FieldName.ContainerId].ToString();
-                swmFromMheData.ContainerType = swmFromMheReader[TestData.FieldName.ContainerType].ToString();
-                swmFromMheData.MessageJson = swmFromMheReader[TestData.FieldName.MsgJson].ToString();
-                swmFromMheData.SourceMessageText = swmFromMheReader[TestData.FieldName.SourceMsgText].ToString();
-                swmFromMheData.LocationId = swmFromMheReader[TestData.FieldName.LocnId].ToString();
-            }
-            return swmFromMheData;
-        }
+       
 
-        public void GetDataAfterTrigger()
+        public void GetDataAfterTrigger(long key)
         {
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                swmFromMhe = SwmFromMhe(db, IvstData.CaseNumber, TransactionCode.Ivst, IvstData.SkuId);
+                swmFromMhe = SwmFromMhe(db, key, TransactionCode.Ivst);
                 Ivst = JsonConvert.DeserializeObject<IvstDto>(swmFromMhe.MessageJson);
                 trnsInvAfterApi = FetchTransInvnentory(db, Ivst.Sku);
                 pickLocnDtlAfterApi = PickLocnData(db, Ivst.Sku);
@@ -263,6 +243,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 pixtran = GetPixtransaction(db, PixTrnAfterApi);
             }
         }
+
+
+
 
         public PixTransactionDto GetPixtransaction(OracleConnection db, string rsnCode)
         {

@@ -70,7 +70,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         protected void GetValidDataAfterTrigger()
         {
-            GetDataAfterTrigger();
+            GetDataAfterTrigger(CurrentMsgKey);
         }
         protected IRestResponse ApiIsCalled()
         {
