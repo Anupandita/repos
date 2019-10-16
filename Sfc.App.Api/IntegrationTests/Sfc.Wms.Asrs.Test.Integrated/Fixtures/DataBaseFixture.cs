@@ -81,7 +81,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public CaseViewDto TriggerOnCaseHeader(OracleConnection db, int SeqNumber)
         {
             var caseheader = new CaseViewDto();
-            var countQuery = $"select COUNT(*) from  CASE_HDR inner join CASE_DTL on CASE_HDR.CASE_NBR = CASE_DTL.CASE_NBR inner join ITEM_MASTER im ON CASE_DTL.sku_id = im.sku_id inner join locn_hdr lh ON CASE_HDR.locn_id = lh.locn_id inner join locn_grp lg ON lg.locn_id=lh.locn_id inner join sys_code sc ON sc.code_id=lg.grp_type where CASE_DTL.total_alloc_qty >1 and CASE_DTL.actl_qty>1 and CASE_DTL.CASE_SEQ_NBR = 1 and CASE_HDR.stat_code = '50'and CASE_HDR.po_nbr!= 'null'and sc.code_type='740' and code_id ='19' and im.temp_zone in ('D', 'F')";
+            var countQuery = $"select COUNT(*) from  CASE_HDR inner join CASE_DTL on CASE_HDR.CASE_NBR = CASE_DTL.CASE_NBR inner join ITEM_MASTER im ON CASE_DTL.sku_id = im.sku_id inner join locn_hdr lh ON CASE_HDR.locn_id = lh.locn_id inner join locn_grp lg ON lg.locn_id=lh.locn_id inner join sys_code sc ON sc.code_id=lg.grp_type where CASE_DTL.total_alloc_qty >1 and CASE_DTL.actl_qty>1 and CASE_DTL.CASE_SEQ_NBR = 1 and CASE_HDR.stat_code = '50'and CASE_HDR.po_nbr!= 'null'and sc.code_type='740' and code_id ='19' and im.temp_zone in ('D', 'F') and case_hdr.actl_wt < 1000";
             var countCommand = new OracleCommand(countQuery, db);
             var rowSize = Convert.ToInt32(countCommand.ExecuteScalar());
             if (rowSize == 0)
@@ -92,7 +92,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
             else
             {
-                var q = $"select CASE_HDR.CASE_NBR,CASE_HDR.LOCN_ID,CASE_HDR.STAT_CODE from  CASE_HDR inner join CASE_DTL on CASE_HDR.CASE_NBR = CASE_DTL.CASE_NBR inner join ITEM_MASTER im ON CASE_DTL.sku_id = im.sku_id inner join locn_hdr lh ON CASE_HDR.locn_id = lh.locn_id inner join locn_grp lg ON lg.locn_id=lh.locn_id inner join sys_code sc ON sc.code_id=lg.grp_type where CASE_DTL.total_alloc_qty >1 and CASE_DTL.actl_qty>1 and CASE_DTL.CASE_SEQ_NBR = 1 and CASE_HDR.stat_code = '50'and CASE_HDR.po_nbr!= 'null'and sc.code_type='740' and code_id ='19' and im.temp_zone in ('D', 'F')";
+                var q = $"select CASE_HDR.CASE_NBR,CASE_HDR.LOCN_ID,CASE_HDR.STAT_CODE from  CASE_HDR inner join CASE_DTL on CASE_HDR.CASE_NBR = CASE_DTL.CASE_NBR inner join ITEM_MASTER im ON CASE_DTL.sku_id = im.sku_id inner join locn_hdr lh ON CASE_HDR.locn_id = lh.locn_id inner join locn_grp lg ON lg.locn_id=lh.locn_id inner join sys_code sc ON sc.code_id=lg.grp_type where CASE_DTL.total_alloc_qty >1 and CASE_DTL.actl_qty>1 and CASE_DTL.CASE_SEQ_NBR = 1 and CASE_HDR.stat_code = '50'and CASE_HDR.po_nbr!= 'null'and sc.code_type='740' and code_id ='19' and im.temp_zone in ('D', 'F') and case_hdr.actl_wt < 1000";
                 var command = new OracleCommand(q, db);
 
                 var caseHeaderReader = command.ExecuteReader();
@@ -109,7 +109,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public CaseViewDto ValidQueryToFetchCaseData(OracleConnection db, int SeqNumber)
         {
             var caseheader = new CaseViewDto();
-            var Query = $"select CASE_HDR.CASE_NBR,CASE_HDR.LOCN_ID,CASE_HDR.STAT_CODE,im.temp_zone from  CASE_HDR inner join CASE_DTL on CASE_HDR.CASE_NBR = CASE_DTL.CASE_NBR inner join ITEM_MASTER im ON CASE_DTL.sku_id = im.sku_id where CASE_DTL.total_alloc_qty > 1 and CASE_DTL.actl_qty > 1 and CASE_DTL.CASE_SEQ_NBR = 1 and CASE_HDR.stat_code = '50' and CASE_HDR.po_nbr != 'null' and im.temp_zone in ('D', 'F')";
+            var Query = $"select CASE_HDR.CASE_NBR,CASE_HDR.LOCN_ID,CASE_HDR.STAT_CODE,im.temp_zone from  CASE_HDR inner join CASE_DTL on CASE_HDR.CASE_NBR = CASE_DTL.CASE_NBR inner join ITEM_MASTER im ON CASE_DTL.sku_id = im.sku_id where CASE_DTL.total_alloc_qty > 1 and CASE_DTL.actl_qty > 1 and CASE_DTL.CASE_SEQ_NBR = 1 and CASE_HDR.stat_code = '50' and CASE_HDR.po_nbr != 'null' and im.temp_zone in ('D', 'F') and case_hdr.actl_wt < 1000";
             var command = new OracleCommand(Query, db);
             var caseHeaderReader = command.ExecuteReader();
             if (caseHeaderReader.Read())

@@ -9,7 +9,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
 /*If you drop a custom stylesheet named BDDfyCustom.css in your output folder it gets embedded here. This way you can apply some custom styles over your html report.*/
 
     </style>
-    <title>BDDfy Test Result 10/15/2019</title>
+    <title>BDDfy Test Result 10/16/2019</title>
   </head>
   <body>
     <div id='main'>
@@ -23,19 +23,19 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
           <li class='storySummary'>
             <div class='summaryLine'>
               <div class='summaryLabel'>Stories</div>
-              <span class='summaryCount'>1</span>
+              <span class='summaryCount'>4</span>
             </div>
           </li>
           <li class='scenarioSummary'>
             <div class='summaryLine'>
               <div class='summaryLabel'>Scenarios</div>
-              <span class='summaryCount'>1</span>
+              <span class='summaryCount'>13</span>
             </div>
           </li>
           <li class='Passed'>
             <div class='summaryLine'>
               <div class='summaryLabel'>Passed</div>
-              <span class='summaryCount'>1</span>
+              <span class='summaryCount'>13</span>
             </div>
           </li>
           <li class='Inconclusive'>
@@ -70,6 +70,101 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
           <li>
             <div class='story Passed'>
               <div class='storyMetadata'>
+                <div class='storyTitle'>Story: Comt and ivmt test</div>
+                <ul class='storyNarrative'>
+                  <li>As a Authorized User test for comt message from wms to ems</li>
+                  <li>I want To Verify COMT message is inserted in to SWMTOMHE table with appropriate data Verify in TransInventory table for Allocation Inventory units and actual weight Verify in Case Detail table for Quantity, CaseHeader and task detail table for status code </li>
+                  <li>So that I can validate for message fields in COMT message, in Internal Table SWM_TO_MHE and validate the quantity,weight,statuscode in the caseheader, casedetail, task header tables</li>
+                </ul>
+              </div>
+              <div class='scenarios'>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-1'>Comt and ivmt message test scenarios</div>
+                  <ul class='steps' id='scenario-1'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-1-1' >
+                      <span>Given current case number for single sku</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-1-2' >
+                      <span>And a valid new comt message record</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-1-3' >
+                      <span>When comt api is called created is returned</span>
+                    </li>
+                    <li class='step Passed  Assertion ' data-toggle-target='step-1-4' >
+                      <span>Then get data from data base for single sku scenarios</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-1-5' >
+                      <span>And verify comt message was inserted into swm to mhe</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-1-6' >
+                      <span>And verify comt message was inserted into wms to ems</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-1-7' >
+                      <span>And verify the quantity is increased to trans inventory</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-1-8' >
+                      <span>And verify quantityis reduced into case detail</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-1-9' >
+                      <span>And verify status is updated into case header</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-1-10' >
+                      <span>And verify status is updated into task header</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-2'>Comt and ivmt test for multi sku scenarios</div>
+                  <ul class='steps' id='scenario-2'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-2-1' >
+                      <span>Given current case number for multi sku</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-2-2' >
+                      <span>And a valid new comt message record</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-2-3' >
+                      <span>When comt api is called created is returned</span>
+                    </li>
+                    <li class='step Passed  Assertion ' data-toggle-target='step-2-4' >
+                      <span>Then get data and validate for ivmt message has inserted into both tables</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-2-5' >
+                      <span>And verify comt message was inserted into swm to mhe for multi sku</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-2-6' >
+                      <span>And verify comt message was inserted into wms to ems for multi sku</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-2-7' >
+                      <span>And verify quantityis reduced into case detail table</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-2-8' >
+                      <span>And verify status is updated into case header table</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-3'>Comt ivmt message test case for no enough inventory in case</div>
+                  <ul class='steps' id='scenario-3'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-3-1' >
+                      <span>Given current case number for not enough inventory in case</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-3-2' >
+                      <span>And a valid new comt message record</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-3-3' >
+                      <span>When comt api is called for not enough inventory in case</span>
+                    </li>
+                    <li class='step Passed  Assertion ' data-toggle-target='step-3-4' >
+                      <span>Then validate for not enough inventory in case</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class='story Passed'>
+              <div class='storyMetadata'>
                 <div class='storyTitle'>Story: Cost message test</div>
                 <ul class='storyNarrative'>
                   <li>As a Authorized User test for cost message from emstowms</li>
@@ -79,27 +174,95 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
               </div>
               <div class='scenarios'>
                 <div class='scenario'>
-                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-1'>Verify for valid cost message scenarios</div>
-                  <ul class='steps' id='scenario-1'>
-                    <li class='step Passed  SetupState ' data-toggle-target='step-1-1' >
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-6'>Verify for error log no case found</div>
+                  <ul class='steps' id='scenario-6'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-6-1' >
+                      <span>Given test initialize for invalid case</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-6-2' >
+                      <span>And invalid case msg key</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-6-3' >
+                      <span>When cost api is called for invalid case number</span>
+                    </li>
+                    <li class='step Passed  Assertion ' data-toggle-target='step-6-4' >
+                      <span>Then validate result for invalid case number</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-7'>Verify for error not enough inventory</div>
+                  <ul class='steps' id='scenario-7'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-7-1' >
+                      <span>Given test initialize for trans invn does not exist</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-7-2' >
+                      <span>And trans invn not exists msg key</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-7-3' >
+                      <span>When cost api is called for trans invn not found</span>
+                    </li>
+                    <li class='step Passed  Assertion ' data-toggle-target='step-7-4' >
+                      <span>Then validate result for trans inventory not exist</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-8'>Verify for error pick location not found</div>
+                  <ul class='steps' id='scenario-8'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-8-1' >
+                      <span>Given test initialize for pick locn does not exist</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-8-2' >
+                      <span>And pick location not exist key</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-8-3' >
+                      <span>When cost api is called for pick locn not found</span>
+                    </li>
+                    <li class='step Passed  Assertion ' data-toggle-target='step-8-4' >
+                      <span>Then validate result for pick locn not found</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-5'>Verify for invalid message key</div>
+                  <ul class='steps' id='scenario-5'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-5-1' >
+                      <span>Given test initialize for invalid case</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-5-2' >
+                      <span>And invalid msg key</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-5-3' >
+                      <span>When cost api is called for invalid message key</span>
+                    </li>
+                    <li class='step Passed  Assertion ' data-toggle-target='step-5-4' >
+                      <span>Then validate result for invalid message key</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-4'>Verify for valid cost message scenarios</div>
+                  <ul class='steps' id='scenario-4'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-4-1' >
                       <span>Given test initialize for valid message</span>
                     </li>
-                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-1-2' >
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-4-2' >
                       <span>And a valid msg key</span>
                     </li>
-                    <li class='step Passed  Transition ' data-toggle-target='step-1-3' >
+                    <li class='step Passed  Transition ' data-toggle-target='step-4-3' >
                       <span>When cost api is called with valid msg key</span>
                     </li>
-                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-1-4' >
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-4-4' >
                       <span>And get valid data after trigger</span>
                     </li>
-                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-1-5' >
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-4-5' >
                       <span>And verify cost message was inserted into swm from mhe</span>
                     </li>
-                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-1-6' >
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-4-6' >
                       <span>And verify the quantity was decreased in to trans inventory</span>
                     </li>
-                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-1-7' >
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-4-7' >
                       <span>And verify the quantity was increased into pick location table</span>
                     </li>
                   </ul>
@@ -107,8 +270,175 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
               </div>
             </div>
           </li>
+          <li>
+            <div class='story Passed'>
+              <div class='storyMetadata'>
+                <div class='storyTitle'>Story: Ivmt</div>
+                <ul class='storyNarrative'>
+                  <li>As a Authorized User test for ivmt message from wms to ems</li>
+                  <li>I want To Verify IVMT message is inserted in to SWMTOMHE table with appropriate data And verify IVMT message is inserted in to WMSTOEMS table with appropriate data  Verify in TransInventory table for Allocation Inventory units and actual weight Verify in Case Detail table for Quantity, CaseHeader and task detail table for status code </li>
+                  <li>So that I can validate for message fields in IVMT message, in Internal Table SWM_TO_MHE and validate the quantity,weight,statuscode in the caseheader, casedetail, task header tables</li>
+                </ul>
+              </div>
+              <div class='scenarios'>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-9'>Ivmt message test scenarios</div>
+                  <ul class='steps' id='scenario-9'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-9-1' >
+                      <span>Given current case number for single sku</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-9-2' >
+                      <span>And a valid new ivmt message record</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-9-3' >
+                      <span>When ivmt api is called created is returned</span>
+                    </li>
+                    <li class='step Passed  Assertion ' data-toggle-target='step-9-4' >
+                      <span>Then get data from data base for single sku scenarios ivmt</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-9-5' >
+                      <span>And verify ivmt message was inserted into swm to mhe</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-9-6' >
+                      <span>And verify ivmt message was inserted into wms to ems</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-9-7' >
+                      <span>And verify the quantity is increased to trans inventory</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-9-8' >
+                      <span>And verify quantityis reduced into case detail</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-9-9' >
+                      <span>And verify status is updated into case header</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-9-10' >
+                      <span>And verify status is updated into task header</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class='story Passed'>
+              <div class='storyMetadata'>
+                <div class='storyTitle'>Story: Ivst</div>
+                <ul class='storyNarrative'>
+                  <li>As a Authorized User test for Ivst message from emstowms</li>
+                  <li>I want To Verify IVST message is inserted in to SWM_FROM_MHE table with appropriate data And verify IVST message is inserted in to swm_from_mhe table with appropriate data  Verify in TransInventory table for Allocation Inventory units and actual weight Verify in Case Detail table for Quantity, CaseHeader and task detail table for status code </li>
+                  <li>So that I can validate for message fields in IVST message, in Internal Table SWM_FROM_MHE and validate the quantity,weight,statuscode in the caseheader, casedetail, task header tables</li>
+                </ul>
+              </div>
+              <div class='scenarios'>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-11'>Test for ivst inventory shortage exception scenarios</div>
+                  <ul class='steps' id='scenario-11'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-11-1' >
+                      <span>Given test data for inventory exception</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-11-2' >
+                      <span>And msg key for inventory shortage exception</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-11-3' >
+                      <span>When ivst api is called created is returned</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-11-4' >
+                      <span>And get valid data after trigger</span>
+                    </li>
+                    <li class='step Passed  Assertion ' data-toggle-target='step-11-5' >
+                      <span>Then verify ivst message was inserted into swm from mhe inventory shortage</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-11-6' >
+                      <span>And verify the quantity for inventory shortage exception into trans inventory table</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-11-7' >
+                      <span>And verify the record inserted into pix transaction tablereason code for inventory shortage exception</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-12'>Test for ivst ivst damage message scenarios</div>
+                  <ul class='steps' id='scenario-12'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-12-1' >
+                      <span>Given test data for damage exception</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-12-2' >
+                      <span>And msg key for damage exception</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-12-3' >
+                      <span>When ivst api is called created is returned</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-12-4' >
+                      <span>And get valid data after trigger</span>
+                    </li>
+                    <li class='step Passed  Assertion ' data-toggle-target='step-12-5' >
+                      <span>Then verify ivst message was inserted into swm from mhe damage</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-12-6' >
+                      <span>And verify the quantity for damage exception into trans inventory table</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-12-7' >
+                      <span>And verify the record inserted into pix transaction tablereason code for damage exception</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-10'>Test for ivst unexpected overage exception scenarios</div>
+                  <ul class='steps' id='scenario-10'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-10-1' >
+                      <span>Given test data for unexpected overage exception</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-10-2' >
+                      <span>And msg key for unexpected overage exception</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-10-3' >
+                      <span>When ivst api is called created is returned</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-10-4' >
+                      <span>And get valid data after trigger</span>
+                    </li>
+                    <li class='step Passed  Assertion ' data-toggle-target='step-10-5' >
+                      <span>Then verify ivst message was inserted into swm from mhe un excepted overage</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-10-6' >
+                      <span>And verify the quantity for unexpected overage exception into trans inventory table</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-10-7' >
+                      <span>And verify the record inserted into pix transaction tablereason code for unexpected overage exception</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-13'>Test for ivst wrong sku message scenarios</div>
+                  <ul class='steps' id='scenario-13'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-13-1' >
+                      <span>Given test data for wrong sku exception</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-13-2' >
+                      <span>And msg key for wrong sku exception</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-13-3' >
+                      <span>When ivst api is called created is returned</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-13-4' >
+                      <span>And get valid data after trigger</span>
+                    </li>
+                    <li class='step Passed  Assertion ' data-toggle-target='step-13-5' >
+                      <span>Then verify ivst message was inserted into swm from mhe wrong sku</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-13-6' >
+                      <span>And verify the quantity for wrong sku exception into trans inventory table</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-13-7' >
+                      <span>And verify the record inserted into pix transaction tablereason code for wrong sku exception</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </li>
         </ul>
-        <p><span>Tested at: 10/15/2019 5:29:51 PM</span></p>
+        <p><span>Tested at: 10/16/2019 10:39:39 AM</span></p>
       </div>
     </div>
     <div class='footer'>Powered by <a href='https://github.com/TestStack/TestStack.BDDfy'>BDDfy</a> framework</div>
