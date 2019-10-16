@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>3.0.1</Version>
+    <Version>3.0.2</Version>
     <Configurations>Debug;Release;QA;UAT;PROD</Configurations>
     <PackageId>Sfc.Wms.App.App</PackageId>
     <Company>Shamrock Foods Company</Company>
