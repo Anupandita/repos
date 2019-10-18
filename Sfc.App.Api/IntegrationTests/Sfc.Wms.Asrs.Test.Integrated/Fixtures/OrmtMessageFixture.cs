@@ -1,10 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using RestSharp;
+using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
 using Sfc.Wms.InboundLpn.Contracts.Dtos;
 using Sfc.Wms.Interface.ParserAndTranslator.Contracts.Constants;
-using Sfc.Wms.Result;
 
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
@@ -17,7 +17,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected string baseUrl = "http://localhost:59665/api/order-maintenance/carton-number";
         protected CaseDetailDto caseDetailDto;
         protected ComtParams OrmtParameters;
-        protected ComtIvmtMessageFixture  comtIvmtMessageFixture;
         protected IRestResponse Response;
         protected string ormtUrl;
         protected BaseResult negativecase1;

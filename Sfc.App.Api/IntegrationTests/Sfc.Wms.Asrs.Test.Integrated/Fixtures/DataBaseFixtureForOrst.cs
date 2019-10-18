@@ -4,16 +4,13 @@ using Oracle.ManagedDataAccess.Client;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
 using Sfc.Wms.Asrs.Dematic.Contracts.Dtos;
 using Sfc.Wms.Asrs.Shamrock.Contracts.Dtos;
-using Sfc.Wms.Interface.ParserAndTranslator.Contracts.Constants;
-using Sfc.Wms.Interface.ParserAndTranslator.Contracts.Dto;
-using Sfc.Wms.ParserAndTranslator.Contracts.Interfaces;
-using Sfc.Wms.ParserAndTranslator.Contracts.Validation;
+using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Constants;
+using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Dto;
 using Sfc.Wms.Foundation.Location.Contracts.Dtos;
-using Sfc.Wms.Result;
-using Sfc.Wms.Foundation.Carton.Contracts.Dtos;
+using Sfc.Core.OnPrem.Result;
 using System;
-using Sfc.Wms.Interface.Builder.MessageBuilder;
-using Sfc.Wms.Data.Entities;
+using Sfc.Wms.ParserAndTranslator.Contracts.Interfaces;
+using Sfc.Wms.Foundation.Carton.Contracts.Dtos;
 using PickTicketDetail = Sfc.Wms.Data.Entities.PickTicketDetail;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
@@ -30,7 +27,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected SwmFromMheDto swmFromMheCase2 = new SwmFromMheDto();
         protected SwmFromMheDto swmFromMheCase3 = new SwmFromMheDto();
         protected SwmFromMheDto swmFromMheCase4 = new SwmFromMheDto();
-        protected OrstDto OrstParameters;
+        protected Interfaces.ParserAndTranslator.Contracts.Dto.OrstDto OrstParameters;
         protected OrstDto orstCase1 = new OrstDto();
         protected OrstDto orstCase2 = new OrstDto();
         protected OrstDto orstCase3 = new OrstDto();
@@ -83,7 +80,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var swmToMheReader = command.ExecuteReader();
             if(swmToMheReader.Read())
             {
-                swmToMheView.OrderId = swmToMheReader["CONTAINER_ID"].ToString();
+                swmToMheView.OrderId = swmToMheReader["ORDER_ID"].ToString();
                 swmToMheView.SkuId = swmToMheReader["SKU_ID"].ToString();
                 swmToMheView.Quantity = Convert.ToInt16(swmToMheReader["QTY"].ToString());
                 swmToMheView.MessageJson = swmToMheReader["MSG_JSON"].ToString();             
@@ -203,7 +200,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public string CreateOrstMessage(string actionCode,string containerId,string skuId,string qty,string waveNbr,string orderReasonCodeMap)
+        public string CreateOrstMessage(string actionCode,string containerId,string skuId,string qty,string waveNbr,string orderReasonCodeMap,string owner, string currentLocationId)
         {
             OrstParameters = new OrstDto
             {
@@ -212,34 +209,34 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 ActionCode = actionCode,
                 OrderId = containerId,
                 OrderLineId = "1",
-                CompletionTime = DateTime.Now.ToString("dd-MMM-yy"),
+                CompletionTime = "20190909121212",
                 Sku = skuId,
-                Owner = "",
+                Owner = owner,
                 UnitOfMeasure = "Case",
                 ParentContainerId = containerId,
                 QuantityOrdered = qty,
                 QuantityDelivered = "1",
                 DestinationLocationId = OrmtCase1.DestinationLocationId,
-                CurrentLocationId = "asrsLocation",
+                CurrentLocationId = currentLocationId,
                 Priority = "",
                 OrderReasonCodeMap = orderReasonCodeMap,
                 WaveId = waveNbr
             };
-            var buildMessage = new MessageHeaderBuilder();
-            var testResult = buildMessage.BuildMessage<OrstDto, OrstValidationRule>(OrstParameters, TransactionCode.Orst);
+            var buildMessage = new Interfaces.Builder.MessageBuilder.MessageHeaderBuilder();
+            var testResult = buildMessage.BuildMessage<OrstDto, Interfaces.ParserAndTranslator.Contracts.Validation.OrstValidationRule>(OrstParameters, TransactionCode.Orst);
             Assert.AreEqual(testResult.ResultType, ResultTypes.Ok);
             Assert.IsNotNull(testResult.Payload);
             return testResult.Payload;
         }
-
+//------------------------------------------------
         public void OrstMessageCreatedForAllocatedStatus(OracleConnection db)
         {
-            var orstmsg = CreateOrstMessage("Allocated",case1.ContainerId,case1.SkuId, OrmtCase1.Quantity, OrmtCase1.WaveId,"0");
+            var orstmsg = CreateOrstMessage("Allocated",case1.OrderId,case1.SkuId, OrmtCase1.Quantity, OrmtCase1.WaveId,"0", OrmtCase1.Owner,null);
             var emsToWms = new EmsToWmsDto
             {
                 Process = DefaultValues.Process,
                 Status = DefaultValues.Status,
-                Transaction = TransactionCode.Cost,
+                Transaction = TransactionCode.Orst,
                 ResponseCode = (short)int.Parse(ReasonCode.Success),
                 MessageText = orstmsg
             };
@@ -248,7 +245,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         public void OrstMessageCreatedForCompletedStatus(OracleConnection db)
         {
-            var orstmsg = CreateOrstMessage("Completed", case2.ContainerId, case2.SkuId, OrmtCase2.Quantity, OrmtCase2.WaveId,"0");
+            var orstmsg = CreateOrstMessage("Completed", case2.OrderId, case2.SkuId, OrmtCase2.Quantity, OrmtCase2.WaveId,"0",null,null);
             var emsToWms = new EmsToWmsDto
             {
                 Process = DefaultValues.Process,
@@ -262,7 +259,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         public void OrstMessageCreatedForDeallocateStatus(OracleConnection db)
         {
-            var orstmsg = CreateOrstMessage("Deallocate", case3.ContainerId, case3.SkuId, OrmtCase3.Quantity, OrmtCase3.WaveId,"0");
+            var orstmsg = CreateOrstMessage("Deallocate", case3.OrderId, case3.SkuId, OrmtCase3.Quantity, OrmtCase3.WaveId,"0",null,null);
             var emsToWms = new EmsToWmsDto
             {
                 Process = DefaultValues.Process,
@@ -276,7 +273,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         public void OrstMessageCreatedForCancelledStatus(OracleConnection db)
         {
-            var orstmsg = CreateOrstMessage("Deallocate", case4.ContainerId, case4.SkuId, OrmtCase4.Quantity, OrmtCase4.WaveId,"0");
+            var orstmsg = CreateOrstMessage("Deallocate", case4.OrderId, case4.SkuId, OrmtCase4.Quantity, OrmtCase4.WaveId,"0",null,null);
             var emsToWms = new EmsToWmsDto
             {
                 Process = DefaultValues.Process,

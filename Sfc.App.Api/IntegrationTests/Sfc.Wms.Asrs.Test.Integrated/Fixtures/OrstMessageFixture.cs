@@ -2,12 +2,12 @@
 using Newtonsoft.Json;
 using RestSharp;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
-using Sfc.Wms.Result;
 using System;
 using System.Configuration;
 using Sfc.Wms.Data.Entities;
 using Sfc.Wms.Interface.ParserAndTranslator.Contracts.Constants;
 using Sfc.Core.OnPrem.ParserAndTranslator.Constants;
+using Sfc.Core.OnPrem.Result;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {

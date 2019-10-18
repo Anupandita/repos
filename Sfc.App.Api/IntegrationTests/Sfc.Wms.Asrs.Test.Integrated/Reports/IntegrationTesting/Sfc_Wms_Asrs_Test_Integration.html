@@ -70,34 +70,25 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
           <li>
             <div class='story Failed'>
               <div class='storyMetadata'>
-                <div class='storyTitle'>Story: Ormt message test</div>
+                <div class='storyTitle'>Story: Orst message test</div>
                 <ul class='storyNarrative'>
-                  <li>As a Authorized User test for ormt message from wmstoems</li>
-                  <li>I want To Verify ORMT message is inserted in to swm_to_mhe table with appropriate data And verify ORMT message is inserted in to wmstoems table with appropriate data  Verify in PickLocnDtlExt table for Ormt Count</li>
-                  <li>So that I can validate for message fields in ORMT message, in Internal Table SWM_TO_MHE and in wmstoems</li>
+                  <li>As a Authorized User test for orst message from emstowms</li>
+                  <li>I want To Verify ORST message is inserted in to swm_to_mhe table with appropriate dataFor Bellow CasesCase1: ActionCode = Allocated Case2: ActionCode = Completed and OrderReasonCodeMap = '0'Case3: ActionCode = DeAllocate Case4: ActionCode = CancelledTo Verify Carton Status</li>
+                  <li>So that I can validate for message fields in ORMT message, in Internal Table SWM_TO_MHE and in wmstoems for all caseTypesVerify For Pick Ticket Status and Carton Status for all the Action CodesValidate For Quantities InTo CartonDetail, PickTicketDetail,PickLocationDetail for all case types Validate for Ormt count for all case typesValidate for AllocationStatus for the Task Completion</li>
                 </ul>
               </div>
               <div class='scenarios'>
                 <div class='scenario'>
-                  <div class='Failed canToggle scenarioTitle' data-toggle-target='scenario-1'>Verify for ormt message with action code add release</div>
+                  <div class='Failed canToggle scenarioTitle' data-toggle-target='scenario-1'>Orst message test for action code allocated</div>
                   <ul class='steps' id='scenario-1'>
                     <li class='step Passed  SetupState ' data-toggle-target='step-1-1' >
-                      <span>Given initialize test data for printing of cartons</span>
+                      <span>Given msg key for case 1</span>
                     </li>
-                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-1-2' >
-                      <span>And carton number for add release</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-1-3' >
-                      <span>And valid ormt url</span>
-                    </li>
-                    <li class='step Failed  Transition canToggle' data-toggle-target='step-1-4' >
-                      <span>When ormt api is called created is returned [Exception Message: 'Assert.AreEqual failed. Expected:<Created>. Actual:<BadRequest>. ']</span>
-                      <div class='step FailedException' id='step-1-4'>
-                        <code>   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.HandleFail(String assertionName, String message, Object[] parameters)
-   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual[T](T expected, T actual, String message, Object[] parameters)
-   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual[T](T expected, T actual)
-   at Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.OrmtMessageFixture.OrmtApiIsCalledCreatedIsReturned() in D:\wmspoc\Wms.App.Api\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Fixtures\OrmtMessageFixture.cs:line 139
-   at lambda_method(Closure , OrmtMessageTest )
+                    <li class='step Failed  Transition canToggle' data-toggle-target='step-1-2' >
+                      <span>When orst api is called created is returned [Exception Message: 'Object reference not set to an instance of an object.']</span>
+                      <div class='step FailedException' id='step-1-2'>
+                        <code>   at Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.OrstMessageFixture.OrstApiIsCalledCreatedIsReturned() in D:\wmspoc\Wms.App.Api\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Fixtures\OrstMessageFixture.cs:line 97
+   at lambda_method(Closure , OrstMessageTest )
    at TestStack.BDDfy.StepActionFactory.<>c__DisplayClass1_0`1.<GetStepAction>b__0(Object o)
    at TestStack.BDDfy.StepExecutor.Execute(Step step, Object testObject)
    at TestStack.BDDfy.Processors.ScenarioExecutor.<>c__DisplayClass3_0.<ExecuteStep>b__0()
@@ -106,23 +97,26 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
    at TestStack.BDDfy.Processors.ExceptionProcessor.Process(Story story)
    at TestStack.BDDfy.Engine.Run()
    at TestStack.BDDfy.BDDfyExtensions.BDDfy(Object testObject, String scenarioTitle)
-   at Sfc.Wms.Api.Asrs.Test.Integrated.Tests.OrmtMessageTest.VerifyForOrmtMessageWithActionCodeAddRelease() in D:\wmspoc\Wms.App.Api\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Tests\OrmtMessageTest.cs:line 22</code>
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Tests.OrstMessageTest.OrstMessageTestForActionCodeAllocated() in D:\wmspoc\Wms.App.Api\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Tests\OrstMessageTest.cs:line 39</code>
                       </div>
                     </li>
-                    <li class='step NotExecuted  ConsecutiveTransition ' data-toggle-target='step-1-5' >
-                      <span>And read data after api for printing of carton</span>
+                    <li class='step NotExecuted  ConsecutiveTransition ' data-toggle-target='step-1-3' >
+                      <span>And read data after api for action code allocated</span>
                     </li>
-                    <li class='step NotExecuted  Assertion ' data-toggle-target='step-1-6' >
-                      <span>Then verify ormt message was inserted in to swm to mhe</span>
+                    <li class='step NotExecuted  Assertion ' data-toggle-target='step-1-4' >
+                      <span>Then verify orst message was inserted into swm from mhe for action code allocated</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveAssertion ' data-toggle-target='step-1-5' >
+                      <span>And verify pick ticket status has changed to in picking for action code allocated</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveAssertion ' data-toggle-target='step-1-6' >
+                      <span>And verify carton status has changed to in packing for action code allocated</span>
                     </li>
                     <li class='step NotExecuted  ConsecutiveAssertion ' data-toggle-target='step-1-7' >
-                      <span>And verify ormt message was inserted in to wms to ems for printing of order</span>
+                      <span>And verify to be picked quantity has reduced in to pick location for action code allocated</span>
                     </li>
                     <li class='step NotExecuted  ConsecutiveAssertion ' data-toggle-target='step-1-8' >
-                      <span>And verify for ormt count in pick locn dtl ext</span>
-                    </li>
-                    <li class='step NotExecuted  ConsecutiveAssertion ' data-toggle-target='step-1-9' >
-                      <span>And verify for status codein carton hdr for add release</span>
+                      <span>And verify active ormt count should be reduced for action code allocated</span>
                     </li>
                   </ul>
                 </div>
@@ -130,7 +124,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
             </div>
           </li>
         </ul>
-        <p><span>Tested at: 10/18/2019 11:51:54 AM</span></p>
+        <p><span>Tested at: 10/18/2019 2:45:42 PM</span></p>
       </div>
     </div>
     <div class='footer'>Powered by <a href='https://github.com/TestStack/TestStack.BDDfy'>BDDfy</a> framework</div>
