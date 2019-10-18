@@ -40,6 +40,7 @@
             public const string DematicMessageIvmt = "api/inventory-maintenance";
             public const string DematicMessageComt = "api/container-maintenance";
             public const string DematicMessageOrmt = "api/order-maintenance";
+            public const string DematicMessageSkmt = "api/sku-maintenance";
             public const string EmsToWmsMessage = "api/emstowms-message";
 
 

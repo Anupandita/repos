@@ -4,24 +4,24 @@ using Sfc.Wms.App.Api.Tests.Unit.Fixtures;
 namespace Sfc.Wms.App.Api.Tests.Unit.Controllers
 {
     [TestClass]
-    public class ComtControllerTest : ComtFixture
+    public class SkmtControllerTest : SkmtFixture
     {
         [TestMethod]
         [TestCategory("UNIT")]
-        public void Process_Comt_Message_With_Valid_Comt_Message()
+        public void Process_Skmt_Message_With_Valid_Skmt_Message()
         {
-            ValidComtMessage();
+            ValidSkmtMessage();
             InsertMessageInvoked();
-            ComtMessageShouldBeProcessed();
+            SkmtMessageShouldBeProcessed();
         }
 
         [TestMethod]
         [TestCategory("UNIT")]
-        public void Process_Comt_Message_With_Invalid_Comt_Message()
+        public void Process_Skmt_Message_With_Invalid_Skmt_Message()
         {
-            InvalidComtMessage();
+            InvalidSkmtMessage();
             InsertMessageInvoked();
-            ComtMessageShouldNotBeProcessed();
+            SkmtMessageShouldNotBeProcessed();
         }
     }
 }
