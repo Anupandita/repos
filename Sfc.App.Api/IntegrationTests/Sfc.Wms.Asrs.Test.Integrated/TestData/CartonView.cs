@@ -23,6 +23,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
         public string TotalQty { get; set; }
         public string DestLocnId { get; set; }
         public string ShipWCtrlNbr { get; set; }
+        public string LocnId { get; set; }
 
     }
 

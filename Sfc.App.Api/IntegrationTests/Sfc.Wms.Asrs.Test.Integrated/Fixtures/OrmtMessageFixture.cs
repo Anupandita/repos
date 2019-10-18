@@ -7,7 +7,6 @@ using Sfc.Wms.Interface.ParserAndTranslator.Contracts.Constants;
 using Sfc.Wms.Result;
 
 
-
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
     public class OrmtMessageFixture: DataBaseFixtureForOrmt
@@ -20,7 +19,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected ComtParams OrmtParameters;
         protected ComtIvmtMessageFixture  comtIvmtMessageFixture;
         protected IRestResponse Response;
-        protected string url;
+        protected string ormtUrl;
         protected BaseResult negativecase1;
         protected BaseResult negativecase2;
         protected BaseResult negativeCase3;
@@ -44,7 +43,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         protected void InitializeTestDataForWaveRelease()
         {
-            GetValidDataBeforeTriggerOrmtForPrintingOfCartonsThroughWaveNumber();
+            //GetValidDataBeforeTriggerOrmtForPrintingOfCartonsThroughWaveNumber();
         }
         protected void ReadDataAndValidateTheFieldsInInternalTables()
         {
@@ -58,7 +57,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             GetDataAfterCallingApiForCancellationOfOrders();
         }
-
         protected void InitializeTestDataForNegativeCases()
         {
             GetDataForNegativeCases();
@@ -73,7 +71,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             currentCartonNbr = printCarton.CartonNbr;
             currentActionCode = "AddRelease";
         }
-
         protected void CartonNumberForCancel()
         {
             currentCartonNbr = cancelOrder.CartonNbr;
@@ -106,21 +103,21 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         protected void CartonNumberForInvalidCartonNumber()
         {
-            currentCartonNbr = "90888678904567890456";
+            currentCartonNbr = cancelOrder.CartonNbr;
             currentActionCode = "AddRelease";
         }
 
         protected void TestForInValidActionCode()
         {
-            currentCartonNbr = pickLocnNotFound.CartonNbr;
+            currentCartonNbr = printCarton.CartonNbr;
             currentActionCode = "Adddd";
         }
 
-        protected void ValidUrl()
+        protected void ValidOrmtUrl()
         {
-            url = $"{baseUrl}?{"cartonNumber"}={printCarton.CartonNbr}&{"actionCode"}={currentActionCode}";
-            
+            ormtUrl = $"{baseUrl}?{"cartonNumber"}={currentCartonNbr}&{"actionCode"}={currentActionCode}";            
         }
+
         protected IRestResponse ApiIsCalled(string url)
         {
             var client = new RestClient(url);
@@ -131,7 +128,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         protected BaseResult OrmtResult()
         {
-            var response = ApiIsCalled(url);
+            var response = ApiIsCalled(ormtUrl);
             var result = JsonConvert.DeserializeObject<BaseResult>(response.Content.ToString());
             return result;
         }
@@ -174,29 +171,29 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         protected void ValidateResultForActiveOrmtNotFound()
         {
-            Assert.AreEqual(ResultType.NotFound, negativecase1.ResultType.ToString());
-            Assert.AreEqual("CheckPickLocationDetailExtensionAddValidationMessage", negativecase1.ValidationMessages[1].FieldName);
-            Assert.AreEqual("Not Enough Inventory in Case", negativecase1.ValidationMessages[1].Message);
+            //Assert.AreEqual(ResultType.NotFound, negativecase1.ResultType.ToString());
+            Assert.AreEqual("PickLocationDetailsExtenstion", negativecase1.ValidationMessages[0].FieldName);
+            Assert.AreEqual("Not Enough Inventory in Case", negativecase1.ValidationMessages[0].Message);
         }
         protected void ValidateResultForPickLocationNotFound()
         {
-            Assert.AreEqual("PickLocationDetail", negativecase2.ValidationMessages[1].FieldName);
-            Assert.AreEqual("Not Found", negativecase2.ValidationMessages[1].Message);
+            Assert.AreEqual("ActiveLocationDto", negativecase2.ValidationMessages[0].FieldName);
+            Assert.AreEqual("Not found", negativecase2.ValidationMessages[0].Message);
         }
         protected void ValidateResultForActiveLocationNotFound()
         {
-            Assert.AreEqual("ActiveLocationDto", negativeCase3.ValidationMessages[1].FieldName);
-            Assert.AreEqual("Not Found", negativeCase3.ValidationMessages[1].Message);
+            Assert.AreEqual("ActiveLocationDto", negativeCase3.ValidationMessages[0].FieldName);
+            Assert.AreEqual("Not found", negativeCase3.ValidationMessages[0].Message);
         }
         protected void ValidateResultForInvalidCartonNumber()
         {
-            Assert.AreEqual("OrderDetailsDto", negativeCase4.ValidationMessages[1].FieldName);
-            Assert.AreEqual("Not Found", negativeCase4.ValidationMessages[1].Message);
+            Assert.AreEqual("OrderDetailsDto", negativeCase4.ValidationMessages[0].FieldName);
+            Assert.AreEqual("Not found", negativeCase4.ValidationMessages[0].Message);
         }
         protected void ValidateResultForInvalidActionCode()
         {
-            Assert.AreEqual("ActionCode", Result.ValidationMessages[1].FieldName);
-            Assert.AreEqual("Invalid ActionCode ", Result.ValidationMessages[1].Message);
+            Assert.AreEqual("cartonNumber-String", negativeCase5.ValidationMessages[0].FieldName);
+            Assert.AreEqual("Invalid Data", negativeCase5.ValidationMessages[0].Message);
         }
         protected void VerifyOrmtMessageWasInsertedInToSwmToMhe()
         {
@@ -231,7 +228,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual("SHIPMENT", ormtCancel.OrderType);
             Assert.AreEqual(cancelOrder.WaveNbr, ormtCancel.WaveId);
             Assert.AreEqual("N", ormtCancel.EndOfWaveFlag);
-            Assert.AreEqual(cancelOrder.DestLocnId + "-" + printCarton.ShipWCtrlNbr, ormtCancel.DestinationLocationId);
+            Assert.AreEqual(cancelOrder.DestLocnId +"-"+ cancelOrder.ShipWCtrlNbr, ormtCancel.DestinationLocationId);
             Assert.AreEqual(cancelOrder.Whse + cancelOrder.Co + cancelOrder.Div, ormtCancel.Owner);
             Assert.AreEqual("FIFO", ormtCancel.OpRule);
         }
@@ -249,7 +246,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual("SHIPMENT", ormtEPick.OrderType);
             Assert.AreEqual(ePick.WaveNbr, ormtEPick.WaveId);
             Assert.AreEqual("N", ormtEPick.EndOfWaveFlag);
-            Assert.AreEqual(ePick.DestLocnId + "-" + printCarton.ShipWCtrlNbr, ormtEPick.DestinationLocationId);
+            Assert.AreEqual(ePick.DestLocnId +"-"+ ePick.ShipWCtrlNbr, ormtEPick.DestinationLocationId);
             Assert.AreEqual(ePick.Whse + ePick.Co + ePick.Div, ormtEPick.Owner);
             Assert.AreEqual("FIFO", ormtEPick.OpRule);
         }

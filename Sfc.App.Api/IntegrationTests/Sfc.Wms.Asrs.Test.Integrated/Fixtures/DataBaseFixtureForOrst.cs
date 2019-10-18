@@ -20,7 +20,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
     /*Case1,Case2,Case3,Case4 are defined in story*/
 
-    public class DataBaseFixtureForOrst : CommonFunction
+    public class DataBaseFixtureForOrst : DataBaseFixtureForOrmt
     {
         protected SwmToMheDto case1 = new SwmToMheDto();
         protected SwmToMheDto case2 = new SwmToMheDto();
@@ -78,12 +78,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public SwmToMheDto GetCartonDetailsForInsertingOrstMessage(OracleConnection db,int statusCode)
         {
             var swmToMheView = new SwmToMheDto();
-            var sqlStatement = $"select swm_to_mhe.container_id,swm_to_mhe.sku_id,swm_to_mhe.qty,swm_to_mhe.msg_json from swm_to_mhe inner join carton_hdr on swm_to_mhe.container_id = carton_hdr.carton_nbr and swm_to_mhe.source_msg_status = 'Ready' and swm_to_mhe.qty!= 0 and carton_hdr.stat_code = {statusCode}";
+            var sqlStatement = $"select * from swm_to_mhe sm inner join carton_hdr ch ON sm.order_id = ch.carton_nbr inner join pkt_hdr ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr inner join alloc_invn_dtl al ON al.task_cmpl_ref_nbr = ch.carton_nbr where sm.source_msg_status = 'Ready' and ch.stat_code < {statusCode} and ph.pkt_stat_code <{statusCode}";
             command = new OracleCommand(sqlStatement, db);
             var swmToMheReader = command.ExecuteReader();
             if(swmToMheReader.Read())
             {
-                swmToMheView.ContainerId = swmToMheReader["CONTAINER_ID"].ToString();
+                swmToMheView.OrderId = swmToMheReader["CONTAINER_ID"].ToString();
                 swmToMheView.SkuId = swmToMheReader["SKU_ID"].ToString();
                 swmToMheView.Quantity = Convert.ToInt16(swmToMheReader["QTY"].ToString());
                 swmToMheView.MessageJson = swmToMheReader["MSG_JSON"].ToString();             
@@ -96,12 +96,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                case1 = GetCartonDetailsForInsertingOrstMessage(db, 12);
+                case1 = GetCartonDetailsForInsertingOrstMessage(db, 35);
                 OrmtCase1 = JsonConvert.DeserializeObject<OrmtDto>(case1.MessageJson);
                 OrstMessageCreatedForAllocatedStatus(db);            
                 emsToWmsCase1 = GetEmsToWmsData(db, msgKeyForCase1.MsgKey);             
                 pickLcnCase1BeforeApi = GetPickLocationDetails(db, OrmtCase1.Sku, null);
-                pickLcnExtCase1BeforeApi = GetPickLocnDtlExt(db, pickLcnCase1BeforeApi.SkuId);            
+                pickLcnExtCase1BeforeApi = GetPickLocnDtlExt(db, pickLcnCase1BeforeApi.SkuId,pickLcnCase1BeforeApi.LocationId);            
             }
         }
 
@@ -118,7 +118,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 pickTktDtlCase2BeforeApi = GetPickTicketDetailData(db, cartonHdr.CartonNumber, "1");
                 allocInvnDtlCase2BeforeApi = GetAllocInvnDetails(db, case2.ContainerId);
                 pickLcnCase2BeforeApi = GetPickLocationDetails(db, OrmtCase2.Sku, null);
-                pickLcnExtCase2BeforeApi = GetPickLocnDtlExt(db,  pickLcnCase2BeforeApi.SkuId);         
+                pickLcnExtCase2BeforeApi = GetPickLocnDtlExt(db,  pickLcnCase2BeforeApi.SkuId, pickLcnCase2BeforeApi.LocationId);         
             }
         }
 
@@ -143,7 +143,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 OrmtCase4 = JsonConvert.DeserializeObject<OrmtDto>(case4.MessageJson);
                 emsToWmsCase4 = GetEmsToWmsData(db, msgKeyForCase4.MsgKey);
                 pickLcnCase4BeforeApi = GetPickLocationDetails(db, "carton_dtl.sku", null);
-                pickLcnExtCase4BeforeApi = GetPickLocnDtlExt(db, pickLcnCase4BeforeApi.SkuId);
+                pickLcnExtCase4BeforeApi = GetPickLocnDtlExt(db, pickLcnCase4BeforeApi.SkuId, pickLcnCase4BeforeApi.LocationId);
             }
         }
 
@@ -157,7 +157,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 pickTktHdrCase1 = GetPickTktHeaderDetails(db, orstCase1.OrderId);
                 cartonHdrCase1 = GetCartonHeaderDetails(db, orstCase1.OrderId);
                 pickLcnCase1 = GetPickLocationDetails(db,"carton_dtl.sku", null);              
-                pickLcnExtCase1 = GetPickLocnDtlExt(db, pickLcnCase1BeforeApi.SkuId);
+                pickLcnExtCase1 = GetPickLocnDtlExt(db, pickLcnCase1BeforeApi.SkuId,pickLcnCase1BeforeApi.LocationId);
 
             }
         }
@@ -175,7 +175,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 pickTktHdrCase2 = GetPickTktHeaderDetails(db, orstCase2.OrderId);
                 allocInvnDtlCase2BeforeApi = GetAllocInvnDetails(db, orstCase2.OrderId);
                 pickLcnCase2 = GetPickLocationDetails(db, orstCase2.Sku,null);
-                pickLcnExtCase2 = GetPickLocnDtlExt(db, pickLcnCase1BeforeApi.SkuId);
+                pickLcnExtCase2 = GetPickLocnDtlExt(db, pickLcnCase1BeforeApi.SkuId,pickLcnCase1BeforeApi.LocationId);
             }
         }
 
@@ -199,7 +199,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 orstCase4 = JsonConvert.DeserializeObject<OrstDto>(swmFromMheCase4.MessageJson);
                 cartonHdrCase4 = GetCartonHeaderDetails(db, orstCase3.OrderId);
                 pickLcnCase4 = GetPickLocationDetails(db, orstCase4.Sku, null);
-                pickLcnExtCase4  = GetPickLocnDtlExt(db, pickLcnCase1BeforeApi.SkuId);
+                pickLcnExtCase4  = GetPickLocnDtlExt(db, pickLcnCase1BeforeApi.SkuId,pickLcnCase1BeforeApi.LocationId);
             }
         }
 
@@ -226,7 +226,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 WaveId = waveNbr
             };
             var buildMessage = new MessageHeaderBuilder();
-            var testResult = buildMessage.BuildMessage<OrstDto, OrstValidationRule>(OrstParameters, TransactionCode.Cost);
+            var testResult = buildMessage.BuildMessage<OrstDto, OrstValidationRule>(OrstParameters, TransactionCode.Orst);
             Assert.AreEqual(testResult.ResultType, ResultTypes.Ok);
             Assert.IsNotNull(testResult.Payload);
             return testResult.Payload;

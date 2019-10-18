@@ -15,13 +15,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
     
     public class OrmtMessageTest : OrmtMessageFixture
     {
-
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
         public void VerifyForOrmtMessageWithActionCodeAddRelease()
         {
             this.Given(x => x.InitializeTestDataForPrintingOfCartons())
-             .And(x => x.CartonNumberForAddRelease())
+            .And(x => x.CartonNumberForAddRelease())
+            .And(x=>x.ValidOrmtUrl())
             .When(x => x.OrmtApiIsCalledCreatedIsReturned())
             .And(x => x.ReadDataAfterApiForPrintingOfCarton())
             .Then(x => x.VerifyOrmtMessageWasInsertedInToSwmToMhe())
@@ -36,7 +36,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         public void VerifyForOrmtMessageWithActionCodeCancel()
         {
             this.Given(x => x.InitializeTestDataForCancelOfCarton())
-           .And(x => x.CartonNumberForCancel()) 
+           .And(x => x.CartonNumberForCancel())
+           .And(x => x.ValidOrmtUrl())
            .When(x => x.OrmtApiIsCalledCreatedIsReturned())
            .And(x => x.ReadDataAfterApiForCancelOfCarton())
            .Then(x => x.VerifyOrmtMessageWasInsertedInToSwmToMheForCancelOrders())
@@ -51,6 +52,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         {
             this.Given(x=>x.InitializeTestDataForEpickOfCarton())
            .And(x => x.CartonNumberForEPick())
+           .And(x => x.ValidOrmtUrl())
            .When(x => x.OrmtApiIsCalledCreatedIsReturned())
            .And(x => x.ReadDataAfterApiForEPickOfCarton())
            .Then(x => x.VerifyOrmtMessageWasInsertedInToSwmToMheForEpick())

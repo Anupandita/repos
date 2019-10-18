@@ -222,10 +222,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return pickLocnDtl;
         }
 
-        public PickLocationDetailsExtenstionDto GetPickLocnDtlExt(OracleConnection db, string skuId)
+        public PickLocationDetailsExtenstionDto GetPickLocnDtlExt(OracleConnection db, string skuId, string locnId)
         {
             var pickLocnDtlExt = new PickLocationDetailsExtenstionDto();
-            var query = $"select * from pick_locn_dtl_ext WHERE  SKU_ID='{skuId}'";
+            var query = $"select Active_Ormt_Count from pick_locn_dtl_ext WHERE  SKU_ID='{skuId}' AND LOCN_ID = '{locnId}'";
             command = new OracleCommand(query, db);
             var pickLocnDtlExtReader = command.ExecuteReader();
             if (pickLocnDtlExtReader.Read())

@@ -27,6 +27,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         public void ValidateForMessageWhereActiveOrmtCountNotFound()
         {
             this.Given(x => x.CartonNumberForOrmtCountNotFound())
+                .And(x=>x.ValidOrmtUrl())
                 .When(x=>x.OrmtApiIsCalledForNotEnoughInventory())
                 .And(x => x.ValidateResultForActiveOrmtNotFound())
                 .BDDfy();
@@ -37,6 +38,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         public void ValidateForMessageWherePickLocnNotFound()
         {
             this.Given(x => x.CartonNumberForPickLocnNotFound())
+               .And(x => x.ValidOrmtUrl())
                .When(x => x.OrmtApiIsCalledForPickLocationNotFound())
                .And(x => x.ValidateResultForPickLocationNotFound())
                .BDDfy();
@@ -47,6 +49,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         public void ValidateForMessageWhereActiveLocnNotFound()
         {
             this.Given(x => x.CartonNumberForActiveLocnNotFound())
+               .And(x => x.ValidOrmtUrl())
                .When(x => x.OrmtApiIsCalledForActiveLocationNotFound())
                .And(x => x.ValidateResultForActiveLocationNotFound())
                .BDDfy();
@@ -57,6 +60,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         public void ValidateForMessageWhereCartonNumberIsInvalid()
         {
             this.Given(x => x.CartonNumberForInvalidCartonNumber())
+               .And(x => x.ValidOrmtUrl())
                .When(x => x.OrmtApiIsCalledForInvalidCartonNumber())
                .And(x => x.ValidateResultForInvalidCartonNumber())
                .BDDfy();
@@ -67,6 +71,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         public void ValidateForMessageWhereActionCodeIsInvalid()
         {
             this.Given(x => x.TestForInValidActionCode())
+               .And(x => x.ValidOrmtUrl())
                .When(x => x.OrmtApiIsCalledForInvalidActionCode())
                .And(x => x.ValidateResultForInvalidActionCode())
                .BDDfy();
