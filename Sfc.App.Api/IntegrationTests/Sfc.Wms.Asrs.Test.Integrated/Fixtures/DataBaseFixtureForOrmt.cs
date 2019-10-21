@@ -108,7 +108,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (db = GetOracleConnection())
             {
                 db.Open();
-                swmToMheAddRelease = SwmToMhe(db, TransactionCode.Ormt, printCarton.SkuId);
+                swmToMheAddRelease = SwmToMhe(db,printCarton.CartonNbr, TransactionCode.Ormt, printCarton.SkuId);
                 ormt = JsonConvert.DeserializeObject<OrmtDto>(swmToMheAddRelease.MessageJson);
                 wmsToEmsAddRelease = WmsToEmsData(db, swmToMheAddRelease.SourceMessageKey, TransactionCode.Ormt);
                 cartonHdr = GetStatusCodeFromCartonHdr(db,printCarton.CartonNbr);
@@ -124,7 +124,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 db.Open();
                 for (var i = 0; i < orderList.Count; i++)
                 {
-                    swmToMheAddRelease = SwmToMhe(db, TransactionCode.Ormt, orderList[i].SkuId);
+                    swmToMheAddRelease = SwmToMhe(db, orderList[i].CartonNbr, TransactionCode.Ormt, orderList[i].SkuId);
                     ormt = JsonConvert.DeserializeObject<OrmtDto>(swmToMheAddRelease.MessageJson);
                     var printCarton = orderList[i];
                     VerifyOrmtMessageWasInsertedInToSwmToMhe(ormt,swmToMheAddRelease,printCarton);
@@ -142,7 +142,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (db = GetOracleConnection())
             {
                 db.Open();
-                swmToMheCancelation = SwmToMhe(db, TransactionCode.Ormt, cancelOrder.SkuId);
+                swmToMheCancelation = SwmToMhe(db, cancelOrder.CartonNbr, TransactionCode.Ormt, cancelOrder.SkuId);
                 ormtCancel = JsonConvert.DeserializeObject<OrmtDto>(swmToMheCancelation.MessageJson);
                 wmsToEmsCancelation = WmsToEmsData(db, swmToMheCancelation.SourceMessageKey, TransactionCode.Ormt);
                 cartonHdr = GetStatusCodeFromCartonHdr(db, cancelOrder.CartonNbr);
@@ -156,7 +156,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (db = GetOracleConnection())
             {
                 db.Open();
-                swmToMheEPick = SwmToMhe(db,TransactionCode.Ormt, ePick.SkuId);
+                swmToMheEPick = SwmToMhe(db, ePick.CartonNbr, TransactionCode.Ormt, ePick.SkuId);
                 ormtEPick = JsonConvert.DeserializeObject<OrmtDto>(swmToMheEPick.MessageJson);
                 wmsToEmsEPick = WmsToEmsData(db, swmToMheEPick.SourceMessageKey, TransactionCode.Ormt);
                 cartonHdr = GetStatusCodeFromCartonHdr(db, ePick.CartonNbr);

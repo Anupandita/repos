@@ -44,11 +44,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return WmsToEms;
         }
 
-        protected SwmToMheDto SwmToMhe(OracleConnection db, string trx, string skuId)
+        protected SwmToMheDto SwmToMhe(OracleConnection db, string caseNbr, string trx, string skuId)
         {
             var swmtomhedata = new SwmToMheDto();
             var t = $"and sku_id = '{skuId}' ";
-            var query = $"select * from SWM_TO_MHE where source_msg_trans_code = '{trx}' ";
+            var query = $"select * from SWM_TO_MHE where container_id = '{caseNbr}' and source_msg_trans_code = '{trx}' ";
             var orderBy = "order by created_date_time desc";
             if (trx == TransactionCode.Ivmt)
             {
@@ -79,7 +79,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 swmtomhedata.PoNumber = swmToMheReader["PO_NBR"].ToString();
                 swmtomhedata.Quantity = Convert.ToInt32(swmToMheReader["QTY"].ToString());
                 swmtomhedata.WaveNumber = swmToMheReader["WAVE_NBR"].ToString();
-                swmtomhedata.ZplData = swmToMheReader["ZPL_DATA"].ToString();
             }
             return swmtomhedata;
         }
