@@ -170,7 +170,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         protected void ValidateResultForActiveOrmtNotFound()
         {
-            //Assert.AreEqual(ResultType.NotFound, negativecase1.ResultType.ToString());
             Assert.AreEqual("PickLocationDetailsExtenstion", negativecase1.ValidationMessages[0].FieldName);
             Assert.AreEqual("Not Enough Inventory in Case", negativecase1.ValidationMessages[0].Message);
         }
@@ -186,8 +185,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         }
         protected void ValidateResultForInvalidCartonNumber()
         {
-            Assert.AreEqual("OrderDetailsDto", negativeCase4.ValidationMessages[0].FieldName);
-            Assert.AreEqual("Not found", negativeCase4.ValidationMessages[0].Message);
+            Assert.AreEqual("cartonNumber-String", negativeCase4.ValidationMessages[0].FieldName);
+            Assert.AreEqual("Invalid Data", negativeCase4.ValidationMessages[0].Message);
         }
         protected void ValidateResultForInvalidActionCode()
         {

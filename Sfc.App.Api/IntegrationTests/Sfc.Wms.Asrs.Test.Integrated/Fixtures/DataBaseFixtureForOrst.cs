@@ -72,7 +72,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
          
 
 
-        public OrstTestData GetCartonDetailsForInsertingOrstMessage(OracleConnection db,int statusCode)
+        public OrstTestData GetCartonDetailsForInsertingOrstMessage(OracleConnection db,int cartonStatusCode, int pktStatusCode)
         {
             var orstTestData = new OrstTestData();
             var sqlStatement = $"select sm.order_id,sm.sku_id,sm.qty,sm.msg_json,ch.curr_locn_id,pl.locn_id,ph.ship_w_ctrl_nbr,ch.dest_locn_id from swm_to_mhe sm " +
@@ -80,7 +80,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 $"inner join pkt_hdr ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr " +
                 $"inner join alloc_invn_dtl al ON al.task_cmpl_ref_nbr = ch.carton_nbr " +
                 $"inner join pick_locn_dtl pl ON pl.sku_id = sm.sku_id"+
-                $" where sm.source_msg_status = 'Ready' and ch.stat_code < 15 and ph.pkt_stat_code <{statusCode}";
+                $" where sm.source_msg_status = 'Ready' and ch.stat_code = {cartonStatusCode} and ph.pkt_stat_code = {pktStatusCode}";
             command = new OracleCommand(sqlStatement, db);
             var swmToMheReader = command.ExecuteReader();
             if(swmToMheReader.Read())
@@ -92,8 +92,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 orstTestData.CurrentLocationId = swmToMheReader["CURR_LOCN_ID"].ToString();
                 orstTestData.LocnId = swmToMheReader["LOCN_ID"].ToString();
                 orstTestData.ShipWCtrlNbr = swmToMheReader["SHIP_W_CTRL_NBR"].ToString();
-                orstTestData.DestLocnId = swmToMheReader["DEST_LOCN_ID"].ToString();
-          
+                orstTestData.DestLocnId = swmToMheReader["DEST_LOCN_ID"].ToString();     
             }
             return orstTestData;
         }
@@ -103,12 +102,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                case1 = GetCartonDetailsForInsertingOrstMessage(db, 35);
+                case1 = GetCartonDetailsForInsertingOrstMessage(db, 15,35);
                 OrmtCase1 = JsonConvert.DeserializeObject<OrmtDto>(case1.MessageJson);
                 OrstMessageCreatedForAllocatedStatus(db);            
-                emsToWmsCase1 = GetEmsToWmsData(db, msgKeyForCase1.MsgKey);             
-               // pickLcnCase1BeforeApi = GetPickLocationDetails(db, OrmtCase1.Sku, case1.LocnId);
-                //pickLcnExtCase1BeforeApi = GetPickLocnDtlExt(db, pickLcnCase1BeforeApi.SkuId,pickLcnCase1BeforeApi.LocationId);            
+                emsToWmsCase1 = GetEmsToWmsData(db, msgKeyForCase1.MsgKey);                           
             }
         }
 
@@ -117,7 +114,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                case2 = GetCartonDetailsForInsertingOrstMessage(db, 15);
+                case2 = GetCartonDetailsForInsertingOrstMessage(db, 15, 35);
                 OrmtCase2 = JsonConvert.DeserializeObject<OrmtDto>(case2.MessageJson);
                 emsToWmsCase2 = GetEmsToWmsData(db, msgKeyForCase2.MsgKey);
                 cartonDtlCase2BeforeApi = GetCartonDetails(db, case2.OrderId);
@@ -134,10 +131,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                case3 = GetCartonDetailsForInsertingOrstMessage(db, 30);
+                case3 = GetCartonDetailsForInsertingOrstMessage(db,15,35);
                 OrmtCase3 = JsonConvert.DeserializeObject<OrmtDto>(case3.MessageJson);
                 emsToWmsCase3  = GetEmsToWmsData(db, msgKeyForCase3.MsgKey);
-
             }
         }
 
@@ -146,10 +142,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                case4 = GetCartonDetailsForInsertingOrstMessage(db, 30);
+                case4 = GetCartonDetailsForInsertingOrstMessage(db, 30,50);
                 OrmtCase4 = JsonConvert.DeserializeObject<OrmtDto>(case4.MessageJson);
                 emsToWmsCase4 = GetEmsToWmsData(db, msgKeyForCase4.MsgKey);
-                pickLcnCase4BeforeApi = GetPickLocationDetails(db, "carton_dtl.sku", case4.LocnId);
+                pickLcnCase4BeforeApi = GetPickLocationDetails(db, OrmtCase4.Sku, case4.LocnId);
                 pickLcnExtCase4BeforeApi = GetPickLocnDtlExt(db, pickLcnCase4BeforeApi.SkuId, pickLcnCase4BeforeApi.LocationId);
             }
         }
@@ -163,8 +159,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 orstCase1 = JsonConvert.DeserializeObject<OrstDto>(swmFromMheCase1.MessageJson);
                 pickTktHdrCase1 = GetPickTktHeaderDetails(db, orstCase1.OrderId);
                 cartonHdrCase1 = GetCartonHeaderDetails(db, orstCase1.OrderId);
-                //pickLcnCase1 = GetPickLocationDetails(db, orstCase1.Sku,case1.LocnId);              
-               // pickLcnExtCase1 = GetPickLocnDtlExt(db, pickLcnCase1BeforeApi.SkuId,pickLcnCase1BeforeApi.LocationId);
             }
         }
 
@@ -254,7 +248,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         public void OrstMessageCreatedForCompletedStatus(OracleConnection db)
         {
-            var orstmsg = CreateOrstMessage("Completed", case2.OrderId, case2.SkuId, OrmtCase2.Quantity, OrmtCase2.WaveId,"0",null,null);
+            var orstmsg = CreateOrstMessage("Completed", case2.OrderId, case2.SkuId, OrmtCase2.Quantity, OrmtCase2.WaveId,"0",OrmtCase2.Owner,null);
             var emsToWms = new EmsToWmsDto
             {
                 Process = DefaultValues.Process,
