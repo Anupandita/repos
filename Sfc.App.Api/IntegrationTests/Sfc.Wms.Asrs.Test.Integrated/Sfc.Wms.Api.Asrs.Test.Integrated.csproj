@@ -60,6 +60,7 @@
     <Compile Include="TestData\FieldNames.cs" />
     <Compile Include="TestData\CartonView.cs" />
     <Compile Include="TestData\orstCaseDto.cs" />
+    <Compile Include="TestData\OrstTestData.cs" />
     <Compile Include="TestData\ZplNames.cs" />
     <Compile Include="TestData\ValidationMessage.cs" />
     <Compile Include="Tests\OrmtMessageTest.cs" />

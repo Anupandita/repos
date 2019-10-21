@@ -42,8 +42,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                 .Then(x => x.VerifyOrstMessageWasInsertedIntoSwmFromMheForActionCodeAllocated())
                 .And(x => x.VerifyPickTicketStatusHasChangedToInPickingForActionCodeAllocated())
                 .And(x => x.VerifyCartonStatusHasChangedToInPackingForActionCodeAllocated())
-                .And(x => x.VerifyToBePickedQuantityHasReducedInToPickLocationForActionCodeAllocated())
-                .And(x => x.VerifyActiveOrmtCountShouldBeReducedForActionCodeAllocated())
+               
 
              .BDDfy();
         }

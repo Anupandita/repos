@@ -19,10 +19,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
     public class DataBaseFixtureForOrst : DataBaseFixtureForOrmt
     {
-        protected SwmToMheDto case1 = new SwmToMheDto();
-        protected SwmToMheDto case2 = new SwmToMheDto();
-        protected SwmToMheDto case3 = new SwmToMheDto();
-        protected SwmToMheDto case4 = new SwmToMheDto();
+        protected OrstTestData case1 = new OrstTestData();
+        protected OrstTestData case2 = new OrstTestData();
+        protected OrstTestData case3 = new OrstTestData();
+        protected OrstTestData case4 = new OrstTestData();
         protected SwmFromMheDto swmFromMheCase1 = new SwmFromMheDto();
         protected SwmFromMheDto swmFromMheCase2 = new SwmFromMheDto();
         protected SwmFromMheDto swmFromMheCase3 = new SwmFromMheDto();
@@ -35,7 +35,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         private readonly IHaveDataTypeValidation _dataTypeValidation;
         protected OrmtDto OrmtCase1 = new OrmtDto();
         protected OrmtDto OrmtCase2 = new OrmtDto();
-        protected OrmtDto OrmtCase3 = new OrmtDto();
+        protected OrmtDto OrmtCase3 = new OrmtDto(); 
         protected OrmtDto OrmtCase4 = new OrmtDto();
         protected Orst msgKeyForCase1 = new Orst();
         protected Orst msgKeyForCase2 = new Orst();
@@ -72,20 +72,30 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
          
 
 
-        public SwmToMheDto GetCartonDetailsForInsertingOrstMessage(OracleConnection db,int statusCode)
+        public OrstTestData GetCartonDetailsForInsertingOrstMessage(OracleConnection db,int statusCode)
         {
-            var swmToMheView = new SwmToMheDto();
-            var sqlStatement = $"select * from swm_to_mhe sm inner join carton_hdr ch ON sm.order_id = ch.carton_nbr inner join pkt_hdr ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr inner join alloc_invn_dtl al ON al.task_cmpl_ref_nbr = ch.carton_nbr where sm.source_msg_status = 'Ready' and ch.stat_code < {statusCode} and ph.pkt_stat_code <{statusCode}";
+            var orstTestData = new OrstTestData();
+            var sqlStatement = $"select sm.order_id,sm.sku_id,sm.qty,sm.msg_json,ch.curr_locn_id,pl.locn_id,ph.ship_w_ctrl_nbr,ch.dest_locn_id from swm_to_mhe sm " +
+                $"inner join carton_hdr ch ON sm.order_id = ch.carton_nbr " +
+                $"inner join pkt_hdr ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr " +
+                $"inner join alloc_invn_dtl al ON al.task_cmpl_ref_nbr = ch.carton_nbr " +
+                $"inner join pick_locn_dtl pl ON pl.sku_id = sm.sku_id"+
+                $" where sm.source_msg_status = 'Ready' and ch.stat_code < 15 and ph.pkt_stat_code <{statusCode}";
             command = new OracleCommand(sqlStatement, db);
             var swmToMheReader = command.ExecuteReader();
             if(swmToMheReader.Read())
             {
-                swmToMheView.OrderId = swmToMheReader["ORDER_ID"].ToString();
-                swmToMheView.SkuId = swmToMheReader["SKU_ID"].ToString();
-                swmToMheView.Quantity = Convert.ToInt16(swmToMheReader["QTY"].ToString());
-                swmToMheView.MessageJson = swmToMheReader["MSG_JSON"].ToString();             
+                orstTestData.OrderId = swmToMheReader["ORDER_ID"].ToString();
+                orstTestData.SkuId = swmToMheReader["SKU_ID"].ToString();
+                orstTestData.Quantity = Convert.ToInt16(swmToMheReader["QTY"].ToString());
+                orstTestData.MessageJson = swmToMheReader["MSG_JSON"].ToString();
+                orstTestData.CurrentLocationId = swmToMheReader["CURR_LOCN_ID"].ToString();
+                orstTestData.LocnId = swmToMheReader["LOCN_ID"].ToString();
+                orstTestData.ShipWCtrlNbr = swmToMheReader["SHIP_W_CTRL_NBR"].ToString();
+                orstTestData.DestLocnId = swmToMheReader["DEST_LOCN_ID"].ToString();
+          
             }
-            return swmToMheView;
+            return orstTestData;
         }
           
         public void GetDataBeforeTriggerOrst()
@@ -97,8 +107,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 OrmtCase1 = JsonConvert.DeserializeObject<OrmtDto>(case1.MessageJson);
                 OrstMessageCreatedForAllocatedStatus(db);            
                 emsToWmsCase1 = GetEmsToWmsData(db, msgKeyForCase1.MsgKey);             
-                pickLcnCase1BeforeApi = GetPickLocationDetails(db, OrmtCase1.Sku, null);
-                pickLcnExtCase1BeforeApi = GetPickLocnDtlExt(db, pickLcnCase1BeforeApi.SkuId,pickLcnCase1BeforeApi.LocationId);            
+               // pickLcnCase1BeforeApi = GetPickLocationDetails(db, OrmtCase1.Sku, case1.LocnId);
+                //pickLcnExtCase1BeforeApi = GetPickLocnDtlExt(db, pickLcnCase1BeforeApi.SkuId,pickLcnCase1BeforeApi.LocationId);            
             }
         }
 
@@ -110,11 +120,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 case2 = GetCartonDetailsForInsertingOrstMessage(db, 15);
                 OrmtCase2 = JsonConvert.DeserializeObject<OrmtDto>(case2.MessageJson);
                 emsToWmsCase2 = GetEmsToWmsData(db, msgKeyForCase2.MsgKey);
-                cartonDtlCase2BeforeApi = GetCartonDetails(db, case2.ContainerId);
-                var cartonHdr = GetCartonHeaderDetails(db, case2.ContainerId);
+                cartonDtlCase2BeforeApi = GetCartonDetails(db, case2.OrderId);
+                var cartonHdr = GetCartonHeaderDetails(db, case2.OrderId);
                 pickTktDtlCase2BeforeApi = GetPickTicketDetailData(db, cartonHdr.CartonNumber, "1");
-                allocInvnDtlCase2BeforeApi = GetAllocInvnDetails(db, case2.ContainerId);
-                pickLcnCase2BeforeApi = GetPickLocationDetails(db, OrmtCase2.Sku, null);
+                allocInvnDtlCase2BeforeApi = GetAllocInvnDetails(db, case2.OrderId);
+                pickLcnCase2BeforeApi = GetPickLocationDetails(db, OrmtCase2.Sku, case2.LocnId);
                 pickLcnExtCase2BeforeApi = GetPickLocnDtlExt(db,  pickLcnCase2BeforeApi.SkuId, pickLcnCase2BeforeApi.LocationId);         
             }
         }
@@ -139,7 +149,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 case4 = GetCartonDetailsForInsertingOrstMessage(db, 30);
                 OrmtCase4 = JsonConvert.DeserializeObject<OrmtDto>(case4.MessageJson);
                 emsToWmsCase4 = GetEmsToWmsData(db, msgKeyForCase4.MsgKey);
-                pickLcnCase4BeforeApi = GetPickLocationDetails(db, "carton_dtl.sku", null);
+                pickLcnCase4BeforeApi = GetPickLocationDetails(db, "carton_dtl.sku", case4.LocnId);
                 pickLcnExtCase4BeforeApi = GetPickLocnDtlExt(db, pickLcnCase4BeforeApi.SkuId, pickLcnCase4BeforeApi.LocationId);
             }
         }
@@ -153,9 +163,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 orstCase1 = JsonConvert.DeserializeObject<OrstDto>(swmFromMheCase1.MessageJson);
                 pickTktHdrCase1 = GetPickTktHeaderDetails(db, orstCase1.OrderId);
                 cartonHdrCase1 = GetCartonHeaderDetails(db, orstCase1.OrderId);
-                pickLcnCase1 = GetPickLocationDetails(db,"carton_dtl.sku", null);              
-                pickLcnExtCase1 = GetPickLocnDtlExt(db, pickLcnCase1BeforeApi.SkuId,pickLcnCase1BeforeApi.LocationId);
-
+                //pickLcnCase1 = GetPickLocationDetails(db, orstCase1.Sku,case1.LocnId);              
+               // pickLcnExtCase1 = GetPickLocnDtlExt(db, pickLcnCase1BeforeApi.SkuId,pickLcnCase1BeforeApi.LocationId);
             }
         }
 
@@ -171,7 +180,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 pickTktDtlCase2AfterApi = GetPickTicketDetailData(db, orstCase2.OrderId, orstCase2.OrderLineId);
                 pickTktHdrCase2 = GetPickTktHeaderDetails(db, orstCase2.OrderId);
                 allocInvnDtlCase2BeforeApi = GetAllocInvnDetails(db, orstCase2.OrderId);
-                pickLcnCase2 = GetPickLocationDetails(db, orstCase2.Sku,null);
+                pickLcnCase2 = GetPickLocationDetails(db, orstCase2.Sku,case2.LocnId);
                 pickLcnExtCase2 = GetPickLocnDtlExt(db, pickLcnCase1BeforeApi.SkuId,pickLcnCase1BeforeApi.LocationId);
             }
         }
@@ -195,7 +204,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 swmFromMheCase4 = SwmFromMhe(db, msgKeyForCase4.MsgKey, "ORST");
                 orstCase4 = JsonConvert.DeserializeObject<OrstDto>(swmFromMheCase4.MessageJson);
                 cartonHdrCase4 = GetCartonHeaderDetails(db, orstCase3.OrderId);
-                pickLcnCase4 = GetPickLocationDetails(db, orstCase4.Sku, null);
+                pickLcnCase4 = GetPickLocationDetails(db, orstCase4.Sku, case4.LocnId);
                 pickLcnExtCase4  = GetPickLocnDtlExt(db, pickLcnCase1BeforeApi.SkuId,pickLcnCase1BeforeApi.LocationId);
             }
         }
@@ -297,11 +306,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 cartonHeader.StatusCode = Convert.ToInt16(cartonHeaderReader[TestData.CartonHeader.StatCode].ToString());
                 //cartonHeader.ModificationDateTime = cartonHeaderReader[CartonHeader.ModificationDateTime].ToString();
                 cartonHeader.CurrentLocationId = cartonHeaderReader[TestData.CartonHeader.CurrentLocationId].ToString();
-                cartonHeader.Picker = cartonHeaderReader[TestData.CartonHeader.Pikr].ToString();
-                cartonHeader.Packer = cartonHeaderReader[TestData.CartonHeader.Pakr].ToString();
-                cartonHeader.CartonNumber = cartonHeaderReader[TestData.CartonHeader.CartonNbr].ToString();
-                cartonHeader.PickLocationId = cartonHeaderReader[TestData.CartonHeader.PickLocationId].ToString();
-                cartonHeader.MiscellaneousInstructionCode5 = cartonHeaderReader[TestData.CartonHeader.MiscInstrCode5].ToString();
+                //cartonHeader.Picker = cartonHeaderReader[TestData.CartonHeader.Pikr].ToString();
+                //cartonHeader.Packer = cartonHeaderReader[TestData.CartonHeader.Pakr].ToString();
+                //cartonHeader.CartonNumber = cartonHeaderReader[TestData.CartonHeader.CartonNbr].ToString();
+                //cartonHeader.PickLocationId = cartonHeaderReader[TestData.CartonHeader.PickLocationId].ToString();
+                //cartonHeader.MiscellaneousInstructionCode5 = cartonHeaderReader[TestData.CartonHeader.MiscInstrCode5].ToString();
             }
             return cartonHeader;
         }
@@ -329,7 +338,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var pickTktHeaderReader = command.ExecuteReader();
             if (pickTktHeaderReader.Read())
             {
-                pkTktHeader.CartonNumber = pickTktHeaderReader[TestData.PickTicketHeader.CartonNumber].ToString();
+                
                 pkTktHeader.PickTicketStatusCode = Convert.ToInt16(pickTktHeaderReader[TestData.PickTicketHeader.PktStatCode].ToString());
             }
             return pkTktHeader;

@@ -124,10 +124,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(emsToWmsCase1.Status, swmFromMheCase1.SourceMessageStatus);
             Assert.AreEqual(emsToWmsCase1.Transaction, swmFromMheCase1.SourceMessageTransactionCode);
             Assert.AreEqual(emsToWmsCase1.ResponseCode, swmFromMheCase1.SourceMessageResponseCode);
-            Assert.AreEqual(emsToWmsCase1.MessageText, swmFromMheCase1.SourceMessageText);
-            Assert.AreEqual("CASE", swmFromMheCase1.ContainerType);
+            Assert.AreEqual(emsToWmsCase1.MessageText, swmFromMheCase1.SourceMessageText);            
             Assert.AreEqual("ORST", orstCase1.TransactionCode);
-            Assert.AreEqual("00370", orstCase1.MessageLength);
+            Assert.AreEqual("00255", orstCase1.MessageLength);
             Assert.AreEqual("Allocated", orstCase1.ActionCode);        
         }
 
@@ -139,7 +138,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(emsToWmsCase2.Transaction, swmFromMheCase2.SourceMessageTransactionCode);
             Assert.AreEqual(emsToWmsCase2.ResponseCode, swmFromMheCase2.SourceMessageResponseCode);
             Assert.AreEqual(emsToWmsCase2.MessageText, swmFromMheCase2.SourceMessageText);
-            Assert.AreEqual("CASE", swmFromMheCase2.ContainerType);
             Assert.AreEqual("ORST", orstCase1.TransactionCode);
             Assert.AreEqual("00370", orstCase1.MessageLength);
             Assert.AreEqual("Complete", orstCase1.ActionCode);
@@ -176,33 +174,21 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         protected void VerifyPickTicketStatusHasChangedToInPickingForActionCodeAllocated()
         {
-            Assert.AreEqual("35", pickTktHdrCase1.PickTicketStatusCode);
+            Assert.AreEqual(35, pickTktHdrCase1.PickTicketStatusCode);
         }
 
         protected void VerifyCartonStatusHasChangedToInPackingForActionCodeAllocated()
         {
-            Assert.AreEqual("15", cartonHdrCase1.StatusCode);
-            Assert.AreEqual(cartonHdrCase1.CurrentLocationId,orstCase1.CurrentLocationId);
-            Assert.AreEqual(cartonHdrCase1.DestinationLocationId,orstCase1.DestinationLocationId);
-        }
-
-        protected void VerifyToBePickedQuantityHasReducedInToPickLocationForActionCodeAllocated()
-        {
-            Assert.AreEqual(pickLcnCase1BeforeApi.ToBePickedQty - Convert.ToDecimal(orstCase1.QuantityDelivered), pickLcnCase1.ToBePickedQty);
-        }
-
-        protected void VerifyActiveOrmtCountShouldBeReducedForActionCodeAllocated()
-        {
-            Assert.AreEqual(pickLcnExtCase1BeforeApi.ActiveOrmtCount -1 ,pickLcnExtCase1.ActiveOrmtCount);
+            Assert.AreEqual(15, cartonHdrCase1.StatusCode);
+            Assert.AreEqual(case1.CurrentLocationId ,orstCase1.CurrentLocationId);
+            Assert.AreEqual(case1.DestLocnId + "-" +case1.ShipWCtrlNbr, orstCase1.DestinationLocationId);
         }
 
 
         protected void VerifyCartonStatusHasChangedToPickedForActionCodeComplete()
         {
             Assert.AreEqual("30",cartonHdrCase2.StatusCode);
-            Assert.AreEqual("", cartonHdrCase2.Picker);
-            Assert.AreEqual("",cartonHdrCase2.Packer);
-            Assert.AreEqual("",cartonHdrCase2.PickLocationId);
+            
         }
 
         protected  void ValidateForQuantitiesInTocartonDetailTableForActionCodeComplete()
