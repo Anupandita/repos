@@ -63,6 +63,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             if (swmToMheReader.Read())
             {
                 swmtomhedata.SourceMessageKey = Convert.ToInt16(swmToMheReader[TestData.SwmToMhe.SourceMsgKey].ToString());
+                swmtomhedata.SourceMessageProcess = swmToMheReader[TestData.SwmToMhe.SourceMsgProcess].ToString();
                 swmtomhedata.SourceMessageResponseCode = Convert.ToInt16(swmToMheReader[TestData.SwmToMhe.SourceMsgRsnCode].ToString());
                 swmtomhedata.SourceMessageStatus = swmToMheReader[TestData.SwmToMhe.SourceMsgStatus].ToString();
                 swmtomhedata.ContainerId = swmToMheReader[TestData.SwmToMhe.ContainerId].ToString();
