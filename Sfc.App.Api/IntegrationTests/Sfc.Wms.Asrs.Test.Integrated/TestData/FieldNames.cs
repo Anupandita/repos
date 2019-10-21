@@ -116,6 +116,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
         public const string PickLocationId = "PICK_LOCN_ID";
         public const string MiscInstrCode5 = "MISC_INSTR_CODE_5";
     }
+
+    public class MessageToSv
+    {
+        public const string ptn = "Ptn";
+        public const string message_type = "Message_type";
+    }
     
     public class ItemMaster
     {
