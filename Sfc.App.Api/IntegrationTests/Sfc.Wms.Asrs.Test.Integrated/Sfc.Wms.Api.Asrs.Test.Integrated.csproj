@@ -65,9 +65,7 @@
     <Compile Include="TestData\DefaultValues.cs" />
     <Compile Include="TestData\FieldNames.cs" />
     <Compile Include="TestData\CartonView.cs" />
-    <Compile Include="TestData\orstCaseDto.cs" />
     <Compile Include="TestData\OrstTestData.cs" />
-    <Compile Include="TestData\ZplNames.cs" />
     <Compile Include="Tests\OrmtMessageTest.cs" />
     <Compile Include="Tests\OrstMessageTest.cs" />
     <Compile Include="Tests\OrmtNegativeCases.cs" />

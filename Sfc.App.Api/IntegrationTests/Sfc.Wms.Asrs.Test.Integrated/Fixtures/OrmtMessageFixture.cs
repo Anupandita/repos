@@ -4,7 +4,7 @@ using RestSharp;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
 using Sfc.Wms.InboundLpn.Contracts.Dtos;
-using Sfc.Wms.Interface.ParserAndTranslator.Contracts.Constants;
+using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Constants;
 
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures

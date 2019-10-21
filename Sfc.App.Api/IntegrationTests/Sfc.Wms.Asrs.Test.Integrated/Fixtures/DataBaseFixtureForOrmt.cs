@@ -2,8 +2,8 @@
 using Sfc.Wms.Asrs.Shamrock.Contracts.Dtos;
 using System.Configuration;
 using Oracle.ManagedDataAccess.Client;
-using Sfc.Wms.Interface.ParserAndTranslator.Contracts.Constants;
-using Sfc.Wms.Interface.ParserAndTranslator.Contracts.Dto;
+using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Constants;
+using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Dto;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
 using Newtonsoft.Json;
 using Sfc.Wms.Foundation.Location.Contracts.Dtos;
@@ -71,8 +71,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 var pickLocnDtlExtReader = command.ExecuteReader();
                 if (pickLocnDtlExtReader.Read())
                 {
-                    var activeOrmt = new PickLocationDetailsExtenstionDto();
-                    activeOrmt.ActiveOrmtCount = Convert.ToInt16(pickLocnDtlExtReader[TestData.PickLocnDtlExt.ActiveOrmtCount].ToString());
+                    var activeOrmt = new PickLocationDetailsExtenstionDto
+                    {
+                        ActiveOrmtCount = Convert.ToInt16(pickLocnDtlExtReader[TestData.PickLocnDtlExt.ActiveOrmtCount].ToString())
+                    };
                     pickLocnDtlExt.Add(activeOrmt);
                 }
             }
