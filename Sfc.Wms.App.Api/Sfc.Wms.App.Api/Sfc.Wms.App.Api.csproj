@@ -292,8 +292,8 @@
     <Reference Include="Sfc.Wms.Inbound.TransitionalInventory.App, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Inbound.TransitionalInventory.App.1.0.1\lib\net472\Sfc.Wms.Inbound.TransitionalInventory.App.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Interfaces.Asrs.App, Version=1.2.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Interfaces.Asrs.App.1.2.2\lib\net472\Sfc.Wms.Interfaces.Asrs.App.dll</HintPath>
+    <Reference Include="Sfc.Wms.Interfaces.Asrs.App, Version=1.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Interfaces.Asrs.App.1.2.3\lib\net472\Sfc.Wms.Interfaces.Asrs.App.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Interfaces.Asrs.Contracts, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Interfaces.Asrs.Contracts.1.1.0\lib\net472\Sfc.Wms.Interfaces.Asrs.Contracts.dll</HintPath>
@@ -322,8 +322,8 @@
     <Reference Include="Sfc.Wms.Interfaces.Parser, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Interfaces.Parser.2.0.0\lib\net472\Sfc.Wms.Interfaces.Parser.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Interfaces.ParserAndTranslator.Contracts, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.2.0.3\lib\net472\Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.dll</HintPath>
+    <Reference Include="Sfc.Wms.Interfaces.ParserAndTranslator.Contracts, Version=2.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.2.0.4\lib\net472\Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Interfaces.Translator, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Interfaces.Translator.2.0.1\lib\net472\Sfc.Wms.Interfaces.Translator.dll</HintPath>
@@ -430,7 +430,7 @@
       <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
     </Reference>
     <Reference Include="Wms.App.Contracts, Version=1.0.29.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Wms.App.Contracts.1.0.65\lib\net472\Wms.App.Contracts.dll</HintPath>
+      <HintPath>..\packages\Wms.App.Contracts.1.0.67\lib\net472\Wms.App.Contracts.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
