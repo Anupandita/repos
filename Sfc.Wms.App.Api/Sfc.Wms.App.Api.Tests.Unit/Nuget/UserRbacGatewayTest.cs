@@ -1,46 +1,37 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sfc.Wms.App.Api.Tests.Unit.Constants;
 using Sfc.Wms.App.Api.Tests.Unit.Fixtures;
-using TestStack.BDDfy;
 
 namespace Sfc.Wms.App.Api.Tests.Unit.Nuget
 {
     [TestClass]
-    [Story(
-        AsA = "To do user Role based authentication",
-        IWant = "User to get authenticated",
-        SoThat = "Authenticated user can access the restricted resources"
-    )]
     public class UserRbacGatewayTest : UserRbacGatewayFixture
     {
         [TestMethod]
         [TestCategory(TestCategories.Unit)]
         public void Should_Return_Unauthorized_As_Response_When_InValid_Login_Credentials_Are_Passed()
         {
-            this.Given(el => InValidLoginCredentials())
-                .When(el => UserAuthenticationServiceIsInvoked())
-                .Then(el => TheServiceCallReturnedUnAuthorizesAsResponseStatus())
-                .BDDfy();
+            InValidLoginCredentials();
+            UserAuthenticationServiceIsInvoked();
+            TheServiceCallReturnedUnAuthorizesAsResponseStatus();
         }
 
         [TestMethod]
         [TestCategory(TestCategories.Unit)]
         public void Should_Return_Authorized_As_Response_When_Valid_Login_Credentials_Are_Passed()
         {
-            this.Given(el => ValidLoginCredentials())
-                .When(el => UserAuthenticationServiceIsInvoked())
-                .Then(el => TheServiceCallReturnedAuthorizedAsResponseStatus())
-                .BDDfy();
+            ValidLoginCredentials();
+            UserAuthenticationServiceIsInvoked();
+            TheServiceCallReturnedAuthorizedAsResponseStatus();
         }
 
         [TestMethod]
         [TestCategory("UNIT")]
         public void Should_Return_BadRequest_As_Response_When_Empty_Login_Credentials_Are_Passed()
         {
-            this.Given(el => EmptyLoginCredentials())
-                .When(el => UserAuthenticationServiceIsInvoked())
-                .Then(el => TheServiceCallReturnedBadRequestAsResponseStatus())
-                .BDDfy();
+            EmptyLoginCredentials();
+            UserAuthenticationServiceIsInvoked();
+            TheServiceCallReturnedBadRequestAsResponseStatus();
         }
     }
 }
