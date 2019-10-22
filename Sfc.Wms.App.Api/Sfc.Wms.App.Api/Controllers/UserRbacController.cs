@@ -8,7 +8,6 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using JwtConstants = Sfc.Wms.Framework.Security.Token.Jwt.Jwt.Constants;
-using Sfc.Wms.App.Api.Interfaces;
 
 namespace Sfc.Wms.App.Api.Controllers
 {

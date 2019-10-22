@@ -8,7 +8,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Configurations
     public class Setup
     {
         [AssemblyInitialize]
-        public static void ApplyBddFyReportConfiguration(TestContext testContext)
+        public static void Initialize(TestContext testContext)
         {
             ApplyFakesDataGeneratorConfiguration();
         }

@@ -53,14 +53,14 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         {
             var result = _testResult.Result as NegotiatedContentResult<BaseResult>;
             Assert.IsNotNull(result);
-            Assert.AreEqual(result.Content.ResultType, ResultTypes.Created);
+            Assert.AreEqual(ResultTypes.Created, result.Content.ResultType);
         }
 
         protected void SkmtMessageShouldNotBeProcessed()
         {
             var result = _testResult.Result as NegotiatedContentResult<BaseResult>;
             Assert.IsNotNull(result);
-            Assert.AreEqual(result.Content.ResultType, ResultTypes.BadRequest);
+            Assert.AreEqual(ResultTypes.BadRequest, result.Content.ResultType);
         }
     }
 }
