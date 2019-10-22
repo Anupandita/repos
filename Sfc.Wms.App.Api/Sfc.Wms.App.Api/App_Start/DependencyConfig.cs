@@ -24,7 +24,6 @@ using Sfc.Wms.Configuration.Security.Rbac.Repository.Context;
 using Sfc.Wms.Configuration.Security.Rbac.Repository.Gateways;
 using Sfc.Wms.Configuration.Security.Rbac.Repository.Interfaces;
 using Sfc.Wms.Configuration.SystemCode.Contracts.Interfaces;
-using Sfc.Wms.Configuration.SystemCode.Repository.Context;
 using Sfc.Wms.Configuration.SystemCode.Repository.Gateways;
 using Sfc.Wms.Configuration.SystemCode.Repository.Interfaces;
 using Sfc.Wms.Data.Context;
@@ -127,9 +126,7 @@ using Sfc.Wms.Outbound.Carton.App.UnitOfWork;
 using SimpleInjector;
 using SimpleInjector.Integration.WebApi;
 using SimpleInjector.Lifestyles;
-using System;
 using System.Configuration;
-using System.Reflection;
 using System.Runtime.Caching;
 using System.Web.Http;
 
@@ -182,7 +179,6 @@ namespace Sfc.Wms.App.Api
             container.Register<ISfcCache>(() => new SfcInMemoryCache(MemoryCache.Default), Lifestyle.Scoped);
 
             container.Register(typeof(ISystemCodeService), typeof(SystemCodeService), Lifestyle.Scoped);
-            container.Register(typeof(ISystemCodeRepository), typeof(SystemCodeRepository), Lifestyle.Scoped);
             container.Register(typeof(ISystemCodeUnitOfWork), typeof(SystemCodeUnitOfWork), Lifestyle.Scoped);
             container.Register(typeof(ISystemCodeRepositoryGateway), typeof(SystemCodeRepositoryGateway), Lifestyle.Scoped);
             container.Register(typeof(IRbacService), typeof(RbacService), Lifestyle.Scoped);
@@ -281,7 +277,6 @@ namespace Sfc.Wms.App.Api
             container.Register<UserRepository>(Lifestyle.Scoped);
             container.Register<LocationData>(Lifestyle.Scoped);
             container.Register<LpnParameterValidator>(Lifestyle.Scoped);
-
         }
     }
 }

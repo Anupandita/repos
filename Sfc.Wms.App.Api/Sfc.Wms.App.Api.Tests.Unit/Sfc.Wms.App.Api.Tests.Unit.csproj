@@ -112,6 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="libman.json" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper">
@@ -166,7 +167,7 @@
       <Version>3.0.2</Version>
     </PackageReference>
     <PackageReference Include="Sfc.Wms.Data">
-      <Version>4.0.5</Version>
+      <Version>4.0.6</Version>
     </PackageReference>
     <PackageReference Include="Sfc.Wms.Interfaces.Asrs.Contracts">
       <Version>1.1.0</Version>
