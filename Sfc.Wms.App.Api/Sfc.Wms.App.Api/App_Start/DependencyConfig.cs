@@ -20,7 +20,6 @@ using Sfc.Wms.Configuration.NextUpCounter.Repository.Interfaces;
 using Sfc.Wms.Configuration.Security.Rbac.Repository.Gateways;
 using Sfc.Wms.Configuration.Security.Rbac.Repository.Interfaces;
 using Sfc.Wms.Configuration.SystemCode.Contracts.Interfaces;
-using Sfc.Wms.Configuration.SystemCode.Repository.Context;
 using Sfc.Wms.Configuration.SystemCode.Repository.Gateways;
 using Sfc.Wms.Configuration.SystemCode.Repository.Interfaces;
 using Sfc.Wms.Data.Context;
@@ -78,6 +77,9 @@ using Sfc.Wms.Framework.Security.Rbac.UnitOfWork;
 using Sfc.Wms.Framework.SkuInventory.App.Interfaces;
 using Sfc.Wms.Framework.SkuInventory.App.Services;
 using Sfc.Wms.Framework.SkuInventory.App.UnitOfWork;
+using Sfc.Wms.Inbound.InboundLpn.App.Interfaces;
+using Sfc.Wms.Inbound.InboundLpn.App.Services;
+using Sfc.Wms.Inbound.InboundLpn.App.UnitOfWork;
 using Sfc.Wms.Framework.SystemCode.App.Interfaces;
 using Sfc.Wms.Framework.SystemCode.App.Services;
 using Sfc.Wms.Framework.SystemCode.App.UnitOfWork;
@@ -87,9 +89,7 @@ using Sfc.Wms.Inbound.Tasks.App.UnitOfWork;
 using Sfc.Wms.Inbound.TransitionalInventory.App.Interfaces;
 using Sfc.Wms.Inbound.TransitionalInventory.App.Services;
 using Sfc.Wms.Inbound.TransitionalInventory.App.UnitOfWork;
-using Sfc.Wms.InboundLpn.App.Interfaces;
-using Sfc.Wms.InboundLpn.App.Services;
-using Sfc.Wms.InboundLpn.App.UnitOfWork;
+
 using Sfc.Wms.Interfaces.Asrs.App.Interfaces;
 using Sfc.Wms.Interfaces.Asrs.App.Mappers;
 using Sfc.Wms.Interfaces.Asrs.App.Services;
@@ -121,6 +121,8 @@ using SimpleInjector.Lifestyles;
 using System.Configuration;
 using System.Runtime.Caching;
 using System.Web.Http;
+using Sfc.Core.OnPrem.UnitOfWork.Contracts.Interfaces;
+using Sfc.Wms.Framework.UnitOfWork;
 
 namespace Sfc.Wms.App.Api
 {
@@ -171,10 +173,11 @@ namespace Sfc.Wms.App.Api
             container.Register<ISfcCache>(() => new SfcInMemoryCache(MemoryCache.Default));
 
             container.Register(typeof(ISystemCodeService), typeof(SystemCodeService));
-            container.Register(typeof(ISystemCodeRepository), typeof(SystemCodeRepository));
             container.Register(typeof(ISystemCodeUnitOfWork), typeof(SystemCodeUnitOfWork));
             container.Register(typeof(ISystemCodeRepositoryGateway), typeof(SystemCodeRepositoryGateway));
             container.Register(typeof(IRbacService), typeof(RbacService));
+
+            container.Register(typeof(ISfcUnitOfWork), typeof(SfcUnitOfWork));
 
             container.Register<IMappingFixture>(() => new MappingFixture(), Lifestyle.Singleton);
             container.Register(typeof(IGenericRepository<>), typeof(GenericRepository<>));
