@@ -49,7 +49,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var swmtomhedata = new SwmToMheDto();
             var t = $"and sku_id = '{skuId}' ";
             var query = $"select * from SWM_TO_MHE where container_id = '{caseNbr}' and source_msg_trans_code = '{trx}' ";
-            var orderBy = "order by created_date_time desc";
+            var orderBy = "order by source_msg_key desc";
             if (trx == TransactionCode.Ivmt)
             {
                 query = query + t + orderBy;
@@ -100,7 +100,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public TransitionalInventoryDto FetchTransInvnentory(OracleConnection db, string skuId)
         {
             var singleSkulocal = new TransitionalInventoryDto();
-            var query = $"Select * from trans_invn where sku_id = '{skuId}' and  trans_invn_type = '18'";
+            var query = $"Select * from trans_invn where sku_id = '{skuId}' and trans_invn_type = '18'";
             command = new OracleCommand(query, db);
             var transInvnReader = command.ExecuteReader();
             if (transInvnReader.Read())
@@ -223,7 +223,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public PickLocationDetailsDto GetPickLocationDetails(OracleConnection db, string skuId, string LocnId)
         {
             var pickLocnDtl = new PickLocationDetailsDto();
-            var pickLocnView = $"select * from pick_locn_dtl where sku_id = '{skuId}' order by mod_date_time desc";
+            var pickLocnView = $"select * from pick_locn_dtl where sku_id = '{skuId}' and locn_id in (select lh.locn_id from locn_hdr lh inner join locn_grp lg on lg.locn_id = lh.locn_id inner join sys_code sc on sc.code_id = lg.grp_type and sc.code_type = '740' and sc.code_id = '18') order by mod_date_time desc";
             command = new OracleCommand(pickLocnView, db);
             var pickLocnDtlReader = command.ExecuteReader();
             if (pickLocnDtlReader.Read())
@@ -239,7 +239,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public PickLocationDetailsExtenstionDto GetPickLocnDtlExt(OracleConnection db, string skuId, string locnId)
         {
             var pickLocnDtlExt = new PickLocationDetailsExtenstionDto();
-            var query = $"select Active_Ormt_Count from pick_locn_dtl_ext WHERE  SKU_ID='{skuId}' order by updated_date_time desc,created_date_time asc";
+            var query = $"select Active_Ormt_Count from pick_locn_dtl_ext WHERE  SKU_ID='{skuId}' and locn_id in (select lh.locn_id from locn_hdr lh inner join locn_grp lg on lg.locn_id = lh.locn_id inner join sys_code sc on sc.code_id = lg.grp_type and sc.code_type = '740' and sc.code_id = '18') order by updated_date_time desc,created_date_time asc";
             command = new OracleCommand(query, db);
             var pickLocnDtlExtReader = command.ExecuteReader();
             if (pickLocnDtlExtReader.Read())

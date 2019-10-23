@@ -133,15 +133,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         
         protected void VerifyTheQuantityWasDecreasedInToTransInventory()
         {
-            Assert.AreEqual(trnInvBeforeApi.ActualInventoryUnits - Convert.ToDecimal(cost.StorageClassAttribute2), trnInvAfterApi.ActualInventoryUnits);
-            //* the bellow line of code is tested after new build release.
-            //Assert.AreEqual(trnInvBeforeApi.ActualWeight - (unitweight1 * Convert.ToDecimal(cost.StorageClassAttribute2)), trnInvAfterApi.ActualWeight);
+            Assert.AreEqual(trnInvBeforeApi.ActualInventoryUnits - (Convert.ToDecimal(cost.StorageClassAttribute2)/100), trnInvAfterApi.ActualInventoryUnits);
+            Assert.AreEqual(trnInvBeforeApi.ActualWeight - (unitweight1 * (Convert.ToDecimal(cost.StorageClassAttribute2)/100)), trnInvAfterApi.ActualWeight);
         }
 
         protected void VerifyTheQuantityWasIncreasedIntoPickLocationTable()
         {
-            Assert.AreEqual(pickLcnDtlBeforeApi.ActualInventoryQuantity + Convert.ToDecimal(cost.StorageClassAttribute2), pickLocnDtlAfterApi.ActualInventoryQuantity);
-          //  Assert.AreEqual(pickLcnDtlBeforeApi.ToBeFilledQty - Convert.ToDecimal(cost.StorageClassAttribute2), pickLocnDtlAfterApi.ToBeFilledQty);
+            Assert.AreEqual(pickLcnDtlBeforeApi.ActualInventoryQuantity + (Convert.ToDecimal(cost.StorageClassAttribute2) / 100), pickLocnDtlAfterApi.ActualInventoryQuantity);
+            Assert.AreEqual(pickLcnDtlBeforeApi.ToBeFilledQty - (Convert.ToDecimal(cost.StorageClassAttribute2) / 100), pickLocnDtlAfterApi.ToBeFilledQty);
         }
         protected void ValidateResultForInvalidMessageKey()
         {

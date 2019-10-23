@@ -39,7 +39,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var CostDataDto = new Cost();
             sqlStatements = $"select swm_to_mhe.container_id,swm_to_mhe.sku_id,pick_locn_dtl.locn_id,swm_to_mhe.qty from swm_to_mhe inner join trans_invn" +
                 $" on trans_invn.sku_id = swm_to_mhe.sku_id inner join  pick_locn_dtl on swm_to_mhe.sku_id = pick_locn_dtl.sku_id  " +
-                $"inner join case_hdr on swm_to_mhe.container_id = case_hdr.case_nbr and swm_to_mhe.source_msg_status = 'Ready' and swm_to_mhe.qty!= 0 and case_hdr.stat_code = 96";
+                $"inner join case_hdr on swm_to_mhe.container_id = case_hdr.case_nbr and swm_to_mhe.source_msg_status = 'Ready' and swm_to_mhe.qty!= 0 and case_hdr.stat_code = 96"+
+                $" and pick_locn_dtl.locn_id in (select lh.locn_id from locn_hdr lh inner join locn_grp lg on lg.locn_id = lh.locn_id inner join sys_code sc on sc.code_id = lg.grp_type and sc.code_type = '740' and sc.code_id = '18')";
             command = new OracleCommand(sqlStatements, db);
             var validData = command.ExecuteReader();
             if (validData.Read())
@@ -90,12 +91,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             {
                 ActionCode = DefaultValues.ActionCodeCost,
                 ContainerReasonCodeMap = ReasonCode.Success,
-                ContainerId = containerNbr,
+                ContainerId = "99076490900000000001",
                 ContainerType = DefaultValues.ContainerType,
                 PhysicalContainerId = "",
-                CurrentLocationId = locationId,
+                CurrentLocationId = "87809",
                 StorageClassAttribute1 = skuId,
-                StorageClassAttribute2 = "1",
+                StorageClassAttribute2 = "100",
                 StorageClassAttribute3 = "",
                 StorageClassAttribute4 = "",
                 StorageClassAttribute5 = "",
