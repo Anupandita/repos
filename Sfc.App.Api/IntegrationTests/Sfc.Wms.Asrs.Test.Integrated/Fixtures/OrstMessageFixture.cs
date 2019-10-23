@@ -55,7 +55,21 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             GetDataAfterTriggerOrstCase4();
         }
+        
+        protected void ReadDataBeforeCallingApiForActionCodeCompleteWithBitsEnabled()
+        {
+            GetDataBeforeApiForActionCodeCompletedWithBitsEnabled();
+        }
 
+        protected void ReadDataAfterCallingApiForActionCodeCompleteWithBitsEnabled()
+        {
+            GetDataAfterApiForActionCodeCompleteWithBitsEnabled();
+        }
+
+        protected void ReadDataBeforeApiForNegativeCaseWherePickTicketSeqNumberIsLessThan1()
+        {
+            GetDataBeforeApiForActionCodeCompleteWithPickTicketSeqNumberLessThan1();
+        }
         protected void MsgKeyForCase1()
         {
             currentMsgKey = msgKeyForCase1.MsgKey;
@@ -74,6 +88,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected void MsgKeyForCase4()
         {
             currentMsgKey = msgKeyForCase4.MsgKey;
+        }
+
+        protected void MsgKeyForCase5()
+        {
+            currentMsgKey = msgKeyForCase5.MsgKey;
         }
 
         protected IRestResponse ApiIsCalled()
@@ -101,6 +120,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(ResultType.Created, result.ResultType.ToString());
         }
 
+
+        protected void OrstApiIsCalledForNegativeCase()
+        {
+            var result = OrstResult();
+            Assert.AreEqual("1", result.ValidationMessages.Count.ToString());
+        }
         protected void GetDataAfterTriggerForAllocatedActionCode()
         {
             GetDataAfterTriggerOrstCase1();
@@ -146,7 +171,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual("00255", orstComplete.MessageLength);
             //Assert.AreEqual("Complete", orstCase2.ActionCode);
         }
-
+    
         protected void VerifyOrstMessageWasInsertedIntoSwmFromMheForActionCodeCancel()
         {
             Assert.AreEqual(emsToWmsCase4.Process, swmFromMheCase4.SourceMessageProcess);
@@ -190,6 +215,21 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             Assert.AreEqual(30,cartonHdrCase2.StatusCode);
             
+        }
+
+        protected void VerifyCartonStatusHasChangedTo5ForActionCodeCompleteWithBitsEnabled()
+        {
+            Assert.AreEqual(5, cartonHdrCase2.StatusCode);
+        }
+        
+        protected void VerifyForQuantitiesInToPickLocationTableForActionCodeCompleteWithBitsEnabled()
+        {
+            Assert.AreEqual(pickLcnCase2BeforeApi.ToBePickedQty - Convert.ToDecimal(orstComplete.QuantityDelivered), pickLcnCase2.ToBePickedQty);
+        }
+
+        protected void VerifyForOrmtCountForActionCodeCompleteWithBitsEnabled()
+        {
+            Assert.AreEqual(pickLcnExtCase2BeforeApi.ActiveOrmtCount - 1, pickLcnExtCase2.ActiveOrmtCount);
         }
 
         protected  void ValidateForQuantitiesInTocartonDetailTableForActionCodeComplete()

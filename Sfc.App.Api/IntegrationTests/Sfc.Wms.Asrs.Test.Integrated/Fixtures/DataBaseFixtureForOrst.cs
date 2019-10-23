@@ -106,6 +106,33 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return orstTestData;
         }
           
+        public OrstTestData GetCartonDetailsForInsertingOrstMessageForNegativeCaseWherePickTicketSeqNumberIsLessThan1(OracleConnection db, int cartonStatusCode, int pktStatusCode)
+        {
+            var orstTestData = new OrstTestData();
+            var sqlStatement = $"select sm.order_id,sm.sku_id,sm.qty,sm.msg_json,ch.curr_locn_id,pl.locn_id,ph.ship_w_ctrl_nbr,ch.dest_locn_id from swm_to_mhe sm " +
+                $"inner join carton_hdr ch ON sm.order_id = ch.carton_nbr " +
+                $"inner join pkt_hdr ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr " +
+                $"inner join alloc_invn_dtl al ON al.task_cmpl_ref_nbr = ch.carton_nbr " +
+                $"inner join pick_locn_dtl pl ON pl.sku_id = sm.sku_id " +
+                $"inner join pkt_dtl pd ON pd.pkt_ctrl_nbr =ch.pkt_ctrl_nbr"+
+                $" where sm.source_msg_status = 'Ready' and ch.stat_code = {cartonStatusCode} and ph.pkt_stat_code = {pktStatusCode} and pd.pkt_seq_nbr <= 0";
+                command = new OracleCommand(sqlStatement, db);
+                var swmToMheReader = command.ExecuteReader();
+                if (swmToMheReader.Read())
+                {
+                    orstTestData.OrderId = swmToMheReader["ORDER_ID"].ToString();
+                    orstTestData.SkuId = swmToMheReader["SKU_ID"].ToString();
+                    orstTestData.Quantity = Convert.ToInt16(swmToMheReader["QTY"].ToString());
+                    orstTestData.MessageJson = swmToMheReader["MSG_JSON"].ToString();
+                    orstTestData.CurrentLocationId = swmToMheReader["CURR_LOCN_ID"].ToString();
+                    orstTestData.LocnId = swmToMheReader["LOCN_ID"].ToString();
+                    orstTestData.ShipWCtrlNbr = swmToMheReader["SHIP_W_CTRL_NBR"].ToString();
+                    orstTestData.DestLocnId = swmToMheReader["DEST_LOCN_ID"].ToString();
+                }
+                return orstTestData;
+        }
+
+
         public void GetDataBeforeTriggerOrst()
         {
             using (var db = GetOracleConnection())
@@ -157,7 +184,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 OrmtCase4 = JsonConvert.DeserializeObject<OrmtDto>(case4.MessageJson);
                 OrstMessageCreatedForCancelledStatus(db);
                 emsToWmsCase4 = GetEmsToWmsData(db, msgKeyForCase4.MsgKey);
-              //pickLcnCase4BeforeApi = GetPickLocationDetails(db, OrmtCase4.Sku, case4.LocnId);
                 pickLcnExtCase4BeforeApi = GetPickLocnDtlExt(db, OrmtCase4.Sku, pickLcnCase4BeforeApi.LocationId);
             }
         }
@@ -198,7 +224,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 db.Open();
                 swmFromMheCase3 = SwmFromMhe(db, msgKeyForCase3.MsgKey, "ORST");
                 orstCase3 = JsonConvert.DeserializeObject<OrstDto>(swmFromMheCase3.MessageJson);
-                //cartonHdrCase3  = GetCartonHeaderDetails(db, orstCase3.OrderId);
             }
         }
 
@@ -210,7 +235,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 swmFromMheCase4 = SwmFromMhe(db, msgKeyForCase4.MsgKey, "ORST");
                 orstCase4 = JsonConvert.DeserializeObject<OrstDto>(swmFromMheCase4.MessageJson);
                 cartonHdrCase4 = GetCartonHeaderDetails(db, orstCase4.OrderId);
-                //pickLcnCase4 = GetPickLocationDetails(db, orstCase4.Sku, case4.LocnId);
                 pickLcnExtCase4  = GetPickLocnDtlExt(db, orstCase4.Sku,pickLcnCase1BeforeApi.LocationId);
             }
         }
@@ -224,15 +248,35 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 OrmtCase2 = JsonConvert.DeserializeObject<OrmtDto>(complete.MessageJson);
                 OrstMessageCreatedForCompletedStatusWithBitsEnabled(db);
                 emsToWmsCase2 = GetEmsToWmsData(db, msgKeyForCase5.MsgKey);
-                cartonDtlCase2BeforeApi = GetCartonDetails(db, complete.OrderId);
                 var cartonHdr = GetCartonHeaderDetails(db, complete.OrderId);
-              // pickTktDtlCase2BeforeApi = GetPickTicketDetailData(db, complete.OrderId, "1");
-                allocInvnDtlCase2BeforeApi = GetAllocInvnDetails(db, complete.OrderId);
                 pickLcnCase2BeforeApi = GetPickLocationDetails(db, OrmtCase2.Sku, null);
                 pickLcnExtCase2BeforeApi = GetPickLocnDtlExt(db, complete.SkuId, pickLcnCase2BeforeApi.LocationId);
             }
         }
 
+
+        public void GetDataBeforeApiForActionCodeCompleteWithPickTicketSeqNumberLessThan1()
+        {
+            using (var db = GetOracleConnection())
+            {
+                db.Open();
+                complete = GetCartonDetailsForInsertingOrstMessageForNegativeCaseWherePickTicketSeqNumberIsLessThan1(db, 15, 35);
+                OrmtCase2 = JsonConvert.DeserializeObject<OrmtDto>(complete.MessageJson);
+                OrstMessageCreatedForCompletedStatus(db);
+            }
+        }
+        public void GetDataAfterApiForActionCodeCompleteWithBitsEnabled()
+        {
+            using (var db = GetOracleConnection())
+            {
+                db.Open();
+                swmFromMheCase2 = SwmFromMhe(db, msgKeyForCase5.MsgKey, "ORST");
+                orstComplete = JsonConvert.DeserializeObject<OrstDto>(swmFromMheCase2.MessageJson);
+                cartonHdrCase2 = GetCartonHeaderDetails(db, orstComplete.OrderId);              
+                pickLcnCase2 = GetPickLocationDetails(db, orstComplete.Sku, null);
+                pickLcnExtCase2 = GetPickLocnDtlExt(db, orstComplete.Sku, pickLcnCase1BeforeApi.LocationId);
+            }
+        }
         public string CreateOrstMessage(string actionCode,string containerId,string skuId,string qty,string waveNbr,string orderReasonCodeMap,string owner, string currentLocationId,string destinationLocnId)
         {
             OrstParameters = new OrstDto

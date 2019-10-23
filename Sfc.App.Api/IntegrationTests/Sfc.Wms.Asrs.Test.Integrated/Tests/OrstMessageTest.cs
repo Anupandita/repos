@@ -25,18 +25,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
     public class OrstMessageTest : OrstMessageFixture
     {
-        [TestMethod]
-        [TestInitialize]
-        public void TestData()
-        {
-            // InitializeTestData();
-        }
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
         public void OrstMessageTestForActionCodeAllocated()
         {
-            this.Given(x => x.MsgKeyForCase1())
+            this.Given(x=>x.InitializeTestData())
+                .And(x => x.MsgKeyForCase1())
                 .When(x => x.OrstApiIsCalledCreatedIsReturned())
                 .And(x => x.ReadDataAfterApiForActionCodeAllocated())
                 .Then(x => x.VerifyOrstMessageWasInsertedIntoSwmFromMheForActionCodeAllocated())
@@ -85,11 +80,34 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                 .And(x => x.MsgKeyForCase4())
                 .When(x => x.OrstApiIsCalledCreatedIsReturned())
                 .Then(x => x.ReadDataAfterApiForActionCodeCancel())
-                .And(x => x.VerifyCartonStatusHasUpdatedToAllocatedOrWaitingForActionCodeCancel())
-             // .And(x => x.ValidateForQuantitiesInToPickLocationTableForActionCodeCancel())
+                .And(x => x.VerifyCartonStatusHasUpdatedToAllocatedOrWaitingForActionCodeCancel())        
                 .And(x => x.ValidateForOrmtCountHasReducedForActionCodeCancel())
                 .BDDfy();
         }
 
+        [TestMethod()]
+        [TestCategory("FUNCTIONAL")]
+        public void OrstMessageTestForActionCodeCompleteWhenBitCodeIsEnabled()
+        {
+            this.Given(x => x.ReadDataBeforeCallingApiForActionCodeCompleteWithBitsEnabled())
+                .And(x => x.MsgKeyForCase5())
+                .When(x => x.OrstApiIsCalledCreatedIsReturned())
+                .Then(x => x.ReadDataAfterCallingApiForActionCodeCompleteWithBitsEnabled())
+                .And(x => x.VerifyOrstMessageWasInsertedIntoSwmFromMheForActionCodeComplete())
+                .And(x => x.VerifyCartonStatusHasChangedTo5ForActionCodeCompleteWithBitsEnabled())
+                .And(x => x.VerifyForQuantitiesInToPickLocationTableForActionCodeCompleteWithBitsEnabled())
+                .And(x => x.VerifyForOrmtCountForActionCodeCompleteWithBitsEnabled())
+                .BDDfy();
+        }
+
+        [TestMethod()]
+        [TestCategory("FUNCTIONAL")]
+        public void OrstMessageTestForActionCodeCompleteWhenPickTicketSeqNbrIsSmallerThan1()
+        {
+            this.Given(x => x.ReadDataBeforeApiForNegativeCaseWherePickTicketSeqNumberIsLessThan1())
+                .And(x => x.MsgKeyForCase2())
+                .When(x => x.OrstApiIsCalledForNegativeCase())
+                .BDDfy();            
+        }
     }
 }
