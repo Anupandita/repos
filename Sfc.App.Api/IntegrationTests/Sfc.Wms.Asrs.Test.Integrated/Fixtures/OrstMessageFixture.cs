@@ -6,13 +6,14 @@ using System;
 using System.Configuration;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Constants;
 using Sfc.Core.OnPrem.Result;
+using System.Diagnostics;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
     public class OrstMessageFixture : DataBaseFixtureForOrst
     {
         protected Int64 currentMsgKey;
-        protected string CostUrl = @ConfigurationManager.AppSettings["EmsToWmsUrl"];
+        protected string OrstUrl = @ConfigurationManager.AppSettings["EmsToWmsUrl"];
         protected IRestResponse Response;
 
         protected void InitializeTestData()
@@ -23,6 +24,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected void TestDataForActionCodeComplete()
         {
             GetDataBeforeCallingApiForActionCodeComplete();
+        }
+
+        protected void TestDataForActionCodeDeAllocate()
+        {
+            GetDataBeforeCallingApiForActionCodeDeAllocate();
         }
 
         protected void TestDataForActionCodeCancel()
@@ -72,12 +78,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         protected IRestResponse ApiIsCalled()
         {
-            var client = new RestClient(CostUrl);
+            var client = new RestClient(OrstUrl);
             var request = new RestRequest(Method.POST);
             request.AddHeader("content-type", Content.ContentType);
             request.AddJsonBody(currentMsgKey);
             request.RequestFormat = DataFormat.Json;
-            Response = client.Execute(request);
+            Response = client.Execute(request);          
             return Response;
         }
 
@@ -88,10 +94,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return result;
         }
 
-
         protected void OrstApiIsCalledCreatedIsReturned()
         {
             var result = OrstResult();
+            Debug.Print(result.ResultType.ToString());
             Assert.AreEqual(ResultType.Created, result.ResultType.ToString());
         }
 
@@ -136,38 +142,35 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(emsToWmsCase2.Transaction, swmFromMheCase2.SourceMessageTransactionCode);
             Assert.AreEqual(emsToWmsCase2.ResponseCode, swmFromMheCase2.SourceMessageResponseCode);
             Assert.AreEqual(emsToWmsCase2.MessageText, swmFromMheCase2.SourceMessageText);
-            Assert.AreEqual("ORST", orstCase1.TransactionCode);
-            Assert.AreEqual("00370", orstCase1.MessageLength);
-            Assert.AreEqual("Complete", orstCase1.ActionCode);
+            Assert.AreEqual("ORST", orstComplete.TransactionCode);
+            Assert.AreEqual("00255", orstComplete.MessageLength);
+            //Assert.AreEqual("Complete", orstCase2.ActionCode);
         }
 
-        protected void VerifyOrstMessageWasInsertedIntoSwmFromMheForActionCodeDeAllocate()
+        protected void VerifyOrstMessageWasInsertedIntoSwmFromMheForActionCodeCancel()
         {
             Assert.AreEqual(emsToWmsCase4.Process, swmFromMheCase4.SourceMessageProcess);
             Assert.AreEqual(emsToWmsCase4.MessageKey, swmFromMheCase4.SourceMessageKey);
             Assert.AreEqual(emsToWmsCase4.Status, swmFromMheCase4.SourceMessageStatus);
             Assert.AreEqual(emsToWmsCase4.Transaction, swmFromMheCase4.SourceMessageTransactionCode);
             Assert.AreEqual(emsToWmsCase4.ResponseCode, swmFromMheCase4.SourceMessageResponseCode);
-            Assert.AreEqual(emsToWmsCase4.MessageText, swmFromMheCase4.SourceMessageText);
-            Assert.AreEqual(DefaultValues.ContainerType, swmFromMheCase4.ContainerType);
+            Assert.AreEqual(emsToWmsCase4.MessageText, swmFromMheCase4.SourceMessageText);         
             Assert.AreEqual(TransactionCode.Orst, orstCase4.TransactionCode);
-            Assert.AreEqual("00370", orstCase4.MessageLength);
-            Assert.AreEqual("Deallocate", orstCase4.ActionCode);
+            Assert.AreEqual("00255", orstCase4.MessageLength);
+            Assert.AreEqual("Canceled", orstCase4.ActionCode);
         }
 
-        protected void VerifyOrstMessageWasInsertedIntoSwmFromMheForActionCodeCancel()
+        protected void VerifyOrstMessageWasInsertedIntoSwmFromMheForActionCodeDeAllocate()
         {
             Assert.AreEqual(emsToWmsCase3.Process, swmFromMheCase3.SourceMessageProcess);
             Assert.AreEqual(emsToWmsCase3.MessageKey, swmFromMheCase3.SourceMessageKey);
             Assert.AreEqual(emsToWmsCase3.Status, swmFromMheCase3.SourceMessageStatus);
             Assert.AreEqual(emsToWmsCase3.Transaction, swmFromMheCase3.SourceMessageTransactionCode);
             Assert.AreEqual(emsToWmsCase3.ResponseCode, swmFromMheCase3.SourceMessageResponseCode);
-            Assert.AreEqual(emsToWmsCase3.MessageText, swmFromMheCase3.SourceMessageText);
-            Assert.AreEqual(DefaultValues.ContainerType, swmFromMheCase3.ContainerType);
+            Assert.AreEqual(emsToWmsCase3.MessageText, swmFromMheCase3.SourceMessageText);   
             Assert.AreEqual(TransactionCode.Orst, orstCase3.TransactionCode);
-            Assert.AreEqual("00370", orstCase3.MessageLength);
-            Assert.AreEqual("Canceled", orstCase3.ActionCode);
-
+            Assert.AreEqual("00255", orstCase3.MessageLength);
+            Assert.AreEqual("Deallocate", orstCase3.ActionCode);
         }
 
         protected void VerifyPickTicketStatusHasChangedToInPickingForActionCodeAllocated()
@@ -179,44 +182,43 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             Assert.AreEqual(15, cartonHdrCase1.StatusCode);
             Assert.AreEqual(case1.CurrentLocationId ,orstCase1.CurrentLocationId);
-            Assert.AreEqual(case1.DestLocnId + "-" +case1.ShipWCtrlNbr, orstCase1.DestinationLocationId);
+            Assert.AreEqual(case1.DestLocnId , orstCase1.DestinationLocationId);
         }
 
 
         protected void VerifyCartonStatusHasChangedToPickedForActionCodeComplete()
         {
-            Assert.AreEqual("30",cartonHdrCase2.StatusCode);
+            Assert.AreEqual(30,cartonHdrCase2.StatusCode);
             
         }
 
         protected  void ValidateForQuantitiesInTocartonDetailTableForActionCodeComplete()
         {
-            Assert.AreEqual(cartonDtlCase2BeforeApi.UnitsPacked + Convert.ToDecimal(orstCase2.QuantityDelivered), cartonDtlCase2AfterApi.UnitsPacked);
-            Assert.AreEqual(cartonDtlCase2BeforeApi.ToBePackedUnits - Convert.ToDecimal(orstCase2.QuantityDelivered), cartonDtlCase2AfterApi.ToBePackedUnits);
+            Assert.AreEqual(cartonDtlCase2BeforeApi.UnitsPacked + Convert.ToDecimal(orstComplete.QuantityDelivered), cartonDtlCase2AfterApi.UnitsPacked);
+            Assert.AreEqual(cartonDtlCase2BeforeApi.ToBePackedUnits - Convert.ToDecimal(orstComplete.QuantityDelivered), cartonDtlCase2AfterApi.ToBePackedUnits);
         }
 
         protected void ValidateForQuantitiesInToPickTicketDetailTableForActionCodeComplete()
         {
-            Assert.AreEqual(pickTktDtlCase2BeforeApi.UnitsPacked + orstCase2.QuantityDelivered, pickTktDtlCase2AfterApi.UnitsPacked);
-            Assert.AreEqual(pickTktDtlCase2BeforeApi.VerifiedAsPacked + orstCase2.QuantityDelivered, pickTktDtlCase2AfterApi.VerifiedAsPacked);
+            Assert.AreEqual(pickTktDtlCase2BeforeApi.UnitsPacked + Convert.ToDecimal(orstComplete.QuantityDelivered), pickTktDtlCase2AfterApi.UnitsPacked);
+            Assert.AreEqual(pickTktDtlCase2BeforeApi.VerifiedAsPacked + Convert.ToDecimal(orstComplete.QuantityDelivered), pickTktDtlCase2AfterApi.VerifiedAsPacked);
         }
 
         protected void VerifyPickTicketStatusHasChangedToWeighedForStatusCodeComplete()
         {
-            Assert.AreEqual("50", pickTktHdrCase2.PickTicketStatusCode);
+            Assert.AreEqual(50, pickTktHdrCase2.PickTicketStatusCode);
         }
-
 
         protected void VerifyAllocationStatusHasChangedToCompleteForActionCodeComplete()
         {
-            Assert.AreEqual(allocInvnDtlCase2BeforeApi.QtyPulled + orstCase2.QuantityDelivered, allocInvnDtlCase2AfterApi.QtyPulled);
+            Assert.AreEqual(Convert.ToDecimal(allocInvnDtlCase2BeforeApi.QtyPulled) + Convert.ToDecimal(orstComplete.QuantityDelivered), Convert.ToDecimal(allocInvnDtlCase2AfterApi.QtyPulled));
             Assert.AreEqual("90", allocInvnDtlCase2AfterApi.StatCode);
         }
 
         protected void ValidateForQuantitiesInToPickLocationTableForActionCodeComplete()
         {
-            Assert.AreEqual(pickLcnCase2BeforeApi.ActualInventoryQuantity - Convert.ToDecimal(orstCase2.QuantityDelivered),pickLcnCase2.ActualInventoryQuantity);
-            Assert.AreEqual(pickLcnCase2BeforeApi.ToBePickedQty - Convert.ToDecimal(orstCase2.QuantityDelivered), pickLcnCase2.ToBePickedQty);
+            Assert.AreEqual(pickLcnCase2BeforeApi.ActualInventoryQuantity - Convert.ToDecimal(orstComplete.QuantityDelivered), pickLcnCase2.ActualInventoryQuantity);
+            Assert.AreEqual(pickLcnCase2BeforeApi.ToBePickedQty - Convert.ToDecimal(orstComplete.QuantityDelivered), pickLcnCase2.ToBePickedQty);
         }
 
         protected void ValidateForOrmtCountHasReducedForActionCodeComplete()
@@ -231,7 +233,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         protected void VerifyCartonStatusHasUpdatedToAllocatedOrWaitingForActionCodeCancel()
         {
-            Assert.AreEqual("5", cartonHdrCase4.StatusCode);
+            Assert.AreEqual(5, cartonHdrCase4.StatusCode);
         }
 
         protected void ValidateForQuantitiesInToPickLocationTableForActionCodeCancel()

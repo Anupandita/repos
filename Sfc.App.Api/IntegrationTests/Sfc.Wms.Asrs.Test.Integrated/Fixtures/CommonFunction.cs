@@ -223,7 +223,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public PickLocationDetailsDto GetPickLocationDetails(OracleConnection db, string skuId, string LocnId)
         {
             var pickLocnDtl = new PickLocationDetailsDto();
-            var pickLocnView = $"select * from pick_locn_dtl where sku_id = '{skuId}' and locn_id = '{LocnId}' order by mod_date_time desc";
+            var pickLocnView = $"select * from pick_locn_dtl where sku_id = '{skuId}' order by mod_date_time desc";
             command = new OracleCommand(pickLocnView, db);
             var pickLocnDtlReader = command.ExecuteReader();
             if (pickLocnDtlReader.Read())
@@ -239,7 +239,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public PickLocationDetailsExtenstionDto GetPickLocnDtlExt(OracleConnection db, string skuId, string locnId)
         {
             var pickLocnDtlExt = new PickLocationDetailsExtenstionDto();
-            var query = $"select Active_Ormt_Count from pick_locn_dtl_ext WHERE  SKU_ID='{skuId}' AND LOCN_ID = '{locnId}'";
+            var query = $"select Active_Ormt_Count from pick_locn_dtl_ext WHERE  SKU_ID='{skuId}' order by updated_date_time desc,created_date_time asc";
             command = new OracleCommand(query, db);
             var pickLocnDtlExtReader = command.ExecuteReader();
             if (pickLocnDtlExtReader.Read())
@@ -260,8 +260,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 cartonHdr.StatusCode = Convert.ToInt16(cartonHdrReader["STAT_CODE"].ToString());
             }
             return cartonHdr;
-        }
-
-       
+        }      
     }
 }

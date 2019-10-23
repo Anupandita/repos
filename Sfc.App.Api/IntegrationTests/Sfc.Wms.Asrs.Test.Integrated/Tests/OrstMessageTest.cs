@@ -29,7 +29,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         [TestInitialize]
         public void TestData()
         {
-            //InitializeTestData();
+            // InitializeTestData();
         }
 
         [TestMethod()]
@@ -64,33 +64,32 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
              .BDDfy();
         }
 
-        //[TestMethod()]
-        //[TestCategory("FUNCTIONAL")]
-        //public void OrstMessageTestForActionCodeDeAllocate()
-        //{
-        //    this.Given(x => x.MsgKeyForCase3())
-        //        .When(x => x.OrstApiIsCalledCreatedIsReturned())
-        //        .Then(x => x.ReadDataAfterApiForActionCodeDeAllocate())
-        //        .And(x => x.VerifyOrstMessageWasInsertedIntoSwmFromMheForActionCodeDeAllocate())
-        //        .And(x => x.VerifyCartonStatusHasUpdatedToAllocatedOrWaitingForActionCodeDeAllocate())
-        //        .BDDfy();
-        //}
+        [TestMethod()]
+        [TestCategory("FUNCTIONAL")]
+        public void OrstMessageTestForActionCodeDeAllocate()
+        {
+            this.Given(x=>x.TestDataForActionCodeDeAllocate())
+                .And(x => x.MsgKeyForCase3())
+                .When(x => x.OrstApiIsCalledCreatedIsReturned())
+                .Then(x => x.ReadDataAfterApiForActionCodeDeAllocate())
+                .And(x => x.VerifyOrstMessageWasInsertedIntoSwmFromMheForActionCodeDeAllocate())
+                
+                .BDDfy();
+        }
 
-        //[TestMethod()]
-        //[TestCategory("FUNCTIONAL")]
-        //public void OrstMessageTestForActionCodeCancel()
-        //{
-        //    this.Given(x => x.TestDataForActionCodeCancel())
-        //        .And(x =>x.MsgKeyForCase4())
-        //        .When(x => x.OrstApiIsCalledCreatedIsReturned())
-        //        .Then(x =>x.ReadDataAfterApiForActionCodeCancel())
-        //        .And(x =>x.VerifyCartonStatusHasUpdatedToAllocatedOrWaitingForActionCodeCancel())
-        //        .And(x => x.ValidateForQuantitiesInToPickLocationTableForActionCodeCancel())
-        //        .And(x=>x.ValidateForOrmtCountHasReducedForActionCodeCancel())
-        //        .BDDfy();
-        //}
-
-
+        [TestMethod()]
+        [TestCategory("FUNCTIONAL")]
+        public void OrstMessageTestForActionCodeCancel()
+        {
+            this.Given(x => x.TestDataForActionCodeCancel())
+                .And(x => x.MsgKeyForCase4())
+                .When(x => x.OrstApiIsCalledCreatedIsReturned())
+                .Then(x => x.ReadDataAfterApiForActionCodeCancel())
+                .And(x => x.VerifyCartonStatusHasUpdatedToAllocatedOrWaitingForActionCodeCancel())
+             // .And(x => x.ValidateForQuantitiesInToPickLocationTableForActionCodeCancel())
+                .And(x => x.ValidateForOrmtCountHasReducedForActionCodeCancel())
+                .BDDfy();
+        }
 
     }
 }

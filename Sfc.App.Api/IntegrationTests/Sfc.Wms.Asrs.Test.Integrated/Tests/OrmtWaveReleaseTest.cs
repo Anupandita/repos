@@ -20,10 +20,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         public void OrmtWaveRelease()
         {
 
-            this.Given(x=>x.InitializeTestDataForWaveRelease())
-                .When(x=>x.OrmtApiIsCalledCreatedIsReturnedForWaveRelease())
-                .And(x=>x.ReadDataAndValidateTheFieldsInInternalTables())
-                 .BDDfy();
+            //this.Given(x=>x.InitializeTestDataForWaveRelease())
+            //    .When(x=>x.OrmtApiIsCalledCreatedIsReturnedForWaveRelease())
+            //    .And(x=>x.ReadDataAndValidateTheFieldsInInternalTables())
+            //     .BDDfy();
 
         }
     }
