@@ -56,7 +56,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public DataBaseFixture()
         {
              var dataTypeValidation = new DataTypeValidation();
-             //var messageHeaderParser = new MessageParser();
              _canParseMessage = new MessageHeaderParser();         
         }
 
@@ -247,7 +246,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return caseDtl;
         }
         
-
         protected TaskHeaderDto FetchTaskDetails(OracleConnection db,string skuId)
         {
             var task = new TaskHeaderDto();
@@ -319,7 +317,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected BaseResult ParserTestforMsgText(string transactionCode,string sourceTextMsg)
         {
             var testResult = _canParseMessage.ParseMessage(transactionCode, sourceTextMsg);
-            //Assert.AreEqual(testResult.ResultType, ResultTypes.Ok);
             return testResult;
         }
 
@@ -359,8 +356,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(DefaultValues.ContainerType, ivmt.UnitOfMeasure);          
             Assert.AreEqual(DefaultValues.DataControl, ivmt.DateControl);
             Assert.AreEqual(DefaultValues.InBoundPallet,ivmt.InboundPallet);
-            //Assert.AreEqual("0", swmToMheIvmt.SourceMessageResponseCode);
-            //Assert.AreEqual("PONumber", swmToMheIvmt.PoNumber);
         }
 
         protected void VerifyIvmtMessageWasInsertedIntoWmsToEms(WmsToEmsDto wmsToEms)

@@ -217,8 +217,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
             return CostTransData;
         }
-     
-       
+           
         public void GetDataAfterTrigger()
         {
             using (var db = GetOracleConnection())

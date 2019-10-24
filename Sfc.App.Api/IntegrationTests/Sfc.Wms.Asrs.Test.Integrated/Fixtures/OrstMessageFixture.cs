@@ -72,22 +72,22 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         }
         protected void MsgKeyForCase1()
         {
-            currentMsgKey = msgKeyForCase1.MsgKey;
+            currentMsgKey = msgKeyForAllocated.MsgKey;
         }
 
         protected void MsgKeyForCase2()
         {
-            currentMsgKey = msgKeyForCase2.MsgKey;
+            currentMsgKey = msgKeyForCompleted.MsgKey;
         }
 
         protected void MsgKeyForCase3()
         {
-            currentMsgKey = msgKeyForCase3.MsgKey;
+            currentMsgKey = msgKeyForDeallocated.MsgKey;
         }
 
         protected void MsgKeyForCase4()
         {
-            currentMsgKey = msgKeyForCase4.MsgKey;
+            currentMsgKey = msgKeyForCanceled.MsgKey;
         }
 
         protected void MsgKeyForCase5()
@@ -124,7 +124,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected void OrstApiIsCalledForNegativeCase()
         {
             var result = OrstResult();
-            Assert.AreEqual("1", result.ValidationMessages.Count.ToString());
+            Assert.AreEqual("2", result.ValidationMessages.Count.ToString());
         }
         protected void GetDataAfterTriggerForAllocatedActionCode()
         {
@@ -148,83 +148,82 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         protected void VerifyOrstMessageWasInsertedIntoSwmFromMheForActionCodeAllocated()
         {
-            Assert.AreEqual(emsToWmsCase1.Process, swmFromMheCase1.SourceMessageProcess);
-            Assert.AreEqual(emsToWmsCase1.MessageKey, swmFromMheCase1.SourceMessageKey);
-            Assert.AreEqual(emsToWmsCase1.Status, swmFromMheCase1.SourceMessageStatus);
-            Assert.AreEqual(emsToWmsCase1.Transaction, swmFromMheCase1.SourceMessageTransactionCode);
-            Assert.AreEqual(emsToWmsCase1.ResponseCode, swmFromMheCase1.SourceMessageResponseCode);
-            Assert.AreEqual(emsToWmsCase1.MessageText, swmFromMheCase1.SourceMessageText);            
-            Assert.AreEqual("ORST", orstCase1.TransactionCode);
-            Assert.AreEqual("00255", orstCase1.MessageLength);
-            Assert.AreEqual("Allocated", orstCase1.ActionCode);        
+            Assert.AreEqual(emsToWmsAllocated.Process, swmFromMheAllocated.SourceMessageProcess);
+            Assert.AreEqual(emsToWmsAllocated.MessageKey, swmFromMheAllocated.SourceMessageKey);
+            Assert.AreEqual(emsToWmsAllocated.Status, swmFromMheAllocated.SourceMessageStatus);
+            Assert.AreEqual(emsToWmsAllocated.Transaction, swmFromMheAllocated.SourceMessageTransactionCode);
+            Assert.AreEqual(emsToWmsAllocated.ResponseCode, swmFromMheAllocated.SourceMessageResponseCode);
+            Assert.AreEqual(emsToWmsAllocated.MessageText, swmFromMheAllocated.SourceMessageText);            
+            Assert.AreEqual("ORST", orstAllocated.TransactionCode);
+            Assert.AreEqual("00255", orstAllocated.MessageLength);
+            Assert.AreEqual("Allocated", orstAllocated.ActionCode);        
         }
 
         protected void VerifyOrstMessageWasInsertedIntoSwmFromMheForActionCodeComplete()
         {
-            Assert.AreEqual(emsToWmsCase2.Process, swmFromMheCase2.SourceMessageProcess);
-            Assert.AreEqual(emsToWmsCase2.MessageKey, swmFromMheCase2.SourceMessageKey);
-            Assert.AreEqual(emsToWmsCase2.Status, swmFromMheCase2.SourceMessageStatus);
-            Assert.AreEqual(emsToWmsCase2.Transaction, swmFromMheCase2.SourceMessageTransactionCode);
-            Assert.AreEqual(emsToWmsCase2.ResponseCode, swmFromMheCase2.SourceMessageResponseCode);
-            Assert.AreEqual(emsToWmsCase2.MessageText, swmFromMheCase2.SourceMessageText);
-            Assert.AreEqual("ORST", orstComplete.TransactionCode);
-            Assert.AreEqual("00255", orstComplete.MessageLength);
+            Assert.AreEqual(emsToWmsCompleted.Process, swmFromMheComplete.SourceMessageProcess);
+            Assert.AreEqual(emsToWmsCompleted.MessageKey, swmFromMheComplete.SourceMessageKey);
+            Assert.AreEqual(emsToWmsCompleted.Status, swmFromMheComplete.SourceMessageStatus);
+            Assert.AreEqual(emsToWmsCompleted.Transaction, swmFromMheComplete.SourceMessageTransactionCode);
+            Assert.AreEqual(emsToWmsCompleted.ResponseCode, swmFromMheComplete.SourceMessageResponseCode);
+            Assert.AreEqual(emsToWmsCompleted.MessageText, swmFromMheComplete.SourceMessageText);
+            Assert.AreEqual("ORST", orstCompleted.TransactionCode);
+            Assert.AreEqual("00255", orstCompleted.MessageLength);
             //Assert.AreEqual("Complete", orstCase2.ActionCode);
         }
     
         protected void VerifyOrstMessageWasInsertedIntoSwmFromMheForActionCodeCancel()
         {
-            Assert.AreEqual(emsToWmsCase4.Process, swmFromMheCase4.SourceMessageProcess);
-            Assert.AreEqual(emsToWmsCase4.MessageKey, swmFromMheCase4.SourceMessageKey);
-            Assert.AreEqual(emsToWmsCase4.Status, swmFromMheCase4.SourceMessageStatus);
-            Assert.AreEqual(emsToWmsCase4.Transaction, swmFromMheCase4.SourceMessageTransactionCode);
-            Assert.AreEqual(emsToWmsCase4.ResponseCode, swmFromMheCase4.SourceMessageResponseCode);
-            Assert.AreEqual(emsToWmsCase4.MessageText, swmFromMheCase4.SourceMessageText);         
-            Assert.AreEqual(TransactionCode.Orst, orstCase4.TransactionCode);
-            Assert.AreEqual("00255", orstCase4.MessageLength);
-            Assert.AreEqual("Canceled", orstCase4.ActionCode);
+            Assert.AreEqual(emsToWmsCanceled.Process, swmFromMheCancel.SourceMessageProcess);
+            Assert.AreEqual(emsToWmsCanceled.MessageKey, swmFromMheCancel.SourceMessageKey);
+            Assert.AreEqual(emsToWmsCanceled.Status, swmFromMheCancel.SourceMessageStatus);
+            Assert.AreEqual(emsToWmsCanceled.Transaction, swmFromMheCancel.SourceMessageTransactionCode);
+            Assert.AreEqual(emsToWmsCanceled.ResponseCode, swmFromMheCancel.SourceMessageResponseCode);
+            Assert.AreEqual(emsToWmsCanceled.MessageText, swmFromMheCancel.SourceMessageText);         
+            Assert.AreEqual(TransactionCode.Orst, orstCanceled.TransactionCode);
+            Assert.AreEqual("00255", orstCanceled.MessageLength);
+            Assert.AreEqual("Canceled", orstCanceled.ActionCode);
         }
 
         protected void VerifyOrstMessageWasInsertedIntoSwmFromMheForActionCodeDeAllocate()
         {
-            Assert.AreEqual(emsToWmsCase3.Process, swmFromMheCase3.SourceMessageProcess);
-            Assert.AreEqual(emsToWmsCase3.MessageKey, swmFromMheCase3.SourceMessageKey);
-            Assert.AreEqual(emsToWmsCase3.Status, swmFromMheCase3.SourceMessageStatus);
-            Assert.AreEqual(emsToWmsCase3.Transaction, swmFromMheCase3.SourceMessageTransactionCode);
-            Assert.AreEqual(emsToWmsCase3.ResponseCode, swmFromMheCase3.SourceMessageResponseCode);
-            Assert.AreEqual(emsToWmsCase3.MessageText, swmFromMheCase3.SourceMessageText);   
-            Assert.AreEqual(TransactionCode.Orst, orstCase3.TransactionCode);
-            Assert.AreEqual("00255", orstCase3.MessageLength);
-            Assert.AreEqual("Deallocate", orstCase3.ActionCode);
+            Assert.AreEqual(emsToWmsDeallocated.Process, swmFromMheDeallocate.SourceMessageProcess);
+            Assert.AreEqual(emsToWmsDeallocated.MessageKey, swmFromMheDeallocate.SourceMessageKey);
+            Assert.AreEqual(emsToWmsDeallocated.Status, swmFromMheDeallocate.SourceMessageStatus);
+            Assert.AreEqual(emsToWmsDeallocated.Transaction, swmFromMheDeallocate.SourceMessageTransactionCode);
+            Assert.AreEqual(emsToWmsDeallocated.ResponseCode, swmFromMheDeallocate.SourceMessageResponseCode);
+            Assert.AreEqual(emsToWmsDeallocated.MessageText, swmFromMheDeallocate.SourceMessageText);   
+            Assert.AreEqual(TransactionCode.Orst, orstDeallocate.TransactionCode);
+            Assert.AreEqual("00255", orstDeallocate.MessageLength);
+            Assert.AreEqual("Deallocate", orstDeallocate.ActionCode);
         }
 
         protected void VerifyPickTicketStatusHasChangedToInPickingForActionCodeAllocated()
         {
-            Assert.AreEqual(35, pickTktHdrCase1.PickTicketStatusCode);
+            Assert.AreEqual(35, pickTktHdrAllocated.PickTicketStatusCode);
         }
 
         protected void VerifyCartonStatusHasChangedToInPackingForActionCodeAllocated()
         {
-            Assert.AreEqual(15, cartonHdrCase1.StatusCode);
-            Assert.AreEqual(case1.CurrentLocationId ,orstCase1.CurrentLocationId);
-            Assert.AreEqual(case1.DestLocnId , orstCase1.DestinationLocationId);
+            Assert.AreEqual(15, cartonHdrAllocated.StatusCode);
+            Assert.AreEqual(allocated.CurrentLocationId ,orstAllocated.CurrentLocationId);
+            Assert.AreEqual(allocated.DestLocnId , orstAllocated.DestinationLocationId);
         }
 
 
         protected void VerifyCartonStatusHasChangedToPickedForActionCodeComplete()
         {
-            Assert.AreEqual(30,cartonHdrCase2.StatusCode);
-            
+            Assert.AreEqual(30,cartonHdrCompleted.StatusCode);         
         }
 
         protected void VerifyCartonStatusHasChangedTo5ForActionCodeCompleteWithBitsEnabled()
         {
-            Assert.AreEqual(5, cartonHdrCase2.StatusCode);
+            Assert.AreEqual(5, cartonHdrCompleted.StatusCode);
         }
         
         protected void VerifyForQuantitiesInToPickLocationTableForActionCodeCompleteWithBitsEnabled()
         {
-            Assert.AreEqual(pickLcnCase2BeforeApi.ToBePickedQty - Convert.ToDecimal(orstComplete.QuantityDelivered), pickLcnCase2.ToBePickedQty);
+            Assert.AreEqual(pickLcnCase2BeforeApi.ToBePickedQty - Convert.ToDecimal(orstCompleted.QuantityDelivered), pickLcnCase2.ToBePickedQty);
         }
 
         protected void VerifyForOrmtCountForActionCodeCompleteWithBitsEnabled()
@@ -234,51 +233,51 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         protected  void ValidateForQuantitiesInTocartonDetailTableForActionCodeComplete()
         {
-            Assert.AreEqual(cartonDtlCase2BeforeApi.UnitsPacked + Convert.ToDecimal(orstComplete.QuantityDelivered), cartonDtlCase2AfterApi.UnitsPacked);
-            Assert.AreEqual(cartonDtlCase2BeforeApi.ToBePackedUnits - Convert.ToDecimal(orstComplete.QuantityDelivered), cartonDtlCase2AfterApi.ToBePackedUnits);
+            Assert.AreEqual(cartonDtlCase2BeforeApi.UnitsPacked + Convert.ToDecimal(orstCompleted.QuantityDelivered), cartonDtlCase2AfterApi.UnitsPacked);
+            Assert.AreEqual(cartonDtlCase2BeforeApi.ToBePackedUnits - Convert.ToDecimal(orstCompleted.QuantityDelivered), cartonDtlCase2AfterApi.ToBePackedUnits);
         }
 
         protected void ValidateForQuantitiesInToPickTicketDetailTableForActionCodeComplete()
         {
-            Assert.AreEqual(pickTktDtlCase2BeforeApi.UnitsPacked + Convert.ToDecimal(orstComplete.QuantityDelivered), pickTktDtlCase2AfterApi.UnitsPacked);
-            Assert.AreEqual(pickTktDtlCase2BeforeApi.VerifiedAsPacked + Convert.ToDecimal(orstComplete.QuantityDelivered), pickTktDtlCase2AfterApi.VerifiedAsPacked);
+            Assert.AreEqual(pickTktDtlCase2BeforeApi.UnitsPacked + Convert.ToDecimal(orstCompleted.QuantityDelivered), pickTktDtlCase2AfterApi.UnitsPacked);
+            Assert.AreEqual(pickTktDtlCase2BeforeApi.VerifiedAsPacked + Convert.ToDecimal(orstCompleted.QuantityDelivered), pickTktDtlCase2AfterApi.VerifiedAsPacked);
         }
 
         protected void VerifyPickTicketStatusHasChangedToWeighedForStatusCodeComplete()
         {
-            Assert.AreEqual(50, pickTktHdrCase2.PickTicketStatusCode);
+            Assert.AreEqual(50, pickTktHdrCompleted.PickTicketStatusCode);
         }
 
         protected void VerifyAllocationStatusHasChangedToCompleteForActionCodeComplete()
         {
-            Assert.AreEqual(Convert.ToDecimal(allocInvnDtlCase2BeforeApi.QtyPulled) + Convert.ToDecimal(orstComplete.QuantityDelivered), Convert.ToDecimal(allocInvnDtlCase2AfterApi.QtyPulled));
-            Assert.AreEqual("90", allocInvnDtlCase2AfterApi.StatCode);
+            Assert.AreEqual(Convert.ToDecimal(allocInvnDtlCompletedBeforeApi.QtyPulled) + Convert.ToDecimal(orstCompleted.QuantityDelivered), Convert.ToDecimal(allocInvnDtlCompletedAfterApi.QtyPulled));
+            Assert.AreEqual("90", allocInvnDtlCompletedAfterApi.StatCode);
         }
 
         protected void ValidateForQuantitiesInToPickLocationTableForActionCodeComplete()
         {
-            Assert.AreEqual(pickLcnCase2BeforeApi.ActualInventoryQuantity - Convert.ToDecimal(orstComplete.QuantityDelivered), pickLcnCase2.ActualInventoryQuantity);
-            Assert.AreEqual(pickLcnCase2BeforeApi.ToBePickedQty - Convert.ToDecimal(orstComplete.QuantityDelivered), pickLcnCase2.ToBePickedQty);
+            Assert.AreEqual(pickLcnCase2BeforeApi.ActualInventoryQuantity - Convert.ToDecimal(orstCompleted.QuantityDelivered), pickLcnCase2.ActualInventoryQuantity);
+            Assert.AreEqual(pickLcnCase2BeforeApi.ToBePickedQty - Convert.ToDecimal(orstCompleted.QuantityDelivered), pickLcnCase2.ToBePickedQty);
         }
 
         protected void ValidateForOrmtCountHasReducedForActionCodeComplete()
         {
-            Assert.AreEqual(pickLcnExtCase2BeforeApi.ActiveOrmtCount - 1, pickLcnExtCase2.ActiveOrmtCount);
+           // Assert.AreEqual(pickLcnExtCase2BeforeApi.ActiveOrmtCount - 1, pickLcnExtCase2.ActiveOrmtCount);
         }
 
         protected void VerifyCartonStatusHasUpdatedToAllocatedOrWaitingForActionCodeDeAllocate()
         {
-            Assert.AreEqual("5", cartonHdrCase3.StatusCode);
+            Assert.AreEqual("5", cartonHdrDeallocated.StatusCode);
         }
 
         protected void VerifyCartonStatusHasUpdatedToAllocatedOrWaitingForActionCodeCancel()
         {
-            Assert.AreEqual(5, cartonHdrCase4.StatusCode);
+            Assert.AreEqual(5, cartonHdrCanceled.StatusCode);
         }
 
         protected void ValidateForQuantitiesInToPickLocationTableForActionCodeCancel()
         {
-            Assert.AreEqual(pickLcnCase4BeforeApi.ToBePickedQty - Convert.ToDecimal(orstCase4.QuantityDelivered), pickLcnCase4.ToBePickedQty);
+            Assert.AreEqual(pickLcnCase4BeforeApi.ToBePickedQty - Convert.ToDecimal(orstCanceled.QuantityDelivered), pickLcnCase4.ToBePickedQty);
         }
 
         protected void ValidateForOrmtCountHasReducedForActionCodeCancel()

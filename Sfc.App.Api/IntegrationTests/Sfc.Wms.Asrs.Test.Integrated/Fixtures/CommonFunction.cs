@@ -3,14 +3,13 @@ using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
 using Sfc.Wms.Asrs.Dematic.Contracts.Dtos;
 using Sfc.Wms.Asrs.Shamrock.Contracts.Dtos;
 using Sfc.Wms.Data.Entities;
-using Sfc.Wms.TransitionalInventory.Contracts.Dtos;
+using Sfc.Wms.Foundation.Carton.Contracts.Dtos;
+using Sfc.Wms.Foundation.Location.Contracts.Dtos;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Constants;
-using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Dto;
+using Sfc.Wms.TransitionalInventory.Contracts.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using Sfc.Wms.Foundation.Location.Contracts.Dtos;
-using Sfc.Wms.Foundation.Carton.Contracts.Dtos;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
@@ -44,19 +43,25 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return WmsToEms;
         }
 
-        protected SwmToMheDto SwmToMhe(OracleConnection db, string caseNbr, string trx, string skuId)
+        protected SwmToMheDto SwmToMhe(OracleConnection db, string containerNbr, string trx, string skuId)
         {
             var swmtomhedata = new SwmToMheDto();
-            var t = $"and sku_id = '{skuId}' ";
-            var query = $"select * from SWM_TO_MHE where container_id = '{caseNbr}' and source_msg_trans_code = '{trx}' ";
-            var orderBy = "order by source_msg_key desc";
+            var t = $" and sku_id = '{skuId}' ";
+            var ormt = $" and order_id = '{containerNbr}' ";
+            var comt = $" and container_id = '{containerNbr}' ";
+            var query = $"select * from SWM_TO_MHE where  source_msg_trans_code = '{trx}'";          
+            var orderBy = " order by source_msg_key desc ";
             if (trx == TransactionCode.Ivmt)
             {
-                query = query + t + orderBy;
+                query = query + comt + t + orderBy;
+            }
+            else if(trx == TransactionCode.Ormt)
+            {
+                query = query + ormt + t + orderBy;
             }
             else
             {
-                query = query + orderBy;
+                query = query + comt + orderBy;
             }
             command = new OracleCommand(query, db);
             var swmToMheReader = command.ExecuteReader();
@@ -80,6 +85,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 swmtomhedata.PoNumber = swmToMheReader["PO_NBR"].ToString();
                 swmtomhedata.Quantity = Convert.ToInt32(swmToMheReader["QTY"].ToString());
                 swmtomhedata.WaveNumber = swmToMheReader["WAVE_NBR"].ToString();
+                swmtomhedata.ZplData = swmToMheReader["ZPL_DATA"].ToString();
             }
             return swmtomhedata;
         }

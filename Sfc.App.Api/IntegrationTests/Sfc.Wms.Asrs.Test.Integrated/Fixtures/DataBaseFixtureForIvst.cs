@@ -47,14 +47,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected TransitionalInventoryDto trnsInvAfterApi = new TransitionalInventoryDto();
         protected List<Scenarios> msgkeyList = new List<Scenarios>();
 
-
-
         public DataBaseFixtureForIvst()
         {
             // _dataTypeValidation = new DataTypeValidation();
         }
-
-
 
         public void GetDataBeforeApiTrigger()
         {
@@ -193,7 +189,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 ActionCode = ActionCode,
                 AdjustmentReasonCode = AdjustmentReasonCode,
                 ContainerId = containerNbr,
-                Quantity = "100",
+                Quantity = "1",
                 Sku = SkuId,
                 Owner = "Wms",
                 UserName = "Prashant M G",
@@ -227,8 +223,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return pickLocn;
         }
 
-       
-
         public void GetDataAfterTrigger(long key)
         {
             using (var db = GetOracleConnection())
@@ -243,9 +237,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 pixtran = GetPixtransaction(db, PixTrnAfterApi);
             }
         }
-
-
-
 
         public PixTransactionDto GetPixtransaction(OracleConnection db, string rsnCode)
         {

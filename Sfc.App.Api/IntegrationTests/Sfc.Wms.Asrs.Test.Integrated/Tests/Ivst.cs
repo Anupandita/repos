@@ -21,24 +21,26 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         {
             TestInitialize();
         }
-
-        //[TestMethod()]
-        //[TestCategory("FUNCTIONAL")]
-        //[Priority(1)]
-        //public void VerifyForValidIvstMessageScenariosCycleCount()
-        //{
-        //    this.Given(x => x.MsgKeyCycleCount())
-        //        .When(x => x.IvstApiIsCalledWithValidMsgKey())
-        //        .And(x => x.GetValidDataAfterTrigger())
-        //        .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMhe())
-        //        .And(x => x.VerifyCycleCountMessage())
-        //        .And(x => x.PixTransactionValidationForCycleCountAdjustmentPlus())
-        //        .BDDfy();
-        //}
+        /* this code will be tested only for outbound process
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
         [Priority(1)]
-        public void TestForIvstUnexpectedOverageExceptionScenarios()
+        public void VerifyForValidIvstMessageScenariosCycleCount()
+        {
+            this.Given(x => x.MsgKeyCycleCount())
+                .When(x => x.IvstApiIsCalledWithValidMsgKey())
+                .And(x => x.GetValidDataAfterTrigger())
+                .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMhe())
+                .And(x => x.VerifyCycleCountMessage())
+                .And(x => x.PixTransactionValidationForCycleCountAdjustmentPlus())
+                .BDDfy();
+        }*/
+
+        [TestMethod()]
+        [TestCategory("FUNCTIONAL")]
+        [Priority(1)]
+        [DataRow(2)]
+        public void TestForIvstUnexpectedOverageExceptionScenarios(int count)
         {
             this.Given(x => x.TestDataForUnexpectedOverageException())
              .And(x => x.MsgKeyForUnexpectedOverageException())
@@ -92,13 +94,5 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
             .And(x => x.VerifyTheRecordInsertedIntoPixTransactionTablereasonCodeForWrongSkuException())
             .BDDfy();
         }
-
-
-
-
-
-
-
-
     }
 }

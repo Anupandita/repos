@@ -115,7 +115,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void GetDataAfterCallingOrmtApiAfterWaveRelease()
+        /* wave release not tested.
+       /* public void GetDataAfterCallingOrmtApiAfterWaveRelease()
         {
             OracleConnection db;
             using (db = GetOracleConnection())
@@ -132,7 +133,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                     pickLcnDtlExtAfterApi = GetPickLocnDtlExt(db, orderList[i].SkuId,orderList[i].LocnId);
                 }
             }
-        }
+        }*/
 
 
         public void GetDataAfterCallingApiForCancellationOfOrders()
@@ -178,18 +179,16 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public CartonView GetValidOrderDetails(OracleConnection db, int statCode, int miscNum1)
         {
             var cartonView = new CartonView();
-            var countQuery = $"select COUNT(*) from CARTON_HDR ch " +
-                $"inner join PKT_HDR ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr " +
-                $"inner join Pick_Locn_dtl pl ON  pl.sku_id = ch.sku_id  " +
-                $"inner join ITEM_MASTER im ON pl.sku_id = im.sku_id " +
-                $"inner join locn_hdr lh ON pl.locn_id = lh.locn_id " +
-                $"inner join locn_grp lg ON lg.locn_id=lh.locn_id " +
+            var countQuery = $"select COUNT(distinct ch.carton_nbr) from CARTON_HDR ch inner join" +
+                $" PKT_HDR ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr inner join Pick_Locn_dtl pl ON  " +
+                $"pl.sku_id = ch.sku_id inner join ITEM_MASTER im ON ch.sku_id = im.sku_id inner join " +
+                $"locn_hdr lh ON pl.locn_id = lh.locn_id inner join locn_grp lg ON lg.locn_id=lh.locn_id " +
                 $"inner join sys_code sc ON sc.code_id=lg.grp_type " +
-                $"inner join pkt_hdr ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr " +
+                $"inner join pkt_hdr ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr  " +
                 $"inner join pkt_dtl pd ON pd.pkt_ctrl_nbr =ch.pkt_ctrl_nbr " +
                 $"inner join alloc_invn_dtl ai ON ai.sku_id = ch.sku_id " +
-                $"left join pick_locn_dtl_ext ple ON pl.sku_id =ple.sku_id " +
-                $"where  ch.stat_code = 5 and ch.misc_instr_code_5 is null and misc_num_1 = 0 and  sc.code_type='740' and code_id ='18' and lg.grp_attr = DECODE(im.temp_zone,'D','Dry','Freezer') and pl.actl_invn_qty! =0 and ph.pkt_stat_code < 35 and (pl.actl_invn_qty - ple.active_ormt_count) > 0 and pd.pkt_seq_nbr > 0";    
+                $"left join pick_locn_dtl_ext ple ON pl.sku_id =ple.sku_id where  " +
+                $"ch.stat_code = 5 and ch.misc_instr_code_5 is null and misc_num_1 = 0 and  sc.code_type='740' and code_id ='18' and lg.grp_attr = DECODE(im.temp_zone,'D','Dry','Freezer') and pl.actl_invn_qty! =0 and ph.pkt_stat_code < 35 and (pl.actl_invn_qty - ple.active_ormt_count) > 0 and pd.pkt_seq_nbr > 0";    
             var countCommand = new OracleCommand(countQuery, db);
             var rowSize = Convert.ToInt32(countCommand.ExecuteScalar());
             if (rowSize == 0)
@@ -229,7 +228,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var query = $"select ch.carton_nbr,ai.task_cmpl_ref_nbr,ch.wave_nbr,ch.sku_id,pl.locn_id,ch.MISC_NUM_1, ch.total_qty, ch.stat_code,pl.actl_invn_qty,ch.DEST_LOCN_ID,ph.PKT_CTRL_NBR,ph.SHIP_W_CTRL_NBR,ph.Whse,ph.CO,ph.DIV, im.spl_instr_code_1, im.spl_instr_code_5 from CARTON_HDR ch inner join PKT_HDR ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr " +
                 $"inner join Pick_Locn_dtl pl ON  pl.sku_id = ch.sku_id " +
                 $"inner join ITEM_MASTER im ON pl.sku_id = im.sku_id inner join pkt_dtl pd ON pd.pkt_ctrl_nbr =ch.pkt_ctrl_nbr inner join locn_hdr lh ON pl.locn_id = lh.locn_id inner join locn_grp lg ON lg.locn_id = lh.locn_id inner join sys_code sc ON sc.code_id = lg.grp_type" +
-                $" inner join pkt_hdr ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr inner join alloc_invn_dtl ai ON ai.task_cmpl_ref_nbr = ch.carton_nbr left join pick_locn_dtl_ext ple ON pl.sku_id =ple.sku_id where ch.stat_code = 12 and ch.misc_instr_code_5 is null and misc_num_1 = 0 and " +
+                $" inner join pkt_hdr ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr inner join alloc_invn_dtl ai ON ai.task_cmpl_ref_nbr = ch.carton_nbr left join pick_locn_dtl_ext ple ON pl.sku_id =ple.sku_id where ch.stat_code = 10 and ch.misc_instr_code_5 is null and misc_num_1 = 0 and " +
                 $"sc.code_type = '740' and code_id = '18' and lg.grp_attr = DECODE(im.temp_zone, 'D', 'Dry', 'Freezer') and (pl.actl_invn_qty - ple.active_ormt_count) > 0 and pd.pkt_seq_nbr > 0";
             var command = new OracleCommand(query,db);
             var Reader = command.ExecuteReader();
@@ -270,34 +269,32 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             transaction.Commit();
         }
 
-
-
-
-        //public List<CartonView> GetValidOrderDetailsForWaveRelease(OracleConnection db)
-        //{
-        //    var orderdtls = new List<CartonView>();
-        //    var query = $"select ch.carton_nbr,ch.sku_id,ch.wave_nbr,ch.MISC_NUM_1, ch.total_qty, ch.stat_code,pl.actl_invn_qty,ch.DEST_LOCN_ID,ph.PKT_CTRL_NBR,ph.SHIP_W_CTRL_NBR,ph.Whse,ph.CO,ph.DIV, im.spl_instr_code_1, im.spl_instr_code_5 from CARTON_HDR ch inner join PKT_HDR ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr inner join Pick_Locn_dtl pl ON  pl.sku_id = ch.sku_id inner join ITEM_MASTER im ON pl.sku_id = im.sku_id inner join locn_hdr lh ON pl.locn_id = lh.locn_id inner join locn_grp lg ON lg.locn_id = lh.locn_id inner join sys_code sc ON sc.code_id = lg.grp_type where ch.stat_code = 5 and ch.misc_instr_code_5 is null and misc_num_1 = 0 and sc.code_type = '740' and code_id = '18' and lg.grp_attr = DECODE(im.temp_zone, 'D', 'Dry', 'Freezer') and pl.actl_invn_qty! = 0 and ch.wave_nbr = '20190804052'";
-        //    var command = new OracleCommand(query,db);
-        //    var Reader = command.ExecuteReader();
-        //    while (Reader.Read())
-        //    {
-        //        var cartonView = new CartonView();
-        //        cartonView.PickTktCtrlNbr = Reader[TestData.PickTicketHeader.PickTktCtrlNbr].ToString();
-        //        cartonView.SkuId = Reader["SKU_ID"].ToString();
-        //        cartonView.WaveNbr = Reader["WAVE_NBR"].ToString();
-        //        cartonView.Whse = Reader[TestData.PickTicketHeader.Whse].ToString();
-        //        cartonView.Co = Reader[TestData.PickTicketHeader.Co].ToString();
-        //        cartonView.Div = Reader[TestData.PickTicketHeader.Div].ToString();
-        //        cartonView.SplInstrCode1 = Reader[TestData.ItemMaster.SplInstrCode1].ToString();
-        //        cartonView.SplInstrCode5 = Reader[TestData.ItemMaster.SplInstrCode5].ToString();
-        //        cartonView.TotalQty = Reader["TOTAL_QTY"].ToString();
-        //        cartonView.CartonNbr = Reader["CARTON_NBR"].ToString();
-        //        cartonView.DestLocnId = Reader["DEST_LOCN_ID"].ToString();
-        //        cartonView.ShipWCtrlNbr = Reader["SHIP_W_CTRL_NBR"].ToString();
-        //        orderdtls.Add(cartonView);
-        //    }
-        //    return orderdtls;
-        //}
+        /* wave release is not tested
+       /*public List<CartonView> GetValidOrderDetailsForWaveRelease(OracleConnection db)
+        {
+            var orderdtls = new List<CartonView>();
+            var query = $"select ch.carton_nbr,ch.sku_id,ch.wave_nbr,ch.MISC_NUM_1, ch.total_qty, ch.stat_code,pl.actl_invn_qty,ch.DEST_LOCN_ID,ph.PKT_CTRL_NBR,ph.SHIP_W_CTRL_NBR,ph.Whse,ph.CO,ph.DIV, im.spl_instr_code_1, im.spl_instr_code_5 from CARTON_HDR ch inner join PKT_HDR ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr inner join Pick_Locn_dtl pl ON  pl.sku_id = ch.sku_id inner join ITEM_MASTER im ON pl.sku_id = im.sku_id inner join locn_hdr lh ON pl.locn_id = lh.locn_id inner join locn_grp lg ON lg.locn_id = lh.locn_id inner join sys_code sc ON sc.code_id = lg.grp_type where ch.stat_code = 5 and ch.misc_instr_code_5 is null and misc_num_1 = 0 and sc.code_type = '740' and code_id = '18' and lg.grp_attr = DECODE(im.temp_zone, 'D', 'Dry', 'Freezer') and pl.actl_invn_qty! = 0 and ch.wave_nbr = '20190804052'";
+            var command = new OracleCommand(query,db);
+            var Reader = command.ExecuteReader();
+            while (Reader.Read())
+            {
+                var cartonView = new CartonView();
+                cartonView.PickTktCtrlNbr = Reader[TestData.PickTicketHeader.PickTktCtrlNbr].ToString();
+                cartonView.SkuId = Reader["SKU_ID"].ToString();
+                cartonView.WaveNbr = Reader["WAVE_NBR"].ToString();
+                cartonView.Whse = Reader[TestData.PickTicketHeader.Whse].ToString();
+                cartonView.Co = Reader[TestData.PickTicketHeader.Co].ToString();
+                cartonView.Div = Reader[TestData.PickTicketHeader.Div].ToString();
+                cartonView.SplInstrCode1 = Reader[TestData.ItemMaster.SplInstrCode1].ToString();
+                cartonView.SplInstrCode5 = Reader[TestData.ItemMaster.SplInstrCode5].ToString();
+                cartonView.TotalQty = Reader["TOTAL_QTY"].ToString();
+                cartonView.CartonNbr = Reader["CARTON_NBR"].ToString();
+                cartonView.DestLocnId = Reader["DEST_LOCN_ID"].ToString();
+                cartonView.ShipWCtrlNbr = Reader["SHIP_W_CTRL_NBR"].ToString();
+                orderdtls.Add(cartonView);
+            }
+            return orderdtls;
+        }*/
 
         public CartonView GetCartonNbrWhereActiveOrmtNotFound(OracleConnection db)
         {
@@ -328,18 +325,20 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
             return cartonView;
         }
-        //public CartonHeaderDto GetStatusCodeFromCartonHdrForWaveRelease(OracleConnection db,string cartonNbr)
-        //{
-        //    var query = $"Select * from carton_hdr where carton_nbr = '{cartonNbr}'";
-        //    command = new OracleCommand(query, db);
-        //    var cartonHdrReader = command.ExecuteReader();
-        //    if (cartonHdrReader.Read())
-        //    {
-        //        var cartonHdrView = new CartonHeaderDto();
-        //        cartonHdrView.StatusCode = Convert.ToInt16(cartonHdrReader["STAT_CODE"].ToString());
-        //    }
-        //    return cartonHdr;
-        //}
+
+        /* wave release is not tested
+       /*public CartonHeaderDto GetStatusCodeFromCartonHdrForWaveRelease(OracleConnection db,string cartonNbr)
+       {
+           var query = $"Select * from carton_hdr where carton_nbr = '{cartonNbr}'";
+           command = new OracleCommand(query, db);
+           var cartonHdrReader = command.ExecuteReader();
+           if (cartonHdrReader.Read())
+           {
+               var cartonHdrView = new CartonHeaderDto();
+               cartonHdrView.StatusCode = Convert.ToInt16(cartonHdrReader["STAT_CODE"].ToString());
+           }
+           return cartonHdr;
+       }*/
 
         public CartonView GetCartonNbrWhereActiveLocationNotFound(OracleConnection db)
         {

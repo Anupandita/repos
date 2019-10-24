@@ -19,11 +19,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         [TestCategory("FUNCTIONAL")]
         public void OrmtWaveRelease()
         {
-
-            //this.Given(x=>x.InitializeTestDataForWaveRelease())
-            //    .When(x=>x.OrmtApiIsCalledCreatedIsReturnedForWaveRelease())
-            //    .And(x=>x.ReadDataAndValidateTheFieldsInInternalTables())
-            //     .BDDfy();
+           /* this code is not tested*/
+           /* this.Given(x=>x.InitializeTestDataForWaveRelease())
+                .When(x=>x.OrmtApiIsCalledCreatedIsReturnedForWaveRelease())
+                .And(x=>x.ReadDataAndValidateTheFieldsInInternalTables())
+                 .BDDfy();*/
 
         }
     }
