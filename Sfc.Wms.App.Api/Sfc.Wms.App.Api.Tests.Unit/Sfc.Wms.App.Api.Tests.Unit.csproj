@@ -112,7 +112,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="libman.json" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper">

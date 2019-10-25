@@ -42,6 +42,7 @@
             public const string DematicMessageOrmt = "api/order-maintenance";
             public const string DematicMessageSkmt = "api/sku-maintenance";
             public const string EmsToWmsMessage = "api/emstowms-message";
+            public const string ConnectionInformation = "api/release-connection-information";
 
 
         }
