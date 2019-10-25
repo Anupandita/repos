@@ -2,8 +2,8 @@
 using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.App.Api.Contracts.Constants;
 using Sfc.Wms.App.Api.Contracts.Dto;
+using System;
 using System.Configuration;
-using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 
@@ -16,11 +16,16 @@ namespace Sfc.Wms.App.Api.Controllers
         [Route]
         [ResponseType(typeof(BaseResult))]
         [AllowAnonymous]
-        public async Task<IHttpActionResult> Get()
+        public IHttpActionResult Get()
         {
-            var releaseAndConnectionInfo = new ConnectionInfo()
+            var releaseAndConnectionInfo = new BaseResult<ConnectionInfo>()
             {
-                Database = ConfigurationManager.ConnectionStrings["SfcOracleDbContext"].ConnectionString,
+                ResultType = ResultTypes.Ok,
+                Payload = new ConnectionInfo()
+                {
+                    Database = ConfigurationManager.ConnectionStrings["SfcOracleDbContext"].ConnectionString,
+                    Environment = ConfigurationManager.AppSettings.Get(nameof(Environment))
+                }
             };
             return Json(releaseAndConnectionInfo);
         }

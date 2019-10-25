@@ -67,9 +67,9 @@ namespace Sfc.Wms.App.Api
 
             container.Options.AllowOverridingRegistrations = true;
 
-            var types = AppDomain.CurrentDomain.GetAssemblies().Where(e => e.FullName.StartsWith("Sfc"));
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(e => e.FullName.StartsWith("Sfc"));
 
-            foreach (var assemblyInfo in types)
+            foreach (var assemblyInfo in assemblies)
             {
                 var registrations = from type in assemblyInfo.GetExportedTypes()
                                     where type.Namespace != null && type.Namespace.StartsWith("Sfc") && type.IsClass
