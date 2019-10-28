@@ -274,7 +274,7 @@ namespace Sfc.Wms.App.Api
             container.Register(typeof(IItemMasterGateway<>), typeof(ItemMasterGateway<>), Lifestyle.Scoped);
             container.Register(typeof(IItemMasterUnitOfWork), typeof(ItemMasterUnitOfWork), Lifestyle.Scoped);
 
-            container.Register<UserRepository>(Lifestyle.Scoped);
+            container.Register<IUserRepository,UserRepository>( Lifestyle.Scoped);
             container.Register<LocationData>(Lifestyle.Scoped);
             container.Register<LpnParameterValidator>(Lifestyle.Scoped);
         }
