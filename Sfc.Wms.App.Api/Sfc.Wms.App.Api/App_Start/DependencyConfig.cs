@@ -5,6 +5,7 @@ using Sfc.Core.Cache.InMemory;
 using Sfc.Core.OnPrem.Security.Contracts.Extensions;
 using Sfc.Wms.App.App.AutoMapper;
 using Sfc.Wms.Configuration.Security.Rbac.Repository.Context;
+using Sfc.Wms.Configuration.Security.Rbac.Repository.Interfaces;
 using Sfc.Wms.Data.Context;
 using Sfc.Wms.Foundation.InboundLpn.Repository.LocationDataRepository;
 using Sfc.Wms.Framework.Security.Rbac.AutoMapper;
@@ -61,7 +62,7 @@ namespace Sfc.Wms.App.Api
             container.Register(() => ConfigurationManager.AppSettings["db:encryptionKey"].ToSecureString(), Lifestyle.Singleton);
             container.Register<ISfcCache>(() => new SfcInMemoryCache(MemoryCache.Default), Lifestyle.Scoped);
             container.Register<IMappingFixture>(() => new MappingFixture(), Lifestyle.Singleton);
-            container.Register<UserRepository>(Lifestyle.Scoped);
+            container.Register<IUserRepository, UserRepository>(Lifestyle.Scoped);
             container.Register<LocationData>(Lifestyle.Scoped);
             container.Register<LpnParameterValidator>(Lifestyle.Scoped);
 
