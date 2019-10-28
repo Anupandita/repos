@@ -25,7 +25,7 @@ namespace Sfc.Wms.App.Api.Controllers
         [AllowAnonymous]
         [Route(Routes.Paths.Find)]
         [ResponseType(typeof(BaseResult<List<FindLpnDto>>))]
-        public async Task<IHttpActionResult> FindLpnAsync(LpnParamModel lpnParamModel)
+        public async Task<IHttpActionResult> FindLpnAsync([FromUri]LpnParamModel lpnParamModel)
         {
             var response = await _findLpnService.FindLpnAsync(lpnParamModel).ConfigureAwait(false);
             return ResponseHandler(response);
