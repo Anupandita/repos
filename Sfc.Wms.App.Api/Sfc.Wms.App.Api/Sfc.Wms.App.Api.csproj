@@ -136,11 +136,11 @@
     <Reference Include="Sfc.Core.OnPrem.ParserAndTranslator, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Core.OnPrem.ParserAndTranslator.2.0.0\lib\net472\Sfc.Core.OnPrem.ParserAndTranslator.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Core.OnPrem.Result, Version=2.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Core.OnPrem.Result.2.1.2\lib\net472\Sfc.Core.OnPrem.Result.dll</HintPath>
+    <Reference Include="Sfc.Core.OnPrem.Result, Version=2.1.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Core.OnPrem.Result.2.1.4\lib\net472\Sfc.Core.OnPrem.Result.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Core.OnPrem.Security.Contracts, Version=2.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Core.OnPrem.Security.Contracts.2.1.2\lib\net472\Sfc.Core.OnPrem.Security.Contracts.dll</HintPath>
+    <Reference Include="Sfc.Core.OnPrem.Security.Contracts, Version=2.1.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Core.OnPrem.Security.Contracts.2.1.3\lib\net472\Sfc.Core.OnPrem.Security.Contracts.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Core.OnPrem.UnitOfWork.Contracts, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Core.OnPrem.UnitOfWork.Contracts.1.0.1\lib\net472\Sfc.Core.OnPrem.UnitOfWork.Contracts.dll</HintPath>
@@ -148,8 +148,8 @@
     <Reference Include="Sfc.Core.RestResponse, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Core.RestResponse.1.2.1\lib\net472\Sfc.Core.RestResponse.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms..Configuration.Security.Rbac.Repository, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Configuration.Security.Rbac.Repository.4.0.0\lib\net472\Sfc.Wms..Configuration.Security.Rbac.Repository.dll</HintPath>
+    <Reference Include="Sfc.Wms..Configuration.Security.Rbac.Repository, Version=4.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Configuration.Security.Rbac.Repository.4.0.5\lib\net472\Sfc.Wms..Configuration.Security.Rbac.Repository.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.App.Api.Contracts, Version=2.2.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.App.Api.Contracts.2.2.2\lib\net472\Sfc.Wms.App.Api.Contracts.dll</HintPath>
@@ -187,8 +187,8 @@
     <Reference Include="Sfc.Wms.Configuration.WarehouseMaster.Contracts, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.WarehouseMaster.Contracts.2.0.2\lib\net472\Sfc.Wms.Configuration.WarehouseMaster.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Data, Version=4.0.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Data.4.0.6\lib\net472\Sfc.Wms.Data.dll</HintPath>
+    <Reference Include="Sfc.Wms.Data, Version=4.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Data.4.2.0\lib\net472\Sfc.Wms.Data.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Foundation.AllocationInventory.App, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.AllocationInventory.App.2.0.2\lib\net472\Sfc.Wms.Foundation.AllocationInventory.App.dll</HintPath>
@@ -268,8 +268,8 @@
     <Reference Include="Sfc.Wms.Framework.PixTransaction.App, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.PixTransaction.App.2.1.0\lib\net472\Sfc.Wms.Framework.PixTransaction.App.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Framework.Security.Rbac, Version=5.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Framework.Security.Rbac.5.0.1\lib\net472\Sfc.Wms.Framework.Security.Rbac.dll</HintPath>
+    <Reference Include="Sfc.Wms.Framework.Security.Rbac, Version=5.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.Security.Rbac.5.0.3\lib\net472\Sfc.Wms.Framework.Security.Rbac.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Framework.Security.Token.Jwt, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.Security.Token.Jwt.3.0.2\lib\net472\Sfc.Wms.Framework.Security.Token.Jwt.dll</HintPath>
@@ -461,7 +461,9 @@
     <Compile Include="Services\RbacService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
