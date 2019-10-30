@@ -17,6 +17,7 @@ using System.Configuration;
 using System.Linq;
 using System.Runtime.Caching;
 using System.Web.Http;
+using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Interfaces;
 
 namespace Sfc.Wms.App.Api
 {
