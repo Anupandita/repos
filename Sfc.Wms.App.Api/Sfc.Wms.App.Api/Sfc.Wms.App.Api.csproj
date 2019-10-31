@@ -113,7 +113,7 @@
       <HintPath>..\packages\Serilog.Sinks.RollingFile.3.2.0\lib\net45\Serilog.Sinks.RollingFile.dll</HintPath>
     </Reference>
     <Reference Include="SFC.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SFC.Core.3.2.3\lib\net472\SFC.Core.dll</HintPath>
+      <HintPath>..\packages\SFC.Core.3.0.2\lib\net472\SFC.Core.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Core.Aop.WebApi, Version=1.1.30.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Core.Aop.WebApi.1.1.30\lib\net472\Sfc.Core.Aop.WebApi.dll</HintPath>
@@ -265,8 +265,8 @@
     <Reference Include="Sfc.Wms.Framework.NextUpCounter.App, Version=4.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.NextUpCounter.App.4.0.2\lib\net472\Sfc.Wms.Framework.NextUpCounter.App.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Framework.PixTransaction.App, Version=2.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Framework.PixTransaction.App.2.1.2\lib\net472\Sfc.Wms.Framework.PixTransaction.App.dll</HintPath>
+    <Reference Include="Sfc.Wms.Framework.PixTransaction.App, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.PixTransaction.App.2.1.0\lib\net472\Sfc.Wms.Framework.PixTransaction.App.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Framework.Security.Rbac, Version=5.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.Security.Rbac.5.0.3\lib\net472\Sfc.Wms.Framework.Security.Rbac.dll</HintPath>
