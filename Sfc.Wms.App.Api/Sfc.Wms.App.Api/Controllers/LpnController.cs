@@ -13,21 +13,20 @@ namespace Sfc.Wms.App.Api.Controllers
     [RoutePrefix(Routes.Prefixes.Lpn)]
     public class LpnController : SfcBaseController
     {
-        private readonly IFindLpnService _findLpnService;
-        private readonly ILpnHistoryService _lpnHistoryService;
-        public LpnController(IFindLpnService findLpnService, ILpnHistoryService lpnHistoryService)
+        private readonly ILpnService _lpnService;
+
+        public LpnController(ILpnService lpnService)
         {
-            _findLpnService = findLpnService;
-            _lpnHistoryService = lpnHistoryService;
+            _lpnService = lpnService;
         }
 
         [HttpGet]
         [AllowAnonymous]
         [Route(Routes.Paths.Find)]
-        [ResponseType(typeof(BaseResult<List<FindLpnDto>>))]
+        [ResponseType(typeof(BaseResult<FindLpnDto>))]
         public async Task<IHttpActionResult> FindLpnAsync([FromUri]LpnParamModel lpnParamModel)
         {
-            var response = await _findLpnService.FindLpnAsync(lpnParamModel).ConfigureAwait(false);
+            var response = await _lpnService.FindLpnAsync(lpnParamModel).ConfigureAwait(false);
             return ResponseHandler(response);
         }
 
@@ -37,7 +36,57 @@ namespace Sfc.Wms.App.Api.Controllers
         [ResponseType(typeof(BaseResult<List<LpnHistoryDto>>))]
         public async Task<IHttpActionResult> GetLpnHistoryAsync(string warehouse, string lpnNumber)
         {
-            var response = await _lpnHistoryService.GetLpnHistoryAsync(warehouse, lpnNumber).ConfigureAwait(false);
+            var response = await _lpnService.GetLpnHistoryAsync(warehouse, lpnNumber).ConfigureAwait(false);
+            return ResponseHandler(response);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route(Routes.Paths.LpnAisleTrans)]
+        [ResponseType(typeof(BaseResult<AisleTransactionDto>))]
+        public async Task<IHttpActionResult> GetAisleTransactionAsync(string lpnId, string faceLocationId)
+        {
+            var response = await _lpnService.GetAisleTransactionAsync(lpnId, faceLocationId).ConfigureAwait(false);
+            return ResponseHandler(response);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route(Routes.Paths.LpnComments)]
+        [ResponseType(typeof(BaseResult<int>))]
+        public async Task<IHttpActionResult> DeleteLpnCommentAsync(string caseNumber, int commentSequenceNumber)
+        {
+            var response = await _lpnService.DeleteLpnCommentAsync(caseNumber, commentSequenceNumber).ConfigureAwait(false);
+            return ResponseHandler(response);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route(Routes.Paths.LpnComments)]
+        [ResponseType(typeof(BaseResult<List<CaseCommentDto>>))]
+        public async Task<IHttpActionResult> GetLpnCommentsAsync(string lpnId)
+        {
+            var response = await _lpnService.GetLpnCommentsAsync(lpnId).ConfigureAwait(false);
+            return ResponseHandler(response);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route(Routes.Paths.LpnDetails)]
+        [ResponseType(typeof(BaseResult<int>))]
+        public async Task<IHttpActionResult> UpdateLpnAsync(LpnUpdateDto lpnUpdate)
+        {
+            var response = await _lpnService.UpdateLpnDetails(lpnUpdate).ConfigureAwait(false);
+            return ResponseHandler(response);
+        }
+
+        [HttpPut]
+        [AllowAnonymous]
+        [Route(Routes.Paths.LpnComments)]
+        [ResponseType(typeof(BaseResult<int>))]
+        public async Task<IHttpActionResult> AddLpnCommentAsync(CaseCommentDto caseComment)
+        {
+            var response = await _lpnService.AddLpnCommentAsync(caseComment).ConfigureAwait(false);
             return ResponseHandler(response);
         }
     }
