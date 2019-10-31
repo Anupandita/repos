@@ -80,7 +80,7 @@ namespace Sfc.Wms.App.Api.Controllers
             return ResponseHandler(response);
         }
 
-        [HttpPost]
+        [HttpPut]
         [AllowAnonymous]
         [Route(Routes.Paths.LpnComments)]
         [ResponseType(typeof(BaseResult<int>))]
