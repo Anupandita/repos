@@ -17,6 +17,7 @@ using System.Configuration;
 using System.Linq;
 using System.Runtime.Caching;
 using System.Web.Http;
+using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Interfaces;
 
 namespace Sfc.Wms.App.Api
 {
@@ -55,7 +56,7 @@ namespace Sfc.Wms.App.Api
              });
 
             container.Register(() => new ShamrockContext(ConfigurationManager.ConnectionStrings["SfcOracleDbContext"].ConnectionString),
-                Lifestyle.Singleton);
+                Lifestyle.Scoped);
             container.Register(() => ConfigurationManager.AppSettings["db:encryptionKey"].ToSecureString(), Lifestyle.Singleton);
             container.Register<ISfcCache>(() => new SfcInMemoryCache(MemoryCache.Default), Lifestyle.Scoped);
             container.Register<IMappingFixture>(() => new MappingFixture(), Lifestyle.Singleton);
