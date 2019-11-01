@@ -50,7 +50,7 @@ namespace Sfc.Wms.App.Api.Controllers
             return ResponseHandler(response);
         }
 
-        [HttpPost]
+        [HttpDelete]
         [AllowAnonymous]
         [Route(Routes.Paths.LpnComments)]
         [ResponseType(typeof(BaseResult<int>))]
@@ -80,7 +80,7 @@ namespace Sfc.Wms.App.Api.Controllers
             return ResponseHandler(response);
         }
 
-        [HttpPut]
+        [HttpPost]
         [AllowAnonymous]
         [Route(Routes.Paths.LpnComments)]
         [ResponseType(typeof(BaseResult<int>))]
