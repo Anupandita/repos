@@ -15,6 +15,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
         private readonly int _maxRetryAttempts;
         private readonly TimeSpan _pauseBetweenFailures;
         private readonly int _webRequestTimeoutInSecs;
+        protected  string serviceUrl;
 
         public SfcBaseGateway()
         {
@@ -45,7 +46,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             {
                 RequestFormat = DataFormat.Json
             };
-            request.AddHeader("Token", token);
+            request.AddHeader(Constants.Token, token);
             request.Timeout = _webRequestTimeoutInSecs * 1000;
             return request;
         }
