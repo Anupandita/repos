@@ -40,7 +40,7 @@ namespace Sfc.Wms.App.Api.Controllers
             return ResponseHandler(response);
         }
 
-        [HttpGet]
+        [HttpPost]
         [AllowAnonymous]
         [Route(Routes.Paths.LpnAisleTrans)]
         [ResponseType(typeof(BaseResult<AisleTransactionDto>))]
@@ -70,7 +70,7 @@ namespace Sfc.Wms.App.Api.Controllers
             return ResponseHandler(response);
         }
 
-        [HttpPost]
+        [HttpPut]
         [AllowAnonymous]
         [Route(Routes.Paths.LpnDetails)]
         [ResponseType(typeof(BaseResult<int>))]
