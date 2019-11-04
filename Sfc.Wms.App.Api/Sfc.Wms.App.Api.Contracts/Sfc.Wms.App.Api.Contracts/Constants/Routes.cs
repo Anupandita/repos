@@ -1,4 +1,5 @@
-﻿namespace Sfc.Wms.App.Api.Contracts.Constants
+﻿// ReSharper disable InconsistentNaming
+namespace Sfc.Wms.App.Api.Contracts.Constants
 {
     public static class Routes
     {

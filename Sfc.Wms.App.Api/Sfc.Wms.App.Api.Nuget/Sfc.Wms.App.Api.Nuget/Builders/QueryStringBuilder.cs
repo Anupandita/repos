@@ -6,7 +6,7 @@ namespace Sfc.Wms.App.Api.Nuget.Builders
     {
         public static string BuildQuery(string field, dynamic value, string query, bool firstCondition)
         {
-            if ((value != null && value.GetType() == typeof(System.String)) && !System.String.IsNullOrEmpty(value))
+            if ((value != null && value is string) && !string.IsNullOrEmpty(value))
             {
                 query = $"{query}{(firstCondition ? "" : Routes.Paths.QueryParamAnd)}{field}{value}";
                 return query;

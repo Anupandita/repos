@@ -2,16 +2,17 @@
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.2.2</Version>
+    <Version>3.0.3</Version>
     <Authors>Shamrock Foods (SOWL)</Authors>
     <Company>Shamrock Foods Company</Company>
     <Product>Wms.App</Product>
-    <PackageReleaseNotes></PackageReleaseNotes>
+    <PackageReleaseNotes>Updated to remove errant BaseResult defined here.</PackageReleaseNotes>
     <Configurations>Debug;Release;QA;UAT;PROD</Configurations>
     <PackageId>Sfc.Wms.App.Api.Contracts</PackageId>
+    <Copyright>2019</Copyright>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Restsharp" Version="106.6.10" />
-    <PackageReference Include="Sfc.Core.OnPrem.Result" Version="2.1.2" />
+    <PackageReference Include="Sfc.Core.OnPrem.Result" Version="[2.2,3)" />
   </ItemGroup>
  </Project>
