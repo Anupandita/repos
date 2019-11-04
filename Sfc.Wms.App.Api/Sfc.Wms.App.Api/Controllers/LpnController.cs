@@ -10,6 +10,8 @@ using System.Web.Http.Description;
 
 namespace Sfc.Wms.App.Api.Controllers
 {
+
+    [Authorize]
     [RoutePrefix(Routes.Prefixes.Lpn)]
     public class LpnController : SfcBaseController
     {
@@ -21,7 +23,6 @@ namespace Sfc.Wms.App.Api.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         [Route(Routes.Paths.Find)]
         [ResponseType(typeof(BaseResult<FindLpnDto>))]
         public async Task<IHttpActionResult> FindLpnAsync([FromUri]LpnParamModel lpnParamModel)
@@ -31,7 +32,6 @@ namespace Sfc.Wms.App.Api.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         [Route(Routes.Paths.LpnHistory)]
         [ResponseType(typeof(BaseResult<List<LpnHistoryDto>>))]
         public async Task<IHttpActionResult> GetLpnHistoryAsync(string warehouse, string lpnNumber)
@@ -41,7 +41,6 @@ namespace Sfc.Wms.App.Api.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
         [Route(Routes.Paths.LpnAisleTrans)]
         [ResponseType(typeof(BaseResult<AisleTransactionDto>))]
         public async Task<IHttpActionResult> GetAisleTransactionAsync(string lpnId, string faceLocationId)
@@ -51,7 +50,6 @@ namespace Sfc.Wms.App.Api.Controllers
         }
 
         [HttpDelete]
-        [AllowAnonymous]
         [Route(Routes.Paths.LpnComments)]
         [ResponseType(typeof(BaseResult<int>))]
         public async Task<IHttpActionResult> DeleteLpnCommentAsync(string caseNumber, int commentSequenceNumber)
@@ -61,7 +59,6 @@ namespace Sfc.Wms.App.Api.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         [Route(Routes.Paths.LpnComments)]
         [ResponseType(typeof(BaseResult<List<CaseCommentDto>>))]
         public async Task<IHttpActionResult> GetLpnCommentsAsync(string lpnId)
@@ -71,7 +68,6 @@ namespace Sfc.Wms.App.Api.Controllers
         }
 
         [HttpPut]
-        [AllowAnonymous]
         [Route(Routes.Paths.LpnDetails)]
         [ResponseType(typeof(BaseResult<int>))]
         public async Task<IHttpActionResult> UpdateLpnAsync(LpnUpdateDto lpnUpdate)
@@ -81,7 +77,6 @@ namespace Sfc.Wms.App.Api.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
         [Route(Routes.Paths.LpnComments)]
         [ResponseType(typeof(BaseResult<int>))]
         public async Task<IHttpActionResult> AddLpnCommentAsync(CaseCommentDto caseComment)

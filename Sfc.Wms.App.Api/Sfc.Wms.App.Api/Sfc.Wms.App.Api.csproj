@@ -201,6 +201,15 @@
     <Reference Include="Sfc.Wms.Foundation.Carton.Repository, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.Carton.Repository.2.0.3\lib\net472\Sfc.Wms.Foundation.Carton.Repository.dll</HintPath>
     </Reference>
+    <Reference Include="Sfc.Wms.Foundation.Corba.App, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.Corba.App.1.0.2\lib\net472\Sfc.Wms.Foundation.Corba.App.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Foundation.Corba.Contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.Corba.Contracts.1.0.2\lib\net472\Sfc.Wms.Foundation.Corba.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Foundation.Corba.Repository, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.Corba.Repository.1.0.2\lib\net472\Sfc.Wms.Foundation.Corba.Repository.dll</HintPath>
+    </Reference>
     <Reference Include="Sfc.Wms.Foundation.InboundLpn.Contracts, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.InboundLpn.Contracts.2.1.0\lib\net472\Sfc.Wms.Foundation.InboundLpn.Contracts.dll</HintPath>
     </Reference>
@@ -440,6 +449,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CorbaController.cs" />
     <Compile Include="Controllers\ReleaseAndConnectionInfoController.cs" />
     <Compile Include="Controllers\SkuMaintenanceController.cs" />
     <Compile Include="Controllers\ContainerMaintenanceController.cs" />
