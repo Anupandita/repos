@@ -10,8 +10,7 @@ using System.Web.Http.Description;
 
 namespace Sfc.Wms.App.Api.Controllers
 {
-
-    [Authorize]
+    [AllowAnonymous]
     [RoutePrefix(Routes.Prefixes.Corba)]
     public class CorbaController : SfcBaseController
     {
