@@ -17,7 +17,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
     {
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void VerifyForOrmtMessageWithActionCodeAddRelease()
+        [DataRow(3)]
+        public void VerifyForOrmtMessageWithActionCodeAddRelease(int count)
         {
             this.Given(x => x.InitializeTestDataForPrintingOfCartons())
             .And(x => x.CartonNumberForAddRelease())

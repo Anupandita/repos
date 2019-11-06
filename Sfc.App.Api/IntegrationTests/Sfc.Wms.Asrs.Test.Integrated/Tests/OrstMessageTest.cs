@@ -27,8 +27,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
     {
 
         [TestMethod()]
-        [TestCategory("FUNCTIONAL")]
-        public void OrstMessageTestForActionCodeAllocated()
+        [TestCategory("FUNCTIONAL")]    
+        [DataRow (3)]
+        public void OrstMessageTestForActionCodeAllocated(int count)
         {
             this.Given(x=>x.InitializeTestData())
                 .And(x => x.MsgKeyForCase1())
