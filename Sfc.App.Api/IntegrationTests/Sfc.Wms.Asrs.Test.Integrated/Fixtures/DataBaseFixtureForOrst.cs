@@ -2,14 +2,13 @@
 using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
-using Sfc.Wms.Asrs.Dematic.Contracts.Dtos;
-using Sfc.Wms.Asrs.Shamrock.Contracts.Dtos;
+using Sfc.Wms.Interfaces.Asrs.Shamrock.Contracts.Dtos;
+using Sfc.Wms.Interfaces.Asrs.Dematic.Contracts.Dtos;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Constants;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Dto;
 using Sfc.Wms.Foundation.Location.Contracts.Dtos;
 using Sfc.Core.OnPrem.Result;
 using System;
-using Sfc.Wms.ParserAndTranslator.Contracts.Interfaces;
 using Sfc.Wms.Foundation.Carton.Contracts.Dtos;
 using PickTicketDetail = Sfc.Wms.Data.Entities.PickTicketDetail;
 

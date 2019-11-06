@@ -58,6 +58,8 @@
     <Compile Include="Fixtures\CostMessageFixture.cs" />
     <Compile Include="Fixtures\IvstMessageFixture.cs" />
     <Compile Include="Fixtures\DataBaseFixtureForIvst.cs" />
+    <Compile Include="Fixtures\SkmtMessageFixture.cs" />
+    <Compile Include="Fixtures\DataBaseFixtureForSkmt.cs" />
     <Compile Include="TestData\CaseViewDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestData\ComtParams.cs" />
@@ -66,6 +68,8 @@
     <Compile Include="TestData\FieldNames.cs" />
     <Compile Include="TestData\CartonView.cs" />
     <Compile Include="TestData\OrstTestData.cs" />
+    <Compile Include="TestData\SkmtParams.cs" />
+    <Compile Include="TestData\ItemMasterView.cs" />
     <Compile Include="Tests\OrmtMessageTest.cs" />
     <Compile Include="Tests\OrstMessageTest.cs" />
     <Compile Include="Tests\OrmtNegativeCases.cs" />
@@ -80,6 +84,10 @@
     <Compile Include="Tests\CostMessageTest.cs" />
     <Compile Include="Tests\Ivmt.cs" />
     <Compile Include="Tests\Ivst.cs" />
+    <Compile Include="Tests\Skmt.cs" />
+    <Compile Include="Tests\SkmtParentSku.cs" />
+    <Compile Include="Tests\SkmtChildSku.cs" />
+    <Compile Include="Tests\SkmtNeagtiveCase.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Castle.Core">
@@ -121,29 +129,26 @@
     <PackageReference Include="RestSharp">
       <Version>106.6.10</Version>
     </PackageReference>
-    <PackageReference Include="Sfc.Wms.Asrs.Dematic.Contracts">
-      <Version>5.0.0</Version>
-    </PackageReference>
-    <PackageReference Include="Sfc.Wms.Asrs.Shamrock.Contracts">
-      <Version>4.0.0</Version>
-    </PackageReference>
-    <PackageReference Include="Sfc.Wms.Builder">
-      <Version>2.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="Sfc.Wms.Data">
-      <Version>3.6.0</Version>
-    </PackageReference>
-    <PackageReference Include="Sfc.Wms.Foundation.Carton.Contracts">
-      <Version>1.0.3</Version>
-    </PackageReference>
-    <PackageReference Include="Sfc.Wms.Foundation.Location.Contracts">
+    <PackageReference Include="Sfc.Core.OnPrem.ParserAndTranslator">
       <Version>2.0.0</Version>
     </PackageReference>
+    <PackageReference Include="Sfc.Wms.Foundation.Carton.Contracts">
+      <Version>2.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="Sfc.Wms.Foundation.InboundLpn.Contracts">
+      <Version>2.0.4</Version>
+    </PackageReference>
+    <PackageReference Include="Sfc.Wms.Foundation.Location.Contracts">
+      <Version>2.1.2</Version>
+    </PackageReference>
     <PackageReference Include="Sfc.Wms.Foundation.Message.Contracts">
-      <Version>4.0.0</Version>
+      <Version>4.0.1</Version>
     </PackageReference>
     <PackageReference Include="Sfc.Wms.Foundation.Message.Repository">
-      <Version>4.0.0</Version>
+      <Version>4.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Sfc.Wms.Foundation.PickLocationDetail.Contracts">
+      <Version>1.0.0</Version>
     </PackageReference>
     <PackageReference Include="Sfc.Wms.Foundation.PixTransaction.Contracts">
       <Version>1.0.0</Version>
@@ -151,44 +156,32 @@
     <PackageReference Include="Sfc.Wms.Foundation.PixTransaction.Repository">
       <Version>1.0.0</Version>
     </PackageReference>
-    <PackageReference Include="Sfc.Wms.InboundLpn.Contracts">
-      <Version>3.1.0</Version>
+    <PackageReference Include="Sfc.Wms.Foundation.Tasks.Contracts">
+      <Version>1.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="Sfc.Wms.Foundation.TransitionalInventory.Contracts">
+      <Version>1.0.1</Version>
     </PackageReference>
     <PackageReference Include="Sfc.Wms.Interfaces.Asrs.Contracts">
+      <Version>1.1.0</Version>
+    </PackageReference>
+    <PackageReference Include="Sfc.Wms.Interfaces.Asrs.Dematic.Contracts">
       <Version>1.0.0</Version>
     </PackageReference>
     <PackageReference Include="Sfc.Wms.Interfaces.Builder">
-      <Version>1.0.1</Version>
+      <Version>2.0.0</Version>
     </PackageReference>
     <PackageReference Include="Sfc.Wms.Interfaces.Parser">
-      <Version>1.0.1</Version>
+      <Version>2.0.1</Version>
     </PackageReference>
     <PackageReference Include="Sfc.Wms.Interfaces.ParserAndTranslator.Contracts">
-      <Version>2.0.4</Version>
+      <Version>2.0.9</Version>
     </PackageReference>
     <PackageReference Include="Sfc.Wms.Interfaces.Asrs.Contracts">
       <Version>1.0.1</Version>
     </PackageReference>
     <PackageReference Include="Sfc.Wms.Interfaces.Builder">
       <Version>1.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="Sfc.Wms.Parser">
-      <Version>2.0.3</Version>
-    </PackageReference>
-    <PackageReference Include="Sfc.Wms.PickLocationDetail.Contracts">
-      <Version>1.0.4</Version>
-    </PackageReference>
-    <PackageReference Include="Sfc.Wms.Result">
-      <Version>1.1.1</Version>
-    </PackageReference>
-    <PackageReference Include="Sfc.Wms.TaskDetail.Contracts">
-      <Version>1.0.4</Version>
-    </PackageReference>
-    <PackageReference Include="Sfc.Wms.TransitionalInventory.Contracts">
-      <Version>1.0.12</Version>
-    </PackageReference>
-    <PackageReference Include="Sfc.Wms.Translator">
-      <Version>2.1.3</Version>
     </PackageReference>
     <PackageReference Include="System.Memory">
       <Version>4.5.3</Version>

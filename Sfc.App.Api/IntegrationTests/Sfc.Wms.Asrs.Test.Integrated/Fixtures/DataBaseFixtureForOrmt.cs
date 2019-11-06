@@ -1,6 +1,4 @@
-﻿using Sfc.Wms.Asrs.Dematic.Contracts.Dtos;
-using Sfc.Wms.Asrs.Shamrock.Contracts.Dtos;
-using System.Configuration;
+﻿using System.Configuration;
 using Oracle.ManagedDataAccess.Client;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Constants;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Dto;
@@ -11,6 +9,8 @@ using Sfc.Wms.Foundation.Carton.Contracts.Dtos;
 using System.Collections.Generic;
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Sfc.Wms.Interfaces.Asrs.Shamrock.Contracts.Dtos;
+using Sfc.Wms.Interfaces.Asrs.Dematic.Contracts.Dtos;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {

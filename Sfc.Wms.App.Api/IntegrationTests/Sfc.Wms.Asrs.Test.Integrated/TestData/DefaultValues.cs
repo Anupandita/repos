@@ -20,11 +20,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
         public const string InvalidCase = "00000283000804736790";
         public const string MessageLengthCost = "00268";
         public const string InBoundPallet = "Y";
+        public const string InvalidSku = "0909";
     }
 
     public class ResultType
     {
         public const string Created = "Created";
         public const string NotFound = "Conflict";
+        public const string NotFounds = "NotFound";
     }
 }

@@ -2,27 +2,27 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
-using Sfc.Wms.Asrs.Dematic.Contracts.Dtos;
-using Sfc.Wms.Asrs.Shamrock.Contracts.Dtos;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
-using Sfc.Wms.PickLocationDetail.Contracts.Dtos;
-using Sfc.Wms.TransitionalInventory.Contracts.Dtos;
 using System.Configuration;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Dto;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Constants;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Validation;
 using Sfc.Wms.Interfaces.Builder.MessageBuilder;
-using Sfc.Wms.Asrs.Dematic.Contracts.EnumsAndConstants.Enums;
 using System.Collections.Generic;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.Foundation.PixTransaction.Contracts.Dtos;
+using Sfc.Wms.Interfaces.Asrs.Shamrock.Contracts.Dtos;
+using Sfc.Wms.Interfaces.Asrs.Dematic.Contracts.Dtos;
+using Sfc.Wms.Foundation.TransitionalInventory.Contracts.Dtos;
+using Sfc.Wms.Foundation.InboundLpn.Contracts.Enums;
+using Sfc.Wms.Foundation.PickLocationDetail.Contracts.Dtos;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
     [TestClass]
     public class DataBaseFixtureForIvst:CommonFunction
     {
-        public decimal unitWeight;
+        protected decimal unitWeight;
         protected Ivst IvstData = new Ivst();
         protected Ivst Invshort = new Ivst();
         protected Ivst Damage = new Ivst();
@@ -37,10 +37,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected EmsToWmsDto emsToWmsParametersDamage;
         protected EmsToWmsDto emsToWmsParametersWrongSku;
         protected EmsToWmsDto emsToWmsParametersNoException;
-        protected IvstDto IvstParameters;      
+        protected IvstDto IvstParameters;
         protected PickLocationDtlDto pickLocnDtlAfterApi = new PickLocationDtlDto();
         protected PickLocationDtlDto pickLcnDtlBeforeApi = new PickLocationDtlDto();
-        public decimal unitweight1;
+        protected decimal unitweight1;
         protected OracleCommand oracleCommand;
         protected PixTransactionDto pixtran = new PixTransactionDto();
         protected TransitionalInventoryDto trnsInvBeforeApi = new TransitionalInventoryDto();
@@ -192,7 +192,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 Quantity = "1",
                 Sku = SkuId,
                 Owner = "Wms",
-                UserName = "Prashant M G",
+                UserName = "Dematic",
                 UnitOfMeasure = "Case",
                 LotId = "1231",
                 Po = "2445",

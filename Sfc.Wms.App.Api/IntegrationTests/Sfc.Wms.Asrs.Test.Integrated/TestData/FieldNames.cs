@@ -16,7 +16,23 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
 
     }
 
-  public class TransInventory
+    public class ItemMasterViews
+    {
+        public const string SkuId = "SKU_ID";
+        public const string Invalidsku = "09033";
+        public const string div = "DIV";
+        public const string skuDesc = "SKU_DESC";
+        public const string StdCaseQty = "STD_CASE_QTY";
+        public const string tempzone = "TEMP_ZONE";
+        public const string unitwieght = "UNIT_WT";
+        public const string unitvolume = "UNIT_VOL";
+        public const string prodlifeinday = "PROD_LIFE_IN_DAY";
+        public const string NestVolume = "NEST_VOL";
+        public const string skubrcd = "SKU_BRCD";
+        public const string colordesc = "COLOR_DESC";
+    }
+
+    public class TransInventory
     {
         public const string ActualInventoryUnits = "ACTL_INVN_UNITS";
         public const string ActlWt = "ACTL_WT";
@@ -53,6 +69,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
         public const string SourceMsgText = "SOURCE_MSG_TEXT";
         public const string SourceMsgProcess = "SOURCE_MSG_PROCESS";
         public const string SourceMsgTransCode = "SOURCE_MSG_TRANS_CODE";
+
+
     }
 
     public class SwmFromMhe

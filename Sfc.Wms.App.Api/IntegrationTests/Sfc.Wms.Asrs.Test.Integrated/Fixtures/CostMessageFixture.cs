@@ -3,11 +3,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
 using RestSharp;
 using Newtonsoft.Json;
-using DefaultPossibleValue = Sfc.Wms.ParserAndTranslator.Contracts.Constants;
+using DefaultPossibleValue = Sfc.Wms.Interfaces.ParserAndTranslator.Contracts;
 using System.Configuration;
-using Sfc.Wms.InboundLpn.Contracts.Dtos;
+using Sfc.Wms.Foundation.InboundLpn.Contracts.Dtos;
 using ValidationMessage = Sfc.Wms.Api.Asrs.Test.Integrated.TestData.ValidationMessage;
 using Sfc.Core.OnPrem.Result;
+using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Constants;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
@@ -125,7 +126,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(emsToWmsParameters.ResponseCode,swmFromMhe.SourceMessageResponseCode);
             Assert.AreEqual(emsToWmsParameters.MessageText, swmFromMhe.SourceMessageText);            
             Assert.AreEqual(DefaultValues.ContainerType, swmFromMhe.ContainerType);
-            Assert.AreEqual(DefaultPossibleValue.TransactionCode.Cost, cost.TransactionCode);
+            Assert.AreEqual(TransactionCode.Cost, cost.TransactionCode);
             Assert.AreEqual(DefaultValues.MessageLengthCost, cost.MessageLength);
             Assert.AreEqual(DefaultValues.ActionCodeCost, cost.ActionCode);
             Assert.AreEqual(caseHeaderDto.PoNumber, swmFromMhe.PoNumber);

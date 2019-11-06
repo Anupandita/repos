@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using RestSharp;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
-using Sfc.Wms.InboundLpn.Contracts.Dtos;
+using Sfc.Wms.Foundation.InboundLpn.Contracts.Dtos;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Constants;
 using System.Configuration;
 
