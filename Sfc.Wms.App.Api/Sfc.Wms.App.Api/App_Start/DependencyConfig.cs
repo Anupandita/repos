@@ -6,18 +6,19 @@ using Sfc.Core.OnPrem.Security.Contracts.Extensions;
 using Sfc.Wms.App.App.AutoMapper;
 using Sfc.Wms.Data.Context;
 using Sfc.Wms.Foundation.InboundLpn.Repository.LocationDataRepository;
-using Sfc.Wms.Framework.Security.Rbac.AutoMapper;
-using Sfc.Wms.Inbound.InboundLpn.App.Validators;
 using Sfc.Wms.Interfaces.Asrs.App.Mappers;
-using SimpleInjector;
-using SimpleInjector.Integration.WebApi;
 using SimpleInjector.Lifestyles;
 using System;
 using System.Configuration;
 using System.Linq;
 using System.Runtime.Caching;
 using System.Web.Http;
+using Sfc.Wms.Framework.Security.Rbac.AutoMapper;
+using Sfc.Wms.Inbound.InboundLpn.App.Validators;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Interfaces;
+using SimpleInjector;
+using SimpleInjector.Integration.WebApi;
+
 
 namespace Sfc.Wms.App.Api
 {
@@ -34,7 +35,6 @@ namespace Sfc.Wms.App.Api
 #endif
             GlobalConfiguration.Configuration.DependencyResolver =
                 new SimpleInjectorWebApiDependencyResolver(container);
-
             return container;
         }
 

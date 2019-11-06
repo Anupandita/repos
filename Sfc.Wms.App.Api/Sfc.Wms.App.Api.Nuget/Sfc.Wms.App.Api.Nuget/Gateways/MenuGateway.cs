@@ -49,7 +49,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             return await retryPolicy.ExecuteAsync(async () =>
             {
                 var request = GetAllMenuRequest(token);
-                var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false); ;
+                var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false); 
                 return _responseBuilder.GetResponseData<object>(response);
             }).ConfigureAwait(false);
         }
@@ -60,7 +60,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             return await retryPolicy.ExecuteAsync(async () =>
             {
                 var request = GetMenuByIdRequest(menuId, token);
-                var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false); ;
+                var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false); 
                 return _responseBuilder.GetResponseData<object>(response);
             }).ConfigureAwait(false);
         }
@@ -71,7 +71,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             return await retryPolicy.ExecuteAsync(async () =>
             {
                 var request = DeleteMenuRequest(menuId,token);
-                var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false); ;
+                var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false); 
                 return _responseBuilder.GetResponseData<object>(response);
             }).ConfigureAwait(false);
         }

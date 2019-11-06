@@ -11,7 +11,7 @@ namespace Sfc.Wms.App.Api.Nuget.Builders
                 query = $"{query}{(firstCondition ? "" : Routes.Paths.QueryParamAnd)}{field}{value}";
                 return query;
             }
-            if ((value != null && value.GetType() == typeof(System.Int32)) && value != 0)
+            if ((value != null && value is int) && value != 0)
             {
                 query = $"{query}{(firstCondition ? "" : Routes.Paths.QueryParamAnd)}{field}{value}";
                 return query;

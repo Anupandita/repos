@@ -11,15 +11,16 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
 {
     public class SfcBaseGateway:BaseResultBuilder
     {
-        protected  string _serviceBaseUrl;
+        protected string ServiceBaseUrl;
         private readonly int _maxRetryAttempts;
         private readonly TimeSpan _pauseBetweenFailures;
         private readonly int _webRequestTimeoutInSecs;
-        protected  string serviceUrl;
+        protected string ServiceUrl;
 
-        public SfcBaseGateway()
+        protected SfcBaseGateway()
         {
-            _serviceBaseUrl = ConfigurationManager.AppSettings["BaseUrl"];
+            ServiceBaseUrl = ConfigurationManager.AppSettings["BaseUrl"];
+            ServiceUrl = ConfigurationManager.AppSettings["ServiceUrl"];
 
             if (!int.TryParse(ConfigurationManager.AppSettings["MaxRetryAttempts"], out _maxRetryAttempts))
                 _maxRetryAttempts = 3;
@@ -33,14 +34,14 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
                 _webRequestTimeoutInSecs = 300;
         }
 
-        public AsyncRetryPolicy Proxy()
+        protected AsyncRetryPolicy Proxy()
         {
             return Policy
                  .Handle<HttpRequestException>()
                  .WaitAndRetryAsync(_maxRetryAttempts, i => _pauseBetweenFailures);
         }
 
-        public RestRequest GetRequest(string token, string resource)
+        protected RestRequest GetRequest(string token, string resource)
         {
             var request = new RestRequest(resource, Method.GET)
             {
@@ -51,7 +52,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             return request;
         }
 
-        public RestRequest PutRequest<TEntity>(string resource, TEntity body, string token) where TEntity : class
+        protected RestRequest PutRequest<TEntity>(string resource, TEntity body, string token) where TEntity : class
         {
             var request = new RestRequest(resource, Method.PUT)
             {
@@ -63,7 +64,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             return request;
         }
 
-        public RestRequest PostRequest<TEntity>(string resource, TEntity body, string token) where TEntity : class
+        protected RestRequest PostRequest<TEntity>(string resource, TEntity body, string token) where TEntity : class
         {
             var request = new RestRequest(resource, Method.POST)
             {
@@ -75,7 +76,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             return request;
         }
 
-        public RestRequest DeleteRequest(string resource, string token) 
+        protected RestRequest DeleteRequest(string resource, string token) 
         {
             var request = new RestRequest(resource, Method.DELETE)
             {

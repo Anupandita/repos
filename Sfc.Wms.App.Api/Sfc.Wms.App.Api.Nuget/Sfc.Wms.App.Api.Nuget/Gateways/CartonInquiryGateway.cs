@@ -1,5 +1,4 @@
 ﻿using RestSharp;
-using System.Configuration;
 using System.Threading.Tasks;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.App.Api.Contracts.Constants;
@@ -18,7 +17,6 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
         public CartonInquiryGateway(IResponseBuilder responseBuilder , IRestClient restClient)
         {
             _endPoint = Routes.Prefixes.Carton;
-            _serviceBaseUrl = ConfigurationManager.AppSettings["BaseUrl"];
             _responseBuilder = responseBuilder;
             _restClient = restClient;
         }

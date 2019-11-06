@@ -1,8 +1,7 @@
-﻿using Sfc.Core.OnPrem.Result;
-using Sfc.Wms.Interfaces.Asrs.Contracts.Dtos;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Sfc.Core.OnPrem.Result;
 
-namespace Sfc.App.Api.Nuget.Interfaces
+namespace Sfc.Wms.App.Api.Nuget.Interfaces
 {
     public interface IOrderMaintenanceGateway
     {

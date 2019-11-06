@@ -1,4 +1,6 @@
-﻿namespace Sfc.Wms.App.Api.Contracts.Entities
+﻿using Sfc.Core.ListManagement.Contracts.Models;
+
+namespace Sfc.Wms.App.Api.Contracts.Entities
 {
     public class CartonInquiryModel : PaginationModel
     {
