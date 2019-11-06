@@ -8,8 +8,7 @@ namespace Sfc.Wms.App.Api
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
-            DependencyConfig.Register();
-            HttpConfiguration config = GlobalConfiguration.Configuration;
+            var config = GlobalConfiguration.Configuration;
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             config.Formatters.JsonFormatter.UseDataContractJsonSerializer = false;
         }

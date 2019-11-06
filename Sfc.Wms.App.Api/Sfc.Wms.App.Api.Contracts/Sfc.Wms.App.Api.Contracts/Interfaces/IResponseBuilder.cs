@@ -1,5 +1,5 @@
 ﻿using RestSharp;
-using Sfc.Wms.App.Api.Contracts.Result;
+using Sfc.Core.OnPrem.Result;
 
 namespace Sfc.Wms.App.Api.Contracts.Interfaces
 {

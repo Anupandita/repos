@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Threading.Tasks;
 using RestSharp;
+using Sfc.Core.OnPrem.Result;
 using Sfc.Core.OnPrem.Security.Contracts.Dtos;
 using Sfc.Wms.App.Api.Contracts.Constants;
 using Sfc.Wms.App.Api.Contracts.Entities;
 using Sfc.Wms.App.Api.Contracts.Interfaces;
-using Sfc.Wms.App.Api.Contracts.Result;
 
 namespace Sfc.Wms.App.Api.Nuget.Gateways
 {
@@ -24,7 +24,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             _restClient = restClient;
         }
 
-        public async Task<Contracts.Result.BaseResult<string>> ChangePassword(ChangePasswordModel changePasswordModel, string token)
+        public async Task<BaseResult<string>> ChangePassword(ChangePasswordModel changePasswordModel, string token)
         {
             return await Proxy().ExecuteAsync(async () =>
             {
@@ -34,7 +34,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        public async Task<Contracts.Result.BaseResult<string>> CheckSession(string token)
+        public async Task<BaseResult<string>> CheckSession(string token)
         {
             return await Proxy().ExecuteAsync(async () =>
             {
@@ -44,7 +44,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        public async Task<Contracts.Result.BaseResult<string>> GetAllAsync(string token)
+        public async Task<BaseResult<string>> GetAllAsync(string token)
         {
             return await Proxy().ExecuteAsync(async () =>
             {
@@ -54,7 +54,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        public async Task<Contracts.Result.BaseResult<string>> GetRolesByUsernameAsync(string token, string userName)
+        public async Task<BaseResult<string>> GetRolesByUsernameAsync(string token, string userName)
         {
             return await Proxy().ExecuteAsync(async () =>
             {
@@ -64,7 +64,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        public async Task<Contracts.Result.BaseResult<string>> GetUserMenus(string token)
+        public async Task<BaseResult<string>> GetUserMenus(string token)
         {
             return await Proxy().ExecuteAsync(async () =>
             {
@@ -74,7 +74,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        public async Task<Contracts.Result.BaseResult<string>> GetUserPermissions(string token)
+        public async Task<BaseResult<string>> GetUserPermissions(string token)
         {
             return await Proxy().ExecuteAsync(async () =>
             {
@@ -84,7 +84,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        public async Task<Contracts.Result.BaseResult<string>> Logout()
+        public async Task<BaseResult<string>> Logout()
         {
             return await Proxy().ExecuteAsync(async () =>
             {
@@ -108,7 +108,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        public async Task<Contracts.Result.BaseResult<string>> UpdateUserRoles(UserRoleModel userRoleModel, string token)
+        public async Task<BaseResult<string>> UpdateUserRoles(UserRoleModel userRoleModel, string token)
         {
             return await Proxy().ExecuteAsync(async () =>
             {
@@ -118,7 +118,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        public async Task<Contracts.Result.BaseResult<string>> UserPreferences(UserPreferencesModel userPreferencesModel, string token)
+        public async Task<BaseResult<string>> UserPreferences(UserPreferencesModel userPreferencesModel, string token)
         {
             return await Proxy().ExecuteAsync(async () =>
             {

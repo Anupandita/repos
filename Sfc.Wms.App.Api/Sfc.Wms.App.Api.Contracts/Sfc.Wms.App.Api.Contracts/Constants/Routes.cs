@@ -1,4 +1,5 @@
-﻿namespace Sfc.Wms.App.Api.Contracts.Constants
+﻿// ReSharper disable InconsistentNaming
+namespace Sfc.Wms.App.Api.Contracts.Constants
 {
     public static class Routes
     {
@@ -42,6 +43,7 @@
             public const string DematicMessageOrmt = "api/order-maintenance";
             public const string DematicMessageSkmt = "api/sku-maintenance";
             public const string EmsToWmsMessage = "api/emstowms-message";
+            public const string ConnectionInformation = "api/release-connection-information";
 
 
         }

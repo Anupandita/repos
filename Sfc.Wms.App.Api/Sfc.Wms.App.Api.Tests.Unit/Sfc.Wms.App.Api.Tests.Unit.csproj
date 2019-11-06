@@ -112,7 +112,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="libman.json" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper">
@@ -170,7 +169,7 @@
       <Version>4.0.6</Version>
     </PackageReference>
     <PackageReference Include="Sfc.Wms.Interfaces.Asrs.Contracts">
-      <Version>1.1.0</Version>
+      <Version>1.2.1</Version>
     </PackageReference>
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
       <Version>4.5.2</Version>
