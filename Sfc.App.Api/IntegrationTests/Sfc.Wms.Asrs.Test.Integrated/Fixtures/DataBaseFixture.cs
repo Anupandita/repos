@@ -1,21 +1,21 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
-using Sfc.Wms.Asrs.Dematic.Contracts.Dtos;
-using Sfc.Wms.Asrs.Shamrock.Contracts.Dtos;
+using Sfc.Wms.Interfaces.Asrs.Dematic.Contracts.Dtos;
+using Sfc.Wms.Interfaces.Asrs.Shamrock.Contracts.Dtos;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
-using Sfc.Wms.InboundLpn.Contracts.Dtos;
+using Sfc.Wms.Foundation.InboundLpn.Contracts.Dtos;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Constants;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Dto;
 using Sfc.Core.OnPrem.Result;
-using Sfc.Wms.TaskDetail.Contracts.Dtos;
-using Sfc.Wms.TransitionalInventory.Contracts.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Sfc.Core.OnPrem.ParserAndTranslator.Constants;
 using Sfc.Wms.Interfaces.Parser.Parsers;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Validation;
+using Sfc.Wms.Foundation.Tasks.Contracts.Dtos;
+using Sfc.Wms.Foundation.TransitionalInventory.Contracts.Dtos;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {

@@ -9,7 +9,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
 /*If you drop a custom stylesheet named BDDfyCustom.css in your output folder it gets embedded here. This way you can apply some custom styles over your html report.*/
 
     </style>
-    <title>BDDfy Test Result 10/23/2019</title>
+    <title>BDDfy Test Result 06-11-2019</title>
   </head>
   <body>
     <div id='main'>
@@ -23,19 +23,19 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
           <li class='storySummary'>
             <div class='summaryLine'>
               <div class='summaryLabel'>Stories</div>
-              <span class='summaryCount'>1</span>
+              <span class='summaryCount'>11</span>
             </div>
           </li>
           <li class='scenarioSummary'>
             <div class='summaryLine'>
               <div class='summaryLabel'>Scenarios</div>
-              <span class='summaryCount'>1</span>
+              <span class='summaryCount'>37</span>
             </div>
           </li>
           <li class='Passed'>
             <div class='summaryLine'>
               <div class='summaryLabel'>Passed</div>
-              <span class='summaryCount'>0</span>
+              <span class='summaryCount'>18</span>
             </div>
           </li>
           <li class='Inconclusive'>
@@ -53,7 +53,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
           <li class='Failed'>
             <div class='summaryLine'>
               <div class='summaryLabel'>Failed</div>
-              <span class='summaryCount'>1</span>
+              <span class='summaryCount'>19</span>
             </div>
           </li>
         </ul>
@@ -68,6 +68,290 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
         </div>
         <ul class='testResult'>
           <li>
+            <div class='story Passed'>
+              <div class='storyMetadata'>
+                <div class='storyTitle'>Story: Comt and ivmt test</div>
+                <ul class='storyNarrative'>
+                  <li>As a Authorized User test for comt message from wms to ems</li>
+                  <li>I want To Verify COMT message is inserted in to SWMTOMHE table with appropriate data Verify in TransInventory table for Allocation Inventory units and actual weight Verify in Case Detail table for Quantity, CaseHeader and task detail table for status code </li>
+                  <li>So that I can validate for message fields in COMT message, in Internal Table SWM_TO_MHE and validate the quantity,weight,statuscode in the caseheader, casedetail, task header tables</li>
+                </ul>
+              </div>
+              <div class='scenarios'>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-1'>Comt and ivmt message test scenarios</div>
+                  <ul class='steps' id='scenario-1'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-1-1' >
+                      <span>Given current case number for single sku</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-1-2' >
+                      <span>And a valid new comt message record</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-1-3' >
+                      <span>When comt api is called created is returned</span>
+                    </li>
+                    <li class='step Passed  Assertion ' data-toggle-target='step-1-4' >
+                      <span>Then get data from data base for single sku scenarios</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-1-5' >
+                      <span>And verify comt message was inserted into swm to mhe</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-1-6' >
+                      <span>And verify comt message was inserted into wms to ems</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-1-7' >
+                      <span>And verify the quantity is increased to trans inventory</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-1-8' >
+                      <span>And verify quantityis reduced into case detail</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-1-9' >
+                      <span>And verify status is updated into case header</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-1-10' >
+                      <span>And verify status is updated into task header</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-2'>Comt and ivmt test for multi sku scenarios</div>
+                  <ul class='steps' id='scenario-2'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-2-1' >
+                      <span>Given current case number for multi sku</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-2-2' >
+                      <span>And a valid new comt message record</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-2-3' >
+                      <span>When comt api is called created is returned</span>
+                    </li>
+                    <li class='step Passed  Assertion ' data-toggle-target='step-2-4' >
+                      <span>Then get data and validate for ivmt message has inserted into both tables</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-2-5' >
+                      <span>And verify comt message was inserted into swm to mhe for multi sku</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-2-6' >
+                      <span>And verify comt message was inserted into wms to ems for multi sku</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-2-7' >
+                      <span>And verify quantityis reduced into case detail table</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-2-8' >
+                      <span>And verify status is updated into case header table</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-3'>Comt ivmt message test case for no enough inventory in case</div>
+                  <ul class='steps' id='scenario-3'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-3-1' >
+                      <span>Given current case number for not enough inventory in case</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-3-2' >
+                      <span>And a valid new comt message record</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-3-3' >
+                      <span>When comt api is called for not enough inventory in case</span>
+                    </li>
+                    <li class='step Passed  Assertion ' data-toggle-target='step-3-4' >
+                      <span>Then validate for not enough inventory in case</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class='story Failed'>
+              <div class='storyMetadata'>
+                <div class='storyTitle'>Story: Cost message test</div>
+                <ul class='storyNarrative'>
+                  <li>As a Authorized User test for cost message from emstowms</li>
+                  <li>I want To Verify COST message is inserted in to SWM_FROM_MHE table with appropriate data And verify COST message is inserted in to swm_from_mhe table with appropriate data  Verify in TransInventory table for Allocation Inventory units and actual weight Verify in Case Detail table for Quantity, CaseHeader and task detail table for status code </li>
+                  <li>So that I can validate for message fields in COST message, in Internal Table SWM_FROM_MHE and validate the quantity,weight,statuscode in the caseheader, casedetail, task header tables</li>
+                </ul>
+              </div>
+              <div class='scenarios'>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-4'>Verify for error log no case found</div>
+                  <ul class='steps' id='scenario-4'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-4-1' >
+                      <span>Given test initialize for invalid case</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-4-2' >
+                      <span>And invalid case msg key</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-4-3' >
+                      <span>When cost api is called for invalid case number</span>
+                    </li>
+                    <li class='step Passed  Assertion ' data-toggle-target='step-4-4' >
+                      <span>Then validate result for invalid case number</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-5'>Verify for error not enough inventory</div>
+                  <ul class='steps' id='scenario-5'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-5-1' >
+                      <span>Given test initialize for trans invn does not exist</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-5-2' >
+                      <span>And trans invn not exists msg key</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-5-3' >
+                      <span>When cost api is called for trans invn not found</span>
+                    </li>
+                    <li class='step Passed  Assertion ' data-toggle-target='step-5-4' >
+                      <span>Then validate result for trans inventory not exist</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Failed canToggle scenarioTitle' data-toggle-target='scenario-6'>Verify for error pick location not found</div>
+                  <ul class='steps' id='scenario-6'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-6-1' >
+                      <span>Given test initialize for pick locn does not exist</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-6-2' >
+                      <span>And pick location not exist key</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-6-3' >
+                      <span>When cost api is called for pick locn not found</span>
+                    </li>
+                    <li class='step Failed  Assertion canToggle' data-toggle-target='step-6-4' >
+                      <span>Then validate result for pick locn not found [Exception Message: 'Assert.AreEqual failed. Expected:<PickLocationDetail>. Actual:<ActiveLocationDto>. ']</span>
+                      <div class='step FailedException' id='step-6-4'>
+                        <code>   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.HandleFail(String assertionName, String message, Object[] parameters)
+   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual[T](T expected, T actual, String message, Object[] parameters)
+   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual[T](T expected, T actual)
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.CostMessageFixture.ValidateResultForPickLocnNotFound() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Fixtures\CostMessageFixture.cs:line 169
+   at lambda_method(Closure , CostMessageTest )
+   at TestStack.BDDfy.StepActionFactory.<>c__DisplayClass1_0`1.<GetStepAction>b__0(Object o)
+   at TestStack.BDDfy.StepExecutor.Execute(Step step, Object testObject)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.<>c__DisplayClass3_0.<ExecuteStep>b__0()
+   at TestStack.BDDfy.Processors.AsyncTestRunner.Run(Func`1 performStep)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.ExecuteStep(Step step)
+   at TestStack.BDDfy.Processors.ExceptionProcessor.Process(Story story)
+   at TestStack.BDDfy.Engine.Run()
+   at TestStack.BDDfy.BDDfyExtensions.BDDfy(Object testObject, String scenarioTitle)
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Tests.CostMessageTest.VerifyForErrorPickLocationNotFound() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Tests\CostMessageTest.cs:line 76</code>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Failed canToggle scenarioTitle' data-toggle-target='scenario-7'>Verify for invalid message key</div>
+                  <ul class='steps' id='scenario-7'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-7-1' >
+                      <span>Given test initialize for invalid case</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-7-2' >
+                      <span>And invalid msg key</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-7-3' >
+                      <span>When cost api is called for invalid message key</span>
+                    </li>
+                    <li class='step Failed  Assertion canToggle' data-toggle-target='step-7-4' >
+                      <span>Then validate result for invalid message key [Exception Message: 'Assert.AreEqual failed. Expected:<Conflict>. Actual:<Conflicted with existing record !!>. ']</span>
+                      <div class='step FailedException' id='step-7-4'>
+                        <code>   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.HandleFail(String assertionName, String message, Object[] parameters)
+   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual[T](T expected, T actual, String message, Object[] parameters)
+   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual[T](T expected, T actual)
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.CostMessageFixture.ValidateResultForInvalidMessageKey() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Fixtures\CostMessageFixture.cs:line 151
+   at lambda_method(Closure , CostMessageTest )
+   at TestStack.BDDfy.StepActionFactory.<>c__DisplayClass1_0`1.<GetStepAction>b__0(Object o)
+   at TestStack.BDDfy.StepExecutor.Execute(Step step, Object testObject)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.<>c__DisplayClass3_0.<ExecuteStep>b__0()
+   at TestStack.BDDfy.Processors.AsyncTestRunner.Run(Func`1 performStep)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.ExecuteStep(Step step)
+   at TestStack.BDDfy.Processors.ExceptionProcessor.Process(Story story)
+   at TestStack.BDDfy.Engine.Run()
+   at TestStack.BDDfy.BDDfyExtensions.BDDfy(Object testObject, String scenarioTitle)
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Tests.CostMessageTest.VerifyForInvalidMessageKey() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Tests\CostMessageTest.cs:line 42</code>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-8'>Verify for valid cost message scenarios</div>
+                  <ul class='steps' id='scenario-8'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-8-1' >
+                      <span>Given test initialize for valid message</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-8-2' >
+                      <span>And a valid msg key</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-8-3' >
+                      <span>When cost api is called with valid msg key</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-8-4' >
+                      <span>And get valid data after trigger</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-8-5' >
+                      <span>And verify cost message was inserted into swm from mhe</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-8-6' >
+                      <span>And verify the quantity was decreased in to trans inventory</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-8-7' >
+                      <span>And verify the quantity was increased into pick location table</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class='story Passed'>
+              <div class='storyMetadata'>
+                <div class='storyTitle'>Story: Ivmt</div>
+                <ul class='storyNarrative'>
+                  <li>As a Authorized User test for ivmt message from wms to ems</li>
+                  <li>I want To Verify IVMT message is inserted in to SWMTOMHE table with appropriate data And verify IVMT message is inserted in to WMSTOEMS table with appropriate data  Verify in TransInventory table for Allocation Inventory units and actual weight Verify in Case Detail table for Quantity, CaseHeader and task detail table for status code </li>
+                  <li>So that I can validate for message fields in IVMT message, in Internal Table SWM_TO_MHE and validate the quantity,weight,statuscode in the caseheader, casedetail, task header tables</li>
+                </ul>
+              </div>
+              <div class='scenarios'>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-9'>Ivmt message test scenarios</div>
+                  <ul class='steps' id='scenario-9'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-9-1' >
+                      <span>Given current case number for single sku</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-9-2' >
+                      <span>And a valid new ivmt message record</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-9-3' >
+                      <span>When ivmt api is called created is returned</span>
+                    </li>
+                    <li class='step Passed  Assertion ' data-toggle-target='step-9-4' >
+                      <span>Then get data from data base for single sku scenarios ivmt</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-9-5' >
+                      <span>And verify ivmt message was inserted into swm to mhe</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-9-6' >
+                      <span>And verify ivmt message was inserted into wms to ems</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-9-7' >
+                      <span>And verify the quantity is increased to trans inventory</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-9-8' >
+                      <span>And verify quantityis reduced into case detail</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-9-9' >
+                      <span>And verify status is updated into case header</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-9-10' >
+                      <span>And verify status is updated into task header</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
             <div class='story Failed'>
               <div class='storyMetadata'>
                 <div class='storyTitle'>Story: Ivst</div>
@@ -79,30 +363,30 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
               </div>
               <div class='scenarios'>
                 <div class='scenario'>
-                  <div class='Failed canToggle scenarioTitle' data-toggle-target='scenario-1'>Test for ivst inventory shortage exception scenarios</div>
-                  <ul class='steps' id='scenario-1'>
-                    <li class='step Passed  SetupState ' data-toggle-target='step-1-1' >
+                  <div class='Failed canToggle scenarioTitle' data-toggle-target='scenario-10'>Test for ivst inventory shortage exception scenarios</div>
+                  <ul class='steps' id='scenario-10'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-10-1' >
                       <span>Given test data for inventory exception</span>
                     </li>
-                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-1-2' >
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-10-2' >
                       <span>And msg key for inventory shortage exception</span>
                     </li>
-                    <li class='step Passed  Transition ' data-toggle-target='step-1-3' >
+                    <li class='step Passed  Transition ' data-toggle-target='step-10-3' >
                       <span>When ivst api is called created is returned</span>
                     </li>
-                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-1-4' >
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-10-4' >
                       <span>And get valid data after trigger</span>
                     </li>
-                    <li class='step Passed  Assertion ' data-toggle-target='step-1-5' >
+                    <li class='step Passed  Assertion ' data-toggle-target='step-10-5' >
                       <span>Then verify ivst message was inserted into swm from mhe inventory shortage</span>
                     </li>
-                    <li class='step Failed  ConsecutiveAssertion canToggle' data-toggle-target='step-1-6' >
-                      <span>And verify the quantity for inventory shortage exception into trans inventory table [Exception Message: 'Assert.AreEqual failed. Expected:<552>. Actual:<453>. ']</span>
-                      <div class='step FailedException' id='step-1-6'>
+                    <li class='step Failed  ConsecutiveAssertion canToggle' data-toggle-target='step-10-6' >
+                      <span>And verify the quantity for inventory shortage exception into trans inventory table [Exception Message: 'Assert.AreEqual failed. Expected:<-65>. Actual:<-164>. ']</span>
+                      <div class='step FailedException' id='step-10-6'>
                         <code>   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.HandleFail(String assertionName, String message, Object[] parameters)
    at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual[T](T expected, T actual, String message, Object[] parameters)
    at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual[T](T expected, T actual)
-   at Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.IvstMessageFixture.VerifyTheQuantityForInventoryShortageExceptionIntoTransInventoryTable() in D:\wmspoc\Wms.App.Api\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Fixtures\IvstMessageFixture.cs:line 163
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.IvstMessageFixture.VerifyTheQuantityForInventoryShortageExceptionIntoTransInventoryTable() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Fixtures\IvstMessageFixture.cs:line 163
    at lambda_method(Closure , Ivst )
    at TestStack.BDDfy.StepActionFactory.<>c__DisplayClass1_0`1.<GetStepAction>b__0(Object o)
    at TestStack.BDDfy.StepExecutor.Execute(Step step, Object testObject)
@@ -112,11 +396,1064 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
    at TestStack.BDDfy.Processors.ExceptionProcessor.Process(Story story)
    at TestStack.BDDfy.Engine.Run()
    at TestStack.BDDfy.BDDfyExtensions.BDDfy(Object testObject, String scenarioTitle)
-   at Sfc.Wms.Api.Asrs.Test.Integrated.Tests.Ivst.TestForIvstInventoryShortageExceptionScenarios() in D:\wmspoc\Wms.App.Api\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Tests\Ivst.cs:line 58</code>
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Tests.Ivst.TestForIvstInventoryShortageExceptionScenarios() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Tests\Ivst.cs:line 58</code>
                       </div>
                     </li>
-                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-1-7' >
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-10-7' >
                       <span>And verify the record inserted into pix transaction tablereason code for inventory shortage exception</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Failed canToggle scenarioTitle' data-toggle-target='scenario-11'>Test for ivst ivst damage message scenarios</div>
+                  <ul class='steps' id='scenario-11'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-11-1' >
+                      <span>Given test data for damage exception</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-11-2' >
+                      <span>And msg key for damage exception</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-11-3' >
+                      <span>When ivst api is called created is returned</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-11-4' >
+                      <span>And get valid data after trigger</span>
+                    </li>
+                    <li class='step Passed  Assertion ' data-toggle-target='step-11-5' >
+                      <span>Then verify ivst message was inserted into swm from mhe damage</span>
+                    </li>
+                    <li class='step Failed  ConsecutiveAssertion canToggle' data-toggle-target='step-11-6' >
+                      <span>And verify the quantity for damage exception into trans inventory table [Exception Message: 'Assert.AreEqual failed. Expected:<-165>. Actual:<-264>. ']</span>
+                      <div class='step FailedException' id='step-11-6'>
+                        <code>   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.HandleFail(String assertionName, String message, Object[] parameters)
+   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual[T](T expected, T actual, String message, Object[] parameters)
+   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual[T](T expected, T actual)
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.IvstMessageFixture.VerifyTheQuantityForDamageExceptionIntoTransInventoryTable() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Fixtures\IvstMessageFixture.cs:line 174
+   at lambda_method(Closure , Ivst )
+   at TestStack.BDDfy.StepActionFactory.<>c__DisplayClass1_0`1.<GetStepAction>b__0(Object o)
+   at TestStack.BDDfy.StepExecutor.Execute(Step step, Object testObject)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.<>c__DisplayClass3_0.<ExecuteStep>b__0()
+   at TestStack.BDDfy.Processors.AsyncTestRunner.Run(Func`1 performStep)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.ExecuteStep(Step step)
+   at TestStack.BDDfy.Processors.ExceptionProcessor.Process(Story story)
+   at TestStack.BDDfy.Engine.Run()
+   at TestStack.BDDfy.BDDfyExtensions.BDDfy(Object testObject, String scenarioTitle)
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Tests.Ivst.TestForIvstIvstDamageMessageScenarios() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Tests\Ivst.cs:line 72</code>
+                      </div>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-11-7' >
+                      <span>And verify the record inserted into pix transaction tablereason code for damage exception</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Failed canToggle scenarioTitle' data-toggle-target='scenario-12'>Test for ivst unexpected overage exception scenarios</div>
+                  <ul class='steps' id='scenario-12'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-12-1' >
+                      <span>Given test data for unexpected overage exception</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-12-2' >
+                      <span>And msg key for unexpected overage exception</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-12-3' >
+                      <span>When ivst api is called created is returned</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-12-4' >
+                      <span>And get valid data after trigger</span>
+                    </li>
+                    <li class='step Passed  Assertion ' data-toggle-target='step-12-5' >
+                      <span>Then verify ivst message was inserted into swm from mhe un excepted overage</span>
+                    </li>
+                    <li class='step Failed  ConsecutiveAssertion canToggle' data-toggle-target='step-12-6' >
+                      <span>And verify the quantity for unexpected overage exception into trans inventory table [Exception Message: 'Assert.AreEqual failed. Expected:<-263>. Actual:<-164>. ']</span>
+                      <div class='step FailedException' id='step-12-6'>
+                        <code>   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.HandleFail(String assertionName, String message, Object[] parameters)
+   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual[T](T expected, T actual, String message, Object[] parameters)
+   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual[T](T expected, T actual)
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.IvstMessageFixture.VerifyTheQuantityForUnexpectedOverageExceptionIntoTransInventoryTable() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Fixtures\IvstMessageFixture.cs:line 153
+   at lambda_method(Closure , Ivst )
+   at TestStack.BDDfy.StepActionFactory.<>c__DisplayClass1_0`1.<GetStepAction>b__0(Object o)
+   at TestStack.BDDfy.StepExecutor.Execute(Step step, Object testObject)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.<>c__DisplayClass3_0.<ExecuteStep>b__0()
+   at TestStack.BDDfy.Processors.AsyncTestRunner.Run(Func`1 performStep)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.ExecuteStep(Step step)
+   at TestStack.BDDfy.Processors.ExceptionProcessor.Process(Story story)
+   at TestStack.BDDfy.Engine.Run()
+   at TestStack.BDDfy.BDDfyExtensions.BDDfy(Object testObject, String scenarioTitle)
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Tests.Ivst.TestForIvstUnexpectedOverageExceptionScenarios() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Tests\Ivst.cs:line 43</code>
+                      </div>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-12-7' >
+                      <span>And verify the record inserted into pix transaction tablereason code for unexpected overage exception</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Failed canToggle scenarioTitle' data-toggle-target='scenario-13'>Test for ivst wrong sku message scenarios</div>
+                  <ul class='steps' id='scenario-13'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-13-1' >
+                      <span>Given test data for wrong sku exception</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-13-2' >
+                      <span>And msg key for wrong sku exception</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-13-3' >
+                      <span>When ivst api is called created is returned</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-13-4' >
+                      <span>And get valid data after trigger</span>
+                    </li>
+                    <li class='step Passed  Assertion ' data-toggle-target='step-13-5' >
+                      <span>Then verify ivst message was inserted into swm from mhe wrong sku</span>
+                    </li>
+                    <li class='step Failed  ConsecutiveAssertion canToggle' data-toggle-target='step-13-6' >
+                      <span>And verify the quantity for wrong sku exception into trans inventory table [Exception Message: 'Assert.AreEqual failed. Expected:<-165>. Actual:<-264>. ']</span>
+                      <div class='step FailedException' id='step-13-6'>
+                        <code>   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.HandleFail(String assertionName, String message, Object[] parameters)
+   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual[T](T expected, T actual, String message, Object[] parameters)
+   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual[T](T expected, T actual)
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.IvstMessageFixture.VerifyTheQuantityForWrongSkuExceptionIntoTransInventoryTable() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Fixtures\IvstMessageFixture.cs:line 183
+   at lambda_method(Closure , Ivst )
+   at TestStack.BDDfy.StepActionFactory.<>c__DisplayClass1_0`1.<GetStepAction>b__0(Object o)
+   at TestStack.BDDfy.StepExecutor.Execute(Step step, Object testObject)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.<>c__DisplayClass3_0.<ExecuteStep>b__0()
+   at TestStack.BDDfy.Processors.AsyncTestRunner.Run(Func`1 performStep)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.ExecuteStep(Step step)
+   at TestStack.BDDfy.Processors.ExceptionProcessor.Process(Story story)
+   at TestStack.BDDfy.Engine.Run()
+   at TestStack.BDDfy.BDDfyExtensions.BDDfy(Object testObject, String scenarioTitle)
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Tests.Ivst.TestForIvstWrongSkuMessageScenarios() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Tests\Ivst.cs:line 86</code>
+                      </div>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-13-7' >
+                      <span>And verify the record inserted into pix transaction tablereason code for wrong sku exception</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class='story Failed'>
+              <div class='storyMetadata'>
+                <div class='storyTitle'>Story: Ormt message test</div>
+                <ul class='storyNarrative'>
+                  <li>As a Authorized User test for ormt message from wmstoems</li>
+                  <li>I want To Verify ORMT message is inserted in to swm_to_mhe table with appropriate data And verify ORMT message is inserted in to wmstoems table with appropriate data  Verify in PickLocnDtlExt table for Ormt Count</li>
+                  <li>So that I can validate for message fields in ORMT message, in Internal Table SWM_TO_MHE and in wmstoems</li>
+                </ul>
+              </div>
+              <div class='scenarios'>
+                <div class='scenario'>
+                  <div class='Failed canToggle scenarioTitle' data-toggle-target='scenario-14'>Verify for ormt message with action code add release</div>
+                  <ul class='steps' id='scenario-14'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-14-1' >
+                      <span>Given initialize test data for printing of cartons</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-14-2' >
+                      <span>And carton number for add release</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-14-3' >
+                      <span>And valid ormt url</span>
+                    </li>
+                    <li class='step Failed  Transition canToggle' data-toggle-target='step-14-4' >
+                      <span>When ormt api is called created is returned [Exception Message: 'Assert.AreEqual failed. Expected:<Created>. Actual:<NotFound>. ']</span>
+                      <div class='step FailedException' id='step-14-4'>
+                        <code>   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.HandleFail(String assertionName, String message, Object[] parameters)
+   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual[T](T expected, T actual, String message, Object[] parameters)
+   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual[T](T expected, T actual)
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.OrmtMessageFixture.OrmtApiIsCalledCreatedIsReturned() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Fixtures\OrmtMessageFixture.cs:line 138
+   at lambda_method(Closure , OrmtMessageTest )
+   at TestStack.BDDfy.StepActionFactory.<>c__DisplayClass1_0`1.<GetStepAction>b__0(Object o)
+   at TestStack.BDDfy.StepExecutor.Execute(Step step, Object testObject)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.<>c__DisplayClass3_0.<ExecuteStep>b__0()
+   at TestStack.BDDfy.Processors.AsyncTestRunner.Run(Func`1 performStep)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.ExecuteStep(Step step)
+   at TestStack.BDDfy.Processors.ExceptionProcessor.Process(Story story)
+   at TestStack.BDDfy.Engine.Run()
+   at TestStack.BDDfy.BDDfyExtensions.BDDfy(Object testObject, String scenarioTitle)
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Tests.OrmtMessageTest.VerifyForOrmtMessageWithActionCodeAddRelease() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Tests\OrmtMessageTest.cs:line 22</code>
+                      </div>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveTransition ' data-toggle-target='step-14-5' >
+                      <span>And read data after api for printing of carton</span>
+                    </li>
+                    <li class='step NotExecuted  Assertion ' data-toggle-target='step-14-6' >
+                      <span>Then verify ormt message was inserted in to swm to mhe</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveAssertion ' data-toggle-target='step-14-7' >
+                      <span>And verify ormt message was inserted in to wms to ems for printing of order</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveAssertion ' data-toggle-target='step-14-8' >
+                      <span>And verify for ormt count in pick locn dtl ext</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveAssertion ' data-toggle-target='step-14-9' >
+                      <span>And verify for status codein carton hdr for add release</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Failed canToggle scenarioTitle' data-toggle-target='scenario-15'>Verify for ormt message with action code cancel</div>
+                  <ul class='steps' id='scenario-15'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-15-1' >
+                      <span>Given initialize test data for cancel of carton</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-15-2' >
+                      <span>And carton number for cancel</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-15-3' >
+                      <span>And valid ormt url</span>
+                    </li>
+                    <li class='step Failed  Transition canToggle' data-toggle-target='step-15-4' >
+                      <span>When ormt api is called created is returned [Exception Message: 'Assert.AreEqual failed. Expected:<Created>. Actual:<NotFound>. ']</span>
+                      <div class='step FailedException' id='step-15-4'>
+                        <code>   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.HandleFail(String assertionName, String message, Object[] parameters)
+   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual[T](T expected, T actual, String message, Object[] parameters)
+   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual[T](T expected, T actual)
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.OrmtMessageFixture.OrmtApiIsCalledCreatedIsReturned() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Fixtures\OrmtMessageFixture.cs:line 138
+   at lambda_method(Closure , OrmtMessageTest )
+   at TestStack.BDDfy.StepActionFactory.<>c__DisplayClass1_0`1.<GetStepAction>b__0(Object o)
+   at TestStack.BDDfy.StepExecutor.Execute(Step step, Object testObject)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.<>c__DisplayClass3_0.<ExecuteStep>b__0()
+   at TestStack.BDDfy.Processors.AsyncTestRunner.Run(Func`1 performStep)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.ExecuteStep(Step step)
+   at TestStack.BDDfy.Processors.ExceptionProcessor.Process(Story story)
+   at TestStack.BDDfy.Engine.Run()
+   at TestStack.BDDfy.BDDfyExtensions.BDDfy(Object testObject, String scenarioTitle)
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Tests.OrmtMessageTest.VerifyForOrmtMessageWithActionCodeCancel() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Tests\OrmtMessageTest.cs:line 38</code>
+                      </div>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveTransition ' data-toggle-target='step-15-5' >
+                      <span>And read data after api for cancel of carton</span>
+                    </li>
+                    <li class='step NotExecuted  Assertion ' data-toggle-target='step-15-6' >
+                      <span>Then verify ormt message was inserted in to swm to mhe for cancel orders</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveAssertion ' data-toggle-target='step-15-7' >
+                      <span>And verify ormt message was inserted in to wms to ems for cancel order</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveAssertion ' data-toggle-target='step-15-8' >
+                      <span>And verify for ormt count in pick locn dtl ext</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Failed canToggle scenarioTitle' data-toggle-target='scenario-16'>Verify for ormt message with action code e pick</div>
+                  <ul class='steps' id='scenario-16'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-16-1' >
+                      <span>Given initialize test data for epick of carton</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-16-2' >
+                      <span>And carton number for e pick</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-16-3' >
+                      <span>And valid ormt url</span>
+                    </li>
+                    <li class='step Failed  Transition canToggle' data-toggle-target='step-16-4' >
+                      <span>When ormt api is called created is returned [Exception Message: 'Assert.AreEqual failed. Expected:<Created>. Actual:<NotFound>. ']</span>
+                      <div class='step FailedException' id='step-16-4'>
+                        <code>   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.HandleFail(String assertionName, String message, Object[] parameters)
+   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual[T](T expected, T actual, String message, Object[] parameters)
+   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual[T](T expected, T actual)
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.OrmtMessageFixture.OrmtApiIsCalledCreatedIsReturned() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Fixtures\OrmtMessageFixture.cs:line 138
+   at lambda_method(Closure , OrmtMessageTest )
+   at TestStack.BDDfy.StepActionFactory.<>c__DisplayClass1_0`1.<GetStepAction>b__0(Object o)
+   at TestStack.BDDfy.StepExecutor.Execute(Step step, Object testObject)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.<>c__DisplayClass3_0.<ExecuteStep>b__0()
+   at TestStack.BDDfy.Processors.AsyncTestRunner.Run(Func`1 performStep)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.ExecuteStep(Step step)
+   at TestStack.BDDfy.Processors.ExceptionProcessor.Process(Story story)
+   at TestStack.BDDfy.Engine.Run()
+   at TestStack.BDDfy.BDDfyExtensions.BDDfy(Object testObject, String scenarioTitle)
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Tests.OrmtMessageTest.VerifyForOrmtMessageWithActionCodeEPick() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Tests\OrmtMessageTest.cs:line 53</code>
+                      </div>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveTransition ' data-toggle-target='step-16-5' >
+                      <span>And read data after api for e pick of carton</span>
+                    </li>
+                    <li class='step NotExecuted  Assertion ' data-toggle-target='step-16-6' >
+                      <span>Then verify ormt message was inserted in to swm to mhe for epick</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveAssertion ' data-toggle-target='step-16-7' >
+                      <span>And verify ormt message was inserted in to wms to ems for epick of order</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveAssertion ' data-toggle-target='step-16-8' >
+                      <span>And verify for ormt count in pick locn dtl ext</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveAssertion ' data-toggle-target='step-16-9' >
+                      <span>And verify for status code in carton hdr for e pick</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class='story Failed'>
+              <div class='storyMetadata'>
+                <div class='storyTitle'>Story: Ormt negative cases</div>
+                <ul class='storyNarrative'>
+                  <li>As a Authorized User test for ormt message from wmstoems</li>
+                  <li>I want To Verify ORMT message is inserted in to swm_to_mhe table with appropriate data And verify ORMT message is inserted in to wmstoems table with appropriate data  Verify in PickLocnDtlExt table for Ormt Count</li>
+                  <li>So that I can validate for message fields in ORMT message, in Internal Table SWM_TO_MHE and in wmstoems</li>
+                </ul>
+              </div>
+              <div class='scenarios'>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-17'>Validate for message where action code is invalid</div>
+                  <ul class='steps' id='scenario-17'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-17-1' >
+                      <span>Given test for in valid action code</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-17-2' >
+                      <span>And valid ormt url</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-17-3' >
+                      <span>When ormt api is called for invalid action code</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-17-4' >
+                      <span>And validate result for invalid action code</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-18'>Validate for message where active locn not found</div>
+                  <ul class='steps' id='scenario-18'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-18-1' >
+                      <span>Given carton number for active locn not found</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-18-2' >
+                      <span>And valid ormt url</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-18-3' >
+                      <span>When ormt api is called for active location not found</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-18-4' >
+                      <span>And validate result for active location not found</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Failed canToggle scenarioTitle' data-toggle-target='scenario-19'>Validate for message where active ormt count not found</div>
+                  <ul class='steps' id='scenario-19'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-19-1' >
+                      <span>Given carton number for ormt count not found</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-19-2' >
+                      <span>And valid ormt url</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-19-3' >
+                      <span>When ormt api is called for not enough inventory</span>
+                    </li>
+                    <li class='step Failed  ConsecutiveTransition canToggle' data-toggle-target='step-19-4' >
+                      <span>And validate result for active ormt not found [Exception Message: 'Assert.AreEqual failed. Expected:<PickLocationDetailsExtenstion>. Actual:<String>. ']</span>
+                      <div class='step FailedException' id='step-19-4'>
+                        <code>   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.HandleFail(String assertionName, String message, Object[] parameters)
+   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual[T](T expected, T actual, String message, Object[] parameters)
+   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual[T](T expected, T actual)
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.OrmtMessageFixture.ValidateResultForActiveOrmtNotFound() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Fixtures\OrmtMessageFixture.cs:line 173
+   at lambda_method(Closure , OrmtNegativeCases )
+   at TestStack.BDDfy.StepActionFactory.<>c__DisplayClass1_0`1.<GetStepAction>b__0(Object o)
+   at TestStack.BDDfy.StepExecutor.Execute(Step step, Object testObject)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.<>c__DisplayClass3_0.<ExecuteStep>b__0()
+   at TestStack.BDDfy.Processors.AsyncTestRunner.Run(Func`1 performStep)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.ExecuteStep(Step step)
+   at TestStack.BDDfy.Processors.ExceptionProcessor.Process(Story story)
+   at TestStack.BDDfy.Engine.Run()
+   at TestStack.BDDfy.BDDfyExtensions.BDDfy(Object testObject, String scenarioTitle)
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Tests.OrmtNegativeCases.ValidateForMessageWhereActiveOrmtCountNotFound() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Tests\OrmtNegativeCases.cs:line 29</code>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-20'>Validate for message where carton number is invalid</div>
+                  <ul class='steps' id='scenario-20'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-20-1' >
+                      <span>Given carton number for invalid carton number</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-20-2' >
+                      <span>And valid ormt url</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-20-3' >
+                      <span>When ormt api is called for invalid carton number</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-20-4' >
+                      <span>And validate result for invalid carton number</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-21'>Validate for message where pick locn not found</div>
+                  <ul class='steps' id='scenario-21'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-21-1' >
+                      <span>Given carton number for pick locn not found</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-21-2' >
+                      <span>And valid ormt url</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-21-3' >
+                      <span>When ormt api is called for pick location not found</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-21-4' >
+                      <span>And validate result for pick location not found</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class='story Failed'>
+              <div class='storyMetadata'>
+                <div class='storyTitle'>Story: Orst message test</div>
+                <ul class='storyNarrative'>
+                  <li>As a Authorized User test for orst message from emstowms</li>
+                  <li>I want To Verify ORST message is inserted in to swm_to_mhe table with appropriate dataFor Bellow CasesCase1: ActionCode = Allocated Case2: ActionCode = Completed and OrderReasonCodeMap = '0'Case3: ActionCode = DeAllocate Case4: ActionCode = CancelledTo Verify Carton Status</li>
+                  <li>So that I can validate for message fields in ORMT message, in Internal Table SWM_TO_MHE and in wmstoems for all caseTypesVerify For Pick Ticket Status and Carton Status for all the Action CodesValidate For Quantities InTo CartonDetail, PickTicketDetail,PickLocationDetail for all case types Validate for Ormt count for all case typesValidate for AllocationStatus for the Task Completion</li>
+                </ul>
+              </div>
+              <div class='scenarios'>
+                <div class='scenario'>
+                  <div class='Failed canToggle scenarioTitle' data-toggle-target='scenario-22'>Orst message test for action code allocated</div>
+                  <ul class='steps' id='scenario-22'>
+                    <li class='step Failed  SetupState canToggle' data-toggle-target='step-22-1' >
+                      <span>Given initialize test data [Exception Message: 'Value cannot be null.
+Parameter name: value']</span>
+                      <div class='step FailedException' id='step-22-1'>
+                        <code>   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.DataBaseFixtureForOrst.GetDataBeforeTriggerOrst() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Fixtures\DataBaseFixtureForOrst.cs:line 140
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.OrstMessageFixture.InitializeTestData() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Fixtures\OrstMessageFixture.cs:line 21
+   at lambda_method(Closure , OrstMessageTest )
+   at TestStack.BDDfy.StepActionFactory.<>c__DisplayClass1_0`1.<GetStepAction>b__0(Object o)
+   at TestStack.BDDfy.StepExecutor.Execute(Step step, Object testObject)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.<>c__DisplayClass3_0.<ExecuteStep>b__0()
+   at TestStack.BDDfy.Processors.AsyncTestRunner.Run(Func`1 performStep)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.ExecuteStep(Step step)
+   at TestStack.BDDfy.Processors.ExceptionProcessor.Process(Story story)
+   at TestStack.BDDfy.Engine.Run()
+   at TestStack.BDDfy.BDDfyExtensions.BDDfy(Object testObject, String scenarioTitle)
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Tests.OrstMessageTest.OrstMessageTestForActionCodeAllocated() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Tests\OrstMessageTest.cs:line 33</code>
+                      </div>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveSetupState ' data-toggle-target='step-22-2' >
+                      <span>And msg key for case 1</span>
+                    </li>
+                    <li class='step NotExecuted  Transition ' data-toggle-target='step-22-3' >
+                      <span>When orst api is called created is returned</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveTransition ' data-toggle-target='step-22-4' >
+                      <span>And read data after api for action code allocated</span>
+                    </li>
+                    <li class='step NotExecuted  Assertion ' data-toggle-target='step-22-5' >
+                      <span>Then verify orst message was inserted into swm from mhe for action code allocated</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveAssertion ' data-toggle-target='step-22-6' >
+                      <span>And verify pick ticket status has changed to in picking for action code allocated</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveAssertion ' data-toggle-target='step-22-7' >
+                      <span>And verify carton status has changed to in packing for action code allocated</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Failed canToggle scenarioTitle' data-toggle-target='scenario-23'>Orst message test for action code cancel</div>
+                  <ul class='steps' id='scenario-23'>
+                    <li class='step Failed  SetupState canToggle' data-toggle-target='step-23-1' >
+                      <span>Given test data for action code cancel [Exception Message: 'Value cannot be null.
+Parameter name: value']</span>
+                      <div class='step FailedException' id='step-23-1'>
+                        <code>   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.DataBaseFixtureForOrst.GetDataBeforeCallingApiForActionCodeCancel() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Fixtures\DataBaseFixtureForOrst.cs:line 182
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.OrstMessageFixture.TestDataForActionCodeCancel() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Fixtures\OrstMessageFixture.cs:line 36
+   at lambda_method(Closure , OrstMessageTest )
+   at TestStack.BDDfy.StepActionFactory.<>c__DisplayClass1_0`1.<GetStepAction>b__0(Object o)
+   at TestStack.BDDfy.StepExecutor.Execute(Step step, Object testObject)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.<>c__DisplayClass3_0.<ExecuteStep>b__0()
+   at TestStack.BDDfy.Processors.AsyncTestRunner.Run(Func`1 performStep)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.ExecuteStep(Step step)
+   at TestStack.BDDfy.Processors.ExceptionProcessor.Process(Story story)
+   at TestStack.BDDfy.Engine.Run()
+   at TestStack.BDDfy.BDDfyExtensions.BDDfy(Object testObject, String scenarioTitle)
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Tests.OrstMessageTest.OrstMessageTestForActionCodeCancel() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Tests\OrstMessageTest.cs:line 79</code>
+                      </div>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveSetupState ' data-toggle-target='step-23-2' >
+                      <span>And msg key for case 4</span>
+                    </li>
+                    <li class='step NotExecuted  Transition ' data-toggle-target='step-23-3' >
+                      <span>When orst api is called created is returned</span>
+                    </li>
+                    <li class='step NotExecuted  Assertion ' data-toggle-target='step-23-4' >
+                      <span>Then read data after api for action code cancel</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveAssertion ' data-toggle-target='step-23-5' >
+                      <span>And verify carton status has updated to allocated or waiting for action code cancel</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveAssertion ' data-toggle-target='step-23-6' >
+                      <span>And validate for ormt count has reduced for action code cancel</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Failed canToggle scenarioTitle' data-toggle-target='scenario-24'>Orst message test for action code complete when bit code is enabled</div>
+                  <ul class='steps' id='scenario-24'>
+                    <li class='step Failed  SetupState canToggle' data-toggle-target='step-24-1' >
+                      <span>Given read data before calling api for action code complete with bits enabled [Exception Message: 'Value cannot be null.
+Parameter name: value']</span>
+                      <div class='step FailedException' id='step-24-1'>
+                        <code>   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.DataBaseFixtureForOrst.GetDataBeforeApiForActionCodeCompletedWithBitsEnabled() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Fixtures\DataBaseFixtureForOrst.cs:line 246
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.OrstMessageFixture.ReadDataBeforeCallingApiForActionCodeCompleteWithBitsEnabled() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Fixtures\OrstMessageFixture.cs:line 61
+   at lambda_method(Closure , OrstMessageTest )
+   at TestStack.BDDfy.StepActionFactory.<>c__DisplayClass1_0`1.<GetStepAction>b__0(Object o)
+   at TestStack.BDDfy.StepExecutor.Execute(Step step, Object testObject)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.<>c__DisplayClass3_0.<ExecuteStep>b__0()
+   at TestStack.BDDfy.Processors.AsyncTestRunner.Run(Func`1 performStep)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.ExecuteStep(Step step)
+   at TestStack.BDDfy.Processors.ExceptionProcessor.Process(Story story)
+   at TestStack.BDDfy.Engine.Run()
+   at TestStack.BDDfy.BDDfyExtensions.BDDfy(Object testObject, String scenarioTitle)
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Tests.OrstMessageTest.OrstMessageTestForActionCodeCompleteWhenBitCodeIsEnabled() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Tests\OrstMessageTest.cs:line 92</code>
+                      </div>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveSetupState ' data-toggle-target='step-24-2' >
+                      <span>And msg key for case 5</span>
+                    </li>
+                    <li class='step NotExecuted  Transition ' data-toggle-target='step-24-3' >
+                      <span>When orst api is called created is returned</span>
+                    </li>
+                    <li class='step NotExecuted  Assertion ' data-toggle-target='step-24-4' >
+                      <span>Then read data after calling api for action code complete with bits enabled</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveAssertion ' data-toggle-target='step-24-5' >
+                      <span>And verify orst message was inserted into swm from mhe for action code complete</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveAssertion ' data-toggle-target='step-24-6' >
+                      <span>And verify carton status has changed to 5 for action code complete with bits enabled</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveAssertion ' data-toggle-target='step-24-7' >
+                      <span>And verify for quantities in to pick location table for action code complete with bits enabled</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveAssertion ' data-toggle-target='step-24-8' >
+                      <span>And verify for ormt count for action code complete with bits enabled</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Failed canToggle scenarioTitle' data-toggle-target='scenario-25'>Orst message test for action code complete when pick ticket seq nbr is smaller than 1</div>
+                  <ul class='steps' id='scenario-25'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-25-1' >
+                      <span>Given read data before api for negative case where pick ticket seq number is less than 1</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-25-2' >
+                      <span>And msg key for case 2</span>
+                    </li>
+                    <li class='step Failed  Transition canToggle' data-toggle-target='step-25-3' >
+                      <span>When orst api is called for negative case [Exception Message: 'Object reference not set to an instance of an object.']</span>
+                      <div class='step FailedException' id='step-25-3'>
+                        <code>   at Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.OrstMessageFixture.OrstApiIsCalledForNegativeCase() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Fixtures\OrstMessageFixture.cs:line 127
+   at lambda_method(Closure , OrstMessageTest )
+   at TestStack.BDDfy.StepActionFactory.<>c__DisplayClass1_0`1.<GetStepAction>b__0(Object o)
+   at TestStack.BDDfy.StepExecutor.Execute(Step step, Object testObject)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.<>c__DisplayClass3_0.<ExecuteStep>b__0()
+   at TestStack.BDDfy.Processors.AsyncTestRunner.Run(Func`1 performStep)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.ExecuteStep(Step step)
+   at TestStack.BDDfy.Processors.ExceptionProcessor.Process(Story story)
+   at TestStack.BDDfy.Engine.Run()
+   at TestStack.BDDfy.BDDfyExtensions.BDDfy(Object testObject, String scenarioTitle)
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Tests.OrstMessageTest.OrstMessageTestForActionCodeCompleteWhenPickTicketSeqNbrIsSmallerThan1() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Tests\OrstMessageTest.cs:line 107</code>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Failed canToggle scenarioTitle' data-toggle-target='scenario-26'>Orst message test for action code completed</div>
+                  <ul class='steps' id='scenario-26'>
+                    <li class='step Failed  SetupState canToggle' data-toggle-target='step-26-1' >
+                      <span>Given test data for action code complete [Exception Message: 'Value cannot be null.
+Parameter name: value']</span>
+                      <div class='step FailedException' id='step-26-1'>
+                        <code>   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.DataBaseFixtureForOrst.GetDataBeforeCallingApiForActionCodeComplete() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Fixtures\DataBaseFixtureForOrst.cs:line 152
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.OrstMessageFixture.TestDataForActionCodeComplete() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Fixtures\OrstMessageFixture.cs:line 26
+   at lambda_method(Closure , OrstMessageTest )
+   at TestStack.BDDfy.StepActionFactory.<>c__DisplayClass1_0`1.<GetStepAction>b__0(Object o)
+   at TestStack.BDDfy.StepExecutor.Execute(Step step, Object testObject)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.<>c__DisplayClass3_0.<ExecuteStep>b__0()
+   at TestStack.BDDfy.Processors.AsyncTestRunner.Run(Func`1 performStep)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.ExecuteStep(Step step)
+   at TestStack.BDDfy.Processors.ExceptionProcessor.Process(Story story)
+   at TestStack.BDDfy.Engine.Run()
+   at TestStack.BDDfy.BDDfyExtensions.BDDfy(Object testObject, String scenarioTitle)
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Tests.OrstMessageTest.OrstMessageTestForActionCodeCompleted() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Tests\OrstMessageTest.cs:line 47</code>
+                      </div>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveSetupState ' data-toggle-target='step-26-2' >
+                      <span>And msg key for case 2</span>
+                    </li>
+                    <li class='step NotExecuted  Transition ' data-toggle-target='step-26-3' >
+                      <span>When orst api is called created is returned</span>
+                    </li>
+                    <li class='step NotExecuted  Assertion ' data-toggle-target='step-26-4' >
+                      <span>Then read data after api for action code complete</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveAssertion ' data-toggle-target='step-26-5' >
+                      <span>And verify orst message was inserted into swm from mhe for action code complete</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveAssertion ' data-toggle-target='step-26-6' >
+                      <span>And verify carton status has changed to picked for action code complete</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveAssertion ' data-toggle-target='step-26-7' >
+                      <span>And validate for quantities in tocarton detail table for action code complete</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveAssertion ' data-toggle-target='step-26-8' >
+                      <span>And validate for quantities in to pick ticket detail table for action code complete</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveAssertion ' data-toggle-target='step-26-9' >
+                      <span>And verify pick ticket status has changed to weighed for status code complete</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveAssertion ' data-toggle-target='step-26-10' >
+                      <span>And validate for quantities in to pick location table for action code complete</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveAssertion ' data-toggle-target='step-26-11' >
+                      <span>And validate for ormt count has reduced for action code complete</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveAssertion ' data-toggle-target='step-26-12' >
+                      <span>And verify allocation status has changed to complete for action code complete</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Failed canToggle scenarioTitle' data-toggle-target='scenario-27'>Orst message test for action code de allocate</div>
+                  <ul class='steps' id='scenario-27'>
+                    <li class='step Failed  SetupState canToggle' data-toggle-target='step-27-1' >
+                      <span>Given test data for action code de allocate [Exception Message: 'Value cannot be null.
+Parameter name: value']</span>
+                      <div class='step FailedException' id='step-27-1'>
+                        <code>   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.DataBaseFixtureForOrst.GetDataBeforeCallingApiForActionCodeDeAllocate() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Fixtures\DataBaseFixtureForOrst.cs:line 170
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.OrstMessageFixture.TestDataForActionCodeDeAllocate() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Fixtures\OrstMessageFixture.cs:line 31
+   at lambda_method(Closure , OrstMessageTest )
+   at TestStack.BDDfy.StepActionFactory.<>c__DisplayClass1_0`1.<GetStepAction>b__0(Object o)
+   at TestStack.BDDfy.StepExecutor.Execute(Step step, Object testObject)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.<>c__DisplayClass3_0.<ExecuteStep>b__0()
+   at TestStack.BDDfy.Processors.AsyncTestRunner.Run(Func`1 performStep)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.ExecuteStep(Step step)
+   at TestStack.BDDfy.Processors.ExceptionProcessor.Process(Story story)
+   at TestStack.BDDfy.Engine.Run()
+   at TestStack.BDDfy.BDDfyExtensions.BDDfy(Object testObject, String scenarioTitle)
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Tests.OrstMessageTest.OrstMessageTestForActionCodeDeAllocate() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Tests\OrstMessageTest.cs:line 66</code>
+                      </div>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveSetupState ' data-toggle-target='step-27-2' >
+                      <span>And msg key for case 3</span>
+                    </li>
+                    <li class='step NotExecuted  Transition ' data-toggle-target='step-27-3' >
+                      <span>When orst api is called created is returned</span>
+                    </li>
+                    <li class='step NotExecuted  Assertion ' data-toggle-target='step-27-4' >
+                      <span>Then read data after api for action code de allocate</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveAssertion ' data-toggle-target='step-27-5' >
+                      <span>And verify orst message was inserted into swm from mhe for action code de allocate</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class='story Passed'>
+              <div class='storyMetadata'>
+                <div class='storyTitle'>Story: Skmt</div>
+                <ul class='storyNarrative'>
+                  <li>As a Authorized User test for skmt message from wmstoems</li>
+                  <li>I want To Verify SKMT message is inserted in to swm_to_mhe table with appropriate data And verify SKMT message is inserted in to wmstoems table with appropriate data </li>
+                  <li>So that I can validate for message fields in SKMT message, in Internal Table SWM_TO_MHE and in wmstoems</li>
+                </ul>
+              </div>
+              <div class='scenarios'>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-28'>Skmt message test 1 sku id is null for add scenarios</div>
+                  <ul class='steps' id='scenario-28'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-28-1' >
+                      <span>Given current sku id for itemmaster</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-28-2' >
+                      <span>And current actioncode add</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-28-3' >
+                      <span>And valid skmt url</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-28-4' >
+                      <span>When skmt api is called created is returned</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-28-5' >
+                      <span>And get valid data after trigger</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-28-6' >
+                      <span>And verify skmt message was inserted for into swm to mhe Add, Add</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-28-7' >
+                      <span>And verify skmt message was inserted into wms to ems</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-28-8' >
+                      <span>And verify skmt message was null sku</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-29'>Skmt message test 2 sku id is null forupdate scenarios</div>
+                  <ul class='steps' id='scenario-29'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-29-1' >
+                      <span>Given current sku id for itemmaster</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-29-2' >
+                      <span>And current actioncode update</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-29-3' >
+                      <span>And valid skmt url</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-29-4' >
+                      <span>When skmt api is called created is returned</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-29-5' >
+                      <span>And get valid data after trigger</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-29-6' >
+                      <span>And verify skmt message was inserted for into swm to mhe Update, Update</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-29-7' >
+                      <span>And verify skmt message was inserted into wms to ems</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-29-8' >
+                      <span>And verify skmt message was null sku</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-30'>Skmt message test 3 sku id is null delete for scenarios</div>
+                  <ul class='steps' id='scenario-30'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-30-1' >
+                      <span>Given current sku id for itemmaster</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-30-2' >
+                      <span>And current actioncode delete</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-30-3' >
+                      <span>And valid skmt url</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-30-4' >
+                      <span>When skmt api is called created is returned</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-30-5' >
+                      <span>And get valid data after trigger</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-30-6' >
+                      <span>And verify skmt message was inserted for into swm to mhe Delete, Delete</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-30-7' >
+                      <span>And verify skmt message was inserted into wms to ems</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-30-8' >
+                      <span>And verify skmt message was null sku</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class='story Passed'>
+              <div class='storyMetadata'>
+                <div class='storyTitle'>Story: Skmt child sku</div>
+                <ul class='storyNarrative'>
+                  <li>As a Authorized User test for skmt message from wmstoems</li>
+                  <li>I want To Verify SKMT message is inserted in to swm_to_mhe table with appropriate dataAnd verify SKMT message is inserted in to wmstoems table with appropriate data </li>
+                  <li>So that I can validate for message fields in SKMT message, in Internal Table SWM_TO_MHE and in wmstoems</li>
+                </ul>
+              </div>
+              <div class='scenarios'>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-31'>Skmt message test for 1 child sku add scenarios</div>
+                  <ul class='steps' id='scenario-31'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-31-1' >
+                      <span>Given current sku id for child sku itemmaster</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-31-2' >
+                      <span>And current actioncode add</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-31-3' >
+                      <span>And valid skmt url</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-31-4' >
+                      <span>When skmt api is called created is returned</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-31-5' >
+                      <span>And get valid data after trigger</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-31-6' >
+                      <span>And verify skmt message was inserted for into swm to mhe Add, Add</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-31-7' >
+                      <span>And verify skmt message was inserted into wms to ems</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-31-8' >
+                      <span>And verify skmt message was child sku</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-32'>Skmt message test for 2 child sku update scenarios</div>
+                  <ul class='steps' id='scenario-32'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-32-1' >
+                      <span>Given current sku id for child sku itemmaster</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-32-2' >
+                      <span>And current actioncode update</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-32-3' >
+                      <span>And valid skmt url</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-32-4' >
+                      <span>When skmt api is called created is returned</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-32-5' >
+                      <span>And get valid data after trigger</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-32-6' >
+                      <span>And verify skmt message was inserted for into swm to mhe Update, Update</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-32-7' >
+                      <span>And verify skmt message was inserted into wms to ems</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-32-8' >
+                      <span>And verify skmt message was child sku</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-33'>Skmt message test for 3 child sku delete scenarios</div>
+                  <ul class='steps' id='scenario-33'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-33-1' >
+                      <span>Given current sku id for child sku itemmaster</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-33-2' >
+                      <span>And current actioncode delete</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-33-3' >
+                      <span>And valid skmt url</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-33-4' >
+                      <span>When skmt api is called created is returned</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-33-5' >
+                      <span>And get valid data after trigger</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-33-6' >
+                      <span>And verify skmt message was inserted for into swm to mhe Delete, Delete</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-33-7' >
+                      <span>And verify skmt message was inserted into wms to ems</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-33-8' >
+                      <span>And verify skmt message was child sku</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class='story Passed'>
+              <div class='storyMetadata'>
+                <div class='storyTitle'>Story: Skmt neagtive case</div>
+                <ul class='storyNarrative'>
+                  <li>As a Authorized User test for InvildSkuid</li>
+                  <li>So that The result should be Notfound from ItemMaster</li>
+                </ul>
+              </div>
+              <div class='scenarios'>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-34'>Skmt message test negative scenarios</div>
+                  <ul class='steps' id='scenario-34'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-34-1' >
+                      <span>Given initialize invalid test data</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-34-2' >
+                      <span>And current actioncode add</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-34-3' >
+                      <span>And valid skmt url</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-34-4' >
+                      <span>When skmt api is called created for negative cases</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-34-5' >
+                      <span>And skmt api is called for invalid sku id</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-34-6' >
+                      <span>And validate result for invalid sku id</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class='story Failed'>
+              <div class='storyMetadata'>
+                <div class='storyTitle'>Story: Skmt parent sku</div>
+                <ul class='storyNarrative'>
+                  <li>As a Authorized User test for skmt message from wmstoems</li>
+                  <li>I want To Verify SKMT message is inserted in to swm_to_mhe table with appropriate dataAnd verify SKMT message is inserted in to wmstoems table with appropriate data </li>
+                  <li>So that I can validate for message fields in SKMT message, in Internal Table SWM_TO_MHE and in wmstoems</li>
+                </ul>
+              </div>
+              <div class='scenarios'>
+                <div class='scenario'>
+                  <div class='Failed canToggle scenarioTitle' data-toggle-target='scenario-35'>Skmt message test 1 for parent sku add scenarios</div>
+                  <ul class='steps' id='scenario-35'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-35-1' >
+                      <span>Given current sku id for parent sku itemmaster</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-35-2' >
+                      <span>And current actioncode add</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-35-3' >
+                      <span>And valid skmt url</span>
+                    </li>
+                    <li class='step Failed  Transition canToggle' data-toggle-target='step-35-4' >
+                      <span>When skmt api is called created is returned [Exception Message: 'Assert.AreEqual failed. Expected:<Created>. Actual:<NotFound>. ']</span>
+                      <div class='step FailedException' id='step-35-4'>
+                        <code>   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.HandleFail(String assertionName, String message, Object[] parameters)
+   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual[T](T expected, T actual, String message, Object[] parameters)
+   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual[T](T expected, T actual)
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.SkmtMessageFixture.SkmtApiIsCalledCreatedIsReturned() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Fixtures\SkmtMessageFixture.cs:line 91
+   at lambda_method(Closure , SkmtParentSku )
+   at TestStack.BDDfy.StepActionFactory.<>c__DisplayClass1_0`1.<GetStepAction>b__0(Object o)
+   at TestStack.BDDfy.StepExecutor.Execute(Step step, Object testObject)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.<>c__DisplayClass3_0.<ExecuteStep>b__0()
+   at TestStack.BDDfy.Processors.AsyncTestRunner.Run(Func`1 performStep)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.ExecuteStep(Step step)
+   at TestStack.BDDfy.Processors.ExceptionProcessor.Process(Story story)
+   at TestStack.BDDfy.Engine.Run()
+   at TestStack.BDDfy.BDDfyExtensions.BDDfy(Object testObject, String scenarioTitle)
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Tests.SkmtParentSku.SkmtMessageTest1ForParentSkuAddScenarios() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Tests\SkmtParentSku.cs:line 26</code>
+                      </div>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveTransition ' data-toggle-target='step-35-5' >
+                      <span>And get valid data after trigger</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveTransition ' data-toggle-target='step-35-6' >
+                      <span>And verify skmt message was inserted for into swm to mhe Add, 'null'</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveTransition ' data-toggle-target='step-35-7' >
+                      <span>And verify skmt message was inserted into wms to ems</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveTransition ' data-toggle-target='step-35-8' >
+                      <span>And verify skmt message was parent sku</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Failed canToggle scenarioTitle' data-toggle-target='scenario-36'>Skmt message test 2 for parent sku update scenarios</div>
+                  <ul class='steps' id='scenario-36'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-36-1' >
+                      <span>Given current sku id for parent sku itemmaster</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-36-2' >
+                      <span>And current actioncode update</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-36-3' >
+                      <span>And valid skmt url</span>
+                    </li>
+                    <li class='step Failed  Transition canToggle' data-toggle-target='step-36-4' >
+                      <span>When skmt api is called created is returned [Exception Message: 'Assert.AreEqual failed. Expected:<Created>. Actual:<NotFound>. ']</span>
+                      <div class='step FailedException' id='step-36-4'>
+                        <code>   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.HandleFail(String assertionName, String message, Object[] parameters)
+   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual[T](T expected, T actual, String message, Object[] parameters)
+   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual[T](T expected, T actual)
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.SkmtMessageFixture.SkmtApiIsCalledCreatedIsReturned() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Fixtures\SkmtMessageFixture.cs:line 91
+   at lambda_method(Closure , SkmtParentSku )
+   at TestStack.BDDfy.StepActionFactory.<>c__DisplayClass1_0`1.<GetStepAction>b__0(Object o)
+   at TestStack.BDDfy.StepExecutor.Execute(Step step, Object testObject)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.<>c__DisplayClass3_0.<ExecuteStep>b__0()
+   at TestStack.BDDfy.Processors.AsyncTestRunner.Run(Func`1 performStep)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.ExecuteStep(Step step)
+   at TestStack.BDDfy.Processors.ExceptionProcessor.Process(Story story)
+   at TestStack.BDDfy.Engine.Run()
+   at TestStack.BDDfy.BDDfyExtensions.BDDfy(Object testObject, String scenarioTitle)
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Tests.SkmtParentSku.SkmtMessageTest2ForParentSkuUpdateScenarios() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Tests\SkmtParentSku.cs:line 43</code>
+                      </div>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveTransition ' data-toggle-target='step-36-5' >
+                      <span>And get valid data after trigger</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveTransition ' data-toggle-target='step-36-6' >
+                      <span>And verify skmt message was inserted for into swm to mhe Update, 'null'</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveTransition ' data-toggle-target='step-36-7' >
+                      <span>And verify skmt message was inserted into wms to ems</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveTransition ' data-toggle-target='step-36-8' >
+                      <span>And verify skmt message was parent sku</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Failed canToggle scenarioTitle' data-toggle-target='scenario-37'>Skmt message test 3 for parent sku delete scenarios</div>
+                  <ul class='steps' id='scenario-37'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-37-1' >
+                      <span>Given current sku id for parent sku itemmaster</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-37-2' >
+                      <span>And current actioncode delete</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-37-3' >
+                      <span>And valid skmt url</span>
+                    </li>
+                    <li class='step Failed  Transition canToggle' data-toggle-target='step-37-4' >
+                      <span>When skmt api is called created is returned [Exception Message: 'Assert.AreEqual failed. Expected:<Created>. Actual:<NotFound>. ']</span>
+                      <div class='step FailedException' id='step-37-4'>
+                        <code>   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.HandleFail(String assertionName, String message, Object[] parameters)
+   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual[T](T expected, T actual, String message, Object[] parameters)
+   at Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual[T](T expected, T actual)
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.SkmtMessageFixture.SkmtApiIsCalledCreatedIsReturned() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Fixtures\SkmtMessageFixture.cs:line 91
+   at lambda_method(Closure , SkmtParentSku )
+   at TestStack.BDDfy.StepActionFactory.<>c__DisplayClass1_0`1.<GetStepAction>b__0(Object o)
+   at TestStack.BDDfy.StepExecutor.Execute(Step step, Object testObject)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.<>c__DisplayClass3_0.<ExecuteStep>b__0()
+   at TestStack.BDDfy.Processors.AsyncTestRunner.Run(Func`1 performStep)
+   at TestStack.BDDfy.Processors.ScenarioExecutor.ExecuteStep(Step step)
+   at TestStack.BDDfy.Processors.ExceptionProcessor.Process(Story story)
+   at TestStack.BDDfy.Engine.Run()
+   at TestStack.BDDfy.BDDfyExtensions.BDDfy(Object testObject, String scenarioTitle)
+   at Sfc.Wms.Api.Asrs.Test.Integrated.Tests.SkmtParentSku.SkmtMessageTest3ForParentSkuDeleteScenarios() in D:\working\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Tests\SkmtParentSku.cs:line 60</code>
+                      </div>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveTransition ' data-toggle-target='step-37-5' >
+                      <span>And get valid data after trigger</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveTransition ' data-toggle-target='step-37-6' >
+                      <span>And verify skmt message was inserted for into swm to mhe Delete, 'null'</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveTransition ' data-toggle-target='step-37-7' >
+                      <span>And verify skmt message was inserted into wms to ems</span>
+                    </li>
+                    <li class='step NotExecuted  ConsecutiveTransition ' data-toggle-target='step-37-8' >
+                      <span>And verify skmt message was parent sku</span>
                     </li>
                   </ul>
                 </div>
@@ -124,7 +1461,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
             </div>
           </li>
         </ul>
-        <p><span>Tested at: 10/23/2019 5:21:55 PM</span></p>
+        <p><span>Tested at: 06-11-2019 10:13:51</span></p>
       </div>
     </div>
     <div class='footer'>Powered by <a href='https://github.com/TestStack/TestStack.BDDfy'>BDDfy</a> framework</div>

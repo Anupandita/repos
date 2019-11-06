@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using RestSharp;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
-using Sfc.Wms.InboundLpn.Contracts.Dtos;
+using Sfc.Wms.Foundation.InboundLpn.Contracts.Dtos;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Constants;
 
 
@@ -14,7 +14,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected BaseResult Result;
         protected string currentCartonNbr;
         protected string currentActionCode;
-        protected string baseUrl = "http://localhost:59665/api/order-maintenance/carton-number";
+        protected string baseUrl = "http://dev.az.app.api.wms.shamrockfoods.com/api/order-maintenance/carton-number";
         protected CaseDetailDto caseDetailDto;
         protected ComtParams OrmtParameters;
         protected IRestResponse Response;

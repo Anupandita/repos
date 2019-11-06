@@ -1,10 +1,10 @@
 ﻿using Oracle.ManagedDataAccess.Client;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
-using Sfc.Wms.Asrs.Dematic.Contracts.Dtos;
-using Sfc.Wms.Asrs.Shamrock.Contracts.Dtos;
+using Sfc.Wms.Interfaces.Asrs.Dematic.Contracts.Dtos;
+using Sfc.Wms.Interfaces.Asrs.Shamrock.Contracts.Dtos;
 using Sfc.Wms.Data.Entities;
-using Sfc.Wms.TransitionalInventory.Contracts.Dtos;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Constants;
+using Sfc.Wms.Foundation.TransitionalInventory.Contracts.Dtos;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Dto;
 using System;
 using System.Collections.Generic;
@@ -27,21 +27,21 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         protected WmsToEmsDto WmsToEmsData(OracleConnection db, int msgKey, string trx)
         {
-            var WmsToEms = new WmsToEmsDto();
+            var WmsToEmsDto = new WmsToEmsDto();
             var query = $"select * from WMSTOEMS where TRX = '{trx}' and MSGKEY = '{msgKey}'";
             command = new OracleCommand(query, db);
             var wmsToEmsReader = command.ExecuteReader();
             if (wmsToEmsReader.Read())
             {
-                WmsToEms.Status = wmsToEmsReader[TestData.WmsToEms.Status].ToString();
-                WmsToEms.ResponseCode = Convert.ToInt16(wmsToEmsReader[TestData.WmsToEms.ReasonCode].ToString());
-                WmsToEms.MessageKey = Convert.ToUInt16(wmsToEmsReader[TestData.WmsToEms.MsgKey].ToString());
-                WmsToEms.Transaction = wmsToEmsReader[TestData.WmsToEms.Trx].ToString();
-                WmsToEms.MessageText = wmsToEmsReader[TestData.WmsToEms.MsgTxt].ToString();
-                WmsToEms.Process = wmsToEmsReader["PRC"].ToString();
-                WmsToEms.ZplData = wmsToEmsReader["ZPLDATA"].ToString();
+                WmsToEmsDto.Status = wmsToEmsReader[TestData.WmsToEms.Status].ToString();
+                WmsToEmsDto.ResponseCode = Convert.ToInt16(wmsToEmsReader[TestData.WmsToEms.ReasonCode].ToString());
+                WmsToEmsDto.MessageKey = Convert.ToUInt16(wmsToEmsReader[TestData.WmsToEms.MsgKey].ToString());
+                WmsToEmsDto.Transaction = wmsToEmsReader[TestData.WmsToEms.Trx].ToString();
+                WmsToEmsDto.MessageText = wmsToEmsReader[TestData.WmsToEms.MsgTxt].ToString();
+                WmsToEmsDto.Process = wmsToEmsReader["PRC"].ToString();
+                WmsToEmsDto.ZplData = wmsToEmsReader["ZPLDATA"].ToString();
             }
-            return WmsToEms;
+            return WmsToEmsDto;
         }
 
         protected SwmToMheDto SwmToMhe(OracleConnection db, string caseNbr, string trx, string skuId)

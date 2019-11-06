@@ -2,16 +2,15 @@
 using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
-using Sfc.Wms.Asrs.Dematic.Contracts.Dtos;
-using Sfc.Wms.Asrs.Shamrock.Contracts.Dtos;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Constants;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Dto;
 using Sfc.Wms.Foundation.Location.Contracts.Dtos;
 using Sfc.Core.OnPrem.Result;
 using System;
-using Sfc.Wms.ParserAndTranslator.Contracts.Interfaces;
 using Sfc.Wms.Foundation.Carton.Contracts.Dtos;
 using PickTicketDetail = Sfc.Wms.Data.Entities.PickTicketDetail;
+using Sfc.Wms.Interfaces.Asrs.Shamrock.Contracts.Dtos;
+using Sfc.Wms.Interfaces.Asrs.Dematic.Contracts.Dtos;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
@@ -32,7 +31,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected OrstDto orstComplete = new OrstDto();
         protected OrstDto orstCase3 = new OrstDto();
         protected OrstDto orstCase4 = new OrstDto();
-        private readonly IHaveDataTypeValidation _dataTypeValidation;
         protected OrmtDto OrmtCase1 = new OrmtDto();
         protected OrmtDto OrmtCase2 = new OrmtDto();
         protected OrmtDto OrmtCase3 = new OrmtDto(); 

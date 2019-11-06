@@ -14,6 +14,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
         public const string NotFound = "Not found";
         public const string InboundLpn = "CaseHeader";
         public const string NotEnoughInventoryInCase = "Not Enough Inventory in Case";
+        public const string ItemMasters = "ItemMaster";
     }
 
 }
