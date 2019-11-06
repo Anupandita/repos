@@ -1,54 +1,46 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
-using Sfc.Wms.Asrs.Dematic.Contracts.Dtos;
-using Sfc.Wms.Asrs.Shamrock.Contracts.Dtos;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
-using Sfc.Wms.Builder.MessageBuilder;
-using Sfc.Wms.InboundLpn.Contracts.Dtos;
-using Sfc.Wms.ParserAndTranslator.Contracts.Constants;
-using Sfc.Wms.ParserAndTranslator.Contracts.Dto;
-using Sfc.Wms.ParserAndTranslator.Contracts.Interfaces;
-using Sfc.Wms.ParserAndTranslator.Contracts.Validation;
-using Sfc.Wms.PickLocationDetail.Contracts.Dtos;
-using Sfc.Wms.Result;
+using Sfc.Wms.Interfaces.Builder.MessageBuilder;
+using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Constants;
+using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Dto;
+using Sfc.Wms.Foundation.Location.Contracts.Dtos;
+using Sfc.Core.OnPrem.Result;
 using System;
-using System.Configuration;
+using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Validation;
+using Sfc.Wms.Interfaces.Asrs.Shamrock.Contracts.Dtos;
+using Sfc.Wms.Interfaces.Asrs.Dematic.Contracts.Dtos;
+using Sfc.Wms.Foundation.InboundLpn.Contracts.Dtos;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
-    public class DataBaseFixtureForCost :DataBaseFixture
-    {       
+    public class DataBaseFixtureForCost : CommonFunction
+    {
         protected SwmFromMheDto swmFromMhe = new SwmFromMheDto();
         protected CaseViewDto trnInvBeforeApi = new CaseViewDto();
-        protected CaseViewDto trnInvAfterApi  = new CaseViewDto();
+        protected CaseViewDto trnInvAfterApi = new CaseViewDto();
         protected CostDto CostParameters;
         protected Cost costData = new Cost();
         protected Cost costDataForTransInvnNotExist = new Cost();
         protected Cost costDataForPickLocnNotExist = new Cost();
         protected EmsToWmsDto emsToWmsParameters;
-        private readonly IHaveDataTypeValidation _dataTypeValidation;
-        protected PickLocationDtlDto pickLocnDtlAfterApi = new PickLocationDtlDto();
-        protected PickLocationDtlDto pickLcnDtlBeforeApi = new PickLocationDtlDto();
+        protected PickLocationDetailsDto pickLocnDtlAfterApi = new PickLocationDetailsDto();
+        protected PickLocationDetailsDto pickLcnDtlBeforeApi = new PickLocationDetailsDto();
         protected CaseHeaderDto caseHeaderDto = new CaseHeaderDto();
-        protected CostDto cost = new CostDto();  
+        protected CostDto cost = new CostDto();
         protected string sqlStatements = "";
-        protected OracleTransaction transaction;
         protected OracleCommand oracleCommand;
         public decimal unitweight1;
-       
 
-        public DataBaseFixtureForCost()
-        {
-            _dataTypeValidation = new DataTypeValidation();
-        }
 
         public Cost GetCaseDetailsForInsertingCostMessage(OracleConnection db)
         {
             var CostDataDto = new Cost();
             sqlStatements = $"select swm_to_mhe.container_id,swm_to_mhe.sku_id,pick_locn_dtl.locn_id,swm_to_mhe.qty from swm_to_mhe inner join trans_invn" +
                 $" on trans_invn.sku_id = swm_to_mhe.sku_id inner join  pick_locn_dtl on swm_to_mhe.sku_id = pick_locn_dtl.sku_id  " +
-                $"inner join case_hdr on swm_to_mhe.container_id = case_hdr.case_nbr and swm_to_mhe.source_msg_status = 'Ready' and swm_to_mhe.qty!= 0 and case_hdr.stat_code = 96";
+                $"inner join case_hdr on swm_to_mhe.container_id = case_hdr.case_nbr and swm_to_mhe.source_msg_status = 'Ready' and swm_to_mhe.qty!= 0 and case_hdr.stat_code = 96"+
+                $" and pick_locn_dtl.locn_id in (select lh.locn_id from locn_hdr lh inner join locn_grp lg on lg.locn_id = lh.locn_id inner join sys_code sc on sc.code_id = lg.grp_type and sc.code_type = '740' and sc.code_id = '18')";
             command = new OracleCommand(sqlStatements, db);
             var validData = command.ExecuteReader();
             if (validData.Read())
@@ -56,18 +48,27 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 CostDataDto.CaseNumber = validData[TestData.SwmToMhe.ContainerId].ToString();
                 CostDataDto.SkuId = validData[TestData.SwmToMhe.SkuId].ToString();
                 CostDataDto.Qty = validData[TestData.SwmToMhe.Qty].ToString();
-                CostDataDto.LocnId = validData[PickLocationDtl.LocnId].ToString();
+                CostDataDto.LocnId = validData[TestData.PickLocationDetail.LocnId].ToString();
             }
-            return CostDataDto;                 
+            return CostDataDto;
         }
 
-        public void GetDataBeforeTrigger()
-        {           
+        public void GetValidData()
+        {
             using (var db = GetOracleConnection())
             {
                 db.Open();
                 costData = GetCaseDetailsForInsertingCostMessage(db);
                 unitweight1 = FetchUnitWeight(db, costData.SkuId);
+            }
+        }
+
+
+        public void GetDataBeforeTrigger()
+        {
+            using (var db = GetOracleConnection())
+            {
+                db.Open();
                 var CostResult = CreateCostMessage(costData.CaseNumber, costData.SkuId, costData.Qty, costData.LocnId);
                 emsToWmsParameters = new EmsToWmsDto
                 {
@@ -78,36 +79,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                     ResponseCode = (short)int.Parse(ReasonCode.Success),
                     MessageText = CostResult,
                 };
-                costData.MsgKey = InsertEmsToWMS(db,emsToWmsParameters);
+                costData.MsgKey = InsertEmsToWMS(db, emsToWmsParameters);
                 trnInvBeforeApi = FetchTransInvn(db, costData.SkuId);
-                pickLcnDtlBeforeApi = PickLocnData(db, costData.SkuId);
+                pickLcnDtlBeforeApi = GetPickLocationDetails(db, costData.SkuId, costData.LocnId);
             }
-        }
-         
-        public PickLocationDtlDto PickLocnData(OracleConnection db,string skuId)
-        {
-            var pickLocn = new PickLocationDtlDto();
-            sqlStatements = $"select * from pick_locn_dtl where sku_id = '{skuId}' and locn_id = '{costData.LocnId}' order by mod_date_time desc";
-            command = new OracleCommand(sqlStatements, db);
-            var pickLocnReader = command.ExecuteReader();
-            if (pickLocnReader.Read())
-            {
-                pickLocn.ActualInventoryQuantity = Convert.ToDecimal(pickLocnReader[PickLocationDtl.ActlInvnQty].ToString());
-                pickLocn.ToBeFilledQty = Convert.ToDecimal(pickLocnReader[PickLocationDtl.ToBeFilledQty].ToString());
-                pickLocn.LocationId = pickLocnReader[PickLocationDtl.LocnId].ToString();
-            }
-            return pickLocn;
-        }
-
-        public long InsertEmsToWMS (OracleConnection db, EmsToWmsDto emsToWmsDto)
-        {
-            transaction = db.BeginTransaction();
-            var MsgKey = GetSeqNbrEmsToWms(db);
-            var insertQuery = $"insert into emstowms values ('{emsToWmsDto.Process}','{MsgKey}','{emsToWmsDto.Status}','{emsToWmsDto.Transaction}','{emsToWmsDto.MessageText}','{emsToWmsDto.ResponseCode}','TestUser','{DateTime.Now.ToString("dd-MMM-yy")}','{DateTime.Now.ToString("dd-MMM-yy")}')";
-            command = new OracleCommand(insertQuery, db);
-            command.ExecuteNonQuery();
-            transaction.Commit();
-            return MsgKey;
         }
 
         public string CreateCostMessage(string containerNbr, string skuId, string qty, string locationId)
@@ -116,12 +91,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             {
                 ActionCode = DefaultValues.ActionCodeCost,
                 ContainerReasonCodeMap = ReasonCode.Success,
-                ContainerId = containerNbr,
+                ContainerId = "99076490900000000001",
                 ContainerType = DefaultValues.ContainerType,
                 PhysicalContainerId = "",
-                CurrentLocationId = locationId,
+                CurrentLocationId = "87809",
                 StorageClassAttribute1 = skuId,
-                StorageClassAttribute2 = "1",
+                StorageClassAttribute2 = "100",
                 StorageClassAttribute3 = "",
                 StorageClassAttribute4 = "",
                 StorageClassAttribute5 = "",
@@ -130,27 +105,44 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 MessageLength = MessageLength.Cost,
                 ReasonCode = ReasonCode.Success
             };
-            GenericMessageBuilder gm = new GenericMessageBuilder(_dataTypeValidation);
-            var testResult = gm.BuildMessage<CostDto, CostValidationRule>(CostParameters, TransactionCode.Cost);         
+            var buildMessage = new MessageHeaderBuilder();
+            var testResult = buildMessage.BuildMessage<CostDto, CostValidationRule>(CostParameters, TransactionCode.Cost);
             Assert.AreEqual(testResult.ResultType, ResultTypes.Ok);
             Assert.IsNotNull(testResult.Payload);
             return testResult.Payload;
         }
 
-        
-        public void GetDataForNegativeCases()
-        {     
+
+        public void InsertCostMessageForPickLocnDoesNotExist()
+        {
+            using (var db = GetOracleConnection())
+            {
+                db.Open();              
+                PickLocnDoesNotExistData(db);
+            }
+        }
+
+        public void InsertCostMessageForInValidCase()
+        {
             using (var db = GetOracleConnection())
             {
                 db.Open();
                 InvalidCaseData(db);
-                TransInvnDoesNotExistData(db);
-                PickLocnDoesNotExistData(db);
             }
         }
-        
+
+        public void InsertCostMessageForTransInvnDoesNotExist()
+        {
+            using (var db = GetOracleConnection())
+            {
+                db.Open();
+                TransInvnDoesNotExistData(db);
+            }
+
+        }     
+
         public void InvalidCaseData(OracleConnection db)
-        {   
+        {
             command = new OracleCommand(sqlStatements, db);
             var costmsg = CreateCostMessage(DefaultValues.InvalidCase, costData.SkuId, costData.Qty, costData.LocnId);
              var emsToWms = new EmsToWmsDto
@@ -166,6 +158,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         public void TransInvnDoesNotExistData(OracleConnection db)
         {
+           
             costDataForTransInvnNotExist = FetchCaseNumberWithoutTransInventry(db);
             var costmsg = CreateCostMessage(costDataForTransInvnNotExist.CaseNumber, costDataForTransInvnNotExist.SkuId, costDataForTransInvnNotExist.Qty, costDataForTransInvnNotExist.LocnId);
             var emsToWms = new EmsToWmsDto
@@ -190,7 +183,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 CostTransData.CaseNumber = Reader[CaseHeader.CaseNumber].ToString();
                 CostTransData.SkuId = Reader[CaseDetail.SkuId].ToString();
                 CostTransData.Qty = Reader[TransInventory.ActualInventoryUnits].ToString();
-                CostTransData.LocnId = Reader[PickLocationDtl.LocnId].ToString();
+                CostTransData.LocnId = Reader[TestData.PickLocationDetail.LocnId].ToString();
             }
             return CostTransData;
         }
@@ -224,47 +217,16 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
             return CostTransData;
         }
-
-        public Int64 GetSeqNbrEmsToWms(OracleConnection db)
-        {
-            sqlStatements = $"select EMSTOWMS_MSGKEY_SEQ.nextval from dual";
-            command = new OracleCommand(sqlStatements, db);
-            var key = Convert.ToInt64(command.ExecuteScalar().ToString());
-            return key;
-        }
-
-        public SwmFromMheDto SwmFromMhe(OracleConnection db, string caseNbr, string trx, string skuId)
-        {
-            var swmFromMheData = new SwmFromMheDto();
-            sqlStatements = $"select * from swm_from_mhe where container_id = '{caseNbr}' and source_msg_trans_code = '{trx}' and sku_id = '{skuId}' order by created_date_time desc";
-            command = new OracleCommand(sqlStatements, db);
-            var swmFromMheReader = command.ExecuteReader();
-            if (swmFromMheReader.Read())
-            {
-                swmFromMheData.SourceMessageKey = Convert.ToInt16(swmFromMheReader[TestData.SwmFromMhe.SourceMsgKey].ToString());
-                swmFromMheData.SourceMessageResponseCode = Convert.ToInt16(swmFromMheReader[TestData.SwmFromMhe.SourceMsgRsnCode].ToString());
-                swmFromMheData.SourceMessageStatus = swmFromMheReader[TestData.SwmFromMhe.SourceMsgStatus].ToString();
-                swmFromMheData.SourceMessageProcess = swmFromMheReader[TestData.SwmFromMhe.SourceMsgProcess].ToString();
-                swmFromMheData.SourceMessageTransactionCode = swmFromMheReader[TestData.SwmFromMhe.SourceMsgTransCode].ToString();
-                swmFromMheData.ContainerId = swmFromMheReader[TestData.SwmFromMhe.ContainerId].ToString();
-                swmFromMheData.ContainerType = swmFromMheReader[TestData.SwmFromMhe.ContainerType].ToString();
-                swmFromMheData.MessageJson = swmFromMheReader[TestData.SwmFromMhe.MsgJson].ToString();
-                swmFromMheData.SourceMessageText = swmFromMheReader[TestData.SwmFromMhe.SourceMsgText].ToString();
-                swmFromMheData.LocationId = swmFromMheReader[TestData.SwmFromMhe.LocnId].ToString();
-            }
-            return swmFromMheData;
-        }
-        
-       
+           
         public void GetDataAfterTrigger()
         {
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                swmFromMhe = SwmFromMhe(db, costData.CaseNumber, TransactionCode.Cost, costData.SkuId);
+                swmFromMhe = SwmFromMhe(db, costData.MsgKey, TransactionCode.Cost);
                 cost = JsonConvert.DeserializeObject<CostDto>(swmFromMhe.MessageJson);
                 trnInvAfterApi = FetchTransInvn(db, cost.StorageClassAttribute1);
-                pickLocnDtlAfterApi = PickLocnData(db, cost.StorageClassAttribute1);
+                pickLocnDtlAfterApi = GetPickLocationDetails(db, cost.StorageClassAttribute1,cost.CurrentLocationId);
             }
         }     
     }

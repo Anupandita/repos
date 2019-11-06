@@ -6,12 +6,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 {
     [TestClass]
     [Story(
-       AsA = "Authorized User test for comt and ivmt message from wms to ems",
-       IWant = "To Verify COMT and IVMT message is inserted in to SWMTOMHE table with appropriate data" +
-        " And verify IVMT message is inserted in to WMSTOEMS table with appropriate data " +
+       AsA = "Authorized User test for comt message from wms to ems",
+       IWant = "To Verify COMT message is inserted in to SWMTOMHE table with appropriate data" +
         " Verify in TransInventory table for Allocation Inventory units and actual weight"+
         " Verify in Case Detail table for Quantity, CaseHeader and task detail table for status code ",
-       SoThat = "I can validate for message fields in COMT and IVMT message, in Internal Table SWM_TO_MHE"+
+       SoThat = "I can validate for message fields in COMT message, in Internal Table SWM_TO_MHE"+
         " and validate the quantity,weight,statuscode in the caseheader, casedetail, task header tables"
        )]
     public class ComtAndIvmtTest : ComtIvmtMessageFixture
@@ -41,7 +40,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                 .BDDfy();
         }
 
-        [TestMethod]
+        [TestMethod()]
         [TestCategory("FUNCTIONAL")]
         public void ComtAndIvmtTestForMultiSkuScenarios()
         {
