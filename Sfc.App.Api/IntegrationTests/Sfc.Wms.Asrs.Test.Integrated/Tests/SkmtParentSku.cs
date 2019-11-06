@@ -13,7 +13,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
        )]
     public class SkmtParentSku:SkmtMessageFixture
     {
-         public void AValidTestData()
+        [TestInitialize]
+        public void AValidTestData()
         {
             InitializeTestDataParent();
         }

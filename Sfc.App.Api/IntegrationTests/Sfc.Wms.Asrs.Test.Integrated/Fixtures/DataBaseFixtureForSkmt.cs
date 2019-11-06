@@ -14,7 +14,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
     public class DataBaseFixtureForSkmt : CommonFunction
     {
         protected ItemMasterView ItemMaster = new ItemMasterView();
-        protected ItemMasterView Null = new ItemMasterView();
+        protected ItemMasterView Normal = new ItemMasterView();
         protected ItemMasterView parentSku = new ItemMasterView();
         protected ItemMasterView childSku = new ItemMasterView();
         protected ItemMasterView Childskuassertion = new ItemMasterView();
@@ -28,7 +28,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                Null = TriggerOnItemMaster(db, null);
+                Normal = TriggerOnItemMaster(db, null);
             }
         }
 

@@ -39,7 +39,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         }
         protected void CurrentSkuIdForItemmaster()
         {
-            currentSkuId = Null.SkuId;
+            currentSkuId = Normal.SkuId;
         }
         protected void CurrentSkuIdForParentSkuItemmaster()
         {
@@ -125,7 +125,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(swmToMheSkmt.SourceMessageResponseCode, wte.ResponseCode);
             Assert.AreEqual(TransactionCode.Skmt, wte.Transaction);
         }
-        protected void VerifySkmtMessageWasNullSku()
+        protected void VerifySkmtMessageWasNormalSku()
         {
             Assert.AreEqual(null, skmt.ParentSku);
         }

@@ -31,7 +31,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                 .And(x => x.GetValidDataAfterTrigger())
                 .And(x => x.VerifySkmtMessageWasInsertedForIntoSwmToMhe("Add", skmt.ActionCode))
                 .And(x => x.VerifySkmtMessageWasInsertedIntoWmsToEms())
-                .And(x => x.VerifySkmtMessageWasNullSku())
+                .And(x => x.VerifySkmtMessageWasNormalSku())
 
             .BDDfy();
 
@@ -48,7 +48,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                 .And(x => x.GetValidDataAfterTrigger())
                 .And(x => x.VerifySkmtMessageWasInsertedForIntoSwmToMhe("Update", skmt.ActionCode))
                 .And(x => x.VerifySkmtMessageWasInsertedIntoWmsToEms())
-                .And(x => x.VerifySkmtMessageWasNullSku())
+                .And(x => x.VerifySkmtMessageWasNormalSku())
 
             .BDDfy();
 
@@ -65,7 +65,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                 .And(x => x.GetValidDataAfterTrigger())
                 .And(x => x.VerifySkmtMessageWasInsertedForIntoSwmToMhe("Delete", skmt.ActionCode))
                 .And(x => x.VerifySkmtMessageWasInsertedIntoWmsToEms())
-                .And(x => x.VerifySkmtMessageWasNullSku())
+                .And(x => x.VerifySkmtMessageWasNormalSku())
 
             .BDDfy();
 

@@ -7,7 +7,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
     {
         public const string Invalid = "Invalid";
         public const string EmsToWms = "SwmFromMheDto";
-        public const string InvalidMessageKey = "Conflict";
+        public const string InvalidMessageKey = "Conflicted with existing record !!";
         public const string ContainerId = "Container Id";
         public const string Sku = "SKU";
         public const string PickLocationDtl = "PickLocationDetail";
