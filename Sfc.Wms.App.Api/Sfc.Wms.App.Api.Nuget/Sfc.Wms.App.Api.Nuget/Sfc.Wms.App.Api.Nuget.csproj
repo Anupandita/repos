@@ -17,8 +17,8 @@
     <PackageReference Include="Polly" Version="7.1.1" />
     <PackageReference Include="RestSharp" Version="106.6.10" />
     <PackageReference Include="Sfc.Core.OnPrem.Security.Contracts" Version="[2.1.3,3)" />
-    <PackageReference Include="Sfc.Core.RestResponse" Version="[1.3.1,2)" />
-    <PackageReference Include="Sfc.Wms.App.Api.Contracts" Version="[3.1,4)" />
+    <PackageReference Include="Sfc.Core.RestResponse" Version="1.4.0" />
+    <PackageReference Include="Sfc.Wms.App.Api.Contracts" Version="3.2.0" />
     <PackageReference Include="Sfc.Wms.Interfaces.Asrs.Contracts" Version="[1.2.1,2)" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.6.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.6.0" />
