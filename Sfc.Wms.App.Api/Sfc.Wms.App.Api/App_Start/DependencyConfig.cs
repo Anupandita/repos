@@ -26,8 +26,7 @@ namespace Sfc.Wms.App.Api
     {
         public static Container Register()
         {
-            var container = new Container();
-            container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
+            var container = new Container {Options = {DefaultScopedLifestyle = new AsyncScopedLifestyle()}};
             RegisterTypes(container);
             container.RegisterWebApiControllers(GlobalConfiguration.Configuration);
 #if DEBUG

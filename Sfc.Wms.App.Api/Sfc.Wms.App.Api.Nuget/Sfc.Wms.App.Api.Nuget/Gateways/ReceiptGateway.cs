@@ -85,7 +85,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
         {
             return await Proxy().ExecuteAsync(async () =>
             {
-                var request = GetASNComments(token, shipmentNumber);
+                var request = GetAsnComments(token, shipmentNumber);
                 var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
                 return _responseBuilder.GetResponseData<string>(response);
             }).ConfigureAwait(false);
@@ -95,7 +95,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
         {
             return await Proxy().ExecuteAsync(async () =>
             {
-                var request = UpdateQVDetailsRequest(token, qvDetails);
+                var request = UpdateQvDetailsRequest(token, qvDetails);
                 var response = await _restClient.ExecuteTaskAsync<object>(request, Method.PUT).ConfigureAwait(false);
                 return _responseBuilder.GetResponseData<string>(response);
             }).ConfigureAwait(false);
@@ -131,13 +131,13 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             return GetRequest(token, resource);
         }
 
-        private RestRequest GetASNComments(string token, string shipmentNumber)
+        private RestRequest GetAsnComments(string token, string shipmentNumber)
         {
             var resource = $"{_endPoint}/{Routes.Paths.AsnComments}?{Routes.Params.ShipmentNumber}={shipmentNumber}";
             return GetRequest(token, resource);
         }
 
-        private RestRequest UpdateQVDetailsRequest(string token, QVDetails qvDetails)
+        private RestRequest UpdateQvDetailsRequest(string token, QVDetails qvDetails)
         {
             var resource = $"{_endPoint}/{Routes.Paths.QvDetails}";
             return PutRequest(resource, qvDetails, token);
