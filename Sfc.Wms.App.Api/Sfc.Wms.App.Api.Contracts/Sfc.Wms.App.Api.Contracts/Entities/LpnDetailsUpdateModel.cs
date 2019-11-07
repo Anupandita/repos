@@ -13,5 +13,12 @@
         public string VENDOR_ID { get; set; }
         public string VOL { get; set; }
         public string XPIRE_DATE { get; set; }
+        public string SPL_INSTR_CODE_1 { get; set; }
+        public string SPL_INSTR_CODE_2 { get; set; }
+        public string SPL_INSTR_CODE_3 { get; set; }
+        public string SPL_INSTR_CODE_4 { get; set; }
+        public string SPL_INSTR_CODE_5 { get; set; }
+        public string RCVD_SHPMT_NBR { get; set; }
+        public bool ValidShipmentNumber { get; set; }
     }
 }
