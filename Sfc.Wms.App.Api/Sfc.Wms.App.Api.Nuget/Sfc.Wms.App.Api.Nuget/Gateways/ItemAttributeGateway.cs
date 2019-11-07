@@ -5,6 +5,7 @@ using Sfc.Wms.App.Api.Contracts.Interfaces;
 using System;
 using System.Threading.Tasks;
 using Sfc.Core.OnPrem.Result;
+using Sfc.Core.RestResponse;
 using Sfc.Wms.App.Api.Nuget.Builders;
 
 namespace Sfc.Wms.App.Api.Nuget.Gateways
