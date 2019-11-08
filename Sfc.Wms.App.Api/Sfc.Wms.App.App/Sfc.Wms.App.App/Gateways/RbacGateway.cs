@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Sfc.Core.OnPrem.Result;
+﻿using Sfc.Core.OnPrem.Result;
 using Sfc.Core.OnPrem.Security.Contracts.Dtos;
 using Sfc.Core.OnPrem.Security.Contracts.Interfaces;
 using Sfc.Wms.App.App.Constants;

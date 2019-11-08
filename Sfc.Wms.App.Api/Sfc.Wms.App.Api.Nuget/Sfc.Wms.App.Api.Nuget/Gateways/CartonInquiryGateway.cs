@@ -1,6 +1,7 @@
 ﻿using RestSharp;
 using System.Threading.Tasks;
 using Sfc.Core.OnPrem.Result;
+using Sfc.Core.RestResponse;
 using Sfc.Wms.App.Api.Contracts.Constants;
 using Sfc.Wms.App.Api.Contracts.Entities;
 using Sfc.Wms.App.Api.Contracts.Interfaces;

@@ -51,7 +51,7 @@ namespace Sfc.Wms.App.Api.Controllers
 
         [HttpDelete]
         [Route(Routes.Paths.LpnComments)]
-        [ResponseType(typeof(BaseResult<int>))]
+        [ResponseType(typeof(BaseResult))]
         public async Task<IHttpActionResult> DeleteLpnCommentAsync(string caseNumber, int commentSequenceNumber)
         {
             var response = await _lpnService.DeleteLpnCommentAsync(caseNumber, commentSequenceNumber).ConfigureAwait(false);
@@ -69,7 +69,7 @@ namespace Sfc.Wms.App.Api.Controllers
 
         [HttpPut]
         [Route(Routes.Paths.LpnDetails)]
-        [ResponseType(typeof(BaseResult<int>))]
+        [ResponseType(typeof(BaseResult))]
         public async Task<IHttpActionResult> UpdateLpnAsync(LpnUpdateDto lpnUpdate)
         {
             var response = await _lpnService.UpdateLpnDetails(lpnUpdate).ConfigureAwait(false);
@@ -78,10 +78,19 @@ namespace Sfc.Wms.App.Api.Controllers
 
         [HttpPost]
         [Route(Routes.Paths.LpnComments)]
-        [ResponseType(typeof(BaseResult<int>))]
+        [ResponseType(typeof(BaseResult))]
         public async Task<IHttpActionResult> AddLpnCommentAsync(CaseCommentDto caseComment)
         {
             var response = await _lpnService.AddLpnCommentAsync(caseComment).ConfigureAwait(false);
+            return ResponseHandler(response);
+        }
+
+        [HttpGet]
+        [Route(Routes.Paths.LpnDetails)]
+        [ResponseType(typeof(BaseResult<List<CaseDetailDto>>))]
+        public async Task<IHttpActionResult> GetLpnDetailsAsync(string lpnId)
+        {
+            var response = await _lpnService.GetLpnDetailsAsync(lpnId).ConfigureAwait(false);
             return ResponseHandler(response);
         }
     }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using RestSharp;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Core.OnPrem.Security.Contracts.Dtos;
+using Sfc.Core.RestResponse;
 using Sfc.Wms.App.Api.Contracts.Constants;
 using Sfc.Wms.App.Api.Contracts.Entities;
 using Sfc.Wms.App.Api.Contracts.Interfaces;

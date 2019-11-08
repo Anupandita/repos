@@ -5,6 +5,7 @@ using Sfc.Wms.App.Api.Contracts.Interfaces;
 using System;
 using System.Threading.Tasks;
 using Sfc.Core.OnPrem.Result;
+using Sfc.Core.RestResponse;
 using Sfc.Wms.App.Api.Nuget.Builders;
 
 namespace Sfc.Wms.App.Api.Nuget.Gateways
@@ -140,18 +141,18 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
 
         private RestRequest GetLpnDetailsRequest(LpnParamModel lpnParamModel, string token)
         {
-            var resource = $"{_endPoint}/{Routes.Paths.Find}{Routes.Paths.QueryParamSymbol}pageNo={lpnParamModel.pageNo}{Routes.Paths.QueryParamAnd}rowsPerPage={lpnParamModel.rowsPerPage}{Routes.Paths.QueryParamAnd}totalRows={lpnParamModel.totalRows}";
+            var resource = $"{_endPoint}/{Routes.Paths.Find}{Routes.Paths.QueryParamSymbol}pageNo={lpnParamModel.PageNo}{Routes.Paths.QueryParamAnd}rowsPerPage={lpnParamModel.RowsPerPage}{Routes.Paths.QueryParamAnd}totalRows={lpnParamModel.TotalRows}";
 
-            resource = QueryStringBuilder.BuildQuery("lpnNumber=", lpnParamModel.lpnNumber, resource, false);
-            resource = QueryStringBuilder.BuildQuery("asnId=", lpnParamModel.asnId, resource, false);
-            resource = QueryStringBuilder.BuildQuery("palletId=", lpnParamModel.palletId, resource, false);
-            resource = QueryStringBuilder.BuildQuery("skuId=", lpnParamModel.skuId, resource, false);
-            resource = QueryStringBuilder.BuildQuery("statusFrom=", lpnParamModel.statusFrom, resource, false);
-            resource = QueryStringBuilder.BuildQuery("statusTo=", lpnParamModel.statusTo, resource, false);
-            resource = QueryStringBuilder.BuildQuery("zone=", lpnParamModel.zone, resource, false);
-            resource = QueryStringBuilder.BuildQuery("aisle=", lpnParamModel.aisle, resource, false);
-            resource = QueryStringBuilder.BuildQuery("slot=", lpnParamModel.slot, resource, false);
-            resource = QueryStringBuilder.BuildQuery("createdDate=", lpnParamModel.createdDate, resource, false);
+            resource = QueryStringBuilder.BuildQuery("lpnNumber=", lpnParamModel.LpnNumber, resource, false);
+            resource = QueryStringBuilder.BuildQuery("asnId=", lpnParamModel.AsnId, resource, false);
+            resource = QueryStringBuilder.BuildQuery("palletId=", lpnParamModel.PalletId, resource, false);
+            resource = QueryStringBuilder.BuildQuery("skuId=", lpnParamModel.SkuId, resource, false);
+            resource = QueryStringBuilder.BuildQuery("statusFrom=", lpnParamModel.StatusFrom, resource, false);
+            resource = QueryStringBuilder.BuildQuery("statusTo=", lpnParamModel.StatusTo, resource, false);
+            resource = QueryStringBuilder.BuildQuery("zone=", lpnParamModel.Zone, resource, false);
+            resource = QueryStringBuilder.BuildQuery("aisle=", lpnParamModel.Aisle, resource, false);
+            resource = QueryStringBuilder.BuildQuery("slot=", lpnParamModel.Slot, resource, false);
+            resource = QueryStringBuilder.BuildQuery("createdDate=", lpnParamModel.CreatedDate, resource, false);
 
             return GetRequest(token, resource);
         }
