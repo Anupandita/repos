@@ -1,6 +1,5 @@
 ﻿using Sfc.Core.ListManagement.Contracts.Models;
 using System;
-using Sfc.Core.ListManagement.Contracts.Models;
 
 namespace Sfc.Wms.App.Api.Contracts.Entities
 {
