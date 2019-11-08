@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RestSharp;
 using Sfc.Core.OnPrem.Result;
@@ -21,7 +22,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected IRestResponse Response;
         protected BaseResult negativecase;
         protected string SkmtUrl;
-        protected string baseUrl = "http://dev.az.app.api.wms.shamrockfoods.com/api/sku-maintenance";
+        protected string baseUrl =ConfigurationManager.AppSettings["SkmtUrl"]; 
 
         protected void InitializeTestData()
         {
