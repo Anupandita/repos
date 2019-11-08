@@ -18,12 +18,18 @@ namespace Sfc.Wms.App.Api.Controllers
         [AllowAnonymous]
         public IHttpActionResult Get()
         {
+            var builder = new System.Data.Common.DbConnectionStringBuilder
+            {
+                ConnectionString = ConfigurationManager.ConnectionStrings["SfcOracleDbContext"].ConnectionString
+            };
+
+            var server = builder["Data Source"] as string;
             var releaseAndConnectionInfo = new BaseResult<ConnectionInfo>()
             {
                 ResultType = ResultTypes.Ok,
                 Payload = new ConnectionInfo()
                 {
-                    Database = ConfigurationManager.ConnectionStrings["SfcOracleDbContext"].ConnectionString,
+                    Database = server?.Split('.')[0],
                     Environment = ConfigurationManager.AppSettings.Get(nameof(Environment))
                 }
             };
