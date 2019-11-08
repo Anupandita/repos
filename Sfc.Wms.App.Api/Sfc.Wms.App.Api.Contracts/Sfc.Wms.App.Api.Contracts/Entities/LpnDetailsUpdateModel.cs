@@ -19,6 +19,8 @@
         public string SPL_INSTR_CODE_4 { get; set; }
         public string SPL_INSTR_CODE_5 { get; set; }
         public string RCVD_SHPMT_NBR { get; set; }
+        public string CUT_NBR { get; set; }
+        public string ASSORT_NBR { get; set; }
         public bool ValidShipmentNumber { get; set; }
     }
 }
