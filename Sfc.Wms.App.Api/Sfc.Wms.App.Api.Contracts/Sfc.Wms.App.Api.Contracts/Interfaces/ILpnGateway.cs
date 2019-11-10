@@ -27,6 +27,8 @@ namespace Sfc.Wms.App.Api.Contracts.Interfaces
 
         Task<BaseResult<string>> GetLpnVendorsAsync(string token);
 
+        Task<BaseResult<string>> UpdateCaseLpnDetailsAsync(LpnCaseDetailsUpdateModel lpnDetailsUpdateModel, string token);
 
-     }
+
+    }
 }

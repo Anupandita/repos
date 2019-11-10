@@ -106,6 +106,17 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
+        public async Task<BaseResult<string>> UpdateCaseLpnDetailsAsync(LpnCaseDetailsUpdateModel lpnCaseDetailsUpdateModel, string token)
+        {
+            var retryPolicy = Proxy();
+            return await retryPolicy.ExecuteAsync(async () =>
+            {
+                var request = UpdateCaseLpnDetailsRequest(lpnCaseDetailsUpdateModel, token);
+                var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
+                return _responseBuilder.GetResponseData<string>(response);
+            }).ConfigureAwait(false);
+        }
+
         public async Task<BaseResult<string>> InsertLpnCommentsAsync(LpnCommentsModel lpnCommentsModel, string token)
         {
             var retryPolicy = Proxy();
@@ -192,6 +203,13 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             var resource = $"{_endPoint}/{Routes.Paths.LpnDetails}";
 
             return PutRequest(resource, lpnDetailsUpdateModel, token);
+        }
+
+        private RestRequest UpdateCaseLpnDetailsRequest(LpnCaseDetailsUpdateModel lpnCaseDetailsUpdateModel, string token)
+        {
+            var resource = $"{_endPoint}/{Routes.Paths.LpnCaseDetails}";
+
+            return PutRequest(resource, lpnCaseDetailsUpdateModel, token);
         }
 
         private RestRequest InsertLpnCommentsRequest(LpnCommentsModel lpnCommentsModel, string token)
