@@ -76,6 +76,15 @@ namespace Sfc.Wms.App.Api.Controllers
             return ResponseHandler(response);
         }
 
+        [HttpPut]
+        [Route(Routes.Paths.LpnCaseDetails)]
+        [ResponseType(typeof(BaseResult))]
+        public async Task<IHttpActionResult> UpdateLpnCaseDetailsAsync(LpnCaseDetailsUpdateDto lpnCaseDetailsUpdate)
+        {
+            var response = await _lpnService.UpdateLpnCaseDetails(lpnCaseDetailsUpdate).ConfigureAwait(false);
+            return ResponseHandler(response);
+        }
+
         [HttpPost]
         [Route(Routes.Paths.LpnComments)]
         [ResponseType(typeof(BaseResult))]
