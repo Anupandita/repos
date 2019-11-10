@@ -117,17 +117,6 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        public async Task<BaseResult<string>> UpdateCaseLpnDetailsAsync(LpnCaseDetailsUpdateModel lpnCaseDetailsUpdateModel, string token)
-        {
-            var retryPolicy = Proxy();
-            return await retryPolicy.ExecuteAsync(async () =>
-            {
-                var request = UpdateCaseLpnDetailsRequest(lpnCaseDetailsUpdateModel, token);
-                var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
-                return _responseBuilder.GetResponseData<string>(response);
-            }).ConfigureAwait(false);
-        }
-
         public async Task<BaseResult<string>> InsertLpnCommentsAsync(LpnCommentsModel lpnCommentsModel, string token)
         {
             var retryPolicy = Proxy();
