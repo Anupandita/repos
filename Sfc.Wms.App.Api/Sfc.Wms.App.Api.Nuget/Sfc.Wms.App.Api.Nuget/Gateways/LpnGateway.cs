@@ -35,7 +35,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             {
                 var request = GetLpnDetailsRequest(lpnParamModel, token);
                 var response = await _restCsharpClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
-                return _responseBuilder.GetResponseData<string>(response);
+                return _responseBuilder.GetBaseResult<string>(response);
             }).ConfigureAwait(false);
             
         }
@@ -47,7 +47,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             {
                 var request = GetLpnDetailsByLpnIdRequest(lpnId, token);
                 var response = await _restCsharpClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
-                return _responseBuilder.GetResponseData<string>(response);
+                return _responseBuilder.GetBaseResult<string>(response);
             }).ConfigureAwait(false);
         }
 
@@ -58,7 +58,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             {
                 var request = GetLpnCommentsByLpnIdRequest(lpnId, token);
                 var response = await _restCsharpClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
-                return _responseBuilder.GetResponseData<string>(response);
+                return _responseBuilder.GetBaseResult<string>(response);
             }).ConfigureAwait(false);
         }
 
@@ -69,7 +69,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             {
                 var request = GetLpnHistoryRequest(lpnId, whse, token);
                 var response = await _restCsharpClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
-                return _responseBuilder.GetResponseData<string>(response);
+                return _responseBuilder.GetBaseResult<string>(response);
             }).ConfigureAwait(false);
         }
 
@@ -80,7 +80,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             {
                 var request = GetLpnLockUnlocByLpnIdRequest(lpnId, token);
                 var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
-                return _responseBuilder.GetResponseData<string>(response);
+                return _responseBuilder.GetBaseResult<string>(response);
             }).ConfigureAwait(false);
         }
 
@@ -91,7 +91,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             {
                 var request = InsertLpnAisleTransRequest(lpnAisleTransModel, token);
                 var response = await _restCsharpClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
-                return _responseBuilder.GetResponseData<string>(response);
+                return _responseBuilder.GetBaseResult<string>(response);
             }).ConfigureAwait(false);
         }
 
@@ -102,7 +102,18 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             {
                 var request = UpdateLpnDetailsRequest(lpnDetailsUpdateModel, token);
                 var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
-                return _responseBuilder.GetResponseData<string>(response);
+                return _responseBuilder.GetBaseResult<string>(response);
+            }).ConfigureAwait(false);
+        }
+
+        public async Task<BaseResult<string>> UpdateCaseLpnDetailsAsync(LpnCaseDetailsUpdateModel lpnCaseDetailsUpdateModel, string token)
+        {
+            var retryPolicy = Proxy();
+            return await retryPolicy.ExecuteAsync(async () =>
+            {
+                var request = UpdateCaseLpnDetailsRequest(lpnCaseDetailsUpdateModel, token);
+                var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
+                return _responseBuilder.GetBaseResult<string>(response);
             }).ConfigureAwait(false);
         }
 
@@ -124,7 +135,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             {
                 var request = InsertLpnCommentsRequest(lpnCommentsModel, token);
                 var response = await _restCsharpClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
-                return _responseBuilder.GetResponseData<string>(response);
+                return _responseBuilder.GetBaseResult<string>(response);
             }).ConfigureAwait(false);
         }
 
@@ -135,7 +146,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             {
                 var request = DeleteLpnCommentsRequest(lpnCommentsModel, token);
                 var response = await _restCsharpClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
-                return _responseBuilder.GetResponseData<string>(response);
+                return _responseBuilder.GetBaseResult<string>(response);
             }).ConfigureAwait(false);
         }
 
@@ -146,7 +157,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             {
                 var request = GetLpnVendorsRequest( token);
                 var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
-                return _responseBuilder.GetResponseData<string>(response);
+                return _responseBuilder.GetBaseResult<string>(response);
             }).ConfigureAwait(false);
         }
 
