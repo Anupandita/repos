@@ -79,6 +79,7 @@ namespace Sfc.Wms.App.Api.Contracts.Constants
             public const string LpnCaseDetails = "lpn-case-details";
             public const string LpnVendors = "vendors";
             public const string LpnComments = "lpn-comments/{lpnId}";
+            public const string LpnCommentsAdd = "lpn-comments";
             public const string LpnDeleteComments = "lpn-comments/{caseNumber}/{commentSequenceNumber}";
             public const string LpnHistory = "lpn-history/{lpnNumber}/{warehouse}";
             public const string LpnLockUnlock = "lpn-lock-unlock";
