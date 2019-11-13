@@ -74,7 +74,8 @@ namespace Sfc.Wms.App.Api.Contracts.Constants
             public const string DrillASNDetails = "drill-asn-details";
             public const string ApprointmentSchedule = "appointment-schedule";
             public const string AsnComments = "asn-comments";
-            public const string LpnDetails = "lpn-details";
+            public const string LpnDetails = "lpn-details/{lpnId}";
+            public const string LpnUpdateDetails = "lpn-details";
             public const string LpnCaseDetails = "lpn-case-details";
             public const string LpnComments = "lpn-comments";
             public const string LpnHistory = "lpn-history";
