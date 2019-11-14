@@ -11,7 +11,7 @@ using System.Web.Http.Description;
 namespace Sfc.Wms.App.Api.Controllers
 {
 
-    [AllowAnonymous]
+    [Authorize]
     [RoutePrefix(Routes.Prefixes.Lpn)]
     public class LpnController : SfcBaseController
     {

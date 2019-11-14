@@ -16,6 +16,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
         private readonly IResponseBuilder _responseBuilder;
         private readonly IRestClient _restClient;
         private readonly IRestClient _restCsharpClient;
+        private readonly string Authorization = "Authorization";
 
         public LpnGateway(IResponseBuilder responseBuilders, IRestClient restClient)
         {
@@ -167,44 +168,44 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             resource = QueryStringBuilder.BuildQuery("slot=", lpnParamModel.Slot, resource, false);
             resource = QueryStringBuilder.BuildQuery("createdDate=", lpnParamModel.CreatedDate, resource, false);
 
-            return GetRequest(token, resource);
+            return GetRequest(token, resource, Authorization);
         }
 
         private RestRequest GetLpnDetailsByLpnIdRequest(String lpnId, string token)
         {
             var resource = $"{_endPoint}/{Routes.Paths.LpnDetails}/{lpnId}";
-            return GetRequest(token, resource);
+            return GetRequest(token, resource, Authorization);
         }
 
         private RestRequest GetLpnCommentsByLpnIdRequest(String lpnId, string token)
         {
             var resource = $"{_endPoint}/{Routes.Paths.LpnComments}/{lpnId}";
-            return GetRequest(token, resource);
+            return GetRequest(token, resource, Authorization);
         }
 
         private RestRequest GetLpnHistoryRequest(String lpnId, string whse, string token)
         {
             var resource = $"{_endPoint}/{Routes.Paths.LpnHistory}/{lpnId}/{whse}";
-            return GetRequest(token, resource);
+            return GetRequest(token, resource, Authorization);
         }
 
         private RestRequest GetLpnLockUnlockByLpnIdRequest(String lpnId, string token)
         {
             var resource = $"{_endPoint}/{Routes.Paths.LpnLockUnlock}/{lpnId}";
-            return GetRequest(token, resource);
+            return GetRequest(token, resource, Authorization);
         }
 
         private RestRequest InsertLpnAisleTransRequest(LpnAisleTransModel lpnAisleTransModel, string token)
         {
             var resource = $"{_endPoint}/{Routes.Paths.LpnAisleTrans}";
-            return PostRequest(resource, lpnAisleTransModel, token);
+            return PostRequest(resource, lpnAisleTransModel, token, Authorization);
         }
 
         private RestRequest UpdateLpnDetailsRequest(LpnDetailsUpdateModel lpnDetailsUpdateModel, string token)
         {
             var resource = $"{_endPoint}/{Routes.Paths.LpnDetails}";
 
-            return PutRequest(resource, lpnDetailsUpdateModel, token);
+            return PutRequest(resource, lpnDetailsUpdateModel, token, Authorization);
         }
 
         private RestRequest UpdateCaseLpnDetailsRequest(LpnCaseDetailsUpdateModel lpnCaseDetailsUpdateModel,
@@ -212,13 +213,13 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
         {
             var resource = $"{_endPoint}/{Routes.Paths.LpnCaseDetails}";
 
-            return PutRequest(resource, lpnCaseDetailsUpdateModel, token);
+            return PutRequest(resource, lpnCaseDetailsUpdateModel, token, Authorization);
         }
 
         private RestRequest InsertLpnCommentsRequest(LpnCommentsModel lpnCommentsModel, string token)
         {
             var resource = $"{_endPoint}/{Routes.Paths.LpnComments}";
-            return PostRequest(resource, lpnCommentsModel, token);
+            return PostRequest(resource, lpnCommentsModel, token, Authorization);
         }
 
         private RestRequest DeleteLpnCommentsRequest(LpnCommentsModel lpnCommentsModel, string token)
@@ -226,13 +227,13 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             var resource = $"{_endPoint}/{Routes.Paths.LpnComments}{Routes.Paths.QueryParamSymbol}";
             resource = QueryStringBuilder.BuildQuery("caseNbr=", lpnCommentsModel.caseNbr, resource, true);
             resource = QueryStringBuilder.BuildQuery("seqNbr=", lpnCommentsModel.seqNbr, resource, false);
-            return DeleteRequest(resource, token);
+            return DeleteRequest(resource,token, Authorization);
         }
 
         private RestRequest GetLpnVendorsRequest(string token)
         {
             var resource = $"{_endPoint}/{Routes.Paths.LpnVendors}";
-            return GetRequest(token, resource);
+            return GetRequest(token, resource, Authorization);
         }
     }
 }
