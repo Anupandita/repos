@@ -11,7 +11,7 @@ using System.Web.Http.Description;
 namespace Sfc.Wms.App.Api.Controllers
 {
 
-    [AllowAnonymous]
+    [Authorize]
     [RoutePrefix(Routes.Prefixes.Lpn)]
     public class LpnController : SfcBaseController
     {
@@ -34,7 +34,7 @@ namespace Sfc.Wms.App.Api.Controllers
         [HttpGet]
         [Route(Routes.Paths.LpnHistory)]
         [ResponseType(typeof(BaseResult<List<LpnHistoryDto>>))]
-        public async Task<IHttpActionResult> GetLpnHistoryAsync(string warehouse, string lpnNumber)
+        public async Task<IHttpActionResult> GetLpnHistoryAsync(string lpnNumber,string warehouse )
         {
             var response = await _lpnService.GetLpnHistoryAsync(warehouse, lpnNumber).ConfigureAwait(false);
             return ResponseHandler(response);
@@ -50,7 +50,7 @@ namespace Sfc.Wms.App.Api.Controllers
         }
 
         [HttpDelete]
-        [Route(Routes.Paths.LpnComments)]
+        [Route(Routes.Paths.LpnDeleteComments)]
         [ResponseType(typeof(BaseResult))]
         public async Task<IHttpActionResult> DeleteLpnCommentAsync(string caseNumber, int commentSequenceNumber)
         {
@@ -68,7 +68,7 @@ namespace Sfc.Wms.App.Api.Controllers
         }
 
         [HttpPut]
-        [Route(Routes.Paths.LpnDetails)]
+        [Route(Routes.Paths.LpnUpdateDetails)]
         [ResponseType(typeof(BaseResult))]
         public async Task<IHttpActionResult> UpdateLpnAsync(LpnUpdateDto lpnUpdate)
         {
@@ -86,7 +86,7 @@ namespace Sfc.Wms.App.Api.Controllers
         }
 
         [HttpPost]
-        [Route(Routes.Paths.LpnComments)]
+        [Route(Routes.Paths.LpnCommentsAdd)]
         [ResponseType(typeof(BaseResult))]
         public async Task<IHttpActionResult> AddLpnCommentAsync(CaseCommentDto caseComment)
         {

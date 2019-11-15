@@ -12,147 +12,150 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
 {
     public class LpnGateway : SfcBaseGateway, ILpnGateway
     {
-
         private readonly string _endPoint;
         private readonly IResponseBuilder _responseBuilder;
         private readonly IRestClient _restClient;
         private readonly IRestClient _restCsharpClient;
+        private readonly string Authorization = "Authorization";
 
-
-        public LpnGateway(IResponseBuilder responseBuilders,IRestClient restClient)
+        public LpnGateway(IResponseBuilder responseBuilders, IRestClient restClient)
         {
             _endPoint = Routes.Prefixes.Lpn;
 
             _responseBuilder = responseBuilders;
             _restClient = restClient;
-            _restCsharpClient = new RestClient(ServiceUrl); //TODO: This variable will be removed after all endpoints were moved to C#. 
+            _restCsharpClient =
+                new RestClient(ServiceUrl); //TODO: This variable will be removed after all endpoints were moved to C#.
         }
 
-        public async Task<BaseResult<string>> GetLpnDetailsAsync(LpnParamModel lpnParamModel, string token)
+        public async Task<BaseResult<T>> GetLpnDetailsAsync<T>(LpnParamModel lpnParamModel, string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
                 var request = GetLpnDetailsRequest(lpnParamModel, token);
-                var response = await _restCsharpClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
-                return _responseBuilder.GetBaseResult<string>(response);
+                var response = await _restCsharpClient.ExecuteTaskAsync<T>(request).ConfigureAwait(false);
+                return _responseBuilder.GetBaseResult<T>(response);
             }).ConfigureAwait(false);
-            
         }
 
-        public async Task<BaseResult<string>> GetLpnDetailsByLpnIdAsync(String lpnId, string token)
+        public async Task<BaseResult<T>> GetLpnDetailsByLpnIdAsync<T>(String lpnId, string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
                 var request = GetLpnDetailsByLpnIdRequest(lpnId, token);
-                var response = await _restCsharpClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
-                return _responseBuilder.GetBaseResult<string>(response);
+                var response = await _restCsharpClient.ExecuteTaskAsync<T>(request).ConfigureAwait(false);
+                return _responseBuilder.GetBaseResult<T>(response);
             }).ConfigureAwait(false);
         }
 
-        public async Task<BaseResult<string>> GetLpnCommentsByLpnIdAsync(String lpnId, string token)
+        public async Task<BaseResult<T>> GetLpnCommentsByLpnIdAsync<T>(String lpnId, string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
                 var request = GetLpnCommentsByLpnIdRequest(lpnId, token);
-                var response = await _restCsharpClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
-                return _responseBuilder.GetBaseResult<string>(response);
+                var response = await _restCsharpClient.ExecuteTaskAsync<T>(request).ConfigureAwait(false);
+                return _responseBuilder.GetBaseResult<T>(response);
             }).ConfigureAwait(false);
         }
 
-        public async Task<BaseResult<string>> GetLpnHistoryAsync(String lpnId, string whse, string token)
+        public async Task<BaseResult<T>> GetLpnHistoryAsync<T>(String lpnId, string whse, string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
                 var request = GetLpnHistoryRequest(lpnId, whse, token);
-                var response = await _restCsharpClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
-                return _responseBuilder.GetBaseResult<string>(response);
+                var response = await _restCsharpClient.ExecuteTaskAsync<T>(request).ConfigureAwait(false);
+                return _responseBuilder.GetBaseResult<T>(response);
             }).ConfigureAwait(false);
         }
 
-        public async Task<BaseResult<string>> GetLpnLockUnlocByLpnIdkAsync(String lpnId, string token)
+        public async Task<BaseResult<T>> GetLpnLockUnlockByLpnIdkAsync<T>(String lpnId, string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
-                var request = GetLpnLockUnlocByLpnIdRequest(lpnId, token);
-                var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
-                return _responseBuilder.GetBaseResult<string>(response);
+                var request = GetLpnLockUnlockByLpnIdRequest(lpnId, token);
+                var response = await _restClient.ExecuteTaskAsync<T>(request).ConfigureAwait(false);
+                return _responseBuilder.GetBaseResult<T>(response);
             }).ConfigureAwait(false);
         }
 
-        public async Task<BaseResult<string>> InsertLpnAisleTransAsync(LpnAisleTransModel lpnAisleTransModel, string token)
+        public async Task<BaseResult<T>> InsertLpnAisleTransAsync<T>(LpnAisleTransModel lpnAisleTransModel,
+            string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
                 var request = InsertLpnAisleTransRequest(lpnAisleTransModel, token);
-                var response = await _restCsharpClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
-                return _responseBuilder.GetBaseResult<string>(response);
+                var response = await _restCsharpClient.ExecuteTaskAsync<T>(request).ConfigureAwait(false);
+                return _responseBuilder.GetBaseResult<T>(response);
             }).ConfigureAwait(false);
         }
 
-        public async Task<BaseResult<string>> UpdateLpnDetailsAsync(LpnDetailsUpdateModel lpnDetailsUpdateModel, string token)
+        public async Task<BaseResult<T>> UpdateLpnDetailsAsync<T>(LpnDetailsUpdateModel lpnDetailsUpdateModel,
+            string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
                 var request = UpdateLpnDetailsRequest(lpnDetailsUpdateModel, token);
-                var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
-                return _responseBuilder.GetBaseResult<string>(response);
+                var response = await _restClient.ExecuteTaskAsync<T>(request).ConfigureAwait(false);
+                return _responseBuilder.GetBaseResult<T>(response);
             }).ConfigureAwait(false);
         }
 
-        public async Task<BaseResult<string>> UpdateCaseLpnDetailsAsync(LpnCaseDetailsUpdateModel lpnCaseDetailsUpdateModel, string token)
+        public async Task<BaseResult<T>> UpdateCaseLpnDetailsAsync<T>(
+            LpnCaseDetailsUpdateModel lpnCaseDetailsUpdateModel, string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
                 var request = UpdateCaseLpnDetailsRequest(lpnCaseDetailsUpdateModel, token);
-                var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
-                return _responseBuilder.GetBaseResult<string>(response);
+                var response = await _restClient.ExecuteTaskAsync<T>(request).ConfigureAwait(false);
+                return _responseBuilder.GetBaseResult<T>(response);
             }).ConfigureAwait(false);
         }
 
-        public async Task<BaseResult<string>> InsertLpnCommentsAsync(LpnCommentsModel lpnCommentsModel, string token)
+        public async Task<BaseResult<T>> InsertLpnCommentsAsync<T>(LpnCommentsModel lpnCommentsModel, string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
                 var request = InsertLpnCommentsRequest(lpnCommentsModel, token);
-                var response = await _restCsharpClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
-                return _responseBuilder.GetBaseResult<string>(response);
+                var response = await _restCsharpClient.ExecuteTaskAsync<T>(request).ConfigureAwait(false);
+                return _responseBuilder.GetBaseResult<T>(response);
             }).ConfigureAwait(false);
         }
 
-        public async Task<BaseResult<string>> DeleteLpnCommentsAsync(LpnCommentsModel lpnCommentsModel, string token)
+        public async Task<BaseResult<T>> DeleteLpnCommentsAsync<T>(LpnCommentsModel lpnCommentsModel, string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
                 var request = DeleteLpnCommentsRequest(lpnCommentsModel, token);
-                var response = await _restCsharpClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
-                return _responseBuilder.GetBaseResult<string>(response);
+                var response = await _restCsharpClient.ExecuteTaskAsync<T>(request).ConfigureAwait(false);
+                return _responseBuilder.GetBaseResult<T>(response);
             }).ConfigureAwait(false);
         }
 
-        public async Task<BaseResult<string>> GetLpnVendorsAsync(string token)
+        public async Task<BaseResult<T>> GetLpnVendorsAsync<T>(string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
-                var request = GetLpnVendorsRequest( token);
-                var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
-                return _responseBuilder.GetBaseResult<string>(response);
+                var request = GetLpnVendorsRequest(token);
+                var response = await _restClient.ExecuteTaskAsync<T>(request).ConfigureAwait(false);
+                return _responseBuilder.GetBaseResult<T>(response);
             }).ConfigureAwait(false);
         }
 
         private RestRequest GetLpnDetailsRequest(LpnParamModel lpnParamModel, string token)
         {
-            var resource = $"{_endPoint}/{Routes.Paths.Find}{Routes.Paths.QueryParamSymbol}pageNo={lpnParamModel.PageNo}{Routes.Paths.QueryParamAnd}rowsPerPage={lpnParamModel.RowsPerPage}{Routes.Paths.QueryParamAnd}totalRows={lpnParamModel.TotalRows}";
+            var resource =
+                $"{_endPoint}/{Routes.Paths.Find}{Routes.Paths.QueryParamSymbol}pageNo={lpnParamModel.PageNo}{Routes.Paths.QueryParamAnd}rowsPerPage={lpnParamModel.RowsPerPage}{Routes.Paths.QueryParamAnd}totalRows={lpnParamModel.TotalRows}";
 
             resource = QueryStringBuilder.BuildQuery("lpnNumber=", lpnParamModel.LpnNumber, resource, false);
             resource = QueryStringBuilder.BuildQuery("asnId=", lpnParamModel.AsnId, resource, false);
@@ -165,57 +168,58 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             resource = QueryStringBuilder.BuildQuery("slot=", lpnParamModel.Slot, resource, false);
             resource = QueryStringBuilder.BuildQuery("createdDate=", lpnParamModel.CreatedDate, resource, false);
 
-            return GetRequest(token, resource);
+            return GetRequest(token, resource, Authorization);
         }
 
         private RestRequest GetLpnDetailsByLpnIdRequest(String lpnId, string token)
         {
             var resource = $"{_endPoint}/{Routes.Paths.LpnDetails}/{lpnId}";
-            return GetRequest(token, resource);
+            return GetRequest(token, resource, Authorization);
         }
 
         private RestRequest GetLpnCommentsByLpnIdRequest(String lpnId, string token)
         {
             var resource = $"{_endPoint}/{Routes.Paths.LpnComments}/{lpnId}";
-            return GetRequest(token, resource);
+            return GetRequest(token, resource, Authorization);
         }
 
         private RestRequest GetLpnHistoryRequest(String lpnId, string whse, string token)
         {
             var resource = $"{_endPoint}/{Routes.Paths.LpnHistory}/{lpnId}/{whse}";
-            return GetRequest(token, resource);
+            return GetRequest(token, resource, Authorization);
         }
 
-        private RestRequest GetLpnLockUnlocByLpnIdRequest(String lpnId, string token)
+        private RestRequest GetLpnLockUnlockByLpnIdRequest(String lpnId, string token)
         {
             var resource = $"{_endPoint}/{Routes.Paths.LpnLockUnlock}/{lpnId}";
-            return GetRequest(token, resource);
+            return GetRequest(token, resource, Authorization);
         }
 
         private RestRequest InsertLpnAisleTransRequest(LpnAisleTransModel lpnAisleTransModel, string token)
         {
             var resource = $"{_endPoint}/{Routes.Paths.LpnAisleTrans}";
-            return PostRequest(resource, lpnAisleTransModel, token);
+            return PostRequest(resource, lpnAisleTransModel, token, Authorization);
         }
 
         private RestRequest UpdateLpnDetailsRequest(LpnDetailsUpdateModel lpnDetailsUpdateModel, string token)
         {
             var resource = $"{_endPoint}/{Routes.Paths.LpnDetails}";
 
-            return PutRequest(resource, lpnDetailsUpdateModel, token);
+            return PutRequest(resource, lpnDetailsUpdateModel, token, Authorization);
         }
 
-        private RestRequest UpdateCaseLpnDetailsRequest(LpnCaseDetailsUpdateModel lpnCaseDetailsUpdateModel, string token)
+        private RestRequest UpdateCaseLpnDetailsRequest(LpnCaseDetailsUpdateModel lpnCaseDetailsUpdateModel,
+            string token)
         {
             var resource = $"{_endPoint}/{Routes.Paths.LpnCaseDetails}";
 
-            return PutRequest(resource, lpnCaseDetailsUpdateModel, token);
+            return PutRequest(resource, lpnCaseDetailsUpdateModel, token, Authorization);
         }
 
         private RestRequest InsertLpnCommentsRequest(LpnCommentsModel lpnCommentsModel, string token)
         {
             var resource = $"{_endPoint}/{Routes.Paths.LpnComments}";
-            return PostRequest(resource, lpnCommentsModel, token);
+            return PostRequest(resource, lpnCommentsModel, token, Authorization);
         }
 
         private RestRequest DeleteLpnCommentsRequest(LpnCommentsModel lpnCommentsModel, string token)
@@ -223,13 +227,13 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             var resource = $"{_endPoint}/{Routes.Paths.LpnComments}{Routes.Paths.QueryParamSymbol}";
             resource = QueryStringBuilder.BuildQuery("caseNbr=", lpnCommentsModel.caseNbr, resource, true);
             resource = QueryStringBuilder.BuildQuery("seqNbr=", lpnCommentsModel.seqNbr, resource, false);
-            return DeleteRequest(resource,token);
+            return DeleteRequest(resource,token, Authorization);
         }
 
         private RestRequest GetLpnVendorsRequest(string token)
         {
             var resource = $"{_endPoint}/{Routes.Paths.LpnVendors}";
-            return GetRequest(token, resource);
+            return GetRequest(token, resource, Authorization);
         }
     }
 }

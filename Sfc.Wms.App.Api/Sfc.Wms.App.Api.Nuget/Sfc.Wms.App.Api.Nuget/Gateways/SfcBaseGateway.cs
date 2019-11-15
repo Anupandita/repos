@@ -86,5 +86,51 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             request.Timeout = _webRequestTimeoutInSecs * 1000;
             return request;
         }
+
+        protected RestRequest GetRequest(string token, string resource, string header)
+        {
+            var request = new RestRequest(resource, Method.GET)
+            {
+                RequestFormat = DataFormat.Json
+            };
+            request.AddHeader(header, token);
+            request.Timeout = _webRequestTimeoutInSecs * 1000;
+            return request;
+        }
+
+        protected RestRequest PutRequest<TEntity>(string resource, TEntity body, string token, string header) where TEntity : class
+        {
+            var request = new RestRequest(resource, Method.PUT)
+            {
+                RequestFormat = DataFormat.Json
+            };
+            request.AddHeader(header, token);
+            request.AddJsonBody(body);
+            request.Timeout = _webRequestTimeoutInSecs * 1000;
+            return request;
+        }
+
+        protected RestRequest PostRequest<TEntity>(string resource, TEntity body, string token, string header) where TEntity : class
+        {
+            var request = new RestRequest(resource, Method.POST)
+            {
+                RequestFormat = DataFormat.Json
+            };
+            request.AddHeader(header, token);
+            request.AddJsonBody(body);
+            request.Timeout = _webRequestTimeoutInSecs * 1000;
+            return request;
+        }
+
+        protected RestRequest DeleteRequest(string resource, string token,string header)
+        {
+            var request = new RestRequest(resource, Method.DELETE)
+            {
+                RequestFormat = DataFormat.Json
+            };
+            request.AddHeader(header, token);
+            request.Timeout = _webRequestTimeoutInSecs * 1000;
+            return request;
+        }
     }
 }
