@@ -6,12 +6,12 @@ namespace Sfc.Wms.App.Api.Nuget.Builders
     {
         public static string BuildQuery(string field, dynamic value, string query, bool firstCondition)
         {
-            if ((value != null && value.GetType() == typeof(System.String)) && !System.String.IsNullOrEmpty(value))
+            if ((value != null && value is string) && !string.IsNullOrEmpty(value))
             {
                 query = $"{query}{(firstCondition ? "" : Routes.Paths.QueryParamAnd)}{field}{value}";
                 return query;
             }
-            if ((value != null && value.GetType() == typeof(System.Int32)) && value != 0)
+            if ((value != null && value is int) && value != 0)
             {
                 query = $"{query}{(firstCondition ? "" : Routes.Paths.QueryParamAnd)}{field}{value}";
                 return query;

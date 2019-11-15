@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Threading.Tasks;
 using RestSharp;
+using Sfc.Core.OnPrem.Result;
 using Sfc.Core.OnPrem.Security.Contracts.Dtos;
+using Sfc.Core.RestResponse;
 using Sfc.Wms.App.Api.Contracts.Constants;
 using Sfc.Wms.App.Api.Contracts.Entities;
 using Sfc.Wms.App.Api.Contracts.Interfaces;
-using Sfc.Wms.App.Api.Contracts.Result;
 
 namespace Sfc.Wms.App.Api.Nuget.Gateways
 {
@@ -24,7 +25,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             _restClient = restClient;
         }
 
-        public async Task<Contracts.Result.BaseResult<string>> ChangePassword(ChangePasswordModel changePasswordModel, string token)
+        public async Task<BaseResult<string>> ChangePassword(ChangePasswordModel changePasswordModel, string token)
         {
             return await Proxy().ExecuteAsync(async () =>
             {
@@ -34,7 +35,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        public async Task<Contracts.Result.BaseResult<string>> CheckSession(string token)
+        public async Task<BaseResult<string>> CheckSession(string token)
         {
             return await Proxy().ExecuteAsync(async () =>
             {
@@ -44,7 +45,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        public async Task<Contracts.Result.BaseResult<string>> GetAllAsync(string token)
+        public async Task<BaseResult<string>> GetAllAsync(string token)
         {
             return await Proxy().ExecuteAsync(async () =>
             {
@@ -54,7 +55,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        public async Task<Contracts.Result.BaseResult<string>> GetRolesByUsernameAsync(string token, string userName)
+        public async Task<BaseResult<string>> GetRolesByUsernameAsync(string token, string userName)
         {
             return await Proxy().ExecuteAsync(async () =>
             {
@@ -64,7 +65,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        public async Task<Contracts.Result.BaseResult<string>> GetUserMenus(string token)
+        public async Task<BaseResult<string>> GetUserMenus(string token)
         {
             return await Proxy().ExecuteAsync(async () =>
             {
@@ -74,7 +75,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        public async Task<Contracts.Result.BaseResult<string>> GetUserPermissions(string token)
+        public async Task<BaseResult<string>> GetUserPermissions(string token)
         {
             return await Proxy().ExecuteAsync(async () =>
             {
@@ -84,7 +85,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        public async Task<Contracts.Result.BaseResult<string>> Logout()
+        public async Task<BaseResult<string>> Logout()
         {
             return await Proxy().ExecuteAsync(async () =>
             {
@@ -94,21 +95,21 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        public async Task<BaseResult<string>> SignInAsync(Sfc.Wms.App.Api.Contracts.Entities.LoginCredentials loginCredentials)
+        public async Task<BaseResult<string>> SignInAsync(LoginCredentials loginCredentials)
         {
             return await Proxy().ExecuteAsync(async () =>
             {
-                RestRequest CRequest = SignInRequest(loginCredentials, ConfigurationManager.AppSettings["ServiceUrl"]);
-                IRestResponse<UserInfoDto> CResponse = await _restClient.ExecuteTaskAsync<UserInfoDto>(CRequest).ConfigureAwait(false);
-                RestRequest Noderequest = SignInRequest(loginCredentials, _restClient.BaseUrl.ToString());
-                IRestResponse<UserInfoDto> Noderesponse = await _restClient.ExecuteTaskAsync<UserInfoDto>(Noderequest).ConfigureAwait(false);
-                var TokenHeaderParameter = new Parameter(Constants.NodeToken, Noderesponse.Data.Token, ParameterType.HttpHeader);
-                CResponse.Headers.Add(TokenHeaderParameter);
-                return _responseBuilder.GetCResponseData<UserInfoDto>(CResponse);
+                var cRequest = SignInRequest(loginCredentials, ConfigurationManager.AppSettings["ServiceUrl"]);
+                var cResponse = await _restClient.ExecuteTaskAsync<UserInfoDto>(cRequest).ConfigureAwait(false);
+                var nodeRequest = SignInRequest(loginCredentials, _restClient.BaseUrl.ToString());
+                var nodeResponse = await _restClient.ExecuteTaskAsync<UserInfoDto>(nodeRequest).ConfigureAwait(false);
+                var tokenHeaderParameter = new Parameter(Constants.NodeToken, nodeResponse.Data.Token, ParameterType.HttpHeader);
+                cResponse.Headers.Add(tokenHeaderParameter);
+                return _responseBuilder.GetCResponseData<UserInfoDto>(cResponse);
             }).ConfigureAwait(false);
         }
 
-        public async Task<Contracts.Result.BaseResult<string>> UpdateUserRoles(UserRoleModel userRoleModel, string token)
+        public async Task<BaseResult<string>> UpdateUserRoles(UserRoleModel userRoleModel, string token)
         {
             return await Proxy().ExecuteAsync(async () =>
             {
@@ -118,7 +119,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        public async Task<Contracts.Result.BaseResult<string>> UserPreferences(UserPreferencesModel userPreferencesModel, string token)
+        public async Task<BaseResult<string>> UserPreferences(UserPreferencesModel userPreferencesModel, string token)
         {
             return await Proxy().ExecuteAsync(async () =>
             {
@@ -128,11 +129,11 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        private string BuildUriString(string path, string RestUrl)
+        private string BuildUriString(string path, string restUrl)
         {
-            var UrlBuilder = new UriBuilder(RestUrl);
-            UrlBuilder.Path += $"{_endPoint}/{path}";
-            return UrlBuilder.Uri.ToString();
+            var urlBuilder = new UriBuilder(restUrl);
+            urlBuilder.Path += $"{_endPoint}/{path}";
+            return urlBuilder.Uri.ToString();
         }
 
         private RestRequest CheckSessionRequest(string token)
@@ -177,9 +178,9 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             return PostRequest(token, changePasswordModel, resource);
         }
 
-        private RestRequest SignInRequest(Sfc.Wms.App.Api.Contracts.Entities.LoginCredentials loginCredentials, string RestUrl)
+        private RestRequest SignInRequest(LoginCredentials loginCredentials, string restUrl)
         {
-            var resource = BuildUriString(Routes.Paths.UserLogin, RestUrl);
+            var resource = BuildUriString(Routes.Paths.UserLogin, restUrl);
             var body = new
             {
                 userName = loginCredentials.UserName,

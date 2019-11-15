@@ -1,9 +1,9 @@
 ﻿using RestSharp;
-using Sfc.App.Api.Nuget.Interfaces;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Core.RestResponse;
 using Sfc.Wms.App.Api.Contracts.Constants;
 using System.Threading.Tasks;
+using Sfc.Wms.App.Api.Nuget.Interfaces;
 
 namespace Sfc.Wms.App.Api.Nuget.Gateways
 {
@@ -12,7 +12,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
         private readonly IRestClient _restClient;
         private readonly ResponseBuilder _responseBuilder;
 
-        public OrderMaintenanceGateway(IRestClient restClient, ResponseBuilder responseBuilder) : base()
+        public OrderMaintenanceGateway(IRestClient restClient, ResponseBuilder responseBuilder)
         {
             _restClient = restClient;
             _responseBuilder = responseBuilder;

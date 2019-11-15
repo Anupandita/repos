@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
+using Sfc.Core.OnPrem.Result;
+using Sfc.Core.OnPrem.Security.Contracts.Dtos;
 using Sfc.Wms.App.Api.Contracts.Entities;
-using Sfc.Wms.App.Api.Contracts.Result;
 
 namespace Sfc.Wms.App.Api.Contracts.Interfaces
 {

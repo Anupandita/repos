@@ -4,21 +4,21 @@ using Sfc.Core.Cache.Contracts;
 using Sfc.Core.Cache.InMemory;
 using Sfc.Core.OnPrem.Security.Contracts.Extensions;
 using Sfc.Wms.App.App.AutoMapper;
-using Sfc.Wms.Configuration.Security.Rbac.Repository.Context;
 using Sfc.Wms.Data.Context;
 using Sfc.Wms.Foundation.InboundLpn.Repository.LocationDataRepository;
-using Sfc.Wms.Framework.Security.Rbac.AutoMapper;
-using Sfc.Wms.Inbound.InboundLpn.App.Validators;
 using Sfc.Wms.Interfaces.Asrs.App.Mappers;
-using SimpleInjector;
-using SimpleInjector.Integration.WebApi;
 using SimpleInjector.Lifestyles;
 using System;
 using System.Configuration;
 using System.Linq;
-using System.Linq.Dynamic;
 using System.Runtime.Caching;
 using System.Web.Http;
+using Sfc.Wms.Framework.Security.Rbac.AutoMapper;
+using Sfc.Wms.Inbound.InboundLpn.App.Validators;
+using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Interfaces;
+using SimpleInjector;
+using SimpleInjector.Integration.WebApi;
+
 
 namespace Sfc.Wms.App.Api
 {
@@ -26,8 +26,7 @@ namespace Sfc.Wms.App.Api
     {
         public static Container Register()
         {
-            var container = new Container();
-            container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
+            var container = new Container {Options = {DefaultScopedLifestyle = new AsyncScopedLifestyle()}};
             RegisterTypes(container);
             container.RegisterWebApiControllers(GlobalConfiguration.Configuration);
 #if DEBUG
@@ -35,7 +34,6 @@ namespace Sfc.Wms.App.Api
 #endif
             GlobalConfiguration.Configuration.DependencyResolver =
                 new SimpleInjectorWebApiDependencyResolver(container);
-
             return container;
         }
 
@@ -57,11 +55,10 @@ namespace Sfc.Wms.App.Api
              });
 
             container.Register(() => new ShamrockContext(ConfigurationManager.ConnectionStrings["SfcOracleDbContext"].ConnectionString),
-                Lifestyle.Singleton);
+                Lifestyle.Scoped);
             container.Register(() => ConfigurationManager.AppSettings["db:encryptionKey"].ToSecureString(), Lifestyle.Singleton);
             container.Register<ISfcCache>(() => new SfcInMemoryCache(MemoryCache.Default), Lifestyle.Scoped);
             container.Register<IMappingFixture>(() => new MappingFixture(), Lifestyle.Singleton);
-            container.Register<UserRepository>(Lifestyle.Scoped);
             container.Register<LocationData>(Lifestyle.Scoped);
             container.Register<LpnParameterValidator>(Lifestyle.Scoped);
 

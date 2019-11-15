@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// ReSharper disable InconsistentNaming
+
+using Sfc.Core.ListManagement.Contracts.Models;
 
 namespace Sfc.Wms.App.Api.Contracts.Entities
 {

@@ -5,7 +5,6 @@ using Sfc.Wms.Interfaces.Asrs.Contracts.Interfaces;
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 
@@ -42,7 +41,6 @@ namespace Sfc.Wms.App.Api.Controllers
         [AllowAnonymous]
         public async Task<IHttpActionResult> CreateOrmtMessageByWaveNumberAsync(string waveNumber)
         {
-            var path = HttpContext.Current.Server.MapPath("~/");
             var result = await _wmsToEmsMessageProcessorService.GetOrmtMessageByWaveNumberAsync(waveNumber)
                 .ConfigureAwait(false);
 

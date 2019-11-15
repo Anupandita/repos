@@ -1,9 +1,10 @@
 ﻿using RestSharp;
 using Sfc.Wms.App.Api.Contracts.Constants;
 using Sfc.Wms.App.Api.Contracts.Interfaces;
-using Sfc.Wms.App.Api.Contracts.Result;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Sfc.Core.OnPrem.Result;
+using Sfc.Core.RestResponse;
 
 namespace Sfc.Wms.App.Api.Nuget.Gateways
 {

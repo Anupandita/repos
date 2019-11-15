@@ -2,8 +2,9 @@
 using Sfc.Wms.App.Api.Contracts.Constants;
 using Sfc.Wms.App.Api.Contracts.Entities;
 using Sfc.Wms.App.Api.Contracts.Interfaces;
-using Sfc.Wms.App.Api.Contracts.Result;
 using System.Threading.Tasks;
+using Sfc.Core.OnPrem.Result;
+using Sfc.Core.RestResponse;
 using Sfc.Wms.App.Api.Nuget.Builders;
 
 namespace Sfc.Wms.App.Api.Nuget.Gateways
@@ -68,12 +69,12 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
 
         }
 
-        public async Task<BaseResult<string>> GetLocationGroupById(string grid_locn_id, string token)
+        public async Task<BaseResult<string>> GetLocationGroupById(string gridLocnId, string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
-                var request = GetActiveLocationGroupByIdRequest(grid_locn_id, token);
+                var request = GetActiveLocationGroupByIdRequest(gridLocnId, token);
                 var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
                 return _responseBuilder.GetResponseData<string>(response);
             }).ConfigureAwait(false);
@@ -109,21 +110,21 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             return GetRequest(token, resource);
         }
 
-        public async Task<BaseResult<string>> GetLocationLPNS(string grid_locn_id, string token)
+        public async Task<BaseResult<string>> GetLocationLPNS(string gridLocnId, string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
-                var request = GetLocationLPNSRequest(grid_locn_id, token);
+                var request = GetLocationLpnsRequest(gridLocnId, token);
                 var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
                 return _responseBuilder.GetResponseData<string>(response);
             }).ConfigureAwait(false);
         }
 
-        private RestRequest GetLocationLPNSRequest(string grid_locn_id, string token)
+        private RestRequest GetLocationLpnsRequest(string gridLocnId, string token)
         {
             var resource = $"{_endPoint}{Routes.Paths.QueryParamSeperator}{Routes.Prefixes.LocationLPN}{Routes.Paths.QueryParamSymbol}";
-            resource = QueryStringBuilder.BuildQuery(Routes.Paths.GridLocationId, grid_locn_id, resource, true);
+            resource = QueryStringBuilder.BuildQuery(Routes.Paths.GridLocationId, gridLocnId, resource, true);
             return GetRequest(token, resource);
         }
 
@@ -205,7 +206,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
-                var request = UpdateLocationLPNSRequest(allm, token);
+                var request = UpdateLocationLpnsRequest(allm, token);
                 var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
                 return _responseBuilder.GetResponseData<string>(response);
             }).ConfigureAwait(false);
@@ -256,7 +257,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
-                var request = UpdateReserveLocationnDrillDownRequest(reserveLocationDrillDownModel, token);
+                var request = UpdateReserveLocationDrillDownRequest(reserveLocationDrillDownModel, token);
                 var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
                 return _responseBuilder.GetResponseData<string>(response);
             }).ConfigureAwait(false);
@@ -278,12 +279,12 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             return PutRequest(resource, lockUnlockModel, token);
         }
         
-        private RestRequest UpdateLocationLPNSRequest(ActiveLocationLpnModel activeLocationLpnModel, string token)
+        private RestRequest UpdateLocationLpnsRequest(ActiveLocationLpnModel activeLocationLpnModel, string token)
         {
             var resource = $"{_endPoint}{Routes.Paths.QueryParamSeperator}{Routes.Prefixes.LocationLPN}";
             return PutRequest(resource, activeLocationLpnModel, token);
         }
-        private RestRequest UpdateReserveLocationnDrillDownRequest(ReserveLocationDrillDownModel reserveLocationDrillDownModel, string token)
+        private RestRequest UpdateReserveLocationDrillDownRequest(ReserveLocationDrillDownModel reserveLocationDrillDownModel, string token)
         {
             var resource = $"{_endPoint}{Routes.Paths.QueryParamSeperator}{Routes.Prefixes.ReserveLocationDrillDown}";
             return PutRequest(resource, reserveLocationDrillDownModel, token);
@@ -338,10 +339,10 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             var resource = $"{_endPoint}{Routes.Paths.QueryParamSeperator}{Routes.Prefixes.ActiveLocationsDrilldown}";
             return PutRequest(resource, activeLocationsDrillDownModel, token);
         }
-        private RestRequest GetActiveLocationGroupByIdRequest(string grid_locn_id, string token)
+        private RestRequest GetActiveLocationGroupByIdRequest(string gridLocnId, string token)
         {
             var resource = $"{_endPoint}{Routes.Paths.QueryParamSeperator}{Routes.Prefixes.LocationsGroupById}{Routes.Paths.QueryParamSymbol}";
-            resource = QueryStringBuilder.BuildQuery(Routes.Paths.GridLocationId, grid_locn_id, resource, true);
+            resource = QueryStringBuilder.BuildQuery(Routes.Paths.GridLocationId, gridLocnId, resource, true);
             return GetRequest(token, resource);
         }
 
