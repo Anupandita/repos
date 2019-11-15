@@ -28,7 +28,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                 .And(x => x.ValidSkmtUrl())
                .When(x => x.SkmtApiIsCalledCreatedIsReturned())
                 .And(x => x.GetValidDataAfterTrigger())
-              .And(x => x.VerifySkmtMessageWasInsertedForIntoSwmToMhe("Add", skmt.ActionCode))
+              .And(x => x.VerifySkmtMessageWasInsertedForIntoSwmToMhe("Add", Skmt.ActionCode))
               .And(x => x.VerifySkmtMessageWasInsertedIntoWmsToEms())
               .And(x => x.VerifySkmtMessageWasChildSku())
 
@@ -45,7 +45,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                .And(x => x.ValidSkmtUrl())
               .When(x => x.SkmtApiIsCalledCreatedIsReturned())
                .And(x => x.GetValidDataAfterTrigger())
-              .And(x => x.VerifySkmtMessageWasInsertedForIntoSwmToMhe("Update", skmt.ActionCode))
+              .And(x => x.VerifySkmtMessageWasInsertedForIntoSwmToMhe("Update", Skmt.ActionCode))
               .And(x => x.VerifySkmtMessageWasInsertedIntoWmsToEms())
               .And(x => x.VerifySkmtMessageWasChildSku())
               .BDDfy();
@@ -61,7 +61,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                .And(x => x.ValidSkmtUrl())
               .When(x => x.SkmtApiIsCalledCreatedIsReturned())
                .And(x => x.GetValidDataAfterTrigger())
-              .And(x => x.VerifySkmtMessageWasInsertedForIntoSwmToMhe("Delete", skmt.ActionCode))
+              .And(x => x.VerifySkmtMessageWasInsertedForIntoSwmToMhe("Delete", Skmt.ActionCode))
               .And(x => x.VerifySkmtMessageWasInsertedIntoWmsToEms())
               .And(x => x.VerifySkmtMessageWasChildSku())
             .BDDfy();

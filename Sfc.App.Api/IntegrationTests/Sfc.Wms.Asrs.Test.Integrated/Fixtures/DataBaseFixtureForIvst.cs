@@ -3,7 +3,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
-using System.Configuration;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Dto;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Constants;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Validation;
@@ -22,7 +21,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
     [TestClass]
     public class DataBaseFixtureForIvst:CommonFunction
     {
-        protected decimal unitWeight;
+        protected decimal UnitWeight;
         protected Ivst IvstData = new Ivst();
         protected Ivst Invshort = new Ivst();
         protected Ivst Damage = new Ivst();
@@ -30,27 +29,22 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected Ivst NoException = new Ivst();
         protected IvstDto Ivst = new IvstDto();
         protected string Query = "";
-        protected SwmFromMheDto swmFromMhe = new SwmFromMheDto();
+        protected new SwmFromMheDto SwmFromMhe = new SwmFromMheDto();
         protected string PixTrnAfterApi;
-        protected EmsToWmsDto emsToWmsParameters;
-        protected EmsToWmsDto emsToWmsParametersInventoryShortage;
-        protected EmsToWmsDto emsToWmsParametersDamage;
-        protected EmsToWmsDto emsToWmsParametersWrongSku;
-        protected EmsToWmsDto emsToWmsParametersNoException;
+        protected EmsToWmsDto EmsToWmsParameters;
+        protected EmsToWmsDto EmsToWmsParametersInventoryShortage;
+        protected EmsToWmsDto EmsToWmsParametersDamage;
+        protected EmsToWmsDto EmsToWmsParametersWrongSku;
+        protected EmsToWmsDto EmsToWmsParametersNoException;
         protected IvstDto IvstParameters;
-        protected PickLocationDtlDto pickLocnDtlAfterApi = new PickLocationDtlDto();
-        protected PickLocationDtlDto pickLcnDtlBeforeApi = new PickLocationDtlDto();
-        protected decimal unitweight1;
-        protected OracleCommand oracleCommand;
-        protected PixTransactionDto pixtran = new PixTransactionDto();
-        protected TransitionalInventoryDto trnsInvBeforeApi = new TransitionalInventoryDto();
-        protected TransitionalInventoryDto trnsInvAfterApi = new TransitionalInventoryDto();
-        protected List<Scenarios> msgkeyList = new List<Scenarios>();
-
-        public DataBaseFixtureForIvst()
-        {
-            // _dataTypeValidation = new DataTypeValidation();
-        }
+        protected PickLocationDtlDto PickLocnDtlAfterApi = new PickLocationDtlDto();
+        protected PickLocationDtlDto PickLcnDtlBeforeApi = new PickLocationDtlDto();
+        protected decimal Unitweight1;
+        protected OracleCommand OracleCommand;
+        protected PixTransactionDto Pixtran = new PixTransactionDto();
+        protected TransitionalInventoryDto TrnsInvBeforeApi = new TransitionalInventoryDto();
+        protected TransitionalInventoryDto TrnsInvAfterApi = new TransitionalInventoryDto();
+        protected List<Scenarios> MsgkeyList = new List<Scenarios>();
 
         public void GetDataBeforeApiTrigger()
         {
@@ -58,9 +52,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             {
                 db.Open();
                 IvstData = GetCaseDetailsForInsertingIvstMessage(db);
-                unitweight1 = FetchUnitWeight(db, IvstData.SkuId);
-                trnsInvBeforeApi = FetchTransInvnentory(db, IvstData.SkuId);
-                pickLcnDtlBeforeApi = PickLocnData(db, IvstData.SkuId);
+                Unitweight1 = FetchUnitWeight(db, IvstData.SkuId);
+                TrnsInvBeforeApi = FetchTransInvnentory(db, IvstData.SkuId);
+                PickLcnDtlBeforeApi = PickLocnData(db, IvstData.SkuId);
             }
         }
 
@@ -110,87 +104,87 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         public Ivst GetCaseDetailsForInsertingIvstMessage(OracleConnection db)
         {
-            var IvstDataDto = new Ivst();
+            var ivstDataDto = new Ivst();
             Query = $"select swm_to_mhe.container_id,swm_to_mhe.sku_id,pick_locn_dtl.locn_id,swm_to_mhe.qty from swm_to_mhe inner join trans_invn" +
                 $" on trans_invn.sku_id = swm_to_mhe.sku_id inner join  pick_locn_dtl on swm_to_mhe.sku_id = pick_locn_dtl.sku_id  " +
                 $"inner join case_hdr on swm_to_mhe.container_id = case_hdr.case_nbr and swm_to_mhe.source_msg_status = 'Ready' and swm_to_mhe.qty!= 0 and case_hdr.stat_code = 96"+
                 $" and pick_locn_dtl.locn_id in (select lh.locn_id from locn_hdr lh inner join locn_grp lg on lg.locn_id = lh.locn_id inner join sys_code sc on sc.code_id = lg.grp_type and sc.code_type = '740' and sc.code_id = '18')";
-            command = new OracleCommand(Query, db);
-            var validData = command.ExecuteReader();
+            Command = new OracleCommand(Query, db);
+            var validData = Command.ExecuteReader();
             if (validData.Read())
             {
-                IvstDataDto.CaseNumber = validData[TestData.FieldName.ContainerId].ToString();
-                IvstDataDto.SkuId = validData[TestData.FieldName.SkuId].ToString();
-                IvstDataDto.Qty = validData[TestData.FieldName.Qty].ToString();
-                IvstDataDto.LocnId = validData[TestData.FieldName.LocnId].ToString();
+                ivstDataDto.CaseNumber = validData[FieldName.ContainerId].ToString();
+                ivstDataDto.SkuId = validData[FieldName.SkuId].ToString();
+                ivstDataDto.Qty = validData[FieldName.Qty].ToString();
+                ivstDataDto.LocnId = validData[FieldName.LocnId].ToString();
             }
-            return IvstDataDto;
+            return ivstDataDto;
         }
 
-        public void InsertingUnexpectedOverage(OracleConnection db, string ActionCode, string exception)
+        public void InsertingUnexpectedOverage(OracleConnection db, string actionCode, string exception)
         {
-            command = new OracleCommand(Query, db);
-            var Ivstmsg = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, IvstData.Qty, ActionCode, exception);
-            emsToWmsParameters = new EmsToWmsDto
+            Command = new OracleCommand(Query, db);
+            var ivstmsg = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, IvstData.Qty, actionCode, exception);
+            EmsToWmsParameters = new EmsToWmsDto
             {
                 Process = DefaultPossibleValue.MessageProcessor,
                 Status = RecordStatus.Ready.ToString(),
                 Transaction = TransactionCode.Ivst,
-                MessageText = Ivstmsg
+                MessageText = ivstmsg
             };
-            IvstData.Key = InsertEmsToWMS(db, emsToWmsParameters);
+            IvstData.Key = InsertEmsToWms(db, EmsToWmsParameters);
         }
 
-        public void InsertingInventoryShortage(OracleConnection db, string ActionCode, string exception)
+        public void InsertingInventoryShortage(OracleConnection db, string actionCode, string exception)
         {
-            command = new OracleCommand(Query, db);
-            var Ivstmsg = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, IvstData.Qty, ActionCode, exception);
-            emsToWmsParametersInventoryShortage = new EmsToWmsDto
+            Command = new OracleCommand(Query, db);
+            var ivstmsg = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, IvstData.Qty, actionCode, exception);
+            EmsToWmsParametersInventoryShortage = new EmsToWmsDto
             {
                 Process = DefaultPossibleValue.MessageProcessor,
                 Status = RecordStatus.Ready.ToString(),
                 Transaction = TransactionCode.Ivst,
-                MessageText = Ivstmsg
+                MessageText = ivstmsg
             };
-            Invshort.Key = InsertEmsToWMS(db, emsToWmsParametersInventoryShortage);
+            Invshort.Key = InsertEmsToWms(db, EmsToWmsParametersInventoryShortage);
         }
-        public void InsertingDamage(OracleConnection db, string ActionCode, string exception)
+        public void InsertingDamage(OracleConnection db, string actionCode, string exception)
         {
-            command = new OracleCommand(Query, db);
-            var Ivstmsg = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, IvstData.Qty, ActionCode, exception);
-            emsToWmsParametersDamage = new EmsToWmsDto
+            Command = new OracleCommand(Query, db);
+            var ivstmsg = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, IvstData.Qty, actionCode, exception);
+            EmsToWmsParametersDamage = new EmsToWmsDto
             {
                 Process = DefaultPossibleValue.MessageProcessor,
                 Status = RecordStatus.Ready.ToString(),
                 Transaction = TransactionCode.Ivst,
-                MessageText = Ivstmsg
+                MessageText = ivstmsg
             };
-            Damage.Key = InsertEmsToWMS(db, emsToWmsParametersDamage);
+            Damage.Key = InsertEmsToWms(db, EmsToWmsParametersDamage);
         }
 
-        public void InsertingWrongSku(OracleConnection db, string ActionCode, string exception)
+        public void InsertingWrongSku(OracleConnection db, string actionCode, string exception)
         {
-            command = new OracleCommand(Query, db);
-            var Ivstmsg = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, IvstData.Qty, ActionCode, exception);
-            emsToWmsParametersWrongSku = new EmsToWmsDto
+            Command = new OracleCommand(Query, db);
+            var ivstmsg = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, IvstData.Qty, actionCode, exception);
+            EmsToWmsParametersWrongSku = new EmsToWmsDto
             {
                 Process = DefaultPossibleValue.MessageProcessor,
                 Status = RecordStatus.Ready.ToString(),
                 Transaction = TransactionCode.Ivst,
-                MessageText = Ivstmsg
+                MessageText = ivstmsg
             };
-            WrongSku.Key = InsertEmsToWMS(db, emsToWmsParametersWrongSku);
+            WrongSku.Key = InsertEmsToWms(db, EmsToWmsParametersWrongSku);
         }
 
-        public string CreateIvstMessage(string containerNbr, string SkuId, string locationId, string ActionCode, string AdjustmentReasonCode)
+        public string CreateIvstMessage(string containerNbr, string skuId, string locationId, string actionCode, string adjustmentReasonCode)
         {
             IvstParameters = new IvstDto
             {
-                ActionCode = ActionCode,
-                AdjustmentReasonCode = AdjustmentReasonCode,
+                ActionCode = actionCode,
+                AdjustmentReasonCode = adjustmentReasonCode,
                 ContainerId = containerNbr,
                 Quantity = "1",
-                Sku = SkuId,
+                Sku = skuId,
                 Owner = "Wms",
                 UserName = "Dematic",
                 UnitOfMeasure = "Case",
@@ -212,13 +206,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var pickLocn = new PickLocationDtlDto();
             Query = $"select * from pick_locn_dtl where sku_id = '{skuId}' and locn_id = '{IvstData.LocnId}' order by mod_date_time desc";
-            command = new OracleCommand(Query, db);
-            var pickLocnReader = command.ExecuteReader();
+            Command = new OracleCommand(Query, db);
+            var pickLocnReader = Command.ExecuteReader();
             if (pickLocnReader.Read())
             {
-                pickLocn.ActualInventoryQuantity = Convert.ToDecimal(pickLocnReader[TestData.FieldName.ActlInvnQty].ToString());
-                pickLocn.ToBeFilledQty = Convert.ToDecimal(pickLocnReader[TestData.FieldName.ToBeFilledQty].ToString());
-                pickLocn.LocationId = pickLocnReader[TestData.FieldName.LocnId].ToString();
+                pickLocn.ActualInventoryQuantity = Convert.ToDecimal(pickLocnReader[FieldName.ActlInvnQty].ToString());
+                pickLocn.ToBeFilledQty = Convert.ToDecimal(pickLocnReader[FieldName.ToBeFilledQty].ToString());
+                pickLocn.LocationId = pickLocnReader[FieldName.LocnId].ToString();
             }
             return pickLocn;
         }
@@ -228,13 +222,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                swmFromMhe = SwmFromMhe(db, key, TransactionCode.Ivst);
-                Ivst = JsonConvert.DeserializeObject<IvstDto>(swmFromMhe.MessageJson);
-                trnsInvAfterApi = FetchTransInvnentory(db, Ivst.Sku);
-                pickLocnDtlAfterApi = PickLocnData(db, Ivst.Sku);
-                unitWeight = FetchUnitWeight(db, Ivst.Sku);
-                var PixTrnAfterApi = PixTransactionTable(Ivst.AdjustmentReasonCode);
-                pixtran = GetPixtransaction(db, PixTrnAfterApi);
+                SwmFromMhe = SwmFromMhe(db, key, TransactionCode.Ivst);
+                Ivst = JsonConvert.DeserializeObject<IvstDto>(SwmFromMhe.MessageJson);
+                TrnsInvAfterApi = FetchTransInvnentory(db, Ivst.Sku);
+                PickLocnDtlAfterApi = PickLocnData(db, Ivst.Sku);
+                UnitWeight = FetchUnitWeight(db, Ivst.Sku);
+                var pixTrnAfterApi = PixTransactionTable(Ivst.AdjustmentReasonCode);
+                Pixtran = GetPixtransaction(db, pixTrnAfterApi);
             }
         }
 
@@ -242,36 +236,36 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var pixtran = new PixTransactionDto();
             Query = $"select * from Pix_tran where rsn_code='{rsnCode}'";
-            command = new OracleCommand(Query, db);
-            var Rsn = command.ExecuteReader();
+            Command = new OracleCommand(Query, db);
+            var rsn = Command.ExecuteReader();
 
-            if (Rsn.Read())
+            if (rsn.Read())
             {
-                pixtran.ReasonCode = (Rsn["RSN_CODE"].ToString());
+                pixtran.ReasonCode = (rsn["RSN_CODE"].ToString());
             }
             return pixtran;
         }
 
 
-        public string PixTransactionTable(string AdjustmentReasonCode)
+        public string PixTransactionTable(string adjustmentReasonCode)
         {
-            if (AdjustmentReasonCode == "0001")
+            if (adjustmentReasonCode == "0001")
             {
                 return "CC";
             }
-            else if (AdjustmentReasonCode == "0002")
+            else if (adjustmentReasonCode == "0002")
             {
                 return "CO";
             }
-            else if (AdjustmentReasonCode == "0003")
+            else if (adjustmentReasonCode == "0003")
             {
                 return "CS";
             }
-            else if (AdjustmentReasonCode == "0004")
+            else if (adjustmentReasonCode == "0004")
             {
                 return "DG";
             }
-            else if (AdjustmentReasonCode == "0005")
+            else if (adjustmentReasonCode == "0005")
             {
                 return "CC";
             }

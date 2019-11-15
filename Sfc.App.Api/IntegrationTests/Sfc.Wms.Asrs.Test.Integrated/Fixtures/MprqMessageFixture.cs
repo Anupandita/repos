@@ -1,0 +1,80 @@
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Configuration;
+using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
+using RestSharp;
+using Sfc.Core.OnPrem.Result;
+using Newtonsoft.Json;
+
+namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
+{
+    [TestClass]
+    public class MprqMessageFixture : DataBaseFixtureForMprq
+    {
+        protected Int64 CurrentMsgKey;
+        protected IRestResponse Response;
+        protected string MprqUrl = @ConfigurationManager.AppSettings["EmsToWmsUrl"];
+
+        protected void TestInitializeForValidMessage()
+        {
+            GetDataBeforeTrigger();
+        }
+        protected void AValidMsgKey()
+        {
+            CurrentMsgKey = MprqData.MsgKey;
+        }
+        protected IRestResponse ApiIsCalled()
+        {
+            var client = new RestClient(MprqUrl);
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("content-type", Content.ContentType);
+            request.AddJsonBody(CurrentMsgKey);
+            request.RequestFormat = DataFormat.Json;
+            Response = client.Execute(request);
+            return Response;
+        }
+
+        protected BaseResult MprqResult()
+        {
+            var response = ApiIsCalled();
+            var result = JsonConvert.DeserializeObject<BaseResult>(response.Content);
+            return result;
+        }
+
+        protected void MprqApiIsCalledWithValidMsgKey()
+        {
+            var result = MprqResult();
+            Assert.AreEqual(ResultType.Created, result.ResultType.ToString());
+        }
+        protected void GetValidDataAfterTrigger()
+        {
+            GetDataAfterTrigger();
+        }
+
+        protected void VerifyMprqMessageWasInsertedIntoSwmFromMhe()
+        {
+            Assert.AreEqual(EmsToWmsParameters.Process, SwmFromMhe.SourceMessageProcess);
+            Assert.AreEqual(MprqData.MsgKey, SwmFromMhe.SourceMessageKey);
+            Assert.AreEqual(EmsToWmsParameters.Status, SwmFromMhe.SourceMessageStatus);
+            Assert.AreEqual(EmsToWmsParameters.Transaction, SwmFromMhe.SourceMessageTransactionCode);
+            Assert.AreEqual(EmsToWmsParameters.ResponseCode, SwmFromMhe.SourceMessageResponseCode);
+            Assert.AreEqual(EmsToWmsParameters.MessageText, SwmFromMhe.SourceMessageText);
+
+        }
+
+        protected void VerifyMpidMessageWasInsertedIntoswmToMhe()
+        {
+            Assert.AreEqual(NextUpCounter.PrefixField + ((NextUpCounter.CurrentNumber)+1).ToString("000000000"), Mpid.MasterPackId);
+
+        }
+
+        protected void VerifyLocationMpid()
+        {
+            Assert.AreEqual(Mprq.LocationId, Mpid.LocationId);
+        }
+
+
+    }
+
+   
+}

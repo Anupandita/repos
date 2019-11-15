@@ -1,7 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
+﻿namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
 {
   public class CaseHeader 
     {
@@ -20,16 +17,16 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
     {
         public const string SkuId = "SKU_ID";
         public const string Invalidsku = "09033";
-        public const string div = "DIV";
-        public const string skuDesc = "SKU_DESC";
+        public const string Div = "DIV";
+        public const string SkuDesc = "SKU_DESC";
         public const string StdCaseQty = "STD_CASE_QTY";
-        public const string tempzone = "TEMP_ZONE";
-        public const string unitwieght = "UNIT_WT";
-        public const string unitvolume = "UNIT_VOL";
-        public const string prodlifeinday = "PROD_LIFE_IN_DAY";
+        public const string Tempzone = "TEMP_ZONE";
+        public const string Unitwieght = "UNIT_WT";
+        public const string Unitvolume = "UNIT_VOL";
+        public const string Prodlifeinday = "PROD_LIFE_IN_DAY";
         public const string NestVolume = "NEST_VOL";
-        public const string skubrcd = "SKU_BRCD";
-        public const string colordesc = "COLOR_DESC";
+        public const string Skubrcd = "SKU_BRCD";
+        public const string Colordesc = "COLOR_DESC";
     }
 
     public class TransInventory
@@ -49,7 +46,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
     public class EmsToWms
     {
         public const string Status = "STS";
-        public const string prc = "PRC";
+        public const string Prc = "PRC";
         public const string ReasonCode = "RSNRCODE";
         public const string MsgKey = "MSGKEY";
         public const string Trx = "TRX";
@@ -137,8 +134,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
 
     public class MessageToSv
     {
-        public const string ptn = "Ptn";
-        public const string message_type = "Message_type";
+        public const string Ptn = "Ptn";
+        public const string MessageType = "Message_type";
     }
     
     public class ItemMaster
