@@ -65,7 +65,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 MultiSkuData(db);
                 NotEnoughInvCase = QueryForNotEnoughInventoryInCase(db, 1);
             }
-        }     
+        }
+
+
 
         public CaseViewDto TriggerOnCaseHeader(OracleConnection db, int seqNumber)
         {
@@ -94,6 +96,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
             return caseheader;
         }
+
+       
 
         public CaseViewDto ValidQueryToFetchCaseData(OracleConnection db, int seqNumber)
         {
@@ -159,7 +163,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
             return caseDtl;
         }
-       
+      
+
         public void MultiSkuData(OracleConnection db)
         {
             CaseHdrMultiSku = TriggerOnCaseHeader(db,1);
