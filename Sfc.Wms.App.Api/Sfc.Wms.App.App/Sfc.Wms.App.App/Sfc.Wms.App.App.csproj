@@ -11,8 +11,9 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Sfc.Wms.Configuration.SystemCode.Contracts" Version="[2.2,3.0)" />
-    <PackageReference Include="Sfc.Wms.Framework.Security.Rbac" Version="5.0.1" />
+    <PackageReference Include="Sfc.Wms.Framework.Security.Rbac" Version="5.0.3" />
     <PackageReference Include="Sfc.Wms.Framework.Security.Token.Jwt" Version="3.0.2" />
-    <PackageReference Include="Sfc.Wms.Framework.SystemCode.App" Version="3.1.1" />
+    <PackageReference Include="Sfc.Wms.Framework.SystemCode.App" Version="3.2.3" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.5.0" />
   </ItemGroup>
 </Project>
