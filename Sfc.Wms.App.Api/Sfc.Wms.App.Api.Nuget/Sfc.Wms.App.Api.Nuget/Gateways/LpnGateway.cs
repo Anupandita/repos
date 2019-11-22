@@ -203,7 +203,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
 
         private RestRequest UpdateLpnDetailsRequest(LpnDetailsUpdateModel lpnDetailsUpdateModel, string token)
         {
-            var resource = $"{_endPoint}/{Routes.Paths.LpnDetails}";
+            var resource = $"{_endPoint}/{Routes.Paths.LpnUpdateDetails}";
 
             return PutRequest(resource, lpnDetailsUpdateModel, token, Authorization);
         }

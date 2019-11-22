@@ -15,16 +15,16 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
     [TestClass]
     public class CostMessageFixture : DataBaseFixtureForCost
     {
-        protected string currentCaseNbr;
+        protected string CurrentCaseNbr;
         protected string CostUrl = @ConfigurationManager.AppSettings["EmsToWmsUrl"];
-        protected CaseDetailDto caseDetailDto;
+        protected CaseDetailDto CaseDetailDto;
         protected Cost Parameters;
         protected IRestResponse Response;
-        protected Int64 currentMsgKey;
-        protected BaseResult negativecase1;
-        protected BaseResult negativecase2;
-        protected BaseResult negativeCase3;
-        protected BaseResult negativeCase4;
+        protected Int64 CurrentMsgKey;
+        protected BaseResult Negativecase1;
+        protected BaseResult Negativecase2;
+        protected BaseResult NegativeCase3;
+        protected BaseResult NegativeCase4;
 
         protected void TestInitialize()
         {
@@ -53,30 +53,30 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         protected void AValidMsgKey()
         {
-            currentMsgKey = costData.MsgKey;
+            CurrentMsgKey = CostData.MsgKey;
         }
         protected void InvalidMsgKey()
         {
-            currentMsgKey = 5;
+            CurrentMsgKey = 5;
         }    
         protected void InvalidCaseMsgKey()
         {
-            currentMsgKey = costData.InvalidKey;
+            CurrentMsgKey = CostData.InvalidKey;
         }     
         protected void TransInvnNotExistsMsgKey()
         {
-            currentMsgKey = costDataForTransInvnNotExist.MsgKey;
+            CurrentMsgKey = CostDataForTransInvnNotExist.MsgKey;
         }
         protected void PickLocationNotExistKey()
         {
-            currentMsgKey = costDataForPickLocnNotExist.MsgKey;
+            CurrentMsgKey = CostDataForPickLocnNotExist.MsgKey;
         }  
         protected IRestResponse ApiIsCalled()
         {
             var client = new RestClient(CostUrl);
             var request = new RestRequest(Method.POST);
             request.AddHeader("content-type", Content.ContentType);
-            request.AddJsonBody(currentMsgKey);
+            request.AddJsonBody(CurrentMsgKey);
             request.RequestFormat = DataFormat.Json;
             Response = client.Execute(request);           
             return Response;
@@ -84,7 +84,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected BaseResult CostResult()
         {
             var response = ApiIsCalled();
-            var result = JsonConvert.DeserializeObject<BaseResult>(response.Content.ToString());
+            var result = JsonConvert.DeserializeObject<BaseResult>(response.Content);
             return result;
         }
         protected void CostApiIsCalledWithValidMsgKey()
@@ -94,22 +94,22 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         }
         protected void CostApiIsCalledForInvalidMessageKey()
         {
-            negativecase1 = CostResult();       
+            Negativecase1 = CostResult();       
         }  
 
         protected void CostApiIsCalledForInvalidCaseNumber()
         {
-            negativecase2 = CostResult();    
+            Negativecase2 = CostResult();    
         }
 
         protected void CostApiIsCalledForTransInvnNotFound()
         {
-            negativeCase3 = CostResult();
+            NegativeCase3 = CostResult();
         }
        
         protected void CostApiIsCalledForPickLocnNotFound()
         {
-            negativeCase4 = CostResult();         
+            NegativeCase4 = CostResult();         
         }
       
         protected void GetValidDataAfterTrigger()
@@ -119,44 +119,44 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         
         protected void VerifyCostMessageWasInsertedIntoSwmFromMhe()
         {
-            Assert.AreEqual(emsToWmsParameters.Process, swmFromMhe.SourceMessageProcess);
-            Assert.AreEqual(costData.MsgKey, swmFromMhe.SourceMessageKey);
-            Assert.AreEqual(emsToWmsParameters.Status,swmFromMhe.SourceMessageStatus);
-            Assert.AreEqual(emsToWmsParameters.Transaction, swmFromMhe.SourceMessageTransactionCode);
-            Assert.AreEqual(emsToWmsParameters.ResponseCode,swmFromMhe.SourceMessageResponseCode);
-            Assert.AreEqual(emsToWmsParameters.MessageText, swmFromMhe.SourceMessageText);            
-            Assert.AreEqual(DefaultValues.ContainerType, swmFromMhe.ContainerType);
-            Assert.AreEqual(TransactionCode.Cost, cost.TransactionCode);
-            Assert.AreEqual(DefaultValues.MessageLengthCost, cost.MessageLength);
-            Assert.AreEqual(DefaultValues.ActionCodeCost, cost.ActionCode);
-            Assert.AreEqual(caseHeaderDto.PoNumber, swmFromMhe.PoNumber);
+            Assert.AreEqual(EmsToWmsParameters.Process, SwmFromMheDto.SourceMessageProcess);
+            Assert.AreEqual(CostData.MsgKey, SwmFromMheDto.SourceMessageKey);
+            Assert.AreEqual(EmsToWmsParameters.Status, SwmFromMheDto.SourceMessageStatus);
+            Assert.AreEqual(EmsToWmsParameters.Transaction, SwmFromMheDto.SourceMessageTransactionCode);
+            Assert.AreEqual(EmsToWmsParameters.ResponseCode, SwmFromMheDto.SourceMessageResponseCode);
+            Assert.AreEqual(EmsToWmsParameters.MessageText, SwmFromMheDto.SourceMessageText);            
+            Assert.AreEqual(DefaultValues.ContainerType, SwmFromMheDto.ContainerType);
+            Assert.AreEqual(TransactionCode.Cost, Cost.TransactionCode);
+            Assert.AreEqual(DefaultValues.MessageLengthCost, Cost.MessageLength);
+            Assert.AreEqual(DefaultValues.ActionCodeCost, Cost.ActionCode);
+            Assert.AreEqual(CaseHeaderDto.PoNumber, SwmFromMheDto.PoNumber);
         }
         
         protected void VerifyTheQuantityWasDecreasedInToTransInventory()
         {
-            Assert.AreEqual(trnInvBeforeApi.ActualInventoryUnits - (Convert.ToDecimal(cost.StorageClassAttribute2)/100), trnInvAfterApi.ActualInventoryUnits);
-            Assert.AreEqual(trnInvBeforeApi.ActualWeight - (unitweight1 * (Convert.ToDecimal(cost.StorageClassAttribute2)/100)), trnInvAfterApi.ActualWeight);
+            Assert.AreEqual(TrnInvBeforeApi.ActualInventoryUnits - (Convert.ToDecimal(Cost.StorageClassAttribute2)/100), TrnInvAfterApi.ActualInventoryUnits);
+            Assert.AreEqual(TrnInvBeforeApi.ActualWeight - (UnitWeight1 * (Convert.ToDecimal(Cost.StorageClassAttribute2)/100)), TrnInvAfterApi.ActualWeight);
         }
 
         protected void VerifyTheQuantityWasIncreasedIntoPickLocationTable()
         {
-            Assert.AreEqual(pickLcnDtlBeforeApi.ActualInventoryQuantity + (Convert.ToDecimal(cost.StorageClassAttribute2) / 100), pickLocnDtlAfterApi.ActualInventoryQuantity);
-            Assert.AreEqual(pickLcnDtlBeforeApi.ToBeFilledQty - (Convert.ToDecimal(cost.StorageClassAttribute2) / 100), pickLocnDtlAfterApi.ToBeFilledQty);
+            Assert.AreEqual(PickLcnDtlBeforeApi.ActualInventoryQuantity + (Convert.ToDecimal(Cost.StorageClassAttribute2) / 100), PickLocnDtlAfterApi.ActualInventoryQuantity);
+            Assert.AreEqual(PickLcnDtlBeforeApi.ToBeFilledQty - (Convert.ToDecimal(Cost.StorageClassAttribute2) / 100), PickLocnDtlAfterApi.ToBeFilledQty);
         }
         protected void ValidateResultForInvalidMessageKey()
         {
-            Assert.AreEqual(ResultType.NotFound, negativecase1.ResultType.ToString());
-            Assert.AreEqual(1, negativecase1.ValidationMessages.Count);
-            Assert.AreEqual(ValidationMessage.EmsToWms, negativecase1.ValidationMessages[0].FieldName);
-            Assert.AreEqual(ValidationMessage.InvalidMessageKey, negativecase1.ValidationMessages[0].Message);
+            Assert.AreEqual(ResultType.NotFound, Negativecase1.ResultType.ToString());
+            Assert.AreEqual(1, Negativecase1.ValidationMessages.Count);
+            Assert.AreEqual(ValidationMessage.EmsToWms, Negativecase1.ValidationMessages[0].FieldName);
+            Assert.AreEqual(ValidationMessage.InvalidMessageKey, Negativecase1.ValidationMessages[0].Message);
         }
         protected void ValidateResultForInvalidCaseNumber()
         {
-            Assert.AreEqual(2, negativecase2.ValidationMessages.Count);
-            Assert.AreEqual(ValidationMessage.ContainerId, negativecase2.ValidationMessages[0].FieldName);
-            Assert.AreEqual(ValidationMessage.Invalid, negativecase2.ValidationMessages[0].Message);
-            Assert.AreEqual(ValidationMessage.Sku, negativecase2.ValidationMessages[1].FieldName);
-            Assert.AreEqual(ValidationMessage.Invalid, negativecase2.ValidationMessages[1].Message);
+            Assert.AreEqual(2, Negativecase2.ValidationMessages.Count);
+            Assert.AreEqual(ValidationMessage.ContainerId, Negativecase2.ValidationMessages[0].FieldName);
+            Assert.AreEqual(ValidationMessage.Invalid, Negativecase2.ValidationMessages[0].Message);
+            Assert.AreEqual(ValidationMessage.Sku, Negativecase2.ValidationMessages[1].FieldName);
+            Assert.AreEqual(ValidationMessage.Invalid, Negativecase2.ValidationMessages[1].Message);
         }
 
         protected void ValidateResultForTransInventoryNotExist()
@@ -165,10 +165,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         }
         protected void ValidateResultForPickLocnNotFound()
         {
-            Assert.AreEqual(1, negativeCase4.ValidationMessages.Count);
+            Assert.AreEqual(1, NegativeCase4.ValidationMessages.Count);
             /* Validation Messages are not proper */
            // Assert.AreEqual(ValidationMessage.PickLocationDtl, negativeCase4.ValidationMessages[0].FieldName);
-            Assert.AreEqual(ValidationMessage.NotFound, negativeCase4.ValidationMessages[0].Message);
+            Assert.AreEqual(ValidationMessage.NotFound, NegativeCase4.ValidationMessages[0].Message);
         }
     }
 }

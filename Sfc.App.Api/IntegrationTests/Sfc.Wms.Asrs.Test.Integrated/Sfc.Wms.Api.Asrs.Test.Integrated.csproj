@@ -60,6 +60,8 @@
     <Compile Include="Fixtures\DataBaseFixtureForIvst.cs" />
     <Compile Include="Fixtures\SkmtMessageFixture.cs" />
     <Compile Include="Fixtures\DataBaseFixtureForSkmt.cs" />
+    <Compile Include="Fixtures\MprqMessageFixture.cs" />
+    <Compile Include="Fixtures\DataBaseFixtureForMprq.cs" />
     <Compile Include="TestData\CaseViewDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestData\ComtParams.cs" />
@@ -70,6 +72,7 @@
     <Compile Include="TestData\OrstTestData.cs" />
     <Compile Include="TestData\SkmtParams.cs" />
     <Compile Include="TestData\ItemMasterView.cs" />
+    <Compile Include="TestData\mprq.cs" />
     <Compile Include="Tests\OrmtMessageTest.cs" />
     <Compile Include="Tests\OrstMessageTest.cs" />
     <Compile Include="Tests\OrmtNegativeCases.cs" />
@@ -88,6 +91,7 @@
     <Compile Include="Tests\SkmtParentSku.cs" />
     <Compile Include="Tests\SkmtChildSku.cs" />
     <Compile Include="Tests\SkmtNeagtiveCase.cs" />
+    <Compile Include="Tests\MprqAndMpidTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Castle.Core">
@@ -132,6 +136,15 @@
     <PackageReference Include="Sfc.Core.OnPrem.ParserAndTranslator">
       <Version>2.0.0</Version>
     </PackageReference>
+    <PackageReference Include="Sfc.Core.OnPrem.Result">
+      <Version>2.1.2</Version>
+    </PackageReference>
+    <PackageReference Include="Sfc.Wms.Configuration.NextUpCounter.Contracts">
+      <Version>4.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="Sfc.Wms.Configuration.NextUpCounter.Repository">
+      <Version>4.1.0</Version>
+    </PackageReference>
     <PackageReference Include="Sfc.Wms.Foundation.Carton.Contracts">
       <Version>2.0.2</Version>
     </PackageReference>
@@ -162,6 +175,9 @@
     <PackageReference Include="Sfc.Wms.Foundation.TransitionalInventory.Contracts">
       <Version>1.0.1</Version>
     </PackageReference>
+    <PackageReference Include="Sfc.Wms.Framework.NextUpCounter.Contracts">
+      <Version>4.0.0</Version>
+    </PackageReference>
     <PackageReference Include="Sfc.Wms.Interfaces.Asrs.Contracts">
       <Version>1.1.0</Version>
     </PackageReference>
@@ -182,6 +198,9 @@
     </PackageReference>
     <PackageReference Include="Sfc.Wms.Interfaces.Builder">
       <Version>1.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Sfc.Wms.NextUpCounter.Contracts">
+      <Version>2.0.2</Version>
     </PackageReference>
     <PackageReference Include="System.Memory">
       <Version>4.5.3</Version>

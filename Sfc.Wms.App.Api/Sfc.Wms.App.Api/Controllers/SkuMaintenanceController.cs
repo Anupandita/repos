@@ -33,5 +33,19 @@ namespace Sfc.Wms.App.Api.Controllers
                 ? statusCode
                 : HttpStatusCode.ExpectationFailed, result);
         }
+
+        [HttpPost]
+        [Route(Routes.Paths.SkmtWrapper)]
+        [ResponseType(typeof(BaseResult))]
+        [AllowAnonymous]
+        public async Task<IHttpActionResult> CreateAsync(string actionCode)
+        {
+            var result = await _wmsToEmsMessageProcessorService.GetAllSkmtMessageAsync(actionCode)
+                .ConfigureAwait(false);
+
+            return Content(Enum.TryParse(result.ResultType.ToString(), out HttpStatusCode statusCode)
+                ? statusCode
+                : HttpStatusCode.ExpectationFailed, result);
+        }
     }
 }

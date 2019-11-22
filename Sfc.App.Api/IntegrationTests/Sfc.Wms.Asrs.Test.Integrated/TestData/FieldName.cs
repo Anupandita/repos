@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
 {
@@ -13,8 +12,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
         public const string SkuId = "SKU_ID";
         public const string TotalAllocQty = "TOTAL_ALLOC_QTY";
         public const string LocnId = "LOCN_ID";
-        public const string ToBeFilledQty = "TO_BE_FILLD_QTY";
+        public const string Prefixfield = "PFX_FIELD";
+        public const string Currentnumber = "CURR_NBR";
         public const string ActlInvnQty = "ACTL_INVN_QTY";
+        public const string ToBeFilledQty = "TO_BE_FILLD_QTY";
         public const string Status = "STS";
         public const string ReasonCode = "RSNRCODE";
         public const string ActualInventoryUnits = "ACTL_INVN_UNITS";

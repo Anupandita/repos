@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
 {
@@ -9,6 +8,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
 
         public string Exception { get; set; }
 
-        public Int64 key { get; set; }
+        public Int64 Key { get; set; }
     }
 }

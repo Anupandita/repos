@@ -20,7 +20,7 @@ namespace Wms.App.Api
                 })
                 .EnableSwaggerUi(c =>
                 {
-                    c.EnableApiKeySupport("Token", "header");
+                    c.EnableApiKeySupport("Authorization", "header");
                 });
         }
     }

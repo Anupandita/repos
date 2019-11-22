@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
 {
@@ -7,18 +6,18 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
     public class ItemMasterView
     {
         public string SkuId { get; set; }
-        public string div { get; set; }
+        public string Div { get; set; }
         public string Skudesc { get; set; }
         public string StdCaseQty { get; set; }
-        public string tempzone { get; set; }
-        public string unitwieght { get; set; }
+        public string Tempzone { get; set; }
+        public string Unitwieght { get; set; }
 
-        public string unitvolume { get; set; }
-        public string prodlifeinday { get; set; }
-        public string colordescription { get; set; }
+        public string Unitvolume { get; set; }
+        public string Prodlifeinday { get; set; }
+        public string Colordescription { get; set; }
 
         public string NestVolume { get; set; }
-        public string skubrcd { get; set; }
+        public string Skubrcd { get; set; }
     }
 
     //public class Content

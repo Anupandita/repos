@@ -1,6 +1,6 @@
-﻿namespace Sfc.Wms.App.Api.Contracts.Entities
+﻿namespace Sfc.Wms.App.Api.Contracts.Dto
 {
-    public class CommonModel
+    public class SystemCodeDto
     {
         public string RecType { get; set; }
         public string CodeType { get; set; }
