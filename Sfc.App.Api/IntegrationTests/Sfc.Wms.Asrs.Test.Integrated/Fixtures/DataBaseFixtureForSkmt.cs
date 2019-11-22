@@ -1,7 +1,5 @@
 ﻿using System;
 using Oracle.ManagedDataAccess.Client;
-using System.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
 using Newtonsoft.Json;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Constants;
@@ -13,14 +11,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
     public class DataBaseFixtureForSkmt : CommonFunction
     {
-        protected ItemMasterView ItemMaster = new ItemMasterView();
+        protected readonly ItemMasterView ItemMaster = new ItemMasterView();
         protected ItemMasterView Normal = new ItemMasterView();
-        protected ItemMasterView parentSku = new ItemMasterView();
-        protected ItemMasterView childSku = new ItemMasterView();
+        protected ItemMasterView ParentSku = new ItemMasterView();
+        protected ItemMasterView ChildSku = new ItemMasterView();
         protected ItemMasterView Childskuassertion = new ItemMasterView();
-        protected WmsToEmsDto wmsToEmsSkmt = new WmsToEmsDto();
-        protected SwmToMheDto swmToMheSkmt = new SwmToMheDto();
-        protected SkmtDto skmt = new SkmtDto();
+        protected WmsToEmsDto WmsToEmsSkmt = new WmsToEmsDto();
+        protected SwmToMheDto SwmToMheSkmt = new SwmToMheDto();
+        protected SkmtDto Skmt = new SkmtDto();
 
 
         public void GetDataBeforeTriggerSkmt()
@@ -37,7 +35,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                parentSku = TriggerOnItemMaster(db, "C");
+                ParentSku = TriggerOnItemMaster(db, "C");
 
             }
         }
@@ -46,9 +44,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                parentSku = TriggerOnItemMaster(db, "C");
-                childSku = TriggerOnItemMaster(db, "P");
-                Childskuassertion = ChildSkufunction(db, parentSku.SkuId);
+                ParentSku = TriggerOnItemMaster(db, "C");
+                ChildSku = TriggerOnItemMaster(db, "P");
+                Childskuassertion = ChildSkufunction(db, ParentSku.SkuId);
             }
 
 
@@ -61,21 +59,21 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             {
                 sqlStatement = sqlStatement + $" where SPL_INSTR_CODE_5='{skuCondition}'";
             }
-            command = new OracleCommand(sqlStatement, db);
-            var ItemMasterReader = command.ExecuteReader();
-            if (ItemMasterReader.Read())
+            Command = new OracleCommand(sqlStatement, db);
+            var itemMasterReader = Command.ExecuteReader();
+            if (itemMasterReader.Read())
             {
-                ItemMaster.SkuId = ItemMasterReader[ItemMasterViews.SkuId].ToString();
-                ItemMaster.div = ItemMasterReader[ItemMasterViews.div].ToString();
-                ItemMaster.Skudesc = ItemMasterReader[ItemMasterViews.skuDesc].ToString();
-                ItemMaster.StdCaseQty = ItemMasterReader[ItemMasterViews.StdCaseQty].ToString();
-                ItemMaster.tempzone = ItemMasterReader[ItemMasterViews.tempzone].ToString();
-                ItemMaster.unitwieght = ItemMasterReader[ItemMasterViews.unitwieght].ToString();
-                ItemMaster.unitvolume = ItemMasterReader[ItemMasterViews.unitvolume].ToString();
-                ItemMaster.prodlifeinday = ItemMasterReader[ItemMasterViews.prodlifeinday].ToString();
-                ItemMaster.NestVolume = ItemMasterReader[ItemMasterViews.NestVolume].ToString();
-                ItemMaster.skubrcd = ItemMasterReader[ItemMasterViews.skubrcd].ToString();
-                ItemMaster.colordescription = ItemMasterReader[ItemMasterViews.colordesc].ToString();
+                ItemMaster.SkuId = itemMasterReader[ItemMasterViews.SkuId].ToString();
+                ItemMaster.Div = itemMasterReader[ItemMasterViews.Div].ToString();
+                ItemMaster.Skudesc = itemMasterReader[ItemMasterViews.SkuDesc].ToString();
+                ItemMaster.StdCaseQty = itemMasterReader[ItemMasterViews.StdCaseQty].ToString();
+                ItemMaster.Tempzone = itemMasterReader[ItemMasterViews.Tempzone].ToString();
+                ItemMaster.Unitwieght = itemMasterReader[ItemMasterViews.Unitwieght].ToString();
+                ItemMaster.Unitvolume = itemMasterReader[ItemMasterViews.Unitvolume].ToString();
+                ItemMaster.Prodlifeinday = itemMasterReader[ItemMasterViews.Prodlifeinday].ToString();
+                ItemMaster.NestVolume = itemMasterReader[ItemMasterViews.NestVolume].ToString();
+                ItemMaster.Skubrcd = itemMasterReader[ItemMasterViews.Skubrcd].ToString();
+                ItemMaster.Colordescription = itemMasterReader[ItemMasterViews.Colordesc].ToString();
             }
 
 
@@ -86,29 +84,29 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         public ItemMasterView ChildSkufunction(OracleConnection db, string colordesc)
         {
-            var Query = $"select * from Item_master WHERE COLOR_DESC='{colordesc}'";
+            var query = $"select * from Item_master WHERE COLOR_DESC='{colordesc}'";
 
-            command = new OracleCommand(Query, db);
-            var ColordescReader = command.ExecuteReader();
-            if (ColordescReader.Read())
+            Command = new OracleCommand(query, db);
+            var colordescReader = Command.ExecuteReader();
+            if (colordescReader.Read())
             {
-                ItemMaster.SkuId = ColordescReader[ItemMasterViews.SkuId].ToString();
-                ItemMaster.colordescription = ColordescReader[ItemMasterViews.colordesc].ToString();
+                ItemMaster.SkuId = colordescReader[ItemMasterViews.SkuId].ToString();
+                ItemMaster.Colordescription = colordescReader[ItemMasterViews.Colordesc].ToString();
 
             }
             return ItemMaster;
 
         }
 
-        public void GetDataAfterTrigger()
+        protected void GetDataAfterTrigger()
         {
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                command = new OracleCommand();
-                swmToMheSkmt = SwmToMhe(db, ItemMaster.SkuId, TransactionCode.Skmt);
-                skmt = JsonConvert.DeserializeObject<SkmtDto>(swmToMheSkmt.MessageJson);
-                wmsToEmsSkmt = WmsToEmsData(db, swmToMheSkmt.SourceMessageKey, TransactionCode.Skmt);
+                Command = new OracleCommand();
+                SwmToMheSkmt = SwmToMhe(db, ItemMaster.SkuId, TransactionCode.Skmt);
+                Skmt = JsonConvert.DeserializeObject<SkmtDto>(SwmToMheSkmt.MessageJson);
+                WmsToEmsSkmt = WmsToEmsData(db, SwmToMheSkmt.SourceMessageKey, TransactionCode.Skmt);
 
             }
         }
@@ -117,8 +115,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var swmtomhedata = new SwmToMheDto();
             var query = $"select * from SWM_TO_MHE where sku_id = '{skuId}'and source_msg_trans_code = '{trx}' order by SOURCE_MSG_KEY desc";
-            command = new OracleCommand(query, db);
-            var swmToMheReader = command.ExecuteReader();
+            Command = new OracleCommand(query, db);
+            var swmToMheReader = Command.ExecuteReader();
             if (swmToMheReader.Read())
             {
                 swmtomhedata.SourceMessageKey = Convert.ToInt16(swmToMheReader[TestData.SwmToMhe.SourceMsgKey].ToString());

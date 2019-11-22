@@ -14,11 +14,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
     public class IvstMessageFixture: DataBaseFixtureForIvst
     {
         protected string IvstUrl = @ConfigurationManager.AppSettings["EmsToWmsUrl"];
-        protected Int64 currentMsgKey;
+        protected Int64 CurrentMsgKeys;
         protected Ivst Parameters;
         protected IRestResponse Response;
         protected long CurrentMsgKey;
-        protected OracleConnection db;
+        protected OracleConnection Db;
         protected void TestInitialize()
         {
             GetDataBeforeApiTrigger();
@@ -86,102 +86,102 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected BaseResult IvstResult()
         {
             var response = ApiIsCalled();
-            var result = JsonConvert.DeserializeObject<BaseResult>(response.Content.ToString());
+            var result = JsonConvert.DeserializeObject<BaseResult>(response.Content);
             return result;
         }
         protected void VerifyIvstMessageWasInsertedIntoSwmFromMheUnExceptedOverage()
         {
-            Assert.AreEqual(emsToWmsParameters.Process, swmFromMhe.SourceMessageProcess);
-            Assert.AreEqual(IvstData.Key, swmFromMhe.SourceMessageKey);
-            Assert.AreEqual(emsToWmsParameters.Status, swmFromMhe.SourceMessageStatus);
-            Assert.AreEqual(emsToWmsParameters.Transaction, swmFromMhe.SourceMessageTransactionCode);
-            Assert.AreEqual(emsToWmsParameters.ResponseCode, swmFromMhe.SourceMessageResponseCode);
-            Assert.AreEqual(emsToWmsParameters.MessageText, swmFromMhe.SourceMessageText);
-            Assert.AreEqual(Ivst.ContainerId, swmFromMhe.ContainerId);
+            Assert.AreEqual(EmsToWmsParameters.Process, SwmFromMhe.SourceMessageProcess);
+            Assert.AreEqual(IvstData.Key, SwmFromMhe.SourceMessageKey);
+            Assert.AreEqual(EmsToWmsParameters.Status, SwmFromMhe.SourceMessageStatus);
+            Assert.AreEqual(EmsToWmsParameters.Transaction, SwmFromMhe.SourceMessageTransactionCode);
+            Assert.AreEqual(EmsToWmsParameters.ResponseCode, SwmFromMhe.SourceMessageResponseCode);
+            Assert.AreEqual(EmsToWmsParameters.MessageText, SwmFromMhe.SourceMessageText);
+            Assert.AreEqual(Ivst.ContainerId, SwmFromMhe.ContainerId);
         }
 
         protected void VerifyIvstMessageWasInsertedIntoSwmFromMheInventoryShortage()
         {
-            Assert.AreEqual(emsToWmsParametersInventoryShortage.Process, swmFromMhe.SourceMessageProcess);
-            Assert.AreEqual(Invshort.Key, swmFromMhe.SourceMessageKey);
-            Assert.AreEqual(emsToWmsParametersInventoryShortage.Status, swmFromMhe.SourceMessageStatus);
-            Assert.AreEqual(emsToWmsParametersInventoryShortage.Transaction, swmFromMhe.SourceMessageTransactionCode);
-            Assert.AreEqual(emsToWmsParametersInventoryShortage.ResponseCode, swmFromMhe.SourceMessageResponseCode);
-            Assert.AreEqual(emsToWmsParametersInventoryShortage.MessageText, swmFromMhe.SourceMessageText);
-            Assert.AreEqual(Ivst.ContainerId, swmFromMhe.ContainerId);
+            Assert.AreEqual(EmsToWmsParametersInventoryShortage.Process, SwmFromMhe.SourceMessageProcess);
+            Assert.AreEqual(Invshort.Key, SwmFromMhe.SourceMessageKey);
+            Assert.AreEqual(EmsToWmsParametersInventoryShortage.Status, SwmFromMhe.SourceMessageStatus);
+            Assert.AreEqual(EmsToWmsParametersInventoryShortage.Transaction, SwmFromMhe.SourceMessageTransactionCode);
+            Assert.AreEqual(EmsToWmsParametersInventoryShortage.ResponseCode, SwmFromMhe.SourceMessageResponseCode);
+            Assert.AreEqual(EmsToWmsParametersInventoryShortage.MessageText, SwmFromMhe.SourceMessageText);
+            Assert.AreEqual(Ivst.ContainerId, SwmFromMhe.ContainerId);
 
         }
         protected void VerifyIvstMessageWasInsertedIntoSwmFromMheDamage()
         {
-            Assert.AreEqual(emsToWmsParametersDamage.Process, swmFromMhe.SourceMessageProcess);
-            Assert.AreEqual(Damage.Key, swmFromMhe.SourceMessageKey);
-            Assert.AreEqual(emsToWmsParametersDamage.Status, swmFromMhe.SourceMessageStatus);
-            Assert.AreEqual(emsToWmsParametersDamage.Transaction, swmFromMhe.SourceMessageTransactionCode);
-            Assert.AreEqual(emsToWmsParametersDamage.ResponseCode, swmFromMhe.SourceMessageResponseCode);
-            Assert.AreEqual(emsToWmsParametersDamage.MessageText, swmFromMhe.SourceMessageText);
-            Assert.AreEqual(Ivst.ContainerId, swmFromMhe.ContainerId);
+            Assert.AreEqual(EmsToWmsParametersDamage.Process, SwmFromMhe.SourceMessageProcess);
+            Assert.AreEqual(Damage.Key, SwmFromMhe.SourceMessageKey);
+            Assert.AreEqual(EmsToWmsParametersDamage.Status, SwmFromMhe.SourceMessageStatus);
+            Assert.AreEqual(EmsToWmsParametersDamage.Transaction, SwmFromMhe.SourceMessageTransactionCode);
+            Assert.AreEqual(EmsToWmsParametersDamage.ResponseCode, SwmFromMhe.SourceMessageResponseCode);
+            Assert.AreEqual(EmsToWmsParametersDamage.MessageText, SwmFromMhe.SourceMessageText);
+            Assert.AreEqual(Ivst.ContainerId, SwmFromMhe.ContainerId);
 
         }
 
         protected void VerifyIvstMessageWasInsertedIntoSwmFromMheWrongSku()
         {
-            Assert.AreEqual(emsToWmsParametersWrongSku.Process, swmFromMhe.SourceMessageProcess);
-            Assert.AreEqual(WrongSku.Key, swmFromMhe.SourceMessageKey);
-            Assert.AreEqual(emsToWmsParametersWrongSku.Status, swmFromMhe.SourceMessageStatus);
-            Assert.AreEqual(emsToWmsParametersWrongSku.Transaction, swmFromMhe.SourceMessageTransactionCode);
-            Assert.AreEqual(emsToWmsParametersWrongSku.ResponseCode, swmFromMhe.SourceMessageResponseCode);
-            Assert.AreEqual(emsToWmsParametersWrongSku.MessageText, swmFromMhe.SourceMessageText);
-            Assert.AreEqual(Ivst.ContainerId, swmFromMhe.ContainerId);
+            Assert.AreEqual(EmsToWmsParametersWrongSku.Process, SwmFromMhe.SourceMessageProcess);
+            Assert.AreEqual(WrongSku.Key, SwmFromMhe.SourceMessageKey);
+            Assert.AreEqual(EmsToWmsParametersWrongSku.Status, SwmFromMhe.SourceMessageStatus);
+            Assert.AreEqual(EmsToWmsParametersWrongSku.Transaction, SwmFromMhe.SourceMessageTransactionCode);
+            Assert.AreEqual(EmsToWmsParametersWrongSku.ResponseCode, SwmFromMhe.SourceMessageResponseCode);
+            Assert.AreEqual(EmsToWmsParametersWrongSku.MessageText, SwmFromMhe.SourceMessageText);
+            Assert.AreEqual(Ivst.ContainerId, SwmFromMhe.ContainerId);
 
         }
         protected void VerifyCycleCountMessage()
         {
-            Assert.AreEqual(pickLcnDtlBeforeApi.ActualInventoryQuantity + Convert.ToDecimal(Ivst.Quantity), pickLocnDtlAfterApi.ActualInventoryQuantity);
+            Assert.AreEqual(PickLcnDtlBeforeApi.ActualInventoryQuantity + Convert.ToDecimal(Ivst.Quantity), PickLocnDtlAfterApi.ActualInventoryQuantity);
 
         }
 
         protected void PixTransactionValidationForCycleCountAdjustmentPlus()
         {
-            Assert.AreEqual("CC", pixtran.ReasonCode);
+            Assert.AreEqual("CC", Pixtran.ReasonCode);
         }
         protected void VerifyTheQuantityForUnexpectedOverageExceptionIntoTransInventoryTable()
         {
-            Assert.AreEqual(trnsInvBeforeApi.ActualInventoryUnits + Convert.ToDecimal(Ivst.Quantity) , trnsInvAfterApi.ActualInventoryUnits);
+            Assert.AreEqual(TrnsInvBeforeApi.ActualInventoryUnits + Convert.ToDecimal(Ivst.Quantity) , TrnsInvAfterApi.ActualInventoryUnits);
 
         }
         protected void VerifyTheRecordInsertedIntoPixTransactionTablereasonCodeForUnexpectedOverageException()
         {
-            Assert.AreEqual("CO", pixtran.ReasonCode);
+            Assert.AreEqual("CO", Pixtran.ReasonCode);
         }
 
         protected void VerifyTheQuantityForInventoryShortageExceptionIntoTransInventoryTable()
         {
-            Assert.AreEqual(trnsInvBeforeApi.ActualInventoryUnits - Convert.ToDecimal(Ivst.Quantity), trnsInvAfterApi.ActualInventoryUnits);
-            Assert.AreEqual(Convert.ToDecimal(trnsInvBeforeApi.ActualWeight) - (unitWeight * Convert.ToDecimal(Ivst.Quantity)), Convert.ToDecimal(trnsInvAfterApi.ActualWeight));
+            Assert.AreEqual(TrnsInvBeforeApi.ActualInventoryUnits - Convert.ToDecimal(Ivst.Quantity), TrnsInvAfterApi.ActualInventoryUnits);
+            Assert.AreEqual(Convert.ToDecimal(TrnsInvBeforeApi.ActualWeight) - (UnitWeight * Convert.ToDecimal(Ivst.Quantity)), Convert.ToDecimal(TrnsInvAfterApi.ActualWeight));
         }
 
         protected void VerifyTheRecordInsertedIntoPixTransactionTablereasonCodeForInventoryShortageException()
         {
-            Assert.AreEqual("CS", pixtran.ReasonCode);
+            Assert.AreEqual("CS", Pixtran.ReasonCode);
         }
 
         protected void VerifyTheQuantityForDamageExceptionIntoTransInventoryTable()
         {
-            Assert.AreEqual(trnsInvBeforeApi.ActualInventoryUnits - Convert.ToDecimal(Ivst.Quantity), trnsInvAfterApi.ActualInventoryUnits);
-            Assert.AreEqual(Convert.ToDecimal(trnsInvBeforeApi.ActualWeight) - (unitWeight * Convert.ToDecimal(Ivst.Quantity) ), Convert.ToDecimal(trnsInvAfterApi.ActualWeight));
+            Assert.AreEqual(TrnsInvBeforeApi.ActualInventoryUnits - Convert.ToDecimal(Ivst.Quantity), TrnsInvAfterApi.ActualInventoryUnits);
+            Assert.AreEqual(Convert.ToDecimal(TrnsInvBeforeApi.ActualWeight) - (UnitWeight * Convert.ToDecimal(Ivst.Quantity) ), Convert.ToDecimal(TrnsInvAfterApi.ActualWeight));
         }
         protected void VerifyTheRecordInsertedIntoPixTransactionTablereasonCodeForDamageException()
         {
-            Assert.AreEqual("DG", pixtran.ReasonCode);
+            Assert.AreEqual("DG", Pixtran.ReasonCode);
         }
         protected void VerifyTheQuantityForWrongSkuExceptionIntoTransInventoryTable()
         {
-            Assert.AreEqual(trnsInvBeforeApi.ActualInventoryUnits - Convert.ToDecimal(Ivst.Quantity), trnsInvAfterApi.ActualInventoryUnits);
-            Assert.AreEqual(Convert.ToDecimal(trnsInvBeforeApi.ActualWeight) - (unitWeight * Convert.ToDecimal(Ivst.Quantity) ), Convert.ToDecimal(trnsInvAfterApi.ActualWeight));
+            Assert.AreEqual(TrnsInvBeforeApi.ActualInventoryUnits - Convert.ToDecimal(Ivst.Quantity), TrnsInvAfterApi.ActualInventoryUnits);
+            Assert.AreEqual(Convert.ToDecimal(TrnsInvBeforeApi.ActualWeight) - (UnitWeight * Convert.ToDecimal(Ivst.Quantity) ), Convert.ToDecimal(TrnsInvAfterApi.ActualWeight));
         }
         protected void VerifyTheRecordInsertedIntoPixTransactionTablereasonCodeForWrongSkuException()
         {
-            Assert.AreEqual("CC", pixtran.ReasonCode);
+            Assert.AreEqual("CC", Pixtran.ReasonCode);
         }
 
     }

@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestStack.BDDfy;
 using Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures;
 

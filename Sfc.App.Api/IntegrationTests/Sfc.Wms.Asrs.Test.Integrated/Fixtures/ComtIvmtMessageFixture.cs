@@ -4,7 +4,6 @@ using RestSharp;
 using Sfc.Core.OnPrem.ParserAndTranslator.Constants;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
-using Sfc.Wms.Foundation.InboundLpn.Contracts.Dtos;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Constants;
 using System;
 using System.Configuration;
@@ -15,10 +14,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
     public class ComtIvmtMessageFixture : DataBaseFixture
     {
-        protected string currentCaseNbr;
-        protected string ComtUrl = @ConfigurationManager.AppSettings["ComtUrl"];
-        protected string IvmtUrl = @ConfigurationManager.AppSettings["IvmtUrl"];
-        protected CaseDetailDto caseDetailDto;
+        protected string CurrentCaseNbr;
+        protected string ComtUrl = ConfigurationManager.AppSettings["ComtUrl"];
+        protected string IvmtUrl = ConfigurationManager.AppSettings["IvmtUrl"];
         protected ComtParams ComtParameters;
         protected IvmtParam IvmtParameters;
         protected IRestResponse Response;
@@ -32,16 +30,16 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         
         protected void CurrentCaseNumberForSingleSku()
         {
-            currentCaseNbr = singleSkuCase.CaseNumber;
+            CurrentCaseNbr = SingleSkuCase.CaseNumber;
         }
 
         protected void CurrentCaseNumberForMultiSku()
         {
-            currentCaseNbr =  caseHdrMultiSku.CaseNumber;
+            CurrentCaseNbr =  CaseHdrMultiSku.CaseNumber;
         }
         protected void CurrentCaseNumberForNotEnoughInventoryInCase()
         {
-            currentCaseNbr = NotEnoughInvCase.CaseNumber;
+            CurrentCaseNbr = NotEnoughInvCase.CaseNumber;
         }
 
         public void AValidNewComtMessageRecord()
@@ -50,9 +48,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             {
                 ActionCode = ActionCodeConstants.Create,
                 CurrentLocationId = DefaultValues.CurrentlocnId,
-                ContainerId = currentCaseNbr,
+                ContainerId = CurrentCaseNbr,
                 ContainerType = DefaultValues.ContainerType,
-                ParentContainerId = currentCaseNbr,
+                ParentContainerId = CurrentCaseNbr,
                 AttributeBitmap = DefaultValues.AttributeBitMap,
                 QuantityToInduct = DefaultValues.QuantityToInduct
             };
@@ -63,9 +61,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             {
                 ActionCode = ActionCodeConstants.Create,
                 CurrentLocationId = DefaultValues.CurrentlocnId,
-                ContainerId = currentCaseNbr,
+                ContainerId = CurrentCaseNbr,
                 ContainerType = DefaultValues.ContainerType,
-                ParentContainerId = currentCaseNbr,
+                ParentContainerId = CurrentCaseNbr,
                 AttributeBitmap = DefaultValues.AttributeBitMap,
                 QuantityToInduct = DefaultValues.QuantityToInduct
             };
@@ -83,7 +81,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected BaseResult IvmtResult()
         {
             var response = ApiIsCalled(IvmtUrl, IvmtParameters);
-            var result = JsonConvert.DeserializeObject<BaseResult>(response.Content.ToString());
+            var result = JsonConvert.DeserializeObject<BaseResult>(response.Content);
             return result;
         }
         protected void IvmtApiIsCalledCreatedIsReturned()
@@ -117,7 +115,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected BaseResult ComtIvmtResult()
         {
             var response = ApiIsCalled(ComtUrl, ComtParameters);
-            var result = JsonConvert.DeserializeObject<BaseResult>(response.Content.ToString());
+            var result = JsonConvert.DeserializeObject<BaseResult>(response.Content);
             return result;
         }
         protected void ComtApiIsCalledCreatedIsReturned()
@@ -141,58 +139,58 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         protected void VerifyIvmtMessageWasInsertedIntoSwmToMhe()
         {
-            Assert.AreEqual(DefaultValues.Status, swmToMheIvmt.SourceMessageStatus);
-            Assert.AreEqual(TransactionCode.Ivmt, ivmt.TransactionCode);
-            Assert.AreEqual(MessageLength.Ivmt, ivmt.MessageLength);
-            Assert.AreEqual(ActionCodeConstants.Create, ivmt.ActionCode);
-            Assert.AreEqual(singleSkuCase.SkuId, ivmt.Sku);
-            Assert.AreEqual(singleSkuCase.TotalAllocQty, Convert.ToDouble(ivmt.Quantity));
-            Assert.AreEqual(DefaultValues.ContainerType, ivmt.UnitOfMeasure);
-            Assert.AreEqual(DefaultValues.DataControl, ivmt.DateControl);
+            Assert.AreEqual(DefaultValues.Status, SwmToMheIvmt.SourceMessageStatus);
+            Assert.AreEqual(TransactionCode.Ivmt, Ivmt.TransactionCode);
+            Assert.AreEqual(MessageLength.Ivmt, Ivmt.MessageLength);
+            Assert.AreEqual(ActionCodeConstants.Create, Ivmt.ActionCode);
+            Assert.AreEqual(SingleSkuCase.SkuId, Ivmt.Sku);
+            Assert.AreEqual(SingleSkuCase.TotalAllocQty, Convert.ToDouble(Ivmt.Quantity));
+            Assert.AreEqual(DefaultValues.ContainerType, Ivmt.UnitOfMeasure);
+            Assert.AreEqual(DefaultValues.DataControl, Ivmt.DateControl);
         }
 
         protected void VerifyComtMessageWasInsertedIntoSwmToMheForMultiSku()
         {
-            VerifyComtMessageWasInsertedIntoSwmToMhe(comt, swmToMheComt, caseHdrMultiSku.CaseNumber);
+            VerifyComtMessageWasInsertedIntoSwmToMhe(Comt, SwmToMheComt, CaseHdrMultiSku.CaseNumber);
         }
         protected void VerifyComtMessageWasInsertedIntoWmsToEms() 
         {
-            VerifyComtMessageWasInsertedIntoWmsToEms(wmsToEmsComt);      
+            VerifyComtMessageWasInsertedIntoWmsToEms(WmsToEmsComt);      
         }
         protected void VerifyComtMessageWasInsertedIntoWmsToEmsForMultiSku()
         {
-            VerifyComtMessageWasInsertedIntoWmsToEms(wmsToEmsComt);
+            VerifyComtMessageWasInsertedIntoWmsToEms(WmsToEmsComt);
         }
         protected void VerifyComtMessageWasInsertedIntoSwmToMhe()
         {
-            VerifyComtMessageWasInsertedIntoSwmToMhe(comt, swmToMheComt, singleSkuCase.CaseNumber);
+            VerifyComtMessageWasInsertedIntoSwmToMhe(Comt, SwmToMheComt, SingleSkuCase.CaseNumber);
         }
         protected void VerifyIvmtMessageWasInsertedIntoWmsToEms()
         {
-            VerifyIvmtMessageWasInsertedIntoWmsToEms(wmsToEmsIvmt);
+            VerifyIvmtMessageWasInsertedIntoWmsToEms(WmsToEmsIvmt);
         }
 
   
         protected void VerifyTheQuantityIsIncreasedToTransInventory()
         {
-           Assert.AreEqual(singleSkuCase.ActualInventoryUnits + Convert.ToDecimal(ivmt.Quantity), caseDtlAfterApi.ActualInventoryUnits);
+           Assert.AreEqual(SingleSkuCase.ActualInventoryUnits + Convert.ToDecimal(Ivmt.Quantity), CaseDtlAfterApi.ActualInventoryUnits);
            // the bellow code will be tested after new build release.
            //Assert.AreEqual((unitWeight * Convert.ToDecimal(ivmt.Quantity))+ Convert.ToInt16(singleSkuCase.ActualWeight), Math.Round(Convert.ToDecimal(caseDtlAfterApi.ActualWeight)));
         }
         protected void VerifyQuantityisReducedIntoCaseDetail()
         {
-            Assert.AreEqual(0, caseDtlAfterApi.TotalAllocQty);        
+            Assert.AreEqual(0, CaseDtlAfterApi.TotalAllocQty);        
         }
         protected void VerifyStatusIsUpdatedIntoCaseHeader()
         {
-            VerifyStatusIsUpdatedIntoCaseHeader(caseDtlAfterApi.StatusCode);
+            VerifyStatusIsUpdatedIntoCaseHeader(CaseDtlAfterApi.StatusCode);
         }
 
         protected void VerifyStatusIsUpdatedIntoTaskHeader()
         {
             try
             {
-                 VerifyStatusIsUpdatedIntoTaskHeader(taskSingleSku.StatusCode);
+                 VerifyStatusIsUpdatedIntoTaskHeader(TaskSingleSku.StatusCode);
             }
             catch
             {
@@ -206,7 +204,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         protected void VerifyStatusIsUpdatedIntoCaseHeaderTable()
         {
-            VerifyStatusIsUpdatedIntoCaseHeader(caseHdrDtl.StatusCode);
+            VerifyStatusIsUpdatedIntoCaseHeader(CaseHdrDtl.StatusCode);
         }
     }
 }
