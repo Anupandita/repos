@@ -4,6 +4,8 @@ using Sfc.Wms.App.Api.Contracts.Constants;
 using Sfc.Wms.App.Api.Contracts.Dto;
 using System;
 using System.Configuration;
+using System.Reflection;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 
@@ -30,7 +32,8 @@ namespace Sfc.Wms.App.Api.Controllers
                 Payload = new ConnectionInfo()
                 {
                     Database = server?.Split('.')[0],
-                    Environment = ConfigurationManager.AppSettings.Get(nameof(Environment))
+                    Environment = ConfigurationManager.AppSettings.Get(nameof(Environment)),
+                    Version = GetType().Assembly.GetName().Version.ToString()
                 }
             };
             return Json(releaseAndConnectionInfo);
