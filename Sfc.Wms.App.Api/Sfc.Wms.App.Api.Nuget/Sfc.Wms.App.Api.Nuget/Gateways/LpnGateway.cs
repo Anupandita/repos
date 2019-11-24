@@ -78,7 +78,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             return await retryPolicy.ExecuteAsync(async () =>
             {
                 var request = GetLpnLockUnlockByLpnIdRequest(lpnId, token);
-                var response = await _restClient.ExecuteTaskAsync<T>(request).ConfigureAwait(false);
+                var response = await _restCsharpClient.ExecuteTaskAsync<T>(request).ConfigureAwait(false);
                 return _responseBuilder.GetBaseResult<T>(response);
             }).ConfigureAwait(false);
         }
@@ -102,7 +102,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             return await retryPolicy.ExecuteAsync(async () =>
             {
                 var request = UpdateLpnDetailsRequest(lpnDetailsUpdateModel, token);
-                var response = await _restClient.ExecuteTaskAsync<T>(request).ConfigureAwait(false);
+                var response = await _restCsharpClient.ExecuteTaskAsync<T>(request).ConfigureAwait(false);
                 return _responseBuilder.GetBaseResult<T>(response);
             }).ConfigureAwait(false);
         }
@@ -114,7 +114,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             return await retryPolicy.ExecuteAsync(async () =>
             {
                 var request = UpdateCaseLpnDetailsRequest(lpnCaseDetailsUpdateModel, token);
-                var response = await _restClient.ExecuteTaskAsync<T>(request).ConfigureAwait(false);
+                var response = await _restCsharpClient.ExecuteTaskAsync<T>(request).ConfigureAwait(false);
                 return _responseBuilder.GetBaseResult<T>(response);
             }).ConfigureAwait(false);
         }
@@ -147,7 +147,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             return await retryPolicy.ExecuteAsync(async () =>
             {
                 var request = GetLpnVendorsRequest(token);
-                var response = await _restClient.ExecuteTaskAsync<T>(request).ConfigureAwait(false);
+                var response = await _restCsharpClient.ExecuteTaskAsync<T>(request).ConfigureAwait(false);
                 return _responseBuilder.GetBaseResult<T>(response);
             }).ConfigureAwait(false);
         }
@@ -173,25 +173,25 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
 
         private RestRequest GetLpnDetailsByLpnIdRequest(String lpnId, string token)
         {
-            var resource = $"{_endPoint}/{Routes.Paths.LpnDetails}/{lpnId}";
+            var resource = $"{_endPoint}/{"lpn-details"}/{lpnId}";
             return GetRequest(token, resource, Authorization);
         }
 
         private RestRequest GetLpnCommentsByLpnIdRequest(String lpnId, string token)
         {
-            var resource = $"{_endPoint}/{Routes.Paths.LpnComments}/{lpnId}";
+            var resource = $"{_endPoint}/{"lpn-comments"}/{lpnId}";
             return GetRequest(token, resource, Authorization);
         }
 
         private RestRequest GetLpnHistoryRequest(String lpnId, string whse, string token)
-        {
-            var resource = $"{_endPoint}/{Routes.Paths.LpnHistory}/{lpnId}/{whse}";
+        {            
+            var resource = $"{_endPoint}/{"lpn-history"}/{lpnId}/{whse}";
             return GetRequest(token, resource, Authorization);
         }
 
         private RestRequest GetLpnLockUnlockByLpnIdRequest(String lpnId, string token)
         {
-            var resource = $"{_endPoint}/{Routes.Paths.LpnLockUnlock}/{lpnId}";
+            var resource = $"{_endPoint}/{"lpn-lock-unlock"}/{lpnId}";
             return GetRequest(token, resource, Authorization);
         }
 
