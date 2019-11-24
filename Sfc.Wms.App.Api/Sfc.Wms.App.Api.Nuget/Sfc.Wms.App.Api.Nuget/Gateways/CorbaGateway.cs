@@ -48,13 +48,13 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
 
         private RestRequest GetBatchCorbaCallRequest(string functionName, string className, string isVector, string token, CorbaModel[] corbaModel)
         {
-            var resource = $"{_endPoint}{Routes.Paths.QueryParamSeperator}{Routes.Paths.Batch}{Routes.Paths.QueryParamSeperator}{className}{Routes.Paths.QueryParamSeperator}{functionName}{Routes.Paths.QueryParamSeperator}{isVector}";
+            var resource = $"{_endPoint}{Routes.Paths.QueryParamSeperator}{"batch"}{Routes.Paths.QueryParamSeperator}{className}{Routes.Paths.QueryParamSeperator}{functionName}{Routes.Paths.QueryParamSeperator}{isVector}";
             return PostRequest(resource, corbaModel, token, Constants.Authorization);
         }
 
         private RestRequest GetSingleCorbaCallRequest(string functionName, string className, string isVector, string token, CorbaModel[] corbaModel)
         {
-            var resource = $"{_endPoint}{Routes.Paths.QueryParamSeperator}{Routes.Paths.Single}{Routes.Paths.QueryParamSeperator}{className}{Routes.Paths.QueryParamSeperator}{functionName}{Routes.Paths.QueryParamSeperator}{isVector}";
+            var resource = $"{_endPoint}{Routes.Paths.QueryParamSeperator}{"single"}{Routes.Paths.QueryParamSeperator}{className}{Routes.Paths.QueryParamSeperator}{functionName}{Routes.Paths.QueryParamSeperator}{isVector}";
             return PostRequest(resource, corbaModel[0], token, Constants.Authorization);
         }
     }
