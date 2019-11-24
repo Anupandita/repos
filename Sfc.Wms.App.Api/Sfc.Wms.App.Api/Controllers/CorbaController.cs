@@ -10,7 +10,7 @@ using System.Web.Http.Description;
 
 namespace Sfc.Wms.App.Api.Controllers
 {
-    [AllowAnonymous]
+    [Authorize]
     [RoutePrefix(Routes.Prefixes.Corba)]
     public class CorbaController : SfcBaseController
     {
@@ -22,20 +22,21 @@ namespace Sfc.Wms.App.Api.Controllers
         }
 
         [HttpPost]
-        [Route(Routes.Paths.Single)]
+        [Route(Routes.Paths.Batch)]
         [ResponseType(typeof(BaseResult<CorbaResponseDto>))]
-        public async Task<IHttpActionResult> SingleCorbaAsync(string functionName, string className, string isVector, CorbaDto corbaDto)
+        public async Task<IHttpActionResult> BatchCorbaAsync(string functionName, string className, string isVector, List<CorbaDto> corbaDtos)
         {
-            var response = await _corbaService.SingleCorbaAsync(functionName, className, isVector, corbaDto).ConfigureAwait(false);
+            var response = await _corbaService.BatchCorbaAsync(functionName, className, isVector, corbaDtos, this.UserName).ConfigureAwait(false);
             return ResponseHandler(response);
         }
 
         [HttpPost]
-        [Route(Routes.Paths.Batch)]
+        [Route(Routes.Paths.Single)]
         [ResponseType(typeof(BaseResult<CorbaResponseDto>))]
-        public async Task<IHttpActionResult> BatchCorbaAsync(string functionName, string className, string isVector, List<CorbaDto> corbaDtos, string userId)
+        public async Task<IHttpActionResult> SingleCorbaAsync(string functionName, string className, string isVector, CorbaDto corbaDto)
         {
-            var response = await _corbaService.BatchCorbaAsync(functionName, className, isVector, corbaDtos, userId).ConfigureAwait(false);
+            corbaDto.UserId = this.UserName;
+            var response = await _corbaService.SingleCorbaAsync(functionName, className, isVector, corbaDto).ConfigureAwait(false);
             return ResponseHandler(response);
         }
     }
