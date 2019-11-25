@@ -114,9 +114,6 @@
     <Reference Include="SFC.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SFC.Core.3.0.2\lib\net472\SFC.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Core.Aop.WebApi, Version=1.1.30.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Core.Aop.WebApi.1.1.30\lib\net472\Sfc.Core.Aop.WebApi.dll</HintPath>
-    </Reference>
     <Reference Include="Sfc.Core.BaseApiController, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Core.BaseApiController.2.0.3\lib\net472\Sfc.Core.BaseApiController.dll</HintPath>
     </Reference>
@@ -516,6 +513,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\frameworkIntegration\Sfc.Wms.Framework.Interceptor\Sfc.Wms.Framework.Interceptor.App\Sfc.Wms.Framework.Interceptor.App.csproj">
+      <Project>{3b69ae29-5612-442b-a85e-a9fbf291f592}</Project>
+      <Name>Sfc.Wms.Framework.Interceptor.App</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\onCorePrem\Sfc.Core.Aop.WebApi\Sfc.Core.Aop.WebApi\Sfc.Core.Aop.WebApi.csproj">
+      <Project>{1ced988f-d222-4a09-9189-b9886e8c62e2}</Project>
+      <Name>Sfc.Core.Aop.WebApi</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

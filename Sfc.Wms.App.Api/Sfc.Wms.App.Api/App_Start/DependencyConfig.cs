@@ -13,6 +13,9 @@ using System.Configuration;
 using System.Linq;
 using System.Runtime.Caching;
 using System.Web.Http;
+using Sfc.Core.Aop.WebApi.Logging;
+using Sfc.Core.OnPrem.Security.Contracts.Interfaces;
+using Sfc.Wms.Framework.Interceptor.App.interceptors;
 using Sfc.Wms.Framework.Security.Rbac.AutoMapper;
 using Sfc.Wms.Inbound.InboundLpn.App.Validators;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Interfaces;
@@ -63,7 +66,8 @@ namespace Sfc.Wms.App.Api
             container.Register<LpnParameterValidator>(Lifestyle.Scoped);
 
             container.Options.AllowOverridingRegistrations = true;
-
+            container.Register<SfcLogger>(Lifestyle.Scoped);
+            container.InterceptWith<MonitoringInterceptor>(type => type == typeof(IUserRbacService));
             var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(e => e.FullName.StartsWith("Sfc"));
 
             foreach (var assemblyInfo in assemblies)
