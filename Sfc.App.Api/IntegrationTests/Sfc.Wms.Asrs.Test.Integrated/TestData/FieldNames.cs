@@ -10,6 +10,7 @@
     {
         public const string SkuId = "SKU_ID";
         public const string TotalAllocQty = "TOTAL_ALLOC_QTY";
+        public const string ActualQty = "ACTL_QTY";
 
     }
 
@@ -33,6 +34,7 @@
     {
         public const string ActualInventoryUnits = "ACTL_INVN_UNITS";
         public const string ActlWt = "ACTL_WT";
+        
     }
   
   public class WmsToEms
@@ -115,6 +117,8 @@
         public const string LocnId = "LOCN_ID";
         public const string ToBeFilledQty = "TO_BE_FILLD_QTY";
         public const string ActlInvnQty = "ACTL_INVN_QTY";
+        public const string MaximumInvqty = "MAX_INVN_QTY";
+        
     }
 
     public class CartonHeader

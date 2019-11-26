@@ -1,12 +1,12 @@
 ﻿using Oracle.ManagedDataAccess.Client;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
-using Sfc.Wms.Interfaces.Asrs.Dematic.Contracts.Dtos;
-using Sfc.Wms.Interfaces.Asrs.Shamrock.Contracts.Dtos;
 using Sfc.Wms.Data.Entities;
-using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Constants;
-using Sfc.Wms.Foundation.TransitionalInventory.Contracts.Dtos;
 using Sfc.Wms.Foundation.Carton.Contracts.Dtos;
 using Sfc.Wms.Foundation.Location.Contracts.Dtos;
+using Sfc.Wms.Foundation.TransitionalInventory.Contracts.Dtos;
+using Sfc.Wms.Interfaces.Asrs.Dematic.Contracts.Dtos;
+using Sfc.Wms.Interfaces.Asrs.Shamrock.Contracts.Dtos;
+using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Constants;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -49,13 +49,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var t = $" and sku_id = '{skuId}' ";
             var ormt = $" and order_id = '{containerNbr}' ";
             var comt = $" and container_id = '{containerNbr}' ";
-            var query = $"select * from SWM_TO_MHE where  source_msg_trans_code = '{trx}'";          
+            var query = $"select * from SWM_TO_MHE where  source_msg_trans_code = '{trx}'";
             var orderBy = " order by source_msg_key desc ";
             if (trx == TransactionCode.Ivmt)
             {
                 query = query + comt + t + orderBy;
             }
-            else if(trx == TransactionCode.Ormt)
+            else if (trx == TransactionCode.Ormt)
             {
                 query = query + ormt + t + orderBy;
             }
@@ -127,6 +127,20 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return singleSkulocal;
         }
 
+        public CaseViewDto FetchTransInvnventory(OracleConnection db, string skuId)
+        {
+            var singleSkurecievedCase = new CaseViewDto();
+            var query = $"Select * from trans_invn where sku_id = '{skuId}' and  trans_invn_type = '18'";
+            Command = new OracleCommand(query, db);
+            var transInvnReader = Command.ExecuteReader();
+            if (transInvnReader.Read())
+            {
+                singleSkurecievedCase.ActualInventoryUnits = Convert.ToInt16(transInvnReader[TransInventory.ActualInventoryUnits].ToString());
+                singleSkurecievedCase.ActualWeight = Convert.ToDecimal(transInvnReader[TransInventory.ActlWt].ToString());
+            }
+            return singleSkurecievedCase;
+        }
+
         public TransitionalInventoryDto FetchTransInvnentory(OracleConnection db, string skuId)
         {
             var singleSkulocal = new TransitionalInventoryDto();
@@ -190,7 +204,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public LocationGroup GetLocnId(OracleConnection db,string skuId)
+        public LocationGroup GetLocnId(OracleConnection db, string skuId)
         {
             var tempZone = GetTempZone(db, skuId);
             var temp = TempZoneRelate(tempZone.TempZone);
@@ -275,17 +289,17 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return pickLocnDtlExt;
         }
 
-        public CartonHeaderDto GetStatusCodeFromCartonHdr(OracleConnection db,string cartonNbr)
+        public CartonHeaderDto GetStatusCodeFromCartonHdr(OracleConnection db, string cartonNbr)
         {
             var cartonHdr = new CartonHeaderDto();
             var query = $"Select * from carton_hdr where carton_nbr = '{cartonNbr}'";
             Command = new OracleCommand(query, db);
             var cartonHdrReader = Command.ExecuteReader();
-            if(cartonHdrReader.Read())
+            if (cartonHdrReader.Read())
             {
                 cartonHdr.StatusCode = Convert.ToInt16(cartonHdrReader["STAT_CODE"].ToString());
             }
             return cartonHdr;
-        }      
+        }
     }
 }

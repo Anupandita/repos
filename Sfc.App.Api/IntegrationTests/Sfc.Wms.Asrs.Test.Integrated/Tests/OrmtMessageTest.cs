@@ -62,5 +62,22 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
            .And(x => x.VerifyForStatusCodeInCartonHdrForEPick())
            .BDDfy();
         }
+
+        [TestMethod()]
+        [TestCategory("FUNCTIONAL")]
+        public void VerifyForOrmtOnProcesscostMessage()
+        {
+            this.Given(x => x.InitializeTestDataForOnProcessCostMessage())
+                .And(x => x.CartonNumberForOnProcessCost())
+                .And(x => x.ValidOrmtUrl())
+                .When(x => x.OrmtApiIsCalledCreatedIsReturned())
+                .And(x => x.ReadDataAfterApiForOnprocessCostOfCarton())
+                .Then(x => x.VerifyOrmtMessageWasInsertedInToSwmToMheForOnProcessCost())
+                .And(x => x.VerifyOrmtMessageWasInsertedInToWmsToEmsForOnProcessCostOfOrder())
+                .And(x => x.VerifyForOrmtCountInPickLocnDtlExt())
+                .And(x => x.VerifyForStatusCodeInCartonHdrForEPick())
+                .BDDfy();
+        }
+
     }
 }

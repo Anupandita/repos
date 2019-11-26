@@ -10,6 +10,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sfc.Wms.Interfaces.Asrs.Shamrock.Contracts.Dtos;
 using Sfc.Wms.Interfaces.Asrs.Dematic.Contracts.Dtos;
+//using SwmFromMhe = Sfc.Wms.Data.Entities.SwmFromMhe;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
@@ -20,13 +21,17 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected WmsToEmsDto WmsToEmsCancelation = new WmsToEmsDto();
         protected SwmToMheDto SwmToMheCancelation = new SwmToMheDto();
         protected WmsToEmsDto WmsToEmsEPick = new WmsToEmsDto();
+        protected  WmsToEmsDto WmsToEmsOnPrc =new WmsToEmsDto();
         protected SwmToMheDto SwmToMheEPick = new SwmToMheDto();
+        protected  SwmToMheDto SwmToMheOnProcess=new SwmToMheDto();
         protected OrmtDto Ormt = new OrmtDto();
         protected OrmtDto OrmtCancel = new OrmtDto();
         protected OrmtDto OrmtEPick = new OrmtDto();
+        protected  OrmtDto OrmtOnprocess =new OrmtDto();
         protected CartonView PrintCarton = new CartonView();
         protected CartonView CancelOrder = new CartonView();
         protected CartonView EPick = new CartonView();
+        protected  CartonView OnProCost =new CartonView();
         protected PickLocationDetailsExtenstionDto PickLcnDtlExtBeforeApi = new PickLocationDetailsExtenstionDto();
         protected PickLocationDetailsExtenstionDto PickLcnDtlExtAfterApi = new PickLocationDetailsExtenstionDto();
         protected CartonHeaderDto CartonHdr = new CartonHeaderDto();
@@ -100,6 +105,18 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 PickLcnDtlExtBeforeApi = GetPickLocnDtlExt(db, EPick.SkuId, EPick.LocnId);
             }
         }
+
+        public void GetDataBeforeCallingApiForOnProcessCostMessage()
+        {
+            OracleConnection db;
+            using (db = GetOracleConnection())
+            {
+                db.Open();
+                OnProCost = GetValidOnProcessCostMessage(db);
+                PickLcnDtlExtBeforeApi = GetPickLocnDtlExt(db, OnProCost.SkuId, OnProCost.LocnId);
+            }
+        }
+
         public void GetDataAfterCallingOrmtApiForAddRelease()
         {
             OracleConnection db;
@@ -163,6 +180,20 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
+        public void GetDataAfterCallingApiForOnProcessCost()
+        {
+            OracleConnection db;
+            using (db = GetOracleConnection())
+            {
+                db.Open();
+                SwmToMheOnProcess = SwmToMhe(db, OnProCost.CartonNbr, TransactionCode.Ormt, OnProCost.SkuId);
+                OrmtOnprocess = JsonConvert.DeserializeObject<OrmtDto>(SwmToMheEPick.MessageJson);
+                WmsToEmsOnPrc = WmsToEmsData(db, SwmToMheEPick.SourceMessageKey, TransactionCode.Ormt);
+                //CartonHdr = GetStatusCodeFromCartonHdr(db, EPick.CartonNbr);
+                //PickLcnDtlExtAfterApi = GetPickLocnDtlExt(db, EPick.SkuId, EPick.LocnId);
+            }
+        }
+
         public void GetDataForNegativeCases()
         {
             OracleConnection db;
@@ -178,16 +209,20 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public CartonView GetValidOrderDetails(OracleConnection db, int statCode, int miscNum1)
         {
             var cartonView = new CartonView();
-            var countQuery = $"select COUNT(distinct ch.carton_nbr) from CARTON_HDR ch inner join" +
-                $" PKT_HDR ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr inner join Pick_Locn_dtl pl ON  " +
-                $"pl.sku_id = ch.sku_id inner join ITEM_MASTER im ON ch.sku_id = im.sku_id inner join " +
-                $"locn_hdr lh ON pl.locn_id = lh.locn_id inner join locn_grp lg ON lg.locn_id=lh.locn_id " +
-                $"inner join sys_code sc ON sc.code_id=lg.grp_type " +
-                $"inner join pkt_hdr ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr  " +
-                $"inner join pkt_dtl pd ON pd.pkt_ctrl_nbr =ch.pkt_ctrl_nbr " +
-                $"inner join alloc_invn_dtl ai ON ai.sku_id = ch.sku_id " +
-                $"left join pick_locn_dtl_ext ple ON pl.sku_id =ple.sku_id where  " +
-                $"ch.stat_code = 5 and ch.misc_instr_code_5 is null and misc_num_1 = 0 and  sc.code_type='740' and code_id ='18' and lg.grp_attr = DECODE(im.temp_zone,'D','Dry','Freezer') and pl.actl_invn_qty! =0 and ph.pkt_stat_code < 35 and (pl.actl_invn_qty - ple.active_ormt_count) > 0 and pd.pkt_seq_nbr > 0";    
+            var countQuery = $"select COUNT(distinct eg.carton_nbr) " +
+                             $"from SWM_ELGBL_ORMT_CARTONS eg " +
+                             $"inner join carton_hdr ch on ch.Carton_Nbr = eg.Carton_Nbr " +
+                             $"inner join PKT_HDR ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr " +
+                             $"inner join Pick_Locn_dtl pl ON  pl.sku_id = ch.sku_id " +
+                             $"inner join ITEM_MASTER im ON ch.sku_id = im.sku_id " +
+                             $"inner join locn_hdr lh ON pl.locn_id = lh.locn_id " +
+                             $"inner join locn_grp lg ON lg.locn_id = lh.locn_id " +
+                             $"inner join sys_code sc ON sc.code_id = lg.grp_type " +
+                             $"inner join pkt_hdr ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr " +
+                             $"inner join pkt_dtl pd ON pd.pkt_ctrl_nbr = ch.pkt_ctrl_nbr " +
+                             $"inner join alloc_invn_dtl ai ON ai.sku_id = ch.sku_id " +
+                             $"left join pick_locn_dtl_ext ple ON pl.sku_id = ple.sku_id" +
+                             $" where eg.STATUS = 10 and ch.misc_instr_code_5 is null and misc_num_1 = 0 and sc.code_type = '740' and code_id = '18' and lg.grp_attr = DECODE(im.temp_zone, 'D', 'Dry', 'Freezer') and ch.misc_instr_code_5 is null and misc_num_1 = 0 ORDER BY eg.CARTON_NBR,eg.CREATED_DATE_TIME";   
             var countCommand = new OracleCommand(countQuery, db);
             var rowSize = Convert.ToInt32(countCommand.ExecuteScalar());
             if (rowSize == 0)
@@ -220,6 +255,22 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
             return cartonView;
         }
+
+        public CartonView GetValidOnProcessCostMessage(OracleConnection db)
+        {
+            var onproCostView= new CartonView();
+            var onQuery = $"select soc.CARTON_NBR from swm_from_mhe sfm inner join carton_hdr ch on sfm.SKU_ID = ch.SKU_ID inner join SWM_ELGBL_ORMT_CARTONS soc on soc.carton_nbr = ch.carton_nbr where ch.SKU_ID = sfm.SKU_ID and soc.STATUS = 50 ORDER BY soc.CARTON_NBR,soc.CREATED_DATE_TIME";
+            var command = new OracleCommand(onQuery, db);
+            var reader = command.ExecuteReader();
+            if (reader.Read())
+            {
+                onproCostView.CartonNbr = reader["CARTON_NBR"].ToString();
+                //onproCostView.SkuId = reader["SKU_ID"].ToString();
+            }
+
+            return onproCostView;
+        }
+
 
         public CartonView ValidQueryToFetchOrderDetails(OracleConnection db,int statCode)
         {

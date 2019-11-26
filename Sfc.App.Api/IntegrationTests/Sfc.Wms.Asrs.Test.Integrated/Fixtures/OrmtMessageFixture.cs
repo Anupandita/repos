@@ -40,6 +40,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             GetDataBeforeCallingApiForEpickOfOrders();
         }
 
+        protected void InitializeTestDataForOnProcessCostMessage()
+        {
+            GetDataBeforeCallingApiForOnProcessCostMessage();
+        }
+
+
         protected void InitializeTestDataForWaveRelease()
         {
             //GetValidDataBeforeTriggerOrmtForPrintingOfCartonsThroughWaveNumber();
@@ -65,6 +71,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             GetDataAfterCallingApiForEPickOrders();
         }
+
+        protected void ReadDataAfterApiForOnprocessCostOfCarton()
+        {
+            GetDataAfterCallingApiForOnProcessCost();
+        }
         protected void CartonNumberForAddRelease()
         {
             CurrentCartonNbr = PrintCarton.CartonNbr;
@@ -79,6 +90,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected void CartonNumberForEPick()
         {
             CurrentCartonNbr = EPick.CartonNbr;
+            CurrentActionCode = "AddRelease";
+        }
+
+        protected void CartonNumberForOnProcessCost()
+        {
+            CurrentCartonNbr = OnProCost.CartonNbr;
             CurrentActionCode = "AddRelease";
         }
 
@@ -250,6 +267,20 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual("FIFO", OrmtEPick.OpRule);
         }
 
+        protected void VerifyOrmtMessageWasInsertedInToSwmToMheForOnProcessCost()
+        {
+            Assert.AreEqual("Ready", SwmToMheOnProcess.SourceMessageStatus);
+            Assert.AreEqual(TransactionCode.Ormt, OrmtOnprocess.TransactionCode);
+            Assert.AreEqual(MessageLength.Ormt, OrmtOnprocess.MessageLength);
+            Assert.AreEqual("AddRelease", OrmtOnprocess.ActionCode);
+            Assert.AreEqual(OnProCost.SkuId, OrmtOnprocess.Sku);
+            Assert.AreEqual(OnProCost.TotalQty, OrmtOnprocess.Quantity);
+            Assert.AreEqual("Case", OrmtOnprocess.UnitOfMeasure);
+            Assert.AreEqual(OnProCost.CartonNbr, OrmtOnprocess.OrderId);
+        }
+
+
+
         protected void VerifyOrmtMessageWasInsertedInToWmsToEmsForPrintingOfOrder()
         {
             Assert.AreEqual(SwmToMheAddRelease.SourceMessageStatus, WmsToEmsAddRelease.Status);
@@ -285,9 +316,21 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(SwmToMheEPick.SourceMessageResponseCode, WmsToEmsEPick.ResponseCode);
             Assert.AreEqual(SwmToMheEPick.ZplData, WmsToEmsEPick.ZplData);
         }
+
+        protected void VerifyOrmtMessageWasInsertedInToWmsToEmsForOnProcessCostOfOrder()
+        {
+            Assert.AreEqual(SwmToMheOnProcess.SourceMessageStatus, WmsToEmsOnPrc.Status);
+            Assert.AreEqual(TransactionCode.Ormt, WmsToEmsOnPrc.Transaction);
+            Assert.AreEqual("MessageBuilder", WmsToEmsOnPrc.Process);
+            Assert.AreEqual(SwmToMheOnProcess.SourceMessageKey, WmsToEmsOnPrc.MessageKey);
+            Assert.AreEqual(SwmToMheOnProcess.SourceMessageTransactionCode, WmsToEmsOnPrc.Transaction);
+            Assert.AreEqual(SwmToMheOnProcess.SourceMessageText, WmsToEmsOnPrc.MessageText);
+            Assert.AreEqual(SwmToMheOnProcess.SourceMessageResponseCode, WmsToEmsOnPrc.ResponseCode);
+            Assert.AreEqual(SwmToMheOnProcess.ZplData, WmsToEmsOnPrc.ZplData);
+        }
         protected void VerifyForOrmtCountInPickLocnDtlExt()
         {
-           // Assert.AreEqual(pickLcnDtlExtBeforeApi.ActiveOrmtCount + 1, pickLcnDtlExtAfterApi.ActiveOrmtCount);
+            Assert.AreEqual(PickLcnDtlExtBeforeApi.ActiveOrmtCount + 1, PickLcnDtlExtAfterApi.ActiveOrmtCount);
         }
 
         protected void VerifyForStatusCodeinCartonHdrForAddRelease()

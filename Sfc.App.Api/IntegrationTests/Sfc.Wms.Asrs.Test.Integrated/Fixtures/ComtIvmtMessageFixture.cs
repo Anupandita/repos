@@ -15,6 +15,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
     public class ComtIvmtMessageFixture : DataBaseFixture
     {
         protected string CurrentCaseNbr;
+        protected string RecivedCaseNbr;
         protected string ComtUrl = ConfigurationManager.AppSettings["ComtUrl"];
         protected string IvmtUrl = ConfigurationManager.AppSettings["IvmtUrl"];
         protected ComtParams ComtParameters;
@@ -27,7 +28,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             GetDataBeforeTriggerComt();
         }
-        
+
+        protected void InitializeRecievedCaseTestData()
+        {
+            GetDataBeforeTriggerforRecievedCaseComt();
+        }
+
         protected void CurrentCaseNumberForSingleSku()
         {
             CurrentCaseNbr = SingleSkuCase.CaseNumber;
@@ -37,10 +43,27 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             CurrentCaseNbr =  CaseHdrMultiSku.CaseNumber;
         }
+
         protected void CurrentCaseNumberForNotEnoughInventoryInCase()
         {
             CurrentCaseNbr = NotEnoughInvCase.CaseNumber;
         }
+
+        protected void CurrentCaseNumberForRecivedCasesfromReturn()
+        {
+            RecivedCaseNbr = SingleSkuRecivedCase.CaseNumber;
+        }
+
+        protected void CurrentRecivedCaseNumberForMultisku()
+        {
+            RecivedCaseNbr = RecivedCaseHdrMultiSku.CaseNumber;
+        }
+        protected void CurrentCaseNumberForNotEnoughInventoryInCaseForRecivedCase()
+        {
+            RecivedCaseNbr = NotEnoughInvCase.CaseNumber;
+        }
+
+
 
         public void AValidNewComtMessageRecord()
         {
@@ -68,6 +91,21 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 QuantityToInduct = DefaultValues.QuantityToInduct
             };
         }
+
+        public void AValidNewRecivedCaseComtMessageRecord()
+        {
+            ComtParameters = new ComtParams
+            {
+                ActionCode = ActionCodeConstants.Create,
+                CurrentLocationId = DefaultValues.CurrentlocnId,
+                ContainerId = RecivedCaseNbr,
+                ContainerType = DefaultValues.ContainerType,
+                ParentContainerId = RecivedCaseNbr,
+                AttributeBitmap = DefaultValues.AttributeBitMap,
+                QuantityToInduct = DefaultValues.QuantityToInduct
+            };
+        }
+
         protected IRestResponse ApiIsCalled(string url, IvmtParam parameters)
         {
             var client = new RestClient(url);
@@ -93,15 +131,29 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             GetDataAfterTriggerOfComtForSingleSku();
         }
-
+        protected void GetDataFromDataBaseForRecivedCaseSingleSkuScenarios()
+        {
+            GetDataAfterTriggerOfComtForRecivedCaseSingleSku();
+        }
         protected void GetDataFromDataBaseForSingleSkuScenariosIvmt()
         {
             GetDataAfterTriggerOfIvmtForSingleSku();
         }
+
+        protected void GetDataFromDataBaseForRecivedCaseSingleSku()
+        {
+            GetDataAfterTriggerOfIvmtForRecivedCaseSingleSku();
+        }
+
         protected void GetDataAndValidateForIvmtMessageHasInsertedIntoBothTables()
         {
             GetDataAfterTriggerForMultiSkuAndValidateData();
         }
+        protected void GetDataAndValidateForCaseRecievedIvmtMessageInsertedIntoBothTable()
+        {
+            GetDataAfterTriggerForRecivedCaseMultiSkuAndValidateData();
+        }
+
         protected IRestResponse ApiIsCalled(string url,ComtParams parameters) 
         {
             var client = new RestClient(url);
@@ -153,6 +205,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             VerifyComtMessageWasInsertedIntoSwmToMhe(Comt, SwmToMheComt, CaseHdrMultiSku.CaseNumber);
         }
+
+        protected void VerifyComtMessageWasInsertedIntoSwmToMheForRecivedMultiSku()
+        {
+            VerifyComtMessageWasInsertedIntoSwmToMhe(Comt, SwmToMheComt, RecivedCaseHdrMultiSku.CaseNumber);
+        }
         protected void VerifyComtMessageWasInsertedIntoWmsToEms() 
         {
             VerifyComtMessageWasInsertedIntoWmsToEms(WmsToEmsComt);      
@@ -165,6 +222,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             VerifyComtMessageWasInsertedIntoSwmToMhe(Comt, SwmToMheComt, SingleSkuCase.CaseNumber);
         }
+
+        protected void VerifyRecivedCaseComtMessageWasInsertedIntoSwmToMhe()
+        {
+            VerifyComtMessageWasInsertedIntoSwmToMhe(Comt, SwmToMheComt, SingleSkuRecivedCase.CaseNumber);
+        }
+
         protected void VerifyIvmtMessageWasInsertedIntoWmsToEms()
         {
             VerifyIvmtMessageWasInsertedIntoWmsToEms(WmsToEmsIvmt);
@@ -177,10 +240,17 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
            // the bellow code will be tested after new build release.
            //Assert.AreEqual((unitWeight * Convert.ToDecimal(ivmt.Quantity))+ Convert.ToInt16(singleSkuCase.ActualWeight), Math.Round(Convert.ToDecimal(caseDtlAfterApi.ActualWeight)));
         }
+
+        protected void VerifyTheQuantityCasedetail()
+        {
+            Assert.AreEqual(CaseDtlBeforeApi.ActlQty <= Convert.ToDecimal(PickLocn.MaximumInventoryQuantity - (PickLocn.ActualInventoryQuantity + PickLocn.ToBeFilledQty - PickLocn.ToBePickedQty)),CaseDtlAfterApi.ActlQty <= Convert.ToDecimal(PickLocn.MaximumInventoryQuantity - (PickLocn.ActualInventoryQuantity + PickLocn.ToBeFilledQty - PickLocn.ToBePickedQty)));
+        }
         protected void VerifyQuantityisReducedIntoCaseDetail()
         {
             Assert.AreEqual(0, CaseDtlAfterApi.TotalAllocQty);        
         }
+
+        
         protected void VerifyStatusIsUpdatedIntoCaseHeader()
         {
             VerifyStatusIsUpdatedIntoCaseHeader(CaseDtlAfterApi.StatusCode);
