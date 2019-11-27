@@ -210,14 +210,14 @@
     <Reference Include="Sfc.Wms.Foundation.Carton.Repository, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.Carton.Repository.2.1.0\lib\net472\Sfc.Wms.Foundation.Carton.Repository.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Foundation.Corba.App, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Foundation.Corba.App.1.0.4\lib\net472\Sfc.Wms.Foundation.Corba.App.dll</HintPath>
+    <Reference Include="Sfc.Wms.Foundation.Corba.App, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.Corba.App.1.0.5\lib\net472\Sfc.Wms.Foundation.Corba.App.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Foundation.Corba.Contracts, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.Corba.Contracts.1.0.4\lib\net472\Sfc.Wms.Foundation.Corba.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Foundation.Corba.Repository, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Foundation.Corba.Repository.1.0.6\lib\net472\Sfc.Wms.Foundation.Corba.Repository.dll</HintPath>
+    <Reference Include="Sfc.Wms.Foundation.Corba.Repository, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.Corba.Repository.1.0.7\lib\net472\Sfc.Wms.Foundation.Corba.Repository.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Foundation.InboundLpn.Contracts, Version=3.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.InboundLpn.Contracts.3.1.4\lib\net472\Sfc.Wms.Foundation.InboundLpn.Contracts.dll</HintPath>
