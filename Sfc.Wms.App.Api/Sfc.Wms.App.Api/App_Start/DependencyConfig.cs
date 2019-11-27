@@ -92,7 +92,7 @@ namespace Sfc.Wms.App.Api
                                                      && !reg.implementation.IsGenericTypeDefinition)
                     {
                         container.Register(reg.service, reg.implementation, Lifestyle.Scoped);
-                        container.InterceptWith<MonitoringInterceptor>(type => type == reg.service.BaseType);
+                      //  container.InterceptWith<MonitoringInterceptor>(type => type == reg.service.BaseType);
 
 
                     }
@@ -101,13 +101,13 @@ namespace Sfc.Wms.App.Api
                         container.Register(reg.service.GetGenericTypeDefinition(),
                             reg.implementation.GetGenericTypeDefinition(), Lifestyle.Scoped);
 
-                        container.InterceptWith<MonitoringInterceptor>(type =>
-                            type == reg.service.GetGenericTypeDefinition().BaseType);
+                        //container.InterceptWith<MonitoringInterceptor>(type =>
+                         //   type == reg.service.GetGenericTypeDefinition().BaseType);
                     }
 
                 }
             }
-            container.Register(typeof(IMessageTypeService),typeof(MessageTypeService),Lifestyle.Scoped);
+          //  container.Register(typeof(IMessageTypeService),typeof(MessageTypeService),Lifestyle.Scoped);
             container.Register(typeof(IMessageDetailService), typeof(MessageDetailService), Lifestyle.Scoped);
 
             container.Register(typeof(IMessageMasterService), typeof(MessageMasterService), Lifestyle.Scoped);
