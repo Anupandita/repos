@@ -174,11 +174,11 @@
     <Reference Include="Sfc.Wms.Configuration.MessageTypes.Contracts, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.MessageTypes.Contracts.4.0.0\lib\net472\Sfc.Wms.Configuration.MessageTypes.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Configuration.NextUpCounter.Contracts, Version=4.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Configuration.NextUpCounter.Contracts.4.0.3\lib\net472\Sfc.Wms.Configuration.NextUpCounter.Contracts.dll</HintPath>
+    <Reference Include="Sfc.Wms.Configuration.NextUpCounter.Contracts, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Configuration.NextUpCounter.Contracts.5.0.0\lib\net472\Sfc.Wms.Configuration.NextUpCounter.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Configuration.NextUpCounter.Repository, Version=4.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Configuration.NextUpCounter.Repository.4.1.0\lib\net472\Sfc.Wms.Configuration.NextUpCounter.Repository.dll</HintPath>
+    <Reference Include="Sfc.Wms.Configuration.NextUpCounter.Repository, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Configuration.NextUpCounter.Repository.5.0.0\lib\net472\Sfc.Wms.Configuration.NextUpCounter.Repository.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Configuration.SystemCode.Contracts, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.SystemCode.Contracts.2.2.0\lib\net472\Sfc.Wms.Configuration.SystemCode.Contracts.dll</HintPath>
@@ -273,14 +273,14 @@
     <Reference Include="Sfc.Wms.Framework.ItemMaster.App, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.ItemMaster.App.1.0.0\lib\net472\Sfc.Wms.Framework.ItemMaster.App.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Framework.NextUpCounter.App, Version=4.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Framework.NextUpCounter.App.4.0.2\lib\net472\Sfc.Wms.Framework.NextUpCounter.App.dll</HintPath>
+    <Reference Include="Sfc.Wms.Framework.NextUpCounter.App, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.NextUpCounter.App.5.0.0\lib\net472\Sfc.Wms.Framework.NextUpCounter.App.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Framework.PixTransaction.App, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.PixTransaction.App.2.2.0\lib\net472\Sfc.Wms.Framework.PixTransaction.App.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Framework.Security.Rbac, Version=5.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Framework.Security.Rbac.5.0.3\lib\net472\Sfc.Wms.Framework.Security.Rbac.dll</HintPath>
+    <Reference Include="Sfc.Wms.Framework.Security.Rbac, Version=5.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.Security.Rbac.5.0.4\lib\net472\Sfc.Wms.Framework.Security.Rbac.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Framework.Security.Token.Jwt, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.Security.Token.Jwt.3.0.2\lib\net472\Sfc.Wms.Framework.Security.Token.Jwt.dll</HintPath>

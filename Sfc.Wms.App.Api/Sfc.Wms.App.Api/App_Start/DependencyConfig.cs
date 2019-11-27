@@ -67,7 +67,6 @@ namespace Sfc.Wms.App.Api
 
             container.Options.AllowOverridingRegistrations = true;
             container.Register<SfcLogger>(Lifestyle.Scoped);
-            container.InterceptWith<MonitoringInterceptor>(type => type == typeof(IUserRbacService));
             var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(e => e.FullName.StartsWith("Sfc"));
 
             foreach (var assemblyInfo in assemblies)
@@ -82,12 +81,15 @@ namespace Sfc.Wms.App.Api
                     if (reg.service.FullName != null && reg.implementation.FullName != null
                         && reg.service.FullName.StartsWith("Sfc")
                         && !reg.implementation.FullName.Contains(nameof(SfcInMemoryCache))
+                        && !reg.implementation.FullName.Contains(nameof(MonitoringInterceptor))
                         && !reg.implementation.IsGenericTypeDefinition)
                         container.Register(reg.service, reg.implementation, Lifestyle.Scoped);
                     else if (reg.implementation.IsGenericTypeDefinition)
                         container.Register(reg.service.GetGenericTypeDefinition(), reg.implementation.GetGenericTypeDefinition(), Lifestyle.Scoped);
                 }
             }
+            container.InterceptWith<MonitoringInterceptor>(type => type == typeof(IUserRbacService).BaseType);
+
         }
     }
 }
