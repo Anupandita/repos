@@ -15,9 +15,11 @@ using System.Runtime.Caching;
 using System.Web.Http;
 using Sfc.Core.Aop.WebApi.Logging;
 using Sfc.Core.OnPrem.Security.Contracts.Interfaces;
+using Sfc.Wms.Configuration.MessageLogger.Contracts.Interfaces;
 using Sfc.Wms.Configuration.MessageMaster.Contracts.Interfaces;
 using Sfc.Wms.Configuration.MessageTypes.Contracts.Interface;
 using Sfc.Wms.Framework.Interceptor.App.interceptors;
+using Sfc.Wms.Framework.MessageLogger.App.Services;
 using Sfc.Wms.Framework.MessageMaster.App.Services;
 using Sfc.Wms.Framework.MessageTypes.App.Services;
 using Sfc.Wms.Framework.Security.Rbac.AutoMapper;
@@ -106,6 +108,11 @@ namespace Sfc.Wms.App.Api
                 }
             }
             container.Register(typeof(IMessageTypeService),typeof(MessageTypeService),Lifestyle.Scoped);
+            container.Register(typeof(IMessageDetailService), typeof(MessageDetailService), Lifestyle.Scoped);
+
+            container.Register(typeof(IMessageMasterService), typeof(MessageMasterService), Lifestyle.Scoped);
+            container.Register(typeof(IMessageLogService), typeof(MessageLogService), Lifestyle.Scoped);
+
             container.InterceptWith<MonitoringInterceptor>(type => type == typeof(IUserRbacService).BaseType);
 
         }
