@@ -15,7 +15,11 @@ using System.Runtime.Caching;
 using System.Web.Http;
 using Sfc.Core.Aop.WebApi.Logging;
 using Sfc.Core.OnPrem.Security.Contracts.Interfaces;
+using Sfc.Wms.Configuration.MessageMaster.Contracts.Interfaces;
+using Sfc.Wms.Configuration.MessageTypes.Contracts.Interface;
 using Sfc.Wms.Framework.Interceptor.App.interceptors;
+using Sfc.Wms.Framework.MessageMaster.App.Services;
+using Sfc.Wms.Framework.MessageTypes.App.Services;
 using Sfc.Wms.Framework.Security.Rbac.AutoMapper;
 using Sfc.Wms.Inbound.InboundLpn.App.Validators;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Interfaces;
@@ -79,15 +83,29 @@ namespace Sfc.Wms.App.Api
                 foreach (var reg in registrations)
                 {
                     if (reg.service.FullName != null && reg.implementation.FullName != null
-                        && reg.service.FullName.StartsWith("Sfc")
-                        && !reg.implementation.FullName.Contains(nameof(SfcInMemoryCache))
-                        && !reg.implementation.FullName.Contains(nameof(MonitoringInterceptor))
-                        && !reg.implementation.IsGenericTypeDefinition)
+                                                     && reg.service.FullName.StartsWith("Sfc")
+                                                     && !reg.implementation.FullName.Contains(nameof(SfcInMemoryCache))
+                                                     && !reg.implementation.FullName.Contains(
+                                                         nameof(MonitoringInterceptor))
+                                                     && !reg.implementation.IsGenericTypeDefinition)
+                    {
                         container.Register(reg.service, reg.implementation, Lifestyle.Scoped);
+                        container.InterceptWith<MonitoringInterceptor>(type => type == reg.service.BaseType);
+
+
+                    }
                     else if (reg.implementation.IsGenericTypeDefinition)
-                        container.Register(reg.service.GetGenericTypeDefinition(), reg.implementation.GetGenericTypeDefinition(), Lifestyle.Scoped);
+                    {
+                        container.Register(reg.service.GetGenericTypeDefinition(),
+                            reg.implementation.GetGenericTypeDefinition(), Lifestyle.Scoped);
+
+                        container.InterceptWith<MonitoringInterceptor>(type =>
+                            type == reg.service.GetGenericTypeDefinition().BaseType);
+                    }
+
                 }
             }
+            container.Register(typeof(IMessageTypeService),typeof(MessageTypeService),Lifestyle.Scoped);
             container.InterceptWith<MonitoringInterceptor>(type => type == typeof(IUserRbacService).BaseType);
 
         }

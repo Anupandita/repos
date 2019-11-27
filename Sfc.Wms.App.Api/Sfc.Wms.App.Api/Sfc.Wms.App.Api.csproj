@@ -168,11 +168,23 @@
     <Reference Include="Sfc.Wms.Configuration.ItemMaster.Repository, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.ItemMaster.Repository.3.0.1\lib\net472\Sfc.Wms.Configuration.ItemMaster.Repository.dll</HintPath>
     </Reference>
+    <Reference Include="Sfc.Wms.Configuration.MessageLogger.Contracts, Version=4.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Configuration.MessageLogger.Contracts.4.0.2\lib\net472\Sfc.Wms.Configuration.MessageLogger.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Configuration.MessageLogger.Repository, Version=4.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Configuration.MessageLogger.Repository.4.1.2\lib\net472\Sfc.Wms.Configuration.MessageLogger.Repository.dll</HintPath>
+    </Reference>
     <Reference Include="Sfc.Wms.Configuration.MessageMaster.Contracts, Version=1.0.8.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.MessageMaster.Contracts.1.0.8\lib\net472\Sfc.Wms.Configuration.MessageMaster.Contracts.dll</HintPath>
     </Reference>
+    <Reference Include="Sfc.Wms.Configuration.MessageMaster.Repository, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Configuration.MessageMaster.Repository.1.0.2\lib\net472\Sfc.Wms.Configuration.MessageMaster.Repository.dll</HintPath>
+    </Reference>
     <Reference Include="Sfc.Wms.Configuration.MessageTypes.Contracts, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.MessageTypes.Contracts.4.0.0\lib\net472\Sfc.Wms.Configuration.MessageTypes.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Configuration.MessageTypes.Repository, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Configuration.MessageType.Repository.3.0.0\lib\net472\Sfc.Wms.Configuration.MessageTypes.Repository.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Configuration.NextUpCounter.Contracts, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.NextUpCounter.Contracts.5.0.0\lib\net472\Sfc.Wms.Configuration.NextUpCounter.Contracts.dll</HintPath>
@@ -272,6 +284,15 @@
     </Reference>
     <Reference Include="Sfc.Wms.Framework.ItemMaster.App, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.ItemMaster.App.1.0.0\lib\net472\Sfc.Wms.Framework.ItemMaster.App.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Framework.MessageLogger.App, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.MessageLogger.App.1.0.2\lib\net472\Sfc.Wms.Framework.MessageLogger.App.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Framework.MessageMaster.App, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.MessageMaster.App.1.0.0\lib\net472\Sfc.Wms.Framework.MessageMaster.App.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Framework.MessageTypes.App, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.MessageTypes.App.2.1.0\lib\net472\Sfc.Wms.Framework.MessageTypes.App.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Framework.NextUpCounter.App, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.NextUpCounter.App.5.0.0\lib\net472\Sfc.Wms.Framework.NextUpCounter.App.dll</HintPath>
@@ -516,11 +537,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\frameworkIntegration\Sfc.Wms.Framework.Interceptor\Sfc.Wms.Framework.Interceptor.App\Sfc.Wms.Framework.Interceptor.App.csproj">
-      <Project>{3b69ae29-5612-442b-a85e-a9fbf291f592}</Project>
+      <Project>{8172742e-5175-49a9-8c1b-fb2d794a264e}</Project>
       <Name>Sfc.Wms.Framework.Interceptor.App</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\onCorePrem\Sfc.Core.Aop.WebApi\Sfc.Core.Aop.WebApi\Sfc.Core.Aop.WebApi.csproj">
-      <Project>{1ced988f-d222-4a09-9189-b9886e8c62e2}</Project>
+      <Project>{3f35d16c-b1fb-442a-95dd-92876267929a}</Project>
       <Name>Sfc.Core.Aop.WebApi</Name>
     </ProjectReference>
   </ItemGroup>
