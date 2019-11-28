@@ -219,7 +219,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
 
         private RestRequest InsertLpnCommentsRequest(LpnCommentsModel lpnCommentsModel, string token)
         {
-            var resource = $"{_endPoint}/{Routes.Paths.LpnComments}";
+            var resource = $"{_endPoint}/{Routes.Paths.LpnCommentsAdd}";
             return PostRequest(resource, lpnCommentsModel, token, Authorization);
         }
 
