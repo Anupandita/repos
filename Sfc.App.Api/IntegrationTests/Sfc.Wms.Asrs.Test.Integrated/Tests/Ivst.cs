@@ -21,20 +21,20 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         {
             TestInitialize();
         }
-        /* this code will be tested only for outbound process
+         //this code will be tested only for outbound process
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
         [Priority(1)]
         public void VerifyForValidIvstMessageScenariosCycleCount()
         {
             this.Given(x => x.MsgKeyCycleCount())
-                .When(x => x.IvstApiIsCalledWithValidMsgKey())
+                //.When(x => x.IvstApiIsCalledWithValidMsgKey())
                 .And(x => x.GetValidDataAfterTrigger())
-                .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMhe())
+                //.Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMhe())
                 .And(x => x.VerifyCycleCountMessage())
                 .And(x => x.PixTransactionValidationForCycleCountAdjustmentPlus())
                 .BDDfy();
-        }*/
+        }
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]

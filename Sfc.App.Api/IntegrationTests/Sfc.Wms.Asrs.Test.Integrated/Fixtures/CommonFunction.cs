@@ -110,9 +110,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return swmtomhedata;
         }
 
-
-
-
         public CaseViewDto FetchTransInvn(OracleConnection db, string skuId)
         {
             var singleSkulocal = new CaseViewDto();

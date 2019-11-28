@@ -180,8 +180,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             IvstParameters = new IvstDto
             {
-                ActionCode = actionCode,
-                AdjustmentReasonCode = adjustmentReasonCode,
+                ActionCode = "AdjustmentPlus",
+                AdjustmentReasonCode = "0001",
                 ContainerId = containerNbr,
                 Quantity = "1",
                 Sku = skuId,

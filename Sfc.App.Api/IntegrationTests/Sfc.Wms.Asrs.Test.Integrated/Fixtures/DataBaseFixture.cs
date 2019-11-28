@@ -151,7 +151,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         }
 
        
-
         public CaseViewDto ValidQueryToFetchCaseData(OracleConnection db, int seqNumber)
         {
 
@@ -184,7 +183,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 picklocn.ToBePickedQty = Convert.ToInt16(picklocationReader[PickLocationDetail.ToBePickedQuantity].ToString());
             }
             return picklocn;
-
         }
 
         public string FetchLocnId(OracleConnection db,string tempZone)
@@ -230,8 +228,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
             return recivedcaseheader;
         }
-
-
 
         public List<CaseViewDto> GetCaseDtlData(OracleConnection db, string caseNumber)
         {

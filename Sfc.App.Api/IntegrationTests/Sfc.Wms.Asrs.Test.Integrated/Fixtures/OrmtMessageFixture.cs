@@ -15,6 +15,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected string CurrentCartonNbr;
         protected string CurrentActionCode;
         protected string Url = @ConfigurationManager.AppSettings["OrmtUrl"];
+        protected string BaseUrl = @ConfigurationManager.AppSettings["OrmtWaveUrl"];
         protected CaseDetailDto CaseDetailDto;
         protected ComtParams OrmtParameters;
         protected IRestResponse Response;
@@ -24,7 +25,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected BaseResult NegativeCase3;
         protected BaseResult NegativeCase4;
         protected BaseResult NegativeCase5;
-        protected string WaveUrl = "";
+        protected string WaveUrl;
 
         protected void InitializeTestDataForPrintingOfCartons()
         {
@@ -45,14 +46,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             GetDataBeforeCallingApiForOnProcessCostMessage();
         }
 
-
         protected void InitializeTestDataForWaveRelease()
         {
-            //GetValidDataBeforeTriggerOrmtForPrintingOfCartonsThroughWaveNumber();
+            GetValidDataBeforeTriggerOrmtForPrintingOfCartonsThroughWaveNumber();
         }
         protected void ReadDataAndValidateTheFieldsInInternalTables()
         {
-            //GetDataAfterCallingOrmtApiAfterWaveRelease();
+            GetDataAfterCallingOrmtApiAfterWaveRelease();
         }
         protected void ReadDataAfterApiForPrintingOfCarton()
         {
@@ -134,9 +134,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             OrmtUrl = $"{Url}?{"cartonNumber"}={CurrentCartonNbr}&{"actionCode"}={CurrentActionCode}";            
         }
 
-        protected IRestResponse ApiIsCalled(string url)
+        protected void ValidOrmtWaveUrl()
         {
-            var client = new RestClient(url);
+            WaveUrl = $"{BaseUrl}?{"waveNumber"}={OrderList[0].WaveNbr}";
+        }
+
+        protected IRestResponse ApiIsCalled(string Url)
+        {
+            var client = new RestClient(Url);
             var request = new RestRequest(Method.POST);     
             Response = client.Execute(request);
             return Response;
