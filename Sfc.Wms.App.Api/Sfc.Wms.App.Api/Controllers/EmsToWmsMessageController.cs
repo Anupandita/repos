@@ -23,7 +23,7 @@ namespace Sfc.Wms.App.Api.Controllers
         [Route(Routes.Prefixes.EmsToWmsMessage)]
         [ResponseType(typeof(BaseResult))]
         [AllowAnonymous]
-        public async Task<IHttpActionResult> CreateAsync([FromBody]long msgKey, [FromBody]string msgProcessor)
+        public async Task<IHttpActionResult> CreateAsync(long msgKey,string msgProcessor)
         {
             var result = await _emsToWmsMessageProcessorService.GetMessageAsync(msgKey,msgProcessor)
                 .ConfigureAwait(false);
