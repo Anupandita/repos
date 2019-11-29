@@ -234,8 +234,8 @@
     <Reference Include="Sfc.Wms.Foundation.InboundLpn.Contracts, Version=3.1.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.InboundLpn.Contracts.3.1.5\lib\net472\Sfc.Wms.Foundation.InboundLpn.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Foundation.InboundLpn.Repository, Version=2.0.32.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Foundation.InboundLpn.Repository.2.0.32\lib\net472\Sfc.Wms.Foundation.InboundLpn.Repository.dll</HintPath>
+    <Reference Include="Sfc.Wms.Foundation.InboundLpn.Repository, Version=2.0.33.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.InboundLpn.Repository.2.0.33\lib\net472\Sfc.Wms.Foundation.InboundLpn.Repository.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Foundation.Location.App, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.Location.App.3.0.0\lib\net472\Sfc.Wms.Foundation.Location.App.dll</HintPath>
@@ -321,8 +321,8 @@
     <Reference Include="Sfc.Wms.Framework.UnitOfWork, Version=4.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.UnitOfWork.4.0.2\lib\net472\Sfc.Wms.Framework.UnitOfWork.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Inbound.InboundLpn.App, Version=5.2.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.InboundLpn.App.5.2.2\lib\net472\Sfc.Wms.Inbound.InboundLpn.App.dll</HintPath>
+    <Reference Include="Sfc.Wms.Inbound.InboundLpn.App, Version=5.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.InboundLpn.App.5.2.3\lib\net472\Sfc.Wms.Inbound.InboundLpn.App.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Inbound.Tasks.App, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Inbound.Tasks.App.1.0.2\lib\net472\Sfc.Wms.Inbound.Tasks.App.dll</HintPath>
@@ -540,7 +540,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Logs\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
