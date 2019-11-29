@@ -1,5 +1,5 @@
-﻿using Sfc.Core.ListManagement.Contracts.Models;
-using System;
+﻿using System;
+using Sfc.Core.ListManagement.Contracts.Models;
 
 namespace Sfc.Wms.App.Api.Contracts.Entities
 {
@@ -7,9 +7,11 @@ namespace Sfc.Wms.App.Api.Contracts.Entities
     {
         public string Aisle { get; set; }
         public string AsnId { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public string LpnNumber { get; set; }
+        public DateTime? CreatedDate { get; set; }
         public string Level { get; set; }
+        public string LpnNumber { get; set; }
+        public string OrderByColumn { get; set; }
+        public string OrderByDirection { get; set; }
         public string PalletId { get; set; }
         public string ShipmtNumber { get; set; }
         public string SkuId { get; set; }
