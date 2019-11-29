@@ -1,24 +1,27 @@
-﻿namespace Sfc.Wms.App.Api.Contracts.Entities
+﻿using System;
+
+namespace Sfc.Wms.App.Api.Contracts.Entities
 {
     public class LpnDetailsUpdateModel
     {
-        public string CASE_NBR { get; set; }
-        public string CONS_CASE_PRTY { get; set; }
-        public string CONS_PRTY_DATE { get; set; }
-        public string CONS_SEQ { get; set; }
-        public string DC_ORD_NBR { get; set; }
-        public string EST_WT { get; set; }
-        public string MFG_DATE { get; set; }
-        public string PO_NBR { get; set; }
-        public string VENDOR_ID { get; set; }
-        public string VOL { get; set; }
-        public string XPIRE_DATE { get; set; }
-        public string SPL_INSTR_CODE_1 { get; set; }
-        public string SPL_INSTR_CODE_2 { get; set; }
-        public string SPL_INSTR_CODE_3 { get; set; }
-        public string SPL_INSTR_CODE_4 { get; set; }
-        public string SPL_INSTR_CODE_5 { get; set; }
-        public string RCVD_SHPMT_NBR { get; set; }
+        public string AisleValue { get; set; }
+        public string CaseNumber { get; set; }
+        public string ConsolidateCaseParty { get; set; }
+        public DateTime? ConsolidatePartyDate { get; set; }
+        public string ConsolidateSequence { get; set; }
+        public string DcOrderNumber { get; set; }
+        public int EstWt { get; set; }
+        public DateTime? ExpireDate { get; set; }
+        public DateTime? ManufacturingDate { get; set; }
+        public string PoNumber { get; set; }
+        public string RcvdShipmentNumber { get; set; }
+        public string SpecialInstructionCode1 { get; set; }
+        public string SpecialInstructionCode2 { get; set; }
+        public string SpecialInstructionCode3 { get; set; }
+        public string SpecialInstructionCode4 { get; set; }
+        public string SpecialInstructionCode5 { get; set; }
         public bool ValidShipmentNumber { get; set; }
+        public string VendorId { get; set; }
+        public int Volume { get; set; }
     }
 }
