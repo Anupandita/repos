@@ -24,9 +24,9 @@ namespace Sfc.Wms.App.Api.Controllers
         [HttpPost]
         [Route(Routes.Paths.LpnCommentsAdd)]
         [ResponseType(typeof(BaseResult))]
-        public async Task<IHttpActionResult> AddLpnCommentAsync(CaseCommentDto caseComment)
+        public async Task<IHttpActionResult> AddLpnCommentAsync(LpnCommentDto lpnCommentDto)
         {
-            var response = await _lpnService.AddLpnCommentAsync(caseComment).ConfigureAwait(false);
+            var response = await _lpnService.AddLpnCommentAsync(lpnCommentDto).ConfigureAwait(false);
             return ResponseHandler(response);
         }
 

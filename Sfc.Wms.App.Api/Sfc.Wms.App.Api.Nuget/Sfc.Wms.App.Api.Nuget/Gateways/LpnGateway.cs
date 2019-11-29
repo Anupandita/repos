@@ -39,7 +39,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        public async Task<BaseResult<T>> GetLpnDetailsByLpnIdAsync<T>(String lpnId, string token)
+        public async Task<BaseResult<T>> GetLpnDetailsByLpnIdAsync<T>(string lpnId, string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
@@ -50,7 +50,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        public async Task<BaseResult<T>> GetLpnCommentsByLpnIdAsync<T>(String lpnId, string token)
+        public async Task<BaseResult<T>> GetLpnCommentsByLpnIdAsync<T>(string lpnId, string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
@@ -61,7 +61,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        public async Task<BaseResult<T>> GetLpnHistoryAsync<T>(String lpnId, string whse, string token)
+        public async Task<BaseResult<T>> GetLpnHistoryAsync<T>(string lpnId, string whse, string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
@@ -72,7 +72,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        public async Task<BaseResult<T>> GetLpnLockUnlockByLpnIdkAsync<T>(String lpnId, string token)
+        public async Task<BaseResult<T>> GetLpnLockUnlockByLpnIdkAsync<T>(string lpnId, string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
@@ -167,29 +167,30 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             resource = QueryStringBuilder.BuildQuery("aisle=", lpnParamModel.Aisle, resource, false);
             resource = QueryStringBuilder.BuildQuery("slot=", lpnParamModel.Slot, resource, false);
             resource = QueryStringBuilder.BuildQuery("createdDate=", lpnParamModel.CreatedDate, resource, false);
+            resource = QueryStringBuilder.BuildQuery("level=", lpnParamModel.Level, resource, false);
 
             return GetRequest(token, resource, Authorization);
         }
 
-        private RestRequest GetLpnDetailsByLpnIdRequest(String lpnId, string token)
+        private RestRequest GetLpnDetailsByLpnIdRequest(string lpnId, string token)
         {
             var resource = $"{_endPoint}/{"lpn-details"}/{lpnId}";
             return GetRequest(token, resource, Authorization);
         }
 
-        private RestRequest GetLpnCommentsByLpnIdRequest(String lpnId, string token)
+        private RestRequest GetLpnCommentsByLpnIdRequest(string lpnId, string token)
         {
             var resource = $"{_endPoint}/{"lpn-comments"}/{lpnId}";
             return GetRequest(token, resource, Authorization);
         }
 
-        private RestRequest GetLpnHistoryRequest(String lpnId, string whse, string token)
+        private RestRequest GetLpnHistoryRequest(string lpnId, string whse, string token)
         {            
             var resource = $"{_endPoint}/{"lpn-history"}/{lpnId}/{whse}";
             return GetRequest(token, resource, Authorization);
         }
 
-        private RestRequest GetLpnLockUnlockByLpnIdRequest(String lpnId, string token)
+        private RestRequest GetLpnLockUnlockByLpnIdRequest(string lpnId, string token)
         {
             var resource = $"{_endPoint}/{"lpn-lock-unlock"}/{lpnId}";
             return GetRequest(token, resource, Authorization);
@@ -218,7 +219,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
 
         private RestRequest InsertLpnCommentsRequest(LpnCommentsModel lpnCommentsModel, string token)
         {
-            var resource = $"{_endPoint}/{Routes.Paths.LpnComments}";
+            var resource = $"{_endPoint}/{Routes.Paths.LpnCommentsAdd}";
             return PostRequest(resource, lpnCommentsModel, token, Authorization);
         }
 
