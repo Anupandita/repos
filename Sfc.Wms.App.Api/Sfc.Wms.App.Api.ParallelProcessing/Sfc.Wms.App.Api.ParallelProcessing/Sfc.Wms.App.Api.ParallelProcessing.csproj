@@ -14,8 +14,8 @@
   <ItemGroup>
     <PackageReference Include="Oracle.ManagedDataAccess" Version="19.5.0" />
     <PackageReference Include="Sfc.Core.OnPrem.Result" Version="2.3.0" />
-    <PackageReference Include="Sfc.Wms.Interfaces.Asrs.Contracts" Version="1.3.0" />
-    <PackageReference Include="Sfc.Wms.Interfaces.Asrs.Dematic.Contracts" Version="2.0.0" />
+    <PackageReference Include="Sfc.Wms.Interfaces.Asrs.Contracts" Version="2.0.0" />
+    <PackageReference Include="Sfc.Wms.Interfaces.Asrs.Dematic.Contracts" Version="3.0.0" />
     <PackageReference Include="SimpleInjector" Version="4.7.1" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.6.0" />
   </ItemGroup>
