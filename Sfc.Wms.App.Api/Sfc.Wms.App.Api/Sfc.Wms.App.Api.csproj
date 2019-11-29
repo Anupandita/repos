@@ -153,8 +153,8 @@
     <Reference Include="Sfc.Wms..Configuration.Security.Rbac.Repository, Version=4.0.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.Security.Rbac.Repository.4.0.5\lib\net472\Sfc.Wms..Configuration.Security.Rbac.Repository.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.App.Api.Contracts, Version=3.3.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.App.Api.Contracts.3.3.2\lib\net472\Sfc.Wms.App.Api.Contracts.dll</HintPath>
+    <Reference Include="Sfc.Wms.App.Api.Contracts, Version=3.3.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.App.Api.Contracts.3.3.3\lib\net472\Sfc.Wms.App.Api.Contracts.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.App.App, Version=3.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.App.App.3.1.1\lib\net472\Sfc.Wms.App.App.dll</HintPath>
@@ -327,23 +327,23 @@
     <Reference Include="Sfc.Wms.Inbound.Tasks.App, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Inbound.Tasks.App.1.0.2\lib\net472\Sfc.Wms.Inbound.Tasks.App.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Inbound.TransitionalInventory.App, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Inbound.TransitionalInventory.App.1.1.1\lib\net472\Sfc.Wms.Inbound.TransitionalInventory.App.dll</HintPath>
+    <Reference Include="Sfc.Wms.Inbound.TransitionalInventory.App, Version=1.1.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Inbound.TransitionalInventory.App.1.1.3\lib\net472\Sfc.Wms.Inbound.TransitionalInventory.App.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Interfaces.Asrs.App, Version=1.6.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Interfaces.Asrs.App.1.6.3\lib\net472\Sfc.Wms.Interfaces.Asrs.App.dll</HintPath>
+    <Reference Include="Sfc.Wms.Interfaces.Asrs.App, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Interfaces.Asrs.App.2.0.0\lib\net472\Sfc.Wms.Interfaces.Asrs.App.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Interfaces.Asrs.Contracts, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Interfaces.Asrs.Contracts.1.3.0\lib\net472\Sfc.Wms.Interfaces.Asrs.Contracts.dll</HintPath>
+    <Reference Include="Sfc.Wms.Interfaces.Asrs.Contracts, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Interfaces.Asrs.Contracts.2.0.0\lib\net472\Sfc.Wms.Interfaces.Asrs.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Interfaces.Asrs.Dematic.Contracts, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Interfaces.Asrs.Dematic.Contracts.2.0.0\lib\net472\Sfc.Wms.Interfaces.Asrs.Dematic.Contracts.dll</HintPath>
+    <Reference Include="Sfc.Wms.Interfaces.Asrs.Dematic.Contracts, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Interfaces.Asrs.Dematic.Contracts.3.0.0\lib\net472\Sfc.Wms.Interfaces.Asrs.Dematic.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Interfaces.Asrs.Dematic.Repository, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Interfaces.Asrs.Dematic.Repository.1.2.1\lib\net472\Sfc.Wms.Interfaces.Asrs.Dematic.Repository.dll</HintPath>
+    <Reference Include="Sfc.Wms.Interfaces.Asrs.Dematic.Repository, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Interfaces.Asrs.Dematic.Repository.2.0.0\lib\net472\Sfc.Wms.Interfaces.Asrs.Dematic.Repository.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Interfaces.Asrs.Shamrock.Contracts, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Interfaces.Asrs.Shamrock.Contracts.2.0.0\lib\net472\Sfc.Wms.Interfaces.Asrs.Shamrock.Contracts.dll</HintPath>
+    <Reference Include="Sfc.Wms.Interfaces.Asrs.Shamrock.Contracts, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Interfaces.Asrs.Shamrock.Contracts.3.0.0\lib\net472\Sfc.Wms.Interfaces.Asrs.Shamrock.Contracts.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Interfaces.Asrs.Shamrock.Repository, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Interfaces.Asrs.Shamrock.Repository.1.1.2\lib\net472\Sfc.Wms.Interfaces.Asrs.Shamrock.Repository.dll</HintPath>
@@ -363,8 +363,8 @@
     <Reference Include="Sfc.Wms.Interfaces.ParserAndTranslator.Contracts, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.2.3.0\lib\net472\Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Interfaces.Translator, Version=3.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Interfaces.Translator.3.2.0\lib\net472\Sfc.Wms.Interfaces.Translator.dll</HintPath>
+    <Reference Include="Sfc.Wms.Interfaces.Translator, Version=3.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Interfaces.Translator.3.2.1\lib\net472\Sfc.Wms.Interfaces.Translator.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Outbound.Carton.App, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Outbound.Carton.App.1.0.2\lib\net472\Sfc.Wms.Outbound.Carton.App.dll</HintPath>
