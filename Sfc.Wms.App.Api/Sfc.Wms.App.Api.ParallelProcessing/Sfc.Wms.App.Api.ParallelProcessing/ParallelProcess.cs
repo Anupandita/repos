@@ -15,7 +15,7 @@ namespace Sfc.Wms.App.Api.ParallelProcessing
     public class ParallelProcess : IParallelProcess
     {
         private bool isAwake;
-        private int processCount = 0;
+        private int processCount;
 
         private BlockingCollection<EmsToWmsDto> GetEmsToWmsData()
         {
@@ -24,7 +24,7 @@ namespace Sfc.Wms.App.Api.ParallelProcessing
             var connection = new OracleConnection(connectionString);
             var cmd = new OracleCommand
             {
-                CommandText = "select * from  emstowms where sts='Ready' and msgkey in (16631,16646,11437,16641,17635,12426,17630,26626,21417,26621,12417,17626,17621)",
+                CommandText = "select * from  emstowms where sts='Ready'",
                 Connection = connection
             };
             connection.Open();
