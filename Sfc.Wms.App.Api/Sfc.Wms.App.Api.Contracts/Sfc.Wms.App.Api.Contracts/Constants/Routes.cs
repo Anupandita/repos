@@ -16,9 +16,10 @@ namespace Sfc.Wms.App.Api.Contracts.Constants
             public const string ApprointmentSchedule = "appointment-schedule";
             public const string AsnComments = "asn-comments";
             public const string AsnDetails = "asn-details";
-            public const string Batch = "batch";
+            public const string Batch = "batch/" + CorbaParams;
             public const string CodeIds = "code-ids";
             public const string Comments = "comments";
+            public const string CorbaParams = "{functionName}/{className}/{isVector}";
             public const string Details = "details";
             public const string DrillASNDetails = "drill-asn-details";
             public const string DrillDownItemAttribute = "drill-down";
@@ -63,7 +64,8 @@ namespace Sfc.Wms.App.Api.Contracts.Constants
             public const string SerialNumbers = "serial-numbers";
             public const string ShipmentDetails = "shipment-details";
             public const string ShpmtDetailsByShpmtNumber = "shipmentDetails/{shipmentNumber}";
-            public const string Single = "single";
+            public const string Single = "single/" + CorbaParams;
+            public const string SkmtWrapper = "wrapper";
             public const string StatusCodes = "get_status_codes";
             public const string ToSortation = "to-sortation";
             public const string TotalRows = "totalRows=";
@@ -79,7 +81,6 @@ namespace Sfc.Wms.App.Api.Contracts.Constants
             public const string UserLogin = "login";
             public const string Username = "username";
             public const string UserRoles = "user-roles";
-            public const string SkmtWrapper = "wrapper";
         }
 
         public static class Prefixes
