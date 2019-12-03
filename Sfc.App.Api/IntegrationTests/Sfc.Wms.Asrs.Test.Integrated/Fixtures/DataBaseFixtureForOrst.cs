@@ -324,13 +324,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return messageTosv;
         }
 
-
-
-
-
-
-
-
         public void OrstMessageCreatedForCompletedStatus(OracleConnection db)
         {
             var orstmsg = CreateOrstMessage("Complete", Complete.OrderId, Complete.SkuId, OrmtCase2.Quantity, OrmtCase2.WaveId,"0",OrmtCase2.Owner,null,Complete.DestLocnId);
@@ -430,8 +423,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
             return pkTktHeader;
         }
-
-        
+       
         public PickTicketDetail GetPickTicketDetailData(OracleConnection db,string cartonNbr,string pktSeqNbr)
         {
             var pickTktDtl = new PickTicketDetail();

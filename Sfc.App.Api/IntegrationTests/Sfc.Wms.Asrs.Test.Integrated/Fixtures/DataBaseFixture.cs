@@ -82,7 +82,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 var returncaseheader = TriggerOnRecievedCaseHeader(db, 1);
                 var recievedcaseDto = GetRecivedCaseDtlData(db, returncaseheader.CaseNumber);
                 CaseDtlBeforeApi = FetchCaseDetailsTriger(db);
-                //PickLocn = GetPickLocationDetail(db);
                 SingleSkuCase = FetchTransInvnventory(db, recievedcaseDto[0].SkuId);
                 SingleSkuCase.CaseNumber = returncaseheader.CaseNumber;
                 SingleSkuCase.LocationId = returncaseheader.LocationId;

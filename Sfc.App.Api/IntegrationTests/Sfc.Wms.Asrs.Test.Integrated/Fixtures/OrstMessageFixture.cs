@@ -184,9 +184,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(EmsToWmsCompleted.MessageText, SwmFromMheComplete.SourceMessageText);
             Assert.AreEqual("ORST", OrstCompleted.TransactionCode);
             Assert.AreEqual("00255", OrstCompleted.MessageLength);
-            //Assert.AreEqual("Complete", orstCase2.ActionCode);
+            //Assert.AreEqual("Complete", OrstCompleted.ActionCode);
         }
-    
+
         protected void VerifyOrstMessageWasInsertedIntoSwmFromMheForActionCodeCancel()
         {
             Assert.AreEqual(EmsToWmsCanceled.Process, SwmFromMheCancel.SourceMessageProcess);

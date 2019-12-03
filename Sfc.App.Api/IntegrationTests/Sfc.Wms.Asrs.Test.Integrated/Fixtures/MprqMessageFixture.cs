@@ -80,9 +80,5 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             Assert.AreEqual(Mprq.LocationId, Mpid.LocationId);
         }
-
-
-    }
-
-   
+    }  
 }

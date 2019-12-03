@@ -86,7 +86,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var client = new RestClient(CostUrl);
             var request = new RestRequest(Method.POST);
             request.AddHeader("content-type", Content.ContentType);
-            //request.AddJsonBody(CurrentMsgKey);
             request.RequestFormat = DataFormat.Json;
             Response = client.Execute(request);           
             return Response;

@@ -92,12 +92,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 Mprq = JsonConvert.DeserializeObject<MprqDto>(SwmFromMhe.MessageJson);
                 SwmToMhe = SwmToMhe(db, TransactionCode.Mpid);
                 Mpid = JsonConvert.DeserializeObject<MpidDto>(SwmToMhe.MessageJson);
-
-
             }
         }
-
-
-
     }
 }

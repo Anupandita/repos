@@ -71,7 +71,5 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         }
 
-
-
     }
 }

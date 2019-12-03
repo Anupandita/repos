@@ -10,7 +10,6 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sfc.Wms.Interfaces.Asrs.Shamrock.Contracts.Dtos;
 using Sfc.Wms.Interfaces.Asrs.Dematic.Contracts.Dtos;
-//using SwmFromMhe = Sfc.Wms.Data.Entities.SwmFromMhe;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
@@ -376,8 +375,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var waveNbr = Command.ExecuteScalar().ToString();
             return waveNbr;
         }
-
-     
+   
         public List<CartonView> GetValidOrderDetailsForWaveRelease(OracleConnection db, string waveNbr)
         {
             var orderdtls = new List<CartonView>();
@@ -496,7 +494,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(printCarton.CartonNbr, ormt.OrderId);
             Assert.AreEqual("1", ormt.OrderLineId);
             Assert.AreEqual("SHIPMENT", ormt.OrderType);
-            //Assert.AreEqual(printCarton.WaveNbr, swmToMheAddRelease.WaveNumber);
             Assert.AreEqual("N", ormt.EndOfWaveFlag);
             Assert.AreEqual(printCarton.DestLocnId + "-" + printCarton.ShipWCtrlNbr, ormt.DestinationLocationId);
             Assert.AreEqual(printCarton.Whse , ormt.Owner);
