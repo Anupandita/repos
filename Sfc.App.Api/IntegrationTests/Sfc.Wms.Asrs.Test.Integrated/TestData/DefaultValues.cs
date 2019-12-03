@@ -23,7 +23,7 @@
     public class ResultType
     {
         public const string Created = "Created";
-        public const string NotFound = "Conflict";
+        public const string NotFound = "NotFound";
         public const string NotFounds = "NotFound";
     }
 }

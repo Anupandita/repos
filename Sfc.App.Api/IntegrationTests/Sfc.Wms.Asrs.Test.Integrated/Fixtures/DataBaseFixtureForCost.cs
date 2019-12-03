@@ -72,7 +72,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 var costResult = CreateCostMessage(CostData.CaseNumber, CostData.SkuId, CostData.Qty, CostData.LocnId);
                 EmsToWmsParameters = new EmsToWmsDto
                 {
-                    Process = DefaultValues.Process,
+                    Process = DefaultPossibleValue.MessageProcessor,
                     MessageKey = Convert.ToInt64(CostData.MsgKey),
                     Status = DefaultValues.Status,
                     Transaction = TransactionCode.Cost,
@@ -111,7 +111,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.IsNotNull(testResult.Payload);
             return testResult.Payload;
         }
-
 
         public void InsertCostMessageForPickLocnDoesNotExist()
         {

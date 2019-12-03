@@ -53,7 +53,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             RecivedCaseNbr = SingleSkuRecivedCase.CaseNumber;
         }
-
         protected void CurrentRecivedCaseNumberForMultisku()
         {
             RecivedCaseNbr = RecivedCaseHdrMultiSku.CaseNumber;
@@ -62,9 +61,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             RecivedCaseNbr = NotEnoughInvCase.CaseNumber;
         }
-
-
-
         public void AValidNewComtMessageRecord()
         {
             ComtParameters = new ComtParams
@@ -91,7 +87,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 QuantityToInduct = DefaultValues.QuantityToInduct
             };
         }
-
         public void AValidNewRecivedCaseComtMessageRecord()
         {
             ComtParameters = new ComtParams
@@ -105,7 +100,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 QuantityToInduct = DefaultValues.QuantityToInduct
             };
         }
-
         protected IRestResponse ApiIsCalled(string url, IvmtParam parameters)
         {
             var client = new RestClient(url);
@@ -153,7 +147,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             GetDataAfterTriggerForRecivedCaseMultiSkuAndValidateData();
         }
-
         protected IRestResponse ApiIsCalled(string url,ComtParams parameters) 
         {
             var client = new RestClient(url);
@@ -175,20 +168,16 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Result = ComtIvmtResult();
             Assert.AreEqual(ResultType.Created, Result.ResultType.ToString());
         }
-
         protected void ComtApiIsCalledForNotEnoughInventoryInCase()
         {
             ResultForNegativeCase = ComtIvmtResult();
         }
-
         protected void ValidateForNotEnoughInventoryInCase()
         {
             Assert.AreEqual(ValidationMessage.InboundLpn, ResultForNegativeCase.ValidationMessages[0].FieldName);
             /* Validation messages are not proper.*/
             //Assert.AreEqual(ValidationMessage.NotEnoughInventoryInCase, ResultForNegativeCase.ValidationMessages[0].Message);
-
         }
-
         protected void VerifyIvmtMessageWasInsertedIntoSwmToMhe()
         {
             Assert.AreEqual(DefaultValues.Status, SwmToMheIvmt.SourceMessageStatus);
@@ -200,7 +189,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(DefaultValues.ContainerType, Ivmt.UnitOfMeasure);
             Assert.AreEqual(DefaultValues.DataControl, Ivmt.DateControl);
         }
-
         protected void VerifyComtMessageWasInsertedIntoSwmToMheForMultiSku()
         {
             VerifyComtMessageWasInsertedIntoSwmToMhe(Comt, SwmToMheComt, CaseHdrMultiSku.CaseNumber);
@@ -222,25 +210,20 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             VerifyComtMessageWasInsertedIntoSwmToMhe(Comt, SwmToMheComt, SingleSkuCase.CaseNumber);
         }
-
         protected void VerifyRecivedCaseComtMessageWasInsertedIntoSwmToMhe()
         {
             VerifyComtMessageWasInsertedIntoSwmToMhe(Comt, SwmToMheComt, SingleSkuRecivedCase.CaseNumber);
         }
-
         protected void VerifyIvmtMessageWasInsertedIntoWmsToEms()
         {
             VerifyIvmtMessageWasInsertedIntoWmsToEms(WmsToEmsIvmt);
-        }
-
-  
+        } 
         protected void VerifyTheQuantityIsIncreasedToTransInventory()
         {
            Assert.AreEqual(SingleSkuCase.ActualInventoryUnits + Convert.ToDecimal(Ivmt.Quantity), CaseDtlAfterApi.ActualInventoryUnits);
            // the bellow code will be tested after new build release.
            //Assert.AreEqual((unitWeight * Convert.ToDecimal(ivmt.Quantity))+ Convert.ToInt16(singleSkuCase.ActualWeight), Math.Round(Convert.ToDecimal(caseDtlAfterApi.ActualWeight)));
         }
-
         protected void VerifyTheQuantityCasedetail()
         {
             Assert.AreEqual(CaseDtlBeforeApi.ActlQty <= Convert.ToDecimal(PickLocn.MaximumInventoryQuantity - (PickLocn.ActualInventoryQuantity + PickLocn.ToBeFilledQty - PickLocn.ToBePickedQty)),CaseDtlAfterApi.ActlQty <= Convert.ToDecimal(PickLocn.MaximumInventoryQuantity - (PickLocn.ActualInventoryQuantity + PickLocn.ToBeFilledQty - PickLocn.ToBePickedQty)));
@@ -249,13 +232,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             Assert.AreEqual(0, CaseDtlAfterApi.TotalAllocQty);        
         }
-
-        
         protected void VerifyStatusIsUpdatedIntoCaseHeader()
         {
             VerifyStatusIsUpdatedIntoCaseHeader(CaseDtlAfterApi.StatusCode);
         }
-
         protected void VerifyStatusIsUpdatedIntoTaskHeader()
         {
             try

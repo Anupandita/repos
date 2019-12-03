@@ -5,6 +5,7 @@ using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
 using RestSharp;
 using Sfc.Core.OnPrem.Result;
 using Newtonsoft.Json;
+using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Constants;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
@@ -12,8 +13,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
     public class MprqMessageFixture : DataBaseFixtureForMprq
     {
         protected Int64 CurrentMsgKey;
+        protected string CurrentMsgProcessor;
         protected IRestResponse Response;
-        protected string MprqUrl = @ConfigurationManager.AppSettings["EmsToWmsUrl"];
+        protected string BaseUrl = @ConfigurationManager.AppSettings["EmsToWmsUrl"];
+        protected string MprqUrl;
 
         protected void TestInitializeForValidMessage()
         {
@@ -22,6 +25,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected void AValidMsgKey()
         {
             CurrentMsgKey = MprqData.MsgKey;
+            CurrentMsgProcessor = DefaultPossibleValue.MessageProcessor;
+        }
+        protected void AValidMprqUrl()
+        {
+            MprqUrl = $"{BaseUrl}?{"msgKey"}={CurrentMsgKey}&{"msgProcessor"}={CurrentMsgProcessor}";
         }
         protected IRestResponse ApiIsCalled()
         {

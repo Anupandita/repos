@@ -18,6 +18,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         {
             this.Given(x => x.TestInitializeForValidMessage())
                 .And(x => x.AValidMsgKey())
+                .And(x=>x.AValidMprqUrl())
                 .When(x => x.MprqApiIsCalledWithValidMsgKey())
                 .And(x => x.GetValidDataAfterTrigger())
                 .And(x => x.VerifyMprqMessageWasInsertedIntoSwmFromMhe())

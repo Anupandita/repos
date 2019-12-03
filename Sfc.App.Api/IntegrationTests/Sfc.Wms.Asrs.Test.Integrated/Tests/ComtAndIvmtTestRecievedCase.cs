@@ -20,54 +20,42 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         {
             InitializeRecievedCaseTestData();
         }
+        // this code is not tested.
+        //[TestMethod()]
+        //[TestCategory("FUNCTIONAL")]
+        //public void ComtAndIvmtMessageForRecievedCasesTestScenarios()
+        //{
+        //    this.Given(x => x.CurrentCaseNumberForRecivedCasesfromReturn())
+        //        .And(x => x.AValidNewRecivedCaseComtMessageRecord())
+        //        .When(x => x.ComtApiIsCalledCreatedIsReturned())
+        //        .Then(x => x.GetDataFromDataBaseForRecivedCaseSingleSkuScenarios())
+        //        .And(x => x.VerifyRecivedCaseComtMessageWasInsertedIntoSwmToMhe())
+        //        .And(x => x.VerifyComtMessageWasInsertedIntoWmsToEms())
+        //        .And(x => x.VerifyIvmtMessageWasInsertedIntoSwmToMhe())
+        //        .And(x => x.VerifyIvmtMessageWasInsertedIntoWmsToEms())
+        //        .And(x => x.VerifyTheQuantityIsIncreasedToTransInventory())
+        //        .And(x => x.VerifyQuantityisReducedIntoCaseDetail())
+        //        .And(x =>x.VerifyTheQuantityCasedetail())
+        //        .And(x => x.VerifyStatusIsUpdatedIntoCaseHeader())
+        //        .And(x => x.VerifyStatusIsUpdatedIntoTaskHeader())
 
-        [TestMethod()]
-        [TestCategory("FUNCTIONAL")]
-        public void ComtAndIvmtMessageForRecievedCasesTestScenarios()
-        {
-            this.Given(x => x.CurrentCaseNumberForRecivedCasesfromReturn())
-                .And(x => x.AValidNewRecivedCaseComtMessageRecord())
-                .When(x => x.ComtApiIsCalledCreatedIsReturned())
-                .Then(x => x.GetDataFromDataBaseForRecivedCaseSingleSkuScenarios())
-                .And(x => x.VerifyRecivedCaseComtMessageWasInsertedIntoSwmToMhe())
-                .And(x => x.VerifyComtMessageWasInsertedIntoWmsToEms())
-                .And(x => x.VerifyIvmtMessageWasInsertedIntoSwmToMhe())
-                .And(x => x.VerifyIvmtMessageWasInsertedIntoWmsToEms())
-                .And(x => x.VerifyTheQuantityIsIncreasedToTransInventory())
-                .And(x => x.VerifyQuantityisReducedIntoCaseDetail())
-                .And(x =>x.VerifyTheQuantityCasedetail())
-                .And(x => x.VerifyStatusIsUpdatedIntoCaseHeader())
-                .And(x => x.VerifyStatusIsUpdatedIntoTaskHeader())
+        //        .BDDfy();
+        //}
 
-                .BDDfy();
-        }
-
-        [TestMethod()]
-        [TestCategory("FUNCTIONAL")]
-        public void ComtAndIvmtTestForReciveCaseMultiSkuScenarios()
-        {
-            this.Given(x => x.CurrentRecivedCaseNumberForMultisku())
-                .And(x => x.AValidNewRecivedCaseComtMessageRecord())
-                .When(x => x.ComtApiIsCalledCreatedIsReturned())
-                .Then(x => x.GetDataAndValidateForCaseRecievedIvmtMessageInsertedIntoBothTable())
-                .And(x => x.VerifyComtMessageWasInsertedIntoSwmToMheForRecivedMultiSku())
-                .And(x => x.VerifyComtMessageWasInsertedIntoWmsToEmsForMultiSku())
-                .And(x => x.VerifyQuantityisReducedIntoCaseDetailTable())
-                .And(x => x.VerifyStatusIsUpdatedIntoCaseHeaderTable())
-                .BDDfy();
-        }
-
-        [TestMethod()]
-        [TestCategory("FUNCTIONAL")]
-        public void ComtIvmtMessageTestCaseForNoEnoughInventoryInCase()
-        {
-            this.Given(x => x.CurrentCaseNumberForNotEnoughInventoryInCaseForRecivedCase())
-                .And(x => x.AValidNewRecivedCaseComtMessageRecord())
-                .When(x => x.ComtApiIsCalledForNotEnoughInventoryInCase())
-                .Then(x => x.ValidateForNotEnoughInventoryInCase())
-                .BDDfy();
-        }
-
+        //[TestMethod()]
+        //[TestCategory("FUNCTIONAL")]
+        //public void ComtAndIvmtTestForReciveCaseMultiSkuScenarios()
+        //{
+        //    this.Given(x => x.CurrentRecivedCaseNumberForMultisku())
+        //        .And(x => x.AValidNewRecivedCaseComtMessageRecord())
+        //        .When(x => x.ComtApiIsCalledCreatedIsReturned())
+        //        .Then(x => x.GetDataAndValidateForCaseRecievedIvmtMessageInsertedIntoBothTable())
+        //        .And(x => x.VerifyComtMessageWasInsertedIntoSwmToMheForRecivedMultiSku())
+        //        .And(x => x.VerifyComtMessageWasInsertedIntoWmsToEmsForMultiSku())
+        //        .And(x => x.VerifyQuantityisReducedIntoCaseDetailTable())
+        //        .And(x => x.VerifyStatusIsUpdatedIntoCaseHeaderTable())
+        //        .BDDfy();
+        //}
 
     }
 }

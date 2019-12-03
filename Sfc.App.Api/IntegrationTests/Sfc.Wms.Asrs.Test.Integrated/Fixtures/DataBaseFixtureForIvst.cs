@@ -57,7 +57,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 PickLcnDtlBeforeApi = PickLocnData(db, IvstData.SkuId);
             }
         }
-
         public void InsertIvstMessagetUnexpectedFunction()
         {
             using (var db = GetOracleConnection())
@@ -74,10 +73,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-
                 InsertingInventoryShortage(db, IvstActionCode.AdjustmentMinus, IvstException.InventoryShortage);
             }
-
         }
 
         public void InsertIvstMessageDamageFunction()
@@ -88,7 +85,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
                 InsertingDamage(db, IvstActionCode.AdjustmentMinus, IvstException.Damage);
             }
-
         }
         public void InsertIvstMessageWrongSkuFunction()
         {
@@ -100,7 +96,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
 
         }
-
 
         public Ivst GetCaseDetailsForInsertingIvstMessage(OracleConnection db)
         {
@@ -180,8 +175,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             IvstParameters = new IvstDto
             {
-                ActionCode = "AdjustmentPlus",
-                AdjustmentReasonCode = "0001",
+                ActionCode = actionCode,
+                AdjustmentReasonCode = adjustmentReasonCode,
                 ContainerId = containerNbr,
                 Quantity = "1",
                 Sku = skuId,
@@ -235,7 +230,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public PixTransactionDto GetPixtransaction(OracleConnection db, string rsnCode)
         {
             var pixtran = new PixTransactionDto();
-            Query = $"select * from Pix_tran where rsn_code='{rsnCode}'";
+            Query = $"select * from Pix_tran where rsn_code='{rsnCode}'order by create_date_time desc";
             Command = new OracleCommand(Query, db);
             var rsn = Command.ExecuteReader();
 

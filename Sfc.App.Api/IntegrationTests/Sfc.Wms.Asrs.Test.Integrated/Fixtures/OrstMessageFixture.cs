@@ -13,7 +13,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
     public class OrstMessageFixture : DataBaseFixtureForOrst
     {
         protected Int64 CurrentMsgKey;
-        protected string OrstUrl = @ConfigurationManager.AppSettings["EmsToWmsUrl"];
+        protected string CurrentMsgProcess;
+        protected string BaseUrl = @ConfigurationManager.AppSettings["EmsToWmsUrl"];
+        protected string OrstUrl;
+
         protected IRestResponse Response;
 
         protected void InitializeTestData()
@@ -73,26 +76,31 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected void MsgKeyForCase1()
         {
             CurrentMsgKey = MsgKeyForAllocated.MsgKey;
+            CurrentMsgProcess = EmsToWmsAllocated.Process;
         }
 
         protected void MsgKeyForCase2()
         {
             CurrentMsgKey = MsgKeyForCompleted.MsgKey;
+            CurrentMsgProcess = EmsToWmsCompleted.Process;
         }
 
         protected void MsgKeyForCase3()
         {
             CurrentMsgKey = MsgKeyForDeallocated.MsgKey;
+            CurrentMsgProcess = EmsToWmsDeallocated.Process;
         }
 
         protected void MsgKeyForCase4()
         {
             CurrentMsgKey = MsgKeyForCanceled.MsgKey;
+            CurrentMsgProcess = EmsToWmsCanceled.Process;
         }
 
         protected void MsgKeyForCase5()
         {
             CurrentMsgKey = MsgKeysForCase5.MsgKey;
+            CurrentMsgProcess = EmsToWmsCompleted.Process;
         }
 
         protected IRestResponse ApiIsCalled()
@@ -100,10 +108,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var client = new RestClient(OrstUrl);
             var request = new RestRequest(Method.POST);
             request.AddHeader("content-type", Content.ContentType);
-            request.AddJsonBody(CurrentMsgKey);
             request.RequestFormat = DataFormat.Json;
             Response = client.Execute(request);          
             return Response;
+        }
+
+        protected void ValidOrstUrl()
+        {
+            OrstUrl = $"{BaseUrl}?{"msgKey"}={CurrentMsgKey}&{"msgProcessor"}={CurrentMsgProcess}";
         }
 
         protected BaseResult OrstResult()
@@ -124,7 +136,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected void OrstApiIsCalledForNegativeCase()
         {
             var result = OrstResult();
-            Assert.AreEqual("2", result.ValidationMessages.Count.ToString());
+            Assert.AreEqual("1", result.ValidationMessages.Count.ToString());
         }
         protected void GetDataAfterTriggerForAllocatedActionCode()
         {
@@ -145,7 +157,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             GetDataAfterTriggerOrstCase4();
         }
-
+        protected void ValidateForOrmtMessagetosortViewtable()
+        {
+            Assert.AreEqual(MessageToSort.Ptn, CancelOrder.CartonNbr);
+        }
         protected void VerifyOrstMessageWasInsertedIntoSwmFromMheForActionCodeAllocated()
         {
             Assert.AreEqual(EmsToWmsAllocated.Process, SwmFromMheAllocated.SourceMessageProcess);

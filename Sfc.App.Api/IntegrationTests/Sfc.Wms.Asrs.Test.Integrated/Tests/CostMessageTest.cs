@@ -28,6 +28,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         {
             this.Given(x => x.TestInitializeForValidMessage())
                 .And(x => x.AValidMsgKey())
+                .And(x => x.ValidCostUrl())
                 .When(x => x.CostApiIsCalledWithValidMsgKey())
                 .And(x => x.GetValidDataAfterTrigger())
                 .And(x => x.VerifyCostMessageWasInsertedIntoSwmFromMhe())
@@ -41,6 +42,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         {
             this.Given(x =>x.TestInitializeForInvalidCase())
                 .And(x => x.InvalidMsgKey())
+                .And(x => x.ValidCostUrl())
                 .When(x => x.CostApiIsCalledForInvalidMessageKey())
                 .Then(x => x.ValidateResultForInvalidMessageKey())
                 .BDDfy();
@@ -51,12 +53,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         public void VerifyForErrorLogNoCaseFound()
         {
                 this.Given(x => x.TestInitializeForInvalidCase())
-               .And(x => x.InvalidCaseMsgKey())         
+               .And(x => x.InvalidCaseMsgKey())
+               .And(x => x.ValidCostUrl())
                .When(x => x.CostApiIsCalledForInvalidCaseNumber())
                .Then(x => x.ValidateResultForInvalidCaseNumber())
                .BDDfy();
         }
-
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
@@ -64,6 +66,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         {
                 this.Given(x => x.TestInitializeForTransInvnDoesNotExist())
                .And(x => x.TransInvnNotExistsMsgKey())
+               .And(x => x.ValidCostUrl())
                .When(x => x.CostApiIsCalledForTransInvnNotFound())
                .Then(x => x.ValidateResultForTransInventoryNotExist())
                .BDDfy();
@@ -75,6 +78,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         {
                 this.Given(x => x.TestInitializeForPickLocnDoesNotExist())
                .And(x => x.PickLocationNotExistKey())
+               .And(x => x.ValidCostUrl())
                .When(x => x.CostApiIsCalledForPickLocnNotFound())
                .Then(x => x.ValidateResultForPickLocnNotFound())
                .BDDfy();

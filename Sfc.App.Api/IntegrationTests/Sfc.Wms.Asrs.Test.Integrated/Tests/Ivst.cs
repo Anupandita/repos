@@ -27,13 +27,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         [Priority(1)]
         public void VerifyForValidIvstMessageScenariosCycleCount()
         {
-            this.Given(x => x.MsgKeyCycleCount())
-                //.When(x => x.IvstApiIsCalledWithValidMsgKey())
-                .And(x => x.GetValidDataAfterTrigger())
-                //.Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMhe())
-                .And(x => x.VerifyCycleCountMessage())
-                .And(x => x.PixTransactionValidationForCycleCountAdjustmentPlus())
-                .BDDfy();
+            //this.Given(x => x.MsgKeyCycleCount())
+            //    .And(x => x.ValidIvstUrl())
+            //    .When(x => x.IvstApiIsCalledWithValidMsgKey())
+            //    .And(x => x.GetValidDataAfterTrigger())
+            //    .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMhe())
+            //    .And(x => x.VerifyCycleCountMessage())
+            //    .And(x => x.PixTransactionValidationForCycleCountAdjustmentPlus())
+            //    .BDDfy();
         }
 
         [TestMethod()]
@@ -43,7 +44,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         public void TestForIvstUnexpectedOverageExceptionScenarios(int count)
         {
             this.Given(x => x.TestDataForUnexpectedOverageException())
-             .And(x => x.MsgKeyForUnexpectedOverageException())
+            .And(x => x.MsgKeyForUnexpectedOverageException())
+            .And(x => x.ValidIvstUrl())
             .When(x => x.IvstApiIsCalledCreatedIsReturned())
             .And(x => x.GetValidDataAfterTrigger())
             .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheUnExceptedOverage())
@@ -59,6 +61,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         {
             this.Given(x => x.TestDataForInventoryException())
             .And(x => x.MsgKeyForInventoryShortageException())
+            .And(x => x.ValidIvstUrl())
             .When(x => x.IvstApiIsCalledCreatedIsReturned())
             .And(x => x.GetValidDataAfterTrigger())
             .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheInventoryShortage())
@@ -72,7 +75,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         public void TestForIvstIvstDamageMessageScenarios()
         {
             this.Given(x => x.TestDataForDamageException())
-                .And(x => x.MsgKeyForDamageException())
+            .And(x => x.MsgKeyForDamageException())
+            .And(x => x.ValidIvstUrl())
             .When(x => x.IvstApiIsCalledCreatedIsReturned())
             .And(x => x.GetValidDataAfterTrigger())
             .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheDamage())
@@ -86,7 +90,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         public void TestForIvstWrongSkuMessageScenarios()
         {
             this.Given(x => x.TestDataForWrongSkuException())
-                .And(x => x.MsgKeyForWrongSkuException())
+            .And(x => x.MsgKeyForWrongSkuException())
+            .And(x => x.ValidIvstUrl())
             .When(x => x.IvstApiIsCalledCreatedIsReturned())
             .And(x => x.GetValidDataAfterTrigger())
             .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheWrongSku())

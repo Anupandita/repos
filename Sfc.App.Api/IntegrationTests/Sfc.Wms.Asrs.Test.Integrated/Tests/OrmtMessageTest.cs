@@ -17,19 +17,20 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
     {
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        [DataRow(3)]
+        [DataRow(1)]
         public void VerifyForOrmtMessageWithActionCodeAddRelease(int count)
         {
             this.Given(x => x.InitializeTestDataForPrintingOfCartons())
             .And(x => x.CartonNumberForAddRelease())
-            .And(x=>x.ValidOrmtUrl())
+            .And(x => x.ValidOrmtUrl())
             .When(x => x.OrmtApiIsCalledCreatedIsReturned())
             .And(x => x.ReadDataAfterApiForPrintingOfCarton())
             .Then(x => x.VerifyOrmtMessageWasInsertedInToSwmToMhe())
             .And(x => x.VerifyOrmtMessageWasInsertedInToWmsToEmsForPrintingOfOrder())
             .And(x => x.VerifyForOrmtCountInPickLocnDtlExt())
             .And(x => x.VerifyForStatusCodeinCartonHdrForAddRelease())
-           .BDDfy();
+            .And(x => x.VerifyForStatusInSwmEligibleOrmtCartons())
+            .BDDfy();
         }
 
         [TestMethod()]

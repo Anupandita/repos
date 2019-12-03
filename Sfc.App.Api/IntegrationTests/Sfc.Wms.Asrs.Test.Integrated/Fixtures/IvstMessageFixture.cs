@@ -6,46 +6,54 @@ using Newtonsoft.Json;
 using System.Configuration;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
-
+using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Constants;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
     [TestClass]
     public class IvstMessageFixture: DataBaseFixtureForIvst
     {
-        protected string IvstUrl = @ConfigurationManager.AppSettings["EmsToWmsUrl"];
+        protected string BaseUrl = @ConfigurationManager.AppSettings["EmsToWmsUrl"];
         protected Int64 CurrentMsgKeys;
         protected Ivst Parameters;
         protected IRestResponse Response;
         protected long CurrentMsgKey;
+        protected string CurrentMsgProcessor;
+        protected string IvstUrl;
         protected OracleConnection Db;
         protected void TestInitialize()
         {
             GetDataBeforeApiTrigger();
         }
+        protected void ValidIvstUrl()
+        {
+            IvstUrl = $"{BaseUrl}?{"msgKey"}={CurrentMsgKey}&{"msgProcessor"}={CurrentMsgProcessor}";
+        }
         protected void MsgKeyCycleCount()
         {
             CurrentMsgKey = IvstData.InvalidKey;
+            CurrentMsgProcessor = DefaultPossibleValue.MessageProcessor;
         }
         protected void MsgKeyForUnexpectedOverageException()
         {
             CurrentMsgKey = IvstData.Key;
+            CurrentMsgProcessor = DefaultPossibleValue.MessageProcessor;
         }
-
         protected void MsgKeyForInventoryShortageException()
         {
             CurrentMsgKey = Invshort.Key;
+            CurrentMsgProcessor = DefaultPossibleValue.MessageProcessor;
         }
-
         protected void MsgKeyForDamageException()
         {
             CurrentMsgKey = Damage.Key;
+            CurrentMsgProcessor = DefaultPossibleValue.MessageProcessor;
         }
         protected void MsgKeyForWrongSkuException()
         {
             CurrentMsgKey = WrongSku.Key;
+            CurrentMsgProcessor = DefaultPossibleValue.MessageProcessor;
         }
-
         protected void TestDataForUnexpectedOverageException()
         {
             InsertIvstMessagetUnexpectedFunction();
@@ -73,7 +81,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var client = new RestClient(IvstUrl);
             var request = new RestRequest(Method.POST);
             request.AddHeader("content-type", Contents.ContentType);
-            request.AddJsonBody(CurrentMsgKey);
+          //request.AddJsonBody(CurrentMsgKey);
             request.RequestFormat = DataFormat.Json;
             Response = client.Execute(request);
             return Response;
@@ -137,7 +145,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected void VerifyCycleCountMessage()
         {
             Assert.AreEqual(PickLcnDtlBeforeApi.ActualInventoryQuantity + Convert.ToDecimal(Ivst.Quantity), PickLocnDtlAfterApi.ActualInventoryQuantity);
-
         }
 
         protected void PixTransactionValidationForCycleCountAdjustmentPlus()
@@ -147,7 +154,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected void VerifyTheQuantityForUnexpectedOverageExceptionIntoTransInventoryTable()
         {
             Assert.AreEqual(TrnsInvBeforeApi.ActualInventoryUnits + Convert.ToDecimal(Ivst.Quantity) , TrnsInvAfterApi.ActualInventoryUnits);
-
         }
         protected void VerifyTheRecordInsertedIntoPixTransactionTablereasonCodeForUnexpectedOverageException()
         {
@@ -183,6 +189,5 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             Assert.AreEqual("CC", Pixtran.ReasonCode);
         }
-
     }
 }

@@ -11,6 +11,7 @@ using Sfc.Core.OnPrem.Result;
 using System;
 using Sfc.Wms.Foundation.Carton.Contracts.Dtos;
 using PickTicketDetail = Sfc.Wms.Data.Entities.PickTicketDetail;
+using Sfc.Wms.Foundation.Message.Contracts.Dtos;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
@@ -41,6 +42,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected Orst MsgKeysForCase5 = new Orst();
         protected EmsToWmsDto EmsToWmsAllocated = new EmsToWmsDto();
         protected EmsToWmsDto EmsToWmsCompleted = new EmsToWmsDto();
+        protected MessageToSortViewDto MessageToSort = new MessageToSortViewDto();
         protected EmsToWmsDto EmsToWmsDeallocated = new EmsToWmsDto();
         protected EmsToWmsDto EmsToWmsCanceled = new EmsToWmsDto();
         protected PickTicketHeaderDto PickTktHdrAllocated = new PickTicketHeaderDto();
@@ -228,6 +230,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 OrstCanceled = JsonConvert.DeserializeObject<OrstDto>(SwmFromMheCancel.MessageJson);
                 CartonHdrCanceled = GetCartonHeaderDetails(db, OrstCanceled.OrderId);
                 PickLcnExtCase4  = GetPickLocnDtlExt(db, OrstCanceled.Sku,PickLcnCase1BeforeApi.LocationId);
+                MessageToSort = GetMsgTosvDetail(db, CancelOrder.CartonNbr);
             }
         }
 
@@ -302,7 +305,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var orstmsg = CreateOrstMessage("Allocated",Allocated.OrderId,Allocated.SkuId, OrmtCase1.Quantity, OrmtCase1.WaveId,"0", OrmtCase1.Owner,null,Allocated.DestLocnId);
             var emsToWms = new EmsToWmsDto
             {
-                Process = DefaultValues.Process,
+                Process = DefaultPossibleValue.MessageProcessor,
                 Status = DefaultValues.Status,
                 Transaction = TransactionCode.Orst,
                 ResponseCode = (short)int.Parse(ReasonCode.Success),
@@ -311,12 +314,29 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             MsgKeyForAllocated.MsgKey = InsertEmsToWms(db, emsToWms);
         }
 
+        public MessageToSortViewDto GetMsgTosvDetail(OracleConnection db, string cartonNo)
+        {
+            var messageTosv = new MessageToSortViewDto();
+            var query = $"select * from msg_to_sv where message_type='USL' and PTN='{cartonNo}'";
+            Command = new OracleCommand(query, db); var cartonHeaderReader = Command.ExecuteReader();
+            if (cartonHeaderReader.Read()) { messageTosv.Ptn = (cartonHeaderReader[MessageToSv.Ptn].ToString());
+            }
+            return messageTosv;
+        }
+
+
+
+
+
+
+
+
         public void OrstMessageCreatedForCompletedStatus(OracleConnection db)
         {
             var orstmsg = CreateOrstMessage("Complete", Complete.OrderId, Complete.SkuId, OrmtCase2.Quantity, OrmtCase2.WaveId,"0",OrmtCase2.Owner,null,Complete.DestLocnId);
             var emsToWms = new EmsToWmsDto
             {
-                Process = DefaultValues.Process,
+                Process = DefaultPossibleValue.MessageProcessor,
                 Status = DefaultValues.Status,
                 Transaction = TransactionCode.Orst,
                 ResponseCode = (short)int.Parse(ReasonCode.Success),
@@ -330,7 +350,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var orstmsg = CreateOrstMessage("Complete", Complete.OrderId, Complete.SkuId, OrmtCase2.Quantity, OrmtCase2.WaveId, "01110605", OrmtCase2.Owner, "12890", Complete.DestLocnId);
             var emsToWms = new EmsToWmsDto
             {
-                Process = DefaultValues.Process,
+                Process = DefaultPossibleValue.MessageProcessor,
                 Status = DefaultValues.Status,
                 Transaction = TransactionCode.Orst,
                 ResponseCode = (short)int.Parse(ReasonCode.Success),
@@ -345,7 +365,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var orstmsg = CreateOrstMessage("Deallocate", Deallocate.OrderId, Deallocate.SkuId, OrmtCase3.Quantity, OrmtCase3.WaveId,"05",null,null,Deallocate.DestLocnId);
             var emsToWms = new EmsToWmsDto
             {
-                Process = DefaultValues.Process,
+                Process = DefaultPossibleValue.MessageProcessor,
                 Status = DefaultValues.Status,
                 Transaction = TransactionCode.Orst,
                 ResponseCode = (short)int.Parse(ReasonCode.Success),
@@ -359,7 +379,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var orstmsg = CreateOrstMessage("Canceled", Canceled.OrderId, Canceled.SkuId, OrmtCase4.Quantity, OrmtCase4.WaveId,"06",null,null,Canceled.DestLocnId);
             var emsToWms = new EmsToWmsDto
             {
-                Process = DefaultValues.Process,
+                Process = DefaultPossibleValue.MessageProcessor,
                 Status = DefaultValues.Status,
                 Transaction = TransactionCode.Orst,
                 ResponseCode = (short)int.Parse(ReasonCode.Success),

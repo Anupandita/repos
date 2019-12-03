@@ -39,7 +39,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 var mprqResult = CreateMprqMessage();
                 EmsToWmsParameters = new EmsToWmsDto
                 {
-                    Process = DefaultValues.Process,
+                    Process = DefaultPossibleValue.MessageProcessor,
                     MessageKey = Convert.ToInt64(MprqData.MsgKey),
                     Status = DefaultValues.Status,
                     Transaction = TransactionCode.Mprq,
