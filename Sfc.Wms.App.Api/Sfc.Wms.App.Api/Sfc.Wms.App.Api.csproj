@@ -204,8 +204,8 @@
     <Reference Include="Sfc.Wms.Configuration.WarehouseMaster.Contracts, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.WarehouseMaster.Contracts.3.0.0\lib\net472\Sfc.Wms.Configuration.WarehouseMaster.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Data, Version=4.5.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Data.4.5.3\lib\net472\Sfc.Wms.Data.dll</HintPath>
+    <Reference Include="Sfc.Wms.Data, Version=4.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Data.4.6.0\lib\net472\Sfc.Wms.Data.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Foundation.AllocationInventory.App, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.AllocationInventory.App.3.0.0\lib\net472\Sfc.Wms.Foundation.AllocationInventory.App.dll</HintPath>
