@@ -26,7 +26,7 @@ namespace Sfc.Wms.App.Api.Controllers
         [ResponseType(typeof(BaseResult<CorbaResponseDto>))]
         public async Task<IHttpActionResult> BatchCorbaAsync(string functionName, string className, string isVector, List<CorbaDto> corbaDtos)
         {
-            var response = await _corbaService.BatchCorbaAsync(functionName, className, isVector, corbaDtos, this.UserName).ConfigureAwait(false);
+            var response = await _corbaService.BatchCorbaAsync(functionName, className, isVector, corbaDtos, UserName).ConfigureAwait(false);
             return ResponseHandler(response);
         }
 
@@ -35,7 +35,7 @@ namespace Sfc.Wms.App.Api.Controllers
         [ResponseType(typeof(BaseResult<CorbaResponseDto>))]
         public async Task<IHttpActionResult> SingleCorbaAsync(string functionName, string className, string isVector, CorbaDto corbaDto)
         {
-            corbaDto.UserId = this.UserName;
+            corbaDto.UserId = UserName;
             var response = await _corbaService.SingleCorbaAsync(functionName, className, isVector, corbaDto).ConfigureAwait(false);
             return ResponseHandler(response);
         }
