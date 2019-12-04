@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Wms.App.Api")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Backend Web Api")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Shamrock Foods Company")]
 [assembly: AssemblyProduct("Wms.App.Api")]
