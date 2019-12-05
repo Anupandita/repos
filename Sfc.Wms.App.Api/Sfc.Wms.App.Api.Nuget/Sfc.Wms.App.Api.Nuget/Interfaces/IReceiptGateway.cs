@@ -12,7 +12,8 @@ namespace Sfc.Wms.App.Api.Nuget.Interfaces
 
         Task<BaseResult<string>> GetAsnDetailsAsync(string token, string shipmentNumber);
 
-        Task<BaseResult<string>> GetDrillAsnDetailsAsync(string token, string whse, string shipmentNumber, string skuId);
+        Task<BaseResult<string>>
+            GetDrillAsnDetailsAsync(string token, string whse, string shipmentNumber, string skuId);
 
         Task<BaseResult<string>> GetAppoitmentScheduleAsync(string token, string shipmentNumber);
 

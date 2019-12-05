@@ -5,6 +5,7 @@ namespace Sfc.Wms.App.Api.Nuget.Interfaces
 {
     public interface ICommonGateway
     {
-        Task<BaseResult<T>> CodeIds<T>(string isWhseSysCode, string recType, string codeType, bool isNumber, string orderByColumn, string token);
+        Task<BaseResult<T>> CodeIds<T>(string isWhseSysCode, string recType, string codeType, bool isNumber,
+            string orderByColumn, string token);
     }
 }
