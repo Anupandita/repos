@@ -28,12 +28,12 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
                 new RestClient(ServiceUrl); //TODO: This variable will be removed after all endpoints were moved to C#.
         }
 
-        public async Task<BaseResult<T>> DeleteLpnCommentsAsync<T>(CaseCommentDto lpnCommentsModel, string token)
+        public async Task<BaseResult<T>> DeleteLpnCommentsAsync<T>(CaseCommentDto caseCommentDto, string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
-                var request = DeleteLpnCommentsRequest(lpnCommentsModel, token);
+                var request = DeleteLpnCommentsRequest(caseCommentDto, token);
                 var response = await _restCsharpClient.ExecuteTaskAsync<T>(request).ConfigureAwait(false);
                 return _responseBuilder.GetBaseResult<T>(response);
             }).ConfigureAwait(false);
@@ -50,12 +50,12 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        public async Task<BaseResult<T>> GetLpnDetailsAsync<T>(LpnParameterDto lpnParamModel, string token)
+        public async Task<BaseResult<T>> GetLpnDetailsAsync<T>(LpnParameterDto lpnParameterDto, string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
-                var request = GetLpnDetailsRequest(lpnParamModel, token);
+                var request = GetLpnDetailsRequest(lpnParameterDto, token);
                 var response = await _restCsharpClient.ExecuteTaskAsync<T>(request).ConfigureAwait(false);
                 return _responseBuilder.GetBaseResult<T>(response);
             }).ConfigureAwait(false);
@@ -169,22 +169,22 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             return GetRequest(token, resource, Authorization);
         }
 
-        private RestRequest GetLpnDetailsRequest(LpnParameterDto lpnParamModel, string token)
+        private RestRequest GetLpnDetailsRequest(LpnParameterDto lpnParameterDto, string token)
         {
             var resource =
-                $"{_endPoint}/{Routes.Paths.Find}{Routes.Paths.QueryParamSymbol}pageNo={lpnParamModel.PageNumber}{Routes.Paths.QueryParamAnd}rowsPerPage={lpnParamModel.PageSize}{Routes.Paths.QueryParamAnd}totalRows={lpnParamModel.TotalRecords}";
+                $"{_endPoint}/{Routes.Paths.Find}{Routes.Paths.QueryParamSymbol}pageNo={lpnParameterDto.PageNumber}{Routes.Paths.QueryParamAnd}rowsPerPage={lpnParameterDto.PageSize}{Routes.Paths.QueryParamAnd}totalRows={lpnParameterDto.TotalRecords}";
 
-            resource = QueryStringBuilder.BuildQuery("lpnNumber=", lpnParamModel.LpnNumber, resource, false);
-            resource = QueryStringBuilder.BuildQuery("asnId=", lpnParamModel.AsnId, resource, false);
-            resource = QueryStringBuilder.BuildQuery("palletId=", lpnParamModel.PalletId, resource, false);
-            resource = QueryStringBuilder.BuildQuery("skuId=", lpnParamModel.SkuId, resource, false);
-            resource = QueryStringBuilder.BuildQuery("statusFrom=", lpnParamModel.StatusFrom, resource, false);
-            resource = QueryStringBuilder.BuildQuery("statusTo=", lpnParamModel.StatusTo, resource, false);
-            resource = QueryStringBuilder.BuildQuery("zone=", lpnParamModel.Zone, resource, false);
-            resource = QueryStringBuilder.BuildQuery("aisle=", lpnParamModel.Aisle, resource, false);
-            resource = QueryStringBuilder.BuildQuery("slot=", lpnParamModel.Slot, resource, false);
-            resource = QueryStringBuilder.BuildQuery("createdDate=", lpnParamModel.CreatedDate, resource, false);
-            resource = QueryStringBuilder.BuildQuery("level=", lpnParamModel.Level, resource, false);
+            resource = QueryStringBuilder.BuildQuery("lpnNumber=", lpnParameterDto.LpnNumber, resource, false);
+            resource = QueryStringBuilder.BuildQuery("asnId=", lpnParameterDto.AsnId, resource, false);
+            resource = QueryStringBuilder.BuildQuery("palletId=", lpnParameterDto.PalletId, resource, false);
+            resource = QueryStringBuilder.BuildQuery("skuId=", lpnParameterDto.SkuId, resource, false);
+            resource = QueryStringBuilder.BuildQuery("statusFrom=", lpnParameterDto.StatusFrom, resource, false);
+            resource = QueryStringBuilder.BuildQuery("statusTo=", lpnParameterDto.StatusTo, resource, false);
+            resource = QueryStringBuilder.BuildQuery("zone=", lpnParameterDto.Zone, resource, false);
+            resource = QueryStringBuilder.BuildQuery("aisle=", lpnParameterDto.Aisle, resource, false);
+            resource = QueryStringBuilder.BuildQuery("slot=", lpnParameterDto.Slot, resource, false);
+            resource = QueryStringBuilder.BuildQuery("createdDate=", lpnParameterDto.CreatedDate, resource, false);
+            resource = QueryStringBuilder.BuildQuery("level=", lpnParameterDto.Level, resource, false);
 
             return GetRequest(token, resource, Authorization);
         }
@@ -213,10 +213,10 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             return PostRequest(resource, lpnAisleTransModel, token, Authorization);
         }
 
-        private RestRequest InsertLpnCommentsRequest(CaseCommentDto lpnCommentsModel, string token)
+        private RestRequest InsertLpnCommentsRequest(CaseCommentDto caseCommentDto, string token)
         {
             var resource = $"{_endPoint}/{Routes.Paths.LpnCommentsAdd}";
-            return PostRequest(resource, lpnCommentsModel, token, Authorization);
+            return PostRequest(resource, caseCommentDto, token, Authorization);
         }
 
         private RestRequest UpdateCaseLpnDetailsRequest(LpnDetailsUpdateDto lpnCaseDetailsUpdateModel,
