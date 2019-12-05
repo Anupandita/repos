@@ -53,15 +53,13 @@ namespace Sfc.Wms.App.Api
                      PrinterValuesMapper.CreateMaps(cfg);
                      SfcAsrsMapper.CreateMaps(cfg);
                      cfg.CreateMap<CaseLock, CaseLockDto>().ReverseMap();
-                     cfg.CreateMap<CaseDetail, CaseDetailDto>().ReverseMap();
-                     cfg.CreateMap<CaseComment, CaseCommentDto>().ReverseMap();
-                     cfg.CreateMap<CaseHeader, CaseHeaderDto>().ReverseMap();
+                     cfg.CreateMap<CaseComment, CaseCommentDto>(MemberList.None).ReverseMap();
                      cfg.CreateMap<CaseHeader, LpnHeaderUpdateDto>(MemberList.None).ReverseMap();
                      cfg.CreateMap<LpnParameterDto, PageOptions>(MemberList.None).ReverseMap();
                      cfg.CreateMap<PageOptions, LpnSearchResultsDto>(MemberList.None).ReverseMap();
                  }));
 #if DEBUG
-                // mapper.DefaultContext.ConfigurationProvider.AssertConfigurationIsValid();
+                 mapper.DefaultContext.ConfigurationProvider.AssertConfigurationIsValid();
 #endif
                  return mapper;
              });
