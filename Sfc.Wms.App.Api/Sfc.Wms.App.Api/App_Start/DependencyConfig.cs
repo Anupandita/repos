@@ -8,10 +8,12 @@ using AutoMapper.Extensions.ExpressionMapping;
 using Sfc.Core.Aop.WebApi.Logging;
 using Sfc.Core.Cache.Contracts;
 using Sfc.Core.Cache.InMemory;
+using Sfc.Core.OnPrem.Pagination;
 using Sfc.Core.OnPrem.Security.Contracts.Extensions;
 using Sfc.Wms.App.App.AutoMapper;
 using Sfc.Wms.Data.Context;
-using Sfc.Wms.Foundation.InboundLpn.Repository.LocationDataRepository;
+using Sfc.Wms.Data.Entities;
+using Sfc.Wms.Foundation.InboundLpn.Contracts.Dtos;
 using Sfc.Wms.Framework.Interceptor.App.interceptors;
 using Sfc.Wms.Framework.MessageLogger.App.Services;
 using Sfc.Wms.Framework.MessageMaster.App.Services;
@@ -50,9 +52,16 @@ namespace Sfc.Wms.App.Api
                      SfcRbacMapper.CreateMaps(cfg);
                      PrinterValuesMapper.CreateMaps(cfg);
                      SfcAsrsMapper.CreateMaps(cfg);
+                     cfg.CreateMap<CaseLock, CaseLockDto>().ReverseMap();
+                     cfg.CreateMap<CaseDetail, CaseDetailDto>().ReverseMap();
+                     cfg.CreateMap<CaseComment, CaseCommentDto>().ReverseMap();
+                     cfg.CreateMap<CaseHeader, CaseHeaderDto>().ReverseMap();
+                     cfg.CreateMap<CaseHeader, LpnHeaderUpdateDto>(MemberList.None).ReverseMap();
+                     cfg.CreateMap<LpnParameterDto, PageOptions>(MemberList.None).ReverseMap();
+                     cfg.CreateMap<PageOptions, LpnSearchResultsDto>(MemberList.None).ReverseMap();
                  }));
 #if DEBUG
-                 mapper.DefaultContext.ConfigurationProvider.AssertConfigurationIsValid();
+                // mapper.DefaultContext.ConfigurationProvider.AssertConfigurationIsValid();
 #endif
                  return mapper;
              });
@@ -62,8 +71,7 @@ namespace Sfc.Wms.App.Api
             container.Register(() => ConfigurationManager.AppSettings["db:encryptionKey"].ToSecureString(), Lifestyle.Singleton);
             container.Register<ISfcCache>(() => new SfcInMemoryCache(MemoryCache.Default), Lifestyle.Scoped);
             container.Register<IMappingFixture>(() => new MappingFixture(), Lifestyle.Singleton);
-            container.Register<LocationData>(Lifestyle.Scoped);
-            container.Register<LpnParameterValidator>(Lifestyle.Scoped);
+           container.Register<LpnParameterValidator>(Lifestyle.Scoped);
 
             container.Options.AllowOverridingRegistrations = true;
             container.Register<SfcLogger>(Lifestyle.Scoped);

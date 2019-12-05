@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Description;
-using Sfc.Core.BaseApiController;
+﻿using Sfc.Core.BaseApiController;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.App.Api.Contracts.Constants;
 using Sfc.Wms.Foundation.InboundLpn.Contracts.Dtos;
 using Sfc.Wms.Foundation.InboundLpn.Contracts.Interfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace Sfc.Wms.App.Api.Controllers
 {
@@ -15,18 +15,26 @@ namespace Sfc.Wms.App.Api.Controllers
     public class LpnController : SfcBaseController
     {
         private readonly ILpnService _lpnService;
+        private readonly ICaseCommentService _caseCommentService;
+        private readonly ICaseDetailService _caseDetailService;
+        private readonly ICaseLockService _caseLockService;
 
-        public LpnController(ILpnService lpnService)
+        public LpnController(ILpnService lpnService, ICaseCommentService caseCommentService,
+            ICaseDetailService caseDetailService, ICaseLockService caseLockService)
         {
             _lpnService = lpnService;
+            _caseCommentService = caseCommentService;
+            _caseDetailService = caseDetailService;
+            _caseLockService = caseLockService;
         }
 
         [HttpPost]
         [Route(Routes.Paths.LpnCommentsAdd)]
         [ResponseType(typeof(BaseResult))]
-        public async Task<IHttpActionResult> AddLpnCommentAsync(LpnCommentDto lpnCommentDto)
+        public async Task<IHttpActionResult> AddLpnCommentAsync(CaseCommentDto caseCommentDto)
         {
-            var response = await _lpnService.AddLpnCommentAsync(lpnCommentDto).ConfigureAwait(false);
+            var response = await _caseCommentService.InsertAsync(caseCommentDto)
+                .ConfigureAwait(false);
             return ResponseHandler(response);
         }
 
@@ -35,16 +43,17 @@ namespace Sfc.Wms.App.Api.Controllers
         [ResponseType(typeof(BaseResult))]
         public async Task<IHttpActionResult> DeleteLpnCommentAsync(string caseNumber, int commentSequenceNumber)
         {
-            var response = await _lpnService.DeleteLpnCommentAsync(caseNumber, commentSequenceNumber).ConfigureAwait(false);
+            var response = await _caseCommentService.DeleteAsync(caseNumber, commentSequenceNumber)
+                .ConfigureAwait(false);
             return ResponseHandler(response);
         }
 
         [HttpGet]
         [Route(Routes.Paths.Find)]
-        [ResponseType(typeof(BaseResult<FindLpnDto>))]
-        public async Task<IHttpActionResult> FindLpnAsync([FromUri]LpnParamModel lpnParamModel)
+        [ResponseType(typeof(BaseResult<LpnSearchResultsDto>))]
+        public async Task<IHttpActionResult> FindLpnAsync([FromUri]LpnParameterDto lpnParamDto)
         {
-            var response = await _lpnService.FindLpnAsync(lpnParamModel).ConfigureAwait(false);
+            var response = await _lpnService.LpnSearchAsync(lpnParamDto).ConfigureAwait(false);
             return ResponseHandler(response);
         }
 
@@ -62,7 +71,7 @@ namespace Sfc.Wms.App.Api.Controllers
         [ResponseType(typeof(BaseResult<List<CaseCommentDto>>))]
         public async Task<IHttpActionResult> GetLpnCommentsAsync(string lpnId)
         {
-            var response = await _lpnService.GetLpnCommentsAsync(lpnId).ConfigureAwait(false);
+            var response = await _caseCommentService.GetLpnCommentsWithCodeDescriptionAsync(lpnId).ConfigureAwait(false);
             return ResponseHandler(response);
         }
 
@@ -89,25 +98,25 @@ namespace Sfc.Wms.App.Api.Controllers
         [ResponseType(typeof(BaseResult<List<CaseDetailDto>>))]
         public async Task<IHttpActionResult> GetLpnLockUnlockAsync(string lpnId)
         {
-            var response = await _lpnService.GetLpnLockUnlockAsync(lpnId).ConfigureAwait(false);
+            var response = await _caseLockService.GetCaseLockUnlockAsync(lpnId).ConfigureAwait(false);
             return ResponseHandler(response);
         }
 
         [HttpPut]
         [Route(Routes.Paths.LpnUpdateDetails)]
         [ResponseType(typeof(BaseResult))]
-        public async Task<IHttpActionResult> UpdateLpnAsync(LpnUpdateDto lpnUpdate)
+        public async Task<IHttpActionResult> UpdateLpnAsync(LpnHeaderUpdateDto lpnUpdate)
         {
-            var response = await _lpnService.UpdateLpnDetails(lpnUpdate).ConfigureAwait(false);
+            var response = await _lpnService.UpdateLpnDetailsAsync(lpnUpdate).ConfigureAwait(false);
             return ResponseHandler(response);
         }
 
         [HttpPut]
         [Route(Routes.Paths.LpnCaseDetails)]
         [ResponseType(typeof(BaseResult))]
-        public async Task<IHttpActionResult> UpdateLpnCaseDetailsAsync(LpnCaseDetailsUpdateDto lpnCaseDetailsUpdate)
+        public async Task<IHttpActionResult> UpdateLpnCaseDetailsAsync(LpnDetailsUpdateDto lpnCaseDetailsUpdate)
         {
-            var response = await _lpnService.UpdateLpnCaseDetails(lpnCaseDetailsUpdate).ConfigureAwait(false);
+            var response = await _caseDetailService.UpdateCaseDetailAssortAndCutNumberAsync(lpnCaseDetailsUpdate).ConfigureAwait(false);
             return ResponseHandler(response);
         }
     }
