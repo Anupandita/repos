@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29306.81
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.902
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfc.Wms.App.Api.Nuget", "Sfc.Wms.App.Api.Nuget\Sfc.Wms.App.Api.Nuget.csproj", "{57638794-9DC7-4136-8896-48F0A51CEE6E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfc.Wms.App.Api.Contracts", "..\Sfc.Wms.App.Api.Contracts\Sfc.Wms.App.Api.Contracts\Sfc.Wms.App.Api.Contracts.csproj", "{8BFDC1DE-8468-4374-8F19-8296144AFD11}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +26,16 @@ Global
 		{57638794-9DC7-4136-8896-48F0A51CEE6E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{57638794-9DC7-4136-8896-48F0A51CEE6E}.UAT|Any CPU.ActiveCfg = UAT|Any CPU
 		{57638794-9DC7-4136-8896-48F0A51CEE6E}.UAT|Any CPU.Build.0 = UAT|Any CPU
+		{8BFDC1DE-8468-4374-8F19-8296144AFD11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BFDC1DE-8468-4374-8F19-8296144AFD11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BFDC1DE-8468-4374-8F19-8296144AFD11}.PROD|Any CPU.ActiveCfg = PROD|Any CPU
+		{8BFDC1DE-8468-4374-8F19-8296144AFD11}.PROD|Any CPU.Build.0 = PROD|Any CPU
+		{8BFDC1DE-8468-4374-8F19-8296144AFD11}.QA|Any CPU.ActiveCfg = QA|Any CPU
+		{8BFDC1DE-8468-4374-8F19-8296144AFD11}.QA|Any CPU.Build.0 = QA|Any CPU
+		{8BFDC1DE-8468-4374-8F19-8296144AFD11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BFDC1DE-8468-4374-8F19-8296144AFD11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BFDC1DE-8468-4374-8F19-8296144AFD11}.UAT|Any CPU.ActiveCfg = UAT|Any CPU
+		{8BFDC1DE-8468-4374-8F19-8296144AFD11}.UAT|Any CPU.Build.0 = UAT|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

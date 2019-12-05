@@ -18,4 +18,7 @@
     <PackageReference Include="Sfc.Core.OnPrem.Security.Contracts" Version="2.1.*" />
     <PackageReference Include="Sfc.Wms.Foundation.InboundLpn.Contracts" Version="3.*" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+  </ItemGroup>
  </Project>

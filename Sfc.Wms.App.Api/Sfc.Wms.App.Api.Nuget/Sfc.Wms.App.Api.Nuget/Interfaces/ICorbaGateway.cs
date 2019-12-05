@@ -1,8 +1,8 @@
-﻿using Sfc.Core.OnPrem.Result;
+﻿using System.Threading.Tasks;
+using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.App.Api.Contracts.Entities;
-using System.Threading.Tasks;
 
-namespace Sfc.Wms.App.Api.Contracts.Interfaces
+namespace Sfc.Wms.App.Api.Nuget.Interfaces
 {
     public interface ICorbaGateway
     {

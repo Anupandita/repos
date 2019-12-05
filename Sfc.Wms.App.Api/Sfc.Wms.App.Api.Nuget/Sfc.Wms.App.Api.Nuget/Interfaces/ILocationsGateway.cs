@@ -2,7 +2,7 @@
 using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.App.Api.Contracts.Entities;
 
-namespace Sfc.Wms.App.Api.Contracts.Interfaces
+namespace Sfc.Wms.App.Api.Nuget.Interfaces
 {
     public interface ILocationsGateway
     {
@@ -22,7 +22,7 @@ namespace Sfc.Wms.App.Api.Contracts.Interfaces
         Task<BaseResult<string>> GetLocationLPNS(string grid_locn_id, string token);
         Task<BaseResult<string>> UpdateLocationLPNS(ActiveLocationLpnModel activeLocationLpnModel, string token);
 
-        Task<BaseResult<string>> UpdateLockUnlock(LockUnlockModel lockUnlockModel, string token);
+       // Task<BaseResult<string>> UpdateLockUnlock(LockUnlockModel lockUnlockModel, string token);
         Task<BaseResult<string>> UpdateAdjInv(AdjInvModel adjInvModel, string token);
 
         Task<BaseResult<string>> GetReserveLocnDrillDown(string token);
