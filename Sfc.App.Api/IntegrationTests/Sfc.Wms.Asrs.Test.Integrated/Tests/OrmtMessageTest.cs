@@ -7,9 +7,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
     [TestClass]
     [Story(
        AsA = "Authorized User test for ormt message from wmstoems",
-      IWant = "To Verify ORMT message is inserted in to swm_to_mhe table with appropriate data" +
-       " And verify ORMT message is inserted in to wmstoems table with appropriate data " +
-       " Verify in PickLocnDtlExt table for Ormt Count",
+      IWant = "To Test for Ormt messages on printing of carton,On Cancellation of carton,OnEpick and On Processing COST message"+
+        "To Verify ORMT message is inserted in to swm_to_mhe table with appropriate data" +
+       " Verify in PickLocnDtlExt table for Ormt Count and status in SWM_ELGBL_ORMT_CARTONS table",
       SoThat = "I can validate for message fields in ORMT message, in Internal Table SWM_TO_MHE and in wmstoems"
        )]
     
