@@ -1,9 +1,4 @@
-﻿using System;
-using System.Configuration;
-using System.Linq;
-using System.Runtime.Caching;
-using System.Web.Http;
-using AutoMapper;
+﻿using AutoMapper;
 using AutoMapper.Extensions.ExpressionMapping;
 using Sfc.Core.Aop.WebApi.Logging;
 using Sfc.Core.Cache.Contracts;
@@ -24,6 +19,11 @@ using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Interfaces;
 using SimpleInjector;
 using SimpleInjector.Integration.WebApi;
 using SimpleInjector.Lifestyles;
+using System;
+using System.Configuration;
+using System.Linq;
+using System.Runtime.Caching;
+using System.Web.Http;
 
 namespace Sfc.Wms.App.Api
 {
@@ -69,7 +69,7 @@ namespace Sfc.Wms.App.Api
             container.Register(() => ConfigurationManager.AppSettings["db:encryptionKey"].ToSecureString(), Lifestyle.Singleton);
             container.Register<ISfcCache>(() => new SfcInMemoryCache(MemoryCache.Default), Lifestyle.Scoped);
             container.Register<IMappingFixture>(() => new MappingFixture(), Lifestyle.Singleton);
-           container.Register<LpnParameterValidator>(Lifestyle.Scoped);
+            container.Register<LpnParameterValidator>(Lifestyle.Scoped);
 
             container.Options.AllowOverridingRegistrations = true;
             container.Register<SfcLogger>(Lifestyle.Scoped);
@@ -113,7 +113,6 @@ namespace Sfc.Wms.App.Api
                         {
                             container.InterceptWith<MonitoringInterceptor>(type =>
                                 type == reg.service.GetGenericTypeDefinition());
-
                         }
                     }
                 }
