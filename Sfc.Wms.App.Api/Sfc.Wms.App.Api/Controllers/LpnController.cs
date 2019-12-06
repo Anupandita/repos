@@ -35,7 +35,8 @@ namespace Sfc.Wms.App.Api.Controllers
         {
             var response = await _caseCommentService.InsertAsync(caseCommentDto)
                 .ConfigureAwait(false);
-            return ResponseHandler(response);
+            return response.ResultType == ResultTypes.Created ? 
+                Created("", new BaseResult {ResultType = ResultTypes.Created}) : ResponseHandler(response);
         }
 
         [HttpDelete]
