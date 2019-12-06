@@ -32,7 +32,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                .Then(x => x.GetDataFromDataBaseForSingleSkuScenariosIvmt())
                .And(x => x.VerifyIvmtMessageWasInsertedIntoSwmToMhe())
                .And(x => x.VerifyIvmtMessageWasInsertedIntoWmsToEms())
-               .And(x => x.VerifyTheQuantityIsIncreasedToTransInventory())
+               .And(x => x.VerifyTheQuantityIsIncreasedInToTransInventory())
                .And(x => x.VerifyQuantityisReducedIntoCaseDetail())
                .And(x => x.VerifyStatusIsUpdatedIntoCaseHeader())
                .And(x => x.VerifyStatusIsUpdatedIntoTaskHeader())

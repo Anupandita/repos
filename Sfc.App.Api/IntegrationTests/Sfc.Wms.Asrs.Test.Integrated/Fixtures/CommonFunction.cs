@@ -13,7 +13,6 @@ using System.Configuration;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
-
     public class CommonFunction
     {
         protected OracleCommand Command;

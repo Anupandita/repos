@@ -48,19 +48,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             CurrentCaseNbr = NotEnoughInvCase.CaseNumber;
         }
-
-        protected void CurrentCaseNumberForRecivedCasesfromReturn()
-        {
-            RecivedCaseNbr = SingleSkuRecivedCase.CaseNumber;
-        }
-        protected void CurrentRecivedCaseNumberForMultisku()
-        {
-            RecivedCaseNbr = RecivedCaseHdrMultiSku.CaseNumber;
-        }
-        protected void CurrentCaseNumberForNotEnoughInventoryInCaseForRecivedCase()
-        {
-            RecivedCaseNbr = NotEnoughInvCase.CaseNumber;
-        }
+     
+       
         public void AValidNewComtMessageRecord()
         {
             ComtParameters = new ComtParams
@@ -91,11 +80,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             ComtParameters = new ComtParams
             {
-                ActionCode = ActionCodeConstants.Create,
-                CurrentLocationId = DefaultValues.CurrentlocnId,
-                ContainerId = RecivedCaseNbr,
+                ActionCode = ActionCodeConstants.Create,               
+                ContainerId = SingleSkuCase.CaseNumber,
                 ContainerType = DefaultValues.ContainerType,
-                ParentContainerId = RecivedCaseNbr,
+                ParentContainerId = "",
                 AttributeBitmap = DefaultValues.AttributeBitMap,
                 QuantityToInduct = DefaultValues.QuantityToInduct
             };
@@ -143,10 +131,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             GetDataAfterTriggerForMultiSkuAndValidateData();
         }
-        protected void GetDataAndValidateForCaseRecievedIvmtMessageInsertedIntoBothTable()
-        {
-            GetDataAfterTriggerForRecivedCaseMultiSkuAndValidateData();
-        }
+       
         protected IRestResponse ApiIsCalled(string url,ComtParams parameters) 
         {
             var client = new RestClient(url);
@@ -168,6 +153,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Result = ComtIvmtResult();
             Assert.AreEqual(ResultType.Created, Result.ResultType.ToString());
         }
+
         protected void ComtApiIsCalledForNotEnoughInventoryInCase()
         {
             ResultForNegativeCase = ComtIvmtResult();
@@ -185,7 +171,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(MessageLength.Ivmt, Ivmt.MessageLength);
             Assert.AreEqual(ActionCodeConstants.Create, Ivmt.ActionCode);
             Assert.AreEqual(SingleSkuCase.SkuId, Ivmt.Sku);
-            Assert.AreEqual(SingleSkuCase.TotalAllocQty, Convert.ToDouble(Ivmt.Quantity));
+            Assert.AreEqual(SingleSkuCase.ActlQty, Convert.ToDouble(Ivmt.Quantity));
             Assert.AreEqual(DefaultValues.ContainerType, Ivmt.UnitOfMeasure);
             Assert.AreEqual(DefaultValues.DataControl, Ivmt.DateControl);
         }
@@ -194,10 +180,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             VerifyComtMessageWasInsertedIntoSwmToMhe(Comt, SwmToMheComt, CaseHdrMultiSku.CaseNumber);
         }
 
-        protected void VerifyComtMessageWasInsertedIntoSwmToMheForRecivedMultiSku()
-        {
-            VerifyComtMessageWasInsertedIntoSwmToMhe(Comt, SwmToMheComt, RecivedCaseHdrMultiSku.CaseNumber);
-        }
+        
         protected void VerifyComtMessageWasInsertedIntoWmsToEms() 
         {
             VerifyComtMessageWasInsertedIntoWmsToEms(WmsToEmsComt);      
@@ -210,28 +193,30 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             VerifyComtMessageWasInsertedIntoSwmToMhe(Comt, SwmToMheComt, SingleSkuCase.CaseNumber);
         }
-        protected void VerifyRecivedCaseComtMessageWasInsertedIntoSwmToMhe()
+        protected void VerifyReceivedCaseComtMessageWasInsertedIntoSwmToMhe()
         {
-            VerifyComtMessageWasInsertedIntoSwmToMhe(Comt, SwmToMheComt, SingleSkuRecivedCase.CaseNumber);
+            VerifyComtMessageWasInsertedIntoSwmToMhe(Comt, SwmToMheComt, SingleSkuCase.CaseNumber);
         }
         protected void VerifyIvmtMessageWasInsertedIntoWmsToEms()
         {
             VerifyIvmtMessageWasInsertedIntoWmsToEms(WmsToEmsIvmt);
         } 
-        protected void VerifyTheQuantityIsIncreasedToTransInventory()
+        protected void VerifyTheQuantityIsIncreasedInToTransInventory()
         {
-           Assert.AreEqual(SingleSkuCase.ActualInventoryUnits + Convert.ToDecimal(Ivmt.Quantity), CaseDtlAfterApi.ActualInventoryUnits);
-           // the bellow code will be tested after new build release.
-           //Assert.AreEqual((unitWeight * Convert.ToDecimal(ivmt.Quantity))+ Convert.ToInt16(singleSkuCase.ActualWeight), Math.Round(Convert.ToDecimal(caseDtlAfterApi.ActualWeight)));
+           Assert.AreEqual(SingleSkuCase.ActualInventoryUnits + Convert.ToDecimal(Ivmt.Quantity), CaseDtlAfterApi.ActualInventoryUnits);       
+           Assert.AreEqual((UnitWeight * Convert.ToDecimal(Ivmt.Quantity))+ SingleSkuCase.ActualWeight, Convert.ToDecimal(CaseDtlAfterApi.ActualWeight));
         }
-        protected void VerifyTheQuantityCasedetail()
-        {
-            Assert.AreEqual(CaseDtlBeforeApi.ActlQty <= Convert.ToDecimal(PickLocn.MaximumInventoryQuantity - (PickLocn.ActualInventoryQuantity + PickLocn.ToBeFilledQty - PickLocn.ToBePickedQty)),CaseDtlAfterApi.ActlQty <= Convert.ToDecimal(PickLocn.MaximumInventoryQuantity - (PickLocn.ActualInventoryQuantity + PickLocn.ToBeFilledQty - PickLocn.ToBePickedQty)));
-        }
+      
         protected void VerifyQuantityisReducedIntoCaseDetail()
         {
-            Assert.AreEqual(0, CaseDtlAfterApi.TotalAllocQty);        
+            Assert.AreEqual(0, CaseDtlAfterApi.TotalAllocQty);
         }
+
+        protected void VerifyActualQuantityIsReducedInToCaseDtl()
+        {
+            Assert.AreEqual(0, CaseDtlAfterApi.ActlQty);
+        }
+
         protected void VerifyStatusIsUpdatedIntoCaseHeader()
         {
             VerifyStatusIsUpdatedIntoCaseHeader(CaseDtlAfterApi.StatusCode);
