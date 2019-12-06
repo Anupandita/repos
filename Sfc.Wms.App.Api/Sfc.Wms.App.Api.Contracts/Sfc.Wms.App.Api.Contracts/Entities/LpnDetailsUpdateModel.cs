@@ -10,7 +10,7 @@ namespace Sfc.Wms.App.Api.Contracts.Entities
         public DateTime? ConsolidatePartyDate { get; set; }
         public string ConsolidateSequence { get; set; }
         public string DcOrderNumber { get; set; }
-        public int EstWt { get; set; }
+        public decimal EstWt { get; set; }
         public DateTime? ExpireDate { get; set; }
         public DateTime? ManufacturingDate { get; set; }
         public string PoNumber { get; set; }
@@ -22,6 +22,6 @@ namespace Sfc.Wms.App.Api.Contracts.Entities
         public string SpecialInstructionCode5 { get; set; }
         public bool ValidShipmentNumber { get; set; }
         public string VendorId { get; set; }
-        public int Volume { get; set; }
+        public decimal Volume { get; set; }
     }
 }
