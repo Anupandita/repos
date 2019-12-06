@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Wms.App.Api")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Backend Web Api")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Shamrock Foods Company")]
 [assembly: AssemblyProduct("Wms.App.Api")]
@@ -30,5 +30,5 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can default the Revision and Build Numbers
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("1.1.3.3")]
-[assembly: AssemblyFileVersion("1.1.3.3")]
+[assembly: AssemblyVersion("1.1.3.4")]
+[assembly: AssemblyFileVersion("1.1.3.4")]
