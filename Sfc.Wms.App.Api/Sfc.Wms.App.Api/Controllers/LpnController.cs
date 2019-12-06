@@ -35,8 +35,8 @@ namespace Sfc.Wms.App.Api.Controllers
         {
             var response = await _caseCommentService.InsertAsync(caseCommentDto)
                 .ConfigureAwait(false);
-            return response.ResultType == ResultTypes.Created ? 
-                Created("", new BaseResult {ResultType = ResultTypes.Created}) : ResponseHandler(response);
+            return response.ResultType == ResultTypes.Created ?
+                CreatedAtRoute( nameof(CaseCommentDto),new{ lpnId =caseCommentDto.CaseNumber},new BaseResult { ResultType = ResultTypes.Created }) : ResponseHandler(response);
         }
 
         [HttpDelete]
@@ -68,7 +68,7 @@ namespace Sfc.Wms.App.Api.Controllers
         }
 
         [HttpGet]
-        [Route(Routes.Paths.LpnComments)]
+        [Route(Routes.Paths.LpnComments, Name = nameof(CaseCommentDto))]
         [ResponseType(typeof(BaseResult<List<CaseCommentDto>>))]
         public async Task<IHttpActionResult> GetLpnCommentsAsync(string lpnId)
         {
