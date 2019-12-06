@@ -59,7 +59,8 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             {
                 var request = GetLpnDetailsRequest(lpnParameterDto, token);
                 var response = await _restCsharpClient.ExecuteTaskAsync<T>(request).ConfigureAwait(false);
-                return _responseBuilder.GetBaseResult<T>(response);
+                var jj= _responseBuilder.GetBaseResult<T>(response);
+                return jj;
             }).ConfigureAwait(false);
         }
 
@@ -173,8 +174,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
 
         private RestRequest GetLpnDetailsRequest(LpnParameterDto lpnParameterDto, string token)
         {
-            var resource =
-                $"{_endPoint}/{Routes.Paths.Find}{Routes.Paths.QueryParamSymbol}pageNo={lpnParameterDto.PageNumber}{Routes.Paths.QueryParamAnd}rowsPerPage={lpnParameterDto.PageSize}{Routes.Paths.QueryParamAnd}totalRows={lpnParameterDto.TotalRecords}";
+            var resource = $"{_endPoint}/{Routes.Paths.Find}";
             return PostRequest(resource, lpnParameterDto, token, Authorization);
 
 //            resource = QueryStringBuilder.BuildQuery("lpnNumber=", lpnParameterDto.LpnNumber, resource, false);
