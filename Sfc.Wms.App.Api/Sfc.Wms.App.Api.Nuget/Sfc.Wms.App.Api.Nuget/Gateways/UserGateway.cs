@@ -96,7 +96,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        public async Task<BaseResult<string>> SignInAsync(LoginCredentials loginCredentials)
+        public async Task<BaseResult<UserInfoDto>> SignInAsync(LoginCredentials loginCredentials)
         {
             return await Proxy().ExecuteAsync(async () =>
             {
@@ -104,9 +104,9 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
                 var cResponse = await _restClient.ExecuteTaskAsync<UserInfoDto>(cRequest).ConfigureAwait(false);
                 var nodeRequest = SignInRequest(loginCredentials, _restClient.BaseUrl.ToString());
                 var nodeResponse = await _restClient.ExecuteTaskAsync<UserInfoDto>(nodeRequest).ConfigureAwait(false);
-                var tokenHeaderParameter = new Parameter(Constants.NodeToken, nodeResponse.Data.Token, ParameterType.HttpHeader);
+                var tokenHeaderParameter = new Parameter(Constants.NodeToken, nodeResponse.Data?.Token, ParameterType.HttpHeader);
                 cResponse.Headers.Add(tokenHeaderParameter);
-                return _responseBuilder.GetCResponseData<UserInfoDto>(cResponse);
+                return _responseBuilder.GetBaseResult<UserInfoDto>(cResponse);
             }).ConfigureAwait(false);
         }
 

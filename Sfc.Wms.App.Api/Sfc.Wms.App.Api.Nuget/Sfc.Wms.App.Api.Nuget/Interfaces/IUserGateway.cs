@@ -7,7 +7,7 @@ namespace Sfc.Wms.App.Api.Nuget.Interfaces
 {
     public interface IUserGateway
     {
-        Task<BaseResult<string>> SignInAsync(LoginCredentials loginCredentials);
+        Task<BaseResult<UserInfoDto>> SignInAsync(LoginCredentials loginCredentials);
 
         Task<BaseResult<string>> GetAllAsync(string token);
 
