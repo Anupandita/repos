@@ -96,7 +96,7 @@ namespace Sfc.Wms.App.Api.Controllers
 
         [HttpGet]
         [Route(Routes.Paths.LpnLockUnlock)]
-        [ResponseType(typeof(BaseResult<List<CaseDetailDto>>))]
+        [ResponseType(typeof(BaseResult<List<CaseLockUnlockDto>>))]
         public async Task<IHttpActionResult> GetLpnLockUnlockAsync(string lpnId)
         {
             var response = await _caseLockService.GetCaseLockUnlockAsync(lpnId).ConfigureAwait(false);
