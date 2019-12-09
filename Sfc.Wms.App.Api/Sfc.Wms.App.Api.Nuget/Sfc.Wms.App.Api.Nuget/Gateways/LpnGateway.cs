@@ -2,13 +2,10 @@
 using Sfc.Core.OnPrem.Result;
 using Sfc.Core.RestResponse;
 using Sfc.Wms.App.Api.Contracts.Constants;
-using Sfc.Wms.App.Api.Nuget.Builders;
+using Sfc.Wms.App.Api.Contracts.Entities;
 using Sfc.Wms.App.Api.Nuget.Interfaces;
 using Sfc.Wms.Foundation.InboundLpn.Contracts.Dtos;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Sfc.Core.OnPrem.Pagination;
-using Sfc.Wms.App.Api.Contracts.Entities;
 
 namespace Sfc.Wms.App.Api.Nuget.Gateways
 {
@@ -59,8 +56,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             {
                 var request = GetLpnDetailsRequest(lpnParameterDto, token);
                 var response = await _restCsharpClient.ExecuteTaskAsync<T>(request).ConfigureAwait(false);
-                var jj= _responseBuilder.GetBaseResult<T>(response);
-                return jj;
+                return _responseBuilder.GetBaseResult<T>(response);
             }).ConfigureAwait(false);
         }
 
@@ -176,22 +172,6 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
         {
             var resource = $"{_endPoint}/{Routes.Paths.Find}";
             return PostRequest(resource, lpnParameterDto, token, Authorization);
-
-//            resource = QueryStringBuilder.BuildQuery("lpnNumber=", lpnParameterDto.LpnNumber, resource, false);
-//            resource = QueryStringBuilder.BuildQuery("asnId=", lpnParameterDto.AsnId, resource, false);
-//            resource = QueryStringBuilder.BuildQuery("palletId=", lpnParameterDto.PalletId, resource, false);
-//            resource = QueryStringBuilder.BuildQuery("skuId=", lpnParameterDto.SkuId, resource, false);
-//            resource = QueryStringBuilder.BuildQuery("statusFrom=", lpnParameterDto.StatusFrom, resource, false);
-//            resource = QueryStringBuilder.BuildQuery("statusTo=", lpnParameterDto.StatusTo, resource, false);
-//            resource = QueryStringBuilder.BuildQuery("zone=", lpnParameterDto.Zone, resource, false);
-//            resource = QueryStringBuilder.BuildQuery("aisle=", lpnParameterDto.Aisle, resource, false);
-//            resource = QueryStringBuilder.BuildQuery("slot=", lpnParameterDto.Slot, resource, false);
-//            resource = QueryStringBuilder.BuildQuery("createdDate=", lpnParameterDto.CreatedDate, resource, false);
-//            resource = QueryStringBuilder.BuildQuery("level=", lpnParameterDto.Level, resource, false);
-//            resource = QueryStringBuilder.BuildQuery("level=", lpnParameterDto.Level, resource, false);
-//            resource = QueryStringBuilder.BuildQuery($"{nameof(LpnParameterDto.SortOptions)}=", JsonConvert.SerializeObject(lpnParameterDto.SortOptions), resource, false);
-//
-//            return GetRequest(token, resource, Authorization);
         }
 
         private RestRequest GetLpnHistoryRequest(string lpnId, string whse, string token)
