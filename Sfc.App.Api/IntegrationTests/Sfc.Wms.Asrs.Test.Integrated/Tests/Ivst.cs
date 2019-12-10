@@ -45,6 +45,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         {
             this.Given(x => x.TestDataForInventoryException())
             .And(x => x.MsgKeyForInventoryShortageException())
+            .And(x =>x.ValidUrl(IvstUrl))
             .And(x => x.ValidIvstUrl())
             .When(x => x.IvstApiIsCalledCreatedIsReturned())
             .And(x => x.GetValidDataAfterTrigger())

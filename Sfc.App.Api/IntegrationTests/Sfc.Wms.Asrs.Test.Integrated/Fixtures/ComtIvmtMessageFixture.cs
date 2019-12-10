@@ -15,7 +15,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
     public class ComtIvmtMessageFixture : DataBaseFixture
     {
         protected string CurrentCaseNbr;
-        protected string RecivedCaseNbr;
+        protected string ReceivedCaseNbr;
         protected string ComtUrl = ConfigurationManager.AppSettings["ComtUrl"];
         protected string IvmtUrl = ConfigurationManager.AppSettings["IvmtUrl"];
         protected ComtParams ComtParameters;
@@ -29,9 +29,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             GetDataBeforeTriggerComt();
         }
 
-        protected void InitializeRecievedCaseTestData()
+        protected void InitializeReceivedCaseTestData()
         {
-            GetDataBeforeTriggerforRecievedCaseComt();
+            GetDataBeforeTriggerforReceivedCaseComt();
         }
 
         protected void CurrentCaseNumberForSingleSku()
@@ -76,7 +76,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 QuantityToInduct = DefaultValues.QuantityToInduct
             };
         }
-        public void AValidNewRecivedCaseComtMessageRecord()
+        public void AValidNewReceivedCaseComtMessageRecord()
         {
             ComtParameters = new ComtParams
             {
@@ -113,18 +113,18 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             GetDataAfterTriggerOfComtForSingleSku();
         }
-        protected void GetDataFromDataBaseForRecivedCaseSingleSkuScenarios()
+        protected void GetDataFromDataBaseForReceivedCaseSingleSkuScenarios()
         {
-            GetDataAfterTriggerOfComtForRecivedCaseSingleSku();
+            GetDataAfterTriggerOfComtForReceivedCaseSingleSku();
         }
         protected void GetDataFromDataBaseForSingleSkuScenariosIvmt()
         {
             GetDataAfterTriggerOfIvmtForSingleSku();
         }
 
-        protected void GetDataFromDataBaseForRecivedCaseSingleSku()
+        protected void GetDataFromDataBaseForReceivedCaseSingleSku()
         {
-            GetDataAfterTriggerOfIvmtForRecivedCaseSingleSku();
+            GetDataAfterTriggerOfIvmtForReceivedCaseSingleSku();
         }
 
         protected void GetDataAndValidateForIvmtMessageHasInsertedIntoBothTables()
@@ -161,8 +161,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected void ValidateForNotEnoughInventoryInCase()
         {
             Assert.AreEqual(ValidationMessage.InboundLpn, ResultForNegativeCase.ValidationMessages[0].FieldName);
-            /* Validation messages are not proper.*/
-            //Assert.AreEqual(ValidationMessage.NotEnoughInventoryInCase, ResultForNegativeCase.ValidationMessages[0].Message);
         }
         protected void VerifyIvmtMessageWasInsertedIntoSwmToMhe()
         {
@@ -179,8 +177,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             VerifyComtMessageWasInsertedIntoSwmToMhe(Comt, SwmToMheComt, CaseHdrMultiSku.CaseNumber);
         }
-
-        
+      
         protected void VerifyComtMessageWasInsertedIntoWmsToEms() 
         {
             VerifyComtMessageWasInsertedIntoWmsToEms(WmsToEmsComt);      
@@ -205,18 +202,16 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
            Assert.AreEqual(SingleSkuCase.ActualInventoryUnits + Convert.ToDecimal(Ivmt.Quantity), CaseDtlAfterApi.ActualInventoryUnits);       
            Assert.AreEqual((UnitWeight * Convert.ToDecimal(Ivmt.Quantity))+ SingleSkuCase.ActualWeight, Convert.ToDecimal(CaseDtlAfterApi.ActualWeight));
-        }
-      
+        }      
         protected void VerifyQuantityisReducedIntoCaseDetail()
         {
-            Assert.AreEqual(0, CaseDtlAfterApi.TotalAllocQty);
+            Assert.AreEqual(Constants.QuantityReducedToZero, CaseDtlAfterApi.TotalAllocQty);
         }
 
         protected void VerifyActualQuantityIsReducedInToCaseDtl()
         {
-            Assert.AreEqual(0, CaseDtlAfterApi.ActlQty);
+            Assert.AreEqual(Constants.QuantityReducedToZero, CaseDtlAfterApi.ActlQty);
         }
-
         protected void VerifyStatusIsUpdatedIntoCaseHeader()
         {
             VerifyStatusIsUpdatedIntoCaseHeader(CaseDtlAfterApi.StatusCode);

@@ -112,7 +112,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public CaseViewDto FetchTransInvn(OracleConnection db, string skuId)
         {
             var singleSkulocal = new CaseViewDto();
-            var query = $"Select * from trans_invn where sku_id = '{skuId}' and  trans_invn_type = '18'";
+            var query = $"Select * from trans_invn where sku_id = '{skuId}' and  trans_invn_type = '{Constants.TransInvnType}'";
             Command = new OracleCommand(query, db);
             var transInvnReader = Command.ExecuteReader();
             if (transInvnReader.Read())
@@ -125,22 +125,22 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         public CaseViewDto FetchTransInvnventory(OracleConnection db, string skuId)
         {
-            var singleSkurecievedCase = new CaseViewDto();
-            var query = $"Select * from trans_invn where sku_id = '{skuId}' and  trans_invn_type = '18'";
+            var singleSkureceivedCase = new CaseViewDto();
+            var query = $"Select * from trans_invn where sku_id = '{skuId}' and  trans_invn_type = '{Constants.TransInvnType}'";
             Command = new OracleCommand(query, db);
             var transInvnReader = Command.ExecuteReader();
             if (transInvnReader.Read())
             {
-                singleSkurecievedCase.ActualInventoryUnits = Convert.ToInt16(transInvnReader[TransInventory.ActualInventoryUnits].ToString());
-                singleSkurecievedCase.ActualWeight = Convert.ToDecimal(transInvnReader[TransInventory.ActlWt].ToString());
+                singleSkureceivedCase.ActualInventoryUnits = Convert.ToInt16(transInvnReader[TransInventory.ActualInventoryUnits].ToString());
+                singleSkureceivedCase.ActualWeight = Convert.ToDecimal(transInvnReader[TransInventory.ActlWt].ToString());
             }
-            return singleSkurecievedCase;
+            return singleSkureceivedCase;
         }
 
         public TransitionalInventoryDto FetchTransInvnentory(OracleConnection db, string skuId)
         {
             var singleSkulocal = new TransitionalInventoryDto();
-            var query = $"Select * from trans_invn where sku_id = '{skuId}' and trans_invn_type = '18'";
+            var query = $"Select * from trans_invn where sku_id = '{skuId}' and trans_invn_type = '{Constants.TransInvnType}'";
             Command = new OracleCommand(query, db);
             var transInvnReader = Command.ExecuteReader();
             if (transInvnReader.Read())
@@ -205,7 +205,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var tempZone = GetTempZone(db, skuId);
             var temp = TempZoneRelate(tempZone.TempZone);
             var locnGrp = new LocationGroup();
-            var query = $"select lh.locn_id,lg.grp_attr from locn_hdr lh inner join locn_grp lg on lg.locn_id = lh.locn_id and lg.grp_attr = '{temp}' inner join sys_code sc on sc.code_id = lg.grp_type and sc.code_type = '740' and code_id = '18'";
+            var query = $"select lh.locn_id,lg.grp_attr from locn_hdr lh inner join locn_grp lg on lg.locn_id = lh.locn_id and lg.grp_attr = '{temp}' inner join sys_code sc on sc.code_id = lg.grp_type and sc.code_type = '{Constants.SysCodeType}' and sc.code_id = '{Constants.SysCodeIdForActiveLocation}'";
             Command = new OracleCommand(query, db);
             var locnGrpReader = Command.ExecuteReader();
             if (locnGrpReader.Read())
@@ -259,7 +259,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public PickLocationDetailsDto GetPickLocationDetails(OracleConnection db, string skuId, string locnId)
         {
             var pickLocnDtl = new PickLocationDetailsDto();
-            var pickLocnView = $"select * from pick_locn_dtl where sku_id = '{skuId}' and locn_id in (select lh.locn_id from locn_hdr lh inner join locn_grp lg on lg.locn_id = lh.locn_id inner join sys_code sc on sc.code_id = lg.grp_type and sc.code_type = '740' and sc.code_id = '18') order by mod_date_time desc";
+            var pickLocnView = $"select * from pick_locn_dtl where sku_id = '{skuId}' and locn_id in (select lh.locn_id from locn_hdr lh inner join locn_grp lg on lg.locn_id = lh.locn_id inner join sys_code sc on sc.code_id = lg.grp_type and sc.code_type = '{Constants.SysCodeType}' and sc.code_id = '{Constants.SysCodeIdForActiveLocation}') order by mod_date_time desc";
             Command = new OracleCommand(pickLocnView, db);
             var pickLocnDtlReader = Command.ExecuteReader();
             if (pickLocnDtlReader.Read())
@@ -275,7 +275,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public PickLocationDetailsExtenstionDto GetPickLocnDtlExt(OracleConnection db, string skuId, string locnId)
         {
             var pickLocnDtlExt = new PickLocationDetailsExtenstionDto();
-            var query = $"select Active_Ormt_Count from pick_locn_dtl_ext WHERE  SKU_ID='{skuId}' and locn_id in (select lh.locn_id from locn_hdr lh inner join locn_grp lg on lg.locn_id = lh.locn_id inner join sys_code sc on sc.code_id = lg.grp_type and sc.code_type = '740' and sc.code_id = '18') order by updated_date_time desc,created_date_time asc";
+            var query = $"select Active_Ormt_Count from pick_locn_dtl_ext WHERE  SKU_ID='{skuId}' and locn_id in (select lh.locn_id from locn_hdr lh inner join locn_grp lg on lg.locn_id = lh.locn_id inner join sys_code sc on sc.code_id = lg.grp_type and sc.code_type = '{Constants.SysCodeType}' and sc.code_id = '{Constants.SysCodeIdForActiveLocation}') order by updated_date_time desc,created_date_time asc";
             Command = new OracleCommand(query, db);
             var pickLocnDtlExtReader = Command.ExecuteReader();
             if (pickLocnDtlExtReader.Read())

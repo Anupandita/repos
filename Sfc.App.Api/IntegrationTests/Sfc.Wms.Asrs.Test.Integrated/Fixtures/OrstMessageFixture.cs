@@ -184,7 +184,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(EmsToWmsCompleted.MessageText, SwmFromMheComplete.SourceMessageText);
             Assert.AreEqual("ORST", OrstCompleted.TransactionCode);
             Assert.AreEqual("00255", OrstCompleted.MessageLength);
-            //Assert.AreEqual("Complete", OrstCompleted.ActionCode);
+            Assert.AreEqual("Complete", OrstCompleted.ActionCode);
         }
 
         protected void VerifyOrstMessageWasInsertedIntoSwmFromMheForActionCodeCancel()
@@ -224,7 +224,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(Allocated.CurrentLocationId ,OrstAllocated.CurrentLocationId);
             Assert.AreEqual(Allocated.DestLocnId , OrstAllocated.DestinationLocationId);
         }
-
 
         protected void VerifyCartonStatusHasChangedToPickedForActionCodeComplete()
         {
@@ -277,12 +276,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         protected void ValidateForOrmtCountHasReducedForActionCodeComplete()
         {
-           // Assert.AreEqual(pickLcnExtCase2BeforeApi.ActiveOrmtCount - 1, pickLcnExtCase2.ActiveOrmtCount);
-        }
-
-        protected void VerifyCartonStatusHasUpdatedToAllocatedOrWaitingForActionCodeDeAllocate()
-        {
-            Assert.AreEqual("5", CartonHdrDeallocated.StatusCode);
+            Assert.AreEqual(PickLcnExtCase2BeforeApi.ActiveOrmtCount - 1, PickLcnExtCase2.ActiveOrmtCount);
         }
 
         protected void VerifyCartonStatusHasUpdatedToAllocatedOrWaitingForActionCodeCancel()
@@ -290,16 +284,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(5, CartonHdrCanceled.StatusCode);
         }
 
-        protected void ValidateForQuantitiesInToPickLocationTableForActionCodeCancel()
-        {
-            Assert.AreEqual(PickLcnCase4BeforeApi.ToBePickedQty - Convert.ToDecimal(OrstCanceled.QuantityDelivered), PickLcnCase4.ToBePickedQty);
-        }
-
         protected void ValidateForOrmtCountHasReducedForActionCodeCancel()
         {
             Assert.AreEqual(PickLcnExtCase4BeforeApi.ActiveOrmtCount - 1, PickLcnExtCase4.ActiveOrmtCount);
         }
-
 
     }
 }

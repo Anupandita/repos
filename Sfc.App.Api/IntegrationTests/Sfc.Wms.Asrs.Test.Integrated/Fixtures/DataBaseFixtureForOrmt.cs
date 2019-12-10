@@ -42,8 +42,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected CartonView ActiveLocnNotFound = new CartonView();
         protected List<CartonView> OrderList = new List<CartonView>();
         protected List<PickLocationDetailsExtenstionDto> ActiveOrmtCountList = new List<PickLocationDetailsExtenstionDto>();
-        private CartonHeaderDto cartonHdrView;
-
+       
         public void GetDataBeforeTriggerOrmtForPrintingOfCartons()
         {
             OracleConnection db;
@@ -51,6 +50,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             {
                 db.Open();     
                 PrintCarton = GetValidOrderDetails(db,10,0);
+                UpdatePickTicketStatusCodeTo12(db, 12, PrintCarton.PickTktCtrlNbr);
                 PickLcnDtlExtBeforeApi = GetPickLocnDtlExt(db, PrintCarton.SkuId, PrintCarton.LocnId);
             }
         }    
@@ -219,31 +219,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public CartonView GetValidOrderDetails(OracleConnection db, int statCode, int miscNum1)
         {
             var cartonView = new CartonView();
-            var countQuery = $"select COUNT(distinct eg.carton_nbr) " +
-                             $"from SWM_ELGBL_ORMT_CARTONS eg " +
-                             $"inner join carton_hdr ch on ch.Carton_Nbr = eg.Carton_Nbr " +
-                             $"inner join PKT_HDR ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr " +
-                             $"inner join Pick_Locn_dtl pl ON  pl.sku_id = ch.sku_id " +
-                             $"inner join ITEM_MASTER im ON ch.sku_id = im.sku_id " +
-                             $"inner join locn_hdr lh ON pl.locn_id = lh.locn_id " +
-                             $"inner join locn_grp lg ON lg.locn_id = lh.locn_id " +
-                             $"inner join sys_code sc ON sc.code_id = lg.grp_type " +
-                             $"inner join pkt_hdr ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr " +
-                             $"inner join pkt_dtl pd ON pd.pkt_ctrl_nbr = ch.pkt_ctrl_nbr " +
-                             $"inner join alloc_invn_dtl ai ON ai.sku_id = ch.sku_id " +
-                             $"left join pick_locn_dtl_ext ple ON pl.sku_id = ple.sku_id" +
-                             $" where eg.STATUS = 10 and ch.misc_instr_code_5 is null and misc_num_1 = 0 and sc.code_type = '740' and code_id = '18' and lg.grp_attr = DECODE(im.temp_zone, 'D', 'Dry', 'Freezer') and ch.misc_instr_code_5 is null and misc_num_1 = 0 ORDER BY eg.CARTON_NBR,eg.CREATED_DATE_TIME";   
-            var countCommand = new OracleCommand(countQuery, db);
-            var rowSize = Convert.ToInt32(countCommand.ExecuteScalar());
-            if (rowSize == 0)
-            {
-                cartonView = ValidQueryToFetchOrderDetails(db,10);
-                UpdateStatCode(db, 5, cartonView.CartonNbr);
-                UpdatePickTicketStatusCodeTo12(db, 12, cartonView.PickTktCtrlNbr);
-            }        
-            else
-            {
-                var query = $"select ch.carton_nbr,ch.wave_nbr,ch.sku_id,pl.locn_id,ch.MISC_NUM_1, ch.total_qty, " +
+            var query = $"select distinct ch.carton_nbr,ch.wave_nbr,ch.sku_id,pl.locn_id,ch.MISC_NUM_1, ch.total_qty, " +
                     $"ch.stat_code,pl.actl_invn_qty,ch.DEST_LOCN_ID,ph.PKT_CTRL_NBR,ph.SHIP_W_CTRL_NBR,ph.Whse," +
                     $"ph.CO,ph.DIV, im.spl_instr_code_1, im.spl_instr_code_5 from SWM_ELGBL_ORMT_CARTONS eg " +
                     $"inner join carton_hdr ch on ch.Carton_Nbr = eg.Carton_Nbr inner join PKT_HDR ph ON " +
@@ -255,26 +231,27 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                     $"inner join pkt_dtl pd ON pd.pkt_ctrl_nbr = ch.pkt_ctrl_nbr " +
                     $"inner join alloc_invn_dtl ai ON ai.sku_id = ch.sku_id  " +
                     $"left join pick_locn_dtl_ext ple ON pl.sku_id = ple.sku_id " +
-                    $"where ch.misc_instr_code_5 is null and misc_num_1 = 0 and sc.code_type = '740' and code_id = '18' and lg.grp_attr = DECODE(im.temp_zone, 'D', 'Dry', 'Freezer') and ch.misc_instr_code_5 is null and misc_num_1 = 0 and ch.stat_code = 10 and eg.status = 10";
-                var command = new OracleCommand(query, db);
-                var reader = command.ExecuteReader();
-                if (reader.Read())
-                {
-                    cartonView.PickTktCtrlNbr = reader[PickTicketHeader.PickTktCtrlNbr].ToString();
-                    cartonView.SkuId = reader["SKU_ID"].ToString();
-                    cartonView.WaveNbr = reader["WAVE_NBR"].ToString();
-                    cartonView.Whse = reader[PickTicketHeader.Whse].ToString();
-                    cartonView.Co = reader[PickTicketHeader.Co].ToString();
-                    cartonView.Div = reader[PickTicketHeader.Div].ToString();
-                    cartonView.SplInstrCode1 = reader[ItemMaster.SplInstrCode1].ToString();
-                    cartonView.SplInstrCode5 = reader[ItemMaster.SplInstrCode5].ToString();
-                    cartonView.TotalQty = reader["TOTAL_QTY"].ToString();
-                    cartonView.CartonNbr = reader["CARTON_NBR"].ToString();
-                    cartonView.DestLocnId = reader["DEST_LOCN_ID"].ToString();
-                    cartonView.ShipWCtrlNbr = reader["SHIP_W_CTRL_NBR"].ToString();
-                    cartonView.LocnId = reader["LOCN_ID"].ToString();
-                }
-            }
+                    $"where ch.misc_instr_code_5 is null and ch.misc_num_1 = {Constants.NumZero} and sc.code_type = '{Constants.SysCodeType}' and code_id = '{Constants.SysCodeIdForActiveLocation}' and lg.grp_attr = DECODE(im.temp_zone, 'D', 'Dry', 'Freezer') " +
+                    $"and ch.misc_instr_code_5 is null and ch.stat_code = {Constants.PrintCartonStatus} and eg.status = {Constants.EgblOrmtStatus}";
+            var command = new OracleCommand(query, db);
+            var reader = command.ExecuteReader();
+            if (reader.Read())
+            {
+                cartonView.PickTktCtrlNbr = reader[PickTicketHeader.PickTktCtrlNbr].ToString();
+                cartonView.SkuId = reader["SKU_ID"].ToString();
+                cartonView.WaveNbr = reader["WAVE_NBR"].ToString();
+                cartonView.Whse = reader[PickTicketHeader.Whse].ToString();
+                cartonView.Co = reader[PickTicketHeader.Co].ToString();
+                cartonView.Div = reader[PickTicketHeader.Div].ToString();
+                cartonView.SplInstrCode1 = reader[ItemMaster.SplInstrCode1].ToString();
+                cartonView.SplInstrCode5 = reader[ItemMaster.SplInstrCode5].ToString();
+                cartonView.TotalQty = reader["TOTAL_QTY"].ToString();
+                cartonView.CartonNbr = reader["CARTON_NBR"].ToString();
+                cartonView.DestLocnId = reader["DEST_LOCN_ID"].ToString();
+                cartonView.ShipWCtrlNbr = reader["SHIP_W_CTRL_NBR"].ToString();
+                cartonView.LocnId = reader["LOCN_ID"].ToString();           
+            }        
+           
             return cartonView;
         }
 
@@ -296,9 +273,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 $"inner join locn_hdr lh ON pl.locn_id = lh.locn_id " +
                 $"inner join locn_grp lg ON lg.locn_id = lh.locn_id " +
                 $"inner join sys_code sc ON sc.code_id = lg.grp_type " +
-                $"where ch.misc_instr_code_5 is null and misc_num_1 = 0 and sc.code_type = '740' and code_id = '18' and " +
-                $"lg.grp_attr = DECODE(im.temp_zone, 'D', 'Dry', 'Freezer') and ch.misc_instr_code_5 is null and misc_num_1 = 0 " +
-                $"and soc.STATUS = 50 and sfm.source_msg_trans_code = 'COST' ORDER BY soc.CARTON_NBR,soc.CREATED_DATE_TIME";
+                $"where ch.misc_instr_code_5 is null and misc_num_1 = {Constants.NumZero} and sc.code_type = '{Constants.SysCodeType}' and code_id = '{Constants.SysCodeIdForActiveLocation}' and " +
+                $"lg.grp_attr = DECODE(im.temp_zone, 'D', 'Dry', 'Freezer') and ch.misc_instr_code_5 is null and misc_num_1 = {Constants.NumZero} " +
+                $"and soc.STATUS = {Constants.OrmtNoInvnStatus} and sfm.source_msg_trans_code = '{TransactionCode.Cost}' ORDER BY soc.CARTON_NBR,soc.CREATED_DATE_TIME";
             var command = new OracleCommand(onQuery, db);
             var reader = command.ExecuteReader();
             if (reader.Read())
@@ -321,44 +298,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return onproCostView;
         }
 
-        public CartonView ValidQueryToFetchOrderDetails(OracleConnection db,int statCode)
-        {
-            var cartonView = new CartonView();
-            var query = $"select ch.carton_nbr,ai.task_cmpl_ref_nbr,ch.wave_nbr,ch.sku_id,pl.locn_id,ch.MISC_NUM_1, ch.total_qty, ch.stat_code,pl.actl_invn_qty,ch.DEST_LOCN_ID,ph.PKT_CTRL_NBR,ph.SHIP_W_CTRL_NBR,ph.Whse,ph.CO,ph.DIV, im.spl_instr_code_1, im.spl_instr_code_5 from CARTON_HDR ch inner join PKT_HDR ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr " +
-                $"inner join Pick_Locn_dtl pl ON  pl.sku_id = ch.sku_id " +
-                $"inner join ITEM_MASTER im ON pl.sku_id = im.sku_id inner join pkt_dtl pd ON pd.pkt_ctrl_nbr =ch.pkt_ctrl_nbr inner join locn_hdr lh ON pl.locn_id = lh.locn_id inner join locn_grp lg ON lg.locn_id = lh.locn_id inner join sys_code sc ON sc.code_id = lg.grp_type" +
-                $" inner join pkt_hdr ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr inner join alloc_invn_dtl ai ON ai.task_cmpl_ref_nbr = ch.carton_nbr left join pick_locn_dtl_ext ple ON pl.sku_id =ple.sku_id where ch.stat_code = 10 and ch.misc_instr_code_5 is null and misc_num_1 = 0 and " +
-                $"sc.code_type = '740' and code_id = '18' and lg.grp_attr = DECODE(im.temp_zone, 'D', 'Dry', 'Freezer') and (pl.actl_invn_qty - ple.active_ormt_count) > 0 and pd.pkt_seq_nbr > 0";
-            var command = new OracleCommand(query,db);
-            var reader = command.ExecuteReader();
-            if (reader.Read())
-            {
-                cartonView.PickTktCtrlNbr = reader[PickTicketHeader.PickTktCtrlNbr].ToString();
-                cartonView.SkuId = reader["SKU_ID"].ToString();
-                cartonView.WaveNbr = reader["WAVE_NBR"].ToString();
-                cartonView.Whse = reader[PickTicketHeader.Whse].ToString();
-                cartonView.Co = reader[PickTicketHeader.Co].ToString();
-                cartonView.Div = reader[PickTicketHeader.Div].ToString();
-                cartonView.SplInstrCode1 = reader[ItemMaster.SplInstrCode1].ToString();
-                cartonView.SplInstrCode5 = reader[ItemMaster.SplInstrCode5].ToString();
-                cartonView.TotalQty = reader["TOTAL_QTY"].ToString();
-                cartonView.CartonNbr = reader["CARTON_NBR"].ToString();
-                cartonView.DestLocnId = reader["DEST_LOCN_ID"].ToString();
-                cartonView.ShipWCtrlNbr = reader["SHIP_W_CTRL_NBR"].ToString();
-                cartonView.LocnId = reader["LOCN_ID"].ToString();
-            }
-            return cartonView;
-        }
-
-        public void  UpdateStatCode(OracleConnection db, int statCode,string cartonNbr)
-        {
-            Transaction = db.BeginTransaction();
-            var updateQuery = $"update carton_hdr set stat_code = '{statCode}' where carton_nbr = '{cartonNbr}'";
-            Command = new OracleCommand(updateQuery, db);
-            Command.ExecuteNonQuery();
-            Transaction.Commit();
-        }
-
+       
         public void UpdatePickTicketStatusCodeTo12(OracleConnection db, int pktStatCode, string pktCtrlNbr)
         {
             Transaction = db.BeginTransaction();
@@ -370,7 +310,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         protected string GetWaveNumber(OracleConnection db)
         {
-            var query = $"select  distinct eg.wave_nbr from SWM_ELGBL_ORMT_CARTONS eg inner join carton_hdr ch on ch.Carton_Nbr = eg.Carton_Nbr inner join PKT_HDR ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr  inner join Pick_Locn_dtl pl ON  pl.sku_id = ch.sku_id   inner join ITEM_MASTER im ON ch.sku_id = im.sku_id  inner join locn_hdr lh ON pl.locn_id = lh.locn_id inner join locn_grp lg ON lg.locn_id = lh.locn_id   inner join sys_code sc ON sc.code_id = lg.grp_type inner join pkt_hdr ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr inner join pkt_dtl pd ON pd.pkt_ctrl_nbr = ch.pkt_ctrl_nbr inner join alloc_invn_dtl ai ON ai.sku_id = ch.sku_id  left join pick_locn_dtl_ext ple ON pl.sku_id = ple.sku_id where  ch.misc_instr_code_5 is null and misc_num_1 = 0 and sc.code_type = '740' and code_id = '18' and lg.grp_attr = DECODE(im.temp_zone, 'D', 'Dry', 'Freezer') and ch.misc_instr_code_5 is null and misc_num_1 = 0 and ch.stat_code = 10 and eg.status = 10";
+            var query = $"select  distinct eg.wave_nbr from SWM_ELGBL_ORMT_CARTONS eg inner join carton_hdr ch on ch.Carton_Nbr = eg.Carton_Nbr inner join PKT_HDR ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr  " +
+                $"inner join Pick_Locn_dtl pl ON  pl.sku_id = ch.sku_id   inner join ITEM_MASTER im ON ch.sku_id = im.sku_id  inner join locn_hdr lh ON pl.locn_id = lh.locn_id inner join locn_grp lg ON lg.locn_id = lh.locn_id   " +
+                $"inner join sys_code sc ON sc.code_id = lg.grp_type inner join pkt_hdr ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr inner join pkt_dtl pd ON pd.pkt_ctrl_nbr = ch.pkt_ctrl_nbr inner join alloc_invn_dtl ai ON " +
+                $"ai.sku_id = ch.sku_id  left join pick_locn_dtl_ext ple ON pl.sku_id = ple.sku_id where  ch.misc_instr_code_5 is null and misc_num_1 = {Constants.NumZero} and sc.code_type = '{Constants.SysCodeType}' and code_id = '{Constants.SysCodeIdForActiveLocation}' and " +
+                $"lg.grp_attr = DECODE(im.temp_zone, 'D', 'Dry', 'Freezer') and ch.misc_instr_code_5 is null and misc_num_1 = {Constants.NumZero} and ch.stat_code = {Constants.PrintCartonStatus} and eg.status = {Constants.EgblOrmtStatus}";
             Command = new OracleCommand(query,db);
             var waveNbr = Command.ExecuteScalar().ToString();
             return waveNbr;
@@ -388,7 +332,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 $"inner join sys_code sc ON sc.code_id = lg.grp_type inner join pkt_hdr ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr " +
                 $"inner join pkt_dtl pd ON pd.pkt_ctrl_nbr = ch.pkt_ctrl_nbr " +
                 $"inner join alloc_invn_dtl ai ON ai.sku_id = ch.sku_id left join pick_locn_dtl_ext ple ON pl.sku_id = ple.sku_id " +
-                $"where eg.STATUS = 10 and ch.misc_instr_code_5 is null and misc_num_1 = 0 and sc.code_type = '740' and code_id = '18' and lg.grp_attr = DECODE(im.temp_zone, 'D', 'Dry', 'Freezer') and ch.misc_instr_code_5 is null and misc_num_1 = 0 and eg.wave_nbr = '{waveNbr}'";
+                $"where eg.STATUS = {Constants.EgblOrmtStatus} and ch.misc_instr_code_5 is null and misc_num_1 = {Constants.NumZero} and " +
+                $"sc.code_type = '{Constants.SysCodeType}' and code_id = '{Constants.SysCodeIdForActiveLocation}' " +
+                $"and lg.grp_attr = DECODE(im.temp_zone, 'D', 'Dry', 'Freezer') and eg.wave_nbr = '{waveNbr}'";
             var command = new OracleCommand(query,db);
             var Reader = command.ExecuteReader();
             while (Reader.Read())
@@ -414,7 +360,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public CartonView GetCartonNbrWhereActiveOrmtNotFound(OracleConnection db)
         {
             var cartonView = new CartonView();
-            var query = $"select ch.carton_nbr,ch.sku_id,ch.wave_nbr,ch.MISC_NUM_1, ch.total_qty, ch.stat_code,pl.actl_invn_qty,ch.DEST_LOCN_ID,ph.PKT_CTRL_NBR,ph.SHIP_W_CTRL_NBR,ph.Whse,ph.CO,ph.DIV, im.spl_instr_code_1, im.spl_instr_code_5 from CARTON_HDR ch inner join PKT_HDR ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr inner join Pick_Locn_dtl pl ON  pl.locn_id = ch.pick_locn_id inner join ITEM_MASTER im ON pl.sku_id = im.sku_id inner join locn_hdr lh ON pl.locn_id = lh.locn_id inner join locn_grp lg ON lg.locn_id = lh.locn_id inner join pick_locn_dtl_ext ple ON ple.sku_id = ch.sku_id inner join sys_code sc ON sc.code_id = lg.grp_type where sc.code_type = '740' and code_id = '18' and lg.grp_attr = DECODE(im.temp_zone, 'D', 'Dry', 'Freezer') and pl.actl_invn_qty <= 0";
+            var query = $"select ch.carton_nbr,ch.sku_id,ch.wave_nbr,ch.MISC_NUM_1, ch.total_qty, ch.stat_code,pl.actl_invn_qty,ch.DEST_LOCN_ID,ph.PKT_CTRL_NBR," +
+                $"ph.SHIP_W_CTRL_NBR,ph.Whse,ph.CO,ph.DIV, im.spl_instr_code_1, im.spl_instr_code_5 from CARTON_HDR ch " +
+                $"inner join PKT_HDR ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr inner join Pick_Locn_dtl pl ON  pl.locn_id = ch.pick_locn_id " +
+                $"inner join ITEM_MASTER im ON pl.sku_id = im.sku_id inner join locn_hdr lh ON pl.locn_id = lh.locn_id " +
+                $"inner join locn_grp lg ON lg.locn_id = lh.locn_id inner join pick_locn_dtl_ext ple ON ple.sku_id = ch.sku_id " +
+                $"inner join sys_code sc ON sc.code_id = lg.grp_type where sc.code_type = '{Constants.SysCodeType}' and code_id = '{Constants.SysCodeIdForActiveLocation}' and " +
+                $"lg.grp_attr = DECODE(im.temp_zone, 'D', 'Dry', 'Freezer') and pl.actl_invn_qty <= {Constants.NumZero}";
             var command = new OracleCommand(query, db);
             var reader = command.ExecuteReader();
             if (reader.Read())
@@ -429,7 +381,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public CartonView GetCartonNbrWherePickLocnNotFound(OracleConnection db)
         {
             var cartonView = new CartonView();
-            var query = $"select * from carton_hdr ch join pick_locn_dtl pl  ON pl.sku_id = ch.sku_id  where ch.sku_id not in (select sku_id from pick_locn_dtl where locn_id in (select lh.locn_id from locn_hdr lh inner join locn_grp lg on lg.locn_id=lh.locn_id inner join sys_code sc on sc.code_id=lg.grp_type and sc.code_type='740' and sc.code_id='18')) and stat_code = 5 and ch.misc_instr_code_5 is null and misc_num_1 = 0 and pl.actl_invn_qty > 0";
+            var query = $"select * from carton_hdr ch join pick_locn_dtl pl  ON pl.sku_id = ch.sku_id  where ch.sku_id not in " +
+                $"(select sku_id from pick_locn_dtl where locn_id in (select lh.locn_id from locn_hdr lh inner join locn_grp lg on " +
+                $"lg.locn_id=lh.locn_id inner join sys_code sc on sc.code_id=lg.grp_type and sc.code_type='{Constants.SysCodeType}' and sc.code_id='{Constants.SysCodeIdForActiveLocation}')) " +
+                $"and stat_code = 5 and ch.misc_instr_code_5 is null and misc_num_1 = {Constants.NumZero} and pl.actl_invn_qty > {Constants.NumZero}";
             var command = new OracleCommand(query, db);
             var reader = command.ExecuteReader();
             if (reader.Read())
@@ -457,7 +412,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public SwmEligibleOrmtCartonDto GetStatusCodeFromEligibleOrmtCount(OracleConnection db, string cartonNbr)
         {
             var swmEligibleOrmtCount = new SwmEligibleOrmtCartonDto();
-            var query = $"Select * from SWM_ELGBL_ORMT_CARTONS where carton_nbr = '{cartonNbr}'";
+            var query = $"Select * from SWM_ELGBL_ORMT_CARTONS where carton_nbr = '{cartonNbr}'order by updated_date_time desc";
             var command = new OracleCommand(query,db);
             var reader = command.ExecuteReader();
             if(reader.Read())
@@ -470,7 +425,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public CartonView GetCartonNbrWhereActiveLocationNotFound(OracleConnection db)
         {
             var cartonView = new CartonView();
-            var query = $"select ch.carton_nbr,ch.sku_id,pl.locn_id,ch.wave_nbr from carton_hdr ch inner join Pick_Locn_dtl pl ON pl.sku_id = ch.sku_id where locn_id not in (select lh.locn_id from locn_hdr lh inner join locn_grp lg on lg.locn_id = lh.locn_id and lg.grp_attr in ('Freezer', 'Dry') inner join sys_code sc on sc.code_id = lg.grp_type and sc.code_type = '740' and code_id = '18')";
+            var query = $"select ch.carton_nbr,ch.sku_id,pl.locn_id,ch.wave_nbr from carton_hdr ch inner join " +
+                $"Pick_Locn_dtl pl ON pl.sku_id = ch.sku_id where locn_id not in (select lh.locn_id from locn_hdr lh " +
+                $"inner join locn_grp lg on lg.locn_id = lh.locn_id and lg.grp_attr in ('Freezer', 'Dry') " +
+                $"inner join sys_code sc on sc.code_id = lg.grp_type and sc.code_type = '{Constants.SysCodeType}' and code_id = '{Constants.SysCodeIdForActiveLocation}')";
             var command = new OracleCommand(query, db);
             var reader = command.ExecuteReader();
             if (reader.Read())
@@ -484,20 +442,20 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         protected void VerifyOrmtMessageWasInsertedInToSwmToMhe(OrmtDto ormt, SwmToMheDto swmToMheAddRelease, CartonView printCarton)
         {
-            Assert.AreEqual("Ready", swmToMheAddRelease.SourceMessageStatus);
+            Assert.AreEqual(DefaultValues.Status, swmToMheAddRelease.SourceMessageStatus);
             Assert.AreEqual(TransactionCode.Ormt, ormt.TransactionCode);
             Assert.AreEqual(MessageLength.Ormt, ormt.MessageLength);
-            Assert.AreEqual("AddRelease", ormt.ActionCode);
+            Assert.AreEqual(OrmtActionCode.AddRelease, ormt.ActionCode);
             Assert.AreEqual(printCarton.SkuId, ormt.Sku);
             Assert.AreEqual(printCarton.TotalQty, ormt.Quantity);
-            Assert.AreEqual("Case", ormt.UnitOfMeasure);
+            Assert.AreEqual(UnitOfMeasures.Case, ormt.UnitOfMeasure);
             Assert.AreEqual(printCarton.CartonNbr, ormt.OrderId);
-            Assert.AreEqual("1", ormt.OrderLineId);
-            Assert.AreEqual("SHIPMENT", ormt.OrderType);
-            Assert.AreEqual("N", ormt.EndOfWaveFlag);
+            Assert.AreEqual(DefaultPossibleValue.OrderLineId, ormt.OrderLineId);
+            Assert.AreEqual(DefaultPossibleValue.OrderType, ormt.OrderType);
+            Assert.AreEqual(Constants.EndOfWaveFlag, ormt.EndOfWaveFlag);
             Assert.AreEqual(printCarton.DestLocnId + "-" + printCarton.ShipWCtrlNbr, ormt.DestinationLocationId);
             Assert.AreEqual(printCarton.Whse , ormt.Owner);
-            Assert.AreEqual("FIFO", ormt.OpRule);
+            Assert.AreEqual(DefaultPossibleValue.OpRule, ormt.OpRule);
         }
 
         protected void VerifyOrmtMessageWasInsertedInToWmsToEmsForPrintingOfOrder(SwmToMheDto swmToMheAddRelease, WmsToEmsDto wmsToEmsAddRelease)

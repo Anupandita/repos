@@ -12,21 +12,21 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         SoThat = "I can validate for message fields in IVMT message, in Internal Table SWM_TO_MHE" +
                  " and validate the quantity,weight,statuscode in the caseheader, casedetail, task header tables"
     )]
-    public class ComtAndIvmtTestRecievedCase:ComtIvmtMessageFixture
+    public class ComtAndIvmtTestReceivedCase:ComtIvmtMessageFixture
     {
         [TestInitialize]
         public void AValidTestData()
         {
-            InitializeRecievedCaseTestData();
+            InitializeReceivedCaseTestData();
         }
       
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void ComtAndIvmtMessageForRecievedCasesTestScenarios()
+        public void ComtAndIvmtMessageForReceivedCasesTestScenarios()
         {
-            this.Given(x => x.AValidNewRecivedCaseComtMessageRecord())
+            this.Given(x => x.AValidNewReceivedCaseComtMessageRecord())
                 .When(x => x.ComtApiIsCalledCreatedIsReturned())
-                .Then(x => x.GetDataFromDataBaseForRecivedCaseSingleSkuScenarios())
+                .Then(x => x.GetDataFromDataBaseForReceivedCaseSingleSkuScenarios())
                 .And(x => x.VerifyReceivedCaseComtMessageWasInsertedIntoSwmToMhe())
                 .And(x => x.VerifyIvmtMessageWasInsertedIntoSwmToMhe())
                 .And(x => x.VerifyIvmtMessageWasInsertedIntoWmsToEms())

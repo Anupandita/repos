@@ -29,6 +29,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             IvstUrl = $"{BaseUrl}?{"msgKey"}={CurrentMsgKey}&{"msgProcessor"}={CurrentMsgProcessor}";
         }
+
+        protected void ValidUrl(string url)
+        {
+
+        }
         protected void MsgKeyCycleCount()
         {
             CurrentMsgKey = IvstData.InvalidKey;

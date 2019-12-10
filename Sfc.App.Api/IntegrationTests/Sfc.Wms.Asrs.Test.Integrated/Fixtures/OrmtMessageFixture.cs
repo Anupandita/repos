@@ -193,9 +193,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         protected void ValidateResultForActiveOrmtNotFound()
         {
-            // validation messages are not proper.
-            //Assert.AreEqual("OrderDetailsDto", Negativecase1.ValidationMessages[0].FieldName);
-            //Assert.AreEqual("Not Enough Inventory in Case", Negativecase1.ValidationMessages[0].Message);
+            // Not implemented due to message change.
         }
         protected void ValidateResultForPickLocationNotFound()
         {

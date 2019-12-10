@@ -3,7 +3,7 @@
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
 {
  
-    public class RecievedCasesViewdto
+    public class ReceivedCasesViewdto
     {
         public string CaseNumber { get; set; }
         public string LocationId { get; set; }

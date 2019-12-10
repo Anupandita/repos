@@ -55,14 +55,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public Entities.NextUpCounter Nxtupcnt(OracleConnection db)
         {
             var nextup = new Entities.NextUpCounter();
-            Query = $"select * from nxt_up_cnt where rec_type_id = 'TOT'";
+            Query = $"select * from nxt_up_cnt where rec_type_id = '{Constants.RecTypeId}'";
             Command = new OracleCommand(Query, db);
             var nextUpCounterReader = Command.ExecuteReader();
             if (nextUpCounterReader.Read())
             {
                 nextup.CurrentNumber = Convert.ToInt32(nextUpCounterReader[FieldName.Currentnumber].ToString());
                 nextup.PrefixField = (nextUpCounterReader[FieldName.Prefixfield].ToString());
-                
+            
             }
             return nextup;
         }
@@ -71,7 +71,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             MprqParameters = new MprqDto
             {
-                LocationId = "000898091",
+                LocationId = Constants.SampleCurrentLocnId,
                 TransactionCode = TransactionCode.Mprq,
                 MessageLength = MessageLength.Mprq
             };

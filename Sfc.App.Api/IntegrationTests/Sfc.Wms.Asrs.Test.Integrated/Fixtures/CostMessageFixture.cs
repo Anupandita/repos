@@ -59,7 +59,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         }
         protected void InvalidMsgKey()
         {
-            CurrentMsgKey = 5;
+            CurrentMsgKey = Constants.InvalidMsgKey;
             CurrentMsgProcessor = DefaultPossibleValue.MessageProcessor;
         }    
         protected void InvalidCaseMsgKey()
@@ -155,15 +155,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected void ValidateResultForInvalidMessageKey()
         {
             Assert.AreEqual(ResultType.NotFound, Negativecase1.ResultType.ToString());
-            Assert.AreEqual(1, Negativecase1.ValidationMessages.Count);
+            Assert.AreEqual(Constants.ValidationCount, Negativecase1.ValidationMessages.Count);
             Assert.AreEqual(ValidationMessage.EmsToWms, Negativecase1.ValidationMessages[0].FieldName);
             Assert.AreEqual(ValidationMessage.InvalidMessageKey, Negativecase1.ValidationMessages[0].Message);
         }
         protected void ValidateResultForInvalidCaseNumber()
         {
-            Assert.AreEqual(1, Negativecase2.ValidationMessages.Count);
-            Assert.AreEqual(ValidationMessage.EmsToWms, Negativecase2.ValidationMessages[0].FieldName);
-                   
+            Assert.AreEqual(Constants.ValidationCount, Negativecase2.ValidationMessages.Count);
+            Assert.AreEqual(ValidationMessage.EmsToWms, Negativecase2.ValidationMessages[0].FieldName);            
         }
 
         protected void ValidateResultForTransInventoryNotExist()
@@ -172,9 +171,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         }
         protected void ValidateResultForPickLocnNotFound()
         {
-            Assert.AreEqual(1, NegativeCase4.ValidationMessages.Count);
-            /* Validation Messages are not proper */   
-           //Assert.AreEqual(ValidationMessage.NotFound, NegativeCase4.ValidationMessages[0].Message);
+            Assert.AreEqual(Constants.ValidationCount, NegativeCase4.ValidationMessages.Count);
         }
     }
 }
