@@ -230,7 +230,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         protected void VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForCycleCountAdjustmentPlus()
         {
-            Assert.AreEqual("CC", Pixtran.ReasonCode);
+            Assert.AreEqual(Constants.PixRsnCodeForCycleCount, Pixtran.ReasonCode);
         }
         protected void VerifyTheQuantityForUnexpectedOverageExceptionIntoTransInventoryTable()
         {
@@ -238,7 +238,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         }
         protected void VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForUnexpectedOverageException()
         {
-            Assert.AreEqual("CO", Pixtran.ReasonCode);
+            Assert.AreEqual(Constants.PixRsnCodeForUnExpectedOverage, Pixtran.ReasonCode);
         }
 
         protected void VerifyTheQuantityAndWeightShouldBeReducedByIvstQtyInTransInventoryForInboundPalletIsY()
@@ -265,18 +265,18 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         protected void VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForInventoryShortageException()
         {
-            Assert.AreEqual("CS", Pixtran.ReasonCode);
+            Assert.AreEqual(Constants.PixRsnCodeForInventoryShortage, Pixtran.ReasonCode);
         }
 
        
         protected void VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForDamageException()
         {
-            Assert.AreEqual("DG", Pixtran.ReasonCode);
+            Assert.AreEqual(Constants.PixRsnCodeForDamage, Pixtran.ReasonCode);
         }
        
         protected void VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForWrongSkuException()
         {
-            Assert.AreEqual("CC", Pixtran.ReasonCode);
+            Assert.AreEqual(Constants.PixRsnCodeForWrongSku, Pixtran.ReasonCode);
         }
     }
 }

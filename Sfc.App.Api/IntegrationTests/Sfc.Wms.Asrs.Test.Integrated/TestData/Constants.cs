@@ -46,7 +46,20 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
         public const string PktStatusForInPacking = "35";
         public const string CartonStatusForReleased = "12";
         public const string CartonStatusForInPacking = "15";
-      
+        public const string PktWeighed = "50";
+        public const string CartonStatusForPicked = "30";
+        public const string OrderLineId = "1";
+        public const string CompletionTime = "20190909121212";
+        public const string QuantityDelivered = "1";
+        public const string OrderReasonCodeMap = "0";
+        public const string PickSeqNumber = "1";
+        public const string OrderRsnCodeBitsEnabled = "01110605";
+        public const string Child = "C";
+        public const string Parent = "P";
+        public const string InvalidOrmtActionCode = "Addd";
+        public const string OrmtMessageSent = "90";
+        public const string ValidationMessage = "Not found";
+        public const string AllocationStatus = "90";
 
 
 

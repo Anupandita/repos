@@ -35,7 +35,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                ParentSku = TriggerOnItemMaster(db, "C");
+                ParentSku = TriggerOnItemMaster(db, Constants.Child);
 
             }
         }
@@ -44,8 +44,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                ParentSku = TriggerOnItemMaster(db, "C");
-                ChildSku = TriggerOnItemMaster(db, "P");
+                ParentSku = TriggerOnItemMaster(db, Constants.Child);
+                ChildSku = TriggerOnItemMaster(db, Constants.Parent);
                 Childskuassertion = ChildSkufunction(db, ParentSku.SkuId);
             }
 

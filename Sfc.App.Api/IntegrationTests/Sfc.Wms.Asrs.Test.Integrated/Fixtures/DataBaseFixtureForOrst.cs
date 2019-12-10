@@ -150,7 +150,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 EmsToWmsCompleted = GetEmsToWmsData(db, MsgKeyForCompleted.MsgKey);
                 CartonDtlCase2BeforeApi = GetCartonDetails(db, Complete.OrderId);
                 GetCartonHeaderDetails(db, Complete.OrderId);
-                PickTktDtlCase2BeforeApi = GetPickTicketDetailData(db, Complete.OrderId, "1");
+                PickTktDtlCase2BeforeApi = GetPickTicketDetailData(db, Complete.OrderId, Constants.PickSeqNumber);
                 AllocInvnDtlCompletedBeforeApi = GetAllocInvnDetails(db, Complete.OrderId);
                 PickLcnCase2BeforeApi = GetPickLocationDetails(db, OrmtCase2.Sku,null);
                 PickLcnExtCase2BeforeApi = GetPickLocnDtlExt(db,  Complete.SkuId, PickLcnCase2BeforeApi.LocationId);         
@@ -174,7 +174,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                Canceled = GetCartonDetailsForInsertingOrstMessage(db, "30","50");
+                Canceled = GetCartonDetailsForInsertingOrstMessage(db, Constants.CartonStatusForPicked,Constants.PktWeighed);
                 OrmtCase4 = JsonConvert.DeserializeObject<OrmtDto>(Canceled.MessageJson);
                 OrstMessageCreatedForCancelledStatus(db);
                 EmsToWmsCanceled = GetEmsToWmsData(db, MsgKeyForCanceled.MsgKey);
@@ -187,7 +187,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                SwmFromMheAllocated = SwmFromMhe(db, MsgKeyForAllocated.MsgKey,"ORST");
+                SwmFromMheAllocated = SwmFromMhe(db, MsgKeyForAllocated.MsgKey,TransactionCode.Orst);
                 OrstAllocated = JsonConvert.DeserializeObject<OrstDto>(SwmFromMheAllocated.MessageJson);
                 PickTktHdrAllocated = GetPickTktHeaderDetails(db, OrstAllocated.OrderId);
                 CartonHdrAllocated = GetCartonHeaderDetails(db, OrstAllocated.OrderId);
@@ -199,7 +199,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                SwmFromMheComplete = SwmFromMhe(db, MsgKeyForCompleted.MsgKey, "ORST");
+                SwmFromMheComplete = SwmFromMhe(db, MsgKeyForCompleted.MsgKey, TransactionCode.Orst);
                 OrstCompleted = JsonConvert.DeserializeObject<OrstDto>(SwmFromMheComplete.MessageJson);
                 CartonHdrCompleted = GetCartonHeaderDetails(db, OrstCompleted.OrderId);
                 CartonDtlCase2AfterApi = GetCartonDetails(db,OrstCompleted.OrderId);
@@ -216,7 +216,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                SwmFromMheDeallocate = SwmFromMhe(db, MsgKeyForDeallocated.MsgKey, "ORST");
+                SwmFromMheDeallocate = SwmFromMhe(db, MsgKeyForDeallocated.MsgKey,TransactionCode.Orst);
                 OrstDeallocate = JsonConvert.DeserializeObject<OrstDto>(SwmFromMheDeallocate.MessageJson);
             }
         }
@@ -226,7 +226,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                SwmFromMheCancel = SwmFromMhe(db, MsgKeyForCanceled.MsgKey, "ORST");
+                SwmFromMheCancel = SwmFromMhe(db, MsgKeyForCanceled.MsgKey, TransactionCode.Orst);
                 OrstCanceled = JsonConvert.DeserializeObject<OrstDto>(SwmFromMheCancel.MessageJson);
                 CartonHdrCanceled = GetCartonHeaderDetails(db, OrstCanceled.OrderId);
                 PickLcnExtCase4  = GetPickLocnDtlExt(db, OrstCanceled.Sku,PickLcnCase1BeforeApi.LocationId);
@@ -239,7 +239,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                Complete = GetCartonDetailsForInsertingOrstMessage(db, "15", "35");
+                Complete = GetCartonDetailsForInsertingOrstMessage(db, Constants.CartonStatusForInPacking, Constants.PktStatusForInPacking);
                 OrmtCase2 = JsonConvert.DeserializeObject<OrmtDto>(Complete.MessageJson);
                 OrstMessageCreatedForCompletedStatusWithBitsEnabled(db);
                 EmsToWmsCompleted = GetEmsToWmsData(db, MsgKeysForCase5.MsgKey);
@@ -254,7 +254,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                Complete = GetCartonDetailsForInsertingOrstMessageForNegativeCaseWherePickTicketSeqNumberIsLessThan1(db, "12", "35");
+                Complete = GetCartonDetailsForInsertingOrstMessageForNegativeCaseWherePickTicketSeqNumberIsLessThan1(db, Constants.CartonStatusForReleased, Constants.PktStatusForInPacking);
                 OrmtCase2 = JsonConvert.DeserializeObject<OrmtDto>(Complete.MessageJson);
                 OrstMessageCreatedForCompletedStatus(db);
             }
@@ -264,7 +264,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                SwmFromMheComplete = SwmFromMhe(db, MsgKeysForCase5.MsgKey, "ORST");
+                SwmFromMheComplete = SwmFromMhe(db, MsgKeysForCase5.MsgKey,TransactionCode.Orst);
                 OrstCompleted = JsonConvert.DeserializeObject<OrstDto>(SwmFromMheComplete.MessageJson);
                 CartonHdrCompleted = GetCartonHeaderDetails(db, OrstCompleted.OrderId);              
                 PickLcnCase2 = GetPickLocationDetails(db, OrstCompleted.Sku, null);
@@ -279,14 +279,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 MessageLength = MessageLength.Orst,
                 ActionCode = actionCode,
                 OrderId = containerId,
-                OrderLineId = "1",
-                CompletionTime = "20190909121212",
+                OrderLineId = Constants.OrderLineId,
+                CompletionTime = Constants.CompletionTime,
                 Sku = skuId,
                 Owner = owner,
-                UnitOfMeasure = "Case",
+                UnitOfMeasure = UnitOfMeasures.Case,
                 ParentContainerId = containerId,
                 QuantityOrdered = qty,
-                QuantityDelivered = "1",
+                QuantityDelivered = Constants.QuantityDelivered,
                 DestinationLocationId = destinationLocnId,
                 CurrentLocationId = currentLocationId,
                 Priority = "",
@@ -302,7 +302,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         public void OrstMessageCreatedForAllocatedStatus(OracleConnection db)
         {
-            var orstmsg = CreateOrstMessage("Allocated",Allocated.OrderId,Allocated.SkuId, OrmtCase1.Quantity, OrmtCase1.WaveId,"0", OrmtCase1.Owner,null,Allocated.DestLocnId);
+            var orstmsg = CreateOrstMessage(OrstActionCode.Allocated,Allocated.OrderId,Allocated.SkuId, OrmtCase1.Quantity, OrmtCase1.WaveId,Constants.OrderReasonCodeMap, OrmtCase1.Owner,null,Allocated.DestLocnId);
             var emsToWms = new EmsToWmsDto
             {
                 Process = DefaultPossibleValue.MessageProcessor,
@@ -326,7 +326,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         public void OrstMessageCreatedForCompletedStatus(OracleConnection db)
         {
-            var orstmsg = CreateOrstMessage("Complete", Complete.OrderId, Complete.SkuId, OrmtCase2.Quantity, OrmtCase2.WaveId,"0",OrmtCase2.Owner,null,Complete.DestLocnId);
+            var orstmsg = CreateOrstMessage(OrstActionCode.Complete, Complete.OrderId, Complete.SkuId, OrmtCase2.Quantity, OrmtCase2.WaveId,Constants.OrderReasonCodeMap,OrmtCase2.Owner,null,Complete.DestLocnId);
             var emsToWms = new EmsToWmsDto
             {
                 Process = DefaultPossibleValue.MessageProcessor,
@@ -340,7 +340,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         public void OrstMessageCreatedForCompletedStatusWithBitsEnabled(OracleConnection db)
         {
-            var orstmsg = CreateOrstMessage("Complete", Complete.OrderId, Complete.SkuId, OrmtCase2.Quantity, OrmtCase2.WaveId, "01110605", OrmtCase2.Owner, "12890", Complete.DestLocnId);
+            var orstmsg = CreateOrstMessage(OrstActionCode.Complete, Complete.OrderId, Complete.SkuId, OrmtCase2.Quantity, OrmtCase2.WaveId, Constants.OrderRsnCodeBitsEnabled, OrmtCase2.Owner, Constants.SampleCurrentLocnId, Complete.DestLocnId);
             var emsToWms = new EmsToWmsDto
             {
                 Process = DefaultPossibleValue.MessageProcessor,
@@ -355,7 +355,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         public void OrstMessageCreatedForDeallocateStatus(OracleConnection db)
         {
-            var orstmsg = CreateOrstMessage("Deallocate", Deallocate.OrderId, Deallocate.SkuId, OrmtCase3.Quantity, OrmtCase3.WaveId,"05",null,null,Deallocate.DestLocnId);
+            var orstmsg = CreateOrstMessage(OrstActionCode.Deallocate, Deallocate.OrderId, Deallocate.SkuId, OrmtCase3.Quantity, OrmtCase3.WaveId,"05",null,null,Deallocate.DestLocnId);
             var emsToWms = new EmsToWmsDto
             {
                 Process = DefaultPossibleValue.MessageProcessor,
@@ -369,7 +369,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         public void OrstMessageCreatedForCancelledStatus(OracleConnection db)
         {
-            var orstmsg = CreateOrstMessage("Canceled", Canceled.OrderId, Canceled.SkuId, OrmtCase4.Quantity, OrmtCase4.WaveId,"06",null,null,Canceled.DestLocnId);
+            var orstmsg = CreateOrstMessage(OrstActionCode.Canceled, Canceled.OrderId, Canceled.SkuId, OrmtCase4.Quantity, OrmtCase4.WaveId,"06",null,null,Canceled.DestLocnId);
             var emsToWms = new EmsToWmsDto
             {
                 Process = DefaultPossibleValue.MessageProcessor,
