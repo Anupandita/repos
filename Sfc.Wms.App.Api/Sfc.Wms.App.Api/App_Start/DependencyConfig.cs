@@ -24,6 +24,7 @@ using System.Configuration;
 using System.Linq;
 using System.Runtime.Caching;
 using System.Web.Http;
+using Sfc.Wms.Foundation.Location.Contracts.Dtos;
 
 namespace Sfc.Wms.App.Api
 {
@@ -57,6 +58,7 @@ namespace Sfc.Wms.App.Api
                      cfg.CreateMap<CaseHeader, LpnHeaderUpdateDto>(MemberList.None).ReverseMap();
                      cfg.CreateMap<LpnParameterDto, PageOptions>(MemberList.None).ReverseMap();
                      cfg.CreateMap<PageOptions, LpnSearchResultsDto>(MemberList.None).ReverseMap();
+                     cfg.CreateMap<LocationHeaderDto, ContactLocationDto>(MemberList.None);
                  }));
 #if DEBUG
                  mapper.DefaultContext.ConfigurationProvider.AssertConfigurationIsValid();
