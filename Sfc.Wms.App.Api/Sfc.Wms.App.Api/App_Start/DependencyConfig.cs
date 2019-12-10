@@ -1,17 +1,14 @@
-﻿using System;
-using System.Configuration;
-using System.Linq;
-using System.Runtime.Caching;
-using System.Web.Http;
-using AutoMapper;
+﻿using AutoMapper;
 using AutoMapper.Extensions.ExpressionMapping;
 using Sfc.Core.Aop.WebApi.Logging;
 using Sfc.Core.Cache.Contracts;
 using Sfc.Core.Cache.InMemory;
+using Sfc.Core.OnPrem.Pagination;
 using Sfc.Core.OnPrem.Security.Contracts.Extensions;
 using Sfc.Wms.App.App.AutoMapper;
 using Sfc.Wms.Data.Context;
-using Sfc.Wms.Foundation.InboundLpn.Repository.LocationDataRepository;
+using Sfc.Wms.Data.Entities;
+using Sfc.Wms.Foundation.InboundLpn.Contracts.Dtos;
 using Sfc.Wms.Framework.Interceptor.App.interceptors;
 using Sfc.Wms.Framework.MessageLogger.App.Services;
 using Sfc.Wms.Framework.MessageMaster.App.Services;
@@ -22,6 +19,12 @@ using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Interfaces;
 using SimpleInjector;
 using SimpleInjector.Integration.WebApi;
 using SimpleInjector.Lifestyles;
+using System;
+using System.Configuration;
+using System.Linq;
+using System.Runtime.Caching;
+using System.Web.Http;
+using Sfc.Wms.Foundation.Location.Contracts.Dtos;
 
 namespace Sfc.Wms.App.Api
 {
@@ -50,6 +53,12 @@ namespace Sfc.Wms.App.Api
                      SfcRbacMapper.CreateMaps(cfg);
                      PrinterValuesMapper.CreateMaps(cfg);
                      SfcAsrsMapper.CreateMaps(cfg);
+                     cfg.CreateMap<CaseLock, CaseLockDto>().ReverseMap();
+                     cfg.CreateMap<CaseComment, CaseCommentDto>(MemberList.None).ReverseMap();
+                     cfg.CreateMap<CaseHeader, LpnHeaderUpdateDto>(MemberList.None).ReverseMap();
+                     cfg.CreateMap<LpnParameterDto, PageOptions>(MemberList.None).ReverseMap();
+                     cfg.CreateMap<PageOptions, LpnSearchResultsDto>(MemberList.None).ReverseMap();
+                     cfg.CreateMap<LocationHeaderDto, ContactLocationDto>(MemberList.None);
                  }));
 #if DEBUG
                  mapper.DefaultContext.ConfigurationProvider.AssertConfigurationIsValid();
@@ -62,7 +71,6 @@ namespace Sfc.Wms.App.Api
             container.Register(() => ConfigurationManager.AppSettings["db:encryptionKey"].ToSecureString(), Lifestyle.Singleton);
             container.Register<ISfcCache>(() => new SfcInMemoryCache(MemoryCache.Default), Lifestyle.Scoped);
             container.Register<IMappingFixture>(() => new MappingFixture(), Lifestyle.Singleton);
-            container.Register<LocationData>(Lifestyle.Scoped);
             container.Register<LpnParameterValidator>(Lifestyle.Scoped);
 
             container.Options.AllowOverridingRegistrations = true;
@@ -107,7 +115,6 @@ namespace Sfc.Wms.App.Api
                         {
                             container.InterceptWith<MonitoringInterceptor>(type =>
                                 type == reg.service.GetGenericTypeDefinition());
-
                         }
                     }
                 }

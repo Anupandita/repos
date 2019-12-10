@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Core.RestResponse;
 using Sfc.Wms.App.Api.Nuget.Builders;
+using Sfc.Wms.App.Api.Nuget.Interfaces;
 
 namespace Sfc.Wms.App.Api.Nuget.Gateways
 {

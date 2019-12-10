@@ -3,8 +3,8 @@ using Sfc.Core.OnPrem.Result;
 using Sfc.Core.RestResponse;
 using Sfc.Wms.App.Api.Contracts.Constants;
 using Sfc.Wms.App.Api.Contracts.Entities;
-using Sfc.Wms.App.Api.Contracts.Interfaces;
-using Sfc.Wms.App.Api.Nuget.Builders;
+using Sfc.Wms.App.Api.Nuget.Interfaces;
+using Sfc.Wms.Foundation.InboundLpn.Contracts.Dtos;
 using System.Threading.Tasks;
 
 namespace Sfc.Wms.App.Api.Nuget.Gateways
@@ -27,12 +27,12 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
                 new RestClient(ServiceUrl); //TODO: This variable will be removed after all endpoints were moved to C#.
         }
 
-        public async Task<BaseResult<T>> DeleteLpnCommentsAsync<T>(LpnCommentsModel lpnCommentsModel, string token)
+        public async Task<BaseResult<T>> DeleteLpnCommentsAsync<T>(CaseCommentDto caseCommentDto, string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
-                var request = DeleteLpnCommentsRequest(lpnCommentsModel, token);
+                var request = DeleteLpnCommentsRequest(caseCommentDto, token);
                 var response = await _restCsharpClient.ExecuteTaskAsync<T>(request).ConfigureAwait(false);
                 return _responseBuilder.GetBaseResult<T>(response);
             }).ConfigureAwait(false);
@@ -49,12 +49,12 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        public async Task<BaseResult<T>> GetLpnDetailsAsync<T>(LpnParamModel lpnParamModel, string token)
+        public async Task<BaseResult<T>> GetLpnDetailsAsync<T>(LpnParameterDto lpnParameterDto, string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
-                var request = GetLpnDetailsRequest(lpnParamModel, token);
+                var request = GetLpnDetailsRequest(lpnParameterDto, token);
                 var response = await _restCsharpClient.ExecuteTaskAsync<T>(request).ConfigureAwait(false);
                 return _responseBuilder.GetBaseResult<T>(response);
             }).ConfigureAwait(false);
@@ -116,7 +116,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        public async Task<BaseResult<T>> InsertLpnCommentsAsync<T>(LpnCommentsModel lpnCommentsModel, string token)
+        public async Task<BaseResult<T>> InsertLpnCommentsAsync<T>(CaseCommentDto lpnCommentsModel, string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
@@ -127,8 +127,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        public async Task<BaseResult<T>> UpdateCaseLpnDetailsAsync<T>(
-            LpnCaseDetailsUpdateModel lpnCaseDetailsUpdateModel, string token)
+        public async Task<BaseResult<T>> UpdateCaseLpnDetailsAsync<T>(LpnDetailsUpdateDto lpnCaseDetailsUpdateModel, string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
@@ -139,7 +138,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        public async Task<BaseResult<T>> UpdateLpnDetailsAsync<T>(LpnDetailsUpdateModel lpnDetailsUpdateModel,
+        public async Task<BaseResult<T>> UpdateLpnDetailsAsync<T>(LpnHeaderUpdateDto lpnDetailsUpdateModel,
                             string token)
         {
             var retryPolicy = Proxy();
@@ -151,9 +150,9 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        private RestRequest DeleteLpnCommentsRequest(LpnCommentsModel lpnCommentsModel, string token)
+        private RestRequest DeleteLpnCommentsRequest(CaseCommentDto lpnCommentsModel, string token)
         {
-            var resource = $"{_endPoint}/{"lpn-comments"}/{lpnCommentsModel.caseNbr}/{lpnCommentsModel.seqNbr}";
+            var resource = $"{_endPoint}/{"lpn-comments"}/{lpnCommentsModel.CaseNumber}/{lpnCommentsModel.CommentSequenceNumber}";
             return DeleteRequest(resource, token, Authorization);
         }
 
@@ -169,24 +168,10 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             return GetRequest(token, resource, Authorization);
         }
 
-        private RestRequest GetLpnDetailsRequest(LpnParamModel lpnParamModel, string token)
+        private RestRequest GetLpnDetailsRequest(LpnParameterDto lpnParameterDto, string token)
         {
-            var resource =
-                $"{_endPoint}/{Routes.Paths.Find}{Routes.Paths.QueryParamSymbol}pageNo={lpnParamModel.PageNo}{Routes.Paths.QueryParamAnd}rowsPerPage={lpnParamModel.RowsPerPage}{Routes.Paths.QueryParamAnd}totalRows={lpnParamModel.TotalRows}";
-
-            resource = QueryStringBuilder.BuildQuery("lpnNumber=", lpnParamModel.LpnNumber, resource, false);
-            resource = QueryStringBuilder.BuildQuery("asnId=", lpnParamModel.AsnId, resource, false);
-            resource = QueryStringBuilder.BuildQuery("palletId=", lpnParamModel.PalletId, resource, false);
-            resource = QueryStringBuilder.BuildQuery("skuId=", lpnParamModel.SkuId, resource, false);
-            resource = QueryStringBuilder.BuildQuery("statusFrom=", lpnParamModel.StatusFrom, resource, false);
-            resource = QueryStringBuilder.BuildQuery("statusTo=", lpnParamModel.StatusTo, resource, false);
-            resource = QueryStringBuilder.BuildQuery("zone=", lpnParamModel.Zone, resource, false);
-            resource = QueryStringBuilder.BuildQuery("aisle=", lpnParamModel.Aisle, resource, false);
-            resource = QueryStringBuilder.BuildQuery("slot=", lpnParamModel.Slot, resource, false);
-            resource = QueryStringBuilder.BuildQuery("createdDate=", lpnParamModel.CreatedDate, resource, false);
-            resource = QueryStringBuilder.BuildQuery("level=", lpnParamModel.Level, resource, false);
-
-            return GetRequest(token, resource, Authorization);
+            var resource = $"{_endPoint}/{Routes.Paths.Find}";
+            return PostRequest(resource, lpnParameterDto, token, Authorization);
         }
 
         private RestRequest GetLpnHistoryRequest(string lpnId, string whse, string token)
@@ -213,13 +198,13 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             return PostRequest(resource, lpnAisleTransModel, token, Authorization);
         }
 
-        private RestRequest InsertLpnCommentsRequest(LpnCommentsModel lpnCommentsModel, string token)
+        private RestRequest InsertLpnCommentsRequest(CaseCommentDto caseCommentDto, string token)
         {
             var resource = $"{_endPoint}/{Routes.Paths.LpnCommentsAdd}";
-            return PostRequest(resource, lpnCommentsModel, token, Authorization);
+            return PostRequest(resource, caseCommentDto, token, Authorization);
         }
 
-        private RestRequest UpdateCaseLpnDetailsRequest(LpnCaseDetailsUpdateModel lpnCaseDetailsUpdateModel,
+        private RestRequest UpdateCaseLpnDetailsRequest(LpnDetailsUpdateDto lpnCaseDetailsUpdateModel,
             string token)
         {
             var resource = $"{_endPoint}/{Routes.Paths.LpnCaseDetails}";
@@ -227,7 +212,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             return PutRequest(resource, lpnCaseDetailsUpdateModel, token, Authorization);
         }
 
-        private RestRequest UpdateLpnDetailsRequest(LpnDetailsUpdateModel lpnDetailsUpdateModel, string token)
+        private RestRequest UpdateLpnDetailsRequest(LpnHeaderUpdateDto lpnDetailsUpdateModel, string token)
         {
             var resource = $"{_endPoint}/{Routes.Paths.LpnUpdateDetails}";
 

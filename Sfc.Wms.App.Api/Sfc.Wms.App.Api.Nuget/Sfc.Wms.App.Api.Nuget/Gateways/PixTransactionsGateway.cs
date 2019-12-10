@@ -1,21 +1,21 @@
 ﻿using RestSharp;
-using Sfc.Wms.App.Api.Contracts.Constants;
-using Sfc.Wms.App.Api.Contracts.Entities;
-using Sfc.Wms.App.Api.Contracts.Interfaces;
-using System.Threading.Tasks;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Core.RestResponse;
+using Sfc.Wms.App.Api.Contracts.Constants;
+using Sfc.Wms.App.Api.Contracts.Entities;
 using Sfc.Wms.App.Api.Nuget.Builders;
+using Sfc.Wms.App.Api.Nuget.Interfaces;
+using System.Threading.Tasks;
 
 namespace Sfc.Wms.App.Api.Nuget.Gateways
 {
-    public class PixTransactionsGateway : SfcBaseGateway,IPixTransactionsGateway
+    public class PixTransactionsGateway : SfcBaseGateway, IPixTransactionsGateway
     {
         private readonly string _endPoint;
         private readonly IResponseBuilder _responseBuilder;
         private readonly IRestClient _restClient;
 
-        public PixTransactionsGateway(IResponseBuilder responseBuilders,IRestClient restClient)
+        public PixTransactionsGateway(IResponseBuilder responseBuilders, IRestClient restClient)
         {
             _endPoint = Routes.Prefixes.PixTransactions;
             _responseBuilder = responseBuilders;

@@ -2,7 +2,7 @@
 using Sfc.Core.OnPrem.Result;
 using Sfc.Core.OnPrem.Security.Contracts.Dtos;
 
-namespace Sfc.Wms.App.Api.Contracts.Interfaces
+namespace Sfc.Wms.App.Api.Nuget.Interfaces
 {
     public interface IUserService
     {
