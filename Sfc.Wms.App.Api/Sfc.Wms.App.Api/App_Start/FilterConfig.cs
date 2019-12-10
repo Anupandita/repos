@@ -9,8 +9,8 @@ namespace Sfc.Wms.App.Api
         public static void RegisterHttpFilters(HttpFilterCollection filters)
         {
             filters.Add(new IdentityJwtAuthenticationAttribute());
-            filters.Add(new LogActionWebApiFilter());
-            filters.Add(new LogExceptionWebApiFilter());
+            //filters.Add(new LogActionWebApiFilter());
+            //filters.Add(new LogExceptionWebApiFilter());
         }
     }
 }
