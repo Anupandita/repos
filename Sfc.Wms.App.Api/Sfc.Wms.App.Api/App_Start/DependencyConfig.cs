@@ -55,7 +55,9 @@ namespace Sfc.Wms.App.Api
                      SfcAsrsMapper.CreateMaps(cfg);
                      cfg.CreateMap<CaseLock, CaseLockDto>().ReverseMap();
                      cfg.CreateMap<CaseComment, CaseCommentDto>(MemberList.None).ReverseMap();
-                     cfg.CreateMap<CaseHeader, LpnHeaderUpdateDto>(MemberList.None).ReverseMap();
+                     cfg.CreateMap<CaseHeader, LpnHeaderUpdateDto>(MemberList.None)
+                         .ForMember(d=>d.ExpireDate,s=>s.MapFrom(e=>e.ExpiryDate))
+                         .ReverseMap();
                      cfg.CreateMap<LpnParameterDto, PageOptions>(MemberList.None).ReverseMap();
                      cfg.CreateMap<PageOptions, LpnSearchResultsDto>(MemberList.None).ReverseMap();
                      cfg.CreateMap<LocationHeaderDto, ContactLocationDto>(MemberList.None);
