@@ -150,8 +150,8 @@
     <Reference Include="Sfc.Core.OnPrem.UnitOfWork.Contracts, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Core.OnPrem.UnitOfWork.Contracts.1.0.1\lib\net472\Sfc.Core.OnPrem.UnitOfWork.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Core.RestResponse, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Core.RestResponse.1.4.1\lib\net472\Sfc.Core.RestResponse.dll</HintPath>
+    <Reference Include="Sfc.Core.RestResponse, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Core.RestResponse.1.4.5\lib\net472\Sfc.Core.RestResponse.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms..Configuration.Security.Rbac.Repository, Version=4.0.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.Security.Rbac.Repository.4.0.5\lib\net472\Sfc.Wms..Configuration.Security.Rbac.Repository.dll</HintPath>
@@ -234,11 +234,11 @@
     <Reference Include="Sfc.Wms.Foundation.Corba.Repository, Version=1.0.8.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.Corba.Repository.1.0.8\lib\net472\Sfc.Wms.Foundation.Corba.Repository.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Foundation.InboundLpn.Contracts, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Foundation.InboundLpn.Contracts.4.0.0\lib\net472\Sfc.Wms.Foundation.InboundLpn.Contracts.dll</HintPath>
+    <Reference Include="Sfc.Wms.Foundation.InboundLpn.Contracts, Version=4.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.InboundLpn.Contracts.4.0.2\lib\net472\Sfc.Wms.Foundation.InboundLpn.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Foundation.InboundLpn.Repository, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Foundation.InboundLpn.Repository.3.0.0\lib\net472\Sfc.Wms.Foundation.InboundLpn.Repository.dll</HintPath>
+    <Reference Include="Sfc.Wms.Foundation.InboundLpn.Repository, Version=3.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.InboundLpn.Repository.3.0.3\lib\net472\Sfc.Wms.Foundation.InboundLpn.Repository.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Foundation.Location.App, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.Location.App.3.0.0\lib\net472\Sfc.Wms.Foundation.Location.App.dll</HintPath>
@@ -324,8 +324,8 @@
     <Reference Include="Sfc.Wms.Framework.UnitOfWork, Version=4.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.UnitOfWork.4.0.2\lib\net472\Sfc.Wms.Framework.UnitOfWork.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Inbound.InboundLpn.App, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.InboundLpn.App.6.0.0\lib\net472\Sfc.Wms.Inbound.InboundLpn.App.dll</HintPath>
+    <Reference Include="Sfc.Wms.Inbound.InboundLpn.App, Version=6.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.InboundLpn.App.6.0.1\lib\net472\Sfc.Wms.Inbound.InboundLpn.App.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Inbound.Tasks.App, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Inbound.Tasks.App.1.0.2\lib\net472\Sfc.Wms.Inbound.Tasks.App.dll</HintPath>
@@ -367,8 +367,8 @@
       <HintPath>..\packages\Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.2.4.0\lib\net472\Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sfc.Wms.Interfaces.Translator, Version=3.3.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Interfaces.Translator.3.3.1\lib\net472\Sfc.Wms.Interfaces.Translator.dll</HintPath>
+    <Reference Include="Sfc.Wms.Interfaces.Translator, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Interfaces.Translator.4.0.0\lib\net472\Sfc.Wms.Interfaces.Translator.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Outbound.Carton.App, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Outbound.Carton.App.1.0.2\lib\net472\Sfc.Wms.Outbound.Carton.App.dll</HintPath>

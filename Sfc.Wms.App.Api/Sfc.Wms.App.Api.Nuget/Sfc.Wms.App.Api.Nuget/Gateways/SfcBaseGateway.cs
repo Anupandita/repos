@@ -1,15 +1,15 @@
 ﻿using Polly;
 using Polly.Retry;
 using RestSharp;
+using Sfc.Core.OnPrem.Result;
+using Sfc.Wms.App.Api.Contracts.Constants;
 using System;
 using System.Configuration;
-using Sfc.Wms.App.Api.Contracts.Constants;
 using System.Net.Http;
-using Sfc.Core.OnPrem.Result;
 
 namespace Sfc.Wms.App.Api.Nuget.Gateways
 {
-    public class SfcBaseGateway:BaseResultBuilder
+    public class SfcBaseGateway : BaseResultBuilder
     {
         protected string ServiceBaseUrl;
         private readonly int _maxRetryAttempts;
@@ -76,7 +76,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             return request;
         }
 
-        protected RestRequest DeleteRequest(string resource, string token) 
+        protected RestRequest DeleteRequest(string resource, string token)
         {
             var request = new RestRequest(resource, Method.DELETE)
             {
@@ -117,12 +117,12 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
                 RequestFormat = DataFormat.Json
             };
             request.AddHeader(header, token);
-            request.AddJsonBody(body);
+            request.AddParameter(new Parameter { Name = "application/json", Type = ParameterType.RequestBody, Value = Newtonsoft.Json.JsonConvert.SerializeObject(body) });
             request.Timeout = _webRequestTimeoutInSecs * 1000;
             return request;
         }
 
-        protected RestRequest DeleteRequest(string resource, string token,string header)
+        protected RestRequest DeleteRequest(string resource, string token, string header)
         {
             var request = new RestRequest(resource, Method.DELETE)
             {
