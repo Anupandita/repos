@@ -15,6 +15,7 @@ namespace Sfc.Wms.App.Api.Controllers
     public class CommonController : SfcBaseController
     {
         private readonly ISystemCodeService _systemCodeService;
+
         public CommonController(ISystemCodeService systemCodeService)
         {
             _systemCodeService = systemCodeService;

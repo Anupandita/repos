@@ -15,7 +15,7 @@ namespace Sfc.Wms.App.Api.Controllers
     public class UserRbacController : SfcBaseController
     {
         private readonly IRbacService _rbacService;
-       
+
         public UserRbacController(IRbacService rbacService)
         {
             _rbacService = rbacService;
