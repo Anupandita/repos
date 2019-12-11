@@ -47,6 +47,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         protected void InsertMessageInvoked()
         {
             _testResult = _skmtController.CreateAsync(It.IsAny<string>(), It.IsAny<string>());
+            _messageTypeService.VerifyAll();
         }
 
         protected void SkmtMessageShouldBeProcessed()

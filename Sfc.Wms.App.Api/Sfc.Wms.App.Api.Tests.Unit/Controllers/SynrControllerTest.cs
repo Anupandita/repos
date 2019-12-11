@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Sfc.Wms.App.Api.Tests.Unit.Constants;
 using Sfc.Wms.App.Api.Tests.Unit.Fixtures;
 
 namespace Sfc.Wms.App.Api.Tests.Unit.Controllers
@@ -7,7 +8,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Controllers
     public class SynrControllerTest : SynrFixture
     {
         [TestMethod]
-        [TestCategory("UNIT")]
+        [TestCategory(TestCategories.Unit)]
         public void Process_Synr_Message_With_Valid_SynchronizationRequest_Message()
         {
             ValidSynchronizationRequestMessage();
@@ -16,7 +17,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Controllers
         }
 
         [TestMethod]
-        [TestCategory("UNIT")]
+        [TestCategory(TestCategories.Unit)]
         public void Process_Synr_Message_With_Invalid_SynchronizationRequest_Message()
         {
             InvalidSynchronizationRequestMessage();

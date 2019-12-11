@@ -47,6 +47,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         protected void InsertMessageInvoked()
         {
             _testResult = _synchronizationRequestController.CreateAsync();
+            _messageTypeService.VerifyAll();
         }
 
         protected void SynchronizationRequestMessageShouldBeProcessed()
