@@ -5,24 +5,24 @@ using Sfc.Wms.App.Api.Tests.Unit.Fixtures;
 namespace Sfc.Wms.App.Api.Tests.Unit.Controllers
 {
     [TestClass]
-    public class ComtControllerTest : ComtFixture
+    public class SynrControllerTest : SynrFixture
     {
         [TestMethod]
         [TestCategory(TestCategories.Unit)]
-        public void Process_Comt_Message_With_Valid_Comt_Message()
+        public void Process_Synr_Message_With_Valid_SynchronizationRequest_Message()
         {
-            ValidComtMessage();
+            ValidSynchronizationRequestMessage();
             InsertMessageInvoked();
-            ComtMessageShouldBeProcessed();
+            SynchronizationRequestMessageShouldBeProcessed();
         }
 
         [TestMethod]
         [TestCategory(TestCategories.Unit)]
-        public void Process_Comt_Message_With_Invalid_Comt_Message()
+        public void Process_Synr_Message_With_Invalid_SynchronizationRequest_Message()
         {
-            InvalidComtMessage();
+            InvalidSynchronizationRequestMessage();
             InsertMessageInvoked();
-            ComtMessageShouldNotBeProcessed();
+            SynchronizationRequestMessageShouldNotBeProcessed();
         }
     }
 }

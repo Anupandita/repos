@@ -26,7 +26,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Nuget
         }
 
         [TestMethod]
-        [TestCategory("UNIT")]
+        [TestCategory(TestCategories.Unit)]
         public void Should_Return_BadRequest_As_Response_When_Empty_Login_Credentials_Are_Passed()
         {
             EmptyLoginCredentials();
