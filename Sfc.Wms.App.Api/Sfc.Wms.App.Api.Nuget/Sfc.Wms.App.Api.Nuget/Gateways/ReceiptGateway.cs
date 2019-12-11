@@ -5,6 +5,7 @@ using Sfc.Core.RestResponse;
 using Sfc.Wms.App.Api.Contracts.Constants;
 using Sfc.Wms.App.Api.Contracts.Entities;
 using Sfc.Wms.App.Api.Contracts.Interfaces;
+using Sfc.Wms.App.Api.Nuget.Interfaces;
 
 namespace Sfc.Wms.App.Api.Nuget.Gateways
 {

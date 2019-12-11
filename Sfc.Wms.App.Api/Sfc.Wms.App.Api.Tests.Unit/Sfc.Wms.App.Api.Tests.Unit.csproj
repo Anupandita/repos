@@ -78,6 +78,7 @@
     <Compile Include="App\RbacGatewayTest.cs" />
     <Compile Include="Configurations\Setup.cs" />
     <Compile Include="Constants\TestCategories.cs" />
+    <Compile Include="Controllers\SynrControllerTest.cs" />
     <Compile Include="Controllers\SkmtControllerTest.cs" />
     <Compile Include="Controllers\ComtControllerTest.cs" />
     <Compile Include="Controllers\EmsToWmsMessageControllerTest.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Fakes\PreferencesDataGeneratorProfile.cs" />
     <Compile Include="Fakes\RolesDataGeneratorProfile.cs" />
     <Compile Include="Fakes\UserInfoDtoDataGeneratorProfile.cs" />
+    <Compile Include="Fixtures\SynrFixture.cs" />
     <Compile Include="Fixtures\SkmtFixture.cs" />
     <Compile Include="Fixtures\ComtFixture.cs" />
     <Compile Include="Fixtures\ComtGatewayFixture.cs" />
@@ -159,11 +161,17 @@
     <PackageReference Include="Sfc.Core.Cache.InMemory">
       <Version>1.2.1</Version>
     </PackageReference>
+    <PackageReference Include="Sfc.Core.OnPrem.Security.Contracts">
+      <Version>2.1.3</Version>
+    </PackageReference>
+    <PackageReference Include="Sfc.Wms.Configuration.SystemCode.Contracts">
+      <Version>2.2.0</Version>
+    </PackageReference>
     <PackageReference Include="Sfc.Wms.Data">
-      <Version>4.5.3</Version>
+      <Version>4.7.1</Version>
     </PackageReference>
     <PackageReference Include="Sfc.Wms.Interfaces.Asrs.Contracts">
-      <Version>1.3.0</Version>
+      <Version>2.1.0</Version>
     </PackageReference>
     <PackageReference Include="System.IdentityModel.Tokens.Jwt">
       <Version>5.5.0</Version>
@@ -180,7 +188,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sfc.Wms.App.Api.Nuget\Sfc.Wms.App.Api.Nuget\Sfc.Wms.App.Api.Nuget.csproj">
-      <Project>{552a145b-e781-4631-82d9-146f7a8b9dff}</Project>
+      <Project>{9ec5ccb4-000a-4306-8838-742b28223e34}</Project>
       <Name>Sfc.Wms.App.Api.Nuget</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sfc.Wms.App.Api\Sfc.Wms.App.Api.csproj">
@@ -188,7 +196,7 @@
       <Name>Sfc.Wms.App.Api</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sfc.Wms.App.App\Sfc.Wms.App.App\Sfc.Wms.App.App.csproj">
-      <Project>{4e07ace2-36ab-4c9c-b431-a37e64950dbb}</Project>
+      <Project>{931aa310-b0b6-46bb-aff9-97ebac4386cb}</Project>
       <Name>Sfc.Wms.App.App</Name>
     </ProjectReference>
   </ItemGroup>

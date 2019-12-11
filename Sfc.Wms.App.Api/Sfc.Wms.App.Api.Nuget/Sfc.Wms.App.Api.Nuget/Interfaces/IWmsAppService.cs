@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Sfc.Core.OnPrem.Result;
 
-namespace Sfc.Wms.App.Api.Contracts.Interfaces
+namespace Sfc.Wms.App.Api.Nuget.Interfaces
 {
     public interface IWmsAppService<in TEntity> where TEntity : class
 

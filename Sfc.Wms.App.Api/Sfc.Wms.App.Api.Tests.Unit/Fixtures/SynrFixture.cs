@@ -10,54 +10,54 @@ using System.Web.Http.Results;
 
 namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 {
-    public abstract class SkmtFixture
+    public abstract class SynrFixture
     {
-        private readonly SkuMaintenanceController _skmtController;
+        private readonly SynchronizationRequestController _synchronizationRequestController;
         private readonly Mock<IWmsToEmsMessageProcessorService> _messageTypeService;
         private Task<IHttpActionResult> _testResult;
 
-        protected SkmtFixture()
+        protected SynrFixture()
         {
             _messageTypeService = new Mock<IWmsToEmsMessageProcessorService>(MockBehavior.Default);
-            _skmtController = new SkuMaintenanceController(_messageTypeService.Object);
+            _synchronizationRequestController = new SynchronizationRequestController(_messageTypeService.Object);
         }
 
-        protected void ValidSkmtMessage()
+        protected void ValidSynchronizationRequestMessage()
         {
             var response = new BaseResult()
             {
                 ResultType = ResultTypes.Created
             };
 
-            _messageTypeService.Setup(el => el.GetSkmtMessageAsync(It.IsAny<string>(), It.IsAny<string>()))
+            _messageTypeService.Setup(el => el.SynchronizationRequestAsync())
                 .Returns(Task.FromResult(response));
         }
 
-        protected void InvalidSkmtMessage()
+        protected void InvalidSynchronizationRequestMessage()
         {
             var response = new BaseResult()
             {
                 ResultType = ResultTypes.BadRequest
             };
 
-            _messageTypeService.Setup(el => el.GetSkmtMessageAsync(It.IsAny<string>(), It.IsAny<string>()))
+            _messageTypeService.Setup(el => el.SynchronizationRequestAsync())
                 .Returns(Task.FromResult(response));
         }
 
         protected void InsertMessageInvoked()
         {
-            _testResult = _skmtController.CreateAsync(It.IsAny<string>(), It.IsAny<string>());
+            _testResult = _synchronizationRequestController.CreateAsync();
             _messageTypeService.VerifyAll();
         }
 
-        protected void SkmtMessageShouldBeProcessed()
+        protected void SynchronizationRequestMessageShouldBeProcessed()
         {
             var result = _testResult.Result as NegotiatedContentResult<BaseResult>;
             Assert.IsNotNull(result);
             Assert.AreEqual(ResultTypes.Created, result.Content.ResultType);
         }
 
-        protected void SkmtMessageShouldNotBeProcessed()
+        protected void SynchronizationRequestMessageShouldNotBeProcessed()
         {
             var result = _testResult.Result as NegotiatedContentResult<BaseResult>;
             Assert.IsNotNull(result);

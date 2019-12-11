@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Sfc.Wms.App.Api.Tests.Unit.Constants;
 using Sfc.Wms.App.Api.Tests.Unit.Fixtures;
 
 namespace Sfc.Wms.App.Api.Tests.Unit.Nuget
@@ -7,7 +8,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Nuget
     public class EmsToWmsMessageGatewayTest : EmsToWmsMessageGatewayFixture
     {
         [TestMethod]
-        [TestCategory("UNIT")]
+        [TestCategory(TestCategories.Unit)]
         public void Process_EmsToWmsMessage_Message_With_Valid_EmsToWmsMessage_Message()
         {
             ValidInputData();
@@ -16,7 +17,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Nuget
         }
 
         [TestMethod]
-        [TestCategory("UNIT")]
+        [TestCategory(TestCategories.Unit)]
         public void Process_EmsToWmsMessage_Message_With_Invalid_EmsToWmsMessage_Message()
         {
             InvalidInputData();
