@@ -24,6 +24,7 @@ using System.Configuration;
 using System.Linq;
 using System.Runtime.Caching;
 using System.Web.Http;
+using Sfc.Core.Aop.WebApi.Interface;
 using Sfc.Wms.Foundation.Location.Contracts.Dtos;
 
 namespace Sfc.Wms.App.Api
@@ -56,7 +57,7 @@ namespace Sfc.Wms.App.Api
                      cfg.CreateMap<CaseLock, CaseLockDto>().ReverseMap();
                      cfg.CreateMap<CaseComment, CaseCommentDto>(MemberList.None).ReverseMap();
                      cfg.CreateMap<CaseHeader, LpnHeaderUpdateDto>(MemberList.None)
-                         .ForMember(d=>d.ExpireDate,s=>s.MapFrom(e=>e.ExpiryDate))
+                         .ForMember(d => d.ExpireDate, s => s.MapFrom(e => e.ExpiryDate))
                          .ReverseMap();
                      cfg.CreateMap<LpnParameterDto, PageOptions>(MemberList.None).ReverseMap();
                      cfg.CreateMap<PageOptions, LpnSearchResultsDto>(MemberList.None).ReverseMap();
@@ -76,7 +77,7 @@ namespace Sfc.Wms.App.Api
             container.Register<LpnParameterValidator>(Lifestyle.Scoped);
 
             container.Options.AllowOverridingRegistrations = true;
-            container.Register<SfcLogger>(Lifestyle.Scoped);
+            container.Register<SfcLogger>(Lifestyle.Singleton); container.Register<ISfcLoggerSerilogs, SfcLoggerSerilogs>(Lifestyle.Singleton);
             var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(e => e.FullName.StartsWith("Sfc"));
             foreach (var assemblyInfo in assemblies)
             {
@@ -87,6 +88,8 @@ namespace Sfc.Wms.App.Api
                                     select new { service, implementation = type };
                 foreach (var reg in registrations)
                 {
+                    if (reg.service.FullName != null && reg.service.FullName.EndsWith(nameof(SfcLoggerSerilogs)))
+                        continue;
                     if (reg.service.FullName != null && reg.implementation.FullName != null
                                                      && reg.service.FullName.StartsWith("Sfc")
                                                      && !reg.implementation.FullName.Contains(
