@@ -78,6 +78,7 @@
     <Compile Include="App\RbacGatewayTest.cs" />
     <Compile Include="Configurations\Setup.cs" />
     <Compile Include="Constants\TestCategories.cs" />
+    <Compile Include="Controllers\LpnControllerTest.cs" />
     <Compile Include="Controllers\SynrControllerTest.cs" />
     <Compile Include="Controllers\SkmtControllerTest.cs" />
     <Compile Include="Controllers\ComtControllerTest.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Fakes\PreferencesDataGeneratorProfile.cs" />
     <Compile Include="Fakes\RolesDataGeneratorProfile.cs" />
     <Compile Include="Fakes\UserInfoDtoDataGeneratorProfile.cs" />
+    <Compile Include="Fixtures\LpnControllerFixture.cs" />
     <Compile Include="Fixtures\SynrFixture.cs" />
     <Compile Include="Fixtures\SkmtFixture.cs" />
     <Compile Include="Fixtures\ComtFixture.cs" />
@@ -174,7 +176,7 @@
       <Version>2.1.0</Version>
     </PackageReference>
     <PackageReference Include="System.IdentityModel.Tokens.Jwt">
-      <Version>5.5.0</Version>
+      <Version>5.6.0</Version>
     </PackageReference>
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
       <Version>4.5.2</Version>
