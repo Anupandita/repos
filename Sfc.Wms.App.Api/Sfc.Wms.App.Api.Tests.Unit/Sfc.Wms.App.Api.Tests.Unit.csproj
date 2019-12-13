@@ -189,10 +189,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Sfc.Wms.App.Api.Nuget\Sfc.Wms.App.Api.Nuget\Sfc.Wms.App.Api.Nuget.csproj">
-      <Project>{9ec5ccb4-000a-4306-8838-742b28223e34}</Project>
-      <Name>Sfc.Wms.App.Api.Nuget</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Sfc.Wms.App.Api\Sfc.Wms.App.Api.csproj">
       <Project>{d64223b7-5eab-4408-9d8c-759d757f49f3}</Project>
       <Name>Sfc.Wms.App.Api</Name>

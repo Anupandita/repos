@@ -1,11 +1,12 @@
-﻿using RestSharp;
+﻿using System;
+using System.Threading.Tasks;
+using RestSharp;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Core.RestResponse;
 using Sfc.Wms.App.Api.Contracts.Constants;
 using Sfc.Wms.App.Api.Contracts.Entities;
 using Sfc.Wms.App.Api.Nuget.Interfaces;
 using Sfc.Wms.Foundation.InboundLpn.Contracts.Dtos;
-using System.Threading.Tasks;
 
 namespace Sfc.Wms.App.Api.Nuget.Gateways
 {
@@ -13,18 +14,15 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
     {
         private readonly string _endPoint;
         private readonly IResponseBuilder _responseBuilder;
-        private readonly IRestClient _restClient;
         private readonly IRestClient _restCsharpClient;
         private readonly string Authorization = "Authorization";
 
-        public LpnGateway(IResponseBuilder responseBuilders, IRestClient restClient)
+        public LpnGateway(IResponseBuilder responseBuilders, IRestClient restClient) : base(restClient)
         {
             _endPoint = Routes.Prefixes.Lpn;
-
             _responseBuilder = responseBuilders;
-            _restClient = restClient;
-            _restCsharpClient =
-                new RestClient(ServiceUrl); //TODO: This variable will be removed after all endpoints were moved to C#.
+            restClient.BaseUrl = new Uri(ServiceUrl);
+            _restCsharpClient = restClient;
         }
 
         public async Task<BaseResult<T>> DeleteLpnCommentsAsync<T>(CaseCommentDto caseCommentDto, string token)
@@ -105,7 +103,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
         }
 
         public async Task<BaseResult<T>> InsertLpnAisleTransAsync<T>(LpnAisleTransModel lpnAisleTransModel,
-                    string token)
+            string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
@@ -127,7 +125,8 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        public async Task<BaseResult<T>> UpdateCaseLpnDetailsAsync<T>(LpnDetailsUpdateDto lpnCaseDetailsUpdateModel, string token)
+        public async Task<BaseResult<T>> UpdateCaseLpnDetailsAsync<T>(LpnDetailsUpdateDto lpnCaseDetailsUpdateModel,
+            string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
@@ -139,7 +138,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
         }
 
         public async Task<BaseResult<T>> UpdateLpnDetailsAsync<T>(LpnHeaderUpdateDto lpnDetailsUpdateModel,
-                            string token)
+            string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
@@ -152,7 +151,8 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
 
         private RestRequest DeleteLpnCommentsRequest(CaseCommentDto lpnCommentsModel, string token)
         {
-            var resource = $"{_endPoint}/{"lpn-comments"}/{lpnCommentsModel.CaseNumber}/{lpnCommentsModel.CommentSequenceNumber}";
+            var resource =
+                $"{_endPoint}/{"lpn-comments"}/{lpnCommentsModel.CaseNumber}/{lpnCommentsModel.CommentSequenceNumber}";
             return DeleteRequest(resource, token, Authorization);
         }
 
