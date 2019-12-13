@@ -68,7 +68,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected AllocInvnDtl AllocInvnDtlCompletedBeforeApi = new AllocInvnDtl();
         protected AllocInvnDtl AllocInvnDtlCompletedAfterApi = new AllocInvnDtl();
          
-        public OrstTestData GetCartonDetailsForInsertingOrstMessage(OracleConnection db,string cartonStatusCode, string pktStatusCode, bool completed = true)
+        public OrstTestData GetCartonDetailsForInsertingOrstMessage(OracleConnection db,int cartonStatusCode, int pktStatusCode, bool completed = true)
         {
             var orstTestData = new OrstTestData();
             var sqlStatement = $"select sm.order_id,sm.sku_id,sm.qty,sm.msg_json,ch.curr_locn_id,pl.locn_id,ph.ship_w_ctrl_nbr,ch.dest_locn_id from swm_to_mhe sm " +
@@ -101,7 +101,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return orstTestData;
         }
           
-        public OrstTestData GetCartonDetailsForInsertingOrstMessageForNegativeCaseWherePickTicketSeqNumberIsLessThan1(OracleConnection db, string cartonStatusCode, string pktStatusCode)
+        public OrstTestData GetCartonDetailsForInsertingOrstMessageForNegativeCaseWherePickTicketSeqNumberIsLessThan1(OracleConnection db, int cartonStatusCode, int pktStatusCode)
         {
             var orstTestData = new OrstTestData();
             var sqlStatement = $"select sm.order_id,sm.sku_id,sm.qty,sm.msg_json,ch.curr_locn_id,pl.locn_id,ph.ship_w_ctrl_nbr,ch.dest_locn_id from swm_to_mhe sm " +

@@ -1,21 +1,28 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures;
-using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
 using TestStack.BDDfy;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 {
+
     [TestClass]
     [Story(
+        Title = "123786 - Ivst exception handling",
         AsA = "Authorized User test for Ivst message from emstowms",
        IWant = "To Test for all Ivst exceptions and verify IVST message was inserted in to SWM_FROM_MHE table ",
        SoThat = "I can validate for message fields in IVST message definition, in Internal Table SWM_FROM_MHE" +
         " and validate for quantity and weight in trans_invn table when inbound pallet is yes for all exceptions which are applicable "+
         " and validate for quantity in pick location table when inbound pallet is No for all exceptions(applicable) "+
-        " and validate for pix transaction table the record should be exists for each message w.r.t reason codes"
+        " and validate for pix transaction table the record should be exists for each message w.r.t reason codes",
+        StoryUri = "http://tfsapp1:8080/tfs/ShamrockCollection/Portfolio-SOWL/_workitems?id=123786&_a=edit"
         )]
+
     public class Ivst : IvstMessageFixture
     {
+
+        public string RequestUrl { get; set; }
+        public string MessageKey { get; set; }
+
         [TestInitialize]
         public void TestData()
         {
@@ -28,14 +35,18 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         public void Ivst3UnexpectedOverageExceptionTestScenariosForInboundPalletIsY()
         {
             this.Given(x => x.TestDataForUnexpectedOverageException())
-            .And(x => x.MsgKeyForUnexpectedOverageException())
-            .And(x => x.ValidIvstUrl())
+            .And(x => x.MsgKeyForUnexpectedOverageExceptionIs(IvstData.Key))
+            .And(x => x.ValidIvstUrlIs(IvstUrl))
             .When(x => x.IvstApiIsCalledCreatedIsReturned())
             .And(x => x.GetValidDataAfterTrigger())
             .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheUnExceptedOverage())
             .And(x => x.VerifyTheQuantityForUnexpectedOverageExceptionIntoTransInventoryTable())
             .And(x => x.VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForUnexpectedOverageException())
-            .BDDfy();
+            .WithExamples(new ExampleTable("RequestUrl", "MessageKey")
+            {
+                {IvstUrl,IvstData.Key},               
+            })          
+            .BDDfy("Test Case ID : 124721 Dematic - IVST- Test for UnExpected overage /Residual Quantity");
         }
 
         [TestMethod()]
@@ -46,13 +57,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
             this.Given(x => x.TestDataForInventoryException())
             .And(x => x.MsgKeyForInventoryShortageException())
             .And(x =>x.ValidUrl(IvstUrl))
-            .And(x => x.ValidIvstUrl())
+            .And(x => x.ValidIvstUrlIs(IvstUrl))
             .When(x => x.IvstApiIsCalledCreatedIsReturned())
             .And(x => x.GetValidDataAfterTrigger())
             .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheForInventoryShortage(InvShortageInbound.Key))
             .And(x => x.VerifyTheQuantityAndWeightShouldBeReducedByIvstQtyInTransInventoryForInboundPalletIsY())
             .And(x => x.VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForInventoryShortageException())
-            .BDDfy();
+            .BDDfy("Test Case ID: 124725- Dematic - IVST- Test for Inventory Shortage Validate for all functionalities .");
         }
 
         [TestMethod()]
@@ -63,13 +74,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         {
             this.Given(x => x.TestDataForInventoryShortageInboundPalletIsN())
             .And(x => x.MsgKeyForInventoryShortageForInboundPalletIsN())
-            .And(x => x.ValidIvstUrl())
+            .And(x => x.ValidIvstUrlIs(IvstUrl))
             .When(x => x.IvstApiIsCalledCreatedIsReturned())
             .And(x => x.GetValidDataAfterTrigger())
             .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheForInventoryShortage(InvShortageOutbound.Key))
             .And(x =>x.VerifyTheQuantityShouldBeReducedByIvstQtyInPickLocationForInboundPalletIsN())
             .And(x => x.VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForInventoryShortageException())
-            .BDDfy();
+            .BDDfy("Test Case ID: 124725- Dematic - IVST- Test for Inventory Shortage. Validate for all functionalities .");
         }
 
 
@@ -80,13 +91,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         {
             this.Given(x => x.TestDataForDamageException())
             .And(x => x.MsgKeyForDamageException())
-            .And(x => x.ValidIvstUrl())
+            .And(x => x.ValidIvstUrlIs(IvstUrl))
             .When(x => x.IvstApiIsCalledCreatedIsReturned())
             .And(x => x.GetValidDataAfterTrigger())
             .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheForDamage(DamageInbound.Key))
             .And(x => x.VerifyTheQuantityAndWeightShouldBeReducedByIvstQtyInTransInventoryForInboundPalletIsY())
             .And(x => x.VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForDamageException())
-            .BDDfy();
+            .BDDfy("Test Case ID :124726- Dematic - IVST- Test for Damage Exceptions for Inbound Pallet = Y and Validate for all functionalities");
         }
 
         [TestMethod()]
@@ -96,13 +107,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         {
             this.Given(x =>x.TestDataForDamageInboundPalletIsN())
                 .And(x =>x.MsgKeyForDamageOutbound())
-                .And(x =>x.ValidIvstUrl())
+                .And(x =>x.ValidIvstUrlIs(IvstUrl))
                 .When(x => x.IvstApiIsCalledCreatedIsReturned())
                 .And(x => x.GetValidDataAfterTrigger())
                 .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheForDamage(DamageOutbound.Key))
                 .And(x => x.VerifyTheQuantityShouldBeReducedByIvstQtyInPickLocationForInboundPalletIsN())
                 .And(x => x.VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForDamageException())
-                .BDDfy();
+                .BDDfy("Test Case ID : 124726- Dematic - IVST- Test for Damage Exceptions for Inbound Pallet = N and Validate for all functionalities");
         }
 
         [TestMethod()]
@@ -112,13 +123,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         {
             this.Given(x => x.TestDataForWrongSkuException())
             .And(x => x.MsgKeyForWrongSkuException())
-            .And(x => x.ValidIvstUrl())
+            .And(x => x.ValidIvstUrlIs(IvstUrl))
             .When(x => x.IvstApiIsCalledCreatedIsReturned())
             .And(x => x.GetValidDataAfterTrigger())
             .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheWrongSku(WrongSku.Key))
             .And(x => x.VerifyTheQuantityAndWeightShouldBeReducedByIvstQtyInTransInventoryForInboundPalletIsY())
             .And(x => x.VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForWrongSkuException())
-            .BDDfy();
+            .BDDfy("Test Case ID : 124727-Dematic - IVST- Test for Wrong SKU for Inbound Pallet = Y and validate for all functionalities");
         }
 
         [TestMethod()]
@@ -128,13 +139,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         {
             this.Given(x => x.TestDataForWrongSkuInboundPalletIsN())
             .And(x => x.MsgKeyForWrongSkuInboundIsN())
-            .And(x => x.ValidIvstUrl())
+            .And(x => x.ValidIvstUrlIs(IvstUrl))
             .When(x => x.IvstApiIsCalledCreatedIsReturned())
             .And(x => x.GetValidDataAfterTrigger())
             .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheWrongSku(WrongSkuOutbound.Key))
             .And(x => x.VerifyTheQuantityShouldBeReducedByIvstQtyInPickLocationForInboundPalletIsN())
             .And(x => x.VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForWrongSkuException())
-            .BDDfy();
+            .BDDfy("Test Case ID:124727 -Dematic - IVST- Test for Wrong SKU for Inbound Pallet = N and validate for all functionalities");
         }
 
         [TestMethod()]
@@ -144,13 +155,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         {
             this.Given(x => x.TestDataForCycleCountAdjustmentPlus())
             .And(x => x.MsgKeyForCycleCountAdjustmentPlus())
-            .And(x => x.ValidIvstUrl())
+            .And(x => x.ValidIvstUrlIs(IvstUrl))
             .When(x => x.IvstApiIsCalledCreatedIsReturned())
             .And(x => x.GetValidDataAfterTrigger())
             .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheForCycleCount(CycleCountAdjustmentPlus.Key,"AdjustmentPlus"))
             .And(x => x.VerifyTheQuantityHasIncreasedInPickLocationForCycleCountAdjustmentPlus())
             .And(x => x.VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForCycleCountAdjustmentPlus())
-            .BDDfy();
+            .BDDfy("Test Case ID: 124720 - Dematic - IVST - Test for IVST api when the Cycle count is done. for both action codes AdjustmentPlus") ;
         }
 
         [TestMethod()]
@@ -160,14 +171,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         {
             this.Given(x => x.TestDataForCycleCountAdjustmentMinus())
             .And(x => x.MsgKeyForCycleCountAdjustmentMinus())
-            .And(x => x.ValidIvstUrl())
+            .And(x => x.ValidIvstUrlIs(IvstUrl))
             .When(x => x.IvstApiIsCalledCreatedIsReturned())
             .And(x => x.GetValidDataAfterTrigger())
             .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheForCycleCount(CycleCountAdjustmentMinus.Key, "AdjustmentMinus"))
             .And(x => x.VerifyTheQuantityShouldBeReducedByIvstQtyInPickLocationForInboundPalletIsN())
             .And(x => x.VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForCycleCountAdjustmentPlus())
-            .BDDfy();
-        }
+            .BDDfy("Test Case ID: 124720 - Dematic - IVST - Test for IVST api when the Cycle count is done. for both action codes AdjustmentPlusMinus");
 
+        }
     }
 }

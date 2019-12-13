@@ -32,9 +32,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                 .And(x => x.VerifySkmtMessageWasInsertedForIntoSwmToMhe("Add", Skmt.ActionCode))
                 .And(x => x.VerifySkmtMessageWasInsertedIntoWmsToEms())
                 .And(x => x.VerifySkmtMessageWasParentSku())
-
             .BDDfy();
-
         }
 
         [TestMethod()]

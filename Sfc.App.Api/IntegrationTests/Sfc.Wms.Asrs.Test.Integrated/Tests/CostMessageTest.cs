@@ -12,7 +12,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         " Verify in TransInventory table for Allocation Inventory units and actual weight" +
         " Verify in Case Detail table for Quantity, CaseHeader and task detail table for status code ",
        SoThat = "I can validate for message fields in COST message, in Internal Table SWM_FROM_MHE" +
-        " and validate the quantity,weight,statuscode in the caseheader, casedetail, task header tables"
+        " and validate the quantity,weight,statuscode in the caseheader, casedetail, task header tables",
+        StoryUri = "http://tfsapp1:8080/tfs/ShamrockCollection/Portfolio-SOWL/WMS%20UI%20Renovate/_testManagement?planId=105523&suiteId=122680&_a=tests"
         )]
     public class CostMessageTest : CostMessageFixture
     {        
@@ -34,7 +35,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                 .And(x => x.VerifyCostMessageWasInsertedIntoSwmFromMhe())
                 .And(x => x.VerifyTheQuantityWasDecreasedInToTransInventory())
                 .And(x => x.VerifyTheQuantityWasIncreasedIntoPickLocationTable())
-                .BDDfy();              
+                .BDDfy("Test Case ID :122681 - Dematic - COST  - Call the Cost api and verify all its funtionalities in EmsToWms, Swm_from_Mhe, Trans_Invn ,Pick_Location tables");              
         }
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
@@ -45,7 +46,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                 .And(x => x.ValidCostUrl())
                 .When(x => x.CostApiIsCalledForInvalidMessageKey())
                 .Then(x => x.ValidateResultForInvalidMessageKey())
-                .BDDfy();
+                .BDDfy("Test Case ID:122693- Dematic - COST - Negative test case1: Pass Invalid message key in the api call");
         }
 
         [TestMethod()]
@@ -57,7 +58,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                .And(x => x.ValidCostUrl())
                .When(x => x.CostApiIsCalledForInvalidCaseNumber())
                .Then(x => x.ValidateResultForInvalidCaseNumber())
-               .BDDfy();
+               .BDDfy("Test Case ID :122697 - Dematic - COST - Negative test case 3: If case number not in CaseHeader");
         }
 
         [TestMethod()]
@@ -69,7 +70,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                .And(x => x.ValidCostUrl())
                .When(x => x.CostApiIsCalledForTransInvnNotFound())
                .Then(x => x.ValidateResultForTransInventoryNotExist())
-               .BDDfy();
+               .BDDfy("Test Case ID :122697 - Dematic - COST - Negative test case 5 :If  transit inventory  does not exists");
         }
 
         [TestMethod()]
@@ -81,7 +82,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                .And(x => x.ValidCostUrl())
                .When(x => x.CostApiIsCalledForPickLocnNotFound())
                .Then(x => x.ValidateResultForPickLocnNotFound())
-               .BDDfy();
+               .BDDfy("Test Case ID :");
         }       
     }
 }

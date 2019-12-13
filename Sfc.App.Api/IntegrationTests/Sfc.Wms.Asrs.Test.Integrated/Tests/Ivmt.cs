@@ -13,6 +13,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
       " Verify in Case Detail table for Quantity, CaseHeader and task detail table for status code ",
      SoThat = "I can validate for message fields in IVMT message, in Internal Table SWM_TO_MHE" +
       " and validate the quantity,weight,statuscode in the caseheader, casedetail, task header tables"
+     StoryUri = "http://tfsapp1:8080/tfs/ShamrockCollection/Portfolio-SOWL/WMS%20UI%20Renovate/_testManagement?planId=105523&suiteId=119426&_a=tests"
      )]
     public class Ivmt:ComtIvmtMessageFixture
     {
@@ -36,7 +37,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                .And(x => x.VerifyQuantityisReducedIntoCaseDetail())
                .And(x => x.VerifyStatusIsUpdatedIntoCaseHeader())
                .And(x => x.VerifyStatusIsUpdatedIntoTaskHeader())
-               .BDDfy();
+               .BDDfy("Test Case ID: 135041-Dematic - IVMT : Single Sku Case , Call the Ivmt Api and Verify all its functionalities in CaseHeader,CaseDetail,TransInventory,TaskHeader Tables.");
         }
 
     }

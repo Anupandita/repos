@@ -20,7 +20,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         [DataRow(1)]
         public void VerifyForOrmtMessageWithActionCodeAddRelease(int count)
         {
-            this.Given(x => x.InitializeTestDataForPrintingOfCartons())
+            this.Given(x => x.InitializeTestDataForPrintingOfCartons(PrintCarton.CartonNbr))
             .And(x => x.CartonNumberForAddRelease())
             .And(x => x.ValidOrmtUrl())
             .When(x => x.OrmtApiIsCalledCreatedIsReturned())

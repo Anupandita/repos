@@ -39,9 +39,17 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var costDataDto = new Cost();
             SqlStatements = $"select swm_to_mhe.container_id,swm_to_mhe.sku_id,pick_locn_dtl.locn_id,swm_to_mhe.qty from swm_to_mhe inner join trans_invn" +
                 $" on trans_invn.sku_id = swm_to_mhe.sku_id inner join  pick_locn_dtl on swm_to_mhe.sku_id = pick_locn_dtl.sku_id  " +
-                $"inner join case_hdr on swm_to_mhe.container_id = case_hdr.case_nbr and swm_to_mhe.source_msg_status = 'Ready' and swm_to_mhe.qty!= {Constants.NumZero} and case_hdr.stat_code = {Constants.StatusCodeConsumed}"+
-                $" and pick_locn_dtl.locn_id in (select lh.locn_id from locn_hdr lh inner join locn_grp lg on lg.locn_id = lh.locn_id inner join sys_code sc on sc.code_id = lg.grp_type and sc.code_type = '{Constants.SysCodeType}' and sc.code_id = '{Constants.SysCodeIdForActiveLocation}')";
-            Command = new OracleCommand(SqlStatements, db);
+                $"inner join case_hdr on swm_to_mhe.container_id = case_hdr.case_nbr and swm_to_mhe.source_msg_status = 'Ready' and swm_to_mhe.qty!= :qty and case_hdr.stat_code = :statCode"+
+                $" and pick_locn_dtl.locn_id in (select lh.locn_id from locn_hdr lh inner join locn_grp lg on lg.locn_id = lh.locn_id " +
+                $"inner join sys_code sc on sc.code_id = lg.grp_type and sc.code_type = :sysCodeType and sc.code_id = :codeId)";
+            Command = new OracleCommand(SqlStatements, db)
+            {
+                BindByName = true
+            };
+            Command.Parameters.Add(new OracleParameter("qty", Constants.NumZero));
+            Command.Parameters.Add(new OracleParameter("statCode", Constants.StatusCodeConsumed));
+            Command.Parameters.Add(new OracleParameter("sysCodeType", Constants.SysCodeType));
+            Command.Parameters.Add(new OracleParameter("codeId", Constants.SysCodeIdForActiveLocation));
             var validData = Command.ExecuteReader();
             if (validData.Read())
             {
@@ -175,9 +183,16 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             SqlStatements = $"select cd.SKU_ID,ch.CASE_NBR,tn.ACTL_INVN_UNITS,ch.STAT_CODE,pick_locn_dtl.locn_id from CASE_HDR ch  " +
                 $"inner join  case_dtl cd on cd.CASE_NBR = ch.CASE_NBR  " +
                 $"inner join pick_locn_dtl on pick_locn_dtl.sku_id = cd.sku_id " +
-                $"left join trans_invn tn on tn.SKU_ID = cd.SKU_ID and ch.STAT_CODE = {Constants.ReceivedCaseFromVendorStatCode} and tn.ACTL_INVN_UNITS > {Constants.MinQuantity} " +
-                $"and trans_invn_type = '{Constants.TransInvnType}' and tn.SKU_ID = null";
-            Command = new OracleCommand(SqlStatements, db);
+                $"left join trans_invn tn on tn.SKU_ID = cd.SKU_ID and ch.STAT_CODE = :statCode" +
+                $"and tn.ACTL_INVN_UNITS > :qty " +
+                $"and trans_invn_type = :transInvnType and tn.SKU_ID = null";
+            Command = new OracleCommand(SqlStatements, db)
+            {
+                BindByName = true
+            };
+            Command.Parameters.Add(new OracleParameter("qty", Constants.MinQuantity));
+            Command.Parameters.Add(new OracleParameter("statCode", Constants.ReceivedCaseFromVendorStatCode));
+            Command.Parameters.Add(new OracleParameter("transInvnType", Constants.TransInvnType));
             var reader = Command.ExecuteReader();
             if (reader.Read())
             {
@@ -208,9 +223,16 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var costTransData = new Cost();
             SqlStatements = $"select tn.ACTL_INVN_UNITS,cd.SKU_ID,ch.CASE_NBR,ch.STAT_CODE from  CASE_HDR ch  inner join  case_dtl cd on cd.CASE_NBR = ch.CASE_NBR  inner join trans_invn tn on tn.SKU_ID = cd.SKU_ID  " +
-                $"left join pick_locn_dtl on pick_locn_dtl.sku_id = tn.sku_id  and ch.STAT_CODE = {Constants.StatusCodeConsumed} and tn.ACTL_INVN_UNITS > {Constants.MinQuantity} and " +
-                $"trans_invn_type = '{Constants.MinQuantity}' and pick_locn_dtl.LOCN_ID = {Constants.NumZero}";
-            Command = new OracleCommand(SqlStatements, db);
+                $"left join pick_locn_dtl on pick_locn_dtl.sku_id = tn.sku_id  and ch.STAT_CODE = :statCode and tn.ACTL_INVN_UNITS > :qty and " +
+                $"trans_invn_type = :transInvnType and pick_locn_dtl.LOCN_ID = :locnId";
+            Command = new OracleCommand(SqlStatements, db)
+            {
+                BindByName = true
+            };
+            Command.Parameters.Add(new OracleParameter("statCode", Constants.StatusCodeConsumed));
+            Command.Parameters.Add(new OracleParameter("qty", Constants.MinQuantity));
+            Command.Parameters.Add(new OracleParameter("transInvnType", Constants.MinQuantity));
+            Command.Parameters.Add(new OracleParameter("locnId", Constants.NumZero));
             var reader = Command.ExecuteReader();
             if (reader.Read())
             {

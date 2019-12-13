@@ -50,15 +50,15 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         }
      
        
-        public void AValidNewComtMessageRecord()
+        public void AValidNewComtMessageRecord(string currentCaseNbr)
         {
             ComtParameters = new ComtParams
             {
                 ActionCode = ActionCodeConstants.Create,
                 CurrentLocationId = DefaultValues.CurrentlocnId,
-                ContainerId = CurrentCaseNbr,
+                ContainerId = currentCaseNbr,
                 ContainerType = DefaultValues.ContainerType,
-                ParentContainerId = CurrentCaseNbr,
+                ParentContainerId = currentCaseNbr,
                 AttributeBitmap = DefaultValues.AttributeBitMap,
                 QuantityToInduct = DefaultValues.QuantityToInduct
             };

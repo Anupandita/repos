@@ -32,9 +32,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                 .And(x => x.VerifySkmtMessageWasInsertedForIntoSwmToMhe("Add", Skmt.ActionCode))
                 .And(x => x.VerifySkmtMessageWasInsertedIntoWmsToEms())
                 .And(x => x.VerifySkmtMessageWasNormalSku())
-
             .BDDfy();
-
         }
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
@@ -49,10 +47,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                 .And(x => x.VerifySkmtMessageWasInsertedForIntoSwmToMhe("Update", Skmt.ActionCode))
                 .And(x => x.VerifySkmtMessageWasInsertedIntoWmsToEms())
                 .And(x => x.VerifySkmtMessageWasNormalSku())
-
             .BDDfy();
-
         }
+
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
         [Priority(3)]
@@ -66,9 +63,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                 .And(x => x.VerifySkmtMessageWasInsertedForIntoSwmToMhe("Delete", Skmt.ActionCode))
                 .And(x => x.VerifySkmtMessageWasInsertedIntoWmsToEms())
                 .And(x => x.VerifySkmtMessageWasNormalSku())
-
             .BDDfy();
-
         }
     }
 }

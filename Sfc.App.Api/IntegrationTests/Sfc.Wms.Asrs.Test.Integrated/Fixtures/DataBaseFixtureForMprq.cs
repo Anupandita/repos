@@ -90,7 +90,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 db.Open();
                 SwmFromMhe = SwmFromMhe(db, MprqData.MsgKey, TransactionCode.Mprq);
                 Mprq = JsonConvert.DeserializeObject<MprqDto>(SwmFromMhe.MessageJson);
-                SwmToMhe = SwmToMhe(db, TransactionCode.Mpid);
+                SwmToMhe = SwmToMhe(db, null,TransactionCode.Mpid,null);
                 Mpid = JsonConvert.DeserializeObject<MpidDto>(SwmToMhe.MessageJson);
             }
         }

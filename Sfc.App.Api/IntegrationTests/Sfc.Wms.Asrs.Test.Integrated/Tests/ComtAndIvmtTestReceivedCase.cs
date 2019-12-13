@@ -7,8 +7,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
     [TestClass]
     [Story(
         AsA = "Authorized User test for comt message from wms to ems",
-        IWant = "To Test the CaseNumbers For Received Cases From Vendors" +
-                "And Verify when Message is Sent Ivmt message should be inserted into swm_to_mhe ,wmstoems table." ,
+        IWant = "To Test the CaseNumbers For Received Cases From Returns" +
+                "And Verify when Message is Sent, Ivmt message should be inserted into swm_to_mhe ,wmstoems table." ,
         SoThat = "I can validate for message fields in IVMT message, in Internal Table SWM_TO_MHE" +
                  " and validate the quantity,weight,statuscode in the caseheader, casedetail, task header tables"
     )]
@@ -31,10 +31,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                 .And(x => x.VerifyIvmtMessageWasInsertedIntoSwmToMhe())
                 .And(x => x.VerifyIvmtMessageWasInsertedIntoWmsToEms())
                 .And(x => x.VerifyTheQuantityIsIncreasedInToTransInventory())
-                .And(x => x.VerifyQuantityisReducedIntoCaseDetail())
+                .And(x => x.VerifyActualQuantityIsReducedInToCaseDtl())
                 .And(x => x.VerifyStatusIsUpdatedIntoCaseHeader())
                 .And(x => x.VerifyStatusIsUpdatedIntoTaskHeader())
-                .BDDfy();
+                .BDDfy("Test Case ID: 142101 -Dematic - IVMT :  For received cases from returns, Call the Comt Api and Verify all its functionalities");
         }
     }
 }

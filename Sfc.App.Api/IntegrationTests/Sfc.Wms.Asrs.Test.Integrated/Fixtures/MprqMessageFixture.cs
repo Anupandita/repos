@@ -67,13 +67,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(EmsToWmsParameters.Transaction, SwmFromMhe.SourceMessageTransactionCode);
             Assert.AreEqual(EmsToWmsParameters.ResponseCode, SwmFromMhe.SourceMessageResponseCode);
             Assert.AreEqual(EmsToWmsParameters.MessageText, SwmFromMhe.SourceMessageText);
-
         }
 
         protected void VerifyMpidMessageWasInsertedIntoswmToMhe()
         {
             Assert.AreEqual(NextUpCounter.PrefixField + ((NextUpCounter.CurrentNumber)+1).ToString("000000000"), Mpid.MasterPackId);
-
         }
 
         protected void VerifyLocationMpid()

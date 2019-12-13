@@ -28,9 +28,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected BaseResult NegativeCase5;
         protected string WaveUrl;
 
-        protected void InitializeTestDataForPrintingOfCartons()
+        protected void InitializeTestDataForPrintingOfCartons(string cartonNumber)
         {
+
             GetDataBeforeTriggerOrmtForPrintingOfCartons();
+
         }
         protected void InitializeTestDataForCancelOfCarton()
         {
@@ -343,7 +345,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         protected void VerifyForStatusInSwmEligibleOrmtCartons()
         {
-            Assert.AreEqual(Constants.OrmtMessageSent, Convert.ToInt32(Status.Status));
+            Assert.AreEqual(Constants.OrmtMessageSent, Status.Status);
         }
 
     }
