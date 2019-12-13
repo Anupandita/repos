@@ -234,11 +234,11 @@
     <Reference Include="Sfc.Wms.Foundation.Corba.Repository, Version=1.0.8.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.Corba.Repository.1.0.8\lib\net472\Sfc.Wms.Foundation.Corba.Repository.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Foundation.InboundLpn.Contracts, Version=4.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Foundation.InboundLpn.Contracts.4.0.4\lib\net472\Sfc.Wms.Foundation.InboundLpn.Contracts.dll</HintPath>
+    <Reference Include="Sfc.Wms.Foundation.InboundLpn.Contracts, Version=4.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.InboundLpn.Contracts.4.0.5\lib\net472\Sfc.Wms.Foundation.InboundLpn.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Foundation.InboundLpn.Repository, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Foundation.InboundLpn.Repository.4.0.0\lib\net472\Sfc.Wms.Foundation.InboundLpn.Repository.dll</HintPath>
+    <Reference Include="Sfc.Wms.Foundation.InboundLpn.Repository, Version=4.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.InboundLpn.Repository.4.0.1\lib\net472\Sfc.Wms.Foundation.InboundLpn.Repository.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Foundation.Location.App, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.Location.App.3.0.0\lib\net472\Sfc.Wms.Foundation.Location.App.dll</HintPath>
