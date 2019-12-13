@@ -77,7 +77,8 @@ namespace Sfc.Wms.App.Api
             container.Register<LpnParameterValidator>(Lifestyle.Scoped);
 
             container.Options.AllowOverridingRegistrations = true;
-            container.Register<SfcLogger>(Lifestyle.Singleton); container.Register<ISfcLoggerSerilogs, SfcLoggerSerilogs>(Lifestyle.Singleton);
+            container.Register<SfcLogger>(Lifestyle.Singleton);
+            container.Register<ISfcLoggerSerilogs, SfcLoggerSerilogs>(Lifestyle.Singleton);
             var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(e => e.FullName.StartsWith("Sfc"));
             foreach (var assemblyInfo in assemblies)
             {
