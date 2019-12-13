@@ -49,10 +49,10 @@ namespace Sfc.Wms.App.Api.Controllers
             return ResponseHandler(response);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route(Routes.Paths.Find)]
         [ResponseType(typeof(BaseResult<LpnSearchResultsDto>))]
-        public async Task<IHttpActionResult> FindLpnAsync([FromBody]LpnParameterDto lpnParamDto)
+        public async Task<IHttpActionResult> FindLpnAsync([FromUri]LpnParameterDto lpnParamDto)
         {
             var response = await _lpnService.LpnSearchAsync(lpnParamDto).ConfigureAwait(false);
             return ResponseHandler(response);

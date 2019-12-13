@@ -171,7 +171,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
         private RestRequest GetLpnDetailsRequest(LpnParameterDto lpnParameterDto, string token)
         {
             var resource = $"{_endPoint}/{Routes.Paths.Find}";
-            return PostRequest(resource, lpnParameterDto, token, Authorization);
+            return GetRequest(resource, lpnParameterDto, token, Authorization);
         }
 
         private RestRequest GetLpnHistoryRequest(string lpnId, string whse, string token)

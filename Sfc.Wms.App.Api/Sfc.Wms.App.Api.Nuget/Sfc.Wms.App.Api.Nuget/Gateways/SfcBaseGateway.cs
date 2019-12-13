@@ -1,12 +1,13 @@
-﻿using System;
-using System.Configuration;
-using System.Net.Http;
-using Polly;
+﻿using Polly;
 using Polly.Retry;
 using RestSharp;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.App.Api.Contracts.Constants;
+using Sfc.Wms.App.Api.Nuget.Extensions;
 using Sfc.Wms.App.Api.Nuget.Serializer;
+using System;
+using System.Configuration;
+using System.Net.Http;
 
 namespace Sfc.Wms.App.Api.Nuget.Gateways
 {
@@ -140,6 +141,22 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
         protected RestRequest DeleteRequest(string resource, string token, string header)
         {
             var request = new RestRequest(resource, Method.DELETE)
+            {
+                RequestFormat = DataFormat.Json,
+                JsonSerializer = _newtonsoftJsonSerializer
+            };
+            request.AddHeader(header, token);
+            request.Timeout = _webRequestTimeoutInSecs * 1000;
+            return request;
+        }
+
+        protected RestRequest GetRequest<TEntity>(string resource, TEntity query, string token, string header) where TEntity : class
+        {
+            var formUrl = new FormUrlEncodedContent(query.ToKeyValue());
+            var queryString = formUrl.ReadAsStringAsync().GetAwaiter().GetResult();
+            var url = string.Concat(resource, "?", queryString);
+
+            var request = new RestRequest(url, Method.GET)
             {
                 RequestFormat = DataFormat.Json,
                 JsonSerializer = _newtonsoftJsonSerializer
