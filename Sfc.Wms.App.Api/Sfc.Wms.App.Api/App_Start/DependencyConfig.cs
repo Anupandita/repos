@@ -89,15 +89,14 @@ namespace Sfc.Wms.App.Api
                                     select new { service, implementation = type };
                 foreach (var reg in registrations)
                 {
-                    if (reg.service.FullName != null && reg.service.FullName.EndsWith(nameof(SfcLoggerSerilogs)))
-                        continue;
                     if (reg.service.FullName != null && reg.implementation.FullName != null
                                                      && reg.service.FullName.StartsWith("Sfc")
                                                      && !reg.implementation.FullName.Contains(
                                                          nameof(SfcInMemoryCache))
                                                      && !reg.implementation.FullName.Contains(
                                                          nameof(MonitoringInterceptor))
-                                                     && !reg.implementation.IsGenericTypeDefinition)
+                                                     && !reg.implementation.IsGenericTypeDefinition
+                                                     && !reg.service.FullName.Contains(nameof(SfcLoggerSerilogs)))
                     {
                         container.Register(reg.service, reg.implementation, Lifestyle.Scoped);
                         if (reg.service.FullName.Contains(".Contracts") && !reg.implementation.FullName.Contains(nameof(MessageDetailService)) &&
