@@ -36,7 +36,7 @@ namespace Sfc.Wms.App.Api.Controllers
             var response = await _caseCommentService.InsertAsync(caseCommentDto)
                 .ConfigureAwait(false);
             return response.ResultType == ResultTypes.Created ?
-                CreatedAtRoute( nameof(CaseCommentDto),new{ lpnId =caseCommentDto.CaseNumber},new BaseResult { ResultType = ResultTypes.Created }) : ResponseHandler(response);
+                CreatedAtRoute(nameof(CaseCommentDto), new { lpnId = caseCommentDto.CaseNumber }, new BaseResult { ResultType = ResultTypes.Created }) : ResponseHandler(response);
         }
 
         [HttpDelete]
