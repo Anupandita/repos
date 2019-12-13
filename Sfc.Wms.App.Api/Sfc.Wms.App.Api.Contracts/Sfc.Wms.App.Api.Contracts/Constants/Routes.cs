@@ -99,6 +99,7 @@ namespace Sfc.Wms.App.Api.Contracts.Constants
             public const string DematicMessageIvmt = "api/inventory-maintenance";
             public const string DematicMessageOrmt = "api/order-maintenance";
             public const string DematicMessageSkmt = "api/sku-maintenance";
+            public const string DematicMessageSynr = "api/synchronization-request";
             public const string EmsToWmsMessage = "api/emstowms-message";
             public const string ItemAttribute = "item-attribute";
             public const string LocationGroup = "location-grp";
