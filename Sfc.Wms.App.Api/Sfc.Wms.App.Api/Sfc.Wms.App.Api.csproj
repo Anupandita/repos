@@ -325,7 +325,8 @@
       <HintPath>..\packages\Sfc.Wms.Framework.UnitOfWork.4.0.2\lib\net472\Sfc.Wms.Framework.UnitOfWork.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Inbound.InboundLpn.App, Version=6.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.InboundLpn.App.6.1.0\lib\net472\Sfc.Wms.Inbound.InboundLpn.App.dll</HintPath>
+      <HintPath>..\Sfc.Wms.App.Api.WithTest\packages\Sfc.Wms.InboundLpn.App.6.1.0\lib\net472\Sfc.Wms.Inbound.InboundLpn.App.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Sfc.Wms.Inbound.Tasks.App, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Inbound.Tasks.App.1.0.2\lib\net472\Sfc.Wms.Inbound.Tasks.App.dll</HintPath>

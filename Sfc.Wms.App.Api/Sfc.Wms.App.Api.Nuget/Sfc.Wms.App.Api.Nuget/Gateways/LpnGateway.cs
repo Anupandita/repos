@@ -105,7 +105,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        //TODO: Needs to re validated
+        //TODO:  Needs to be validated at the time of aisle implementation
         public async Task<BaseResult<AisleTransactionDto>> InsertLpnAisleTransAsync(
             LpnAisleTransModel lpnAisleTransModel,
             string token)

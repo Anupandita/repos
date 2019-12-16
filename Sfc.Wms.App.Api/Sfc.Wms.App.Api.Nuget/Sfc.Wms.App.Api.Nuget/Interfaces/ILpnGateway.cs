@@ -18,7 +18,7 @@ namespace Sfc.Wms.App.Api.Nuget.Interfaces
 
         Task<BaseResult<List<CaseLockUnlockDto>>> GetLpnLockUnlockByLpnIdAsync(string lpnId, string token);
 
-        //TODO:  Based in Bhrani's reply needs to be modified
+        //TODO:  Needs to be validated at the time of aisle implementation
         Task<BaseResult<AisleTransactionDto>> InsertLpnAisleTransAsync(LpnAisleTransModel lpnAisleTransModel, string token);
 
         Task<BaseResult> UpdateLpnHeaderAsync(LpnHeaderUpdateDto lpnDetailsUpdateModel, string token);
