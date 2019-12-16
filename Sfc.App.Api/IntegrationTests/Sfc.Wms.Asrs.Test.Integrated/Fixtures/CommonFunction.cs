@@ -27,10 +27,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var wmsToEmsDto = new WmsToEmsDto();
             var query = $"{CommonQueries.WmsToEms}";
-            Command = new OracleCommand(query, db)
-            {
-                BindByName = true
-            };
+            Command = new OracleCommand(query, db);            
             Command.Parameters.Add(new OracleParameter("transCode", trx));
             Command.Parameters.Add(new OracleParameter("msgKey", msgKey));
             var wmsToEmsReader = Command.ExecuteReader();
@@ -102,10 +99,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var singleSkulocal = new CaseViewDto();
             var query = $"{CommonQueries.TransInventory}";
-            Command = new OracleCommand(query, db)
-            {
-                BindByName = true
-            };
+            Command = new OracleCommand(query, db);            
             Command.Parameters.Add(new OracleParameter("skuId", skuId));
             Command.Parameters.Add(new OracleParameter("transInventoryType", Constants.TransInvnType));
             var transInvnReader = Command.ExecuteReader();
@@ -121,10 +115,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var singleSkulocal = new TransitionalInventoryDto();
             var query = $"{CommonQueries.TransInventory}";
-            Command = new OracleCommand(query, db)
-            {
-                BindByName = true
-            };
+            Command = new OracleCommand(query, db);            
             Command.Parameters.Add(new OracleParameter("skuId", skuId));
             Command.Parameters.Add(new OracleParameter("transInventoryType", Constants.TransInvnType));
             var transInvnReader = Command.ExecuteReader();
@@ -139,10 +130,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected decimal FetchUnitWeight(OracleConnection db, string skuId)
         {
             var query = $"{CommonQueries.ItemMaster}";
-            Command = new OracleCommand(query, db)
-            {
-                BindByName = true
-            };
+            Command = new OracleCommand(query, db);           
             Command.Parameters.Add(new OracleParameter("skuId", skuId));
             var unitWeight = Convert.ToDecimal(Command.ExecuteScalar().ToString());
             return unitWeight;
@@ -152,10 +140,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var itemMaster = new Data.Entities.ItemMaster();
             var query = $"{CommonQueries.TempZone}";
-            Command = new OracleCommand(query, db)
-            {
-                BindByName = true
-            };
+            Command = new OracleCommand(query, db);           
             Command.Parameters.Add(new OracleParameter("skuId", skuId));
             var itemMasterReader = Command.ExecuteReader();
             if (itemMasterReader.Read())
@@ -213,10 +198,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var pickLocnDtl = new PickLocationDetailsDto();
             var pickLocnView = $"{CommonQueries.PickLocnDtl}";
-            Command = new OracleCommand(pickLocnView, db)
-            {
-                BindByName = true
-            };
+            Command = new OracleCommand(pickLocnView, db);           
             Command.Parameters.Add(new OracleParameter("skuId", skuId));
             Command.Parameters.Add(new OracleParameter("sysCodeType", Constants.SysCodeType));
             Command.Parameters.Add(new OracleParameter("sysCodeId", Constants.SysCodeIdForActiveLocation));
@@ -235,10 +217,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var pickLocnDtlExt = new PickLocationDetailsExtenstionDto();
             var query = $"{CommonQueries.PickLocnDtlExt}";
-            Command = new OracleCommand(query, db)
-            {
-                BindByName = true
-            };
+            Command = new OracleCommand(query, db);           
             Command.Parameters.Add(new OracleParameter("skuId", skuId));
             Command.Parameters.Add(new OracleParameter("sysCodeType", Constants.SysCodeType));
             Command.Parameters.Add(new OracleParameter("sysCodeId", Constants.SysCodeIdForActiveLocation));
@@ -254,10 +233,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var cartonHdr = new CartonHeaderDto();
             var query = $"{CommonQueries.CartonHdr}";
-            Command = new OracleCommand(query, db)
-            {
-                BindByName = true
-            };
+            Command = new OracleCommand(query, db);            
             Command.Parameters.Add(new OracleParameter("cartonNumber", cartonNbr));
             var cartonHdrReader = Command.ExecuteReader();
             if (cartonHdrReader.Read())

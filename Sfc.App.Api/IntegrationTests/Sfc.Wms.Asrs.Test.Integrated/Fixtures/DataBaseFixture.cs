@@ -92,11 +92,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var receivedcaseheader = new CaseViewDto();
             var query = $"{ComtQueries.ReceivedCaseFromReturns}";
-               
-            Command = new OracleCommand(query, db)
-            {
-                BindByName = true
-            };
+            Command = new OracleCommand(query, db);            
             Command.Parameters.Add(new OracleParameter("sysCodeType", Constants.SysCodeType));
             Command.Parameters.Add(new OracleParameter("sysCodeId", Constants.SysCodeIdForActiveLocation));
             Command.Parameters.Add(new OracleParameter("minValue", Constants.MinQuantity));
@@ -120,10 +116,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var caseheader = new CaseViewDto();
             var q = $"{ComtQueries.ReceivedCaseFromVendors}";
-            Command = new OracleCommand(q, db)
-            {
-                BindByName = true
-            };
+            Command = new OracleCommand(q, db);            
             Command.Parameters.Add(new OracleParameter("sysCodeType", Constants.SysCodeType));
             Command.Parameters.Add(new OracleParameter("sysCodeId", Constants.SysCodeIdForActiveLocation));
             Command.Parameters.Add(new OracleParameter("minValue", Constants.MinQuantity));
@@ -132,7 +125,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Command.Parameters.Add(new OracleParameter("dry", Constants.Dry));
             Command.Parameters.Add(new OracleParameter("freezer", Constants.Freezer));
             Command.Parameters.Add(new OracleParameter("statCode", Constants.ReceivedCaseFromVendorStatCode));
-
             var caseHeaderReader = Command.ExecuteReader();
             if (caseHeaderReader.Read())
             {
@@ -147,10 +139,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var caseheader = new CaseHeaderDto();
             var query = $"{ComtQueries.NotEnoughInventory}";
-            var command = new OracleCommand(query, db)
-            {
-                BindByName = true
-            };
+            var command = new OracleCommand(query, db);           
             Command.Parameters.Add(new OracleParameter("qty", Constants.NumZero));
             Command.Parameters.Add(new OracleParameter("seqNbr", Constants.CaseSeqNumberForSingleSku));
             Command.Parameters.Add(new OracleParameter("statCode", Constants.StatusCodeConsumed));
@@ -193,10 +182,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             for (var j = 0; j < CaseDtoList.Count; j++)
             {
                 var query = $"{ComtQueries.TransInvnForMultiSku}";
-                Command = new OracleCommand(query, db)
-                {
-                    BindByName = true
-                };
+                Command = new OracleCommand(query, db);               
                 Command.Parameters.Add(new OracleParameter("skuId", CaseDtoList[j].SkuId));
                 Command.Parameters.Add(new OracleParameter("transInvnType", Constants.TransInvnType));
                 var transInvnMultiSku = Command.ExecuteReader();
@@ -287,10 +273,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var caseDtl = new CaseViewDto();
             var query = $"{ComtQueries.CaseHdrDtlTransInvnJoin}";
-            Command = new OracleCommand(query, db)
-            {
-                BindByName = true
-            };
+            Command = new OracleCommand(query, db);           
             Command.Parameters.Add(new OracleParameter("caseNumber", SingleSkuCase.CaseNumber));
             Command.Parameters.Add(new OracleParameter("transInvnType", Constants.TransInvnType));
             var caseHdrDtlTrnReader = Command.ExecuteReader();
@@ -309,10 +292,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var task = new TaskHeaderDto();
             var query = $"{CommonQueries.TaskHdr}";
-            Command = new OracleCommand(query, db)
-            {
-                BindByName = true
-            };
+            Command = new OracleCommand(query, db);          
             Command.Parameters.Add(new OracleParameter("skuId", skuId));
             var taskHdr = Command.ExecuteReader();
             if (taskHdr.Read())
@@ -364,10 +344,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var caseHdrDtl = new CaseViewDto();
             var query = $"{ComtQueries.CaseHdrDtlJoin}";
-            Command = new OracleCommand(query, db)
-            {
-                BindByName = true
-            };
+            Command = new OracleCommand(query, db);          
             Command.Parameters.Add(new OracleParameter("caseNumber", CaseHdrMultiSku.CaseNumber));
             var caseReader = Command.ExecuteReader();
             if (caseReader.Read())
