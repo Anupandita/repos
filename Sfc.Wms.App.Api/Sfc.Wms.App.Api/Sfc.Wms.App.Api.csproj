@@ -114,8 +114,8 @@
     <Reference Include="SFC.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SFC.Core.3.0.2\lib\net472\SFC.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Core.Aop.WebApi, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Core.Aop.WebApi.2.0.0\lib\net472\Sfc.Core.Aop.WebApi.dll</HintPath>
+    <Reference Include="Sfc.Core.Aop.WebApi, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Core.Aop.WebApi.3.1.0\lib\net472\Sfc.Core.Aop.WebApi.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Core.BaseApiController, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Core.BaseApiController.2.0.3\lib\net472\Sfc.Core.BaseApiController.dll</HintPath>
@@ -234,11 +234,11 @@
     <Reference Include="Sfc.Wms.Foundation.Corba.Repository, Version=1.0.8.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.Corba.Repository.1.0.8\lib\net472\Sfc.Wms.Foundation.Corba.Repository.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Foundation.InboundLpn.Contracts, Version=4.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Foundation.InboundLpn.Contracts.4.0.4\lib\net472\Sfc.Wms.Foundation.InboundLpn.Contracts.dll</HintPath>
+    <Reference Include="Sfc.Wms.Foundation.InboundLpn.Contracts, Version=4.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.InboundLpn.Contracts.4.0.5\lib\net472\Sfc.Wms.Foundation.InboundLpn.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Foundation.InboundLpn.Repository, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Foundation.InboundLpn.Repository.4.0.0\lib\net472\Sfc.Wms.Foundation.InboundLpn.Repository.dll</HintPath>
+    <Reference Include="Sfc.Wms.Foundation.InboundLpn.Repository, Version=4.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.InboundLpn.Repository.4.0.1\lib\net472\Sfc.Wms.Foundation.InboundLpn.Repository.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Foundation.Location.App, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.Location.App.3.0.0\lib\net472\Sfc.Wms.Foundation.Location.App.dll</HintPath>
@@ -288,8 +288,8 @@
     <Reference Include="Sfc.Wms.Framework.DockDoor.App, Version=2.2.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.DockDoor.App.2.2.4\lib\net472\Sfc.Wms.Framework.DockDoor.App.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Framework.Interceptor.App, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Framework.Interceptor.App.2.0.0\lib\net472\Sfc.Wms.Framework.Interceptor.App.dll</HintPath>
+    <Reference Include="Sfc.Wms.Framework.Interceptor.App, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.Interceptor.App.3.1.0\lib\net472\Sfc.Wms.Framework.Interceptor.App.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Framework.ItemMaster.App, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.ItemMaster.App.1.0.1\lib\net472\Sfc.Wms.Framework.ItemMaster.App.dll</HintPath>

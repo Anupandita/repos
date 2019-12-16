@@ -1,10 +1,10 @@
-﻿using System.Linq;
+﻿using Sfc.Wms.Framework.Security.Token.Jwt.Jwt;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
-using Sfc.Wms.Framework.Security.Token.Jwt.Jwt;
 
 namespace Sfc.Wms.App.Api.DelegatingHandlers
 {
@@ -27,7 +27,7 @@ namespace Sfc.Wms.App.Api.DelegatingHandlers
         private static bool DoesGenerateNewToken(HttpRequestMessage request, HttpResponseMessage response,
             out ClaimsPrincipal claimsPrincipal)
         {
-            claimsPrincipal = (ClaimsPrincipal) request.GetRequestContext().Principal;
+            claimsPrincipal = (ClaimsPrincipal)request.GetRequestContext().Principal;
             return response.StatusCode == HttpStatusCode.Unauthorized ||
                    !request.Headers.TryGetValues(Constants.Authorization, out var values) ||
                    values == null || !values.Any() ||
