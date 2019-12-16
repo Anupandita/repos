@@ -224,7 +224,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void FindLpnOperationInvoked()
         {
-            _testResponse = _lpnController.FindLpnAsync(_lpnSearchRequest);
+            _testResponse = _lpnController.LpnSearchAsync(_lpnSearchRequest);
         }
 
         protected void TheLpnSearchOperationReturnedOkAsResponseStatus()
@@ -420,7 +420,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void UpdateLpnOperationInvoked()
         {
-            _testResponse = _lpnController.UpdateLpnAsync(_updateLpnHeaderUpdateDto);
+            _testResponse = _lpnController.UpdateLpnHeaderAsync(_updateLpnHeaderUpdateDto);
         }
 
         protected void TheUpdateOperationReturnedNotFoundResponse()
