@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures;
+using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Constants;
 using TestStack.BDDfy;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
@@ -10,7 +11,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
       IWant = "To Test for Ormt messages on printing of carton,On Cancellation of carton,OnEpick and On Processing COST message"+
         "To Verify ORMT message is inserted in to swm_to_mhe table with appropriate data" +
        " Verify in PickLocnDtlExt table for Ormt Count and status in SWM_ELGBL_ORMT_CARTONS table",
-      SoThat = "I can validate for message fields in ORMT message, in Internal Table SWM_TO_MHE and in wmstoems"
+      SoThat = "I can validate for message fields in ORMT message, in Internal Table SWM_TO_MHE and in wmstoems",
+      StoryUri =""
        )]
     
     public class OrmtMessageTest : OrmtMessageFixture
@@ -20,9 +22,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         [DataRow(1)]
         public void VerifyForOrmtMessageWithActionCodeAddRelease(int count)
         {
-            this.Given(x => x.InitializeTestDataForPrintingOfCartons(PrintCarton.CartonNbr))
-            .And(x => x.CartonNumberForAddRelease())
-            .And(x => x.ValidOrmtUrl())
+            this.Given(x => x.InitializeTestDataForPrintingOfCartons())            
+            .And(x => x.ValidOrmtUrlCartonNumberAndActioncodeIs(OrmtUrl,PrintCarton.CartonNbr, OrmtActionCode.AddRelease))
             .When(x => x.OrmtApiIsCalledCreatedIsReturned())
             .And(x => x.ReadDataAfterApiForPrintingOfCarton())
             .Then(x => x.VerifyOrmtMessageWasInsertedInToSwmToMhe())
@@ -37,9 +38,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         [TestCategory("FUNCTIONAL")]
         public void VerifyForOrmtMessageWithActionCodeCancel()
         {
-            this.Given(x => x.InitializeTestDataForCancelOfCarton())
-           .And(x => x.CartonNumberForCancel())
-           .And(x => x.ValidOrmtUrl())
+            this.Given(x => x.InitializeTestDataForCancelOfCarton())           
+           .And(x => x.ValidOrmtUrlCartonNumberAndActioncodeIs(OrmtUrl,CancelOrder.CartonNbr, OrmtActionCode.Cancel))
            .When(x => x.OrmtApiIsCalledCreatedIsReturned())
            .And(x => x.ReadDataAfterApiForCancelOfCarton())
            .Then(x => x.VerifyOrmtMessageWasInsertedInToSwmToMheForCancelOrders())
@@ -52,9 +52,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         [TestCategory("FUNCTIONAL")]
         public void VerifyForOrmtMessageWithActionCodeEPick()
         {
-            this.Given(x=>x.InitializeTestDataForEpickOfCarton())
-           .And(x => x.CartonNumberForEPick())
-           .And(x => x.ValidOrmtUrl())
+            this.Given(x=>x.InitializeTestDataForEpickOfCarton())           
+           .And(x => x.ValidOrmtUrlCartonNumberAndActioncodeIs(OrmtUrl, EPick.CartonNbr, OrmtActionCode.AddRelease))
            .When(x => x.OrmtApiIsCalledCreatedIsReturned())
            .And(x => x.ReadDataAfterApiForEPickOfCarton())
            .Then(x => x.VerifyOrmtMessageWasInsertedInToSwmToMheForEpick())
@@ -68,9 +67,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         [TestCategory("FUNCTIONAL")]
         public void VerifyForOrmtOnProcesscostMessage()
         {
-            this.Given(x => x.InitializeTestDataForOnProcessCostMessage())
-                .And(x => x.CartonNumberForOnProcessCost())
-                .And(x => x.ValidOrmtUrl())
+            this.Given(x => x.InitializeTestDataForOnProcessCostMessage())                
+                .And(x => x.ValidOrmtUrlCartonNumberAndActioncodeIs(OrmtUrl, OnProCost.CartonNbr,OrmtActionCode.AddRelease))
                 .When(x => x.OrmtApiIsCalledCreatedIsReturned())
                 .And(x => x.ReadDataAfterApiForOnprocessCostOfCarton())
                 .Then(x => x.VerifyOrmtMessageWasInsertedInToSwmToMheForOnProcessCost())

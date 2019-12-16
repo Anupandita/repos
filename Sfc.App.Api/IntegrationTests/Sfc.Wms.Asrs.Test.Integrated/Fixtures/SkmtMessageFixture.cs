@@ -21,7 +21,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected IRestResponse Response;
         protected BaseResult Negativecase;
         protected string SkmtUrl;
-        protected string BaseUrl =ConfigurationManager.AppSettings["SkmtUrl"]; 
+        protected string BaseUrl =ConfigurationManager.AppSettings["BaseUrl"]; 
 
         protected void InitializeTestData()
         {
@@ -76,7 +76,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         }
         protected void ValidSkmtUrl()
         {
-            SkmtUrl = $"{BaseUrl}?{"ActionCode"}={CurrentActionCode}&{"SkuId"}={CurrentSkuId}";
+            SkmtUrl = $"{BaseUrl}{TestData.Parameter.SkuMaintenance}?{TestData.Parameter.ActionCode}={CurrentActionCode}&{TestData.Parameter.SkuId}={CurrentSkuId}";
         }
 
         protected BaseResult SkmtResult()

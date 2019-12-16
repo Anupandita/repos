@@ -15,13 +15,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
     public class CostMessageFixture : DataBaseFixtureForCost
     {
         protected string CurrentCaseNbr;
-        protected string BaseUrl = @ConfigurationManager.AppSettings["EmsToWmsUrl"];
+        protected string BaseUrl = @ConfigurationManager.AppSettings["BaseUrl"];
         protected string CostUrl;
         protected CaseDetailDto CaseDetailDto;
         protected Cost Parameters;
         protected IRestResponse Response;
-        protected Int64 CurrentMsgKey;
-        protected string CurrentMsgProcessor;
         protected BaseResult Negativecase1;
         protected BaseResult Negativecase2;
         protected BaseResult NegativeCase3;
@@ -52,34 +50,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             InsertCostMessageForPickLocnDoesNotExist();
         }
 
-        protected void AValidMsgKey()
+        protected void ValidCostUrlMsgKeyAndProcessorIs(string url,Int64 currentMsgKey,string currentMsgProcessor)
         {
-            CurrentMsgKey = CostData.MsgKey;
-            CurrentMsgProcessor = DefaultPossibleValue.MessageProcessor;
-        }
-        protected void InvalidMsgKey()
-        {
-            CurrentMsgKey = Constants.InvalidMsgKey;
-            CurrentMsgProcessor = DefaultPossibleValue.MessageProcessor;
-        }    
-        protected void InvalidCaseMsgKey()
-        {
-            CurrentMsgKey = CostData.InvalidKey;
-            CurrentMsgProcessor = DefaultPossibleValue.MessageProcessor;
-        }     
-        protected void TransInvnNotExistsMsgKey()
-        {
-            CurrentMsgKey = CostDataForTransInvnNotExist.MsgKey;
-            CurrentMsgProcessor = DefaultPossibleValue.MessageProcessor;
-        }
-        protected void PickLocationNotExistKey()
-        {
-            CurrentMsgKey = CostDataForPickLocnNotExist.MsgKey;
-            CurrentMsgProcessor = DefaultPossibleValue.MessageProcessor;
-        }  
-        protected void ValidCostUrl()
-        {
-            CostUrl = $"{BaseUrl}?{"msgKey"}={CurrentMsgKey}&{"msgProcessor"}={CurrentMsgProcessor}";
+            CostUrl = $"{BaseUrl}{TestData.Parameter.EmsToWmsMessage}?{TestData.Parameter.MsgKey}={currentMsgKey}&{TestData.Parameter.MsgProcessor}={currentMsgProcessor}";
         }
         protected IRestResponse ApiIsCalled()
         {

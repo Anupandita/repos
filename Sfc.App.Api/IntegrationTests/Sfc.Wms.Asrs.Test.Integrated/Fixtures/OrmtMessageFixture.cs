@@ -15,8 +15,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected BaseResult Result;
         protected string CurrentCartonNbr;
         protected string CurrentActionCode;
-        protected string Url = @ConfigurationManager.AppSettings["OrmtUrl"];
-        protected string BaseUrl = @ConfigurationManager.AppSettings["OrmtWaveUrl"];
+        protected string Url = @ConfigurationManager.AppSettings["BaseUrl"];
+        protected string BaseUrl = @ConfigurationManager.AppSettings["BaseUrl"];
         protected CaseDetailDto CaseDetailDto;
         protected ComtParams OrmtParameters;
         protected IRestResponse Response;
@@ -28,7 +28,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected BaseResult NegativeCase5;
         protected string WaveUrl;
 
-        protected void InitializeTestDataForPrintingOfCartons(string cartonNumber)
+        protected void InitializeTestDataForPrintingOfCartons()
         {
 
             GetDataBeforeTriggerOrmtForPrintingOfCartons();
@@ -79,28 +79,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             GetDataAfterCallingApiForOnProcessCost();
         }
-        protected void CartonNumberForAddRelease()
-        {
-            CurrentCartonNbr = PrintCarton.CartonNbr;
-            CurrentActionCode = OrmtActionCode.AddRelease;
-        }
-        protected void CartonNumberForCancel()
-        {
-            CurrentCartonNbr = CancelOrder.CartonNbr;
-            CurrentActionCode = OrmtActionCode.Cancel;
-        }
-       
-        protected void CartonNumberForEPick()
-        {
-            CurrentCartonNbr = EPick.CartonNbr;
-            CurrentActionCode = OrmtActionCode.AddRelease;
-        }
-
-        protected void CartonNumberForOnProcessCost()
-        {
-            CurrentCartonNbr = OnProCost.CartonNbr;
-            CurrentActionCode = OrmtActionCode.AddRelease;
-        }
 
         protected void CartonNumberForOrmtCountNotFound()
         {
@@ -132,14 +110,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             CurrentActionCode = Constants.InvalidOrmtActionCode;
         }
 
-        protected void ValidOrmtUrl()
+        protected void ValidOrmtUrlCartonNumberAndActioncodeIs(string url,string currentCartonNbr,string currentActionCode)
         {
-            OrmtUrl = $"{Url}?{"cartonNumber"}={CurrentCartonNbr}&{"actionCode"}={CurrentActionCode}";            
+            OrmtUrl = $"{Url}{TestData.Parameter.OrderMaintenance}/{TestData.Parameter.CartonNbr}?{TestData.Parameter.CartonNumber}={currentCartonNbr}&{TestData.Parameter.ActionCode}={currentActionCode}";            
         }
 
         protected void ValidOrmtWaveUrl()
         {
-            WaveUrl = $"{BaseUrl}?{"waveNumber"}={OrderList[0].WaveNbr}";
+            WaveUrl = $"{BaseUrl}{TestData.Parameter.OrderMaintenance}/{TestData.Parameter.WaveNbr}?{TestData.Parameter.WaveNumber}={OrderList[0].WaveNbr}";
         }
 
         protected IRestResponse ApiIsCalled(string Url)

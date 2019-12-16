@@ -13,79 +13,23 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
     [TestClass]
     public class IvstMessageFixture: DataBaseFixtureForIvst
     {
-        protected string BaseUrl = @ConfigurationManager.AppSettings["EmsToWmsUrl"];
+        protected string BaseUrl = @ConfigurationManager.AppSettings["BaseUrl"];
         protected Int64 CurrentMsgKeys;
         protected Ivst Parameters;
         protected IRestResponse Response;
         protected long CurrentMsgKey;
         protected string CurrentMsgProcessor;
-        protected string IvstUrl;
+        public static string IvstUrl;
         protected OracleConnection Db;
         protected void TestInitialize()
         {
             GetDataBeforeApiTrigger();
         }
-        protected void ValidIvstUrlIs(string url)
+        protected void ValidIvstUrlMsgKeyAndMsgProcessorIs(string url,Int64 currentMsgKey,string currentMsgProcessor)
         {
-            IvstUrl = $"{BaseUrl}?{"msgKey"}={CurrentMsgKey}&{"msgProcessor"}={CurrentMsgProcessor}";
+            IvstUrl = $"{BaseUrl}{TestData.Parameter.EmsToWmsMessage}?{TestData.Parameter.MsgKey}={currentMsgKey}&{TestData.Parameter.MsgProcessor}={currentMsgProcessor}";
         }
-
-        protected void ValidUrl(string url)
-        {
-
-        }
-        protected void MsgKeyCycleCount()
-        {
-            CurrentMsgKey = IvstData.InvalidKey;
-            CurrentMsgProcessor = DefaultPossibleValue.MessageProcessor;
-        }
-        protected void MsgKeyForUnexpectedOverageExceptionIs(long key)
-        {
-            CurrentMsgKey = key;
-            CurrentMsgProcessor = EmsToWmsParameters.Process;
-        }
-        
-        protected void MsgKeyForInventoryShortageForInboundPalletIsN()
-        {
-            CurrentMsgKey = InvShortageOutbound.Key;
-            CurrentMsgProcessor = EmsToWmsParametersInventoryShortage.Process;
-        }
-
-        protected void MsgKeyForInventoryShortageException()
-        {
-            CurrentMsgKey = InvShortageInbound.Key;
-            CurrentMsgProcessor = EmsToWmsParametersInventoryShortage.Process;
-        }
-        protected void MsgKeyForDamageException()
-        {
-            CurrentMsgKey = DamageInbound.Key;
-            CurrentMsgProcessor = EmsToWmsParametersDamage.Process;
-        }
-        protected void MsgKeyForDamageOutbound()
-        {
-            CurrentMsgKey = DamageOutbound.Key;
-            CurrentMsgProcessor = EmsToWmsParametersDamage.Process;
-        }
-        protected void MsgKeyForWrongSkuException()
-        {
-            CurrentMsgKey = WrongSku.Key;
-            CurrentMsgProcessor = EmsToWmsParametersWrongSku.Process;
-        }
-        protected void MsgKeyForWrongSkuInboundIsN()
-        {
-            CurrentMsgKey = WrongSkuOutbound.Key;
-            CurrentMsgProcessor = EmsToWmsParametersWrongSku.Process;
-        }
-        protected void MsgKeyForCycleCountAdjustmentPlus()
-        {
-            CurrentMsgKey = CycleCountAdjustmentPlus.Key;
-            CurrentMsgProcessor = EmsToWmsParametersCycleCount.Process;
-        }
-        protected void MsgKeyForCycleCountAdjustmentMinus()
-        {
-            CurrentMsgKey = CycleCountAdjustmentMinus.Key;
-            CurrentMsgProcessor = EmsToWmsParametersCycleCount.Process;
-        }
+       
         protected void TestDataForUnexpectedOverageException()
         {
             InsertIvstMessagetUnexpectedFunction();
@@ -109,7 +53,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             InsertIvstMessageDamageForInboundPalletIsN();
         }
 
-
         protected void TestDataForWrongSkuException()
         {
             InsertIvstMessageWrongSkuFunction();
@@ -129,9 +72,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             InsertIvstMessageForCycleCountWithAdjustmentMinus();
         }
 
-        protected void GetValidDataAfterTrigger()
+        protected void GetValidDataAfterTriggerForKey(long key)
         {
-            GetDataAfterTrigger(CurrentMsgKey);
+            GetDataAfterTrigger(key);
         }
         protected IRestResponse ApiIsCalled()
         {
@@ -153,7 +96,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var result = JsonConvert.DeserializeObject<BaseResult>(response.Content);
             return result;
         }
-        protected void VerifyIvstMessageWasInsertedIntoSwmFromMheUnExceptedOverage()
+        protected void VerifyIvstMessageWasInsertedIntoSwmFromMheForUnexceptedOverage()
         {
             Assert.AreEqual(EmsToWmsParameters.Process, SwmFromMhe.SourceMessageProcess);
             Assert.AreEqual(IvstData.Key, SwmFromMhe.SourceMessageKey);
@@ -167,7 +110,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(IvstData.SkuId, Ivst.Sku);
         }
 
-        protected void VerifyIvstMessageWasInsertedIntoSwmFromMheForInventoryShortage(long messageKey)
+        protected void VerifyIvstMessageWasInsertedIntoSwmFromMheForInventoryShortageAndMsgKeyShouldBe(long messageKey)
         {
             Assert.AreEqual(EmsToWmsParametersInventoryShortage.Process, SwmFromMhe.SourceMessageProcess);
             Assert.AreEqual(messageKey, SwmFromMhe.SourceMessageKey);
@@ -181,7 +124,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(IvstData.SkuId, Ivst.Sku);
         }
       
-        protected void VerifyIvstMessageWasInsertedIntoSwmFromMheForDamage(long messageKey)
+        protected void VerifyIvstMessageWasInsertedIntoSwmFromMheForDamageAndMsgKeyShouldBe(long messageKey)
         {
             Assert.AreEqual(EmsToWmsParametersDamage.Process, SwmFromMhe.SourceMessageProcess);
             Assert.AreEqual(messageKey, SwmFromMhe.SourceMessageKey);
@@ -195,7 +138,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(IvstData.SkuId, Ivst.Sku);
         }
 
-        protected void VerifyIvstMessageWasInsertedIntoSwmFromMheWrongSku(long messageKey)
+        protected void VerifyIvstMessageWasInsertedIntoSwmFromMheForWrongSkuAndMsgKeyShouldBe(long messageKey)
         {
             Assert.AreEqual(EmsToWmsParametersWrongSku.Process, SwmFromMhe.SourceMessageProcess);
             Assert.AreEqual(messageKey, SwmFromMhe.SourceMessageKey);
@@ -209,7 +152,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(IvstData.SkuId, Ivst.Sku);
         }
 
-        protected void VerifyIvstMessageWasInsertedIntoSwmFromMheForCycleCount(long messageKey, string actionCode)
+        protected void VerifyIvstMessageWasInsertedIntoSwmFromMheForCycleCountAndMsgKeyShouldBe(long messageKey, string actionCode)
         {
             Assert.AreEqual(EmsToWmsParametersCycleCount.Process, SwmFromMhe.SourceMessageProcess);
             Assert.AreEqual(messageKey, SwmFromMhe.SourceMessageKey);
@@ -234,7 +177,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         }
         protected void VerifyTheQuantityForUnexpectedOverageExceptionIntoTransInventoryTable()
         {
-           // Assert.AreEqual(TrnsInvBeforeApi.ActualInventoryUnits + Convert.ToDecimal(Ivst.Quantity) , TrnsInvAfterApi.ActualInventoryUnits);
+            Assert.AreEqual(TrnsInvBeforeApi.ActualInventoryUnits + Convert.ToDecimal(Ivst.Quantity) , TrnsInvAfterApi.ActualInventoryUnits);
         }
         protected void VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForUnexpectedOverageException()
         {

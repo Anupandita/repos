@@ -14,7 +14,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
     {
         protected Int64 CurrentMsgKey;
         protected string CurrentMsgProcess;
-        protected string BaseUrl = @ConfigurationManager.AppSettings["EmsToWmsUrl"];
+        protected string BaseUrl = @ConfigurationManager.AppSettings["BaseUrl"];
         protected string OrstUrl;
 
         protected IRestResponse Response;
@@ -115,7 +115,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         protected void ValidOrstUrl()
         {
-            OrstUrl = $"{BaseUrl}?{"msgKey"}={CurrentMsgKey}&{"msgProcessor"}={CurrentMsgProcess}";
+            OrstUrl = $"{BaseUrl}{TestData.Parameter.EmsToWmsMessage}?{TestData.Parameter.MsgKey}={CurrentMsgKey}&{TestData.Parameter.MsgProcessor}={CurrentMsgProcess}";
         }
 
         protected BaseResult OrstResult()
@@ -131,7 +131,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Debug.Print(result.ResultType.ToString());
             Assert.AreEqual(ResultType.Created, result.ResultType.ToString());
         }
-
 
         protected void OrstApiIsCalledForNegativeCase()
         {

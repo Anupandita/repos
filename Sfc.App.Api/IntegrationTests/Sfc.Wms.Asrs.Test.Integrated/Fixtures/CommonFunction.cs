@@ -169,10 +169,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var swmFromMheData = new SwmFromMheDto();
             var swmFromMheView = $"{CommonQueries.SwmFromMhe}";
-            Command = new OracleCommand(swmFromMheView, db)
-            {
-                BindByName = true
-            };
+            Command = new OracleCommand(swmFromMheView, db);
             Command.Parameters.Add(new OracleParameter("transCode", trx));
             Command.Parameters.Add(new OracleParameter("messageKey", msgKey));
 

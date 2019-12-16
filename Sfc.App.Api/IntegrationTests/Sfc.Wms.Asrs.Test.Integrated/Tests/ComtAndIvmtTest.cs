@@ -12,7 +12,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         " Verify in Case Detail table for Quantity, CaseHeader and task detail table for status code ",
        SoThat = "I can validate for message fields in COMT message, in Internal Table SWM_TO_MHE"+
         " and validate the quantity,weight,statuscode in the caseheader, casedetail, task header tables",
-       StoryUri = "http://tfsapp1:8080/tfs/ShamrockCollection/Portfolio-SOWL/WMS%20UI%20Renovate/_testManagement?planId=105523&suiteId=119426&_a=tests"
+       StoryUri = "http://tfsapp1:8080/tfs/ShamrockCollection/Portfolio-SOWL/_workitems?id=109612&_a=edit"
        )]
     public class ComtAndIvmtTest : ComtIvmtMessageFixture
     {     
@@ -27,9 +27,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         public void ComtAndIvmtMessageTestScenarios() 
         {
-            this.Given(x => x.CurrentCaseNumberForSingleSku())
-                .And(x => x.AValidNewComtMessageRecord(CurrentCaseNbr))
-                .When(x => x.ComtApiIsCalledCreatedIsReturned())
+            this.Given(x => x.AValidNewComtMessageRecordWhereCaseNumberAndSkuIS(SingleSkuCase.CaseNumber, SingleSkuCase.SkuId))
+                .When(x => x.ComtApiIsCalledCreatedIsReturnedWithValidUrlIs(ComtUrl))
                 .Then(x => x.GetDataFromDataBaseForSingleSkuScenarios())
                 .And(x => x.VerifyComtMessageWasInsertedIntoSwmToMhe())
                 .And(x => x.VerifyComtMessageWasInsertedIntoWmsToEms())
@@ -46,9 +45,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         [TestCategory("FUNCTIONAL")]
         public void ComtAndIvmtTestForMultiSkuScenarios()
         {
-            this.Given(x => x.CurrentCaseNumberForMultiSku())
-                .And(x => x.AValidNewComtMessageRecord(CurrentCaseNbr))
-                .When(x => x.ComtApiIsCalledCreatedIsReturned())
+              this.Given(x => x.AValidNewComtMessageRecordWhereCaseNumberAndSkuIS(CaseHdrMultiSku.CaseNumber, CaseHdrMultiSku.SkuId))
+                .When(x => x.ComtApiIsCalledCreatedIsReturnedWithValidUrlIs(ComtUrl))
                 .Then(x => x.GetDataAndValidateForIvmtMessageHasInsertedIntoBothTables())
                 .And(x => x.VerifyComtMessageWasInsertedIntoSwmToMheForMultiSku())
                 .And(x => x.VerifyComtMessageWasInsertedIntoWmsToEmsForMultiSku())
@@ -61,9 +59,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         [TestCategory("FUNCTIONAL")]
         public void ComtIvmtMessageTestCaseForNoEnoughInventoryInCase()
         {
-            this.Given(x => x.CurrentCaseNumberForNotEnoughInventoryInCase())
-                .And(x => x.AValidNewComtMessageRecord(CurrentCaseNbr))
-                .When(x => x.ComtApiIsCalledForNotEnoughInventoryInCase())
+            this.Given(x => x.AValidNewComtMessageRecordWhereCaseNumberAndSkuIS(NotEnoughInvCase.CaseNumber, null))
+                .When(x => x.ComtApiIsCalledForNotEnoughInventoryInCaseAndUrlIs(ComtUrl))
                 .Then(x => x.ValidateForNotEnoughInventoryInCase())  
                 .BDDfy("Test Case ID: 133226 -Dematic - COMT,IVMT : Validate for NotEnough Inventory in Case and validate for error messages");
         }

@@ -10,7 +10,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         IWant = "To Test the CaseNumbers For Received Cases From Returns" +
                 "And Verify when Message is Sent, Ivmt message should be inserted into swm_to_mhe ,wmstoems table." ,
         SoThat = "I can validate for message fields in IVMT message, in Internal Table SWM_TO_MHE" +
-                 " and validate the quantity,weight,statuscode in the caseheader, casedetail, task header tables"
+                 " and validate the quantity,weight,statuscode in the caseheader, casedetail, task header tables",
+        StoryUri = "http://tfsapp1:8080/tfs/ShamrockCollection/Portfolio-SOWL/_workitems?id=129462&_a=edit"
     )]
     public class ComtAndIvmtTestReceivedCase:ComtIvmtMessageFixture
     {
@@ -24,8 +25,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         [TestCategory("FUNCTIONAL")]
         public void ComtAndIvmtMessageForReceivedCasesTestScenarios()
         {
-            this.Given(x => x.AValidNewReceivedCaseComtMessageRecord())
-                .When(x => x.ComtApiIsCalledCreatedIsReturned())
+            this.Given(x => x.AValidNewCaseReturnedRecordWhereCaseNumberAndSkuIdIs(SingleSkuCase.CaseNumber,SingleSkuCase.SkuId))
+                .When(x => x.ComtApiIsCalledCreatedIsReturnedWithValidUrlIs(ComtUrl))
                 .Then(x => x.GetDataFromDataBaseForReceivedCaseSingleSkuScenarios())
                 .And(x => x.VerifyReceivedCaseComtMessageWasInsertedIntoSwmToMhe())
                 .And(x => x.VerifyIvmtMessageWasInsertedIntoSwmToMhe())

@@ -15,28 +15,23 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected Int64 CurrentMsgKey;
         protected string CurrentMsgProcessor;
         protected IRestResponse Response;
-        protected string BaseUrl = @ConfigurationManager.AppSettings["EmsToWmsUrl"];
+        protected string BaseUrl = @ConfigurationManager.AppSettings["BaseUrl"];
         protected string MprqUrl;
 
         protected void TestInitializeForValidMessage()
         {
             GetDataBeforeTrigger();
         }
-        protected void AValidMsgKey()
+       
+        protected void AValidMprqUrl(string url,Int64 currentMsgKey,string currentMsgProcessor)
         {
-            CurrentMsgKey = MprqData.MsgKey;
-            CurrentMsgProcessor = DefaultPossibleValue.MessageProcessor;
-        }
-        protected void AValidMprqUrl()
-        {
-            MprqUrl = $"{BaseUrl}?{"msgKey"}={CurrentMsgKey}&{"msgProcessor"}={CurrentMsgProcessor}";
+            MprqUrl = $"{BaseUrl}{TestData.Parameter.EmsToWmsMessage}?{TestData.Parameter.MsgKey}={currentMsgKey}&{TestData.Parameter.MsgProcessor}={currentMsgProcessor}";
         }
         protected IRestResponse ApiIsCalled()
         {
             var client = new RestClient(MprqUrl);
             var request = new RestRequest(Method.POST);
-            request.AddHeader("content-type", Content.ContentType);
-            request.AddJsonBody(CurrentMsgKey);
+            request.AddHeader("content-type", Content.ContentType);          
             request.RequestFormat = DataFormat.Json;
             Response = client.Execute(request);
             return Response;

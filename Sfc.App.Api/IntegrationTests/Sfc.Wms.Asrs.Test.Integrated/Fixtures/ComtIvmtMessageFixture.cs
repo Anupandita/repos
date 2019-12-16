@@ -14,10 +14,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
     public class ComtIvmtMessageFixture : DataBaseFixture
     {
-        protected string CurrentCaseNbr;
-        protected string ReceivedCaseNbr;
-        protected string ComtUrl = ConfigurationManager.AppSettings["ComtUrl"];
-        protected string IvmtUrl = ConfigurationManager.AppSettings["IvmtUrl"];
+        protected string ComtUrl = ConfigurationManager.AppSettings["BaseUrl"] +TestData.Parameter.ContainerMaintenance;
+        protected string IvmtUrl = ConfigurationManager.AppSettings["BaseUrl"] +TestData.Parameter.InventoryMaintenance;
         protected ComtParams ComtParameters;
         protected IvmtParam IvmtParameters;
         protected IRestResponse Response;
@@ -34,28 +32,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             GetDataBeforeTriggerforReceivedCaseComt();
         }
 
-        protected void CurrentCaseNumberForSingleSku()
-        {
-            CurrentCaseNbr = SingleSkuCase.CaseNumber;
-        }
-
-        protected void CurrentCaseNumberForMultiSku()
-        {
-            CurrentCaseNbr =  CaseHdrMultiSku.CaseNumber;
-        }
-
-        protected void CurrentCaseNumberForNotEnoughInventoryInCase()
-        {
-            CurrentCaseNbr = NotEnoughInvCase.CaseNumber;
-        }
-     
-       
-        public void AValidNewComtMessageRecord(string currentCaseNbr)
+        public void AValidNewComtMessageRecordWhereCaseNumberAndSkuIS(string currentCaseNbr,string skuId)
         {
             ComtParameters = new ComtParams
             {
-                ActionCode = ActionCodeConstants.Create,
-                CurrentLocationId = DefaultValues.CurrentlocnId,
+                ActionCode = ActionCodeConstants.Create,                
                 ContainerId = currentCaseNbr,
                 ContainerType = DefaultValues.ContainerType,
                 ParentContainerId = currentCaseNbr,
@@ -63,25 +44,24 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 QuantityToInduct = DefaultValues.QuantityToInduct
             };
         }
-        public void AValidNewIvmtMessageRecord()
+        public void AValidNewIvmtMessageRecordWhereCaseNumberAndSkuIs(string currentCaseNbr, string skuId)
         {
             IvmtParameters = new IvmtParam
             {
-                ActionCode = ActionCodeConstants.Create,
-                CurrentLocationId = DefaultValues.CurrentlocnId,
-                ContainerId = CurrentCaseNbr,
+                ActionCode = ActionCodeConstants.Create,                
+                ContainerId = currentCaseNbr,
                 ContainerType = DefaultValues.ContainerType,
-                ParentContainerId = CurrentCaseNbr,
+                ParentContainerId = currentCaseNbr,
                 AttributeBitmap = DefaultValues.AttributeBitMap,
                 QuantityToInduct = DefaultValues.QuantityToInduct
             };
         }
-        public void AValidNewReceivedCaseComtMessageRecord()
+        public void AValidNewCaseReturnedRecordWhereCaseNumberAndSkuIdIs(string currentCaseNbr,string skuId)
         {
             ComtParameters = new ComtParams
             {
                 ActionCode = ActionCodeConstants.Create,               
-                ContainerId = SingleSkuCase.CaseNumber,
+                ContainerId = currentCaseNbr,
                 ContainerType = DefaultValues.ContainerType,
                 ParentContainerId = "",
                 AttributeBitmap = DefaultValues.AttributeBitMap,
@@ -98,15 +78,15 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Response = client.Execute(request);
             return Response;
         }
-        protected BaseResult IvmtResult()
+        protected BaseResult IvmtResult(string url)
         {
-            var response = ApiIsCalled(IvmtUrl, IvmtParameters);
+            var response = ApiIsCalled(url, IvmtParameters);
             var result = JsonConvert.DeserializeObject<BaseResult>(response.Content);
             return result;
         }
-        protected void IvmtApiIsCalledCreatedIsReturned()
+        protected void IvmtApiIsCalledCreatedIsReturnedWithValidUrlIs(string url)
         {
-            Result = IvmtResult();
+            Result = IvmtResult(url);
             Assert.AreEqual(ResultType.Created, Result.ResultType.ToString());
         }
         protected void GetDataFromDataBaseForSingleSkuScenarios()
@@ -142,21 +122,21 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Response = client.Execute(request);
             return Response;
         }
-        protected BaseResult ComtIvmtResult()
+        protected BaseResult ComtIvmtResult(string url)
         {
-            var response = ApiIsCalled(ComtUrl, ComtParameters);
+            var response = ApiIsCalled(url, ComtParameters);
             var result = JsonConvert.DeserializeObject<BaseResult>(response.Content);
             return result;
         }
-        protected void ComtApiIsCalledCreatedIsReturned()
+        protected void ComtApiIsCalledCreatedIsReturnedWithValidUrlIs(string url)
         {
-            Result = ComtIvmtResult();
+            Result = ComtIvmtResult(url);
             Assert.AreEqual(ResultType.Created, Result.ResultType.ToString());
         }
 
-        protected void ComtApiIsCalledForNotEnoughInventoryInCase()
+        protected void ComtApiIsCalledForNotEnoughInventoryInCaseAndUrlIs(string url)
         {
-            ResultForNegativeCase = ComtIvmtResult();
+            ResultForNegativeCase = ComtIvmtResult(url);
         }
         protected void ValidateForNotEnoughInventoryInCase()
         {
