@@ -79,45 +79,15 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             GetDataAfterCallingApiForOnProcessCost();
         }
-
-        protected void CartonNumberForOrmtCountNotFound()
-        {
-            CurrentCartonNbr = ActiveOrmtCountNotFound.CartonNbr;
-            CurrentActionCode = OrmtActionCode.AddRelease;
-        }
-
-        protected void CartonNumberForPickLocnNotFound()
-        {
-            CurrentCartonNbr = PickLocnNotFound.CartonNbr;
-            CurrentActionCode = OrmtActionCode.AddRelease;
-        }
-
-        protected void CartonNumberForActiveLocnNotFound()
-        {
-            CurrentCartonNbr = ActiveLocnNotFound.CartonNbr;
-            CurrentActionCode = OrmtActionCode.AddRelease;
-        }
-
-        protected void CartonNumberForInvalidCartonNumber()
-        {
-            CurrentCartonNbr = CancelOrder.CartonNbr;
-            CurrentActionCode = OrmtActionCode.AddRelease;
-        }
-
-        protected void TestForInValidActionCode()
-        {
-            CurrentCartonNbr = PrintCarton.CartonNbr;
-            CurrentActionCode = Constants.InvalidOrmtActionCode;
-        }
-
+       
         protected void ValidOrmtUrlCartonNumberAndActioncodeIs(string url,string currentCartonNbr,string currentActionCode)
         {
             OrmtUrl = $"{Url}{TestData.Parameter.OrderMaintenance}/{TestData.Parameter.CartonNbr}?{TestData.Parameter.CartonNumber}={currentCartonNbr}&{TestData.Parameter.ActionCode}={currentActionCode}";            
         }
 
-        protected void ValidOrmtWaveUrl()
+        protected void ValidOrmtWaveUrlAndWaveNumberIs(string url,string currentWaveNumber)
         {
-            WaveUrl = $"{BaseUrl}{TestData.Parameter.OrderMaintenance}/{TestData.Parameter.WaveNbr}?{TestData.Parameter.WaveNumber}={OrderList[0].WaveNbr}";
+            WaveUrl = $"{BaseUrl}{TestData.Parameter.OrderMaintenance}/{TestData.Parameter.WaveNbr}?{TestData.Parameter.WaveNumber}={currentWaveNumber}";
         }
 
         protected IRestResponse ApiIsCalled(string Url)

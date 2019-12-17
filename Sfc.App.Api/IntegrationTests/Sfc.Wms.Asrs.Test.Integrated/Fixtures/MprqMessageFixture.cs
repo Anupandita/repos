@@ -22,7 +22,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             GetDataBeforeTrigger();
         }
-       
+        
         protected void AValidMprqUrl(string url,Int64 currentMsgKey,string currentMsgProcessor)
         {
             MprqUrl = $"{BaseUrl}{TestData.Parameter.EmsToWmsMessage}?{TestData.Parameter.MsgKey}={currentMsgKey}&{TestData.Parameter.MsgProcessor}={currentMsgProcessor}";

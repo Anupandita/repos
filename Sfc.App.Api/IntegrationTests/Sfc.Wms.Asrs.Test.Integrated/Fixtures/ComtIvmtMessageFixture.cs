@@ -93,18 +93,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             GetDataAfterTriggerOfComtForSingleSku();
         }
-        protected void GetDataFromDataBaseForReceivedCaseSingleSkuScenarios()
+        protected void GetDataFromDataBaseAfterApiIsCalled()
         {
             GetDataAfterTriggerOfComtForReceivedCaseSingleSku();
         }
         protected void GetDataFromDataBaseForSingleSkuScenariosIvmt()
         {
             GetDataAfterTriggerOfIvmtForSingleSku();
-        }
-
-        protected void GetDataFromDataBaseForReceivedCaseSingleSku()
-        {
-            GetDataAfterTriggerOfIvmtForReceivedCaseSingleSku();
         }
 
         protected void GetDataAndValidateForIvmtMessageHasInsertedIntoBothTables()
@@ -170,10 +165,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             VerifyComtMessageWasInsertedIntoSwmToMhe(Comt, SwmToMheComt, SingleSkuCase.CaseNumber);
         }
-        protected void VerifyReceivedCaseComtMessageWasInsertedIntoSwmToMhe()
-        {
-            VerifyComtMessageWasInsertedIntoSwmToMhe(Comt, SwmToMheComt, SingleSkuCase.CaseNumber);
-        }
+       
         protected void VerifyIvmtMessageWasInsertedIntoWmsToEms()
         {
             VerifyIvmtMessageWasInsertedIntoWmsToEms(WmsToEmsIvmt);

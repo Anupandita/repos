@@ -83,7 +83,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
             else
             {
-                sqlStatement = sqlStatement + $" where sm.source_msg_status = '{DefaultValues.Status}' and ch.stat_code < '{cartonStatusCode}' and ph.pkt_stat_code < '{pktStatusCode}' and pd.pkt_seq_nbr > {Constants.NumZero}";
+                sqlStatement = sqlStatement + $" where sm.source_msg_status = '{DefaultValues.Status}' and ch.stat_code ='{cartonStatusCode}' and ph.pkt_stat_code < '{pktStatusCode}' and pd.pkt_seq_nbr > {Constants.NumZero}";
             }
             Command = new OracleCommand(sqlStatement, db);
             var swmToMheReader = Command.ExecuteReader();
@@ -132,10 +132,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                Allocated = GetCartonDetailsForInsertingOrstMessage(db, Constants.CartonStatusForReleased,Constants.PktStatusForInPacking,false);
+                Allocated = GetCartonDetailsForInsertingOrstMessage(db, Constants.CartonStatusForReleased,Constants.PktStatusForInPacking, false);
                 OrmtCase1 = JsonConvert.DeserializeObject<OrmtDto>(Allocated.MessageJson);
-                OrstMessageCreatedForAllocatedStatus(db);            
-                EmsToWmsAllocated = GetEmsToWmsData(db, MsgKeyForAllocated.MsgKey);                           
+                OrstMessageCreatedForAllocatedStatus(db);
+                EmsToWmsAllocated = GetEmsToWmsData(db, MsgKeyForAllocated.MsgKey);
             }
         }
 

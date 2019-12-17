@@ -221,11 +221,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                Command = new OracleCommand();
-                SwmToMheComt = SwmToMhe(db, SingleSkuCase.CaseNumber, TransactionCode.Comt, null);
-                Comt = JsonConvert.DeserializeObject<ComtDto>(SwmToMheComt.MessageJson);
-                ParserTestforMsgText(TransactionCode.Comt, SwmToMheComt.SourceMessageText);
-                WmsToEmsComt = WmsToEmsData(db, SwmToMheComt.SourceMessageKey, TransactionCode.Comt);
+                Command = new OracleCommand();               
                 SwmToMheIvmt = SwmToMhe(db, SingleSkuCase.CaseNumber, TransactionCode.Ivmt, SingleSkuCase.SkuId);
                 Ivmt = JsonConvert.DeserializeObject<IvmtDto>(SwmToMheIvmt.MessageJson);
                 ParserTestforMsgText(TransactionCode.Ivmt, SwmToMheIvmt.SourceMessageText);

@@ -58,7 +58,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
         public const string Child = "C";
         public const string Parent = "P";
         public const string InvalidOrmtActionCode = "Addd";
-        public const int OrmtMessageSent = 90;
+        public const Int16 OrmtMessageSent = 90;
         public const string ValidationMessage = "Not found";
         public const string AllocationStatus = "90";
         public const string CartonStatusAllocated = "5";

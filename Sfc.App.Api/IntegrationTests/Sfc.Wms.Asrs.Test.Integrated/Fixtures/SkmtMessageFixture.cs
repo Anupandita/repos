@@ -12,7 +12,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
     public class SkmtMessageFixture :DataBaseFixtureForSkmt
     {
-
         protected string CurrentSkuId;
         protected string CurrentActionCode;
         protected string InvalidSkuId;
@@ -26,47 +25,16 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected void InitializeTestData()
         {
             GetDataBeforeTriggerSkmt();
-
         }
         protected void InitializeTestDataParent()
         {
             GetDataBeforeTriggerSkmtParent();
-
         }
         protected void InitializeTestDataChild()
         {
             GetDataBeforeTriggerSkmtChildSku();
         }
-        protected void CurrentSkuIdForItemmaster()
-        {
-            CurrentSkuId = Normal.SkuId;
-        }
-        protected void CurrentSkuIdForParentSkuItemmaster()
-        {
-            CurrentSkuId = ParentSku.SkuId;
-        }
-        protected void CurrentSkuIdForChildSkuItemmaster()
-        {
-            CurrentSkuId = ChildSku.SkuId;
-        }
-
-        protected void InitializeInvalidTestData()
-        {
-            CurrentSkuId = DefaultValues.InvalidSku;
-        }
-        protected void CurrentActioncodeAdd()
-        {
-            CurrentActionCode = SkmtActionCode.Add;
-        }
-        protected void CurrentActioncodeUpdate()
-        {
-            CurrentActionCode = SkmtActionCode.Update;
-        }
-        protected void CurrentActioncodeDelete()
-        {
-            CurrentActionCode = SkmtActionCode.Delete;
-        }
-
+        
         protected IRestResponse ApiIsCalled(string url)
         {
             var client = new RestClient(url);
@@ -74,7 +42,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Response = client.Execute(request);
             return Response;
         }
-        protected void ValidSkmtUrl()
+        protected void ValidSkuActioncodeAndSkmtUrlIs(string CurrentSkuId,string CurrentActionCode,string url)
         {
             SkmtUrl = $"{BaseUrl}{TestData.Parameter.SkuMaintenance}?{TestData.Parameter.ActionCode}={CurrentActionCode}&{TestData.Parameter.SkuId}={CurrentSkuId}";
         }
@@ -104,14 +72,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             GetDataAfterTrigger();
         }
-        protected void VerifySkmtMessageWasInsertedForIntoSwmToMhe(string action, string act)
+        protected void VerifySkmtMessageWasInsertedIntoSwmToMheForActionCode(string action, string act)
         {
             Assert.AreEqual(DefaultValues.Status, SwmToMheSkmt.SourceMessageStatus);
             Assert.AreEqual(TransactionCode.Skmt, Skmt.TransactionCode);
             Assert.AreEqual(MessageLength.Skmt, Skmt.MessageLength);
             Assert.AreEqual(action, act);
             Assert.AreEqual(ItemMaster.SkuId, Skmt.Sku);
-
         }
         protected void VerifySkmtMessageWasInsertedIntoWmsToEms()
         {
@@ -125,17 +92,17 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(SwmToMheSkmt.SourceMessageResponseCode, wte.ResponseCode);
             Assert.AreEqual(TransactionCode.Skmt, wte.Transaction);
         }
-        protected void VerifySkmtMessageWasNormalSku()
+        protected void VerifyForSkmtMessageSentTheSkuidWasNormalSku()
         {
             Assert.AreEqual(null, Skmt.ParentSku);
         }
 
-        protected void VerifySkmtMessageWasParentSku()
+        protected void VerifyForSkmtMessageSentTheSkuidWasParentSku()
         {
             Assert.AreEqual(ParentSku.Colordescription, Skmt.ParentSku);
         }
 
-        protected void VerifySkmtMessageWasChildSku()
+        protected void VerifyForSkmtMessageSentTheSkuidWasChildSku()
         {
             Assert.AreEqual(ParentSku.SkuId, ChildSku.SkuId);
         }
@@ -145,7 +112,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(ResultType.NotFounds, Negativecase.ResultType.ToString());
             Assert.AreEqual(1, Negativecase.ValidationMessages.Count);
             Assert.AreEqual(ValidationMessage.ItemMasters, Negativecase.ValidationMessages[0].FieldName);
-
         }
 
     } 

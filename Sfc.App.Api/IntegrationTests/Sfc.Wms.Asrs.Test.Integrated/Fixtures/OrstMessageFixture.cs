@@ -11,9 +11,7 @@ using System.Diagnostics;
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
     public class OrstMessageFixture : DataBaseFixtureForOrst
-    {
-        protected Int64 CurrentMsgKey;
-        protected string CurrentMsgProcess;
+    {     
         protected string BaseUrl = @ConfigurationManager.AppSettings["BaseUrl"];
         protected string OrstUrl;
 
@@ -73,36 +71,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             GetDataBeforeApiForActionCodeCompleteWithPickTicketSeqNumberLessThan1();
         }
-        protected void MsgKeyForCase1()
-        {
-            CurrentMsgKey = MsgKeyForAllocated.MsgKey;
-            CurrentMsgProcess = EmsToWmsAllocated.Process;
-        }
-
-        protected void MsgKeyForCase2()
-        {
-            CurrentMsgKey = MsgKeyForCompleted.MsgKey;
-            CurrentMsgProcess = EmsToWmsCompleted.Process;
-        }
-
-        protected void MsgKeyForCase3()
-        {
-            CurrentMsgKey = MsgKeyForDeallocated.MsgKey;
-            CurrentMsgProcess = EmsToWmsDeallocated.Process;
-        }
-
-        protected void MsgKeyForCase4()
-        {
-            CurrentMsgKey = MsgKeyForCanceled.MsgKey;
-            CurrentMsgProcess = EmsToWmsCanceled.Process;
-        }
-
-        protected void MsgKeyForCase5()
-        {
-            CurrentMsgKey = MsgKeysForCase5.MsgKey;
-            CurrentMsgProcess = EmsToWmsCompleted.Process;
-        }
-
+        
         protected IRestResponse ApiIsCalled()
         {
             var client = new RestClient(OrstUrl);
@@ -113,9 +82,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return Response;
         }
 
-        protected void ValidOrstUrl()
+        protected void ValidMsgKeyMsgProcessorAndOrstUrlIs(Int64 currentMsgKey,string currentMsgProcess,string url)
         {
-            OrstUrl = $"{BaseUrl}{TestData.Parameter.EmsToWmsMessage}?{TestData.Parameter.MsgKey}={CurrentMsgKey}&{TestData.Parameter.MsgProcessor}={CurrentMsgProcess}";
+            OrstUrl = $"{BaseUrl}{TestData.Parameter.EmsToWmsMessage}?{TestData.Parameter.MsgKey}={currentMsgKey}&{TestData.Parameter.MsgProcessor}={currentMsgProcess}";
         }
 
         protected BaseResult OrstResult()

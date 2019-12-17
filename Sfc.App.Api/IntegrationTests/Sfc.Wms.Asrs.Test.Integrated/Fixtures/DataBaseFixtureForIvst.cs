@@ -14,7 +14,8 @@ using Sfc.Wms.Interfaces.Asrs.Shamrock.Contracts.Dtos;
 using Sfc.Wms.Interfaces.Asrs.Dematic.Contracts.Dtos;
 using Sfc.Wms.Foundation.TransitionalInventory.Contracts.Dtos;
 using Sfc.Wms.Foundation.InboundLpn.Contracts.Enums;
-using Sfc.Wms.Foundation.PickLocationDetail.Contracts.Dtos;
+//using Sfc.Wms.Foundation.PickLocationDetail.Contracts.Dtos;
+using Sfc.Wms.Foundation.Location.Contracts.Dtos;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
@@ -43,8 +44,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected EmsToWmsDto EmsToWmsParametersNoException;
         protected EmsToWmsDto EmsToWmsParametersCycleCount;
         protected IvstDto IvstParameters;
-        protected PickLocationDtlDto PickLocnDtlAfterApi = new PickLocationDtlDto();
-        protected PickLocationDtlDto PickLcnDtlBeforeApi = new PickLocationDtlDto();
+        protected Sfc.Wms.Foundation.Location.Contracts.Dtos.PickLocationDetailsDto PickLocnDtlAfterApi = new Sfc.Wms.Foundation.Location.Contracts.Dtos.PickLocationDetailsDto();
+        protected Sfc.Wms.Foundation.Location.Contracts.Dtos.PickLocationDetailsDto PickLcnDtlBeforeApi = new Sfc.Wms.Foundation.Location.Contracts.Dtos.PickLocationDetailsDto();
         protected decimal Unitweight1;
         protected OracleCommand OracleCommand;
         protected PixTransactionDto Pixtran = new PixTransactionDto();
@@ -60,7 +61,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 IvstData = GetCaseDetailsForInsertingIvstMessage(db);
                 Unitweight1 = FetchUnitWeight(db, IvstData.SkuId);
                 TrnsInvBeforeApi = FetchTransInvnentory(db, IvstData.SkuId);
-                PickLcnDtlBeforeApi = PickLocnData(db, IvstData.SkuId);
+                PickLcnDtlBeforeApi = GetPickLocationDetails(db,IvstData.SkuId,null);                  
             }
         }
 
@@ -194,11 +195,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public Ivst GetCaseDetailsForInsertingIvstMessage(OracleConnection db)
         {
             var ivstDataDto = new Ivst();
-            Query = $"select swm_to_mhe.container_id,swm_to_mhe.sku_id,pick_locn_dtl.locn_id,swm_to_mhe.qty from swm_to_mhe inner join trans_invn" +
-                $" on trans_invn.sku_id = swm_to_mhe.sku_id inner join  pick_locn_dtl on swm_to_mhe.sku_id = pick_locn_dtl.sku_id  " +
-                $"inner join case_hdr on swm_to_mhe.container_id = case_hdr.case_nbr and swm_to_mhe.source_msg_status = '{DefaultValues.Status}' and swm_to_mhe.qty!= {Constants.NumZero} and case_hdr.stat_code = {Constants.StatusCodeConsumed}"+
-                $" and pick_locn_dtl.locn_id in (select lh.locn_id from locn_hdr lh inner join locn_grp lg on lg.locn_id = lh.locn_id inner join sys_code sc on sc.code_id = lg.grp_type and sc.code_type = '{Constants.SysCodeType}' and sc.code_id = '{Constants.SysCodeIdForActiveLocation}')";
+            Query = $"{EmsToWmsQueries.CostQuery}";
             Command = new OracleCommand(Query, db);
+            Command.Parameters.Add(new OracleParameter("statCode", Constants.StatusCodeConsumed));
+            Command.Parameters.Add(new OracleParameter("sysCodeType", Constants.SysCodeType));
+            Command.Parameters.Add(new OracleParameter("codeId", Constants.SysCodeIdForActiveLocation));
+            Command.Parameters.Add(new OracleParameter("ready", DefaultValues.Status));
             var validData = Command.ExecuteReader();
             if (validData.Read())
             {
@@ -288,21 +290,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return testResult.Payload;
         }
 
-        public PickLocationDtlDto PickLocnData(OracleConnection db, string skuId)
-        {
-            var pickLocn = new PickLocationDtlDto();
-            Query = $"select * from pick_locn_dtl where sku_id = '{skuId}' and locn_id = '{IvstData.LocnId}' order by mod_date_time desc";
-            Command = new OracleCommand(Query, db);
-            var pickLocnReader = Command.ExecuteReader();
-            if (pickLocnReader.Read())
-            {
-                pickLocn.ActualInventoryQuantity = Convert.ToDecimal(pickLocnReader[FieldName.ActlInvnQty].ToString());
-                pickLocn.ToBeFilledQty = Convert.ToDecimal(pickLocnReader[FieldName.ToBeFilledQty].ToString());
-                pickLocn.LocationId = pickLocnReader[FieldName.LocnId].ToString();
-            }
-            return pickLocn;
-        }
-
         public void GetDataAfterTrigger(long key)
         {
             using (var db = GetOracleConnection())
@@ -311,7 +298,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 SwmFromMhe = SwmFromMhe(db, key, TransactionCode.Ivst);
                 Ivst = JsonConvert.DeserializeObject<IvstDto>(SwmFromMhe.MessageJson);
                 TrnsInvAfterApi = FetchTransInvnentory(db, Ivst.Sku);
-                PickLocnDtlAfterApi = PickLocnData(db, Ivst.Sku);
+                PickLocnDtlAfterApi = GetPickLocationDetails(db, Ivst.Sku,null);                  
                 UnitWeight = FetchUnitWeight(db, Ivst.Sku);
                 var pixTrnAfterApi = PixTransactionTable(Ivst.AdjustmentReasonCode);
                 Pixtran = GetPixtransaction(db, pixTrnAfterApi);
@@ -321,8 +308,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public PixTransactionDto GetPixtransaction(OracleConnection db, string rsnCode)
         {
             var pixtran = new PixTransactionDto();
-            Query = $"select * from Pix_tran where rsn_code='{rsnCode}'order by create_date_time desc";
+            Query = $"select * from Pix_tran where rsn_code= :reasonCode order by create_date_time desc";
             Command = new OracleCommand(Query, db);
+            Command.Parameters.Add(new OracleParameter("reasonCode", rsnCode));
             var rsn = Command.ExecuteReader();
 
             if (rsn.Read())

@@ -23,12 +23,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
       
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void ComtAndIvmtMessageForReceivedCasesTestScenarios()
+        public void ComtAndIvmtMessageForReceivedCasesFromReturnsTestScenarios()
         {
             this.Given(x => x.AValidNewCaseReturnedRecordWhereCaseNumberAndSkuIdIs(SingleSkuCase.CaseNumber,SingleSkuCase.SkuId))
                 .When(x => x.ComtApiIsCalledCreatedIsReturnedWithValidUrlIs(ComtUrl))
-                .Then(x => x.GetDataFromDataBaseForReceivedCaseSingleSkuScenarios())
-                .And(x => x.VerifyReceivedCaseComtMessageWasInsertedIntoSwmToMhe())
+                .Then(x => x.GetDataFromDataBaseAfterApiIsCalled())     
                 .And(x => x.VerifyIvmtMessageWasInsertedIntoSwmToMhe())
                 .And(x => x.VerifyIvmtMessageWasInsertedIntoWmsToEms())
                 .And(x => x.VerifyTheQuantityIsIncreasedInToTransInventory())

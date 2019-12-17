@@ -19,7 +19,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         "Verify For Pick Ticket Status and Carton Status for all the Action Codes" +
         "Validate For Quantities InTo CartonDetail, PickTicketDetail,PickLocationDetail for all case types " +
         "Validate for Ormt count for all case types" +
-        "Validate for AllocationStatus for the Task Completion"
+        "Validate for AllocationStatus for the Task Completion",
+      StoryUri = "http://tfsapp1:8080/tfs/ShamrockCollection/Portfolio-SOWL/_workitems?id=129459&_a=edit"
         )]
 
     public class OrstMessageTest : OrstMessageFixture
@@ -27,18 +28,17 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]    
-        [DataRow (2)]
-        public void OrstMessageTestForActionCodeAllocated(int count)
+       
+        public void OrstMessageTestForActionCodeAllocated()
         {
-            this.Given(x=>x.InitializeTestData())
-                .And(x => x.MsgKeyForCase1())
-                .And(x => x.ValidOrstUrl())
+            this.Given(x=>x.InitializeTestData())                
+                .And(x => x.ValidMsgKeyMsgProcessorAndOrstUrlIs(MsgKeyForAllocated.MsgKey, EmsToWmsAllocated.Process,OrstUrl))
                 .When(x => x.OrstApiIsCalledCreatedIsReturned())
                 .And(x => x.ReadDataAfterApiForActionCodeAllocated())
                 .Then(x => x.VerifyOrstMessageWasInsertedIntoSwmFromMheForActionCodeAllocated())
                 .And(x => x.VerifyPickTicketStatusHasChangedToInPickingForActionCodeAllocated())
                 .And(x => x.VerifyCartonStatusHasChangedToInPackingForActionCodeAllocated())              
-             .BDDfy();
+             .BDDfy("Test Case Id:134866 -Dematic :  ORST : Test For Message when ActionCode = 'Allocated'");
         }
 
         [TestMethod()]
@@ -46,9 +46,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
        
         public void OrstMessageTestForActionCodeCompleted()
         {
-            this.Given(x => x.TestDataForActionCodeComplete())
-                .And(x => x.MsgKeyForCase2())
-                .And(x => x.ValidOrstUrl())
+            this.Given(x => x.TestDataForActionCodeComplete())             
+                .And(x => x.ValidMsgKeyMsgProcessorAndOrstUrlIs(MsgKeyForCompleted.MsgKey, EmsToWmsCompleted.Process,OrstUrl))
                 .When(x => x.OrstApiIsCalledCreatedIsReturned())
                 .Then(x => x.ReadDataAfterApiForActionCodeComplete())
                 .And(x => x.VerifyOrstMessageWasInsertedIntoSwmFromMheForActionCodeComplete())
@@ -59,61 +58,57 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                 .And(x => x.ValidateForQuantitiesInToPickLocationTableForActionCodeComplete())
                 .And(x => x.ValidateForOrmtCountHasReducedForActionCodeComplete())
                 .And(x => x.VerifyAllocationStatusHasChangedToCompleteForActionCodeComplete())
-             .BDDfy();
+             .BDDfy("Test Case Id:134867 -Dematic : ORST : Test Message when Action Code = complete with order reason code map = 0");
         }
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
         public void OrstMessageTestForActionCodeDeAllocate()
         {
-            this.Given(x=>x.TestDataForActionCodeDeAllocate())              
-                .And(x => x.MsgKeyForCase3())
-                .And(x => x.ValidOrstUrl())
+            this.Given(x=>x.TestDataForActionCodeDeAllocate())                           
+                .And(x => x.ValidMsgKeyMsgProcessorAndOrstUrlIs(MsgKeyForDeallocated.MsgKey, EmsToWmsDeallocated.Process,OrstUrl))
                 .When(x => x.OrstApiIsCalledCreatedIsReturned())
                 .Then(x => x.ReadDataAfterApiForActionCodeDeAllocate())
                 .And(x => x.VerifyOrstMessageWasInsertedIntoSwmFromMheForActionCodeDeAllocate())               
-                .BDDfy();
+                .BDDfy("Test Case Id:134868 -Dematic : ORST : Test Message when Action Code = De-Allocate");
         }
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
         public void OrstMessageTestForActionCodeCancel()
         {
-            this.Given(x => x.TestDataForActionCodeCancel())
-                .And(x => x.MsgKeyForCase4())
-                .And(x => x.ValidOrstUrl())
+            this.Given(x => x.TestDataForActionCodeCancel())       
+                .And(x => x.ValidMsgKeyMsgProcessorAndOrstUrlIs(MsgKeyForCanceled.MsgKey, EmsToWmsCanceled.Process,OrstUrl))
                 .When(x => x.OrstApiIsCalledCreatedIsReturned())
                 .Then(x => x.ReadDataAfterApiForActionCodeCancel())
                 .And(x => x.VerifyCartonStatusHasUpdatedToAllocatedOrWaitingForActionCodeCancel())        
                 .And(x => x.ValidateForOrmtCountHasReducedForActionCodeCancel())
-                .BDDfy();
+                .BDDfy("Test Case Id:134869 -Dematic : ORST : Test Message when Action Code = Cancel");
         }
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
         public void OrstMessageTestForActionCodeCompleteWhenBitCodeIsEnabled()
         {
-            this.Given(x => x.ReadDataBeforeCallingApiForActionCodeCompleteWithBitsEnabled())
-                .And(x => x.MsgKeyForCase5())
-                .And(x => x.ValidOrstUrl())
+            this.Given(x => x.ReadDataBeforeCallingApiForActionCodeCompleteWithBitsEnabled())                
+                .And(x => x.ValidMsgKeyMsgProcessorAndOrstUrlIs(MsgKeysForCase5.MsgKey, EmsToWmsCompleted.Process,OrstUrl))
                 .When(x => x.OrstApiIsCalledCreatedIsReturned())
                 .Then(x => x.ReadDataAfterCallingApiForActionCodeCompleteWithBitsEnabled())
                 .And(x => x.VerifyOrstMessageWasInsertedIntoSwmFromMheForActionCodeComplete())
                 .And(x => x.VerifyCartonStatusHasChangedTo5ForActionCodeCompleteWithBitsEnabled())
                 .And(x => x.VerifyForQuantitiesInToPickLocationTableForActionCodeCompleteWithBitsEnabled())
                 .And(x => x.VerifyForOrmtCountForActionCodeCompleteWithBitsEnabled())
-                .BDDfy();
+                .BDDfy("Test Case Id:134871 -Dematic : ORST : Test Message when Action Code = complete with order reason code map <> 0");
         }
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
         public void OrstMessageTestForActionCodeCompleteWhenPickTicketSeqNbrIsSmallerThan1()
         {
-            this.Given(x => x.ReadDataBeforeApiForNegativeCaseWherePickTicketSeqNumberIsLessThan1())
-                .And(x => x.MsgKeyForCase2())
-                .And(x => x.ValidOrstUrl())
+            this.Given(x => x.ReadDataBeforeApiForNegativeCaseWherePickTicketSeqNumberIsLessThan1())            
+                .And(x => x.ValidMsgKeyMsgProcessorAndOrstUrlIs(MsgKeyForCompleted.MsgKey, EmsToWmsCompleted.Process,OrstUrl))
                 .When(x => x.OrstApiIsCalledForNegativeCase())
-                .BDDfy();            
+                .BDDfy("Test Case Id:146384 -OrstMessage:  Test For ActionCode Complete When PickTicket SeqNbr Is Smaller Than 1");            
         }
     }
 }

@@ -55,14 +55,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public Entities.NextUpCounter Nxtupcnt(OracleConnection db)
         {
             var nextup = new Entities.NextUpCounter();
-            Query = $"select * from nxt_up_cnt where rec_type_id = '{Constants.RecTypeId}'";
+            Query = $"select * from nxt_up_cnt where rec_type_id = :recTypeId";
             Command = new OracleCommand(Query, db);
+            Command.Parameters.Add(new OracleParameter("recTypeId", Constants.RecTypeId));
             var nextUpCounterReader = Command.ExecuteReader();
             if (nextUpCounterReader.Read())
             {
                 nextup.CurrentNumber = Convert.ToInt32(nextUpCounterReader[FieldName.Currentnumber].ToString());
-                nextup.PrefixField = (nextUpCounterReader[FieldName.Prefixfield].ToString());
-            
+                nextup.PrefixField = (nextUpCounterReader[FieldName.Prefixfield].ToString());           
             }
             return nextup;
         }
