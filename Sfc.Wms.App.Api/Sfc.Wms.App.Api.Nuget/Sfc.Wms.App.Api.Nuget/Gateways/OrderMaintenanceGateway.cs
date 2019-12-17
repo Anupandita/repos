@@ -1,18 +1,18 @@
-﻿using RestSharp;
+﻿using System.Threading.Tasks;
+using RestSharp;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Core.RestResponse;
 using Sfc.Wms.App.Api.Contracts.Constants;
-using System.Threading.Tasks;
 using Sfc.Wms.App.Api.Nuget.Interfaces;
 
 namespace Sfc.Wms.App.Api.Nuget.Gateways
 {
     public class OrderMaintenanceGateway : SfcBaseGateway, IOrderMaintenanceGateway
     {
-        private readonly IRestClient _restClient;
         private readonly ResponseBuilder _responseBuilder;
+        private readonly IRestClient _restClient;
 
-        public OrderMaintenanceGateway(IRestClient restClient, ResponseBuilder responseBuilder)
+        public OrderMaintenanceGateway(IRestClient restClient, ResponseBuilder responseBuilder) : base(restClient)
         {
             _restClient = restClient;
             _responseBuilder = responseBuilder;

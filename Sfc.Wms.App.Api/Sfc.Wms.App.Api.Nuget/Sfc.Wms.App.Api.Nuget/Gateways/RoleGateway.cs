@@ -1,5 +1,5 @@
-﻿using RestSharp;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using RestSharp;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Core.RestResponse;
 using Sfc.Wms.App.Api.Contracts.Constants;
@@ -14,7 +14,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
         private readonly IResponseBuilder _responseBuilder;
         private readonly IRestClient _restClient;
 
-        public RoleGateway(IResponseBuilder responseBuilders, IRestClient restClient)
+        public RoleGateway(IResponseBuilder responseBuilders, IRestClient restClient) : base(restClient)
         {
             _endPoint = Routes.Prefixes.Roles;
             _responseBuilder = responseBuilders;
@@ -26,8 +26,8 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
-                var request = GetRoleMenuMappingsRequest(roleId,token);
-                var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false); 
+                var request = GetRoleMenuMappingsRequest(roleId, token);
+                var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
                 return _responseBuilder.GetResponseData<object>(response);
             }).ConfigureAwait(false);
         }
@@ -39,12 +39,12 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             return await retryPolicy.ExecuteAsync(async () =>
             {
                 var request = GetRolesForUserRequest(token);
-                var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false); 
+                var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
                 return _responseBuilder.GetResponseData<object>(response);
             }).ConfigureAwait(false);
         }
 
-        public async Task<BaseResult<string>> UpdateRoleMenus(RoleMenuModel roleMenu,string token)
+        public async Task<BaseResult<string>> UpdateRoleMenus(RoleMenuModel roleMenu, string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
@@ -54,14 +54,14 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
                 return _responseBuilder.GetResponseData<object>(response);
             }).ConfigureAwait(false);
         }
-        
+
         public async Task<BaseResult<string>> GetRolePermissions(int roleId, string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
-                var request = GetRolePermissionsRequest(roleId,token);
-                var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false); 
+                var request = GetRolePermissionsRequest(roleId, token);
+                var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
                 return _responseBuilder.GetResponseData<object>(response);
             }).ConfigureAwait(false);
         }
@@ -73,7 +73,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             return await retryPolicy.ExecuteAsync(async () =>
             {
                 var request = UpdateRolePermissionsRequest(rolePermissions, token);
-                var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false); 
+                var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
                 return _responseBuilder.GetResponseData<object>(response);
             }).ConfigureAwait(false);
         }
@@ -81,13 +81,15 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
 
         private RestRequest GetRoleMenuMappingsRequest(int roleId, string token)
         {
-            var resource = $"{_endPoint}{Routes.Paths.QueryParamSeperator}{Routes.Paths.RoleMenus}{Routes.Paths.QueryParamSeperator}{roleId}";
+            var resource =
+                $"{_endPoint}{Routes.Paths.QueryParamSeperator}{Routes.Paths.RoleMenus}{Routes.Paths.QueryParamSeperator}{roleId}";
             return GetRequest(token, resource);
         }
 
-         private RestRequest GetRolePermissionsRequest(int roleId, string token)
+        private RestRequest GetRolePermissionsRequest(int roleId, string token)
         {
-            var resource = $"{_endPoint}{Routes.Paths.QueryParamSeperator}{Routes.Paths.RolePermissions}{Routes.Paths.QueryParamSeperator}{roleId}";
+            var resource =
+                $"{_endPoint}{Routes.Paths.QueryParamSeperator}{Routes.Paths.RolePermissions}{Routes.Paths.QueryParamSeperator}{roleId}";
             return GetRequest(token, resource);
         }
 

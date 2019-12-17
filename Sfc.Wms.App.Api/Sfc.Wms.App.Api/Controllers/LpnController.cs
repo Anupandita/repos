@@ -30,13 +30,13 @@ namespace Sfc.Wms.App.Api.Controllers
 
         [HttpPost]
         [Route(Routes.Paths.LpnCommentsAdd)]
-        [ResponseType(typeof(BaseResult))]
+        [ResponseType(typeof(BaseResult<CaseCommentDto>))]
         public async Task<IHttpActionResult> AddLpnCommentAsync(CaseCommentDto caseCommentDto)
         {
             var response = await _caseCommentService.InsertAsync(caseCommentDto)
                 .ConfigureAwait(false);
             return response.ResultType == ResultTypes.Created ?
-                CreatedAtRoute(nameof(CaseCommentDto), new { lpnId = caseCommentDto.CaseNumber }, new BaseResult { ResultType = ResultTypes.Created }) : ResponseHandler(response);
+                CreatedAtRoute(nameof(CaseCommentDto), new { lpnId = caseCommentDto.CaseNumber }, response) : ResponseHandler(response);
         }
 
         [HttpDelete]
@@ -49,10 +49,10 @@ namespace Sfc.Wms.App.Api.Controllers
             return ResponseHandler(response);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route(Routes.Paths.Find)]
         [ResponseType(typeof(BaseResult<LpnSearchResultsDto>))]
-        public async Task<IHttpActionResult> FindLpnAsync([FromBody]LpnParameterDto lpnParamDto)
+        public async Task<IHttpActionResult> LpnSearchAsync([FromUri]LpnParameterDto lpnParamDto)
         {
             var response = await _lpnService.LpnSearchAsync(lpnParamDto).ConfigureAwait(false);
             return ResponseHandler(response);
@@ -78,7 +78,7 @@ namespace Sfc.Wms.App.Api.Controllers
 
         [HttpGet]
         [Route(Routes.Paths.LpnDetails)]
-        [ResponseType(typeof(BaseResult<List<CaseDetailDto>>))]
+        [ResponseType(typeof(BaseResult<LpnDetailsDto>))]
         public async Task<IHttpActionResult> GetLpnDetailsAsync(string lpnId)
         {
             var response = await _lpnService.GetLpnDetailsAsync(lpnId).ConfigureAwait(false);
@@ -106,7 +106,7 @@ namespace Sfc.Wms.App.Api.Controllers
         [HttpPut]
         [Route(Routes.Paths.LpnUpdateDetails)]
         [ResponseType(typeof(BaseResult))]
-        public async Task<IHttpActionResult> UpdateLpnAsync(LpnHeaderUpdateDto lpnUpdate)
+        public async Task<IHttpActionResult> UpdateLpnHeaderAsync(LpnHeaderUpdateDto lpnUpdate)
         {
             var response = await _lpnService.UpdateLpnDetailsAsync(lpnUpdate).ConfigureAwait(false);
             return ResponseHandler(response);
