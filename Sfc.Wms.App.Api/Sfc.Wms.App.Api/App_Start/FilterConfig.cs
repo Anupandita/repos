@@ -16,7 +16,7 @@ namespace Sfc.Wms.App.Api
 
         public static void RegisterDbInterceptor(QueryLogger queryLogger)
         {
-            DbInterception.Add(new CommandInterceptor(queryLogger));
+            DbInterception.Add(new CommandInterceptor());
         }
     }
 }

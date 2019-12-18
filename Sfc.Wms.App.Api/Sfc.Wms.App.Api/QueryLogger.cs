@@ -14,11 +14,9 @@ namespace Sfc.Wms.App.Api
 
         public void Write(string message)
         {
-            if (ConfigurationManager.AppSettings["EnableQueryLogging"] == "true")
-            {
-                _fileWriter.WriteLine(message);
-                _fileWriter.Flush();
-            }
+            if (ConfigurationManager.AppSettings["EnableQueryLogging"] != "true") return;
+            _fileWriter.WriteLine(message);
+            _fileWriter.Flush();
         }
     }
 }
