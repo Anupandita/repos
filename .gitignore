@@ -288,3 +288,4 @@ __pycache__/
 *.xsd.cs
 /Sfc.App.Api/Sfc.App.Api.Nuget/Program.cs
 /Sfc.App.Api/Sfc.App.Api.Nuget/Sfc.App.Api.Nuget/Program.cs
+Sfc.Wms.App.Api/Sfc.Wms.App.Api/Logs/
