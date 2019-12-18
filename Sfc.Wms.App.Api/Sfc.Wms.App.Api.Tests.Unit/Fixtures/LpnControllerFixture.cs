@@ -574,7 +574,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         {
             VerifyAddLpnComments();
             Assert.IsNotNull(_testResponse);
-            var result = _testResponse.Result as CreatedAtRouteNegotiatedContentResult<BaseResult>;
+            var result = _testResponse.Result as CreatedAtRouteNegotiatedContentResult<BaseResult<CaseCommentDto>>; 
             Assert.IsNotNull(result);
             Assert.AreEqual(ResultTypes.Created, result.Content.ResultType);
         }
