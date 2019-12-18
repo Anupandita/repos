@@ -8,7 +8,7 @@ namespace Sfc.Wms.App.Api
 {
     public class CommandInterceptor : IDbCommandInterceptor
     {
-        private static readonly ConcurrentDictionary<DbCommand, DateTime> m_StartTime = new ConcurrentDictionary<DbCommand, DateTime>();
+        private static readonly ConcurrentDictionary<DbCommand, DateTime> MStartTime = new ConcurrentDictionary<DbCommand, DateTime>();
         private readonly QueryLogger _queryLogger;
 
         public CommandInterceptor(QueryLogger queryLogger)
@@ -48,14 +48,14 @@ namespace Sfc.Wms.App.Api
 
         private void OnStart(DbCommand command)
         {
-            m_StartTime.TryAdd(command, DateTime.Now);
+            MStartTime.TryAdd(command, DateTime.Now);
         }
 
         public void Log<T>(DbCommand command, DbCommandInterceptionContext<T> interceptionContext)
         {
             TimeSpan duration;
 
-            m_StartTime.TryRemove(command, out var startTime);
+            MStartTime.TryRemove(command, out var startTime);
             if (startTime != default(DateTime))
             {
                 duration = DateTime.Now - startTime;
