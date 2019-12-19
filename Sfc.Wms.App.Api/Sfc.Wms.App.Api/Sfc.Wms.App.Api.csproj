@@ -291,9 +291,6 @@
     <Reference Include="Sfc.Wms.Framework.DockDoor.App, Version=2.2.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.DockDoor.App.2.2.4\lib\net472\Sfc.Wms.Framework.DockDoor.App.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Framework.Interceptor.App, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Framework.Interceptor.App.3.1.0\lib\net472\Sfc.Wms.Framework.Interceptor.App.dll</HintPath>
-    </Reference>
     <Reference Include="Sfc.Wms.Framework.ItemMaster.App, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.ItemMaster.App.1.0.1\lib\net472\Sfc.Wms.Framework.ItemMaster.App.dll</HintPath>
     </Reference>
@@ -504,7 +501,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="CommandInterceptor.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\CorbaController.cs" />
     <Compile Include="Controllers\ReleaseAndConnectionInfoController.cs" />
@@ -522,7 +518,6 @@
     <Compile Include="DelegatingHandlers\SlidingExpirationHandler.cs" />
     <Compile Include="Interfaces\IRbacService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QueryLogger.cs" />
     <Compile Include="Services\RbacService.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -549,6 +544,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Wms.Framework\Sfc.Wms.Framework.Interceptor\Sfc.Wms.Framework.Interceptor.App\Sfc.Wms.Framework.Interceptor.App.csproj">
+      <Project>{ef1a9c4a-1df1-42dd-9a61-66e8945c11a8}</Project>
+      <Name>Sfc.Wms.Framework.Interceptor.App</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

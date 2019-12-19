@@ -98,7 +98,6 @@ namespace Sfc.Wms.App.Api
 
             container.Register(() => new StreamWriter(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
                 ConfigurationManager.AppSettings["QueryLogFileName"]), true), Lifestyle.Singleton);
-            container.Register<QueryLogger>(Lifestyle.Singleton);
 
             container.Options.AllowOverridingRegistrations = true;
             container.Register<SfcLogger>(Lifestyle.Singleton);

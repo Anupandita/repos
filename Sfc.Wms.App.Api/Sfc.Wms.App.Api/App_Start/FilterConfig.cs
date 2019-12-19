@@ -2,6 +2,7 @@
 using Sfc.Wms.Framework.Security.Token.Jwt.Filters;
 using System.Web.Http.Filters;
 using Sfc.Core.Aop.WebApi.Logging;
+using Sfc.Wms.Framework.Interceptor.App.interceptors;
 
 namespace Sfc.Wms.App.Api
 {
@@ -14,7 +15,7 @@ namespace Sfc.Wms.App.Api
             filters.Add(new LogExceptionWebApiFilter(sfcLogger));
         }
 
-        public static void RegisterDbInterceptor(QueryLogger queryLogger)
+        public static void RegisterDbInterceptor()
         {
             DbInterception.Add(new CommandInterceptor());
         }
