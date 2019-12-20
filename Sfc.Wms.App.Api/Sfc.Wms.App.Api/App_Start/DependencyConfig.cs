@@ -22,13 +22,9 @@ using SimpleInjector.Integration.WebApi;
 using SimpleInjector.Lifestyles;
 using System;
 using System.Configuration;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Runtime.Caching;
 using System.Web.Http;
-using Serilog;
-using Serilog.Events;
 using Sfc.Core.OnPrem.Pagination;
 
 namespace Sfc.Wms.App.Api
@@ -45,21 +41,6 @@ namespace Sfc.Wms.App.Api
 #endif
             GlobalConfiguration.Configuration.DependencyResolver =
                 new SimpleInjectorWebApiDependencyResolver(container);
-            //var context = container.GetInstance<ShamrockContext>();
-            //context.Database.Log = Debug.WriteLine;
-            //using (var context = container.GetInstance<ShamrockContext>())
-            //{
-            //    context.Database.Log = Console.Write;
-            //}
-
-            //using (AsyncScopedLifestyle.BeginScope(container))
-            //{
-            //var context = container.GetInstance<ShamrockContext>();
-            //var queryLogger = container.GetInstance<QueryLogger>();
-
-            //queryLogger.Write("Writting a test line");
-            //context.Database.Log = queryLogger.Write;
-            //}
 
             return container;
         }
@@ -95,9 +76,6 @@ namespace Sfc.Wms.App.Api
             container.Register<ISfcCache>(() => new SfcInMemoryCache(MemoryCache.Default), Lifestyle.Scoped);
             container.Register<IMappingFixture>(() => new MappingFixture(), Lifestyle.Singleton);
             container.Register<LpnParameterValidator>(Lifestyle.Scoped);
-
-            container.Register(() => new StreamWriter(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
-                ConfigurationManager.AppSettings["QueryLogFileName"]), true), Lifestyle.Singleton);
 
             container.Options.AllowOverridingRegistrations = true;
             container.Register<SfcLogger>(Lifestyle.Singleton);
