@@ -71,12 +71,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public OrstTestData GetCartonDetailsForInsertingOrstMessage(OracleConnection db,int cartonStatusCode, int pktStatusCode, bool completed = true)
         {
             var orstTestData = new OrstTestData();
-            var sqlStatement = $"select sm.order_id,sm.sku_id,sm.qty,sm.msg_json,ch.curr_locn_id,pl.locn_id,ph.ship_w_ctrl_nbr,ch.dest_locn_id from swm_to_mhe sm " +
-                $"inner join carton_hdr ch ON sm.order_id = ch.carton_nbr " +
-                $"inner join pkt_hdr ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr " +
-                $"inner join alloc_invn_dtl al ON al.task_cmpl_ref_nbr = ch.carton_nbr " +
-                $"inner join pick_locn_dtl pl ON pl.sku_id = sm.sku_id "+
-                $"inner join pkt_dtl pd ON pd.pkt_ctrl_nbr =ch.pkt_ctrl_nbr";
+            var sqlStatement = $"{OrstQueries.ValidDataForInsertingOrstMessage}";
             if (completed)
             {
                 sqlStatement = sqlStatement + $" where sm.source_msg_status = '{DefaultValues.Status}' and ch.stat_code = '{cartonStatusCode}' and ph.pkt_stat_code = '{pktStatusCode}' and pd.pkt_seq_nbr > {Constants.NumZero}";
@@ -104,14 +99,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public OrstTestData GetCartonDetailsForInsertingOrstMessageForNegativeCaseWherePickTicketSeqNumberIsLessThan1(OracleConnection db, int cartonStatusCode, int pktStatusCode)
         {
             var orstTestData = new OrstTestData();
-            var sqlStatement = $"select sm.order_id,sm.sku_id,sm.qty,sm.msg_json,ch.curr_locn_id,pl.locn_id,ph.ship_w_ctrl_nbr,ch.dest_locn_id from swm_to_mhe sm " +
-                $"inner join carton_hdr ch ON sm.order_id = ch.carton_nbr " +
-                $"inner join pkt_hdr ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr " +
-                $"inner join alloc_invn_dtl al ON al.task_cmpl_ref_nbr = ch.carton_nbr " +
-                $"inner join pick_locn_dtl pl ON pl.sku_id = sm.sku_id " +
-                $"inner join pkt_dtl pd ON pd.pkt_ctrl_nbr =ch.pkt_ctrl_nbr"+
-                $" where sm.source_msg_status = '{DefaultValues.Status}' and ch.stat_code = '{cartonStatusCode}' and ph.pkt_stat_code < '{pktStatusCode}' and pd.pkt_seq_nbr <= {Constants.NumZero}";
+            var sqlStatement = $"{OrstQueries.PickTktSeqNbrIsLessThan1}";
                 Command = new OracleCommand(sqlStatement, db);
+                Command.Parameters.Add(new OracleParameter("status", DefaultValues.Status));
+                Command.Parameters.Add(new OracleParameter("cartonStatusCode", cartonStatusCode));
+                Command.Parameters.Add(new OracleParameter("pktStatusCode", pktStatusCode));               
                 var swmToMheReader = Command.ExecuteReader();
                 if (swmToMheReader.Read())
                 {
@@ -317,8 +309,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public MessageToSortViewDto GetMsgTosvDetail(OracleConnection db, string cartonNo)
         {
             var messageTosv = new MessageToSortViewDto();
-            var query = $"select * from msg_to_sv where message_type='USL' and PTN='{cartonNo}'";
-            Command = new OracleCommand(query, db); var cartonHeaderReader = Command.ExecuteReader();
+            var query = $"{OrstQueries.MsgToSourceView}";
+            Command = new OracleCommand(query, db);
+            Command.Parameters.Add(new OracleParameter("cartonNo", cartonNo));
+            var cartonHeaderReader = Command.ExecuteReader();
             if (cartonHeaderReader.Read()) { messageTosv.Ptn = (cartonHeaderReader[MessageToSv.Ptn].ToString());
             }
             return messageTosv;
@@ -385,8 +379,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public CartonHeaderDto GetCartonHeaderDetails(OracleConnection db,string cartonNumber)
         {
             var cartonHeader = new CartonHeaderDto();
-            var query = $"select CURR_LOCN_ID, DEST_LOCN_ID,MOD_DATE_TIME, USER_ID, STAT_CODE from CARTON_HDR where CARTON_NBR='{cartonNumber}'";
+            var query = $"{OrstQueries.CartonHeader}";
             Command = new OracleCommand(query,db);
+            Command.Parameters.Add(new OracleParameter("cartonNumber", cartonNumber));
             var cartonHeaderReader = Command.ExecuteReader();
             if (cartonHeaderReader.Read())
             {
@@ -399,8 +394,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public CartonDetailDto GetCartonDetails(OracleConnection db, string cartonNumber)
         {
             var cartonDtl = new CartonDetailDto();
-            var query = $"select * from carton_dtl where carton_nbr = '{cartonNumber}'";
+            var query = $"{OrstQueries.CartonDetail}";
             Command = new OracleCommand(query, db);
+            Command.Parameters.Add(new OracleParameter("cartonNumber", cartonNumber));
             var cartonReader = Command.ExecuteReader();
             if(cartonReader.Read())
             {
@@ -414,8 +410,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public PickTicketHeaderDto GetPickTktHeaderDetails(OracleConnection db,string cartonNumber)
         {
             var pkTktHeader = new PickTicketHeaderDto();
-            var query = $"select PKT_HDR.PKT_STAT_CODE,PKT_HDR.MOD_DATE_TIME,PKT_HDR.USER_ID from PKT_HDR WHERE PKT_CTRL_NBR = (SELECT PKT_CTRL_NBR FROM CARTON_HDR WHERE CARTON_NBR = '{cartonNumber}')";
+            var query = $"{OrstQueries.PickTktHeader}";
             Command = new OracleCommand(query,db);
+            Command.Parameters.Add(new OracleParameter("cartonNumber", cartonNumber));
             var pickTktHeaderReader = Command.ExecuteReader();
             if (pickTktHeaderReader.Read())
             {        
@@ -427,8 +424,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public PickTicketDetail GetPickTicketDetailData(OracleConnection db,string cartonNbr,string pktSeqNbr)
         {
             var pickTktDtl = new PickTicketDetail();
-            var query = $"select PKT_DTL.UNITS_PAKD,PKT_DTL.MOD_DATE_TIME,PKT_DTL.USER_ID ,PKT_DTL.VERF_AS_PAKD,PKT_DTL.PKT_CTRL_NBR from PKT_DTL where PKT_DTL.PKT_CTRL_NBR = (SELECT PKT_CTRL_NBR FROM CARTON_HDR WHERE CARTON_NBR= '{cartonNbr}') AND PKT_SEQ_NBR= '{pktSeqNbr}'";
+            var query = $"{OrstQueries.PickTktDtl}";
             Command = new OracleCommand(query, db);
+            Command.Parameters.Add(new OracleParameter("cartonNbr", cartonNbr));
+            Command.Parameters.Add(new OracleParameter("pktSeqNbr", pktSeqNbr));
             var pickTktDtlReader = Command.ExecuteReader();
             if(pickTktDtlReader.Read())
             {
@@ -441,8 +440,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public AllocInvnDtl GetAllocInvnDetails(OracleConnection db,string cntrNbr)
         {
             var allocInvnDtl = new AllocInvnDtl();
-            var query = $"select * from ALLOC_INVN_DTL WHERE task_cmpl_ref_nbr='{cntrNbr}' order by mod_date_time desc";
+            var query = $"{OrstQueries.AllocInventory}";
             Command = new OracleCommand(query,db);
+            Command.Parameters.Add(new OracleParameter("cntrNbr", cntrNbr));
             var allocInvnDtlReader = Command.ExecuteReader();
             if(allocInvnDtlReader.Read())
             {
@@ -456,8 +456,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public EmsToWmsDto GetEmsToWmsData(OracleConnection db,long msgKey)
         {
             var emsToWms = new EmsToWmsDto();
-            var query = $"select * from emstowms where msgKey ={msgKey}";
+            var query = $"{CommonQueries.EmsToWms}";
             Command = new OracleCommand(query,db);
+            Command.Parameters.Add(new OracleParameter("msgKey", msgKey));
             var emsToWmsReader = Command.ExecuteReader();
             if(emsToWmsReader.Read())
             {

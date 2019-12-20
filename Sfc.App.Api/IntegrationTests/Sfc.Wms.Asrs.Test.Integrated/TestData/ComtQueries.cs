@@ -31,5 +31,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
         public const string NotEnoughInventory = "select CASE_HDR.CASE_NBR,CASE_HDR.LOCN_ID,CASE_HDR.STAT_CODE from  CASE_HDR inner join CASE_DTL on " +
                 "CASE_HDR.CASE_NBR = CASE_DTL.CASE_NBR and CASE_DTL.total_alloc_qty <= :qty  and CASE_DTL.CASE_SEQ_NBR = " +
                 " :seqNbr and stat_code = :statCode";
+        
     }
 }

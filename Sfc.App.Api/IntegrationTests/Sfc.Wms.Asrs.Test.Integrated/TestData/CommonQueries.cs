@@ -17,5 +17,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
         public const string PickLocnDtlExt = "select Active_Ormt_Count from pick_locn_dtl_ext WHERE  SKU_ID= :skuId and locn_id in (select lh.locn_id from locn_hdr lh inner join locn_grp lg on lg.locn_id = lh.locn_id inner join sys_code sc on sc.code_id = lg.grp_type and sc.code_type = :sysCodeType and sc.code_id = :sysCodeId ) order by updated_date_time desc,created_date_time asc";
         public const string CartonHdr = "Select * from carton_hdr where carton_nbr = :cartonNumber";
         public const string TaskHdr = "select * from task_hdr where sku_id = :skuId order by mod_date_time desc";
+        public const string EmsToWms = "select * from emstowms where msgKey = :msgKey";
     }
 }

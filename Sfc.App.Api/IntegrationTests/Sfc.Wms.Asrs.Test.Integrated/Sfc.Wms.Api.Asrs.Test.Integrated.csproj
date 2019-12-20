@@ -79,6 +79,8 @@
     <Compile Include="TestData\ComtQueries.cs" />
     <Compile Include="TestData\Parameter.cs" />
     <Compile Include="TestData\EmsToWmsQueries.cs" />
+    <Compile Include="TestData\OrmtQueries.cs" />
+    <Compile Include="TestData\OrstQueries.cs" />
     <Compile Include="Tests\OrmtMessageTest.cs" />
     <Compile Include="Tests\OrstMessageTest.cs" />
     <Compile Include="Tests\OrmtNegativeCases.cs" />

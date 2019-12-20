@@ -14,7 +14,6 @@ using Sfc.Wms.Interfaces.Asrs.Shamrock.Contracts.Dtos;
 using Sfc.Wms.Interfaces.Asrs.Dematic.Contracts.Dtos;
 using Sfc.Wms.Foundation.TransitionalInventory.Contracts.Dtos;
 using Sfc.Wms.Foundation.InboundLpn.Contracts.Enums;
-//using Sfc.Wms.Foundation.PickLocationDetail.Contracts.Dtos;
 using Sfc.Wms.Foundation.Location.Contracts.Dtos;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
