@@ -41,7 +41,6 @@ namespace Sfc.Wms.App.Api
 #endif
             GlobalConfiguration.Configuration.DependencyResolver =
                 new SimpleInjectorWebApiDependencyResolver(container);
-
             return container;
         }
 

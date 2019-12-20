@@ -132,9 +132,6 @@
     <Reference Include="Sfc.Core.OnPrem.AutoMapping, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Core.OnPrem.AutoMapping.2.0.1\lib\net472\Sfc.Core.OnPrem.AutoMapping.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Core.OnPrem.Extensions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Core.OnPrem.Extensions.1.0.0\lib\net472\Sfc.Core.OnPrem.Extensions.dll</HintPath>
-    </Reference>
     <Reference Include="Sfc.Core.OnPrem.LabelGenerator, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Core.OnPrem.LabelGenerator.1.2.0\lib\net472\Sfc.Core.OnPrem.LabelGenerator.dll</HintPath>
     </Reference>
@@ -290,6 +287,9 @@
     </Reference>
     <Reference Include="Sfc.Wms.Framework.DockDoor.App, Version=2.2.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.DockDoor.App.2.2.4\lib\net472\Sfc.Wms.Framework.DockDoor.App.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Framework.Interceptor.App, Version=3.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.Interceptor.App.3.2.0\lib\net472\Sfc.Wms.Framework.Interceptor.App.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Framework.ItemMaster.App, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.ItemMaster.App.1.0.1\lib\net472\Sfc.Wms.Framework.ItemMaster.App.dll</HintPath>
@@ -544,12 +544,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Wms.Framework\Sfc.Wms.Framework.Interceptor\Sfc.Wms.Framework.Interceptor.App\Sfc.Wms.Framework.Interceptor.App.csproj">
-      <Project>{ef1a9c4a-1df1-42dd-9a61-66e8945c11a8}</Project>
-      <Name>Sfc.Wms.Framework.Interceptor.App</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
