@@ -30,9 +30,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         protected void InitializeTestDataForPrintingOfCartons()
         {
-
             GetDataBeforeTriggerOrmtForPrintingOfCartons();
-
         }
         protected void InitializeTestDataForCancelOfCarton()
         {

@@ -174,8 +174,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var costTransData = new Cost();
             SqlStatements = $"{EmsToWmsQueries.CostFetchDataWithOutTransInvn}";
-            Command = new OracleCommand(SqlStatements, db);
-            
+            Command = new OracleCommand(SqlStatements, db);           
             Command.Parameters.Add(new OracleParameter("qty", Constants.MinQuantity));
             Command.Parameters.Add(new OracleParameter("statCode", Constants.ReceivedCaseFromVendorStatCode));
             Command.Parameters.Add(new OracleParameter("transInvnType", Constants.TransInvnType));

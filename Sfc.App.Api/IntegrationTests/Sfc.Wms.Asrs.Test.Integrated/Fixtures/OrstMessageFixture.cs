@@ -200,7 +200,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         protected void VerifyCartonStatusHasChangedTo5ForActionCodeCompleteWithBitsEnabled()
         {
-            Assert.AreEqual(Constants.CartonStatusAllocated, CartonHdrCompleted.StatusCode);
+            Assert.AreEqual(Constants.CartonStatusAllocated, CartonHdrCompleted.StatusCode.ToString());
         }
         
         protected void VerifyForQuantitiesInToPickLocationTableForActionCodeCompleteWithBitsEnabled()
@@ -249,7 +249,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         protected void VerifyCartonStatusHasUpdatedToAllocatedOrWaitingForActionCodeCancel()
         {
-            Assert.AreEqual(Constants.CartonStatusAllocated, CartonHdrCanceled.StatusCode);
+            Assert.AreEqual(Constants.CartonStatusAllocated, CartonHdrCanceled.StatusCode.ToString());
         }
 
         protected void ValidateForOrmtCountHasReducedForActionCodeCancel()

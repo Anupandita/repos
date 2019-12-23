@@ -37,7 +37,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void ValidateForMessageWherePickLocnNotFound()
+        public void ValidateForOrmtMessageWherePickLocnNotFound()
         {           
            this.Given(x => x.ValidOrmtUrlCartonNumberAndActioncodeIs(OrmtUrl, PickLocnNotFound.CartonNbr, OrmtActionCode.AddRelease))
                .When(x => x.OrmtApiIsCalledForPickLocationNotFound())
@@ -47,7 +47,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void ValidateForMessageWhereActiveLocnNotFound()
+        public void ValidateForOrmtMessageWhereActiveLocnNotFound()
         {         
            this.Given(x => x.ValidOrmtUrlCartonNumberAndActioncodeIs(OrmtUrl, ActiveLocnNotFound.CartonNbr, OrmtActionCode.AddRelease))
                .When(x => x.OrmtApiIsCalledForActiveLocationNotFound())
@@ -57,7 +57,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void ValidateForMessageWhereCartonNumberIsInvalid()
+        public void ValidateForOrmtMessageWhereCartonNumberIsInvalid()
         {
            this.Given(x => x.ValidOrmtUrlCartonNumberAndActioncodeIs(OrmtUrl, CancelOrder.CartonNbr,OrmtActionCode.AddRelease))
                .When(x => x.OrmtApiIsCalledForInvalidCartonNumber())
@@ -67,7 +67,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void ValidateForMessageWhereActionCodeIsInvalid()
+        public void ValidateForOrmtMessageWhereActionCodeIsInvalid()
         {          
            this.Given(x => x.ValidOrmtUrlCartonNumberAndActioncodeIs(OrmtUrl, PrintCarton.CartonNbr, Constants.InvalidOrmtActionCode))
                .When(x => x.OrmtApiIsCalledForInvalidActionCode())

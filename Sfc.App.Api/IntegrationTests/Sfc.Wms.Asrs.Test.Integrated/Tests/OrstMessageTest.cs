@@ -25,11 +25,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
     public class OrstMessageTest : OrstMessageFixture
     {
-
         [TestMethod()]
-        [TestCategory("FUNCTIONAL")]    
-       
-        public void OrstMessageTestForActionCodeAllocated()
+        [TestCategory("FUNCTIONAL")]
+        [DataRow(4)]
+        public void OrstMessageTest1ForActionCodeAllocated(int count)
         {
             this.Given(x=>x.InitializeTestData())                
                 .And(x => x.ValidMsgKeyMsgProcessorAndOrstUrlIs(MsgKeyForAllocated.MsgKey, EmsToWmsAllocated.Process,OrstUrl))
@@ -44,7 +43,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
        
-        public void OrstMessageTestForActionCodeCompleted()
+        public void OrstMessageTest2ForActionCodeCompleted()
         {
             this.Given(x => x.TestDataForActionCodeComplete())             
                 .And(x => x.ValidMsgKeyMsgProcessorAndOrstUrlIs(MsgKeyForCompleted.MsgKey, EmsToWmsCompleted.Process,OrstUrl))
@@ -63,7 +62,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void OrstMessageTestForActionCodeDeAllocate()
+        public void OrstMessageTest3ForActionCodeDeAllocate()
         {
             this.Given(x=>x.TestDataForActionCodeDeAllocate())                           
                 .And(x => x.ValidMsgKeyMsgProcessorAndOrstUrlIs(MsgKeyForDeallocated.MsgKey, EmsToWmsDeallocated.Process,OrstUrl))
@@ -75,7 +74,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void OrstMessageTestForActionCodeCancel()
+        public void OrstMessageTest4ForActionCodeCancel()
         {
             this.Given(x => x.TestDataForActionCodeCancel())       
                 .And(x => x.ValidMsgKeyMsgProcessorAndOrstUrlIs(MsgKeyForCanceled.MsgKey, EmsToWmsCanceled.Process,OrstUrl))
@@ -88,7 +87,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void OrstMessageTestForActionCodeCompleteWhenBitCodeIsEnabled()
+        public void OrstMessageTest5ForActionCodeCompleteWhenBitCodeIsEnabled()
         {
             this.Given(x => x.ReadDataBeforeCallingApiForActionCodeCompleteWithBitsEnabled())                
                 .And(x => x.ValidMsgKeyMsgProcessorAndOrstUrlIs(MsgKeysForCase5.MsgKey, EmsToWmsCompleted.Process,OrstUrl))
@@ -103,7 +102,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void OrstMessageTestForActionCodeCompleteWhenPickTicketSeqNbrIsSmallerThan1()
+        public void OrstMessageTest6ForActionCodeCompleteWhenPickTicketSeqNbrIsSmallerThan1()
         {
             this.Given(x => x.ReadDataBeforeApiForNegativeCaseWherePickTicketSeqNumberIsLessThan1())            
                 .And(x => x.ValidMsgKeyMsgProcessorAndOrstUrlIs(MsgKeyForCompleted.MsgKey, EmsToWmsCompleted.Process,OrstUrl))

@@ -19,7 +19,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
                 "inner join alloc_invn_dtl al ON al.task_cmpl_ref_nbr = ch.carton_nbr " +
                 "inner join pick_locn_dtl pl ON pl.sku_id = sm.sku_id " +
                 "inner join pkt_dtl pd ON pd.pkt_ctrl_nbr =ch.pkt_ctrl_nbr" +
-                " where sm.source_msg_status = :status and ch.stat_code = :cartonStatusCode and ph.pkt_stat_code < :pktStatusCode and pd.pkt_seq_nbr <= {Constants.NumZero}";
+                " where sm.source_msg_status = :status and ch.stat_code = :cartonStatusCode and ph.pkt_stat_code < :pktStatusCode and pd.pkt_seq_nbr <= 0";
         public const string MsgToSourceView = "select * from msg_to_sv where message_type='USL' and PTN= :cartonNo";
         public const string CartonHeader = "select CURR_LOCN_ID, DEST_LOCN_ID,MOD_DATE_TIME, USER_ID, STAT_CODE from CARTON_HDR where CARTON_NBR= :cartonNumber";
         public const string CartonDetail = "select * from carton_dtl where carton_nbr = :cartonNumber";

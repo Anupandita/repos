@@ -20,11 +20,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         [TestCategory("FUNCTIONAL")]
         public void OrmtWaveRelease()
         {           
-           this .Given(x=>x.InitializeTestDataForWaveRelease())
-                .And(x=>x.ValidOrmtWaveUrlAndWaveNumberIs(OrmtUrl,OrderList[0].WaveNbr))
-                .When(x=>x.OrmtApiIsCalledCreatedIsReturnedForWaveRelease())
-                .And(x=>x.ReadDataAndValidateTheFieldsInInternalTables())
-                .BDDfy("Test Case Id:146383-ORMT Wave release : test ormt message by passing wave number in the api call and validate all the functionalities");
+           //this .Given(x=>x.InitializeTestDataForWaveRelease())
+           //     .And(x=>x.ValidOrmtWaveUrlAndWaveNumberIs(OrmtUrl,OrderList[0].WaveNbr))
+           //     .When(x=>x.OrmtApiIsCalledCreatedIsReturnedForWaveRelease())
+           //     .And(x=>x.ReadDataAndValidateTheFieldsInInternalTables())
+           //     .BDDfy("Test Case Id:146383-ORMT Wave release : test ormt message by passing wave number in the api call and validate all the functionalities");
         }
     }
 }
