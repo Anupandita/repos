@@ -101,6 +101,7 @@
     <Compile Include="Tests\SkmtNeagtiveCase.cs" />
     <Compile Include="Tests\MprqAndMpidTest.cs" />
     <Compile Include="Tests\ComtAndIvmtTestReceivedCase.cs" />
+    <Compile Include="Tests\ComtAndIvmtTestWhenTriggerIsOn.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Castle.Core">

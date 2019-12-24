@@ -27,7 +27,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         public void ComtAndIvmtMessageTestScenarios() 
         {
-            this.Given(x => x.AValidNewComtMessageRecordWhereCaseNumberAndSkuIS(SingleSkuCase.CaseNumber, SingleSkuCase.SkuId))
+            this.Given(x => x.AValidNewComtMessageRecordWhereCaseNumberAndSkuIs(SingleSkuCase.CaseNumber, SingleSkuCase.SkuId))
                 .When(x => x.ComtApiIsCalledCreatedIsReturnedWithValidUrlIs(ComtUrl))
                 .Then(x => x.GetDataFromDataBaseForSingleSkuScenarios())
                 .And(x => x.VerifyComtMessageWasInsertedIntoSwmToMhe())
@@ -45,7 +45,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         [TestCategory("FUNCTIONAL")]
         public void ComtAndIvmtTestForMultiSkuScenarios()
         {
-              this.Given(x => x.AValidNewComtMessageRecordWhereCaseNumberAndSkuIS(CaseHdrMultiSku.CaseNumber, CaseHdrMultiSku.SkuId))
+              this.Given(x => x.AValidNewComtMessageRecordWhereCaseNumberAndSkuIs(CaseHdrMultiSku.CaseNumber, CaseHdrMultiSku.SkuId))
                 .When(x => x.ComtApiIsCalledCreatedIsReturnedWithValidUrlIs(ComtUrl))
                 .Then(x => x.GetDataAndValidateForIvmtMessageHasInsertedIntoBothTables())
                 .And(x => x.VerifyComtMessageWasInsertedIntoSwmToMheForMultiSku())
@@ -59,7 +59,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         [TestCategory("FUNCTIONAL")]
         public void ComtIvmtMessageTestCaseForNoEnoughInventoryInCase()
         {
-            this.Given(x => x.AValidNewComtMessageRecordWhereCaseNumberAndSkuIS(NotEnoughInvCase.CaseNumber, null))
+            this.Given(x => x.AValidNewComtMessageRecordWhereCaseNumberAndSkuIs(NotEnoughInvCase.CaseNumber, null))
                 .When(x => x.ComtApiIsCalledForNotEnoughInventoryInCaseAndUrlIs(ComtUrl))
                 .Then(x => x.ValidateForNotEnoughInventoryInCase())  
                 .BDDfy("Test Case ID: 133226 -Dematic - COMT,IVMT : Validate for NotEnough Inventory in Case and validate for error messages");

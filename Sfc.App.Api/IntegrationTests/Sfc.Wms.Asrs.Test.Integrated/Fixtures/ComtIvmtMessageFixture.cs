@@ -31,8 +31,16 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             GetDataBeforeTriggerforReceivedCaseComt();
         }
+        protected void InitializeTestDataForStatCode30WhenTriggerIsOn()
+        {
+            GetDataBeforeTriggerForStatCode30();
+        }
 
-        public void AValidNewComtMessageRecordWhereCaseNumberAndSkuIS(string currentCaseNbr,string skuId)
+        protected void InitializeTestDataForCOMTWhenTriggerIsOn()
+        {
+            GetDataBeforeTriggerForComtIvmt();
+        }
+        public void AValidNewComtMessageRecordWhereCaseNumberAndSkuIs(string currentCaseNbr,string skuId)
         {
             ComtParameters = new ComtParams
             {
@@ -144,7 +152,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(MessageLength.Ivmt, Ivmt.MessageLength);
             Assert.AreEqual(ActionCodeConstants.Create, Ivmt.ActionCode);
             Assert.AreEqual(SingleSkuCase.SkuId, Ivmt.Sku);
-            Assert.AreEqual(SingleSkuCase.ActlQty, Convert.ToDouble(Ivmt.Quantity));
+            Assert.AreEqual(SingleSkuCase.TotalAllocQty, Convert.ToDouble(Ivmt.Quantity));
             Assert.AreEqual(DefaultValues.ContainerType, Ivmt.UnitOfMeasure);
             Assert.AreEqual(DefaultValues.DataControl, Ivmt.DateControl);
         }

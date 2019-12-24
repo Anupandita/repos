@@ -71,6 +71,22 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
+        public void GetDataBeforeTriggerForComtIvmt()
+        {
+            using (var db = GetOracleConnection())
+            {
+                db.Open();
+                var caseheader = TriggerOnCaseHeaderTable(db, Constants.CaseSeqNumberForSingleSku);
+                var caseDto = GetCaseDtlData(db, caseheader.CaseNumber);
+                SingleSkuCase = FetchTransInvn(db, caseDto[0].SkuId);
+                SingleSkuCase.CaseNumber = caseheader.CaseNumber;
+                SingleSkuCase.LocationId = caseheader.LocationId;
+                SingleSkuCase.StatusCode = caseheader.StatusCode;
+                SingleSkuCase.SkuId = caseDto[0].SkuId;
+                SingleSkuCase.TotalAllocQty = Convert.ToInt32(caseDto[0].TotalAllocQty);                
+            }
+        }
+
         public void GetDataBeforeTriggerforReceivedCaseComt()
         {
             using (var db = GetOracleConnection())
@@ -87,6 +103,24 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 SingleSkuCase.ActlQty = Convert.ToInt32(receivedcaseDto[0].ActlQty);
             }
         }
+
+        public void GetDataBeforeTriggerForStatCode30()
+        {
+            using (var db = GetOracleConnection())
+            {
+                db.Open();
+                var returncaseheader = TriggerOnCaseHeaderTableForStatCode30(db, 1);
+                var receivedcaseDto = GetCaseDtlData(db, returncaseheader.CaseNumber);
+                CaseDtlBeforeApi = FetchCaseDetailsTriger(db);
+                SingleSkuCase = FetchTransInvn(db, receivedcaseDto[0].SkuId);
+                SingleSkuCase.CaseNumber = returncaseheader.CaseNumber;
+                SingleSkuCase.LocationId = returncaseheader.LocationId;
+                SingleSkuCase.StatusCode = returncaseheader.StatusCode;
+                SingleSkuCase.SkuId = receivedcaseDto[0].SkuId;
+                SingleSkuCase.ActlQty = Convert.ToInt32(receivedcaseDto[0].ActlQty);
+            }
+        }
+
 
         public CaseViewDto TriggerOnReceivedCaseHeader(OracleConnection db, int seqNumber)
         {
@@ -112,6 +146,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return receivedcaseheader;
         }
 
+
+
+
+
         public CaseViewDto TriggerOnCaseHeader(OracleConnection db, int seqNumber)
         {
             var caseheader = new CaseViewDto();
@@ -134,6 +172,39 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
             return caseheader;
         }
+
+        public CaseViewDto TriggerOnCaseHeaderTable(OracleConnection db, int seqNumber)
+        {
+            var caseheader = new CaseViewDto();
+            var q = $"{ComtQueries.CasesFromVendorsWithTriggerEnabled}";
+            Command = new OracleCommand(q, db);
+            var caseHeaderReader = Command.ExecuteReader();
+            if (caseHeaderReader.Read())
+            {
+                caseheader.CaseNumber = caseHeaderReader[CaseHeader.CaseNumber].ToString();
+                caseheader.LocationId = caseHeaderReader[CaseHeader.LocationId].ToString();
+                caseheader.StatusCode = Convert.ToInt16(caseHeaderReader[CaseHeader.StatusCode].ToString());
+            }
+            return caseheader;
+
+        }
+
+        public CaseViewDto TriggerOnCaseHeaderTableForStatCode30(OracleConnection db, int seqNumber)
+        {
+            var caseheader = new CaseViewDto();
+            var q = $"{ComtQueries.CasesFromReturnsWithTriggerEnabled}";
+            Command = new OracleCommand(q, db);
+            var caseHeaderReader = Command.ExecuteReader();
+            if (caseHeaderReader.Read())
+            {
+                caseheader.CaseNumber = caseHeaderReader[CaseHeader.CaseNumber].ToString();
+                caseheader.LocationId = caseHeaderReader[CaseHeader.LocationId].ToString();
+                caseheader.StatusCode = Convert.ToInt16(caseHeaderReader[CaseHeader.StatusCode].ToString());
+            }
+            return caseheader;
+
+        }
+
 
         public CaseHeaderDto QueryForNotEnoughInventoryInCase(OracleConnection db, int seqNumber)
         {
@@ -265,6 +336,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
+       
+
         protected CaseViewDto FetchCaseDetailsTriger(OracleConnection db)
         {
             var caseDtl = new CaseViewDto();
@@ -296,6 +369,15 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 task.StatusCode = Convert.ToByte(taskHdr[TaskHeader.StatCode].ToString());
             }
             return task;
+        }
+
+        protected void UpdateDropLocationInCaseHeader(OracleConnection db,string locnId,string caseNumber)
+        {
+            Transaction = db.BeginTransaction();
+            var updateQuery = $"Uodate case_hdr set locn_id = '{locnId}' where case_nbr = '{caseNumber}'";
+            Command = new OracleCommand(updateQuery, db);
+            Command.ExecuteNonQuery();
+            Transaction.Commit();
         }
 
         public void GetDataAfterTriggerForMultiSkuAndValidateData()

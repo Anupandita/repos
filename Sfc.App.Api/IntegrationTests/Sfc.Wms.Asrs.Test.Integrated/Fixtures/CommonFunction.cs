@@ -136,17 +136,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return unitWeight;
         }
 
-        public Data.Entities.ItemMaster GetTempZone(OracleConnection db, string skuId)
-        {
-            var itemMaster = new Data.Entities.ItemMaster();
+        public string GetTempZone(OracleConnection db, string skuId)
+        {          
             var query = $"{CommonQueries.TempZone}";
             Command = new OracleCommand(query, db);           
             Command.Parameters.Add(new OracleParameter("skuId", skuId));
-            var itemMasterReader = Command.ExecuteReader();
-            if (itemMasterReader.Read())
-            {
-                itemMaster.TempZone = itemMasterReader["TEMP_ZONE"].ToString();
-            }
+            string itemMaster = Command.ExecuteReader().ToString();            
             return itemMaster;
         }
 

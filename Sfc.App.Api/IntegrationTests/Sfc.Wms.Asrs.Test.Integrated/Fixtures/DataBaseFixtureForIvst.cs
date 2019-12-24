@@ -162,7 +162,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                var ivstResult = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, IvstData.Qty, IvstActionCode.AdjustmentPlus, IvstException.CycleCount, Constants.InboundPalletN);
+                var ivstResult = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, IvstData.Qty, "UPCOverride", IvstException.CycleCount, Constants.InboundPalletN);
                 EmsToWmsParametersCycleCount = new EmsToWmsDto
                 {
                     Process = DefaultPossibleValue.MessageProcessor,
