@@ -5,11 +5,9 @@ using Sfc.Wms.App.Api.Contracts.Dto;
 using Sfc.Wms.Configuration.SystemCode.Contracts.Dtos;
 using Sfc.Wms.Configuration.SystemCode.Contracts.Interfaces;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using Sfc.Core.OnPrem.Pagination;
 
 namespace Sfc.Wms.App.Api.Controllers
 {
@@ -27,18 +25,12 @@ namespace Sfc.Wms.App.Api.Controllers
         [AllowAnonymous]
         [Route(Routes.Paths.CodeIds)]
         [ResponseType(typeof(BaseResult<IEnumerable<SysCodeDto>>))]
-        public async Task<IHttpActionResult> GetSystemCodesAsync([FromUri] SystemCodeDto sysCodeDto)
+        public async Task<IHttpActionResult> GetSystemCodesAsync([FromUri] SystemCodeInputDto systemCodeInputDto)
         {
-            //TODO: Need to update SystemCodeDto
-            var resultResponse = await _systemCodeService.GetSystemCodeAsync(sysCodeDto.RecType, sysCodeDto.CodeType,
-                sysCodeDto.CodeId, 
-                new SortOption
-                {
-                    PropertyName = sysCodeDto.OrderByColumn,
-                    OrderBy = sysCodeDto.OrderBy == "asc" ? ListSortDirection.Ascending : ListSortDirection.Descending
-                });
-              //  sysCodeDto.OrderByColumn, sysCodeDto.OrderBy);
-            return ResponseHandler(resultResponse);
+            var response = await _systemCodeService.GetSystemCodeAsync(systemCodeInputDto.RecType,
+                     systemCodeInputDto.CodeType, systemCodeInputDto.CodeId, systemCodeInputDto.SortOption);
+
+            return ResponseHandler(response);
         }
     }
 }
