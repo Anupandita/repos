@@ -33,11 +33,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected OracleCommand OracleCommand;
         public decimal UnitWeight1;
 
-
         public Cost GetCaseDetailsForInsertingCostMessage(OracleConnection db)
         {
             var costDataDto = new Cost();
-            SqlStatements = $"{EmsToWmsQueries.CostQuery}";
+            SqlStatements = EmsToWmsQueries.CostQuery;
             Command = new OracleCommand(SqlStatements, db);
             Command.Parameters.Add(new OracleParameter("statCode", Constants.StatusCodeConsumed));
             Command.Parameters.Add(new OracleParameter("sysCodeType", Constants.SysCodeType));
@@ -173,7 +172,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public Cost FetchCaseNumberWithoutTransInventry (OracleConnection db)
         {
             var costTransData = new Cost();
-            SqlStatements = $"{EmsToWmsQueries.CostFetchDataWithOutTransInvn}";
+            SqlStatements = EmsToWmsQueries.CostFetchDataWithOutTransInvn;
             Command = new OracleCommand(SqlStatements, db);           
             Command.Parameters.Add(new OracleParameter("qty", Constants.MinQuantity));
             Command.Parameters.Add(new OracleParameter("statCode", Constants.ReceivedCaseFromVendorStatCode));
@@ -207,7 +206,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public Cost FetchPickLocnDoesNotExistData(OracleConnection db)
         {
             var costTransData = new Cost();
-            SqlStatements = $"{EmsToWmsQueries.CostPickLocnDoesNotExist}";
+            SqlStatements = EmsToWmsQueries.CostPickLocnDoesNotExist;
             Command = new OracleCommand(SqlStatements, db);           
             Command.Parameters.Add(new OracleParameter("statCode", Constants.StatusCodeConsumed));
             Command.Parameters.Add(new OracleParameter("qty", Constants.MinQuantity));

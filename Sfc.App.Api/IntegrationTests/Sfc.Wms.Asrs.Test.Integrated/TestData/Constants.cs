@@ -1,6 +1,4 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
 {
@@ -20,7 +18,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
         public const int StatusCodeConsumed = 96;
         public const string MinQuantity = "1";
         public const int NumZero = 0;
-        public const string miscNum1 = "0";
+        public const string MiscNum1 = "0";
         public const string Dry = "D";
         public const string Freezer = "F";
         public const string ListSquAssign = "Y";

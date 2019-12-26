@@ -42,9 +42,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Response = client.Execute(request);
             return Response;
         }
-        protected void ValidSkuActioncodeAndSkmtUrlIs(string CurrentSkuId,string CurrentActionCode,string url)
+        protected void ValidSkuActioncodeAndSkmtUrlIs(string currentSkuId,string currentActionCode,string url)
         {
-            SkmtUrl = $"{BaseUrl}{TestData.Parameter.SkuMaintenance}?{TestData.Parameter.ActionCode}={CurrentActionCode}&{TestData.Parameter.SkuId}={CurrentSkuId}";
+            SkmtUrl = $"{BaseUrl}{TestData.Parameter.SkuMaintenance}?{TestData.Parameter.ActionCode}={currentActionCode}&{TestData.Parameter.SkuId}={currentSkuId}";
         }
 
         protected BaseResult SkmtResult()

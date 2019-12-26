@@ -30,7 +30,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                this.Given(x => x.AValidNewIvmtMessageRecordWhereCaseNumberAndSkuIs(SingleSkuCase.CaseNumber,SingleSkuCase.SkuId))
                .When(x => x.IvmtApiIsCalledCreatedIsReturnedWithValidUrlIs(IvmtUrl))
                .Then(x => x.GetDataFromDataBaseForSingleSkuScenariosIvmt())
-               .And(x => x.VerifyIvmtMessageWasInsertedIntoSwmToMhe())
+               .And(x => x.VerifyIvmtMessageWasInsertedIntoSwmToMhe(SingleSkuCase.TotalAllocQty))
                .And(x => x.VerifyIvmtMessageWasInsertedIntoWmsToEms())
                .And(x => x.VerifyTheQuantityIsIncreasedInToTransInventory())
                .And(x => x.VerifyQuantityisReducedIntoCaseDetail())
@@ -38,6 +38,5 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                .And(x => x.VerifyStatusIsUpdatedIntoTaskHeader())
                .BDDfy("Test Case ID: 135041-Dematic - IVMT : Single Sku Case , Call the Ivmt Api and Verify all its functionalities in CaseHeader,CaseDetail,TransInventory,TaskHeader Tables.");
         }
-
     }
 }

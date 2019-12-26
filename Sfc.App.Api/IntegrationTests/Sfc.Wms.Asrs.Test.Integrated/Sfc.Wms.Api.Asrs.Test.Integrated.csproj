@@ -102,6 +102,7 @@
     <Compile Include="Tests\MprqAndMpidTest.cs" />
     <Compile Include="Tests\ComtAndIvmtTestReceivedCase.cs" />
     <Compile Include="Tests\ComtAndIvmtTestWhenTriggerIsOn.cs" />
+    <Compile Include="Tests\OrmtTestWhenTriggerIsOn.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Castle.Core">

@@ -61,8 +61,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var nextUpCounterReader = Command.ExecuteReader();
             if (nextUpCounterReader.Read())
             {
-                nextup.CurrentNumber = Convert.ToInt32(nextUpCounterReader[FieldName.Currentnumber].ToString());
-                nextup.PrefixField = (nextUpCounterReader[FieldName.Prefixfield].ToString());           
+                nextup.CurrentNumber = Convert.ToInt32(nextUpCounterReader[FieldName.Currentnumber]);
+                nextup.PrefixField = nextUpCounterReader[FieldName.Prefixfield].ToString();           
             }
             return nextup;
         }

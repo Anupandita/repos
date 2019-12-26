@@ -98,32 +98,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             {
                 db.Open();
                 Command = new OracleCommand();
-                SwmToMheSkmt = SwmToMhe(db, ItemMaster.SkuId, TransactionCode.Skmt);
+                SwmToMheSkmt = SwmToMhe(db,null, TransactionCode.Skmt, ItemMaster.SkuId);                  
                 Skmt = JsonConvert.DeserializeObject<SkmtDto>(SwmToMheSkmt.MessageJson);
                 WmsToEmsSkmt = WmsToEmsData(db, SwmToMheSkmt.SourceMessageKey, TransactionCode.Skmt);
             }
-        }
-
-        protected SwmToMheDto SwmToMhe(OracleConnection db, string skuId, string trx)
-        {
-            var swmtomhedata = new SwmToMheDto();
-            var query = $"select * from SWM_TO_MHE where sku_id = :skuId and source_msg_trans_code = :trx order by SOURCE_MSG_KEY desc";
-            Command = new OracleCommand(query, db);
-            Command.Parameters.Add(new OracleParameter("skuId", skuId));
-            Command.Parameters.Add(new OracleParameter("trx", trx));
-            var swmToMheReader = Command.ExecuteReader();
-            if (swmToMheReader.Read())
-            {
-                swmtomhedata.SourceMessageKey = Convert.ToInt16(swmToMheReader[TestData.SwmToMhe.SourceMsgKey].ToString());
-                swmtomhedata.SourceMessageResponseCode = Convert.ToInt16(swmToMheReader[TestData.SwmToMhe.SourceMsgRsnCode].ToString());
-                swmtomhedata.SourceMessageStatus = swmToMheReader[TestData.SwmToMhe.SourceMsgStatus].ToString();
-                swmtomhedata.ContainerId = swmToMheReader[TestData.SwmToMhe.ContainerId].ToString();
-                swmtomhedata.ContainerType = swmToMheReader[TestData.SwmToMhe.ContainerType].ToString();
-                swmtomhedata.MessageJson = swmToMheReader[TestData.SwmToMhe.MsgJson].ToString();
-                swmtomhedata.LocationId = swmToMheReader[TestData.SwmToMhe.LocnId].ToString();
-                swmtomhedata.SourceMessageText = swmToMheReader[TestData.SwmToMhe.SourceMsgText].ToString();
-            }
-            return swmtomhedata;
         }
     }
 }

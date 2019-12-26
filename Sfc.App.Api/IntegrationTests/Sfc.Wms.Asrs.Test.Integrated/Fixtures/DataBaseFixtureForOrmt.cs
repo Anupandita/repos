@@ -17,7 +17,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
     {
         protected WmsToEmsDto WmsToEmsAddRelease = new WmsToEmsDto();
         protected SwmToMheDto SwmToMheAddRelease = new SwmToMheDto();
-        SwmEligibleOrmtCartonDto SwmOrmtCarton = new SwmEligibleOrmtCartonDto();
         protected WmsToEmsDto WmsToEmsCancelation = new WmsToEmsDto();
         protected SwmToMheDto SwmToMheCancelation = new SwmToMheDto();
         protected WmsToEmsDto WmsToEmsEPick = new WmsToEmsDto();
@@ -50,8 +49,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (db = GetOracleConnection())
             {
                 db.Open();     
-                PrintCarton = GetValidOrderDetails(db,10,0);
-                //UpdatePickTicketStatusCodeTo12(db, 12, PrintCarton.PickTktCtrlNbr);
+                PrintCarton = GetValidOrderDetails(db,10,0);               
                 PickLcnDtlExtBeforeApi = GetPickLocnDtlExt(db, PrintCarton.SkuId, PrintCarton.LocnId);
             }
         }    
@@ -67,12 +65,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 ActiveOrmtCountList = FetchActiveOrmtCount(db);
             }
        }
-      
+
         public List<PickLocationDetailsExtenstionDto> FetchActiveOrmtCount(OracleConnection db)
         {
             var pickLocnDtlExt = new List<PickLocationDetailsExtenstionDto>();
             for (var j = 0; j < OrderList.Count; j++)
-            {            
+            {
                 var query = $"select * from pick_locn_dtl_ext WHERE SKU_ID='{OrderList[j].SkuId}' order by created_date_time, updated_date_time  desc ";
                 Command = new OracleCommand(query, db);
                 var pickLocnDtlExtReader = Command.ExecuteReader();
@@ -218,14 +216,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         }
 
         public CartonView GetValidOrderDetails(OracleConnection db, int statCode, int miscNum1)
-        {
-            
+        {           
             var cartonView = new CartonView();
-            var query = $"{OrmtQueries.CommonSelect} from SWM_ELGBL_ORMT_CARTONS eg " +
-                        $"{OrmtQueries.CommonJoin}"+                   
-                        $"{OrmtQueries.CommonWhereCondition}";
+            var query = OrmtQueries.CommonSelect +" from SWM_ELGBL_ORMT_CARTONS eg"  +
+                        OrmtQueries.CommonJoin +                   
+                        OrmtQueries.CommonWhereCondition;
             var command = new OracleCommand(query, db);          
-            command.Parameters.Add(new OracleParameter("miscNum1",Constants.miscNum1));
+            command.Parameters.Add(new OracleParameter("miscNum1",Constants.MiscNum1));
             command.Parameters.Add(new OracleParameter("sysType", Constants.SysCodeType));
             command.Parameters.Add(new OracleParameter("sysCodeId", Constants.SysCodeIdForActiveLocation));
             command.Parameters.Add(new OracleParameter("status", Constants.EgblOrmtStatus));
@@ -253,9 +250,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public CartonView GetValidOnProcessCostMessage(OracleConnection db)
         {
             var onproCostView= new CartonView();
-            var onQuery = $"{OrmtQueries.ValidDataForOnProcessingCostMessage}";
+            var onQuery = OrmtQueries.ValidDataForOnProcessingCostMessage;
             var command = new OracleCommand(onQuery, db);
-            command.Parameters.Add(new OracleParameter("miscNum1", Constants.miscNum1));
+            command.Parameters.Add(new OracleParameter("miscNum1", Constants.MiscNum1));
             command.Parameters.Add(new OracleParameter("sysType", Constants.SysCodeType));
             command.Parameters.Add(new OracleParameter("sysCodeId", Constants.SysCodeIdForActiveLocation));           
             command.Parameters.Add(new OracleParameter("status", Constants.EgblOrmtStatus));
@@ -284,7 +281,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public void UpdatePickTicketStatusCodeTo12(OracleConnection db, int pktStatCode, string pktCtrlNbr)
         {
             Transaction = db.BeginTransaction();
-            var updateQuery = $"{OrmtQueries.UpdatePickStatCode}";
+            var updateQuery = OrmtQueries.UpdatePickStatCode;
             Command = new OracleCommand(updateQuery, db);
             Command.Parameters.Add(new OracleParameter("pktStatCode", pktStatCode));
             Command.Parameters.Add(new OracleParameter("pktCtrlNbr", pktCtrlNbr));
@@ -295,10 +292,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected string GetWaveNumber(OracleConnection db)
         {         
             var query = $"select  distinct eg.wave_nbr from SWM_ELGBL_ORMT_CARTONS eg " +
-                 $"{OrmtQueries.CommonJoin}" +
-                 $"{OrmtQueries.CommonWhereCondition} ";             
+                 OrmtQueries.CommonJoin +
+                 OrmtQueries.CommonWhereCondition;             
             Command = new OracleCommand(query,db);
-            Command.Parameters.Add(new OracleParameter("miscNum1", Constants.miscNum1));
+            Command.Parameters.Add(new OracleParameter("miscNum1", Constants.MiscNum1));
             Command.Parameters.Add(new OracleParameter("sysType", Constants.SysCodeType));
             Command.Parameters.Add(new OracleParameter("sysCodeId", Constants.SysCodeIdForActiveLocation));
             Command.Parameters.Add(new OracleParameter("status", Constants.EgblOrmtStatus));
@@ -309,39 +306,29 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public List<CartonView> GetValidOrderDetailsForWaveRelease(OracleConnection db, string waveNbr)
         {
             var orderdtls = new List<CartonView>();
-            var query = $"select  distinct eg.wave_nbr,ch.carton_nbr,ch.sku_id,ch.MISC_NUM_1,ch.total_qty, " +
-                $"ch.stat_code,pl.actl_invn_qty,ch.DEST_LOCN_ID,ph.PKT_CTRL_NBR,ph.SHIP_W_CTRL_NBR,ph.Whse,ph.CO,ph.DIV, " +
-                $"im.spl_instr_code_1, im.spl_instr_code_5 from SWM_ELGBL_ORMT_CARTONS eg inner join carton_hdr ch on" +
-                $" ch.Carton_Nbr = eg.Carton_Nbr  inner join PKT_HDR ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr  " +
-                $"inner join Pick_Locn_dtl pl ON  pl.sku_id = ch.sku_id inner join ITEM_MASTER im ON ch.sku_id = im.sku_id  " +
-                $"inner join locn_hdr lh ON pl.locn_id = lh.locn_id inner join locn_grp lg ON lg.locn_id = lh.locn_id " +
-                $"inner join sys_code sc ON sc.code_id = lg.grp_type inner join pkt_hdr ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr  " +
-                $"inner join pkt_dtl pd ON pd.pkt_ctrl_nbr = ch.pkt_ctrl_nbr inner join alloc_invn_dtl ai ON ai.sku_id = ch.sku_id " +
-                $"left join pick_locn_dtl_ext ple ON pl.sku_id = ple.sku_id where  ch.misc_instr_code_5 is null and misc_num_1 = 0 and sc.code_type = '740' " +
-                $"and code_id = '18' and lg.grp_attr = DECODE(im.temp_zone, 'D', 'Dry', 'Freezer') and ch.misc_instr_code_5 is null and misc_num_1 = 0 and " +
-                $"eg.wave_nbr = '{waveNbr}' and eg.status = 10 and ch.stat_code = 5";
+            var query = OrmtQueries.WaveRelease;
             var command = new OracleCommand(query,db);
-            Command.Parameters.Add(new OracleParameter("miscNum1", Constants.miscNum1));
+            Command.Parameters.Add(new OracleParameter("miscNum1", Constants.MiscNum1));
             Command.Parameters.Add(new OracleParameter("sysType", Constants.SysCodeType));
             Command.Parameters.Add(new OracleParameter("sysCodeId", Constants.SysCodeIdForActiveLocation));
             Command.Parameters.Add(new OracleParameter("status", Constants.EgblOrmtStatus));
             Command.Parameters.Add(new OracleParameter("waveNbr", waveNbr));
-            var Reader = command.ExecuteReader();
-            while (Reader.Read())
+            var reader = command.ExecuteReader();
+            while (reader.Read())
             {
                 var cartonView = new CartonView();
-                cartonView.PickTktCtrlNbr = Reader[TestData.PickTicketHeader.PickTktCtrlNbr].ToString();
-                cartonView.SkuId = Reader["SKU_ID"].ToString();
-                cartonView.WaveNbr = Reader["WAVE_NBR"].ToString();
-                cartonView.Whse = Reader[TestData.PickTicketHeader.Whse].ToString();
-                cartonView.Co = Reader[TestData.PickTicketHeader.Co].ToString();
-                cartonView.Div = Reader[TestData.PickTicketHeader.Div].ToString();
-                cartonView.SplInstrCode1 = Reader[TestData.ItemMaster.SplInstrCode1].ToString();
-                cartonView.SplInstrCode5 = Reader[TestData.ItemMaster.SplInstrCode5].ToString();
-                cartonView.TotalQty = Reader["TOTAL_QTY"].ToString();
-                cartonView.CartonNbr = Reader["CARTON_NBR"].ToString();
-                cartonView.DestLocnId = Reader["DEST_LOCN_ID"].ToString();
-                cartonView.ShipWCtrlNbr = Reader["SHIP_W_CTRL_NBR"].ToString();
+                cartonView.PickTktCtrlNbr = reader[PickTicketHeader.PickTktCtrlNbr].ToString();
+                cartonView.SkuId = reader["SKU_ID"].ToString();
+                cartonView.WaveNbr = reader["WAVE_NBR"].ToString();
+                cartonView.Whse = reader[PickTicketHeader.Whse].ToString();
+                cartonView.Co = reader[PickTicketHeader.Co].ToString();
+                cartonView.Div = reader[PickTicketHeader.Div].ToString();
+                cartonView.SplInstrCode1 = reader[ItemMaster.SplInstrCode1].ToString();
+                cartonView.SplInstrCode5 = reader[ItemMaster.SplInstrCode5].ToString();
+                cartonView.TotalQty = reader["TOTAL_QTY"].ToString();
+                cartonView.CartonNbr = reader["CARTON_NBR"].ToString();
+                cartonView.DestLocnId = reader["DEST_LOCN_ID"].ToString();
+                cartonView.ShipWCtrlNbr = reader["SHIP_W_CTRL_NBR"].ToString();
                 orderdtls.Add(cartonView);
             }
             return orderdtls;
@@ -350,7 +337,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public CartonView GetCartonNbrWhereActiveOrmtNotFound(OracleConnection db)
         {
             var cartonView = new CartonView();
-            var query = $"{OrmtQueries.ActiveOrmtNotFound}";
+            var query = OrmtQueries.ActiveOrmtNotFound;
             var command = new OracleCommand(query, db);
             command.Parameters.Add(new OracleParameter("sysType", Constants.SysCodeType));
             command.Parameters.Add(new OracleParameter("sysCodeId", Constants.SysCodeIdForActiveLocation));           
@@ -367,7 +354,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public CartonView GetCartonNbrWherePickLocnNotFound(OracleConnection db)
         {
             var cartonView = new CartonView();
-            var query = $"{OrmtQueries.PickLocnNotFound}";
+            var query = OrmtQueries.PickLocnNotFound;
             var command = new OracleCommand(query, db);
             command.Parameters.Add(new OracleParameter("sysType", Constants.SysCodeType));
             command.Parameters.Add(new OracleParameter("sysCodeId", Constants.SysCodeIdForActiveLocation));     
@@ -384,13 +371,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
        public CartonHeaderDto GetStatusCodeFromCartonHdrForWaveRelease(OracleConnection db,string cartonNbr)
        {
            var cartonHdrView = new CartonHeaderDto();
-           var query = $"{OrmtQueries.CartonHeader}";
+           var query = OrmtQueries.CartonHeader;
            var command = new OracleCommand(query, db);
            command.Parameters.Add(new OracleParameter("cartonNbr", cartonNbr));
            var cartonHdrReader = command.ExecuteReader();
            if (cartonHdrReader.Read())
            {              
-              cartonHdrView.StatusCode = Convert.ToInt16(cartonHdrReader["STAT_CODE"].ToString());
+              cartonHdrView.StatusCode = Convert.ToInt16(cartonHdrReader["STAT_CODE"]);
            }
             return cartonHdrView;
         }
@@ -398,13 +385,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public SwmEligibleOrmtCartonDto GetStatusCodeFromEligibleOrmtCount(OracleConnection db, string cartonNbr)
         {
             var swmEligibleOrmtCount = new SwmEligibleOrmtCartonDto();
-            var query = $"{OrmtQueries.SwmElgblOrmtCount}";
+            var query = OrmtQueries.SwmElgblOrmtCount;
             var command = new OracleCommand(query,db);
             command.Parameters.Add(new OracleParameter("cartonNbr", cartonNbr));
             var reader = command.ExecuteReader();
             if(reader.Read())
             {
-                swmEligibleOrmtCount.Status = Convert.ToInt16(reader["STATUS"].ToString());
+                swmEligibleOrmtCount.Status = Convert.ToInt16(reader["STATUS"]);
             }
             return swmEligibleOrmtCount;
         }
@@ -412,7 +399,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public CartonView GetCartonNbrWhereActiveLocationNotFound(OracleConnection db)
         {
             var cartonView = new CartonView();
-            var query = $"{OrmtQueries.ActiveLocnNotFound}";
+            var query = OrmtQueries.ActiveLocnNotFound;
             var command = new OracleCommand(query, db);
             command.Parameters.Add(new OracleParameter("sysCodeType", Constants.SysCodeType));
             command.Parameters.Add(new OracleParameter("sysCodeId", Constants.SysCodeIdForActiveLocation));            

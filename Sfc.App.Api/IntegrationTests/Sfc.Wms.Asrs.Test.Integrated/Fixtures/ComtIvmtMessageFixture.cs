@@ -145,14 +145,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             Assert.AreEqual(ValidationMessage.InboundLpn, ResultForNegativeCase.ValidationMessages[0].FieldName);
         }
-        protected void VerifyIvmtMessageWasInsertedIntoSwmToMhe()
+        protected void VerifyIvmtMessageWasInsertedIntoSwmToMhe(int qty)
         {
             Assert.AreEqual(DefaultValues.Status, SwmToMheIvmt.SourceMessageStatus);
             Assert.AreEqual(TransactionCode.Ivmt, Ivmt.TransactionCode);
             Assert.AreEqual(MessageLength.Ivmt, Ivmt.MessageLength);
             Assert.AreEqual(ActionCodeConstants.Create, Ivmt.ActionCode);
             Assert.AreEqual(SingleSkuCase.SkuId, Ivmt.Sku);
-            Assert.AreEqual(SingleSkuCase.TotalAllocQty, Convert.ToDouble(Ivmt.Quantity));
+            Assert.AreEqual(qty, Convert.ToDouble(Ivmt.Quantity));
             Assert.AreEqual(DefaultValues.ContainerType, Ivmt.UnitOfMeasure);
             Assert.AreEqual(DefaultValues.DataControl, Ivmt.DateControl);
         }

@@ -28,7 +28,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
             this.Given(x => x.AValidNewCaseReturnedRecordWhereCaseNumberAndSkuIdIs(SingleSkuCase.CaseNumber,SingleSkuCase.SkuId))
                 .When(x => x.ComtApiIsCalledCreatedIsReturnedWithValidUrlIs(ComtUrl))
                 .Then(x => x.GetDataFromDataBaseAfterApiIsCalled())     
-                .And(x => x.VerifyIvmtMessageWasInsertedIntoSwmToMhe())
+                .And(x => x.VerifyIvmtMessageWasInsertedIntoSwmToMhe(SingleSkuCase.ActlQty))
                 .And(x => x.VerifyIvmtMessageWasInsertedIntoWmsToEms())
                 .And(x => x.VerifyTheQuantityIsIncreasedInToTransInventory())
                 .And(x => x.VerifyActualQuantityIsReducedInToCaseDtl())

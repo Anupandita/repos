@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
@@ -14,7 +13,6 @@ using Sfc.Wms.Interfaces.Asrs.Shamrock.Contracts.Dtos;
 using Sfc.Wms.Interfaces.Asrs.Dematic.Contracts.Dtos;
 using Sfc.Wms.Foundation.TransitionalInventory.Contracts.Dtos;
 using Sfc.Wms.Foundation.InboundLpn.Contracts.Enums;
-using Sfc.Wms.Foundation.Location.Contracts.Dtos;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
@@ -43,8 +41,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected EmsToWmsDto EmsToWmsParametersNoException;
         protected EmsToWmsDto EmsToWmsParametersCycleCount;
         protected IvstDto IvstParameters;
-        protected Sfc.Wms.Foundation.Location.Contracts.Dtos.PickLocationDetailsDto PickLocnDtlAfterApi = new Sfc.Wms.Foundation.Location.Contracts.Dtos.PickLocationDetailsDto();
-        protected Sfc.Wms.Foundation.Location.Contracts.Dtos.PickLocationDetailsDto PickLcnDtlBeforeApi = new Sfc.Wms.Foundation.Location.Contracts.Dtos.PickLocationDetailsDto();
+        protected Foundation.Location.Contracts.Dtos.PickLocationDetailsDto PickLocnDtlAfterApi = new Foundation.Location.Contracts.Dtos.PickLocationDetailsDto();
+        protected Foundation.Location.Contracts.Dtos.PickLocationDetailsDto PickLcnDtlBeforeApi = new Foundation.Location.Contracts.Dtos.PickLocationDetailsDto();
         protected decimal Unitweight1;
         protected OracleCommand OracleCommand;
         protected PixTransactionDto Pixtran = new PixTransactionDto();
@@ -194,7 +192,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public Ivst GetCaseDetailsForInsertingIvstMessage(OracleConnection db)
         {
             var ivstDataDto = new Ivst();
-            Query = $"{EmsToWmsQueries.CostQuery}";
+            Query = EmsToWmsQueries.CostQuery;
             Command = new OracleCommand(Query, db);
             Command.Parameters.Add(new OracleParameter("statCode", Constants.StatusCodeConsumed));
             Command.Parameters.Add(new OracleParameter("sysCodeType", Constants.SysCodeType));
@@ -211,10 +209,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return ivstDataDto;
         }
 
-        public void InsertingUnexpectedOverage(OracleConnection db, string actionCode, string exception, string InboundPallet)
+        public void InsertingUnexpectedOverage(OracleConnection db, string actionCode, string exception, string inboundPallet)
         {
             Command = new OracleCommand(Query, db);
-            var ivstmsg = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, IvstData.Qty, actionCode, exception,InboundPallet);
+            var ivstmsg = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, IvstData.Qty, actionCode, exception,inboundPallet);
             EmsToWmsParameters = new EmsToWmsDto
             {
                 Process = DefaultPossibleValue.MessageProcessor,
@@ -225,10 +223,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             
         }
 
-        public void  InsertingInventoryShortage(OracleConnection db, string actionCode, string exception, string InboundPallet)
+        public void  InsertingInventoryShortage(OracleConnection db, string actionCode, string exception, string inboundPallet)
         {
             Command = new OracleCommand(Query, db);
-            var ivstmsg = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, IvstData.Qty, actionCode, exception, InboundPallet);
+            var ivstmsg = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, IvstData.Qty, actionCode, exception, inboundPallet);
             EmsToWmsParametersInventoryShortage = new EmsToWmsDto
             {
                 Process = DefaultPossibleValue.MessageProcessor,
@@ -237,10 +235,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 MessageText = ivstmsg
             };       
         }
-        public void InsertingDamage(OracleConnection db, string actionCode, string exception, string InboundPallet)
+        public void InsertingDamage(OracleConnection db, string actionCode, string exception, string inboundPallet)
         {
             Command = new OracleCommand(Query, db);
-            var ivstmsg = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, IvstData.Qty, actionCode, exception, InboundPallet);
+            var ivstmsg = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, IvstData.Qty, actionCode, exception, inboundPallet);
             EmsToWmsParametersDamage = new EmsToWmsDto
             {
                 Process = DefaultPossibleValue.MessageProcessor,
@@ -250,10 +248,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             };           
         }
 
-        public void InsertingWrongSku(OracleConnection db, string actionCode, string exception, string InboundPallet)
+        public void InsertingWrongSku(OracleConnection db, string actionCode, string exception, string inboundPallet)
         {
             Command = new OracleCommand(Query, db);
-            var ivstmsg = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, IvstData.Qty, actionCode, exception, InboundPallet);
+            var ivstmsg = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, IvstData.Qty, actionCode, exception, inboundPallet);
             EmsToWmsParametersWrongSku = new EmsToWmsDto
             {
                 Process = DefaultPossibleValue.MessageProcessor,
@@ -263,7 +261,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             };           
         }
 
-        public string CreateIvstMessage(string containerNbr, string skuId, string locationId, string actionCode, string adjustmentReasonCode,string InboundPallet)
+        public string CreateIvstMessage(string containerNbr, string skuId, string locationId, string actionCode, string adjustmentReasonCode,string inboundPallet)
         {
             IvstParameters = new IvstDto
             {
@@ -277,7 +275,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 UnitOfMeasure = DefaultValues.ContainerType,
                 LotId = Constants.LotId,
                 Po = Constants.Po,
-                InboundPallet = InboundPallet,
+                InboundPallet = inboundPallet,
                 TransactionCode = TransactionCode.Ivst,
                 MessageLength = MessageLength.Ivst,
                 ReasonCode = ReasonCode.Success
@@ -321,27 +319,21 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         public string PixTransactionTable(string adjustmentReasonCode)
         {
-            if (adjustmentReasonCode == IvstException.CycleCount)
+            switch (adjustmentReasonCode)
             {
-                return Constants.PixRsnCodeForCycleCount;
+                case IvstException.CycleCount:
+                    return Constants.PixRsnCodeForCycleCount;
+                case IvstException.UnexpectedOverage:
+                    return Constants.PixRsnCodeForUnExpectedOverage;
+                case IvstException.InventoryShortage:
+                    return Constants.PixRsnCodeForInventoryShortage;
+                case IvstException.Damage:
+                    return Constants.PixRsnCodeForDamage;
+                case IvstException.WrongSku:
+                    return Constants.PixRsnCodeForWrongSku;
+                default:
+                    return Constants.PixRsnCodeForCycleCount;
             }
-            else if (adjustmentReasonCode == IvstException.UnexpectedOverage)
-            {
-                return Constants.PixRsnCodeForUnExpectedOverage;
-            }
-            else if (adjustmentReasonCode == IvstException.InventoryShortage)
-            {
-                return Constants.PixRsnCodeForInventoryShortage;
-            }
-            else if (adjustmentReasonCode == IvstException.Damage)
-            {
-                return Constants.PixRsnCodeForDamage;
-            }
-            else if (adjustmentReasonCode == IvstException.WrongSku)
-            {
-                return Constants.PixRsnCodeForWrongSku;
-            }
-            return Constants.PixRsnCodeForCycleCount;          
         }
     }
 }

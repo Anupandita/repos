@@ -71,7 +71,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public OrstTestData GetCartonDetailsForInsertingOrstMessage(OracleConnection db,int cartonStatusCode, int pktStatusCode, bool completed = true)
         {
             var orstTestData = new OrstTestData();
-            var sqlStatement = $"{OrstQueries.ValidDataForInsertingOrstMessage}";
+            var sqlStatement = OrstQueries.ValidDataForInsertingOrstMessage;
             if (completed)
             {
                 sqlStatement = sqlStatement + $" where sm.source_msg_status = '{DefaultValues.Status}' and ch.stat_code = '{cartonStatusCode}' and ph.pkt_stat_code = '{pktStatusCode}' and pd.pkt_seq_nbr > {Constants.NumZero}";
@@ -99,7 +99,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public OrstTestData GetCartonDetailsForInsertingOrstMessageForNegativeCaseWherePickTicketSeqNumberIsLessThan1(OracleConnection db, int cartonStatusCode, int pktStatusCode)
         {
             var orstTestData = new OrstTestData();
-            var sqlStatement = $"{OrstQueries.PickTktSeqNbrIsLessThan1}";
+            var sqlStatement = OrstQueries.PickTktSeqNbrIsLessThan1;
                 Command = new OracleCommand(sqlStatement, db);
                 Command.Parameters.Add(new OracleParameter("status", DefaultValues.Status));
                 Command.Parameters.Add(new OracleParameter("cartonStatusCode", cartonStatusCode));
@@ -109,7 +109,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 {
                     orstTestData.OrderId = swmToMheReader["ORDER_ID"].ToString();
                     orstTestData.SkuId = swmToMheReader["SKU_ID"].ToString();
-                    orstTestData.Quantity = Convert.ToInt16(swmToMheReader["QTY"].ToString());
+                    orstTestData.Quantity = Convert.ToInt16(swmToMheReader["QTY"]);
                     orstTestData.MessageJson = swmToMheReader["MSG_JSON"].ToString();
                     orstTestData.CurrentLocationId = swmToMheReader["CURR_LOCN_ID"].ToString();
                     orstTestData.LocnId = swmToMheReader["LOCN_ID"].ToString();
@@ -309,7 +309,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public MessageToSortViewDto GetMsgTosvDetail(OracleConnection db, string cartonNo)
         {
             var messageTosv = new MessageToSortViewDto();
-            var query = $"{OrstQueries.MsgToSourceView}";
+            var query = OrstQueries.MsgToSourceView;
             Command = new OracleCommand(query, db);
             Command.Parameters.Add(new OracleParameter("cartonNo", cartonNo));
             var cartonHeaderReader = Command.ExecuteReader();
@@ -379,7 +379,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public CartonHeaderDto GetCartonHeaderDetails(OracleConnection db,string cartonNumber)
         {
             var cartonHeader = new CartonHeaderDto();
-            var query = $"{OrstQueries.CartonHeader}";
+            var query = OrstQueries.CartonHeader;
             Command = new OracleCommand(query,db);
             Command.Parameters.Add(new OracleParameter("cartonNumber", cartonNumber));
             var cartonHeaderReader = Command.ExecuteReader();
@@ -394,7 +394,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public CartonDetailDto GetCartonDetails(OracleConnection db, string cartonNumber)
         {
             var cartonDtl = new CartonDetailDto();
-            var query = $"{OrstQueries.CartonDetail}";
+            var query = OrstQueries.CartonDetail;
             Command = new OracleCommand(query, db);
             Command.Parameters.Add(new OracleParameter("cartonNumber", cartonNumber));
             var cartonReader = Command.ExecuteReader();
@@ -410,7 +410,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public PickTicketHeaderDto GetPickTktHeaderDetails(OracleConnection db,string cartonNumber)
         {
             var pkTktHeader = new PickTicketHeaderDto();
-            var query = $"{OrstQueries.PickTktHeader}";
+            var query = OrstQueries.PickTktHeader;
             Command = new OracleCommand(query,db);
             Command.Parameters.Add(new OracleParameter("cartonNumber", cartonNumber));
             var pickTktHeaderReader = Command.ExecuteReader();
@@ -424,7 +424,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public PickTicketDetail GetPickTicketDetailData(OracleConnection db,string cartonNbr,string pktSeqNbr)
         {
             var pickTktDtl = new PickTicketDetail();
-            var query = $"{OrstQueries.PickTktDtl}";
+            var query = OrstQueries.PickTktDtl;
             Command = new OracleCommand(query, db);
             Command.Parameters.Add(new OracleParameter("cartonNbr", cartonNbr));
             Command.Parameters.Add(new OracleParameter("pktSeqNbr", pktSeqNbr));
@@ -440,7 +440,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public AllocInvnDtl GetAllocInvnDetails(OracleConnection db,string cntrNbr)
         {
             var allocInvnDtl = new AllocInvnDtl();
-            var query = $"{OrstQueries.AllocInventory}";
+            var query = OrstQueries.AllocInventory;
             Command = new OracleCommand(query,db);
             Command.Parameters.Add(new OracleParameter("cntrNbr", cntrNbr));
             var allocInvnDtlReader = Command.ExecuteReader();
@@ -456,15 +456,15 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public EmsToWmsDto GetEmsToWmsData(OracleConnection db,long msgKey)
         {
             var emsToWms = new EmsToWmsDto();
-            var query = $"{CommonQueries.EmsToWms}";
+            var query = CommonQueries.EmsToWms;
             Command = new OracleCommand(query,db);
             Command.Parameters.Add(new OracleParameter("msgKey", msgKey));
             var emsToWmsReader = Command.ExecuteReader();
             if(emsToWmsReader.Read())
             {
-                emsToWms.MessageKey = Convert.ToInt64(emsToWmsReader[EmsToWms.MsgKey].ToString());
+                emsToWms.MessageKey = Convert.ToInt64(emsToWmsReader[EmsToWms.MsgKey]);
                 emsToWms.MessageText = emsToWmsReader[EmsToWms.MsgTxt].ToString();
-                emsToWms.ResponseCode = Convert.ToInt16(emsToWmsReader[EmsToWms.ReasonCode].ToString());
+                emsToWms.ResponseCode = Convert.ToInt16(emsToWmsReader[EmsToWms.ReasonCode]);
                 emsToWms.Process = emsToWmsReader[EmsToWms.Prc].ToString();
                 emsToWms.Status = emsToWmsReader[EmsToWms.Status].ToString();
                 emsToWms.Transaction = emsToWmsReader[EmsToWms.Trx].ToString();

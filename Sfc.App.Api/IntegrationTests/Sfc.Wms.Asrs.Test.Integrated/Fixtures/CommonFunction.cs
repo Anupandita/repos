@@ -1,15 +1,14 @@
-﻿using Oracle.ManagedDataAccess.Client;
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using Oracle.ManagedDataAccess.Client;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
-using Sfc.Wms.Data.Entities;
 using Sfc.Wms.Foundation.Carton.Contracts.Dtos;
 using Sfc.Wms.Foundation.Location.Contracts.Dtos;
 using Sfc.Wms.Foundation.TransitionalInventory.Contracts.Dtos;
 using Sfc.Wms.Interfaces.Asrs.Dematic.Contracts.Dtos;
 using Sfc.Wms.Interfaces.Asrs.Shamrock.Contracts.Dtos;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Constants;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
@@ -26,18 +25,18 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected WmsToEmsDto WmsToEmsData(OracleConnection db, int msgKey, string trx)
         {
             var wmsToEmsDto = new WmsToEmsDto();
-            var query = $"{CommonQueries.WmsToEms}";
+            var query = CommonQueries.WmsToEms;
             Command = new OracleCommand(query, db);            
             Command.Parameters.Add(new OracleParameter("transCode", trx));
             Command.Parameters.Add(new OracleParameter("msgKey", msgKey));
             var wmsToEmsReader = Command.ExecuteReader();
             if (wmsToEmsReader.Read())
             {
-                wmsToEmsDto.Status = wmsToEmsReader[TestData.WmsToEms.Status].ToString();
-                wmsToEmsDto.ResponseCode = Convert.ToInt16(wmsToEmsReader[TestData.WmsToEms.ReasonCode].ToString());
-                wmsToEmsDto.MessageKey = Convert.ToUInt16(wmsToEmsReader[TestData.WmsToEms.MsgKey].ToString());
-                wmsToEmsDto.Transaction = wmsToEmsReader[TestData.WmsToEms.Trx].ToString();
-                wmsToEmsDto.MessageText = wmsToEmsReader[TestData.WmsToEms.MsgTxt].ToString();
+                wmsToEmsDto.Status = wmsToEmsReader[WmsToEms.Status].ToString();
+                wmsToEmsDto.ResponseCode = Convert.ToInt16(wmsToEmsReader[WmsToEms.ReasonCode]);
+                wmsToEmsDto.MessageKey = Convert.ToUInt16(wmsToEmsReader[WmsToEms.MsgKey]);
+                wmsToEmsDto.Transaction = wmsToEmsReader[WmsToEms.Trx].ToString();
+                wmsToEmsDto.MessageText = wmsToEmsReader[WmsToEms.MsgTxt].ToString();
                 wmsToEmsDto.Process = wmsToEmsReader["PRC"].ToString();
                 wmsToEmsDto.ZplData = wmsToEmsReader["ZPLDATA"].ToString();
             }
@@ -52,29 +51,31 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var comt = $" and container_id = '{containerNbr}' ";
             var query = $"select * from SWM_TO_MHE where  source_msg_trans_code = '{trx}'";
             var orderBy = " order by source_msg_key desc ";
-            if (trx == TransactionCode.Ivmt)
+            switch (trx)
             {
-                query = query + comt + sku + orderBy;
-            }
-            else if (trx == TransactionCode.Ormt)
-            {
-                query = query + ormt + sku + orderBy;
-            }
-            else if(trx == TransactionCode.Comt)
-            {
-                query = query + comt + orderBy;
-            }
-            else
-            {
-                query = query + orderBy;
+                case TransactionCode.Ivmt:
+                    query = query + comt + sku + orderBy;
+                    break;
+                case TransactionCode.Ormt:
+                    query = query + ormt + sku + orderBy;
+                    break;
+                case TransactionCode.Comt:
+                    query = query + comt + orderBy;
+                    break;
+                case TransactionCode.Skmt:
+                    query = query + sku + orderBy;
+                    break;
+                default:
+                    query = query + orderBy;
+                    break;
             }
             Command = new OracleCommand(query, db);
             var swmToMheReader = Command.ExecuteReader();
             if (swmToMheReader.Read())
             {
-                swmtomhedata.SourceMessageKey = Convert.ToInt16(swmToMheReader[TestData.SwmToMhe.SourceMsgKey].ToString());
+                swmtomhedata.SourceMessageKey = Convert.ToInt32(swmToMheReader[TestData.SwmToMhe.SourceMsgKey]);
                 swmtomhedata.SourceMessageProcess = swmToMheReader[TestData.SwmToMhe.SourceMsgProcess].ToString();
-                swmtomhedata.SourceMessageResponseCode = Convert.ToInt16(swmToMheReader[TestData.SwmToMhe.SourceMsgRsnCode].ToString());
+                swmtomhedata.SourceMessageResponseCode = Convert.ToInt16(swmToMheReader[TestData.SwmToMhe.SourceMsgRsnCode]);
                 swmtomhedata.SourceMessageStatus = swmToMheReader[TestData.SwmToMhe.SourceMsgStatus].ToString();
                 swmtomhedata.ContainerId = swmToMheReader[TestData.SwmToMhe.ContainerId].ToString();
                 swmtomhedata.ContainerType = swmToMheReader[TestData.SwmToMhe.ContainerType].ToString();
@@ -82,13 +83,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 swmtomhedata.LocationId = swmToMheReader[TestData.SwmToMhe.LocnId].ToString();
                 swmtomhedata.SourceMessageText = swmToMheReader[TestData.SwmToMhe.SourceMsgText].ToString();
                 swmtomhedata.SourceMessageTransactionCode = swmToMheReader["SOURCE_MSG_TRANS_CODE"].ToString();
-                swmtomhedata.MessageStatus = Convert.ToInt32(swmToMheReader["MSG_STATUS"].ToString());
+                swmtomhedata.MessageStatus = Convert.ToInt32(swmToMheReader["MSG_STATUS"]);
                 swmtomhedata.LocationId = swmToMheReader["LOCN_ID"].ToString();
                 swmtomhedata.LotId = swmToMheReader["LOT_ID"].ToString();
                 swmtomhedata.OrderId = swmToMheReader["ORDER_ID"].ToString();
-                swmtomhedata.OrderLineId = Convert.ToInt32(swmToMheReader["ORDER_LINE_ID"].ToString());
+                swmtomhedata.OrderLineId = Convert.ToInt32(swmToMheReader["ORDER_LINE_ID"]);
                 swmtomhedata.PoNumber = swmToMheReader["PO_NBR"].ToString();
-                swmtomhedata.Quantity = Convert.ToInt32(swmToMheReader["QTY"].ToString());
+                swmtomhedata.Quantity = Convert.ToInt32(swmToMheReader["QTY"]);
                 swmtomhedata.WaveNumber = swmToMheReader["WAVE_NBR"].ToString();
                 swmtomhedata.ZplData = swmToMheReader["ZPL_DATA"].ToString();
             }
@@ -98,15 +99,15 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public CaseViewDto FetchTransInvn(OracleConnection db, string skuId)
         {
             var singleSkulocal = new CaseViewDto();
-            var query = $"{CommonQueries.TransInventory}";
+            var query = CommonQueries.TransInventory;
             Command = new OracleCommand(query, db);            
             Command.Parameters.Add(new OracleParameter("skuId", skuId));
             Command.Parameters.Add(new OracleParameter("transInventoryType", Constants.TransInvnType));
             var transInvnReader = Command.ExecuteReader();
             if (transInvnReader.Read())
             {
-                singleSkulocal.ActualInventoryUnits = Convert.ToDecimal(transInvnReader[TransInventory.ActualInventoryUnits].ToString());
-                singleSkulocal.ActualWeight = Convert.ToDecimal(transInvnReader[TransInventory.ActlWt].ToString());
+                singleSkulocal.ActualInventoryUnits = Convert.ToDecimal(transInvnReader[TransInventory.ActualInventoryUnits]);
+                singleSkulocal.ActualWeight = Convert.ToDecimal(transInvnReader[TransInventory.ActlWt]);
             }
             return singleSkulocal;
         }
@@ -114,31 +115,31 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public TransitionalInventoryDto FetchTransInvnentory(OracleConnection db, string skuId)
         {
             var singleSkulocal = new TransitionalInventoryDto();
-            var query = $"{CommonQueries.TransInventory}";
+            var query = CommonQueries.TransInventory;
             Command = new OracleCommand(query, db);            
             Command.Parameters.Add(new OracleParameter("skuId", skuId));
             Command.Parameters.Add(new OracleParameter("transInventoryType", Constants.TransInvnType));
             var transInvnReader = Command.ExecuteReader();
             if (transInvnReader.Read())
             {
-                singleSkulocal.ActualInventoryUnits = Convert.ToDecimal(transInvnReader[FieldName.ActualInventoryUnits].ToString());
-                singleSkulocal.ActualWeight = Convert.ToDecimal(transInvnReader[FieldName.ActlWt].ToString());
+                singleSkulocal.ActualInventoryUnits = Convert.ToDecimal(transInvnReader[FieldName.ActualInventoryUnits]);
+                singleSkulocal.ActualWeight = Convert.ToDecimal(transInvnReader[FieldName.ActlWt]);
             }
             return singleSkulocal;
         }
         
         protected decimal FetchUnitWeight(OracleConnection db, string skuId)
         {
-            var query = $"{CommonQueries.ItemMaster}";
+            var query = CommonQueries.ItemMaster;
             Command = new OracleCommand(query, db);           
             Command.Parameters.Add(new OracleParameter("skuId", skuId));
-            var unitWeight = Convert.ToDecimal(Command.ExecuteScalar().ToString());
+            var unitWeight = Convert.ToDecimal(Command.ExecuteScalar());
             return unitWeight;
         }
 
         public string GetTempZone(OracleConnection db, string skuId)
         {          
-            var query = $"{CommonQueries.TempZone}";
+            var query = CommonQueries.TempZone;
             Command = new OracleCommand(query, db);           
             Command.Parameters.Add(new OracleParameter("skuId", skuId));
             string itemMaster = Command.ExecuteReader().ToString();            
@@ -148,7 +149,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public SwmFromMheDto SwmFromMhe(OracleConnection db, long msgKey, string trx)
         {
             var swmFromMheData = new SwmFromMheDto();
-            var swmFromMheView = $"{CommonQueries.SwmFromMhe}";
+            var swmFromMheView = CommonQueries.SwmFromMhe;
             Command = new OracleCommand(swmFromMheView, db);
             Command.Parameters.Add(new OracleParameter("transCode", trx));
             Command.Parameters.Add(new OracleParameter("messageKey", msgKey));
@@ -156,8 +157,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var swmFromMheReader = Command.ExecuteReader();
             if (swmFromMheReader.Read())
             {
-                swmFromMheData.SourceMessageKey = Convert.ToInt16(swmFromMheReader[TestData.SwmFromMhe.SourceMsgKey].ToString());
-                swmFromMheData.SourceMessageResponseCode = Convert.ToInt16(swmFromMheReader[TestData.SwmFromMhe.SourceMsgRsnCode].ToString());
+                swmFromMheData.SourceMessageKey = Convert.ToInt32(swmFromMheReader[TestData.SwmFromMhe.SourceMsgKey]);
+                swmFromMheData.SourceMessageResponseCode = Convert.ToInt32(swmFromMheReader[TestData.SwmFromMhe.SourceMsgRsnCode]);
                 swmFromMheData.SourceMessageStatus = swmFromMheReader[TestData.SwmFromMhe.SourceMsgStatus].ToString();
                 swmFromMheData.SourceMessageProcess = swmFromMheReader[TestData.SwmFromMhe.SourceMsgProcess].ToString();
                 swmFromMheData.SourceMessageTransactionCode = swmFromMheReader[TestData.SwmFromMhe.SourceMsgTransCode].ToString();
@@ -172,7 +173,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         public Int64 GetSeqNbrEmsToWms(OracleConnection db)
         {
-            var seqNumberGenerate = $"{CommonQueries.SeqNbrEmsToWms}";
+            var seqNumberGenerate = CommonQueries.SeqNbrEmsToWms;
             Command = new OracleCommand(seqNumberGenerate, db);
             var key = Convert.ToInt64(Command.ExecuteScalar().ToString());
             return key;
@@ -192,7 +193,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public PickLocationDetailsDto GetPickLocationDetails(OracleConnection db, string skuId, string locnId)
         {
             var pickLocnDtl = new PickLocationDetailsDto();
-            var pickLocnView = $"{CommonQueries.PickLocnDtl}";
+            var pickLocnView = CommonQueries.PickLocnDtl;
             Command = new OracleCommand(pickLocnView, db);           
             Command.Parameters.Add(new OracleParameter("skuId", skuId));
             Command.Parameters.Add(new OracleParameter("sysCodeType", Constants.SysCodeType));
@@ -200,10 +201,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var pickLocnDtlReader = Command.ExecuteReader();
             if (pickLocnDtlReader.Read())
             {
-                pickLocnDtl.ActualInventoryQuantity = Convert.ToDecimal(pickLocnDtlReader[TestData.PickLocationDetail.ActlInvnQty].ToString());
-                pickLocnDtl.ToBeFilledQty = Convert.ToDecimal(pickLocnDtlReader[TestData.PickLocationDetail.ToBeFilledQty].ToString());
-                pickLocnDtl.LocationId = pickLocnDtlReader[TestData.PickLocationDetail.LocnId].ToString();
-                pickLocnDtl.ToBePickedQty = Convert.ToDecimal(pickLocnDtlReader[TestData.PickLocationDetail.ToBePickedQuantity].ToString());
+                pickLocnDtl.ActualInventoryQuantity = Convert.ToDecimal(pickLocnDtlReader[PickLocationDetail.ActlInvnQty]);
+                pickLocnDtl.ToBeFilledQty = Convert.ToDecimal(pickLocnDtlReader[PickLocationDetail.ToBeFilledQty]);
+                pickLocnDtl.LocationId = pickLocnDtlReader[PickLocationDetail.LocnId].ToString();
+                pickLocnDtl.ToBePickedQty = Convert.ToDecimal(pickLocnDtlReader[PickLocationDetail.ToBePickedQuantity]);
             }
             return pickLocnDtl;
         }
@@ -211,7 +212,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public PickLocationDetailsExtenstionDto GetPickLocnDtlExt(OracleConnection db, string skuId, string locnId)
         {
             var pickLocnDtlExt = new PickLocationDetailsExtenstionDto();
-            var query = $"{CommonQueries.PickLocnDtlExt}";
+            var query = CommonQueries.PickLocnDtlExt;
             Command = new OracleCommand(query, db);           
             Command.Parameters.Add(new OracleParameter("skuId", skuId));
             Command.Parameters.Add(new OracleParameter("sysCodeType", Constants.SysCodeType));
@@ -219,7 +220,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var pickLocnDtlExtReader = Command.ExecuteReader();
             if (pickLocnDtlExtReader.Read())
             {
-                pickLocnDtlExt.ActiveOrmtCount = Convert.ToInt16(pickLocnDtlExtReader[PickLocnDtlExt.ActiveOrmtCount].ToString());
+                pickLocnDtlExt.ActiveOrmtCount = Convert.ToInt32(pickLocnDtlExtReader[PickLocnDtlExt.ActiveOrmtCount]);
             }
             return pickLocnDtlExt;
         }
@@ -227,13 +228,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public CartonHeaderDto GetStatusCodeFromCartonHdr(OracleConnection db, string cartonNbr)
         {
             var cartonHdr = new CartonHeaderDto();
-            var query = $"{CommonQueries.CartonHdr}";
+            var query = CommonQueries.CartonHdr;
             Command = new OracleCommand(query, db);            
             Command.Parameters.Add(new OracleParameter("cartonNumber", cartonNbr));
             var cartonHdrReader = Command.ExecuteReader();
             if (cartonHdrReader.Read())
             {
-                cartonHdr.StatusCode = Convert.ToInt16(cartonHdrReader["STAT_CODE"].ToString());
+                cartonHdr.StatusCode = Convert.ToInt16(cartonHdrReader["STAT_CODE"]);
             }
             return cartonHdr;
         }

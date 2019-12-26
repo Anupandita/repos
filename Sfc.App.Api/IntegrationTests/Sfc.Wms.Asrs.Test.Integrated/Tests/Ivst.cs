@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures;
-using System.Configuration;
 using TestStack.BDDfy;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
@@ -15,7 +14,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         " and validate for quantity and weight in trans_invn table when inbound pallet is yes for all exceptions which are applicable "+
         " and validate for quantity in pick location table when inbound pallet is No for all exceptions(applicable) "+
         " and validate for pix transaction table the record should be exists for each message w.r.t reason codes",
-       StoryUri = "http://tfsapp1:8080/tfs/ShamrockCollection/Portfolio-SOWL/_workitems?id=123786&_a=edit"
+       StoryUri = "http://tfsapp1:8080/tfs/ShamrockCollection/Portfolio-SOWL/_workitems?id=123786&_a=edit"    
         )]
 
     public class Ivst : IvstMessageFixture
