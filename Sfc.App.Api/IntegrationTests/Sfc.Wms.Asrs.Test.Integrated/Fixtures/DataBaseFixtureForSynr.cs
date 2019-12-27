@@ -31,7 +31,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected SwmToMheDto SwmToMheSynr = new SwmToMheDto();
         protected WmsToEmsDto WmsToEmsSynr = new WmsToEmsDto();
         protected SynrDto Synr = new SynrDto();
-        protected PickLocndto SynrMessageData = new PickLocndto();
+        //protected PickLocndto SynrMessageData = new PickLocndto();
+        protected SwmToMheDto SynrMessageData = new SwmToMheDto();
         protected List<PickLocndto> PldList = new List<PickLocndto>();
         protected new string Query = "";
         protected SyndDto SyndParameters;
@@ -92,7 +93,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             {
                 db.Open();
                 Command = new OracleCommand();
-                SwmToMheSynr = SwmToMhe(db, TransactionCode.Synr);
+                SwmToMheSynr = SwmToMhe(db, null,TransactionCode.Synr,null);
                 Synr = JsonConvert.DeserializeObject<SynrDto>(SwmToMheSynr.MessageJson);
                 WmsToEmsSynr = WmsToEmsData(db, SwmToMheSynr.SourceMessageKey, TransactionCode.Synr);
                 Pldsnapshot = FetchPldsnapshottable(db, (Nextupcnt + 1).ToString());
@@ -117,8 +118,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                SynrMessageData = GetSyncIdInsertingSynrMessage(db);
-                Synr = JsonConvert.DeserializeObject<SynrDto>(SynrMessageData.Messsagejson);
+                SynrMessageData = SwmToMhe(db, null, TransactionCode.Synr,null);
+                Synr = JsonConvert.DeserializeObject<SynrDto>(SynrMessageData.MessageJson);
                 PldList = PickLocnTable(db);
             }
         }
@@ -252,8 +253,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             {
 
                 db.Open();
-                SynrMessageData = GetSyncIdInsertingSynrMessage(db);
-                Synr = JsonConvert.DeserializeObject<SynrDto>(SynrMessageData.Messsagejson);
+                SynrMessageData = SwmToMhe(db, null, TransactionCode.Synr,null);
+                Synr = JsonConvert.DeserializeObject<SynrDto>(SynrMessageData.MessageJson);
                 
             }
 
@@ -314,24 +315,31 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         public string FetchSyndDataQty(OracleConnection db, string syncId)
         {
-            var querysyndqty = $"select SUM(SWM_SYND_DATA.Quantity) from SWM_SYND_DATA where SYNCHRONIZATION_ID='{syncId}'and status=90 ";
+            var querysyndqty = $"{SynrQueries.SyndDataQty}";
             Command = new OracleCommand(querysyndqty, db);
-            var syndDataQtyReader = Command.ExecuteScalar().ToString();
             Command.Parameters.Add(new OracleParameter("SyncId", syncId));
+            Command.Parameters.Add(new OracleParameter("Status", Constants.SyndStatus));
+            var syndDataQtyReader = Command.ExecuteScalar().ToString();
             return syndDataQtyReader;
         }
         public string FetchQtyPldSnapshotTable(OracleConnection db, string syncId)
         {
-            var querypldqty = $"select SUM(pld.ACTL_INVN_QTY) from SWM_SYNR_PLD_SNAPSHOT pld join item_master i on  pld.sku_id = i.sku_id where pld.SYNC_ID = '{syncId}' and locn_id|| (DECODE(i.temp_zone, 'D', 'Dry', 'Freezer')) in (select lh.locn_id || lg.grp_attr from locn_hdr lh inner join locn_grp lg on lg.locn_id = lh.locn_id inner join sys_code sc on sc.code_id = lg.grp_type and sc.code_type = '740' and sc.code_id = '18')";
+            var querypldqty = $"{SynrQueries.pldQtyQuery}";
             Command = new OracleCommand(querypldqty, db);
+            Command.Parameters.Add(new OracleParameter("syncId", syncId));
+            Command.Parameters.Add(new OracleParameter("sysCodeType", Constants.SysCodeType));
+            Command.Parameters.Add(new OracleParameter("sysCodeId", Constants.SysCodeIdForActiveLocation));
             var pldsnapshotQtyReader = Command.ExecuteScalar().ToString();
             return pldsnapshotQtyReader;
         }
 
         public string FetchPldsnapshottables(OracleConnection db, string syncId)
         {
-            var querypld = $"select Count(*) from SWM_SYNR_PLD_SNAPSHOT pld join item_master i on  pld.sku_id = i.sku_id where pld.SYNC_ID = '{syncId}' and locn_id|| (DECODE(i.temp_zone, 'D', 'Dry', 'Freezer')) in (select lh.locn_id || lg.grp_attr from locn_hdr lh inner join locn_grp lg on lg.locn_id = lh.locn_id inner join sys_code sc on sc.code_id = lg.grp_type and sc.code_type = '740' and sc.code_id = '18')";
+            var querypld = $"{SynrQueries.PLdSnapShotQuery}";
             Command = new OracleCommand(querypld, db);
+            Command.Parameters.Add(new OracleParameter("syncId", syncId));
+            Command.Parameters.Add(new OracleParameter("sysCodeType", Constants.SysCodeType));
+            Command.Parameters.Add(new OracleParameter("sysCodeId", Constants.SysCodeIdForActiveLocation));
             var pldsnapshotReader = Command.ExecuteScalar().ToString();
             return pldsnapshotReader;
         }

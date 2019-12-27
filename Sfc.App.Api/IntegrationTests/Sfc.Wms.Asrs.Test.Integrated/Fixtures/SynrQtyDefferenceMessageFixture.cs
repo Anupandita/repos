@@ -67,7 +67,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(0, SwmToMheSynr.SourceMessageResponseCode);
             Assert.AreEqual(TransactionCode.Synr, Synr.TransactionCode);
             Assert.AreEqual(MessageLength.Synr, Synr.MessageLength);
-            //Assert.AreEqual(Convert.ToString(Nextupcnt)+1, Synr.SynchronizationId);
         }
 
         protected void VerifySynrMessageWasInsertedIntoWmsToEms()

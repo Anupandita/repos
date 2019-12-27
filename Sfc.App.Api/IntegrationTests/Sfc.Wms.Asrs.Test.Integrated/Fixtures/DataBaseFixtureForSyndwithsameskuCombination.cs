@@ -23,7 +23,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected SynrDto Synr = new SynrDto();
         protected WmsToEmsDto WmsToEmsSynr = new WmsToEmsDto();
         protected long Pldsnapshot;
-        protected PickLocndto SynrMessageData = new PickLocndto();
+        //protected PickLocndto SynrMessageData = new PickLocndto();
+        protected SwmToMheDto SynrMessageData = new SwmToMheDto();
         protected long Nextupcnt;
         protected string BeoforeApiPickLocn;
         protected PickLocationDetailsDto PldList = new PickLocationDetailsDto();
@@ -79,7 +80,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             {
                 db.Open();
                 Command = new OracleCommand();
-                SwmToMheSynr = SwmToMhe(db, TransactionCode.Synr);
+                SwmToMheSynr = SwmToMhe(db, null,TransactionCode.Synr,null);
                 Synr = JsonConvert.DeserializeObject<SynrDto>(SwmToMheSynr.MessageJson);
                 WmsToEmsSynr = WmsToEmsData(db, SwmToMheSynr.SourceMessageKey, TransactionCode.Synr);
                 Pldsnapshot = FetchPldsnapshottable(db, (Nextupcnt + 1).ToString());
@@ -99,8 +100,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                SynrMessageData = GetSyncIdInsertingSynrMessage(db);
-                Synr = JsonConvert.DeserializeObject<SynrDto>(SynrMessageData.Messsagejson);
+                SynrMessageData = SwmToMhe(db,null,TransactionCode.Synr,null);
+                Synr = JsonConvert.DeserializeObject<SynrDto>(SynrMessageData.MessageJson);
                 Picklocndetail = PicklocationDetail(db);
                 InsertSyndMessageForSameSkuWithQuantities(db, Picklocndetail.SkuId, Synr.SynchronizationId);
             }
@@ -223,8 +224,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             {
 
                 db.Open();
-                SynrMessageData = GetSyncIdInsertingSynrMessage(db);
-                Synr = JsonConvert.DeserializeObject<SynrDto>(SynrMessageData.Messsagejson);
+                SynrMessageData = SwmToMhe(db,null,TransactionCode.Synr,null);
+                Synr = JsonConvert.DeserializeObject<SynrDto>(SynrMessageData.MessageJson);
                 SyndDataQtyDefference = SyndDataTable(db);
                 PickLocnBeforeApi = PicklocationTable(db, SyndDataQtyDefference.SkuId);
               
