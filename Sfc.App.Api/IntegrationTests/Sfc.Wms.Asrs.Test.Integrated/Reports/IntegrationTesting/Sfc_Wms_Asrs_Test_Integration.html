@@ -9,7 +9,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
 /*If you drop a custom stylesheet named BDDfyCustom.css in your output folder it gets embedded here. This way you can apply some custom styles over your html report.*/
 
     </style>
-    <title>BDDfy Test Result 12/26/2019</title>
+    <title>BDDfy Test Result 27-12-2019</title>
   </head>
   <body>
     <div id='main'>
@@ -29,13 +29,13 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
           <li class='scenarioSummary'>
             <div class='summaryLine'>
               <div class='summaryLabel'>Scenarios</div>
-              <span class='summaryCount'>1</span>
+              <span class='summaryCount'>4</span>
             </div>
           </li>
           <li class='Passed'>
             <div class='summaryLine'>
               <div class='summaryLabel'>Passed</div>
-              <span class='summaryCount'>1</span>
+              <span class='summaryCount'>4</span>
             </div>
           </li>
           <li class='Inconclusive'>
@@ -70,34 +70,106 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
           <li>
             <div class='story Passed'>
               <div class='storyMetadata'>
-                <div class='storyTitle'><a href='http://tfsapp1:8080/tfs/ShamrockCollection/Portfolio-SOWL/_workitems?id=128771&_a=edit'>Story: Skmt</a></div>
+                <div class='storyTitle'><a href='http://tfsapp1:8080/tfs/ShamrockCollection/Portfolio-SOWL/_workitems?id=143479&_a=edit'>Story: Synchronization Messages</a></div>
                 <ul class='storyNarrative'>
-                  <li>As a Authorized User test for skmt message from wmstoems</li>
-                  <li>I want To Verify SKMT message is inserted in to swm_to_mhe table with appropriate data And verify SKMT message is inserted in to wmstoems table with appropriate data </li>
-                  <li>So that I can validate for message fields in SKMT message, in Internal Table SWM_TO_MHE and in wmstoems</li>
+                  <li>As a Authorized User test for Synr,Synd and Sync messages</li>
+                  <li>I want To Verify All the Records in pick location table w.r.t active location should be inserted into pld_snap_shot table And Validate for Synd data table for all rows inserted from pld snap shot w.r.t sync id , sku, location combinationAnd Verify the quanties in both table should be same </li>
+                  <li>So that I can validate for SYNR message should insert into Swm_to_mhe Validate SYND message should insert into Swm_from_mhe Validate SYNC message should insert into Swm_from_mhe</li>
                 </ul>
               </div>
               <div class='scenarios'>
                 <div class='scenario'>
-                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-1'>Test Case Id: 137882 - Dematic - SKMT - Add - Call the SKMT api and validate for all functionalities in wmstoems,swm_to_mhe tables</div>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-1'>Test Case 144444: SYNR:Synchronization Request</div>
                   <ul class='steps' id='scenario-1'>
                     <li class='step Passed  SetupState ' data-toggle-target='step-1-1' >
-                      <span>Given valid sku actioncode and skmt url is 8823571, Add, http://dev.az.app.api.wms.shamrockfoods.com/api/sku-maintenance?actionCode=Add&skuId=8823571</span>
+                      <span>Given test initialize for valid message</span>
                     </li>
                     <li class='step Passed  Transition ' data-toggle-target='step-1-2' >
-                      <span>When skmt api is called created is returned</span>
+                      <span>When synr api is called created is returned with valid url and sync id is http://dev.az.app.api.wms.shamrockfoods.com/api/synchronization-request, 157</span>
                     </li>
                     <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-1-3' >
-                      <span>And get valid data after trigger</span>
+                      <span>And get data from data base for synr scenarios</span>
                     </li>
                     <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-1-4' >
-                      <span>And verify skmt message was inserted into swm to mhe for action code Add, Add</span>
+                      <span>And verify synr message was inserted into swm to mhe</span>
                     </li>
                     <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-1-5' >
-                      <span>And verify skmt message was inserted into wms to ems</span>
+                      <span>And verify synr message was inserted into wms to ems</span>
                     </li>
                     <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-1-6' >
-                      <span>And verify for skmt message sent the skuid was normal sku</span>
+                      <span>And verify count pick location table and snapshot table</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-3'>Test Case 146038: SYND: Test for message where there is quantity mismatch from dematic pld tables</div>
+                  <ul class='steps' id='scenario-3'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-3-1' >
+                      <span>Given test initialize for dupilcate synd fora same sku with quantities</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-3-2' >
+                      <span>And valid synd same sku with different qty url</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-3-3' >
+                      <span>When synd same sku with different qty api is called with valid msg key</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-3-4' >
+                      <span>And get data from data base for synd same sku with different qty scenarios</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-3-5' >
+                      <span>And verify synd message was inserted into swm from mhe</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-3-6' >
+                      <span>And verify synd message was inserted into swm from mhe tableand synd data table</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-2'>Test Case 146039: SYND: send the duplicate synd message for a same sku with quantities same (split quantity and send)</div>
+                  <ul class='steps' id='scenario-2'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-2-1' >
+                      <span>Given test initialize for dupilcate synd fora same sku with quantities</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-2-2' >
+                      <span>And valid synd same sku with different qty url</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-2-3' >
+                      <span>When synd same sku with different qty api is called with valid msg key</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-2-4' >
+                      <span>And get data from data base for synd same sku with different qty scenarios</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-2-5' >
+                      <span>And verify synd message was inserted into swm from mhe</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-2-6' >
+                      <span>And verify synd message was inserted into swm from mhe tableand synd data table</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class='scenario'>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-4'>Test Case 146667: SYNC: test for message if sku 'x' has a quantity of '10' in SWM_SYNR_PLD_SNAPSHOT and sku 'y' has quantity of '5+1+4' which is splited in to 3 synd messages</div>
+                  <ul class='steps' id='scenario-4'>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-4-1' >
+                      <span>Given sync test initialize</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-4-2' >
+                      <span>And sync test initialize for valid message</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-4-3' >
+                      <span>And valid sync url msg key and processor is http://dev.az.app.api.wms.shamrockfoods.com/api/emstowms-message?msgKey=2148&msgProcessor=MessageProcessor, 2148, MessageProcessor</span>
+                    </li>
+                    <li class='step Passed  Transition ' data-toggle-target='step-4-4' >
+                      <span>When sync api is called with valid msg key</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-4-5' >
+                      <span>And get valid data after trigger sync</span>
+                    </li>
+                    <li class='step Passed  Assertion ' data-toggle-target='step-4-6' >
+                      <span>Then verify sync message was inserted into ems to wms</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-4-7' >
+                      <span>And validate for qty difference should be updated in pick location table</span>
                     </li>
                   </ul>
                 </div>
@@ -105,7 +177,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
             </div>
           </li>
         </ul>
-        <p><span>Tested at: 12/26/2019 3:00:55 PM</span></p>
+        <p><span>Tested at: 27-12-2019 11:09:47</span></p>
       </div>
     </div>
     <div class='footer'>Powered by <a href='https://github.com/TestStack/TestStack.BDDfy'>BDDfy</a> framework</div>

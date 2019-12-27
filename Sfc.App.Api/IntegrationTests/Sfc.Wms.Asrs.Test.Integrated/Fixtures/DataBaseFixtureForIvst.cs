@@ -31,7 +31,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected Ivst CycleCountAdjustmentMinus = new Ivst();
         protected Ivst NoException = new Ivst();
         protected IvstDto Ivst = new IvstDto();
-        protected string Query = "";
+        protected new string Query = "";
         protected new SwmFromMheDto SwmFromMhe = new SwmFromMheDto();
         protected string PixTrnAfterApi;
         protected EmsToWmsDto EmsToWmsParameters;

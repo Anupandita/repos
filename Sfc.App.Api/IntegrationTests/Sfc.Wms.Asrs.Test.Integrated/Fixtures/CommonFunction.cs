@@ -17,6 +17,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected OracleCommand Command;
         protected List<TransitionalInventoryDto> TransInvnList = new List<TransitionalInventoryDto>();
         protected OracleTransaction Transaction;
+        protected string Query = "";
         public OracleConnection GetOracleConnection()
         {
             return new OracleConnection(ConfigurationManager.ConnectionStrings["SfcRbacContextModel"].ConnectionString);
@@ -237,6 +238,60 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 cartonHdr.StatusCode = Convert.ToInt16(cartonHdrReader["STAT_CODE"]);
             }
             return cartonHdr;
+        }
+        protected SwmToMheDto SwmToMhe(OracleConnection db, string trx)
+        {
+            var swmtomhedata = new SwmToMheDto();
+            var query = $"select * from SWM_TO_MHE where source_msg_trans_code = '{trx}' order by SOURCE_MSG_KEY desc";
+            Command = new OracleCommand(query, db);
+            var swmToMheReader = Command.ExecuteReader();
+            if (swmToMheReader.Read())
+            {
+                swmtomhedata.SourceMessageKey = Convert.ToInt32(swmToMheReader[TestData.SwmToMhe.SourceMsgKey].ToString());
+                swmtomhedata.SourceMessageResponseCode = Convert.ToInt16(swmToMheReader[TestData.SwmToMhe.SourceMsgRsnCode].ToString());
+                swmtomhedata.SourceMessageStatus = swmToMheReader[TestData.SwmToMhe.SourceMsgStatus].ToString();
+                swmtomhedata.ContainerId = swmToMheReader[TestData.SwmToMhe.ContainerId].ToString();
+                swmtomhedata.ContainerType = swmToMheReader[TestData.SwmToMhe.ContainerType].ToString();
+                swmtomhedata.MessageJson = swmToMheReader[TestData.SwmToMhe.MsgJson].ToString();
+                swmtomhedata.LocationId = swmToMheReader[TestData.SwmToMhe.LocnId].ToString();
+                swmtomhedata.SourceMessageText = swmToMheReader[TestData.SwmToMhe.SourceMsgText].ToString();
+            }
+            return swmtomhedata;
+        }
+        public SwmFromMheDto SwmFromMheqtydefference(OracleConnection db, string sourceMessage)
+        {
+            var swmFromMheData = new SwmFromMheDto();
+            var pickLocnView = $"select * from swm_from_mhe where SOURCE_MSG_TRANS_CODE='{sourceMessage}' order by CREATED_DATE_TIME desc";
+            Command = new OracleCommand(pickLocnView, db);
+            var swmFromMheReader = Command.ExecuteReader();
+            if (swmFromMheReader.Read())
+            {
+                swmFromMheData.SourceMessageKey = Convert.ToInt16(swmFromMheReader[TestData.SwmFromMhe.SourceMsgKey].ToString());
+                swmFromMheData.SourceMessageResponseCode = Convert.ToInt16(swmFromMheReader[TestData.SwmFromMhe.SourceMsgRsnCode].ToString());
+                swmFromMheData.SourceMessageStatus = swmFromMheReader[TestData.SwmFromMhe.SourceMsgStatus].ToString();
+                swmFromMheData.SourceMessageProcess = swmFromMheReader[TestData.SwmFromMhe.SourceMsgProcess].ToString();
+                swmFromMheData.SourceMessageTransactionCode = swmFromMheReader[TestData.SwmFromMhe.SourceMsgTransCode].ToString();
+                swmFromMheData.ContainerId = swmFromMheReader[TestData.SwmFromMhe.ContainerId].ToString();
+                swmFromMheData.ContainerType = swmFromMheReader[TestData.SwmFromMhe.ContainerType].ToString();
+                swmFromMheData.MessageJson = swmFromMheReader[TestData.SwmFromMhe.MsgJson].ToString();
+                swmFromMheData.SourceMessageText = swmFromMheReader[TestData.SwmFromMhe.SourceMsgText].ToString();
+                swmFromMheData.LocationId = swmFromMheReader[TestData.SwmFromMhe.LocnId].ToString();
+            }
+            return swmFromMheData;
+        }
+
+        public PickLocndto GetSyncIdInsertingSynrMessage(OracleConnection db)
+        {
+            var synrDataDto = new PickLocndto();
+            Query = $"{SynrQueries.NewSyncIdfromWmsquery}";
+            Command = new OracleCommand(Query, db);
+            Command.Parameters.Add(new OracleParameter("sync", Constants.Synchonize));
+            var validData = Command.ExecuteReader();
+            if (validData.Read())
+            {
+                synrDataDto.Messsagejson = validData[FieldName.MsgJson].ToString();
+            }
+            return synrDataDto;
         }
     }
 }

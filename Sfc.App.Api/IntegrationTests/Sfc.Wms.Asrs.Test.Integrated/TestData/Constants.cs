@@ -60,6 +60,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
         public const string ValidationMessage = "Not found";
         public const string AllocationStatus = "90";
         public const string CartonStatusAllocated = "5";
+        public const string RectTypeId = "SYN";
+        public const string Synchonize = "SYNR";
+        public const string UnitofMesure = "Case";
+        public const string AvailableSatus = "Available";
+        public const string HoldStatus = "Y";
 
     }
 }
