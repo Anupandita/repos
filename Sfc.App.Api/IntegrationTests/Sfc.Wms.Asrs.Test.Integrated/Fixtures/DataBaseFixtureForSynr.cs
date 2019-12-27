@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
@@ -127,8 +128,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var pldsnap = new List<PickLocndto>();
             var pldQuerys = $"{SynrQueries.ListPldSkuQuery}";
             var command = new OracleCommand(pldQuerys, db);
-            //Command.Parameters.Add(new OracleParameter("sysCodeType", Constants.SysCodeType));
-            //Command.Parameters.Add(new OracleParameter("sysCodeId", Constants.SysCodeIdForActiveLocation));
             var pldReader = command.ExecuteReader();
             while (pldReader.Read())
             {
@@ -195,6 +194,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var buildMessage = new MessageHeaderBuilder();
             var testResult = buildMessage.BuildMessage<SyndDto, SyndValidationRule>(SyndParameters, TransactionCode.Synd);
             Assert.AreEqual(testResult.ResultType, ResultTypes.Ok);
+            Debug.Print(testResult.Payload);
+            Debug.Print(testResult.ValidationMessages.ToString());
             Assert.IsNotNull(testResult.Payload);
             return testResult.Payload;
         }
@@ -316,6 +317,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var querysyndqty = $"select SUM(SWM_SYND_DATA.Quantity) from SWM_SYND_DATA where SYNCHRONIZATION_ID='{syncId}'and status=90 ";
             Command = new OracleCommand(querysyndqty, db);
             var syndDataQtyReader = Command.ExecuteScalar().ToString();
+            Command.Parameters.Add(new OracleParameter("SyncId", syncId));
             return syndDataQtyReader;
         }
         public string FetchQtyPldSnapshotTable(OracleConnection db, string syncId)
@@ -336,8 +338,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         public string FetchSyndDataTables(OracleConnection db, string syncId)
         {
-            var querysynd = $"select Count(*) from SWM_SYND_DATA where SYNCHRONIZATION_ID='{syncId}'and status=90";
+            var querysynd = $"{SynrQueries.SyndData}";
             Command = new OracleCommand(querysynd, db);
+            Command.Parameters.Add(new OracleParameter("SyncId", syncId));
+            Command.Parameters.Add(new OracleParameter("Status", Constants.SyndStatus));
             var syndDataReader = Command.ExecuteScalar().ToString();
             return syndDataReader;
         }

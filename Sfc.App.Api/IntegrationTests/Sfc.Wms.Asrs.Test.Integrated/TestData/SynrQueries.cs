@@ -10,5 +10,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
         public const string NewSyncIdfromWmsquery = "select * from swm_to_mhe where SOURCE_MSG_TRANS_CODE = :sync order by CREATED_DATE_TIME desc ";
         public const string ListPldSkuQuery = "select * from pick_locn_dtl p join item_master i on  p.sku_id = i.sku_id where  locn_id||(DECODE(i.temp_zone, 'D', 'Dry', 'Freezer')) in (select lh.locn_id||lg.grp_attr from locn_hdr lh inner join locn_grp lg on lg.locn_id = lh.locn_id inner join sys_code sc on sc.code_id = lg.grp_type and sc.code_type = '740' and sc.code_id = '18')";
         public const string SyndDataQuery = "select * from SWM_SYND_DATA where SYNCHRONIZATION_ID=:SyncId and SKU=:Skuid";
+
+        public const string SyndData = "select Count(*) from SWM_SYND_DATA where SYNCHRONIZATION_ID=:SyncId and status=:Status";
+
+
+
     }
 }

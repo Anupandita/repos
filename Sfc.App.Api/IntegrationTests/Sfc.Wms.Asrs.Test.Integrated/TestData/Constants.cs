@@ -65,6 +65,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
         public const string UnitofMesure = "Case";
         public const string AvailableSatus = "Available";
         public const string HoldStatus = "Y";
+        public const int SyndStatus = 90;
 
     }
 }
