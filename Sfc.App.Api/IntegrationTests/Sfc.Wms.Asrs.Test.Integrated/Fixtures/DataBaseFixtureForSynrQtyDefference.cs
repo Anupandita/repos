@@ -124,7 +124,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public PickLocationDetailsDto PickLocnTable(OracleConnection db)
         {
             var pldsnap = new PickLocationDetailsDto();
-            var pldQuerys = $"{SynrQueries.pldTableQuery}";
+            var pldQuerys = $"{SynrQueries.PldTableQuery}";
             var command = new OracleCommand(pldQuerys, db);
             var pldReader = command.ExecuteReader();
             if (pldReader.Read())
@@ -301,7 +301,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public Data.Entities.SwmSyndData SyndDataTable(OracleConnection db)
         {
             var syndData = new Data.Entities.SwmSyndData();
-            var syndDataQuery = $"{SynrQueries.syndDataFilterQuery}";
+            var syndDataQuery = $"{SynrQueries.SyndDataFilterQuery}";
             Command = new OracleCommand(syndDataQuery, db);
             var syndReader = Command.ExecuteReader();
             if (syndReader.Read())

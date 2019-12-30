@@ -324,7 +324,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         }
         public string FetchQtyPldSnapshotTable(OracleConnection db, string syncId)
         {
-            var querypldqty = $"{SynrQueries.pldQtyQuery}";
+            var querypldqty = $"{SynrQueries.PldQtyQuery}";
             Command = new OracleCommand(querypldqty, db);
             Command.Parameters.Add(new OracleParameter("syncId", syncId));
             Command.Parameters.Add(new OracleParameter("sysCodeType", Constants.SysCodeType));
