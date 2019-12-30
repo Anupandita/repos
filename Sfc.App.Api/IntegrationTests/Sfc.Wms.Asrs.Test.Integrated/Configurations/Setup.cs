@@ -20,6 +20,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Configurations
             Configurator.BatchProcessors.Add(new HtmlReporter(new HtmlReportConfig("IntegrationTesting",
                 "Sfc_Wms_Asrs_Test_Integration.html", "Sfc.Wms.Api.Asrs.Test.Integrated.Tests", "Sfc WMS Tests",
                 "Sfc WMS Scenarios and their Test Results")));
+            Configurator.BatchProcessors.HtmlMetroReport.Enable();
 
         }
     }

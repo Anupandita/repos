@@ -1,5 +1,4 @@
-﻿using System;
-using Oracle.ManagedDataAccess.Client;
+﻿using Oracle.ManagedDataAccess.Client;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
 using Newtonsoft.Json;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Constants;
@@ -35,7 +34,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                ParentSku = TriggerOnItemMaster(db, "C");
+                ParentSku = TriggerOnItemMaster(db, Constants.Child);
 
             }
         }
@@ -44,12 +43,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                ParentSku = TriggerOnItemMaster(db, "C");
-                ChildSku = TriggerOnItemMaster(db, "P");
+                ParentSku = TriggerOnItemMaster(db, Constants.Child);
+                ChildSku = TriggerOnItemMaster(db, Constants.Parent);
                 Childskuassertion = ChildSkufunction(db, ParentSku.SkuId);
             }
-
-
         }
 
         public ItemMasterView TriggerOnItemMaster(OracleConnection db, string skuCondition)
@@ -75,18 +72,15 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 ItemMaster.Skubrcd = itemMasterReader[ItemMasterViews.Skubrcd].ToString();
                 ItemMaster.Colordescription = itemMasterReader[ItemMasterViews.Colordesc].ToString();
             }
-
-
             return ItemMaster;
-
         }
 
 
         public ItemMasterView ChildSkufunction(OracleConnection db, string colordesc)
         {
-            var query = $"select * from Item_master WHERE COLOR_DESC='{colordesc}'";
-
+            var query = $"select * from Item_master WHERE COLOR_DESC= :colordesc";
             Command = new OracleCommand(query, db);
+            Command.Parameters.Add(new OracleParameter("colordesc", colordesc));
             var colordescReader = Command.ExecuteReader();
             if (colordescReader.Read())
             {
@@ -95,7 +89,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
             }
             return ItemMaster;
-
         }
 
         protected void GetDataAfterTrigger()
@@ -104,32 +97,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             {
                 db.Open();
                 Command = new OracleCommand();
-                SwmToMheSkmt = SwmToMhe(db, ItemMaster.SkuId, TransactionCode.Skmt);
+                SwmToMheSkmt = SwmToMhe(db,null, TransactionCode.Skmt, ItemMaster.SkuId);                  
                 Skmt = JsonConvert.DeserializeObject<SkmtDto>(SwmToMheSkmt.MessageJson);
                 WmsToEmsSkmt = WmsToEmsData(db, SwmToMheSkmt.SourceMessageKey, TransactionCode.Skmt);
-
             }
         }
-
-        protected SwmToMheDto SwmToMhe(OracleConnection db, string skuId, string trx)
-        {
-            var swmtomhedata = new SwmToMheDto();
-            var query = $"select * from SWM_TO_MHE where sku_id = '{skuId}'and source_msg_trans_code = '{trx}' order by SOURCE_MSG_KEY desc";
-            Command = new OracleCommand(query, db);
-            var swmToMheReader = Command.ExecuteReader();
-            if (swmToMheReader.Read())
-            {
-                swmtomhedata.SourceMessageKey = Convert.ToInt16(swmToMheReader[TestData.SwmToMhe.SourceMsgKey].ToString());
-                swmtomhedata.SourceMessageResponseCode = Convert.ToInt16(swmToMheReader[TestData.SwmToMhe.SourceMsgRsnCode].ToString());
-                swmtomhedata.SourceMessageStatus = swmToMheReader[TestData.SwmToMhe.SourceMsgStatus].ToString();
-                swmtomhedata.ContainerId = swmToMheReader[TestData.SwmToMhe.ContainerId].ToString();
-                swmtomhedata.ContainerType = swmToMheReader[TestData.SwmToMhe.ContainerType].ToString();
-                swmtomhedata.MessageJson = swmToMheReader[TestData.SwmToMhe.MsgJson].ToString();
-                swmtomhedata.LocationId = swmToMheReader[TestData.SwmToMhe.LocnId].ToString();
-                swmtomhedata.SourceMessageText = swmToMheReader[TestData.SwmToMhe.SourceMsgText].ToString();
-            }
-            return swmtomhedata;
-        }
-
     }
 }

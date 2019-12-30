@@ -12,4 +12,6 @@
         public decimal ActualWeight { get; set; }      
         public string TempZone { get; set; }
     }
+
+    
 }
