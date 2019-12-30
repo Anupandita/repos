@@ -205,10 +205,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var caseheader = new CaseHeaderDto();
             var query = ComtQueries.NotEnoughInventory;
-            var command = new OracleCommand(query, db);           
-            Command.Parameters.Add(new OracleParameter("qty", Constants.NumZero));
-            Command.Parameters.Add(new OracleParameter("seqNbr", Constants.CaseSeqNumberForSingleSku));
-            Command.Parameters.Add(new OracleParameter("statCode", Constants.StatusCodeConsumed));
+            var command = new OracleCommand(query, db);
             var caseHeaderReader = command.ExecuteReader();
             if (caseHeaderReader.Read())
             {
