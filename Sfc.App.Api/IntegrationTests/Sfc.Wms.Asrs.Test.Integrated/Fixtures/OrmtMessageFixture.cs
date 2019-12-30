@@ -5,7 +5,6 @@ using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
 using Sfc.Wms.Foundation.InboundLpn.Contracts.Dtos;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Constants;
-using System;
 using System.Configuration;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
@@ -88,9 +87,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             WaveUrl = $"{BaseUrl}{TestData.Parameter.OrderMaintenance}/{TestData.Parameter.WaveNbr}?{TestData.Parameter.WaveNumber}={currentWaveNumber}";
         }
 
-        protected IRestResponse ApiIsCalled(string Url)
+        protected IRestResponse ApiIsCalled(string url)
         {
-            var client = new RestClient(Url);
+            var client = new RestClient(url);
             var request = new RestRequest(Method.POST);     
             Response = client.Execute(request);
             return Response;
