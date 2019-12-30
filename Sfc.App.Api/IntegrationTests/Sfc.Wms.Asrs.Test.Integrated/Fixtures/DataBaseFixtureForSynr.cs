@@ -38,13 +38,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected SyndDto SyndParameters;
         protected EmsToWmsDto EmsToWmsParameters;
         protected SyndDto Synd = new SyndDto();
-        protected synd SyndData = new synd();
+        protected Synd SyndData = new Synd();
         protected string BaseUrl = @ConfigurationManager.AppSettings["BaseUrl"];
         protected string SyndUrl;
         protected SwmFromMheDto SwmFromMheSynd = new SwmFromMheDto();
         protected IRestResponse Response;
         protected new SwmFromMheDto SwmFromMhe = new SwmFromMheDto();
-        protected synd SyncData = new synd();
+        protected Synd SyncData = new Synd();
         protected SyncDto SyncParameters;
         protected SwmFromMheDto SwmFromMheSyncDto = new SwmFromMheDto();
         protected SyncDto Sync = new SyncDto();
@@ -324,7 +324,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         }
         public string FetchQtyPldSnapshotTable(OracleConnection db, string syncId)
         {
-            var querypldqty = $"{SynrQueries.pldQtyQuery}";
+            var querypldqty = $"{SynrQueries.PldQtyQuery}";
             Command = new OracleCommand(querypldqty, db);
             Command.Parameters.Add(new OracleParameter("syncId", syncId));
             Command.Parameters.Add(new OracleParameter("sysCodeType", Constants.SysCodeType));

@@ -17,7 +17,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
     
     public class DataBaseFixtureForMprq :CommonFunction
     {
-
         protected EmsToWmsDto EmsToWmsParameters;
         protected Mprq MprqData = new Mprq();
         protected MprqDto MprqParameters;
@@ -26,10 +25,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected MpidDto Mpid = new MpidDto();
         protected new SwmFromMheDto SwmFromMhe = new SwmFromMheDto();
         protected new SwmToMheDto SwmToMhe = new SwmToMheDto();
-        protected string Query = "";
+        protected new string Query = "";
         protected  Entities.NextUpCounter NextUpCounter= new Entities.NextUpCounter();
-
-
 
         public void GetDataBeforeTrigger()
         {

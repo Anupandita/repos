@@ -18,39 +18,39 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
     public class ComtAndIvmtTestWhenTriggerIsOn : ComtIvmtMessageFixture
     {
        
-        [TestMethod()]
-        [TestCategory("FUNCTIONAL")]
+        //[TestMethod()]
+        //[TestCategory("FUNCTIONAL")]
 
-        public void TestForReceivedCasesFromVendorsWhenTriggerIsOn()
-        {
-            this.Given(x => x.InitializeTestDataForCOMTWhenTriggerIsOn())
-                .And(x => x.AValidNewComtMessageRecordWhereCaseNumberAndSkuIs(SingleSkuCase.CaseNumber, SingleSkuCase.SkuId))
-                .Then(x => x.GetDataFromDataBaseForSingleSkuScenarios())
-                .And(x => x.VerifyComtMessageWasInsertedIntoSwmToMhe())
-                .And(x => x.VerifyComtMessageWasInsertedIntoWmsToEms())
-                .And(x => x.VerifyIvmtMessageWasInsertedIntoSwmToMhe(SingleSkuCase.TotalAllocQty))
-                .And(x => x.VerifyIvmtMessageWasInsertedIntoWmsToEms())
-                .And(x => x.VerifyTheQuantityIsIncreasedInToTransInventory())
-                .And(x => x.VerifyQuantityisReducedIntoCaseDetail())
-                .And(x => x.VerifyStatusIsUpdatedIntoCaseHeader())
-                .And(x => x.VerifyStatusIsUpdatedIntoTaskHeader())
-                .BDDfy("Test Case ID : 120959 -Dematic - COMT,IVMT : Single Sku Case-Case received from Vendor, Call the Comt Api and Verify all its functionalities");
-        }
+        //public void TestForReceivedCasesFromVendorsWhenTriggerIsOn()
+        //{
+        //    this.Given(x => x.InitializeTestDataForComtWhenTriggerIsOn())
+        //        .And(x => x.AValidNewComtMessageRecordWhereCaseNumberAndSkuIs(SingleSkuCase.CaseNumber, SingleSkuCase.SkuId))
+        //        .Then(x => x.GetDataFromDataBaseForSingleSkuScenarios())
+        //        .And(x => x.VerifyComtMessageWasInsertedIntoSwmToMhe())
+        //        .And(x => x.VerifyComtMessageWasInsertedIntoWmsToEms())
+        //        .And(x => x.VerifyIvmtMessageWasInsertedIntoSwmToMhe(SingleSkuCase.TotalAllocQty))
+        //        .And(x => x.VerifyIvmtMessageWasInsertedIntoWmsToEms())
+        //        .And(x => x.VerifyTheQuantityIsIncreasedInToTransInventory())
+        //        .And(x => x.VerifyQuantityisReducedIntoCaseDetail())
+        //        .And(x => x.VerifyStatusIsUpdatedIntoCaseHeader())
+        //        .And(x => x.VerifyStatusIsUpdatedIntoTaskHeader())
+        //        .BDDfy("Test Case ID : 120959 -Dematic - COMT,IVMT : Single Sku Case-Case received from Vendor, Call the Comt Api and Verify all its functionalities");
+        //}
 
-        [TestMethod()]
-        [TestCategory("FUNCTIONAL")]
-        public void TestForReceivedCasesFromReturnsWhenTriggerIsOn()
-        {
-            this.Given(x =>x.InitializeTestDataForStatCode30WhenTriggerIsOn())
-                .And(x =>x.AValidNewComtMessageRecordWhereCaseNumberAndSkuIs(SingleSkuCase.CaseNumber, SingleSkuCase.SkuId))
-                .Then(x => x.GetDataFromDataBaseForSingleSkuScenarios())             
-                .And(x => x.VerifyIvmtMessageWasInsertedIntoSwmToMhe(SingleSkuCase.ActlQty))
-                .And(x => x.VerifyIvmtMessageWasInsertedIntoWmsToEms())
-                .And(x => x.VerifyTheQuantityIsIncreasedInToTransInventory())
-                .And(x => x.VerifyQuantityisReducedIntoCaseDetail())
-                .And(x => x.VerifyStatusIsUpdatedIntoCaseHeader())
-                .And(x => x.VerifyStatusIsUpdatedIntoTaskHeader())
-                .BDDfy("Test Case ID : 120959 -Dematic - COMT,IVMT : Single Sku Case-Case received from Vendor, Call the Comt Api and Verify all its functionalities");
-        }
+        //[TestMethod()]
+        //[TestCategory("FUNCTIONAL")]
+        //public void TestForReceivedCasesFromReturnsWhenTriggerIsOn()
+        //{
+        //    this.Given(x =>x.InitializeTestDataForStatCode30WhenTriggerIsOn())
+        //        .And(x =>x.AValidNewComtMessageRecordWhereCaseNumberAndSkuIs(SingleSkuCase.CaseNumber, SingleSkuCase.SkuId))
+        //        .Then(x => x.GetDataFromDataBaseForSingleSkuScenarios())             
+        //        .And(x => x.VerifyIvmtMessageWasInsertedIntoSwmToMhe(SingleSkuCase.ActlQty))
+        //        .And(x => x.VerifyIvmtMessageWasInsertedIntoWmsToEms())
+        //        .And(x => x.VerifyTheQuantityIsIncreasedInToTransInventory())
+        //        .And(x => x.VerifyQuantityisReducedIntoCaseDetail())
+        //        .And(x => x.VerifyStatusIsUpdatedIntoCaseHeader())
+        //        .And(x => x.VerifyStatusIsUpdatedIntoTaskHeader())
+        //        .BDDfy("Test Case ID : 120959 -Dematic - COMT,IVMT : Single Sku Case-Case received from Vendor, Call the Comt Api and Verify all its functionalities");
+        //}
     }
 }

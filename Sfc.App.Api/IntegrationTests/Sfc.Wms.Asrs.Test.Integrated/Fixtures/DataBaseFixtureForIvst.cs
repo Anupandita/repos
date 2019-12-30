@@ -31,7 +31,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected Ivst CycleCountAdjustmentMinus = new Ivst();
         protected Ivst NoException = new Ivst();
         protected IvstDto Ivst = new IvstDto();
-        protected string Query = "";
+        protected new string Query = "";
         protected new SwmFromMheDto SwmFromMhe = new SwmFromMheDto();
         protected string PixTrnAfterApi;
         protected EmsToWmsDto EmsToWmsParameters;
@@ -160,7 +160,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                var ivstResult = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, IvstData.Qty, "UPCOverride", IvstException.CycleCount, Constants.InboundPalletN);
+                var ivstResult = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, IvstData.Qty, IvstActionCode.AdjustmentPlus, IvstException.CycleCount, Constants.InboundPalletN);
                 EmsToWmsParametersCycleCount = new EmsToWmsDto
                 {
                     Process = DefaultPossibleValue.MessageProcessor,

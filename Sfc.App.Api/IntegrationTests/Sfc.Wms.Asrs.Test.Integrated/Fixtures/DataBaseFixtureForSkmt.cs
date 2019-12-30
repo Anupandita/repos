@@ -1,5 +1,4 @@
-﻿using System;
-using Oracle.ManagedDataAccess.Client;
+﻿using Oracle.ManagedDataAccess.Client;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
 using Newtonsoft.Json;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Constants;

@@ -32,7 +32,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected SwmToMheDto SynrMessageData = new SwmToMheDto();
         protected PickLocationDetailsDto PldList = new PickLocationDetailsDto();
         protected EmsToWmsDto EmsToWmsParameters;
-        protected synd SyndData = new synd();
+        protected Synd SyndData = new Synd();
         protected string BaseUrl = @ConfigurationManager.AppSettings["BaseUrl"];
         protected SwmFromMheDto SwmFromMheSynd = new SwmFromMheDto();
         protected SyndDto SyndParameters;
@@ -40,8 +40,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected new SwmFromMheDto SwmFromMhe = new SwmFromMheDto();
         protected SyndDto Synd = new SyndDto();
         protected SyncDto SyncParameters;
-        protected synd SyncData = new synd();
-        protected synd SyncDataDuplicate = new synd();
+        protected Synd SyncData = new Synd();
+        protected Synd SyncDataDuplicate = new Synd();
         protected SwmFromMheDto SwmFromMheSyncDto = new SwmFromMheDto();
         protected SyncDto Sync = new SyncDto();
         protected PickLocationDetailsDto Picklocndetail = new PickLocationDetailsDto();
@@ -124,7 +124,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public PickLocationDetailsDto PickLocnTable(OracleConnection db)
         {
             var pldsnap = new PickLocationDetailsDto();
-            var pldQuerys = $"{SynrQueries.pldTableQuery}";
+            var pldQuerys = $"{SynrQueries.PldTableQuery}";
             var command = new OracleCommand(pldQuerys, db);
             var pldReader = command.ExecuteReader();
             if (pldReader.Read())
@@ -301,7 +301,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public Data.Entities.SwmSyndData SyndDataTable(OracleConnection db)
         {
             var syndData = new Data.Entities.SwmSyndData();
-            var syndDataQuery = $"{SynrQueries.syndDataFilterQuery}";
+            var syndDataQuery = $"{SynrQueries.SyndDataFilterQuery}";
             Command = new OracleCommand(syndDataQuery, db);
             var syndReader = Command.ExecuteReader();
             if (syndReader.Read())

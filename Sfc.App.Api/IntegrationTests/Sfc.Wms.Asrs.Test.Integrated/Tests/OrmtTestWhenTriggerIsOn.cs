@@ -16,47 +16,47 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
        )]
     public class OrmtTestWhenTriggerIsOn : OrmtMessageFixture
     {
-        [TestMethod()]
-        [TestCategory("FUNCTIONAL")]
-        [DataRow(1)]
-        public void AOrmtTest1VerifyForOrmtMessageWithActionCodeAddRelease(int count)
-        {
-            this.Given(x => x.InitializeTestDataForPrintingOfCartons())
-            .And(x => x.ValidOrmtUrlCartonNumberAndActioncodeIs(Url, PrintCarton.CartonNbr, OrmtActionCode.AddRelease)) 
-            .And(x => x.ReadDataAfterApiForPrintingOfCarton())
-            .Then(x => x.VerifyOrmtMessageWasInsertedInToSwmToMhe())
-            .And(x => x.VerifyOrmtMessageWasInsertedInToWmsToEmsForPrintingOfOrder())
-            .And(x => x.VerifyForOrmtCountInPickLocnDtlExt())
-            .And(x => x.VerifyForStatusCodeinCartonHdrForAddRelease())
-            .And(x => x.VerifyForStatusInSwmEligibleOrmtCartons())
-            .BDDfy("Test Case Id:132756 -Dematic - ORMT - AddRelease - Call the ormt api and validate for all functionalities in  wmstoems,swm_to_mhe,carton_hdr,pick_locn_dtl_ext  tables");
-        }
-        [TestMethod()]
-        [TestCategory("FUNCTIONAL")]
-        public void BOrmtTest2VerifyForOrmtMessageWithActionCodeCancel()
-        {
-            this.Given(x => x.InitializeTestDataForCancelOfCarton())
-           .And(x => x.ValidOrmtUrlCartonNumberAndActioncodeIs(OrmtUrl, CancelOrder.CartonNbr, OrmtActionCode.Cancel))          
-           .And(x => x.ReadDataAfterApiForCancelOfCarton())
-           .Then(x => x.VerifyOrmtMessageWasInsertedInToSwmToMheForCancelOrders())
-           .And(x => x.VerifyOrmtMessageWasInsertedInToWmsToEmsForCancelOrder())
-           .And(x => x.VerifyForOrmtCountInPickLocnDtlExt())
-           .BDDfy("Test Case Id:132757 -Dematic - ORMT - Cancel - Call the ormt api and validate for all functionalities in  wmstoems,swm_to_mhe,carton_hdr,pick_locn_dtl_ext  tables");
-        }
+        //[TestMethod()]
+        //[TestCategory("FUNCTIONAL")]
+        //[DataRow(1)]
+        //public void AOrmtTest1VerifyForOrmtMessageWithActionCodeAddRelease(int count)
+        //{
+        ////    this.Given(x => x.InitializeTestDataForPrintingOfCartons())
+        ////    .And(x => x.ValidOrmtUrlCartonNumberAndActioncodeIs(Url, PrintCarton.CartonNbr, OrmtActionCode.AddRelease)) 
+        ////    .And(x => x.ReadDataAfterApiForPrintingOfCarton())
+        ////    .Then(x => x.VerifyOrmtMessageWasInsertedInToSwmToMhe())
+        ////    .And(x => x.VerifyOrmtMessageWasInsertedInToWmsToEmsForPrintingOfOrder())
+        ////    .And(x => x.VerifyForOrmtCountInPickLocnDtlExt())
+        ////    .And(x => x.VerifyForStatusCodeinCartonHdrForAddRelease())
+        ////    .And(x => x.VerifyForStatusInSwmEligibleOrmtCartons())
+        ////    .BDDfy("Test Case Id:132756 -Dematic - ORMT - AddRelease - Call the ormt api and validate for all functionalities in  wmstoems,swm_to_mhe,carton_hdr,pick_locn_dtl_ext  tables");
+        ////}
+        //[TestMethod()]
+        //[TestCategory("FUNCTIONAL")]
+        //public void BOrmtTest2VerifyForOrmtMessageWithActionCodeCancel()
+        //{
+        //    this.Given(x => x.InitializeTestDataForCancelOfCarton())
+        //   .And(x => x.ValidOrmtUrlCartonNumberAndActioncodeIs(OrmtUrl, CancelOrder.CartonNbr, OrmtActionCode.Cancel))          
+        //   .And(x => x.ReadDataAfterApiForCancelOfCarton())
+        //   .Then(x => x.VerifyOrmtMessageWasInsertedInToSwmToMheForCancelOrders())
+        //   .And(x => x.VerifyOrmtMessageWasInsertedInToWmsToEmsForCancelOrder())
+        //   .And(x => x.VerifyForOrmtCountInPickLocnDtlExt())
+        //   .BDDfy("Test Case Id:132757 -Dematic - ORMT - Cancel - Call the ormt api and validate for all functionalities in  wmstoems,swm_to_mhe,carton_hdr,pick_locn_dtl_ext  tables");
+        //}
 
-        [TestMethod()]
-        [TestCategory("FUNCTIONAL")]
-        public void COrmtTest3VerifyForOrmtMessageWithActionCodeEPick()
-        {
-            this.Given(x => x.InitializeTestDataForEpickOfCarton())
-           .And(x => x.ValidOrmtUrlCartonNumberAndActioncodeIs(OrmtUrl, EPick.CartonNbr, OrmtActionCode.AddRelease))        
-           .And(x => x.ReadDataAfterApiForEPickOfCarton())
-           .Then(x => x.VerifyOrmtMessageWasInsertedInToSwmToMheForEpick())
-           .And(x => x.VerifyOrmtMessageWasInsertedInToWmsToEmsForEpickOfOrder())
-           .And(x => x.VerifyForOrmtCountInPickLocnDtlExt())
-           .And(x => x.VerifyForStatusCodeInCartonHdrForEPick())
-           .BDDfy("Test Case Id:132758 -Dematic - ORMT - EPick -Call the ormt api and validate for all functionalities in  wmstoems,swm_to_mhe,carton_hdr,pick_locn_dtl_ext  tables");
-        }
+        //[TestMethod()]
+        //[TestCategory("FUNCTIONAL")]
+        //public void COrmtTest3VerifyForOrmtMessageWithActionCodeEPick()
+        //{
+        //    this.Given(x => x.InitializeTestDataForEpickOfCarton())
+        //   .And(x => x.ValidOrmtUrlCartonNumberAndActioncodeIs(OrmtUrl, EPick.CartonNbr, OrmtActionCode.AddRelease))        
+        //   .And(x => x.ReadDataAfterApiForEPickOfCarton())
+        //   .Then(x => x.VerifyOrmtMessageWasInsertedInToSwmToMheForEpick())
+        //   .And(x => x.VerifyOrmtMessageWasInsertedInToWmsToEmsForEpickOfOrder())
+        //   .And(x => x.VerifyForOrmtCountInPickLocnDtlExt())
+        //   .And(x => x.VerifyForStatusCodeInCartonHdrForEPick())
+        //   .BDDfy("Test Case Id:132758 -Dematic - ORMT - EPick -Call the ormt api and validate for all functionalities in  wmstoems,swm_to_mhe,carton_hdr,pick_locn_dtl_ext  tables");
+        //}
 
     }
 }

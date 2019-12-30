@@ -36,7 +36,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             GetDataBeforeTriggerForStatCode30();
         }
 
-        protected void InitializeTestDataForCOMTWhenTriggerIsOn()
+        protected void InitializeTestDataForComtWhenTriggerIsOn()
         {
             GetDataBeforeTriggerForComtIvmt();
         }

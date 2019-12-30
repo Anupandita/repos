@@ -20,7 +20,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
           StoryUri = "http://tfsapp1:8080/tfs/ShamrockCollection/Portfolio-SOWL/_workitems?id=143479&_a=edit"
 
       )]
-    public class ValidateforQtyDifferenceSynr : SynrQtyDefferenceMessageFixture
+    public class ValidateforNegativeQtyDiffForSyncMessage : SynrQtyDefferenceMessageFixture
     {
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]

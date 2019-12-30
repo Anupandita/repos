@@ -218,14 +218,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public CartonView GetValidOrderDetails(OracleConnection db, int statCode, int miscNum1)
         {           
             var cartonView = new CartonView();
-            var query = OrmtQueries.CommonSelect +" from SWM_ELGBL_ORMT_CARTONS eg"  +
-                        OrmtQueries.CommonJoin +                   
-                        OrmtQueries.CommonWhereCondition;
-            var command = new OracleCommand(query, db);          
-            command.Parameters.Add(new OracleParameter("miscNum1",Constants.MiscNum1));
-            command.Parameters.Add(new OracleParameter("sysType", Constants.SysCodeType));
-            command.Parameters.Add(new OracleParameter("sysCodeId", Constants.SysCodeIdForActiveLocation));
-            command.Parameters.Add(new OracleParameter("status", Constants.EgblOrmtStatus));
+            var query = OrmtQueries.ValidCartons;
+            var command = new OracleCommand(query, db);
             var reader = command.ExecuteReader();
             if (reader.Read())
             {

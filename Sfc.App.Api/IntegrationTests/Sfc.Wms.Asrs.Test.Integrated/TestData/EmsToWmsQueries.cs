@@ -9,12 +9,7 @@
                 " and pick_locn_dtl.locn_id in (select lh.locn_id from locn_hdr lh inner join locn_grp lg on lg.locn_id = lh.locn_id " +
                 "inner join sys_code sc on sc.code_id = lg.grp_type and sc.code_type = :sysCodeType and sc.code_id = :codeId)";
 
-        public static string CostFetchDataWithOutTransInvn = $"select cd.SKU_ID,ch.CASE_NBR,tn.ACTL_INVN_UNITS,ch.STAT_CODE,pick_locn_dtl.locn_id from CASE_HDR ch  " +
-                "inner join  case_dtl cd on cd.CASE_NBR = ch.CASE_NBR  " +
-                "inner join pick_locn_dtl on pick_locn_dtl.sku_id = cd.sku_id " +
-                "left join trans_invn tn on tn.SKU_ID = cd.SKU_ID and ch.STAT_CODE = :statCode" +
-                "and tn.ACTL_INVN_UNITS > 1 " +
-                "and trans_invn_type = :transInvnType and tn.SKU_ID = null";
+        public static string CostFetchDataWithOutTransInvn = $"select cd.SKU_ID,ch.CASE_NBR,tn.ACTL_INVN_UNITS,ch.STAT_CODE,pick_locn_dtl.locn_id from CASE_HDR ch inner join  case_dtl cd on cd.CASE_NBR = ch.CASE_NBR inner join pick_locn_dtl on pick_locn_dtl.sku_id = cd.sku_id  left join trans_invn tn on tn.SKU_ID = cd.SKU_ID and ch.STAT_CODE = 50 and tn.ACTL_INVN_UNITS > 1 and trans_invn_type = 18 and tn.SKU_ID = null";
 
         public static string CostPickLocnDoesNotExist = $"select tn.ACTL_INVN_UNITS,cd.SKU_ID,ch.CASE_NBR,ch.STAT_CODE from  CASE_HDR ch  inner join  case_dtl cd on cd.CASE_NBR = ch.CASE_NBR  inner join trans_invn tn on tn.SKU_ID = cd.SKU_ID  " +
                 "left join pick_locn_dtl on pick_locn_dtl.sku_id = tn.sku_id  and ch.STAT_CODE = :statCode and tn.ACTL_INVN_UNITS > :qty and " +

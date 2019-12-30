@@ -41,19 +41,19 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                 .BDDfy("Test Case ID : 120959 -Dematic - COMT,IVMT : Single Sku Case-Case received from Vendor, Call the Comt Api and Verify all its functionalities");
         }
 
-        [TestMethod()]
-        [TestCategory("FUNCTIONAL")]
-        public void ComtAndIvmtTestForMultiSkuScenarios()
-        {
-              this.Given(x => x.AValidNewComtMessageRecordWhereCaseNumberAndSkuIs(CaseHdrMultiSku.CaseNumber, CaseHdrMultiSku.SkuId))
-                .When(x => x.ComtApiIsCalledCreatedIsReturnedWithValidUrlIs(ComtUrl))
-                .Then(x => x.GetDataAndValidateForIvmtMessageHasInsertedIntoBothTables())
-                .And(x => x.VerifyComtMessageWasInsertedIntoSwmToMheForMultiSku())
-                .And(x => x.VerifyComtMessageWasInsertedIntoWmsToEmsForMultiSku())
-                .And(x => x.VerifyQuantityisReducedIntoCaseDetailTable())
-                .And(x => x.VerifyStatusIsUpdatedIntoCaseHeaderTable())
-                .BDDfy("Test Case ID : 133225 -Dematic - COMT,IVMT : Multi Sku Case-Case received from Vendor ,Call the comt api Verify all its functionalities");
-        }
+        //[TestMethod()]
+        //[TestCategory("FUNCTIONAL")]
+        //public void ComtAndIvmtTestForMultiSkuScenarios()
+        //{
+        //      this.Given(x => x.AValidNewComtMessageRecordWhereCaseNumberAndSkuIs(CaseHdrMultiSku.CaseNumber, CaseHdrMultiSku.SkuId))
+        //        .When(x => x.ComtApiIsCalledCreatedIsReturnedWithValidUrlIs(ComtUrl))
+        //        .Then(x => x.GetDataAndValidateForIvmtMessageHasInsertedIntoBothTables())
+        //        .And(x => x.VerifyComtMessageWasInsertedIntoSwmToMheForMultiSku())
+        //        .And(x => x.VerifyComtMessageWasInsertedIntoWmsToEmsForMultiSku())
+        //        .And(x => x.VerifyQuantityisReducedIntoCaseDetailTable())
+        //        .And(x => x.VerifyStatusIsUpdatedIntoCaseHeaderTable())
+        //        .BDDfy("Test Case ID : 133225 -Dematic - COMT,IVMT : Multi Sku Case-Case received from Vendor ,Call the comt api Verify all its functionalities");
+        //}
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]

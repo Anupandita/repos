@@ -23,15 +23,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected SynrDto Synr = new SynrDto();
         protected WmsToEmsDto WmsToEmsSynr = new WmsToEmsDto();
         protected long Pldsnapshot;
-        //protected PickLocndto SynrMessageData = new PickLocndto();
         protected SwmToMheDto SynrMessageData = new SwmToMheDto();
         protected long Nextupcnt;
         protected string BeoforeApiPickLocn;
         protected PickLocationDetailsDto PldList = new PickLocationDetailsDto();
         protected PickLocationDetailsDto Picklocndetail = new PickLocationDetailsDto();
         protected EmsToWmsDto EmsToWmsParameters;
-        protected synd SyndData = new synd();
-        protected synd SyncDataDuplicate = new synd();
+        protected Synd SyndData = new Synd();
+        protected Synd SyncDataDuplicate = new Synd();
         protected SyndDto SyndParameters;
         protected SwmFromMheDto SwmFromMheSynd = new SwmFromMheDto();
         protected SyndDto Synd = new SyndDto();
@@ -42,7 +41,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected PickLocationDetailsDto PickLocnAfterApi = new PickLocationDetailsDto();
         protected PickLocationDetailsDto PickLocnBeforeApi = new PickLocationDetailsDto();
         protected Data.Entities.SwmSyndData SyndDataQtyDefference = new Data.Entities.SwmSyndData();
-        protected synd SyncData = new synd();
+        protected Synd SyncData = new Synd();
         protected SwmFromMheDto SwmFromMheSyncDto = new SwmFromMheDto();
         protected SyncDto Sync = new SyncDto();
         protected Data.Entities.PixTransaction PixTran = new Data.Entities.PixTransaction();
@@ -142,11 +141,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             {
                 SynchronizationId = syncid,
                 Sku = skuid,
-                Owner = "008",
-                UnitOfMeasure = "Case",
+                Owner = Constants.Owner,
+                UnitOfMeasure = DefaultPossibleValue.Case,
                 Quantity = "10",
-                LocationStatus = "Available",
-                HoldStatus = "Y",
+                LocationStatus = Constants.AvailableSatus,
+                HoldStatus = Constants.HoldStatus,
                 TransactionCode = TransactionCode.Synd,
                 MessageLength = MessageLength.Synd,
                 ReasonCode = ReasonCode.Success

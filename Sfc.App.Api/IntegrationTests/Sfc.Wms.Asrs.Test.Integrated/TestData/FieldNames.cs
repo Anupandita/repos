@@ -40,7 +40,7 @@
         public const string Qty = "QUANTITY";
         public const string Status = "STATUS";
         public const string Wmslocnid = "WMS_LOCATION_ID";
-        public const string skuid = "SKU";
+        public const string SkuNum = "SKU";
 
     }
 
