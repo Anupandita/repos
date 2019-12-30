@@ -17,6 +17,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected OracleCommand Command;
         protected List<TransitionalInventoryDto> TransInvnList = new List<TransitionalInventoryDto>();
         protected OracleTransaction Transaction;
+        protected string Query = "";
         public OracleConnection GetOracleConnection()
         {
             return new OracleConnection(ConfigurationManager.ConnectionStrings["SfcRbacContextModel"].ConnectionString);
@@ -65,6 +66,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 case TransactionCode.Skmt:
                     query = query + sku + orderBy;
                     break;
+                case TransactionCode.Synr:
+                    query = query + orderBy;
+                    break;
                 default:
                     query = query + orderBy;
                     break;
@@ -87,7 +91,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 swmtomhedata.LocationId = swmToMheReader["LOCN_ID"].ToString();
                 swmtomhedata.LotId = swmToMheReader["LOT_ID"].ToString();
                 swmtomhedata.OrderId = swmToMheReader["ORDER_ID"].ToString();
-                swmtomhedata.OrderLineId = Convert.ToInt32(swmToMheReader["ORDER_LINE_ID"]);
+                //swmtomhedata.OrderLineId = Convert.ToInt32(swmToMheReader["ORDER_LINE_ID"]);
                 swmtomhedata.PoNumber = swmToMheReader["PO_NBR"].ToString();
                 swmtomhedata.Quantity = Convert.ToInt32(swmToMheReader["QTY"]);
                 swmtomhedata.WaveNumber = swmToMheReader["WAVE_NBR"].ToString();
@@ -238,5 +242,47 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
             return cartonHdr;
         }
+        //protected SwmToMheDto SwmToMhe(OracleConnection db, string trx)
+        //{
+        //    var swmtomhedata = new SwmToMheDto();
+        //    var query = $"select * from SWM_TO_MHE where source_msg_trans_code = '{trx}' order by SOURCE_MSG_KEY desc";
+        //    Command = new OracleCommand(query, db);
+        //    var swmToMheReader = Command.ExecuteReader();
+        //    if (swmToMheReader.Read())
+        //    {
+        //        swmtomhedata.SourceMessageKey = Convert.ToInt32(swmToMheReader[TestData.SwmToMhe.SourceMsgKey].ToString());
+        //        swmtomhedata.SourceMessageResponseCode = Convert.ToInt16(swmToMheReader[TestData.SwmToMhe.SourceMsgRsnCode].ToString());
+        //        swmtomhedata.SourceMessageStatus = swmToMheReader[TestData.SwmToMhe.SourceMsgStatus].ToString();
+        //        swmtomhedata.ContainerId = swmToMheReader[TestData.SwmToMhe.ContainerId].ToString();
+        //        swmtomhedata.ContainerType = swmToMheReader[TestData.SwmToMhe.ContainerType].ToString();
+        //        swmtomhedata.MessageJson = swmToMheReader[TestData.SwmToMhe.MsgJson].ToString();
+        //        swmtomhedata.LocationId = swmToMheReader[TestData.SwmToMhe.LocnId].ToString();
+        //        swmtomhedata.SourceMessageText = swmToMheReader[TestData.SwmToMhe.SourceMsgText].ToString();
+        //    }
+        //    return swmtomhedata;
+        //}
+        public SwmFromMheDto SwmFromMheqtydefference(OracleConnection db, string sourceMessage)
+        {
+            var swmFromMheData = new SwmFromMheDto();
+            var pickLocnView = $"select * from swm_from_mhe where SOURCE_MSG_TRANS_CODE='{sourceMessage}' order by CREATED_DATE_TIME desc";
+            Command = new OracleCommand(pickLocnView, db);
+            var swmFromMheReader = Command.ExecuteReader();
+            if (swmFromMheReader.Read())
+            {
+                swmFromMheData.SourceMessageKey = Convert.ToInt16(swmFromMheReader[TestData.SwmFromMhe.SourceMsgKey].ToString());
+                swmFromMheData.SourceMessageResponseCode = Convert.ToInt16(swmFromMheReader[TestData.SwmFromMhe.SourceMsgRsnCode].ToString());
+                swmFromMheData.SourceMessageStatus = swmFromMheReader[TestData.SwmFromMhe.SourceMsgStatus].ToString();
+                swmFromMheData.SourceMessageProcess = swmFromMheReader[TestData.SwmFromMhe.SourceMsgProcess].ToString();
+                swmFromMheData.SourceMessageTransactionCode = swmFromMheReader[TestData.SwmFromMhe.SourceMsgTransCode].ToString();
+                swmFromMheData.ContainerId = swmFromMheReader[TestData.SwmFromMhe.ContainerId].ToString();
+                swmFromMheData.ContainerType = swmFromMheReader[TestData.SwmFromMhe.ContainerType].ToString();
+                swmFromMheData.MessageJson = swmFromMheReader[TestData.SwmFromMhe.MsgJson].ToString();
+                swmFromMheData.SourceMessageText = swmFromMheReader[TestData.SwmFromMhe.SourceMsgText].ToString();
+                swmFromMheData.LocationId = swmFromMheReader[TestData.SwmFromMhe.LocnId].ToString();
+            }
+            return swmFromMheData;
+        }
+
+
     }
 }
