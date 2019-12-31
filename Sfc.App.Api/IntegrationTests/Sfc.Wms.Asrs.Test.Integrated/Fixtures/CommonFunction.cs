@@ -93,7 +93,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 swmtomhedata.OrderId = swmToMheReader["ORDER_ID"].ToString();
                 //swmtomhedata.OrderLineId = Convert.ToInt32(swmToMheReader["ORDER_LINE_ID"]);
                 swmtomhedata.PoNumber = swmToMheReader["PO_NBR"].ToString();
-                swmtomhedata.Quantity = Convert.ToInt32(swmToMheReader["QTY"]);
+                //swmtomhedata.Quantity = Convert.ToInt32(swmToMheReader["QTY"]);
                 swmtomhedata.WaveNumber = swmToMheReader["WAVE_NBR"].ToString();
                 swmtomhedata.ZplData = swmToMheReader["ZPL_DATA"].ToString();
             }
@@ -157,7 +157,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Command = new OracleCommand(swmFromMheView, db);
             Command.Parameters.Add(new OracleParameter("transCode", trx));
             Command.Parameters.Add(new OracleParameter("messageKey", msgKey));
-
             var swmFromMheReader = Command.ExecuteReader();
             if (swmFromMheReader.Read())
             {
