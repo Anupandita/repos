@@ -1,5 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures;
+using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
+using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Constants;
 using TestStack.BDDfy;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
@@ -12,7 +14,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         " Verify in TransInventory table for Allocation Inventory units and actual weight" +
         " Verify in Case Detail table for Quantity, CaseHeader and task detail table for status code ",
        SoThat = "I can validate for message fields in COST message, in Internal Table SWM_FROM_MHE" +
-        " and validate the quantity,weight,statuscode in the caseheader, casedetail, task header tables"
+        " and validate the quantity,weight,statuscode in the caseheader, casedetail, task header tables",
+       StoryUri = "http://tfsapp1:8080/tfs/ShamrockCollection/Portfolio-SOWL/_workitems?id=129461&_a=edit"
         )]
     public class CostMessageTest : CostMessageFixture
     {        
@@ -26,58 +29,57 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         [TestCategory("FUNCTIONAL")]
         public void VerifyForValidCostMessageScenarios()
         {
-            this.Given(x => x.TestInitializeForValidMessage())
-                .And(x => x.AValidMsgKey())
+            this.Given(x => x.TestInitializeForValidMessage())              
+                .And(x => x.ValidCostUrlMsgKeyAndProcessorIs(CostUrl,CostData.MsgKey, DefaultPossibleValue.MessageProcessor))
                 .When(x => x.CostApiIsCalledWithValidMsgKey())
                 .And(x => x.GetValidDataAfterTrigger())
                 .And(x => x.VerifyCostMessageWasInsertedIntoSwmFromMhe())
                 .And(x => x.VerifyTheQuantityWasDecreasedInToTransInventory())
                 .And(x => x.VerifyTheQuantityWasIncreasedIntoPickLocationTable())
-                .BDDfy();              
+                .BDDfy("Test Case ID :122681 - Dematic - COST  - Call the Cost api and verify all its funtionalities in EmsToWms, Swm_from_Mhe, Trans_Invn ,Pick_Location tables");              
         }
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
         public void VerifyForInvalidMessageKey()
         {
-            this.Given(x =>x.TestInitializeForInvalidCase())
-                .And(x => x.InvalidMsgKey())
+            this.Given(x =>x.TestInitializeForInvalidCase())               
+                .And(x => x.ValidCostUrlMsgKeyAndProcessorIs(CostUrl,Constants.InvalidMsgKey, DefaultPossibleValue.MessageProcessor))
                 .When(x => x.CostApiIsCalledForInvalidMessageKey())
                 .Then(x => x.ValidateResultForInvalidMessageKey())
-                .BDDfy();
+                .BDDfy("Test Case ID:122693- Dematic - COST - Negative test case1: Pass Invalid message key in the api call");
         }
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
         public void VerifyForErrorLogNoCaseFound()
         {
-                this.Given(x => x.TestInitializeForInvalidCase())
-               .And(x => x.InvalidCaseMsgKey())         
+                this.Given(x => x.TestInitializeForInvalidCase())            
+               .And(x => x.ValidCostUrlMsgKeyAndProcessorIs(CostUrl,CostData.InvalidKey,DefaultPossibleValue.MessageProcessor))
                .When(x => x.CostApiIsCalledForInvalidCaseNumber())
                .Then(x => x.ValidateResultForInvalidCaseNumber())
-               .BDDfy();
+               .BDDfy("Test Case ID :122697 - Dematic - COST - Negative test case 3: If case number not in CaseHeader");
         }
-
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
         public void VerifyForErrorNotEnoughInventory()
         {
-                this.Given(x => x.TestInitializeForTransInvnDoesNotExist())
-               .And(x => x.TransInvnNotExistsMsgKey())
+                this.Given(x => x.TestInitializeForTransInvnDoesNotExist())             
+               .And(x => x.ValidCostUrlMsgKeyAndProcessorIs(CostUrl,CostDataForTransInvnNotExist.MsgKey,DefaultPossibleValue.MessageProcessor))
                .When(x => x.CostApiIsCalledForTransInvnNotFound())
                .Then(x => x.ValidateResultForTransInventoryNotExist())
-               .BDDfy();
+               .BDDfy("Test Case ID :122697 - Dematic - COST - Negative test case 5 :If  transit inventory  does not exists");
         }
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
         public void VerifyForErrorPickLocationNotFound()
         {
-                this.Given(x => x.TestInitializeForPickLocnDoesNotExist())
-               .And(x => x.PickLocationNotExistKey())
+                this.Given(x => x.TestInitializeForPickLocnDoesNotExist())            
+               .And(x => x.ValidCostUrlMsgKeyAndProcessorIs(CostUrl,CostDataForPickLocnNotExist.MsgKey,DefaultPossibleValue.MessageProcessor))
                .When(x => x.CostApiIsCalledForPickLocnNotFound())
                .Then(x => x.ValidateResultForPickLocnNotFound())
-               .BDDfy();
+               .BDDfy("Test Case ID : Dematic - COST - Negative test case 6 :If  pick location does not exists ");
         }       
     }
 }

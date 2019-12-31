@@ -10,6 +10,37 @@
     {
         public const string SkuId = "SKU_ID";
         public const string TotalAllocQty = "TOTAL_ALLOC_QTY";
+        public const string ActualQty = "ACTL_QTY";
+
+    }
+    public static class Pldsnapshot
+    {
+        public const string SyncId = "SYNC_ID";
+        public const string LocnId = "LOCN_ID";
+        public const string LocanSeqNumber = "LOCN_SEQ_NBR";
+        public const string SkuId = "SKU_ID";
+        public const string ActualInventoryqty = "ACTL_INVN_QTY";
+    }
+
+    public class PixTransaction
+    {
+        public const string Style = "STYLE";
+        public const string InventoryAdjustmentQty = "INVN_ADJMT_QTY";
+        public const string InventoryAdjustmentType = "INVN_ADJMT_TYPE";
+        public const string RefferenceField1 = "REF_FIELD_1";
+        public const string RefferenceField2 = "REF_FIELD_2";
+        public const string RefferenceField4 = "REF_FIELD_4";
+    }
+
+    public class SwmSyndData
+    {
+        public const string Synchronizid = "SYNCHRONIZATION_ID";
+        public const string Messagekey = "MESSAGE_KEY";
+        public const string Skuid = "SKU";
+        public const string Qty = "QUANTITY";
+        public const string Status = "STATUS";
+        public const string Wmslocnid = "WMS_LOCATION_ID";
+        public const string SkuNum = "SKU";
 
     }
 
@@ -33,6 +64,7 @@
     {
         public const string ActualInventoryUnits = "ACTL_INVN_UNITS";
         public const string ActlWt = "ACTL_WT";
+        
     }
   
   public class WmsToEms
@@ -115,6 +147,8 @@
         public const string LocnId = "LOCN_ID";
         public const string ToBeFilledQty = "TO_BE_FILLD_QTY";
         public const string ActlInvnQty = "ACTL_INVN_QTY";
+        public const string MaximumInvqty = "MAX_INVN_QTY";
+        
     }
 
     public class CartonHeader
