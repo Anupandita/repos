@@ -294,8 +294,8 @@
     <Reference Include="Sfc.Wms.Framework.DockDoor.App, Version=2.2.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.DockDoor.App.2.2.5\lib\net472\Sfc.Wms.Framework.DockDoor.App.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Framework.Interceptor.App, Version=3.2.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Framework.Interceptor.App.3.2.2\lib\net472\Sfc.Wms.Framework.Interceptor.App.dll</HintPath>
+    <Reference Include="Sfc.Wms.Framework.Interceptor.App, Version=3.2.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.Interceptor.App.3.2.4\lib\net472\Sfc.Wms.Framework.Interceptor.App.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Framework.ItemMaster.App, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.ItemMaster.App.1.0.2\lib\net472\Sfc.Wms.Framework.ItemMaster.App.dll</HintPath>
