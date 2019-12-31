@@ -157,7 +157,7 @@
       <HintPath>..\packages\Sfc.Wms.Configuration.Security.Rbac.Repository.4.1.0\lib\net472\Sfc.Wms..Configuration.Security.Rbac.Repository.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.App.Api.Contracts, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Sfc.Wms.App.Api.WithTest\packages\Sfc.Wms.App.Api.Contracts.5.0.0\lib\net472\Sfc.Wms.App.Api.Contracts.dll</HintPath>
+      <HintPath>..\packages\Sfc.Wms.App.Api.Contracts.5.0.0\lib\net472\Sfc.Wms.App.Api.Contracts.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.App.App, Version=3.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.App.App.3.1.2\lib\net472\Sfc.Wms.App.App.dll</HintPath>
@@ -228,11 +228,11 @@
     <Reference Include="Sfc.Wms.Foundation.Corba.App, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.Corba.App.1.0.7\lib\net472\Sfc.Wms.Foundation.Corba.App.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Foundation.Corba.Contracts, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Foundation.Corba.Contracts.1.0.4\lib\net472\Sfc.Wms.Foundation.Corba.Contracts.dll</HintPath>
+    <Reference Include="Sfc.Wms.Foundation.Corba.Contracts, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.Corba.Contracts.1.0.6\lib\net472\Sfc.Wms.Foundation.Corba.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Foundation.Corba.Repository, Version=1.0.9.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Foundation.Corba.Repository.1.0.9\lib\net472\Sfc.Wms.Foundation.Corba.Repository.dll</HintPath>
+    <Reference Include="Sfc.Wms.Foundation.Corba.Repository, Version=1.0.10.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.Corba.Repository.1.0.10\lib\net472\Sfc.Wms.Foundation.Corba.Repository.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Foundation.InboundLpn.Contracts, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.InboundLpn.Contracts.5.0.0\lib\net472\Sfc.Wms.Foundation.InboundLpn.Contracts.dll</HintPath>
