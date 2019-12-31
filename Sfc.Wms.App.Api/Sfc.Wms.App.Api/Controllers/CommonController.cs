@@ -25,10 +25,12 @@ namespace Sfc.Wms.App.Api.Controllers
         [AllowAnonymous]
         [Route(Routes.Paths.CodeIds)]
         [ResponseType(typeof(BaseResult<IEnumerable<SysCodeDto>>))]
-        public async Task<IHttpActionResult> GetSystemCodesAsync([FromUri] SystemCodeDto sysCodeDto)
+        public async Task<IHttpActionResult> GetSystemCodesAsync([FromUri] SystemCodeInputDto systemCodeInputDto)
         {
-            var resultResponse = await _systemCodeService.GetSystemCodeAsync(sysCodeDto.RecType, sysCodeDto.CodeType, sysCodeDto.CodeId, sysCodeDto.OrderByColumn, sysCodeDto.OrderBy);
-            return ResponseHandler(resultResponse);
+            var response = await _systemCodeService.GetSystemCodeAsync(systemCodeInputDto.RecType,
+                     systemCodeInputDto.CodeType, systemCodeInputDto.CodeId, systemCodeInputDto.SortOption);
+
+            return ResponseHandler(response);
         }
     }
 }

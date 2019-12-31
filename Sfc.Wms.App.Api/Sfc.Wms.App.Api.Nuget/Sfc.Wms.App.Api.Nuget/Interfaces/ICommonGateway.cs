@@ -1,11 +1,13 @@
-﻿using System.Threading.Tasks;
-using Sfc.Core.OnPrem.Result;
+﻿using Sfc.Core.OnPrem.Result;
+using Sfc.Wms.App.Api.Contracts.Dto;
+using Sfc.Wms.Configuration.SystemCode.Contracts.Dtos;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Sfc.Wms.App.Api.Nuget.Interfaces
 {
     public interface ICommonGateway
     {
-        Task<BaseResult<T>> CodeIds<T>(string isWhseSysCode, string recType, string codeType, bool isNumber,
-            string orderByColumn, string token);
+        Task<BaseResult<IEnumerable<SysCodeDto>>> GetCodeIdsAsync(SystemCodeInputDto systemCodeDto, string token);
     }
 }
