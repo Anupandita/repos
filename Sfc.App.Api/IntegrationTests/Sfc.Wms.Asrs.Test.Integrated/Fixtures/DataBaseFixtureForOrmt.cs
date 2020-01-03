@@ -249,10 +249,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var onproCostView= new CartonView();
             var onQuery = OrmtQueries.ValidDataForOnProcessingCostMessage;
             var command = new OracleCommand(onQuery, db);
-            command.Parameters.Add(new OracleParameter("miscNum1", Constants.MiscNum1));
-            command.Parameters.Add(new OracleParameter("sysType", Constants.SysCodeType));
-            command.Parameters.Add(new OracleParameter("sysCodeId", Constants.SysCodeIdForActiveLocation));           
-            command.Parameters.Add(new OracleParameter("status", Constants.EgblOrmtStatus));
             var reader = command.ExecuteReader();
             if (reader.Read())
             {
