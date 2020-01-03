@@ -11,4 +11,6 @@
        public string AttributeBitmap { get; set; }
        public string QuantityToInduct { get; set; }
     }
+
+    
 }

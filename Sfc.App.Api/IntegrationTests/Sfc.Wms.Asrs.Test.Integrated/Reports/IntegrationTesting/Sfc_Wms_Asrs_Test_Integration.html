@@ -9,7 +9,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
 /*If you drop a custom stylesheet named BDDfyCustom.css in your output folder it gets embedded here. This way you can apply some custom styles over your html report.*/
 
     </style>
-    <title>BDDfy Test Result 12/31/2019</title>
+    <title>BDDfy Test Result 1/3/2020</title>
   </head>
   <body>
     <div id='main'>
@@ -29,13 +29,13 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
           <li class='scenarioSummary'>
             <div class='summaryLine'>
               <div class='summaryLabel'>Scenarios</div>
-              <span class='summaryCount'>5</span>
+              <span class='summaryCount'>1</span>
             </div>
           </li>
           <li class='Passed'>
             <div class='summaryLine'>
               <div class='summaryLabel'>Passed</div>
-              <span class='summaryCount'>4</span>
+              <span class='summaryCount'>1</span>
             </div>
           </li>
           <li class='Inconclusive'>
@@ -53,7 +53,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
           <li class='Failed'>
             <div class='summaryLine'>
               <div class='summaryLabel'>Failed</div>
-              <span class='summaryCount'>1</span>
+              <span class='summaryCount'>0</span>
             </div>
           </li>
         </ul>
@@ -68,125 +68,27 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
         </div>
         <ul class='testResult'>
           <li>
-            <div class='story Failed'>
+            <div class='story Passed'>
               <div class='storyMetadata'>
-                <div class='storyTitle'><a href='http://tfsapp1:8080/tfs/ShamrockCollection/Portfolio-SOWL/_workitems?id=129461&_a=edit'>Story: Cost message test</a></div>
+                <div class='storyTitle'><a href='http://tfsapp1:8080/tfs/ShamrockCollection/Portfolio-SOWL/_workitems?id=129459&_a=edit'>Story: Orst message test</a></div>
                 <ul class='storyNarrative'>
-                  <li>As a Authorized User test for cost message from emstowms</li>
-                  <li>I want To Verify COST message is inserted in to SWM_FROM_MHE table with appropriate data And verify COST message is inserted in to swm_from_mhe table with appropriate data  Verify in TransInventory table for Allocation Inventory units and actual weight Verify in Case Detail table for Quantity, CaseHeader and task detail table for status code </li>
-                  <li>So that I can validate for message fields in COST message, in Internal Table SWM_FROM_MHE and validate the quantity,weight,statuscode in the caseheader, casedetail, task header tables</li>
+                  <li>As a Authorized User test for orst message from emstowms</li>
+                  <li>I want To Verify ORST message is inserted in to swm_to_mhe table with appropriate dataFor Bellow CasesCase1: ActionCode = Allocated Case2: ActionCode = Completed and OrderReasonCodeMap = '0'Case3: ActionCode = DeAllocate Case4: ActionCode = CancelledTo Verify Carton Status</li>
+                  <li>So that I can validate for message fields in ORMT message, in Internal Table SWM_TO_MHE and in wmstoems for all caseTypesVerify For Pick Ticket Status and Carton Status for all the Action CodesValidate For Quantities InTo CartonDetail, PickTicketDetail,PickLocationDetail for all case types Validate for Ormt count for all case typesValidate for AllocationStatus for the Task Completion</li>
                 </ul>
               </div>
               <div class='scenarios'>
                 <div class='scenario'>
-                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-5'>Test Case ID : Dematic - COST - Negative test case 6 :If  pick location does not exists </div>
-                  <ul class='steps' id='scenario-5'>
-                    <li class='step Passed  SetupState ' data-toggle-target='step-5-1' >
-                      <span>Given test initialize for pick locn does not exist</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-5-2' >
-                      <span>And valid cost url msg key and processor is http://dev.az.app.api.wms.shamrockfoods.com/api/emstowms-message?msgKey=3126&msgProcessor=MessageProcessor, 3126, MessageProcessor</span>
-                    </li>
-                    <li class='step Passed  Transition ' data-toggle-target='step-5-3' >
-                      <span>When cost api is called for pick locn not found</span>
-                    </li>
-                    <li class='step Passed  Assertion ' data-toggle-target='step-5-4' >
-                      <span>Then validate result for pick locn not found</span>
-                    </li>
-                  </ul>
-                </div>
-                <div class='scenario'>
-                  <div class='Failed canToggle scenarioTitle' data-toggle-target='scenario-1'>Test Case ID :122681 - Dematic - COST  - Call the Cost api and verify all its funtionalities in EmsToWms, Swm_from_Mhe, Trans_Invn ,Pick_Location tables</div>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-1'>Test Case Id:146384 -OrstMessage:  Test For ActionCode Complete When PickTicket SeqNbr Is Smaller Than 1</div>
                   <ul class='steps' id='scenario-1'>
-                    <li class='step Failed  SetupState canToggle' data-toggle-target='step-1-1' >
-                      <span>Given test initialize for valid message [Exception Message: 'ORA-00001: unique constraint (SHAMLIVE.EMSTOWMS_PK) violated']</span>
-                      <div class='step FailedException' id='step-1-1'>
-                        <code>   at OracleInternal.ServiceObjects.OracleConnectionImpl.VerifyExecution(Int32& cursorId, Boolean bThrowArrayBindRelatedErrors, SqlStatementType sqlStatementType, Int32 arrayBindCount, OracleException& exceptionForArrayBindDML, Boolean& hasMoreRowsInDB, Boolean bFirstIterationDone)
-   at OracleInternal.ServiceObjects.OracleCommandImpl.ExecuteNonQuery(String commandText, OracleParameterCollection paramColl, CommandType commandType, OracleConnectionImpl connectionImpl, Int32 longFetchSize, Int64 clientInitialLOBFS, OracleDependencyImpl orclDependencyImpl, Int64[]& scnFromExecution, OracleParameterCollection& bindByPositionParamColl, Boolean& bBindParamPresent, OracleException& exceptionForArrayBindDML, OracleConnection connection, OracleLogicalTransaction& oracleLogicalTransaction, Boolean isFromEF)
-   at Oracle.ManagedDataAccess.Client.OracleCommand.ExecuteNonQuery()
-   at Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.CommonFunction.InsertEmsToWms(OracleConnection db, EmsToWmsDto emsToWmsDto) in D:\wmspoc\Wms.App.Api\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Fixtures\CommonFunction.cs:line 191
-   at Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.DataBaseFixtureForCost.GetDataBeforeTrigger() in D:\wmspoc\Wms.App.Api\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Fixtures\DataBaseFixtureForCost.cs:line 81
-   at Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.CostMessageFixture.TestInitializeForValidMessage() in D:\wmspoc\Wms.App.Api\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Fixtures\CostMessageFixture.cs:line 35
-   at lambda_method(Closure , CostMessageTest )
-   at TestStack.BDDfy.StepActionFactory.<>c__DisplayClass1_0`1.<GetStepAction>b__0(Object o)
-   at TestStack.BDDfy.StepExecutor.Execute(Step step, Object testObject)
-   at TestStack.BDDfy.Processors.ScenarioExecutor.<>c__DisplayClass3_0.<ExecuteStep>b__0()
-   at TestStack.BDDfy.Processors.AsyncTestRunner.Run(Func`1 performStep)
-   at TestStack.BDDfy.Processors.ScenarioExecutor.ExecuteStep(Step step)
-   at TestStack.BDDfy.Processors.ExceptionProcessor.Process(Story story)
-   at TestStack.BDDfy.Engine.Run()
-   at TestStack.BDDfy.BDDfyExtensions.BDDfy(Object testObject, String scenarioTitle)
-   at Sfc.Wms.Api.Asrs.Test.Integrated.Tests.CostMessageTest.VerifyForValidCostMessageScenarios() in D:\wmspoc\Wms.App.Api\Sfc.App.Api\IntegrationTests\Sfc.Wms.Asrs.Test.Integrated\Tests\CostMessageTest.cs:line 32</code>
-                      </div>
+                    <li class='step Passed  SetupState ' data-toggle-target='step-1-1' >
+                      <span>Given read data before api for negative case where pick ticket seq number is less than 1</span>
                     </li>
-                    <li class='step NotExecuted  ConsecutiveSetupState ' data-toggle-target='step-1-2' >
-                      <span>And valid cost url msg key and processor is 'null', 0, MessageProcessor</span>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-1-2' >
+                      <span>And valid msg key msg processor and orst url is 3572, 'null', http://dev.az.app.api.wms.shamrockfoods.com/api/emstowms-message?msgKey=3572&msgProcessor=</span>
                     </li>
-                    <li class='step NotExecuted  Transition ' data-toggle-target='step-1-3' >
-                      <span>When cost api is called with valid msg key</span>
-                    </li>
-                    <li class='step NotExecuted  ConsecutiveTransition ' data-toggle-target='step-1-4' >
-                      <span>And get valid data after trigger</span>
-                    </li>
-                    <li class='step NotExecuted  ConsecutiveTransition ' data-toggle-target='step-1-5' >
-                      <span>And verify cost message was inserted into swm from mhe</span>
-                    </li>
-                    <li class='step NotExecuted  ConsecutiveTransition ' data-toggle-target='step-1-6' >
-                      <span>And verify the quantity was decreased in to trans inventory</span>
-                    </li>
-                    <li class='step NotExecuted  ConsecutiveTransition ' data-toggle-target='step-1-7' >
-                      <span>And verify the quantity was increased into pick location table</span>
-                    </li>
-                  </ul>
-                </div>
-                <div class='scenario'>
-                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-3'>Test Case ID :122697 - Dematic - COST - Negative test case 3: If case number not in CaseHeader</div>
-                  <ul class='steps' id='scenario-3'>
-                    <li class='step Passed  SetupState ' data-toggle-target='step-3-1' >
-                      <span>Given test initialize for invalid case</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-3-2' >
-                      <span>And valid cost url msg key and processor is http://dev.az.app.api.wms.shamrockfoods.com/api/emstowms-message?msgKey=3124&msgProcessor=MessageProcessor, 3124, MessageProcessor</span>
-                    </li>
-                    <li class='step Passed  Transition ' data-toggle-target='step-3-3' >
-                      <span>When cost api is called for invalid case number</span>
-                    </li>
-                    <li class='step Passed  Assertion ' data-toggle-target='step-3-4' >
-                      <span>Then validate result for invalid case number</span>
-                    </li>
-                  </ul>
-                </div>
-                <div class='scenario'>
-                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-4'>Test Case ID :122697 - Dematic - COST - Negative test case 5 :If  transit inventory  does not exists</div>
-                  <ul class='steps' id='scenario-4'>
-                    <li class='step Passed  SetupState ' data-toggle-target='step-4-1' >
-                      <span>Given test initialize for trans invn does not exist</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-4-2' >
-                      <span>And valid cost url msg key and processor is http://dev.az.app.api.wms.shamrockfoods.com/api/emstowms-message?msgKey=3125&msgProcessor=MessageProcessor, 3125, MessageProcessor</span>
-                    </li>
-                    <li class='step Passed  Transition ' data-toggle-target='step-4-3' >
-                      <span>When cost api is called for trans invn not found</span>
-                    </li>
-                    <li class='step Passed  Assertion ' data-toggle-target='step-4-4' >
-                      <span>Then validate result for trans inventory not exist</span>
-                    </li>
-                  </ul>
-                </div>
-                <div class='scenario'>
-                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-2'>Test Case ID:122693- Dematic - COST - Negative test case1: Pass Invalid message key in the api call</div>
-                  <ul class='steps' id='scenario-2'>
-                    <li class='step Passed  SetupState ' data-toggle-target='step-2-1' >
-                      <span>Given test initialize for invalid case</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-2-2' >
-                      <span>And valid cost url msg key and processor is http://dev.az.app.api.wms.shamrockfoods.com/api/emstowms-message?msgKey=5&msgProcessor=MessageProcessor, 5, MessageProcessor</span>
-                    </li>
-                    <li class='step Passed  Transition ' data-toggle-target='step-2-3' >
-                      <span>When cost api is called for invalid message key</span>
-                    </li>
-                    <li class='step Passed  Assertion ' data-toggle-target='step-2-4' >
-                      <span>Then validate result for invalid message key</span>
+                    <li class='step Passed  Transition ' data-toggle-target='step-1-3' >
+                      <span>When orst api is called for negative case</span>
                     </li>
                   </ul>
                 </div>
@@ -194,7 +96,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
             </div>
           </li>
         </ul>
-        <p><span>Tested at: 12/31/2019 6:02:30 PM</span></p>
+        <p><span>Tested at: 1/3/2020 4:36:00 PM</span></p>
       </div>
     </div>
     <div class='footer'>Powered by <a href='https://github.com/TestStack/TestStack.BDDfy'>BDDfy</a> framework</div>

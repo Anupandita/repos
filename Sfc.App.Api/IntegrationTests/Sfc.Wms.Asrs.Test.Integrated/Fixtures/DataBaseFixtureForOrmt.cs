@@ -49,7 +49,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (db = GetOracleConnection())
             {
                 db.Open();     
-                PrintCarton = GetValidOrderDetails(db,10,0);               
+                PrintCarton = GetValidOrderDetails(db,"5","0","10");               
                 PickLcnDtlExtBeforeApi = GetPickLocnDtlExt(db, PrintCarton.SkuId, PrintCarton.LocnId);
             }
         }    
@@ -92,7 +92,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (db = GetOracleConnection())
             {
                 db.Open();
-                CancelOrder = GetValidOrderDetails(db, 99, 0);
+                CancelOrder = GetValidOrderDetails(db, "99", "0","90");
                 PickLcnDtlExtBeforeApi = GetPickLocnDtlExt(db, CancelOrder.SkuId,CancelOrder.LocnId);
             }
         }
@@ -104,7 +104,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (db = GetOracleConnection())
             {
                 db.Open();
-                EPick = GetValidOrderDetails(db, 5, 1);
+                EPick = GetValidOrderDetails(db, "12", "1","90");
                 PickLcnDtlExtBeforeApi = GetPickLocnDtlExt(db, EPick.SkuId, EPick.LocnId);
             }
         }
@@ -215,11 +215,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public CartonView GetValidOrderDetails(OracleConnection db, int statCode, int miscNum1)
+        public CartonView GetValidOrderDetails(OracleConnection db, string statCode, string miscNum1,string status)
         {           
             var cartonView = new CartonView();
-            var query = OrmtQueries.ValidCartons;
+            var query = OrmtQueries.ValidCartonsForAddRelease;
             var command = new OracleCommand(query, db);
+            command.Parameters.Add(new OracleParameter("statCode", statCode));
+            command.Parameters.Add(new OracleParameter("miscNum1", miscNum1));
+            command.Parameters.Add(new OracleParameter("status", status));
             var reader = command.ExecuteReader();
             if (reader.Read())
             {

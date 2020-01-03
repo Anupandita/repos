@@ -293,5 +293,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(Constants.OrmtMessageSent, Status.Status);
         }
 
+        protected void VerifyForStatusInSwmEligiblrOrmtCartonsForCancelMessage()
+        {
+            Assert.AreEqual(Constants.OrmtCancelMessageSent, Status.Status);
+        }
     }
 }
