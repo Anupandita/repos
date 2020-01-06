@@ -178,7 +178,7 @@
       <HintPath>..\packages\Sfc.Wms.Configuration.Security.Rbac.Repository.4.1.0\lib\net472\Sfc.Wms..Configuration.Security.Rbac.Repository.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.App.Api.Contracts, Version=5.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Sfc.Wms.App.Api.WithTest\packages\Sfc.Wms.App.Api.Contracts.5.0.3\lib\net472\Sfc.Wms.App.Api.Contracts.dll</HintPath>
+      <HintPath>..\packages\Sfc.Wms.App.Api.Contracts.5.0.3\lib\net472\Sfc.Wms.App.Api.Contracts.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.App.App, Version=3.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.App.App.3.1.2\lib\net472\Sfc.Wms.App.App.dll</HintPath>
