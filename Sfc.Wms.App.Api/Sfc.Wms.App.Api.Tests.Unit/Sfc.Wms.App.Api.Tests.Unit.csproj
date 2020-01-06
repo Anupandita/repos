@@ -175,6 +175,9 @@
     <PackageReference Include="Sfc.Core.RestResponse">
       <Version>1.4.5</Version>
     </PackageReference>
+    <PackageReference Include="Sfc.Wms.App.Api.Contracts">
+      <Version>5.0.3</Version>
+    </PackageReference>
     <PackageReference Include="Sfc.Wms.Configuration.SystemCode.Contracts">
       <Version>3.0.0</Version>
     </PackageReference>
@@ -182,7 +185,7 @@
       <Version>5.0.1</Version>
     </PackageReference>
     <PackageReference Include="Sfc.Wms.Foundation.InboundLpn.Contracts">
-      <Version>5.0.0</Version>
+      <Version>5.0.1</Version>
     </PackageReference>
     <PackageReference Include="Sfc.Wms.Interfaces.Asrs.Contracts">
       <Version>2.1.0</Version>
@@ -201,10 +204,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Sfc.Wms.App.Api.Contracts\Sfc.Wms.App.Api.Contracts\Sfc.Wms.App.Api.Contracts.csproj">
-      <Project>{671291d2-09d4-48d2-8eee-9e21a8943790}</Project>
-      <Name>Sfc.Wms.App.Api.Contracts</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Sfc.Wms.App.Api.Nuget\Sfc.Wms.App.Api.Nuget\Sfc.Wms.App.Api.Nuget.csproj">
       <Project>{4df981bd-bcb8-4ad1-85b3-2097f974a17b}</Project>
       <Name>Sfc.Wms.App.Api.Nuget</Name>

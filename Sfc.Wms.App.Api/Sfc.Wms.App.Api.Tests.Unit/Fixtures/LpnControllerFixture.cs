@@ -26,6 +26,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         private Task<IHttpActionResult> _testResponse;
         private int commentSequenceNumber;
         private string warehouse, lpnNumber, faceLocationId;
+        private string lpnIds;
 
 
         protected LpnControllerFixture()
@@ -45,6 +46,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             warehouse = "008";
             faceLocationId = "A07E06706N";
             commentSequenceNumber = 204;
+            lpnIds = "00100283000828329862,00100283000694052673,00100283009301204498";
         }
 
         #region Mock
@@ -165,6 +167,13 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
                 el.GetCaseLockUnlockAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()));
         }
 
+        private void VerifyGetLpnUnlockDetails()
+        {
+            _mockCaseLockService.Verify(el =>
+                el.GetCaseUnLockDetailsAsync(It.IsAny<IEnumerable<string>>()));
+        }
+        
+
         private void MockGetLpnComments(ResultTypes resultType)
         {
             var response = new BaseResult<List<CaseCommentDto>>
@@ -205,6 +214,18 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             };
             _mockCaseLockService
                 .Setup(el => el.GetCaseLockUnlockAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(Task.FromResult(response));
+        }
+
+        private void MockGetLpnUnlockDetails(ResultTypes resultType)
+        {
+            var response = new BaseResult<List<CaseLockDto>>
+            {
+                ResultType = resultType,
+                Payload = resultType == ResultTypes.Ok ? Generator.Default.Single<List<CaseLockDto>>() : null
+            };
+            _mockCaseLockService
+                .Setup(el => el.GetCaseUnLockDetailsAsync(It.IsAny<IEnumerable<string>>()))
                 .Returns(Task.FromResult(response));
         }
 
@@ -686,6 +707,56 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             VerifyGetLpnLockUnlock();
             Assert.IsNotNull(_testResponse);
             var result = _testResponse.Result as OkNegotiatedContentResult<BaseResult<List<CaseLockUnlockDto>>>;
+            Assert.IsNotNull(result);
+            Assert.AreEqual(ResultTypes.Ok, result.Content.ResultType);
+        }
+
+        #endregion
+
+        #region GetLpnUnlockDetails
+
+        protected void GetCaseUnLockDetailsRecordDoesNotExists()
+        {
+            MockGetLpnUnlockDetails(ResultTypes.NotFound);
+        }
+
+        protected void GetCaseUnLockDetailsRecordExists()
+        {
+            MockGetLpnUnlockDetails(ResultTypes.Ok);
+        }
+
+        protected void InValidInputForGetCaseUnLockDetails()
+        {
+            MockGetLpnUnlockDetails(ResultTypes.BadRequest);
+        }
+
+        protected void GetCaseUnLockDetailsOperationInvoked()
+        {
+            _testResponse = _lpnController.GetCaseUnLockDetailsAsync(lpnIds);
+        }
+
+        protected void TheGetCaseUnLockDetailsReturnedNotFoundResponse()
+        {
+            VerifyGetLpnUnlockDetails();
+            Assert.IsNotNull(_testResponse);
+            var result = _testResponse.Result as NegotiatedContentResult<BaseResult<List<CaseLockDto>>>;
+            Assert.IsNotNull(result);
+            Assert.AreEqual(ResultTypes.NotFound, result.Content.ResultType);
+        }
+
+        protected void ThGetCaseUnLockDetailsReturnedBadRequestResponse()
+        {
+            Assert.IsNotNull(_testResponse);
+            var result = _testResponse.Result as NegotiatedContentResult<BaseResult<List<CaseLockDto>>>;
+            Assert.IsNotNull(result);
+            Assert.AreEqual(ResultTypes.BadRequest, result.Content.ResultType);
+        }
+
+        protected void TheGetCaseUnLockDetailsReturnedOkResponse()
+        {
+            VerifyGetLpnUnlockDetails();
+            Assert.IsNotNull(_testResponse);
+            var result = _testResponse.Result as OkNegotiatedContentResult<BaseResult<List<CaseLockDto>>>;
             Assert.IsNotNull(result);
             Assert.AreEqual(ResultTypes.Ok, result.Content.ResultType);
         }

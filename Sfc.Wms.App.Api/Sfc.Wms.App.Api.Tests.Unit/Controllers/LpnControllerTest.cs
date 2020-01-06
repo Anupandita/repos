@@ -235,6 +235,33 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Controllers
 
         [TestMethod]
         [TestCategory(TestCategories.Unit)]
+        public void GetCaseUnLockDetails_Invocation_Returned_NotFound_As_Response_Status()
+        {
+            GetCaseUnLockDetailsRecordDoesNotExists();
+            GetCaseUnLockDetailsOperationInvoked();
+            TheGetCaseUnLockDetailsReturnedNotFoundResponse();
+        }
+
+        [TestMethod]
+        [TestCategory(TestCategories.Unit)]
+        public void GetCaseUnLockDetails_Invocation_Returned_BadRequest_As_Response_Status()
+        {
+            InValidInputForGetCaseUnLockDetails();
+            GetCaseUnLockDetailsOperationInvoked();
+            ThGetCaseUnLockDetailsReturnedBadRequestResponse();
+        }
+
+        [TestMethod]
+        [TestCategory(TestCategories.Unit)]
+        public void GetCaseUnLockDetails_Invocation_Returned_Ok_As_Response_Status()
+        {
+            GetCaseUnLockDetailsRecordExists();
+            GetCaseUnLockDetailsOperationInvoked();
+            TheGetCaseUnLockDetailsReturnedOkResponse();
+        }
+
+        [TestMethod]
+        [TestCategory(TestCategories.Unit)]
         public void GetLpnDetails_Invocation_Returned_NotFound_As_Response_Status()
         {
             GetLpnDetailsRecordDoesNotExists();

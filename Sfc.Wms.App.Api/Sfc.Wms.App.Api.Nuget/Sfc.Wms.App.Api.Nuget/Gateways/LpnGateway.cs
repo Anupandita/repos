@@ -105,6 +105,19 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
+        public async Task<BaseResult<List<CaseLockDto>>> GetCaseUnLockDetailsAsync(string lpnIds, string token)
+        {
+            var retryPolicy = Proxy();
+            return await retryPolicy.ExecuteAsync(async () =>
+            {
+                var resource = $"{_endPoint}/{lpnIds}/{Routes.Paths.LpnCaseUnLockDetails}";
+                var request = GetRequest(token, resource, Authorization);
+                var response = await _restCsharpClient.ExecuteTaskAsync<BaseResult<List<CaseLockDto>>>(request)
+                    .ConfigureAwait(false);
+                return _responseBuilder.GetBaseResult<List<CaseLockDto>>(response);
+            }).ConfigureAwait(false);
+        }
+
         //TODO:  Needs to be validated at the time of aisle implementation
         public async Task<BaseResult<AisleTransactionDto>> InsertLpnAisleTransAsync(
             LpnAisleTransModel lpnAisleTransModel,
