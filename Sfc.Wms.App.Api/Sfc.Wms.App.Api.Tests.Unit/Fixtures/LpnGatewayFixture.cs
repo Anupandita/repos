@@ -20,6 +20,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         private readonly Mock<IRestClient> _restClient;
         private BaseResult<CaseCommentDto> caseCommentBaseResult;
         private BaseResult<List<CaseLockUnlockDto>> caseLockUnlockBaseResult;
+        private BaseResult<List<CaseLockDto>> caseUnlockDetailsBaseResult;
         private BaseResult<List<LpnHistoryDto>> lnpHistoryBaseResult;
         private BaseResult<List<CaseCommentDto>> lpnCommentsBaseResult;
         private BaseResult<LpnDetailsDto> lpnDetailsBaseResult;
@@ -314,6 +315,55 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             VerifyRestClientInvocation<BaseResult<List<CaseLockUnlockDto>>>();
             Assert.IsNotNull(caseLockUnlockBaseResult);
             Assert.AreEqual(ResultTypes.NotFound, caseLockUnlockBaseResult.ResultType);
+        }
+
+        #endregion
+
+        #region GetCaseUnLockDetails
+
+        protected void ValidInputParametersToGetCaseUnLockDetails()
+        {
+            var result = new BaseResult<List<CaseLockDto>> { ResultType = ResultTypes.Ok };
+            GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
+        }
+
+        protected void InValidInputParametersToGetCaseUnLockDetails()
+        {
+            var result = new BaseResult<List<CaseLockDto>> { ResultType = ResultTypes.BadRequest };
+            GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
+        }
+
+        protected void InputParametersToGetCaseUnLockDetailsForWhichNoDetailsExists()
+        {
+            var result = new BaseResult<List<CaseLockDto>> { ResultType = ResultTypes.NotFound };
+            GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
+        }
+
+        protected void GetCaseUnLockDetailsOperationInvoked()
+        {
+            caseUnlockDetailsBaseResult = _lpnGateway.GetCaseUnLockDetailsAsync(It.IsAny<string>(), It.IsAny<string>())
+                .Result;
+        }
+
+        protected void TheGetCaseUnLockDetailsReturnedOkAsResponseStatus()
+        {
+            VerifyRestClientInvocation<BaseResult<List<CaseLockDto>>>();
+            Assert.IsNotNull(caseUnlockDetailsBaseResult);
+            Assert.AreEqual(ResultTypes.Ok, caseUnlockDetailsBaseResult.ResultType);
+        }
+
+        protected void TheGetCaseUnLockDetailsReturnedBadRequestAsResponseStatus()
+        {
+            VerifyRestClientInvocation<BaseResult<List<CaseLockDto>>>();
+            Assert.IsNotNull(caseUnlockDetailsBaseResult);
+            Assert.AreEqual(ResultTypes.BadRequest, caseUnlockDetailsBaseResult.ResultType);
+        }
+
+        protected void TheGetCaseUnLockDetailsReturnedNotFoundAsResponseStatus()
+        {
+            VerifyRestClientInvocation<BaseResult<List<CaseLockDto>>>();
+            Assert.IsNotNull(caseUnlockDetailsBaseResult);
+            Assert.AreEqual(ResultTypes.NotFound, caseUnlockDetailsBaseResult.ResultType);
         }
 
         #endregion

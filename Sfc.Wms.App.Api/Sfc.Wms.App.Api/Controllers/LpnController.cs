@@ -103,6 +103,16 @@ namespace Sfc.Wms.App.Api.Controllers
             return ResponseHandler(response);
         }
 
+        [HttpGet]
+        [Route(Routes.Paths.LpnCaseUnLockDetails)]
+        [ResponseType(typeof(BaseResult<List<CaseLockDto>>))]
+        public async Task<IHttpActionResult> GetCaseUnLockDetailsAsync(string lpnIds)
+        {
+            IEnumerable<string> lpnNumbers = lpnIds.Split(',');
+            var response = await _caseLockService.GetCaseUnLockDetailsAsync(lpnNumbers).ConfigureAwait(false);
+            return ResponseHandler(response);
+        }
+
         [HttpPut]
         [Route(Routes.Paths.LpnUpdateDetails)]
         [ResponseType(typeof(BaseResult))]

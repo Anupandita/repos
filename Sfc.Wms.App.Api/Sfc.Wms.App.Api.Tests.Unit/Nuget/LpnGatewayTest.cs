@@ -153,6 +153,33 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Nuget
 
         [TestMethod]
         [TestCategory(TestCategories.Unit)]
+        public void GetCaseUnLockDetails_Operation_Returned_Ok_As_Response_Status()
+        {
+            ValidInputParametersToGetCaseUnLockDetails();
+            GetCaseUnLockDetailsOperationInvoked();
+            TheGetCaseUnLockDetailsReturnedOkAsResponseStatus();
+        }
+
+        [TestMethod]
+        [TestCategory(TestCategories.Unit)]
+        public void GetCaseUnLockDetails_Operation_Returned_BadRequest_As_Response_Status()
+        {
+            InValidInputParametersToGetCaseUnLockDetails();
+            GetCaseUnLockDetailsOperationInvoked();
+            TheGetCaseUnLockDetailsReturnedBadRequestAsResponseStatus();
+        }
+
+        [TestMethod]
+        [TestCategory(TestCategories.Unit)]
+        public void GetCaseUnLockDetails_Operation_Returned_NotFound_As_Response_Status()
+        {
+            InputParametersToGetCaseUnLockDetailsForWhichNoDetailsExists();
+            GetCaseUnLockDetailsOperationInvoked();
+            TheGetCaseUnLockDetailsReturnedNotFoundAsResponseStatus();
+        }
+
+        [TestMethod]
+        [TestCategory(TestCategories.Unit)]
         public void UpdateLpnHeader_Operation_Returned_Ok_As_Response_Status()
         {
             ValidInputParametersToUpdateLpnHeader();
