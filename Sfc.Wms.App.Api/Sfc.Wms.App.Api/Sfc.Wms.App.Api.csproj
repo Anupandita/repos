@@ -231,9 +231,6 @@
     <Reference Include="Sfc.Wms.Data, Version=5.5.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Data.5.5.1\lib\net472\Sfc.Wms.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Foundation.AllocationInventory.App, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Foundation.AllocationInventory.App.3.1.0\lib\net472\Sfc.Wms.Foundation.AllocationInventory.App.dll</HintPath>
-    </Reference>
     <Reference Include="Sfc.Wms.Foundation.AllocationInventory.Contracts, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.AllocationInventory.Contracts.3.0.0\lib\net472\Sfc.Wms.Foundation.AllocationInventory.Contracts.dll</HintPath>
     </Reference>
@@ -246,9 +243,6 @@
     <Reference Include="Sfc.Wms.Foundation.Carton.Repository, Version=2.1.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.Carton.Repository.2.1.5\lib\net472\Sfc.Wms.Foundation.Carton.Repository.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Foundation.Corba.App, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Foundation.Corba.App.1.0.7\lib\net472\Sfc.Wms.Foundation.Corba.App.dll</HintPath>
-    </Reference>
     <Reference Include="Sfc.Wms.Foundation.Corba.Contracts, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.Corba.Contracts.1.0.6\lib\net472\Sfc.Wms.Foundation.Corba.Contracts.dll</HintPath>
     </Reference>
@@ -260,9 +254,6 @@
     </Reference>
     <Reference Include="Sfc.Wms.Foundation.InboundLpn.Repository, Version=5.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.InboundLpn.Repository.5.0.1\lib\net472\Sfc.Wms.Foundation.InboundLpn.Repository.dll</HintPath>
-    </Reference>
-    <Reference Include="Sfc.Wms.Foundation.Location.App, Version=3.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Foundation.Location.App.3.2.0\lib\net472\Sfc.Wms.Foundation.Location.App.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Foundation.Location.Contracts, Version=4.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.Location.Contracts.4.1.0\lib\net472\Sfc.Wms.Foundation.Location.Contracts.dll</HintPath>
@@ -312,6 +303,12 @@
     <Reference Include="Sfc.Wms.Foundation.TransitionalInventory.Repository, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.TransitionalInventory.Repository.1.2.0\lib\net472\Sfc.Wms.Foundation.TransitionalInventory.Repository.dll</HintPath>
     </Reference>
+    <Reference Include="Sfc.Wms.Framework.AllocationInventory.App, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.AllocationInventory.App.1.0.0\lib\net472\Sfc.Wms.Framework.AllocationInventory.App.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Framework.Corba.App, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.Corba.App.1.0.0\lib\net472\Sfc.Wms.Framework.Corba.App.dll</HintPath>
+    </Reference>
     <Reference Include="Sfc.Wms.Framework.DockDoor.App, Version=2.2.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.DockDoor.App.2.2.5\lib\net472\Sfc.Wms.Framework.DockDoor.App.dll</HintPath>
     </Reference>
@@ -320,6 +317,9 @@
     </Reference>
     <Reference Include="Sfc.Wms.Framework.ItemMaster.App, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.ItemMaster.App.1.0.2\lib\net472\Sfc.Wms.Framework.ItemMaster.App.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Framework.Location.App, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.Location.App.1.0.1\lib\net472\Sfc.Wms.Framework.Location.App.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Framework.MessageLogger.App, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.MessageLogger.App.1.0.3\lib\net472\Sfc.Wms.Framework.MessageLogger.App.dll</HintPath>
