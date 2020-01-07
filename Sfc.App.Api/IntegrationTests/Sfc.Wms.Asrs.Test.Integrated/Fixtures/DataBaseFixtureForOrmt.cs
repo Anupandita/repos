@@ -50,7 +50,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             {
                 db.Open();     
                 PrintCarton = GetValidOrderDetails(db,"5","0","10");               
-                PickLcnDtlExtBeforeApi = GetPickLocnDtlExt(db, PrintCarton.SkuId, PrintCarton.LocnId);
+                PickLcnDtlExtBeforeApi = GetPickLocnDtlExt(db, PrintCarton.SkuId, null);
             }
         }    
 
@@ -93,7 +93,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             {
                 db.Open();
                 CancelOrder = GetValidOrderDetails(db, "99", "0","90");
-                PickLcnDtlExtBeforeApi = GetPickLocnDtlExt(db, CancelOrder.SkuId,CancelOrder.LocnId);
+                PickLcnDtlExtBeforeApi = GetPickLocnDtlExt(db, CancelOrder.SkuId,null);
             }
         }
         
@@ -151,7 +151,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                     VerifyOrmtMessageWasInsertedInToWmsToEmsForPrintingOfOrder(SwmToMheAddRelease,WmsToEmsAddRelease);
                     CartonHdr = GetStatusCodeFromCartonHdrForWaveRelease(db, OrderList[i].CartonNbr);
                     Assert.AreEqual(12, CartonHdr.StatusCode);
-                    PickLcnDtlExtAfterApi = GetPickLocnDtlExt(db, OrderList[i].SkuId,OrderList[i].LocnId);
+                    //PickLcnDtlExtAfterApi = GetPickLocnDtlExt(db, OrderList[i].SkuId,OrderList[i].LocnId);
                     Assert.AreEqual(ActiveOrmtCountList[i].ActiveOrmtCount + 1, PickLcnDtlExtAfterApi.ActiveOrmtCount);
                     Status = GetStatusCodeFromEligibleOrmtCount(db, OrderList[i].CartonNbr);
                     Assert.AreEqual(90, Convert.ToInt32(Status.Status));
@@ -301,11 +301,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var orderdtls = new List<CartonView>();
             var query = OrmtQueries.WaveRelease;
             var command = new OracleCommand(query,db);
-            Command.Parameters.Add(new OracleParameter("miscNum1", Constants.MiscNum1));
-            Command.Parameters.Add(new OracleParameter("sysType", Constants.SysCodeType));
-            Command.Parameters.Add(new OracleParameter("sysCodeId", Constants.SysCodeIdForActiveLocation));
-            Command.Parameters.Add(new OracleParameter("status", Constants.EgblOrmtStatus));
-            Command.Parameters.Add(new OracleParameter("waveNbr", waveNbr));
             var reader = command.ExecuteReader();
             while (reader.Read())
             {

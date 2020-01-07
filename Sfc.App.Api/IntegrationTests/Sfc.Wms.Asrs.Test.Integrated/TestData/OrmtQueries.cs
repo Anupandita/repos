@@ -45,17 +45,10 @@
                 "inner join locn_grp lg on lg.locn_id = lh.locn_id and lg.grp_attr in ('Freezer', 'Dry') " +
                 "inner join sys_code sc on sc.code_id = lg.grp_type and sc.code_type = :sysCodeType and sc.code_id = :sysCodeId)";
 
-        public static string WaveRelease = $"select  distinct eg.wave_nbr,ch.carton_nbr,ch.sku_id,ch.MISC_NUM_1,ch.total_qty, " +
-            "ch.stat_code,pl.actl_invn_qty,ch.DEST_LOCN_ID,ph.PKT_CTRL_NBR,ph.SHIP_W_CTRL_NBR,ph.Whse,ph.CO,ph.DIV, " +
-            "im.spl_instr_code_1, im.spl_instr_code_5 from SWM_ELGBL_ORMT_CARTONS eg inner join carton_hdr ch on" +
-            " ch.Carton_Nbr = eg.Carton_Nbr  inner join PKT_HDR ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr  " +
-            "inner join Pick_Locn_dtl pl ON  pl.sku_id = ch.sku_id inner join ITEM_MASTER im ON ch.sku_id = im.sku_id  " +
-            "inner join locn_hdr lh ON pl.locn_id = lh.locn_id inner join locn_grp lg ON lg.locn_id = lh.locn_id " +
-            "inner join sys_code sc ON sc.code_id = lg.grp_type inner join pkt_hdr ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr  " +
-            "inner join pkt_dtl pd ON pd.pkt_ctrl_nbr = ch.pkt_ctrl_nbr inner join alloc_invn_dtl ai ON ai.sku_id = ch.sku_id " +
-            "left join pick_locn_dtl_ext ple ON pl.sku_id = ple.sku_id where  ch.misc_instr_code_5 is null and misc_num_1 = 0 and sc.code_type = :sysType " +
-            "and code_id = :sysCodeId and lg.grp_attr = DECODE(im.temp_zone, 'D', 'Dry', 'Freezer') and ch.misc_instr_code_5 is null and misc_num_1 = 0 and " +
-            "eg.wave_nbr = '{waveNbr}' and eg.status = :status and ch.stat_code = 5";
+        public static string WaveRelease = $"select distinct ch.carton_nbr,ch.create_date_time,ch.wave_nbr,ch.sku_id,pl.locn_id,ch.MISC_NUM_1, ch.total_qty,ch.stat_code,pl.actl_invn_qty,ch.DEST_LOCN_ID,ph.PKT_CTRL_NBR,ph.SHIP_W_CTRL_NBR,ph.Whse, ph.CO,ph.DIV, " +
+                                           $"im.spl_instr_code_1,im.spl_instr_code_5 from SWM_ELGBL_ORMT_CARTONS eg  inner join carton_hdr ch on ch.Carton_Nbr = eg.Carton_Nbr inner join PKT_HDR ph ON  ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr inner join Pick_Locn_dtl pl ON pl.sku_id = ch.sku_id " +
+                                           $"inner join ITEM_MASTER im ON ch.sku_id = im.sku_id  inner join locn_hdr lh ON pl.locn_id = lh.locn_id inner join locn_grp lg ON lg.locn_id = lh.locn_id   inner join sys_code sc ON sc.code_id = lg.grp_type inner join pkt_hdr ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr " +
+                                           $" inner join pkt_dtl pd ON pd.pkt_ctrl_nbr = ch.pkt_ctrl_nbr inner join alloc_invn_dtl ai ON ai.sku_id = ch.sku_id left join pick_locn_dtl_ext ple ON pl.sku_id = ple.sku_id where sc.code_type = '740' and code_id = '18' and lg.grp_attr = DECODE(im.temp_zone, 'D', 'Dry', 'Freezer') and misc_num_1 = '0'  and eg.status = '10' and ch.stat_code = '5' and eg.wave_nbr = '20200103001'";
 
         public static string ValidCartonsForAddRelease = $"select distinct ch.carton_nbr,ch.create_date_time,ch.wave_nbr,ch.sku_id,pl.locn_id,ch.MISC_NUM_1, ch.total_qty," +
             $" ch.stat_code,pl.actl_invn_qty,ch.DEST_LOCN_ID,ph.PKT_CTRL_NBR,ph.SHIP_W_CTRL_NBR,ph.Whse, ph.CO,ph.DIV, im.spl_instr_code_1," +
@@ -65,7 +58,9 @@
             $" inner join locn_grp lg ON lg.locn_id = lh.locn_id   inner join sys_code sc ON sc.code_id = lg.grp_type  " +
             $" inner join pkt_hdr ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr  inner join pkt_dtl pd ON pd.pkt_ctrl_nbr = ch.pkt_ctrl_nbr " +
             $" inner join alloc_invn_dtl ai ON ai.sku_id = ch.sku_id left join pick_locn_dtl_ext ple ON pl.sku_id = ple.sku_id " +
-            $" where ch.misc_instr_code_5 is null and misc_num_1 = 0 and sc.code_type = '740' and code_id = '18' and lg.grp_attr = DECODE(im.temp_zone, 'D', 'Dry', 'Freezer') and  " +
-            $"ch.misc_instr_code_5 is null and misc_num_1 = :miscNum1  and eg.status = :status and ch.stat_code = :statCode";
+            $" where  sc.code_type = '740' and code_id = '18' and lg.grp_attr = DECODE(im.temp_zone, 'D', 'Dry', 'Freezer') and  " +
+            $"  misc_num_1 = :miscNum1  and eg.status = :status and ch.stat_code = :statCode";
+
+       
     }
 }

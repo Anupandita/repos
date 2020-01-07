@@ -93,7 +93,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 swmtomhedata.OrderId = swmToMheReader["ORDER_ID"].ToString();
                 swmtomhedata.OrderLineId = ToNullableInt(swmToMheReader["ORDER_LINE_ID"]);
                 swmtomhedata.PoNumber = swmToMheReader["PO_NBR"].ToString();
-                //swmtomhedata.Quantity = Convert.ToInt32(swmToMheReader["QTY"]);
+                swmtomhedata.Quantity = ToNullableInt(swmToMheReader["QTY"]);
                 swmtomhedata.WaveNumber = swmToMheReader["WAVE_NBR"].ToString();
                 swmtomhedata.ZplData = swmToMheReader["ZPL_DATA"].ToString();
             }

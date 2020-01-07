@@ -247,7 +247,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(SwmToMheCancelation.SourceMessageTransactionCode, WmsToEmsCancelation.Transaction);
             Assert.AreEqual(SwmToMheCancelation.SourceMessageText, WmsToEmsCancelation.MessageText);
             Assert.AreEqual(SwmToMheCancelation.SourceMessageResponseCode, WmsToEmsCancelation.ResponseCode);
-            Assert.AreEqual(SwmToMheCancelation.ZplData, WmsToEmsCancelation.ZplData);
+            //Assert.AreEqual(SwmToMheCancelation.ZplData, WmsToEmsCancelation.ZplData);
         }
 
         protected void VerifyOrmtMessageWasInsertedInToWmsToEmsForEpickOfOrder()
