@@ -267,9 +267,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             {
                 ActionCode = actionCode,
                 AdjustmentReasonCode = adjustmentReasonCode,
-                ContainerId = "00100283000926134320",
+                ContainerId = containerNbr,
                 Quantity = Constants.MinQuantity,
-                Sku = "4400001",
+                Sku = skuId,
                 Owner = Constants.Owner,
                 UserName = Constants.UserName,
                 UnitOfMeasure = DefaultValues.ContainerType,
