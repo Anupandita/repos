@@ -312,9 +312,6 @@
     <Reference Include="Sfc.Wms.Framework.DockDoor.App, Version=2.2.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.DockDoor.App.2.2.5\lib\net472\Sfc.Wms.Framework.DockDoor.App.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Framework.Interceptor.App, Version=3.2.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Framework.Interceptor.App.3.2.4\lib\net472\Sfc.Wms.Framework.Interceptor.App.dll</HintPath>
-    </Reference>
     <Reference Include="Sfc.Wms.Framework.ItemMaster.App, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.ItemMaster.App.1.0.2\lib\net472\Sfc.Wms.Framework.ItemMaster.App.dll</HintPath>
     </Reference>
@@ -591,6 +588,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Wms.Framework\Sfc.Wms.Framework.Interceptor\Sfc.Wms.Framework.Interceptor.App\Sfc.Wms.Framework.Interceptor.App.csproj">
+      <Project>{93D03F46-E1D9-4F6A-A035-20559E0C8AD4}</Project>
+      <Name>Sfc.Wms.Framework.Interceptor.App</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
