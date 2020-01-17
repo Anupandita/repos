@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Script.Serialization;
-using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
 using Sfc.Wms.Data.Entities;
@@ -68,8 +67,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (db = GetOracleConnection())
             {
                 db.Open();
-
-
 
 
             }

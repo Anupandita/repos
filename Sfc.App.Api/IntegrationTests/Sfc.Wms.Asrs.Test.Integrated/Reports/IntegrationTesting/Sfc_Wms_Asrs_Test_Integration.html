@@ -9,7 +9,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
 /*If you drop a custom stylesheet named BDDfyCustom.css in your output folder it gets embedded here. This way you can apply some custom styles over your html report.*/
 
     </style>
-    <title>BDDfy Test Result 1/8/2020</title>
+    <title>BDDfy Test Result 1/16/2020</title>
   </head>
   <body>
     <div id='main'>
@@ -29,13 +29,13 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
           <li class='scenarioSummary'>
             <div class='summaryLine'>
               <div class='summaryLabel'>Scenarios</div>
-              <span class='summaryCount'>9</span>
+              <span class='summaryCount'>1</span>
             </div>
           </li>
           <li class='Passed'>
             <div class='summaryLine'>
               <div class='summaryLabel'>Passed</div>
-              <span class='summaryCount'>9</span>
+              <span class='summaryCount'>1</span>
             </div>
           </li>
           <li class='Inconclusive'>
@@ -79,235 +79,27 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
               </div>
               <div class='scenarios'>
                 <div class='scenario'>
-                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-1'>Test Case ID : 124721 Dematic - IVST- Test for UnExpected overage /Residual Quantity</div>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-1'>Test Case ID : 124727-Dematic - IVST- Test for Wrong SKU for Inbound Pallet = Y and validate for all functionalities</div>
                   <ul class='steps' id='scenario-1'>
                     <li class='step Passed  SetupState ' data-toggle-target='step-1-1' >
-                      <span>Given test data for unexpected overage exception</span>
+                      <span>Given test data for wrong sku exception</span>
                     </li>
                     <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-1-2' >
-                      <span>And valid ivst url msg key and msg processor is http://dev.az.app.api.wms.shamrockfoods.com/api/emstowms-message?msgKey=190&msgProcessor=MessageProcessor, 182, MessageProcessor</span>
+                      <span>And valid ivst url msg key and msg processor is http://dev.az.app.api.wms.shamrockfoods.com/api/emstowms-message?msgKey=838&msgProcessor=MessageProcessor, 838, MessageProcessor</span>
                     </li>
                     <li class='step Passed  Transition ' data-toggle-target='step-1-3' >
                       <span>When ivst api is called created is returned</span>
                     </li>
                     <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-1-4' >
-                      <span>And get valid data after trigger for key 182</span>
+                      <span>And get valid data after trigger for key 838</span>
                     </li>
                     <li class='step Passed  Assertion ' data-toggle-target='step-1-5' >
-                      <span>Then verify ivst message was inserted into swm from mhe for unexcepted overage</span>
+                      <span>Then verify ivst message was inserted into swm from mhe for wrong sku and msg key should be 838</span>
                     </li>
                     <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-1-6' >
-                      <span>And verify the quantity for unexpected overage exception into trans inventory table</span>
+                      <span>And verify the quantity and weight should be reduced by ivst qty in trans inventory for inbound pallet is y</span>
                     </li>
                     <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-1-7' >
-                      <span>And verify the record inserted into pix transaction and validate reason code for unexpected overage exception</span>
-                    </li>
-                  </ul>
-                </div>
-                <div class='scenario'>
-                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-5'>Test Case ID : 124726- Dematic - IVST- Test for Damage Exceptions for Inbound Pallet = N and Validate for all functionalities</div>
-                  <ul class='steps' id='scenario-5'>
-                    <li class='step Passed  SetupState ' data-toggle-target='step-5-1' >
-                      <span>Given test data for damage inbound pallet is n</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-5-2' >
-                      <span>And valid ivst url msg key and msg processor is http://dev.az.app.api.wms.shamrockfoods.com/api/emstowms-message?msgKey=190&msgProcessor=MessageProcessor, 186, MessageProcessor</span>
-                    </li>
-                    <li class='step Passed  Transition ' data-toggle-target='step-5-3' >
-                      <span>When ivst api is called created is returned</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-5-4' >
-                      <span>And get valid data after trigger for key 186</span>
-                    </li>
-                    <li class='step Passed  Assertion ' data-toggle-target='step-5-5' >
-                      <span>Then verify ivst message was inserted into swm from mhe for damage and msg key should be 186</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-5-6' >
-                      <span>And verify the quantity should be reduced by ivst qty in pick location for inbound pallet is n</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-5-7' >
-                      <span>And verify the record inserted into pix transaction and validate reason code for damage exception</span>
-                    </li>
-                  </ul>
-                </div>
-                <div class='scenario'>
-                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-6'>Test Case ID : 124727-Dematic - IVST- Test for Wrong SKU for Inbound Pallet = Y and validate for all functionalities</div>
-                  <ul class='steps' id='scenario-6'>
-                    <li class='step Passed  SetupState ' data-toggle-target='step-6-1' >
-                      <span>Given test data for wrong sku exception</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-6-2' >
-                      <span>And valid ivst url msg key and msg processor is http://dev.az.app.api.wms.shamrockfoods.com/api/emstowms-message?msgKey=190&msgProcessor=MessageProcessor, 187, MessageProcessor</span>
-                    </li>
-                    <li class='step Passed  Transition ' data-toggle-target='step-6-3' >
-                      <span>When ivst api is called created is returned</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-6-4' >
-                      <span>And get valid data after trigger for key 187</span>
-                    </li>
-                    <li class='step Passed  Assertion ' data-toggle-target='step-6-5' >
-                      <span>Then verify ivst message was inserted into swm from mhe for wrong sku and msg key should be 187</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-6-6' >
-                      <span>And verify the quantity and weight should be reduced by ivst qty in trans inventory for inbound pallet is y</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-6-7' >
-                      <span>And verify the record inserted into pix transaction and validate reason code for wrong sku exception</span>
-                    </li>
-                  </ul>
-                </div>
-                <div class='scenario'>
-                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-4'>Test Case ID :124726- Dematic - IVST- Test for Damage Exceptions for Inbound Pallet = Y and Validate for all functionalities</div>
-                  <ul class='steps' id='scenario-4'>
-                    <li class='step Passed  SetupState ' data-toggle-target='step-4-1' >
-                      <span>Given test data for damage exception</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-4-2' >
-                      <span>And valid ivst url msg key and msg processor is http://dev.az.app.api.wms.shamrockfoods.com/api/emstowms-message?msgKey=190&msgProcessor=MessageProcessor, 185, MessageProcessor</span>
-                    </li>
-                    <li class='step Passed  Transition ' data-toggle-target='step-4-3' >
-                      <span>When ivst api is called created is returned</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-4-4' >
-                      <span>And get valid data after trigger for key 185</span>
-                    </li>
-                    <li class='step Passed  Assertion ' data-toggle-target='step-4-5' >
-                      <span>Then verify ivst message was inserted into swm from mhe for damage and msg key should be 185</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-4-6' >
-                      <span>And verify the quantity and weight should be reduced by ivst qty in trans inventory for inbound pallet is y</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-4-7' >
-                      <span>And verify the record inserted into pix transaction and validate reason code for damage exception</span>
-                    </li>
-                  </ul>
-                </div>
-                <div class='scenario'>
-                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-8'>Test Case ID: 124720 - Dematic - IVST - Test for IVST api when the Cycle count is done. for both action codes AdjustmentPlus</div>
-                  <ul class='steps' id='scenario-8'>
-                    <li class='step Passed  SetupState ' data-toggle-target='step-8-1' >
-                      <span>Given test data for cycle count adjustment plus</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-8-2' >
-                      <span>And valid ivst url msg key and msg processor is http://dev.az.app.api.wms.shamrockfoods.com/api/emstowms-message?msgKey=190&msgProcessor=MessageProcessor, 189, MessageProcessor</span>
-                    </li>
-                    <li class='step Passed  Transition ' data-toggle-target='step-8-3' >
-                      <span>When ivst api is called created is returned</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-8-4' >
-                      <span>And get valid data after trigger for key 189</span>
-                    </li>
-                    <li class='step Passed  Assertion ' data-toggle-target='step-8-5' >
-                      <span>Then verify ivst message was inserted into swm from mhe for cycle count and msg key should be 189, AdjustmentPlus</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-8-6' >
-                      <span>And verify the quantity has increased in pick location for cycle count adjustment plus</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-8-7' >
-                      <span>And verify the record inserted into pix transaction and validate reason code for cycle count adjustment plus</span>
-                    </li>
-                  </ul>
-                </div>
-                <div class='scenario'>
-                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-9'>Test Case ID: 124720 - Dematic - IVST - Test for IVST api when the Cycle count is done. for both action codes AdjustmentPlusMinus</div>
-                  <ul class='steps' id='scenario-9'>
-                    <li class='step Passed  SetupState ' data-toggle-target='step-9-1' >
-                      <span>Given test data for cycle count adjustment minus</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-9-2' >
-                      <span>And valid ivst url msg key and msg processor is http://dev.az.app.api.wms.shamrockfoods.com/api/emstowms-message?msgKey=190&msgProcessor=MessageProcessor, 190, MessageProcessor</span>
-                    </li>
-                    <li class='step Passed  Transition ' data-toggle-target='step-9-3' >
-                      <span>When ivst api is called created is returned</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-9-4' >
-                      <span>And get valid data after trigger for key 190</span>
-                    </li>
-                    <li class='step Passed  Assertion ' data-toggle-target='step-9-5' >
-                      <span>Then verify ivst message was inserted into swm from mhe for cycle count and msg key should be 190, AdjustmentMinus</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-9-6' >
-                      <span>And verify the quantity should be reduced by ivst qty in pick location for inbound pallet is n</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-9-7' >
-                      <span>And verify the record inserted into pix transaction and validate reason code for cycle count adjustment plus</span>
-                    </li>
-                  </ul>
-                </div>
-                <div class='scenario'>
-                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-2'>Test Case ID: 124725- Dematic - IVST- Test for Inventory Shortage Validate for all functionalities .</div>
-                  <ul class='steps' id='scenario-2'>
-                    <li class='step Passed  SetupState ' data-toggle-target='step-2-1' >
-                      <span>Given test data for inventory exception</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-2-2' >
-                      <span>And valid ivst url msg key and msg processor is http://dev.az.app.api.wms.shamrockfoods.com/api/emstowms-message?msgKey=190&msgProcessor=MessageProcessor, 183, MessageProcessor</span>
-                    </li>
-                    <li class='step Passed  Transition ' data-toggle-target='step-2-3' >
-                      <span>When ivst api is called created is returned</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-2-4' >
-                      <span>And get valid data after trigger for key 183</span>
-                    </li>
-                    <li class='step Passed  Assertion ' data-toggle-target='step-2-5' >
-                      <span>Then verify ivst message was inserted into swm from mhe for inventory shortage and msg key should be 183</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-2-6' >
-                      <span>And verify the quantity and weight should be reduced by ivst qty in trans inventory for inbound pallet is y</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-2-7' >
-                      <span>And verify the record inserted into pix transaction and validate reason code for inventory shortage exception</span>
-                    </li>
-                  </ul>
-                </div>
-                <div class='scenario'>
-                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-3'>Test Case ID: 124725- Dematic - IVST- Test for Inventory Shortage. Validate for all functionalities .</div>
-                  <ul class='steps' id='scenario-3'>
-                    <li class='step Passed  SetupState ' data-toggle-target='step-3-1' >
-                      <span>Given test data for inventory shortage inbound pallet is n</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-3-2' >
-                      <span>And valid ivst url msg key and msg processor is http://dev.az.app.api.wms.shamrockfoods.com/api/emstowms-message?msgKey=190&msgProcessor=MessageProcessor, 184, MessageProcessor</span>
-                    </li>
-                    <li class='step Passed  Transition ' data-toggle-target='step-3-3' >
-                      <span>When ivst api is called created is returned</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-3-4' >
-                      <span>And get valid data after trigger for key 184</span>
-                    </li>
-                    <li class='step Passed  Assertion ' data-toggle-target='step-3-5' >
-                      <span>Then verify ivst message was inserted into swm from mhe for inventory shortage and msg key should be 184</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-3-6' >
-                      <span>And verify the quantity should be reduced by ivst qty in pick location for inbound pallet is n</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-3-7' >
-                      <span>And verify the record inserted into pix transaction and validate reason code for inventory shortage exception</span>
-                    </li>
-                  </ul>
-                </div>
-                <div class='scenario'>
-                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-7'>Test Case ID:124727 -Dematic - IVST- Test for Wrong SKU for Inbound Pallet = N and validate for all functionalities</div>
-                  <ul class='steps' id='scenario-7'>
-                    <li class='step Passed  SetupState ' data-toggle-target='step-7-1' >
-                      <span>Given test data for wrong sku inbound pallet is n</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-7-2' >
-                      <span>And valid ivst url msg key and msg processor is http://dev.az.app.api.wms.shamrockfoods.com/api/emstowms-message?msgKey=190&msgProcessor=MessageProcessor, 188, MessageProcessor</span>
-                    </li>
-                    <li class='step Passed  Transition ' data-toggle-target='step-7-3' >
-                      <span>When ivst api is called created is returned</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveTransition ' data-toggle-target='step-7-4' >
-                      <span>And get valid data after trigger for key 188</span>
-                    </li>
-                    <li class='step Passed  Assertion ' data-toggle-target='step-7-5' >
-                      <span>Then verify ivst message was inserted into swm from mhe for wrong sku and msg key should be 188</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-7-6' >
-                      <span>And verify the quantity should be reduced by ivst qty in pick location for inbound pallet is n</span>
-                    </li>
-                    <li class='step Passed  ConsecutiveAssertion ' data-toggle-target='step-7-7' >
                       <span>And verify the record inserted into pix transaction and validate reason code for wrong sku exception</span>
                     </li>
                   </ul>
@@ -316,7 +108,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
             </div>
           </li>
         </ul>
-        <p><span>Tested at: 1/8/2020 12:44:35 PM</span></p>
+        <p><span>Tested at: 1/16/2020 4:23:37 PM</span></p>
       </div>
     </div>
     <div class='footer'>Powered by <a href='https://github.com/TestStack/TestStack.BDDfy'>BDDfy</a> framework</div>

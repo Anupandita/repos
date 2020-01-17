@@ -16,7 +16,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
         public const int ReceivedCaseFromReturnStatusCode = 30;
         public const int ReceivedCaseFromVendorStatCode = 50;
         public const int StatusCodeConsumed = 96;
-        public const string MinQuantity = "1";
+        public const string MinQuantity = "2";
         public const int NumZero = 0;
         public const string MiscNum1 = "0";
         public const string Dry = "D";
@@ -39,7 +39,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
         public const string PixRsnCodeForWrongSku = "CC";
         public const string RecTypeId = "TOT";
         public const int PrintCartonStatus = 5;
-        public const int EgblOrmtStatus = 10;
+        public const int EgblOrmtStatus = 0;
         public const int OrmtNoInvnStatus = 50;
         public const string EndOfWaveFlag = "N";
         public const int PktStatusForInPacking = 35;

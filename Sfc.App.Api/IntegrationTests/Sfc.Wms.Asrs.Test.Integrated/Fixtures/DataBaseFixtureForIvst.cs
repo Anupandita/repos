@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
@@ -298,21 +299,23 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 PickLocnDtlAfterApi = GetPickLocationDetails(db, Ivst.Sku,null);                  
                 UnitWeight = FetchUnitWeight(db, Ivst.Sku);
                 var pixTrnAfterApi = PixTransactionTable(Ivst.AdjustmentReasonCode);
-                Pixtran = GetPixtransaction(db, pixTrnAfterApi);
+                Pixtran = GetPixtransaction(db, pixTrnAfterApi, SwmFromMhe.ContainerId);
             }
         }
 
-        public PixTransactionDto GetPixtransaction(OracleConnection db, string rsnCode)
+        public PixTransactionDto GetPixtransaction(OracleConnection db, string rsnCode, string caseNbr)
         {
             var pixtran = new PixTransactionDto();
-            Query = $"select * from Pix_tran where rsn_code= :reasonCode order by create_date_time desc";
+            Query = $"select * from Pix_tran where rsn_code= :reasonCode  and case_nbr = :caseNbr order by create_date_time desc";
             Command = new OracleCommand(Query, db);
             Command.Parameters.Add(new OracleParameter("reasonCode", rsnCode));
+            Command.Parameters.Add(new OracleParameter("caseNbr", caseNbr));
             var rsn = Command.ExecuteReader();
-
             if (rsn.Read())
             {
-                pixtran.ReasonCode = (rsn["RSN_CODE"].ToString());
+                pixtran.ReasonCode = rsn["RSN_CODE"].ToString();
+                pixtran.InventoryAdjustmentQuantity = Convert.ToDecimal(rsn["INVN_ADJMT_QTY"]);
+                pixtran.InventoryAdjustmentType = rsn["INVN_ADJMT_TYPE"].ToString();
             }
             return pixtran;
         }
@@ -335,5 +338,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                     return Constants.PixRsnCodeForCycleCount;
             }
         }
+
+
+
     }
 }

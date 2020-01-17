@@ -284,9 +284,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         protected string GetWaveNumber(OracleConnection db)
         {         
-            var query = $"select  distinct eg.wave_nbr from SWM_ELGBL_ORMT_CARTONS eg " +
-                 OrmtQueries.CommonJoin +
-                 OrmtQueries.CommonWhereCondition;             
+            var query = OrmtQueries.WaveRelease;             
             Command = new OracleCommand(query,db);
             Command.Parameters.Add(new OracleParameter("miscNum1", Constants.MiscNum1));
             Command.Parameters.Add(new OracleParameter("sysType", Constants.SysCodeType));
