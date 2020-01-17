@@ -34,6 +34,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                 .And(x => x.VerifyActualQuantityIsReducedInToCaseDtl())
                 .And(x => x.VerifyStatusIsUpdatedIntoCaseHeader())
                 .And(x => x.VerifyStatusIsUpdatedIntoTaskHeader())
+                .And(x =>x.VerifyQtyShouldBeIncreasedInPickLocnTableForToBeFilledQtyField())
                 .BDDfy("Test Case ID: 142101 -Dematic - IVMT :  For received cases from returns, Call the Comt Api and Verify all its functionalities");
         }
     }

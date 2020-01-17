@@ -45,7 +45,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected  CaseViewDto CaseDtlBeforeApi =new CaseViewDto();
         protected CaseViewDto CaseHdrDtl = new CaseViewDto();
         protected CaseHeaderDto NotEnoughInvCase = new CaseHeaderDto();
-       
+        protected PickLocationDetailsDto PickLocnAfterCallingApi = new PickLocationDetailsDto();
+        protected PickLocationDetailsDto PickLocnBeforeCallingApi = new PickLocationDetailsDto();
 
 
         public DataBaseFixture()
@@ -101,6 +102,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 SingleSkuCase.StatusCode = returncaseheader.StatusCode;
                 SingleSkuCase.SkuId = receivedcaseDto[0].SkuId;
                 SingleSkuCase.ActlQty = Convert.ToInt32(receivedcaseDto[0].ActlQty);
+                PickLocnBeforeCallingApi = GetPickLocationDetails(db, SingleSkuCase.SkuId, null);
             }
         }
 
@@ -293,6 +295,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 TransInvnAfterTrigger = FetchTransInvnentory(db, SingleSkuCase.SkuId);
                 UnitWeight = FetchUnitWeight(db, SingleSkuCase.SkuId);
                 TaskSingleSku = FetchTaskDetails(db, SingleSkuCase.SkuId);
+                PickLocnAfterCallingApi = GetPickLocationDetails(db, SingleSkuCase.SkuId,null);
             }
         }
 

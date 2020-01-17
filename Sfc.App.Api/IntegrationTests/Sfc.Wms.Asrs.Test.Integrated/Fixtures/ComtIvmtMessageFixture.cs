@@ -125,6 +125,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Response = client.Execute(request);
             return Response;
         }
+
+
+
+
         protected BaseResult ComtIvmtResult(string url)
         {
             var response = ApiIsCalled(url, ComtParameters);
@@ -215,6 +219,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected void VerifyStatusIsUpdatedIntoCaseHeaderTable()
         {
             VerifyStatusIsUpdatedIntoCaseHeader(CaseHdrDtl.StatusCode);
+        }
+
+        protected void VerifyQtyShouldBeIncreasedInPickLocnTableForToBeFilledQtyField()
+        {
+            Assert.AreEqual(PickLocnBeforeCallingApi.ToBeFilledQty + Ivmt.Quantity,PickLocnAfterCallingApi.ToBeFilledQty );
         }
     }
 }
