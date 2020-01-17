@@ -39,6 +39,7 @@ namespace Sfc.Wms.App.Api.Contracts.Constants
             public const string LpnDetails = "lpn-details/{lpnId}";
             public const string LpnHistory = "lpn-history/{lpnNumber}/{warehouse}";
             public const string LpnLockUnlock = "lpn-lock-unlock/{lpnId}";
+            public const string LpnCaseLockComments = "lock-comments";
             public const string LpnCaseUnLockDetails = "{lpnIds}/unlocks";
             public const string LpnUpdateDetails = "lpn-details";
             public const string LpnVendors = "vendors";
@@ -84,6 +85,8 @@ namespace Sfc.Wms.App.Api.Contracts.Constants
             public const string UserRoles = "user-roles";
             public const string Preferences = "preferences";
             public const string GetUserPrefereces ="{userId}/" + Preferences ;
+            public const string LpnMultipleUnlock = "multiple-unlock";
+            public const string CaseUnlock = "case-unlock";
         }
 
         public static class Prefixes

@@ -1,9 +1,11 @@
-﻿using Sfc.Core.BaseApiController;
+﻿using System;
+using Sfc.Core.BaseApiController;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.App.Api.Contracts.Constants;
 using Sfc.Wms.Foundation.InboundLpn.Contracts.Dtos;
 using Sfc.Wms.Foundation.InboundLpn.Contracts.Interfaces;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -104,12 +106,11 @@ namespace Sfc.Wms.App.Api.Controllers
         }
 
         [HttpGet]
-        [Route(Routes.Paths.LpnCaseUnLockDetails)]
+        [Route(Routes.Paths.CaseUnlock)]
         [ResponseType(typeof(BaseResult<List<CaseLockDto>>))]
-        public async Task<IHttpActionResult> GetCaseUnLockDetailsAsync(string lpnIds)
+        public async Task<IHttpActionResult> GetCaseUnLockDetailsAsync([FromUri]IEnumerable<string> lpnIds)
         {
-            IEnumerable<string> lpnNumbers = lpnIds.Split(',');
-            var response = await _caseLockService.GetCaseUnLockDetailsAsync(lpnNumbers).ConfigureAwait(false);
+            var response = await _caseLockService.GetCaseUnLockDetailsAsync(lpnIds).ConfigureAwait(false);
             return ResponseHandler(response);
         }
 
@@ -129,6 +130,26 @@ namespace Sfc.Wms.App.Api.Controllers
         {
             var response = await _caseDetailService.UpdateCaseDetailAssortAndCutNumberAsync(lpnCaseDetailsUpdate).ConfigureAwait(false);
             return ResponseHandler(response);
+        }
+
+        [HttpPost]
+        [Route(Routes.Paths.LpnMultipleUnlock)]
+        [ResponseType(typeof(BaseResult<LpnMultipleUnlockResultDto>))]
+        public async Task<IHttpActionResult> UnlockCommentWithBatchCorbaAsync(List<LpnMultipleUnlockDto> lpnMultipleUnlockDto)
+        {
+            var response = await _caseCommentService.UnlockCommentWithBatchCorbaAsync(lpnMultipleUnlockDto).ConfigureAwait(false);
+            return ResponseHandler(response);
+        }
+
+        [HttpPost]
+        [Route(Routes.Paths.LpnCaseLockComments)]
+        [ResponseType(typeof(BaseResult))]
+        public async Task<IHttpActionResult> AddCaseLockCommentWithBatchCorbaAsync([FromBody]CaseLockCommentDto caseLockComment)
+        {           
+            var response = await _caseCommentService.AddCaseLockCommentWithBatchCorbaAsync(caseLockComment).ConfigureAwait(false);
+            return Content(Enum.TryParse(response.ResultType.ToString(), out HttpStatusCode statusCode)
+                ? statusCode
+                : HttpStatusCode.ExpectationFailed, response);
         }
     }
 }
