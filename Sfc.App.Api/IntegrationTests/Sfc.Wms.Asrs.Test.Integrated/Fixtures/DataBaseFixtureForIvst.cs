@@ -267,10 +267,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             IvstParameters = new IvstDto
             {
                 ActionCode = actionCode,
-                AdjustmentReasonCode = adjustmentReasonCode,
-                ContainerId = "00100283000927952633",
+                AdjustmentReasonCode = "0050",
+                ContainerId = containerNbr,
                 Quantity = Constants.MinQuantity,
-                Sku = "3300121",
+                Sku = skuId,
                 Owner = Constants.Owner,
                 UserName = Constants.UserName,
                 UnitOfMeasure = DefaultValues.ContainerType,

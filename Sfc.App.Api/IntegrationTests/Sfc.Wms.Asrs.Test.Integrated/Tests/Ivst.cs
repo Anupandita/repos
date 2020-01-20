@@ -143,7 +143,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
             .And(x => x.GetValidDataAfterTriggerForKey(CycleCountAdjustmentPlus.Key))
             .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheForCycleCountAndMsgKeyShouldBe(CycleCountAdjustmentPlus.Key,"AdjustmentPlus"))
             .And(x => x.VerifyTheQuantityHasIncreasedInPickLocationForCycleCountAdjustmentPlus())
-            .And(x => x.VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForCycleCountAdjustmentPlus())
+            .And(x => x.VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForCycleCountAdjustmentPlus("A"))
             .BDDfy("Test Case ID: 124720 - Dematic - IVST - Test for IVST api when the Cycle count is done. for both action codes AdjustmentPlus") ;
         }
 
@@ -158,7 +158,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
             .And(x => x.GetValidDataAfterTriggerForKey(CycleCountAdjustmentMinus.Key))
             .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheForCycleCountAndMsgKeyShouldBe(CycleCountAdjustmentMinus.Key, "AdjustmentMinus"))
             .And(x => x.VerifyTheQuantityShouldBeReducedByIvstQtyInPickLocationForInboundPalletIsN())
-            .And(x => x.VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForCycleCountAdjustmentPlus())
+            .And(x => x.VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForCycleCountAdjustmentPlus("S"))
             .BDDfy("Test Case ID: 124720 - Dematic - IVST - Test for IVST api when the Cycle count is done. for both action codes AdjustmentPlusMinus");
         }
     }

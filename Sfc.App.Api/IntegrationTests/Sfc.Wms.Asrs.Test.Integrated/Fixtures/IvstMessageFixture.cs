@@ -171,10 +171,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(PickLcnDtlBeforeApi.ActualInventoryQuantity + Convert.ToDecimal(Ivst.Quantity), PickLocnDtlAfterApi.ActualInventoryQuantity);
         }
 
-        protected void VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForCycleCountAdjustmentPlus()
+        protected void VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForCycleCountAdjustmentPlus(string adjustmentType)
         {
             Assert.AreEqual(Constants.PixRsnCodeForCycleCount, Pixtran.ReasonCode);
-            Assert.AreEqual("A", Pixtran.InventoryAdjustmentType);
+            Assert.AreEqual(adjustmentType, Pixtran.InventoryAdjustmentType);
             Assert.AreEqual(Ivst.Quantity, Pixtran.InventoryAdjustmentQuantity.ToString());
         }
         protected void VerifyTheQuantityForUnexpectedOverageExceptionIntoTransInventoryTable()
