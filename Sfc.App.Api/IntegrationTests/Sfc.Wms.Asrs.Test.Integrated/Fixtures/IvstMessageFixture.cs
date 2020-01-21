@@ -72,6 +72,16 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             InsertIvstMessageForCycleCountWithAdjustmentMinus();
         }
 
+        protected void TestDataForMixedInventory()
+        {
+            InsertIvstMessageForMixedOrIncorrectInventory();
+        }
+
+        protected void TestDataForNoException()
+        {
+            InsertIvstMessageForNoExceptionScenario();
+        }
+
         protected void GetValidDataAfterTriggerForKey(long key)
         {
             GetDataAfterTrigger(key);
@@ -166,6 +176,45 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(IvstData.SkuId,Ivst.Sku);
         }
 
+        protected void VerifyIvstMessageWasInsertedIntoSwmFromMheForMixedInventoryAndMsgKeyShouldBe(long messageKey, string actionCode)
+        {
+            Assert.AreEqual(EmsToWmsParametersMixedInventory.Process, SwmFromMhe.SourceMessageProcess);
+            Assert.AreEqual(messageKey, SwmFromMhe.SourceMessageKey);
+            Assert.AreEqual(EmsToWmsParametersMixedInventory.Status, SwmFromMhe.SourceMessageStatus);
+            Assert.AreEqual(EmsToWmsParametersMixedInventory.Transaction, SwmFromMhe.SourceMessageTransactionCode);
+            Assert.AreEqual(EmsToWmsParametersMixedInventory.ResponseCode, SwmFromMhe.SourceMessageResponseCode);
+            Assert.AreEqual(EmsToWmsParametersMixedInventory.MessageText, SwmFromMhe.SourceMessageText);
+            Assert.AreEqual(IvstData.CaseNumber, SwmFromMhe.ContainerId);
+            Assert.AreEqual(actionCode, Ivst.ActionCode);
+            Assert.AreEqual("0009", Ivst.AdjustmentReasonCode);
+            Assert.AreEqual(IvstData.SkuId, Ivst.Sku);
+        }
+
+        protected void VerifyIvstMessageWasInsertedIntoSwmFromMheForNoExceptionAndMsgKeyShouldBe(long messageKey, string actionCode)
+        {
+            Assert.AreEqual(EmsToWmsParametersNoException.Process, SwmFromMhe.SourceMessageProcess);
+            Assert.AreEqual(messageKey, SwmFromMhe.SourceMessageKey);
+            Assert.AreEqual(EmsToWmsParametersNoException.Status, SwmFromMhe.SourceMessageStatus);
+            Assert.AreEqual(EmsToWmsParametersNoException.Transaction, SwmFromMhe.SourceMessageTransactionCode);
+            Assert.AreEqual(EmsToWmsParametersNoException.ResponseCode, SwmFromMhe.SourceMessageResponseCode);
+            Assert.AreEqual(EmsToWmsParametersNoException.MessageText, SwmFromMhe.SourceMessageText);
+            Assert.AreEqual(IvstData.CaseNumber, SwmFromMhe.ContainerId);
+            Assert.AreEqual(actionCode, Ivst.ActionCode);
+            Assert.AreEqual("0000", Ivst.AdjustmentReasonCode);
+            Assert.AreEqual(IvstData.SkuId, Ivst.Sku);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
         protected void VerifyCycleCountMessage()
         {
             Assert.AreEqual(PickLcnDtlBeforeApi.ActualInventoryQuantity + Convert.ToDecimal(Ivst.Quantity), PickLocnDtlAfterApi.ActualInventoryQuantity);
@@ -175,7 +224,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             Assert.AreEqual(Constants.PixRsnCodeForCycleCount, Pixtran.ReasonCode);
             Assert.AreEqual(adjustmentType, Pixtran.InventoryAdjustmentType);
-            Assert.AreEqual(Ivst.Quantity, Pixtran.InventoryAdjustmentQuantity.ToString());
+            Assert.AreEqual(Ivst.Quantity, Pixtran.InventoryAdjustmentQuantity);
         }
         protected void VerifyTheQuantityForUnexpectedOverageExceptionIntoTransInventoryTable()
         {
@@ -186,7 +235,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             Assert.AreEqual(Constants.PixRsnCodeForUnExpectedOverage, Pixtran.ReasonCode);
             Assert.AreEqual("A", Pixtran.InventoryAdjustmentType);
-            Assert.AreEqual(Ivst.Quantity, Pixtran.InventoryAdjustmentQuantity.ToString());
+            Assert.AreEqual(Ivst.Quantity, Pixtran.InventoryAdjustmentQuantity);
         }
 
         protected void VerifyTheQuantityAndWeightShouldBeReducedByIvstQtyInTransInventoryForInboundPalletIsY()
@@ -215,7 +264,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             Assert.AreEqual(Constants.PixRsnCodeForInventoryShortage, Pixtran.ReasonCode);
             Assert.AreEqual("S", Pixtran.InventoryAdjustmentType);
-            Assert.AreEqual(Ivst.Quantity, Pixtran.InventoryAdjustmentQuantity.ToString());
+            Assert.AreEqual(Ivst.Quantity, Pixtran.InventoryAdjustmentQuantity);
         }
 
        
@@ -223,14 +272,20 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             Assert.AreEqual(Constants.PixRsnCodeForDamage, Pixtran.ReasonCode);
             Assert.AreEqual("S", Pixtran.InventoryAdjustmentType);
-            Assert.AreEqual(Ivst.Quantity, Pixtran.InventoryAdjustmentQuantity.ToString());
+            Assert.AreEqual(Ivst.Quantity, Pixtran.InventoryAdjustmentQuantity);
         }
        
         protected void VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForWrongSkuException()
         {
             Assert.AreEqual(Constants.PixRsnCodeForWrongSku, Pixtran.ReasonCode);
             Assert.AreEqual("S", Pixtran.InventoryAdjustmentType);
-            Assert.AreEqual(Ivst.Quantity, Pixtran.InventoryAdjustmentQuantity.ToString());
+            Assert.AreEqual(Ivst.Quantity, Pixtran.InventoryAdjustmentQuantity);
+        }
+        protected void VerifyTheQuantityShouldNotBeChanged()
+        {
+            Assert.AreEqual(PickLcnDtlBeforeApi.ActualInventoryQuantity , PickLocnDtlAfterApi.ActualInventoryQuantity);
+            Assert.AreEqual(TrnsInvBeforeApi.ActualInventoryUnits, TrnsInvAfterApi.ActualInventoryUnits);
+            Assert.AreEqual(TrnsInvBeforeApi.ActualWeight, TrnsInvAfterApi.ActualWeight);
         }
     }
 }

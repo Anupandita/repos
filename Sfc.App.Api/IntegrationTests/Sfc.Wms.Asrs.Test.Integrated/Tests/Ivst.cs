@@ -161,5 +161,42 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
             .And(x => x.VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForCycleCountAdjustmentPlus("S"))
             .BDDfy("Test Case ID: 124720 - Dematic - IVST - Test for IVST api when the Cycle count is done. for both action codes AdjustmentPlusMinus");
         }
+
+        [TestMethod()]
+        [TestCategory("FUNCTIONAL")]
+        [Priority(10)]
+        public void Ivst10MixedInventoryTestScenariosForAdjustmentMinus()
+        {
+            this.Given(x => x.TestDataForMixedInventory())
+                .And(x => x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl, MixedOutbound.Key, EmsToWmsParametersMixedInventory.Process))
+                .When(x => x.IvstApiIsCalledCreatedIsReturned())
+                .And(x => x.GetValidDataAfterTriggerForKey(MixedOutbound.Key))
+                .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheForMixedInventoryAndMsgKeyShouldBe(MixedOutbound.Key, "AdjustmentMinus"))
+                .And(x => x.VerifyTheQuantityShouldNotBeChanged())
+                .BDDfy();
+        }
+
+        [TestMethod()]
+        [TestCategory("FUNCTIONAL")]
+        [Priority(11)]
+        public void Ivst11NoExceptionTestScenariosForAdjustmentMinus()
+        {
+            this.Given(x => x.TestDataForNoException())
+                .And(x => x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl, NoExceptionInBound.Key, EmsToWmsParametersNoException.Process))
+                .When(x => x.IvstApiIsCalledCreatedIsReturned())
+                .And(x => x.GetValidDataAfterTriggerForKey(NoExceptionInBound.Key))
+                .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheForNoExceptionAndMsgKeyShouldBe(NoExceptionInBound.Key, "AdjustmentMinus"))
+                .And(x => x.VerifyTheQuantityShouldNotBeChanged())
+                .BDDfy();
+        }
+
+
+
+
+
+
+
+
+
     }
 }
