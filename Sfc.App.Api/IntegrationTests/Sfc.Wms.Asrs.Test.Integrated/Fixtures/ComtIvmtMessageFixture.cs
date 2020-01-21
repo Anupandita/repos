@@ -71,7 +71,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 ActionCode = ActionCodeConstants.Create,               
                 ContainerId = currentCaseNbr,
                 ContainerType = DefaultValues.ContainerType,
-                ParentContainerId = "",
+                ParentContainerId = currentCaseNbr,
                 AttributeBitmap = DefaultValues.AttributeBitMap,
                 QuantityToInduct = DefaultValues.QuantityToInduct
             };
@@ -125,8 +125,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Response = client.Execute(request);
             return Response;
         }
-
-
 
 
         protected BaseResult ComtIvmtResult(string url)
@@ -223,7 +221,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         protected void VerifyQtyShouldBeIncreasedInPickLocnTableForToBeFilledQtyField()
         {
-            Assert.AreEqual(PickLocnBeforeCallingApi.ToBeFilledQty + Ivmt.Quantity,PickLocnAfterCallingApi.ToBeFilledQty );
+            Assert.AreEqual(PickLocnBeforeCallingApi.ToBeFilledQty + Convert.ToInt16(Ivmt.Quantity),PickLocnAfterCallingApi.ToBeFilledQty );
         }
     }
 }

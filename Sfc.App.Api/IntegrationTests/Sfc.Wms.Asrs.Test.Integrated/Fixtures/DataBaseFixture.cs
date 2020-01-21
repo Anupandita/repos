@@ -131,7 +131,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Command = new OracleCommand(query, db);            
             Command.Parameters.Add(new OracleParameter("sysCodeType", Constants.SysCodeType));
             Command.Parameters.Add(new OracleParameter("sysCodeId", Constants.SysCodeIdForActiveLocation));
-            Command.Parameters.Add(new OracleParameter("minValue", Constants.MinQuantity));
+           
             Command.Parameters.Add(new OracleParameter("seqNbr", Constants.CaseSeqNumberForSingleSku));
             Command.Parameters.Add(new OracleParameter("codeIdForDropZone", Constants.SysCodeIdForDropZone));
             Command.Parameters.Add(new OracleParameter("dry", Constants.Dry));
@@ -156,7 +156,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Command = new OracleCommand(q, db);            
             Command.Parameters.Add(new OracleParameter("sysCodeType", Constants.SysCodeType));
             Command.Parameters.Add(new OracleParameter("sysCodeId", Constants.SysCodeIdForActiveLocation));
-            Command.Parameters.Add(new OracleParameter("minValue", Constants.MinQuantity));
             Command.Parameters.Add(new OracleParameter("seqNbr", Constants.CaseSeqNumberForSingleSku));
             Command.Parameters.Add(new OracleParameter("codeIdForDropZone", Constants.SysCodeIdForDropZone));
             Command.Parameters.Add(new OracleParameter("dry", Constants.Dry));
