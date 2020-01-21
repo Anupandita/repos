@@ -135,6 +135,9 @@
     <Reference Include="SFC.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SFC.Core.3.0.2\lib\net472\SFC.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Sfc.Core.Aop.WebApi, Version=3.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Core.Aop.WebApi.3.2.0\lib\net472\Sfc.Core.Aop.WebApi.dll</HintPath>
+    </Reference>
     <Reference Include="Sfc.Core.BaseApiController, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Core.BaseApiController.2.0.3\lib\net472\Sfc.Core.BaseApiController.dll</HintPath>
     </Reference>
@@ -311,6 +314,9 @@
     </Reference>
     <Reference Include="Sfc.Wms.Framework.DockDoor.App, Version=2.2.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.DockDoor.App.2.2.5\lib\net472\Sfc.Wms.Framework.DockDoor.App.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Framework.Interceptor.App, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.Interceptor.App.3.3.0\lib\net472\Sfc.Wms.Framework.Interceptor.App.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Framework.ItemMaster.App, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.ItemMaster.App.1.0.2\lib\net472\Sfc.Wms.Framework.ItemMaster.App.dll</HintPath>
@@ -588,16 +594,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Sfc.Core.OnPrem\Sfc.Core.Aop.WebApi\Sfc.Core.Aop.WebApi\Sfc.Core.Aop.WebApi.csproj">
-      <Project>{34af0122-64fd-4448-a277-c42ecdeb944b}</Project>
-      <Name>Sfc.Core.Aop.WebApi</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Wms.Framework\Sfc.Wms.Framework.Interceptor\Sfc.Wms.Framework.Interceptor.App\Sfc.Wms.Framework.Interceptor.App.csproj">
-      <Project>{c827d10b-ee84-4639-9cf2-2341d754bce5}</Project>
-      <Name>Sfc.Wms.Framework.Interceptor.App</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
