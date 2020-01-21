@@ -23,10 +23,12 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         private readonly Mock<ILpnService> _mockLpnService;
         private readonly LpnDetailsUpdateDto _updateLpnCaseDetailsRequest;
         private readonly LpnHeaderUpdateDto _updateLpnHeaderUpdateDto;
+        private readonly CaseLockCommentDto _caseLockCommentDto;
+        private readonly List<LpnMultipleUnlockDto> _lpnMultipleUnlockDtos;
         private Task<IHttpActionResult> _testResponse;
         private int commentSequenceNumber;
         private string warehouse, lpnNumber, faceLocationId;
-        private string lpnIds;
+        private IEnumerable<string> lpnIds;
 
 
         protected LpnControllerFixture()
@@ -40,13 +42,16 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             _updateLpnHeaderUpdateDto = Generator.Default.Single<LpnHeaderUpdateDto>();
             _updateLpnCaseDetailsRequest = Generator.Default.Single<LpnDetailsUpdateDto>();
             _addLpnCommentRequest = Generator.Default.Single<CaseCommentDto>();
+            _caseLockCommentDto = Generator.Default.Single<CaseLockCommentDto>();
+            _lpnMultipleUnlockDtos = Generator.Default.Single<List<LpnMultipleUnlockDto>>();
             _lpnController = new LpnController(_mockLpnService.Object, _mockCaseCommentService.Object,
                 _mockCaseDetailService.Object, _mockCaseLockService.Object);
             lpnNumber = "00100283000512198200";
             warehouse = "008";
             faceLocationId = "A07E06706N";
             commentSequenceNumber = 204;
-            lpnIds = "00100283000828329862,00100283000694052673,00100283009301204498";
+            var lpnNumbers = new List<string>() { "00100283000828329862,00100283000694052673,00100283009301204498" };
+            lpnIds = lpnNumbers;
         }
 
         #region Mock
@@ -227,6 +232,35 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             _mockCaseLockService
                 .Setup(el => el.GetCaseUnLockDetailsAsync(It.IsAny<IEnumerable<string>>()))
                 .Returns(Task.FromResult(response));
+        }
+
+        private void MockAddCaseLockComment(ResultTypes resultType)
+        {
+            var response = new BaseResult
+            {
+                ResultType = resultType
+            };
+            _mockCaseCommentService.Setup(el => el.AddCaseLockCommentWithBatchCorbaAsync(It.IsAny<CaseLockCommentDto>())).Returns(Task.FromResult(response));
+        }
+
+        private void VerifyAddCaseLockComment()
+        {
+            _mockCaseCommentService.Verify(el => el.AddCaseLockCommentWithBatchCorbaAsync(It.IsAny<CaseLockCommentDto>()));
+        }
+
+        private void MockUnlockCommentWithBatchCorba(ResultTypes resultType)
+        {
+            var response = new BaseResult<LpnMultipleUnlockResultDto>
+            {
+                ResultType = resultType,
+                Payload = resultType == ResultTypes.Ok ? Generator.Default.Single<LpnMultipleUnlockResultDto>() : null
+            };
+            _mockCaseCommentService.Setup(el => el.UnlockCommentWithBatchCorbaAsync(It.IsAny<List<LpnMultipleUnlockDto>>())).Returns(Task.FromResult(response));
+        }
+
+        private void VerifyUnlockCommentWithBatchCorba()
+        {
+            _mockCaseCommentService.Verify(el => el.UnlockCommentWithBatchCorbaAsync(It.IsAny<List<LpnMultipleUnlockDto>>()));
         }
 
         #endregion
@@ -762,5 +796,79 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         }
 
         #endregion
+
+        #region AddCaseLockComment
+
+        protected void ValidParametersToAddCaseLockComments()
+        {
+            MockAddCaseLockComment(ResultTypes.Created);
+        }
+
+        protected void InvalidParametersToAddCaseLockComments()
+        {
+            MockAddCaseLockComment(ResultTypes.NotFound);
+        }
+
+        protected void AddCaseLockCommentsInvoked()
+        {
+            _testResponse = _lpnController.AddCaseLockCommentWithBatchCorbaAsync(_caseLockCommentDto);
+        }
+
+        protected void AddCaseLockCommentsOperationReturnedNotFoundResponse()
+        {
+            VerifyAddCaseLockComment();
+            Assert.IsNotNull(_testResponse);
+            var result = _testResponse.Result as NegotiatedContentResult<BaseResult>;
+            Assert.IsNotNull(result);
+            Assert.AreEqual(ResultTypes.NotFound, result.Content.ResultType);
+        }
+
+        protected void AddCaseLockCommentsOperationReturnedOkResponse()
+        {
+            VerifyAddCaseLockComment();
+            Assert.IsNotNull(_testResponse);
+            var result = _testResponse.Result as OkNegotiatedContentResult<BaseResult>;
+            Assert.IsNotNull(result);
+            Assert.AreEqual(ResultTypes.Ok, result.Content.ResultType);
+        }
+
+        #endregion AddCaseLockComment
+
+        #region UnlockCommentWithBatchCorba
+
+        protected void ValidParametersToUnlockComment()
+        {
+            MockUnlockCommentWithBatchCorba(ResultTypes.Ok);
+        }
+
+        protected void InvalidParametersToUnlockComment()
+        {
+            MockUnlockCommentWithBatchCorba(ResultTypes.NotFound);
+        }
+
+        protected void UnlockCommentWithBatchCorbaInvoked()
+        {
+            _testResponse = _lpnController.UnlockCommentWithBatchCorbaAsync(_lpnMultipleUnlockDtos);
+        }
+
+        protected void UnlockCommentWithBatchCorbaReturnedOkResponse()
+        {
+            VerifyUnlockCommentWithBatchCorba();
+            Assert.IsNotNull(_testResponse);
+            var result = _testResponse.Result as OkNegotiatedContentResult<BaseResult<LpnMultipleUnlockResultDto>>;
+            Assert.IsNotNull(result);
+            Assert.AreEqual(ResultTypes.Ok, result.Content.ResultType);
+        }
+
+        protected void UnlockCommentWithBatchCorbaReturnedNotFoundResponse()
+        {
+            VerifyUnlockCommentWithBatchCorba();
+            Assert.IsNotNull(_testResponse);
+            var result = _testResponse.Result as NegotiatedContentResult<BaseResult<LpnMultipleUnlockResultDto>>;
+            Assert.IsNotNull(result);
+            Assert.AreEqual(ResultTypes.NotFound, result.Content.ResultType);
+        }
+
+        #endregion UnlockCommentWithBatchCorba
     }
 }

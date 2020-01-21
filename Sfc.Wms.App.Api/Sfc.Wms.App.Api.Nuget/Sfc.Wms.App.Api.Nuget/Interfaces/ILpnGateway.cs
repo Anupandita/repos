@@ -18,8 +18,6 @@ namespace Sfc.Wms.App.Api.Nuget.Interfaces
 
         Task<BaseResult<List<CaseLockUnlockDto>>> GetLpnLockUnlockByLpnIdAsync(string lpnId, string token);
 
-        Task<BaseResult<List<CaseLockDto>>> GetCaseUnLockDetailsAsync(string lpnIds, string token);
-
         //TODO:  Needs to be validated at the time of aisle implementation
         Task<BaseResult<AisleTransactionDto>> InsertLpnAisleTransAsync(LpnAisleTransModel lpnAisleTransModel, string token);
 
@@ -30,5 +28,11 @@ namespace Sfc.Wms.App.Api.Nuget.Interfaces
         Task<BaseResult> DeleteLpnCommentsAsync(string caseNumber, int commentSequenceNumber, string token);
 
         Task<BaseResult> UpdateLpnDetailsAsync(LpnDetailsUpdateDto lpnDetailsUpdateModel, string token);
+
+        Task<BaseResult<List<CaseLockDto>>> GetCaseUnLockDetailsAsync(IEnumerable<string> lpnIds, string token);
+
+        Task<BaseResult<LpnMultipleUnlockResultDto>> LpnMultipleUnlockAsync(List<LpnMultipleUnlockDto> lpnMultipleUnlockDto, string token);
+
+        Task<BaseResult> AddCaseLockCommentWithBatchCorbaAsync(CaseLockCommentDto caseLockComment, string token);
     }
 }

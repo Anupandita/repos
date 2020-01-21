@@ -259,5 +259,41 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Nuget
             TheUpdateLpnDetailReturnedNotFoundAsResponseStatus();
         }
 
+        [TestMethod]
+        [TestCategory(TestCategories.Unit)]
+        public void Add_Lock_Comments_Operation_Returned_Ok_As_Response_Status()
+        {
+            ValidParametersToAddCaseLockComments();
+            AddCaseLockCommentsInvoked();
+            AddCaseLockCommentsReturnedOkResponse();
+        }
+
+        [TestMethod]
+        [TestCategory(TestCategories.Unit)]
+        public void Add_Lock_Comments_Operation_Returned_NotFound_As_Response_Status()
+        {
+            InvalidParametersToAddCaseLockComments();
+            AddCaseLockCommentsInvoked();
+            AddCaseLockCommentsReturnedNotFoundResponse();
+        }
+
+        [TestMethod()]
+        [TestCategory(TestCategories.Unit)]
+        public void Unlock_Comments_Is_Invoked_With_Invalid_Record_NotFount_Is_Returned()
+        {
+            InvalidParametersToUnlockComment();
+            UnlockCommentWithBatchCorbaInvoked();
+            UnlockCommentWithBatchCorbaReturnedNotFoundResponse();
+        }
+
+        [TestMethod()]
+        [TestCategory(TestCategories.Unit)]
+        public void Unlock_Comments_Is_Invoked_With_Valid_Data_Ok_Response_Is_Returned()
+        {
+            ValidParametersToUnlockComment();
+            UnlockCommentWithBatchCorbaInvoked();
+            UnlockCommentWithBatchCorbaReturnedOkResponse();
+        }
+
     }
 }
