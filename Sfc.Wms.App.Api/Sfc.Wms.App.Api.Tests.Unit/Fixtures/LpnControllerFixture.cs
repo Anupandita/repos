@@ -236,9 +236,10 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         private void MockAddCaseLockComment(ResultTypes resultType)
         {
-            var response = new BaseResult
+            var response = new BaseResult<LpnMultipleUnlockResultDto>
             {
-                ResultType = resultType
+                ResultType = resultType,
+                Payload = resultType == ResultTypes.Ok ? Generator.Default.Single<LpnMultipleUnlockResultDto>() : null
             };
             _mockCaseCommentService.Setup(el => el.AddCaseLockCommentWithBatchCorbaAsync(It.IsAny<CaseLockCommentDto>())).Returns(Task.FromResult(response));
         }
@@ -801,7 +802,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void ValidParametersToAddCaseLockComments()
         {
-            MockAddCaseLockComment(ResultTypes.Created);
+            MockAddCaseLockComment(ResultTypes.Ok);
         }
 
         protected void InvalidParametersToAddCaseLockComments()
@@ -811,14 +812,14 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void AddCaseLockCommentsInvoked()
         {
-            _testResponse = _lpnController.AddCaseLockCommentWithBatchCorbaAsync(_caseLockCommentDto);
+            _testResponse = _lpnController.CaseLockCommentWithBatchCorbaAsync(_caseLockCommentDto);
         }
 
         protected void AddCaseLockCommentsOperationReturnedNotFoundResponse()
         {
             VerifyAddCaseLockComment();
             Assert.IsNotNull(_testResponse);
-            var result = _testResponse.Result as NegotiatedContentResult<BaseResult>;
+            var result = _testResponse.Result as NegotiatedContentResult<BaseResult<LpnMultipleUnlockResultDto>>;
             Assert.IsNotNull(result);
             Assert.AreEqual(ResultTypes.NotFound, result.Content.ResultType);
         }
@@ -827,7 +828,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         {
             VerifyAddCaseLockComment();
             Assert.IsNotNull(_testResponse);
-            var result = _testResponse.Result as NegotiatedContentResult<BaseResult>;
+            var result = _testResponse.Result as OkNegotiatedContentResult<BaseResult<LpnMultipleUnlockResultDto>>;
             Assert.IsNotNull(result);
             Assert.AreEqual(ResultTypes.Created, result.Content.ResultType);
         }

@@ -142,14 +142,12 @@ namespace Sfc.Wms.App.Api.Controllers
         }
 
         [HttpPost]
-        [Route(Routes.Paths.LpnCaseLockComments)]
-        [ResponseType(typeof(BaseResult))]
-        public async Task<IHttpActionResult> AddCaseLockCommentWithBatchCorbaAsync([FromBody]CaseLockCommentDto caseLockComment)
+        [Route(Routes.Paths.LpnMultiplelock)]
+        [ResponseType(typeof(BaseResult<LpnMultipleUnlockResultDto>))]
+        public async Task<IHttpActionResult> CaseLockCommentWithBatchCorbaAsync([FromBody]CaseLockCommentDto caseLockComment)
         {           
             var response = await _caseCommentService.AddCaseLockCommentWithBatchCorbaAsync(caseLockComment).ConfigureAwait(false);
-            return Content(Enum.TryParse(response.ResultType.ToString(), out HttpStatusCode statusCode)
-                ? statusCode
-                : HttpStatusCode.ExpectationFailed, response);
+            return ResponseHandler(response);
         }
     }
 }

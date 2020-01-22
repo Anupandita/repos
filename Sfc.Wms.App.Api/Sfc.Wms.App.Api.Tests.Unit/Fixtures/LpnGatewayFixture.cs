@@ -525,31 +525,31 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void ValidParametersToAddCaseLockComments()
         {
-            var result = new BaseResult { ResultType = ResultTypes.Ok };
+            var result = new BaseResult<LpnMultipleUnlockResultDto> { ResultType = ResultTypes.Ok };
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
         protected void InvalidParametersToAddCaseLockComments()
         {
-            var result = new BaseResult { ResultType = ResultTypes.BadRequest };
+            var result = new BaseResult<LpnMultipleUnlockResultDto> { ResultType = ResultTypes.BadRequest };
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
         protected void AddCaseLockCommentsInvoked()
         {
-            manipulationTestResult = _lpnGateway.AddCaseLockCommentWithBatchCorbaAsync(It.IsAny<CaseLockCommentDto>(), It.IsAny<string>()).Result;
+            manipulationTestResult = _lpnGateway.CaseLockCommentWithBatchCorbaAsync(It.IsAny<CaseLockCommentDto>(), It.IsAny<string>()).Result;
         }
 
         protected void AddCaseLockCommentsReturnedOkResponse()
         {
-            VerifyRestClientInvocation<BaseResult>();
+            VerifyRestClientInvocation<BaseResult<LpnMultipleUnlockResultDto>>();
             Assert.IsNotNull(manipulationTestResult);
             Assert.AreEqual(ResultTypes.Ok, manipulationTestResult.ResultType);
         }
 
         protected void AddCaseLockCommentsReturnedNotFoundResponse()
         {
-            VerifyRestClientInvocation<BaseResult>();
+            VerifyRestClientInvocation<BaseResult<LpnMultipleUnlockResultDto>>();
             Assert.IsNotNull(manipulationTestResult);
             Assert.AreEqual(ResultTypes.BadRequest, manipulationTestResult.ResultType);
         }
