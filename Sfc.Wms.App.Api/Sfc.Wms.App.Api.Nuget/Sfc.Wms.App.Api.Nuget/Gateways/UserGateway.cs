@@ -85,6 +85,16 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
+        public async Task<BaseResult> RefreshAuthTokenAsync(string token)
+        {
+            return await Proxy().ExecuteAsync(async () =>
+            {
+                var cRequest = RefreshAuthTokenRequest(token);
+                var cResponse = await _restClient.ExecuteTaskAsync(cRequest).ConfigureAwait(false);
+                return _responseBuilder.GetBaseResult(cResponse);
+            }).ConfigureAwait(false);
+        }
+
         public async Task<BaseResult<string>> Logout()
         {
             return await Proxy().ExecuteAsync(async () =>
@@ -170,6 +180,12 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
         private RestRequest GetUserPermissionsRequest(string token)
         {
             var resource = $"{_endPoint}{Routes.Paths.QueryParamSeperator}{Routes.Prefixes.UserRolePermissions}";
+            return GetRequest(token, resource);
+        }
+
+        private RestRequest RefreshAuthTokenRequest(string token)
+        {
+            var resource = $"{_endPoint}{Routes.Paths.RefreshToken}";
             return GetRequest(token, resource);
         }
 

@@ -19,6 +19,15 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             _responseBuilder = responseBuilder;
         }
 
+        public async Task<BaseResult> RefreshAuthTokenAsync()
+        {
+            var request = new RestRequest(Routes.Paths.RefreshToken, Method.GET);
+            var result = await _restClient
+                .ExecuteTaskAsync<BaseResult>(request)
+                .ConfigureAwait(false);
+            return _responseBuilder.GetBaseResult(result);
+        }
+
         public async Task<BaseResult<UserInfoDto>> SignInAsync(LoginCredentials loginCredentials)
         {
             var request = new RestRequest(Routes.Paths.UserLogin, Method.POST);
