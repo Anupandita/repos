@@ -213,7 +213,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             Assert.AreEqual(Constants.PixRsnCodeForCycleCount, Pixtran.ReasonCode);
             Assert.AreEqual(adjustmentType, Pixtran.InventoryAdjustmentType);
-            Assert.AreEqual(Ivst.Quantity, Pixtran.InventoryAdjustmentQuantity.ToString());
+            Assert.AreEqual(Convert.ToDecimal(Ivst.Quantity), Pixtran.InventoryAdjustmentQuantity);
         }
         protected void VerifyTheQuantityForUnexpectedOverageExceptionIntoTransInventoryTable()
         {
@@ -224,7 +224,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             Assert.AreEqual(Constants.PixRsnCodeForUnExpectedOverage, Pixtran.ReasonCode);
             Assert.AreEqual("A", Pixtran.InventoryAdjustmentType);
-            Assert.AreEqual(Ivst.Quantity, Pixtran.InventoryAdjustmentQuantity.ToString());
+            Assert.AreEqual(Convert.ToDecimal(Ivst.Quantity), Pixtran.InventoryAdjustmentQuantity);
         }
 
         protected void VerifyTheQuantityAndWeightShouldBeReducedByIvstQtyInTransInventoryForInboundPalletIsY()
@@ -253,7 +253,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             Assert.AreEqual(Constants.PixRsnCodeForInventoryShortage, Pixtran.ReasonCode);
             Assert.AreEqual("S", Pixtran.InventoryAdjustmentType);
-            Assert.AreEqual(Ivst.Quantity, Pixtran.InventoryAdjustmentQuantity.ToString());
+            Assert.AreEqual(Convert.ToDecimal(Ivst.Quantity), Pixtran.InventoryAdjustmentQuantity);
         }
 
        
@@ -261,14 +261,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             Assert.AreEqual(Constants.PixRsnCodeForDamage, Pixtran.ReasonCode);
             Assert.AreEqual("S", Pixtran.InventoryAdjustmentType);
-            Assert.AreEqual(Ivst.Quantity, Pixtran.InventoryAdjustmentQuantity.ToString());
+            Assert.AreEqual(Convert.ToDecimal(Ivst.Quantity), Pixtran.InventoryAdjustmentQuantity);
         }
        
         protected void VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForWrongSkuException()
         {
             Assert.AreEqual(Constants.PixRsnCodeForWrongSku, Pixtran.ReasonCode);
             Assert.AreEqual("S", Pixtran.InventoryAdjustmentType);
-            Assert.AreEqual(Ivst.Quantity, Pixtran.InventoryAdjustmentQuantity.ToString());
+            Assert.AreEqual(Convert.ToDecimal(Ivst.Quantity), Pixtran.InventoryAdjustmentQuantity);
         }
         protected void VerifyTheQuantityShouldNotBeChanged()
         {
