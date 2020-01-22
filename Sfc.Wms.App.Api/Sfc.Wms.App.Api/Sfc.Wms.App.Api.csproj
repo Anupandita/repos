@@ -135,8 +135,8 @@
     <Reference Include="SFC.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SFC.Core.3.0.2\lib\net472\SFC.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Core.Aop.WebApi, Version=3.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Core.Aop.WebApi.3.2.0\lib\net472\Sfc.Core.Aop.WebApi.dll</HintPath>
+    <Reference Include="Sfc.Core.Aop.WebApi, Version=3.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Core.Aop.WebApi.3.2.1\lib\net472\Sfc.Core.Aop.WebApi.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Core.BaseApiController, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Core.BaseApiController.2.0.3\lib\net472\Sfc.Core.BaseApiController.dll</HintPath>
