@@ -827,9 +827,9 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         {
             VerifyAddCaseLockComment();
             Assert.IsNotNull(_testResponse);
-            var result = _testResponse.Result as OkNegotiatedContentResult<BaseResult>;
+            var result = _testResponse.Result as NegotiatedContentResult<BaseResult>;
             Assert.IsNotNull(result);
-            Assert.AreEqual(ResultTypes.Ok, result.Content.ResultType);
+            Assert.AreEqual(ResultTypes.Created, result.Content.ResultType);
         }
 
         #endregion AddCaseLockComment
