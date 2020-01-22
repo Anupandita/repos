@@ -7,6 +7,7 @@ using Sfc.Wms.Foundation.Location.Contracts.Dtos;
 using Sfc.Wms.Foundation.Carton.Contracts.Dtos;
 using System.Collections.Generic;
 using System;
+using System.Drawing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sfc.Wms.Interfaces.Asrs.Shamrock.Contracts.Dtos;
 using Sfc.Wms.Interfaces.Asrs.Dematic.Contracts.Dtos;
@@ -40,6 +41,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected CartonView PickLocnNotFound = new CartonView();
         protected CartonView ActiveLocnNotFound = new CartonView();
         protected List<CartonView> OrderList = new List<CartonView>();
+        protected string DestinationLocationForNormalCarton;
+        protected string DestinationLocationForEpickCarton;
         protected List<PickLocationDetailsExtenstionDto> ActiveOrmtCountList = new List<PickLocationDetailsExtenstionDto>();
        
 
@@ -49,8 +52,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (db = GetOracleConnection())
             {
                 db.Open();     
-                PrintCarton = GetValidOrderDetails(db,"5","0","10");               
+                PrintCarton = GetValidOrderDetails(db,"5","0","0");               
                 PickLcnDtlExtBeforeApi = GetPickLocnDtlExt(db, PrintCarton.SkuId, null);
+                DestinationLocationForNormalCarton = CartonHeaderDestinationLocationMatchForNormalCarton(PrintCarton.TempZone);
             }
         }    
 
@@ -94,6 +98,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 db.Open();
                 CancelOrder = GetValidOrderDetails(db, "99", "0","90");
                 PickLcnDtlExtBeforeApi = GetPickLocnDtlExt(db, CancelOrder.SkuId,null);
+                DestinationLocationForNormalCarton = CartonHeaderDestinationLocationMatchForNormalCarton(PrintCarton.TempZone);
             }
         }
         
@@ -106,6 +111,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 db.Open();
                 EPick = GetValidOrderDetails(db, "12", "1","90");
                 PickLcnDtlExtBeforeApi = GetPickLocnDtlExt(db, EPick.SkuId, EPick.LocnId);
+                DestinationLocationForEpickCarton = CartonHeaderDestinationMatchForEPickCarton(EPick.TempZone);
             }
         }
 
@@ -238,9 +244,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 cartonView.CartonNbr = reader["CARTON_NBR"].ToString();
                 cartonView.DestLocnId = reader["DEST_LOCN_ID"].ToString();
                 cartonView.ShipWCtrlNbr = reader["SHIP_W_CTRL_NBR"].ToString();
-                cartonView.LocnId = reader["LOCN_ID"].ToString();           
-            }        
-          
+                cartonView.LocnId = reader["LOCN_ID"].ToString();
+                cartonView.TempZone = reader["TEMP_ZONE"].ToString();
+            }
             return cartonView;
         }
 
@@ -412,7 +418,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(DefaultPossibleValue.OrderLineId, ormt.OrderLineId);
             Assert.AreEqual(DefaultPossibleValue.OrderType, ormt.OrderType);
             Assert.AreEqual(Constants.EndOfWaveFlag, ormt.EndOfWaveFlag);
-//            Assert.AreEqual(printCarton.DestLocnId + "-" + printCarton.ShipWCtrlNbr, ormt.DestinationLocationId);
+            Assert.AreEqual(DestinationLocationForNormalCarton, ormt.DestinationLocationId);
             Assert.AreEqual(printCarton.Whse , ormt.Owner);
             Assert.AreEqual(DefaultPossibleValue.OpRule, ormt.OpRule);
         }
@@ -428,5 +434,43 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(swmToMheAddRelease.SourceMessageResponseCode, wmsToEmsAddRelease.ResponseCode);
             Assert.AreEqual(swmToMheAddRelease.ZplData, wmsToEmsAddRelease.ZplData);
         }
+
+       
+
+        public string CartonHeaderDestinationLocationMatchForNormalCarton(string tempZone)
+        {
+            switch (tempZone)
+            {
+                case "D":
+                    return "AM-SHIP";
+                case "F":
+                    return "FR-SHIP";
+                default:
+                    return "";
+            }
+        }
+
+        public string CartonHeaderDestinationMatchForEPickCarton(string tempZone)
+        {
+            switch (tempZone)
+            {
+                case "D":
+                    return "AM-REJECT";
+                case "F":
+                    return "FR-REJECT";
+                default:
+                    return "";
+            }
+        }
+
+
+
+
+
+
+
+
+
+
     }
 }

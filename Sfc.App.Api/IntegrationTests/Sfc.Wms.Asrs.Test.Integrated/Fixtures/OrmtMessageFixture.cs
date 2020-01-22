@@ -172,7 +172,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(DefaultPossibleValue.OrderType,Ormt.OrderType);
             Assert.AreEqual(PrintCarton.WaveNbr,Ormt.WaveId);
             Assert.AreEqual(Constants.EndOfWaveFlag,Ormt.EndOfWaveFlag);
-           // Assert.AreEqual(PrintCarton.DestLocnId+"-"+PrintCarton.ShipWCtrlNbr,Ormt.DestinationLocationId);
+            Assert.AreEqual(DestinationLocationForNormalCarton,Ormt.DestinationLocationId);
             Assert.AreEqual(PrintCarton.Whse,Ormt.Owner);
             Assert.AreEqual(DefaultPossibleValue.OpRule,Ormt.OpRule);
         }
@@ -191,7 +191,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(DefaultPossibleValue.OrderType, OrmtCancel.OrderType);
             Assert.AreEqual(CancelOrder.WaveNbr, OrmtCancel.WaveId);
             Assert.AreEqual(Constants.EndOfWaveFlag, OrmtCancel.EndOfWaveFlag);
-            Assert.AreEqual(CancelOrder.DestLocnId +"-"+ CancelOrder.ShipWCtrlNbr, OrmtCancel.DestinationLocationId);
+            Assert.AreEqual(DestinationLocationForNormalCarton, OrmtCancel.DestinationLocationId);
             Assert.AreEqual(CancelOrder.Whse, OrmtCancel.Owner);
             Assert.AreEqual(DefaultPossibleValue.OpRule, OrmtCancel.OpRule);
         }
@@ -209,7 +209,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(DefaultPossibleValue.OrderType, OrmtEPick.OrderType);
             Assert.AreEqual(EPick.WaveNbr, OrmtEPick.WaveId);
             Assert.AreEqual(Constants.EndOfWaveFlag, OrmtEPick.EndOfWaveFlag);
-            Assert.AreEqual(EPick.DestLocnId +"-"+ EPick.ShipWCtrlNbr, OrmtEPick.DestinationLocationId);
+            Assert.AreEqual(DestinationLocationForEpickCarton, OrmtEPick.DestinationLocationId);
             Assert.AreEqual(EPick.Whse , OrmtEPick.Owner);
             Assert.AreEqual(DefaultPossibleValue.OpRule, OrmtEPick.OpRule);
         }
