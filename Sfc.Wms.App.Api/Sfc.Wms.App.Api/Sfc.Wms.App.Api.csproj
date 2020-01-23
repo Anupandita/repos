@@ -569,7 +569,6 @@
     <Compile Include="Services\RbacService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="libman.json" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
