@@ -8,6 +8,6 @@ namespace Sfc.Wms.App.Api.Nuget.Interfaces
     {
         Task<BaseResult<UserInfoDto>> SignInAsync(LoginCredentials loginCredentials);
 
-        Task<BaseResult> RefreshAuthTokenAsync();
+        Task<BaseResult> RefreshAuthTokenAsync(string token);
     }
 }

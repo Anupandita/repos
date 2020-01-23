@@ -9,8 +9,6 @@ namespace Sfc.Wms.App.Api.Nuget.Interfaces
     {
         Task<BaseResult<UserInfoDto>> SignInAsync(LoginCredentials loginCredentials);
 
-        Task<BaseResult> RefreshAuthTokenAsync(string token);
-
         Task<BaseResult<string>> GetAllAsync(string token);
 
         Task<BaseResult<string>> GetRolesByUsernameAsync(string token, string userName);

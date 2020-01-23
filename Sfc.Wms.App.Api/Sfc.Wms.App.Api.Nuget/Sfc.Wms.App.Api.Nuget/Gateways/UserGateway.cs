@@ -85,16 +85,6 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        public async Task<BaseResult> RefreshAuthTokenAsync(string token)
-        {
-            return await Proxy().ExecuteAsync(async () =>
-            {
-                var cRequest = RefreshAuthTokenRequest(token);
-                var cResponse = await _restClient.ExecuteTaskAsync(cRequest).ConfigureAwait(false);
-                return _responseBuilder.GetBaseResult(cResponse);
-            }).ConfigureAwait(false);
-        }
-
         public async Task<BaseResult<string>> Logout()
         {
             return await Proxy().ExecuteAsync(async () =>
