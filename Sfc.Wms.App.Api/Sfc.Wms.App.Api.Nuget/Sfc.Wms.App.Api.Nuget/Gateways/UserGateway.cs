@@ -173,6 +173,12 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             return GetRequest(token, resource);
         }
 
+        private RestRequest RefreshAuthTokenRequest(string token)
+        {
+            var resource = $"{_endPoint}{Routes.Paths.RefreshToken}";
+            return GetRequest(token, resource);
+        }
+
         private RestRequest PostChangePasswordRequest(ChangePasswordModel changePasswordModel, string token)
         {
             var resource = $"{_endPoint}{Routes.Paths.QueryParamSeperator}{Routes.Prefixes.ChangePassword}";

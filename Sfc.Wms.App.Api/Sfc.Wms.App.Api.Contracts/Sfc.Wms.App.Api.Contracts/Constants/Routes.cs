@@ -84,9 +84,10 @@ namespace Sfc.Wms.App.Api.Contracts.Constants
             public const string Username = "username";
             public const string UserRoles = "user-roles";
             public const string Preferences = "preferences";
-            public const string GetUserPrefereces ="{userId}/" + Preferences ;
+            public const string GetUserPrefereces = "{userId}/" + Preferences;
             public const string LpnMultipleUnlock = "multiple-unlock";
             public const string CaseUnlock = "case-unlock";
+            public const string RefreshToken = "refresh-token";
         }
 
         public static class Prefixes

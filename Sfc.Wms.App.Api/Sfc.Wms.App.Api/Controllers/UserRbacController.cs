@@ -11,6 +11,7 @@ using JwtConstants = Sfc.Wms.Framework.Security.Token.Jwt.Jwt.Constants;
 
 namespace Sfc.Wms.App.Api.Controllers
 {
+    [Authorize]
     [RoutePrefix(Routes.Prefixes.User)]
     public class UserRbacController : SfcBaseController
     {
@@ -41,6 +42,14 @@ namespace Sfc.Wms.App.Api.Controllers
             }
 
             return ResponseHandler(resultResponse);
+        }
+
+        [HttpGet]
+        [Route(Routes.Paths.RefreshToken)]
+        [ResponseType(typeof(BaseResult))]
+        public async Task<IHttpActionResult> RefreshAuthToken()
+        {
+            return await Task.FromResult(ResponseHandler(new BaseResult { ResultType = ResultTypes.Ok }));
         }
     }
 }
