@@ -180,15 +180,15 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
 
         public async Task<BaseResult<LpnMultipleUnlockResultDto>> LpnMultipleUnlockAsync(List<LpnMultipleUnlockDto> lpnMultipleUnlockDto, string token)        {            var retryPolicy = Proxy();            return await retryPolicy.ExecuteAsync(async () =>            {                var resource = $"{_endPoint}/{Routes.Paths.LpnMultipleUnlock}";                var request = PostRequest(resource, lpnMultipleUnlockDto, token, Authorization);                var response = await _restCsharpClient.ExecuteTaskAsync<BaseResult<LpnMultipleUnlockResultDto>>(request).ConfigureAwait(false);                return _responseBuilder.GetBaseResult<LpnMultipleUnlockResultDto>(response);            }).ConfigureAwait(false);        }
 
-        public async Task<BaseResult> AddCaseLockCommentWithBatchCorbaAsync(CaseLockCommentDto caseLockComment, string token)
+        public async Task<BaseResult<LpnMultipleUnlockResultDto>> CaseLockCommentWithBatchCorbaAsync(CaseLockCommentDto caseLockComment, string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
-                var resource = $"{_endPoint}/{Routes.Paths.LpnCaseLockComments}";
+                var resource = $"{_endPoint}/{Routes.Paths.LpnMultiplelock}";
                 var request = PostRequest(resource, caseLockComment, token, Authorization);
-                var response = await _restCsharpClient.ExecuteTaskAsync<BaseResult>(request).ConfigureAwait(false);
-                return _responseBuilder.GetBaseResult(response);
+                var response = await _restCsharpClient.ExecuteTaskAsync<BaseResult<LpnMultipleUnlockResultDto>>(request).ConfigureAwait(false);
+                return _responseBuilder.GetBaseResult<LpnMultipleUnlockResultDto>(response);
             }).ConfigureAwait(false);
         }
     }

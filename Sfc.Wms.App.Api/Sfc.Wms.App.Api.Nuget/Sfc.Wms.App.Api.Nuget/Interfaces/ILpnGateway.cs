@@ -33,6 +33,6 @@ namespace Sfc.Wms.App.Api.Nuget.Interfaces
 
         Task<BaseResult<LpnMultipleUnlockResultDto>> LpnMultipleUnlockAsync(List<LpnMultipleUnlockDto> lpnMultipleUnlockDto, string token);
 
-        Task<BaseResult> AddCaseLockCommentWithBatchCorbaAsync(CaseLockCommentDto caseLockComment, string token);
+        Task<BaseResult<LpnMultipleUnlockResultDto>> CaseLockCommentWithBatchCorbaAsync(CaseLockCommentDto caseLockComment, string token);
     }
 }
