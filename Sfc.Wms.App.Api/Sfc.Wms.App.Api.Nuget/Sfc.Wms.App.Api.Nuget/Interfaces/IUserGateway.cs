@@ -25,6 +25,5 @@ namespace Sfc.Wms.App.Api.Nuget.Interfaces
 
         Task<BaseResult<string>> UpdateUserRoles(UserRoleModel userRoleModel, string token);
 
-        Task<BaseResult<string>> UserPreferences(UserPreferencesModel userPreferencesModel, string token);
     }
 }

@@ -120,16 +120,6 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        public async Task<BaseResult<string>> UserPreferences(UserPreferencesModel userPreferencesModel, string token)
-        {
-            return await Proxy().ExecuteAsync(async () =>
-            {
-                var request = UpdateUserPreferencesRequest(userPreferencesModel, token);
-                var response = await _restClient.ExecuteTaskAsync<List<object>>(request).ConfigureAwait(false);
-                return _responseBuilder.GetResponseData<List<object>>(response);
-            }).ConfigureAwait(false);
-        }
-
         private string BuildUriString(string path, string restUrl)
         {
             var urlBuilder = new UriBuilder(restUrl);
@@ -196,11 +186,6 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             return PostRequest(resource, body, null);
         }
 
-        private RestRequest UpdateUserPreferencesRequest(UserPreferencesModel userPreferencesModel, string token)
-        {
-            var resource = $"{_endPoint}{Routes.Paths.QueryParamSeperator}{Routes.Prefixes.UserPreferences}";
-            return PutRequest(resource, userPreferencesModel, token);
-        }
 
         private RestRequest UpdateUserRolesRequest(UserRoleModel userRoleModel, string token)
         {

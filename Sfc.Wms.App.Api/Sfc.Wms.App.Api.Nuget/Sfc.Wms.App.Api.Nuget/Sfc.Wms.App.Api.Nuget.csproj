@@ -20,6 +20,7 @@
     <PackageReference Include="Sfc.Core.RestResponse" Version="[1.4.5,2.0)" />
     <PackageReference Include="Sfc.Wms.App.Api.Contracts" Version="[5.2.0,6.0)" />
     <PackageReference Include="Sfc.Wms.Configuration.SystemCode.Contracts" Version="[3.0.0,4.0)" />
+    <PackageReference Include="Sfc.Wms.Configuration.UserMaster.Contracts" Version="[1.0.2,2.0)" />
     <PackageReference Include="Sfc.Wms.Foundation.InboundLpn.Contracts" Version="[5.4.0,6.0)" />
     <PackageReference Include="Sfc.Wms.Interfaces.Asrs.Contracts" Version="[2.1.0,3.0)" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.6.0" />
