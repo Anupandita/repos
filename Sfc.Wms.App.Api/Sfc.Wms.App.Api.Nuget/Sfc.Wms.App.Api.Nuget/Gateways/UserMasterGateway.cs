@@ -26,7 +26,6 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
         public async Task<BaseResult<IEnumerable<PreferencesDto>>> UpdateUserPreferences(IEnumerable<PreferencesDto> preferencesDto, string token)
         {
             var retryPolicy = Proxy();
-            _restCsharpClient.BaseUrl = new Uri(ServiceUrl);
             return await retryPolicy.ExecuteAsync(async () =>
             {
                 var resourceUrl = $"{_endpoint}/{Routes.Paths.Preferences}";
