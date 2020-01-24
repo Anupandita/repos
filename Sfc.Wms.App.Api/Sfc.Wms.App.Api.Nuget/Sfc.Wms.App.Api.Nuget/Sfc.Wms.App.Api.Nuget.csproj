@@ -9,7 +9,7 @@
     <Description>Nuget package containing the calls for Wms.App.Api</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>Sfc.Wms.App.Api.Nuget</PackageId>
-    <Version>7.3.1</Version>
+    <Version>8.0.0</Version>
     <PackageReleaseNotes>Namespace changes</PackageReleaseNotes>
     <Copyright>2019</Copyright>
   </PropertyGroup>

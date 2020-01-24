@@ -14,19 +14,19 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
     {
         private readonly string _endpoint;
         private readonly IResponseBuilder _responseBuilder;
-        private readonly IRestClient _restCsharpClient;
+        private readonly IRestCsharpClient _restCsharpClient;
 
-        public UserMasterGateway(IResponseBuilder responseBuilder, IRestClient restClient) : base(restClient)
+        public UserMasterGateway(IResponseBuilder responseBuilder, IRestCsharpClient restClient) : base(restClient)
         {
             _endpoint = Routes.Prefixes.User;
             _responseBuilder = responseBuilder;
-            restClient.BaseUrl = new Uri(ServiceUrl);
             _restCsharpClient = restClient;
         }
 
         public async Task<BaseResult<IEnumerable<PreferencesDto>>> UpdateUserPreferences(IEnumerable<PreferencesDto> preferencesDto, string token)
         {
             var retryPolicy = Proxy();
+            _restCsharpClient.BaseUrl = new Uri(ServiceUrl);
             return await retryPolicy.ExecuteAsync(async () =>
             {
                 var resourceUrl = $"{_endpoint}/{Routes.Paths.Preferences}";

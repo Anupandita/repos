@@ -15,10 +15,10 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
     {
         private readonly string _endPoint;
         private readonly IResponseBuilder _responseBuilder;
-        private readonly IRestClient _restCsharpClient;
+        private readonly IRestCsharpClient _restCsharpClient;
         private readonly string Authorization = "Authorization";
 
-        public LpnGateway(IResponseBuilder responseBuilders, IRestClient restClient) : base(restClient)
+        public LpnGateway(IResponseBuilder responseBuilders, IRestCsharpClient restClient) : base(restClient)
         {
             _endPoint = Routes.Prefixes.Lpn;
             _responseBuilder = responseBuilders;
