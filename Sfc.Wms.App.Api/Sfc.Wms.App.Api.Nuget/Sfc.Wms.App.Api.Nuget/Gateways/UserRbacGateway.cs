@@ -13,11 +13,11 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
     {
         private readonly IResponseBuilder _responseBuilder;
         private readonly string _endPoint;
-        private readonly IRestClient _restCsharpClient;
+        private readonly IRestCsharpClient _restCsharpClient;
         private readonly string Authorization = "Authorization";
 
 
-        public UserRbacGateway(IRestClient restClient, IResponseBuilder responseBuilder) : base(restClient)
+        public UserRbacGateway(IRestCsharpClient restClient, IResponseBuilder responseBuilder) : base(restClient)
         {
             _responseBuilder = responseBuilder;
             _endPoint = Routes.Prefixes.User;
@@ -29,7 +29,6 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
         {
             const string url = Routes.Paths.RefreshToken;
             var retryPolicy = Proxy();
-            _restCsharpClient.BaseUrl = new Uri(ServiceUrl);
             return await retryPolicy.ExecuteAsync(async () =>
             {
                 var resource = $"{_endPoint}/{url}";
