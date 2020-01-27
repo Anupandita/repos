@@ -12,16 +12,14 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
     {
         private readonly string _endPoint;
         private readonly IResponseBuilder _responseBuilder;
-        private readonly IRestClient _restClient;
-        private readonly IRestClient _restCsharpClient;
+       private readonly IRestCsharpClient _restCsharpClient;
 
-        public CorbaGateway(IResponseBuilder responseBuilders, IRestClient restClient) : base(restClient)
+        public CorbaGateway(IResponseBuilder responseBuilders, IRestCsharpClient restClient) : base(restClient)
         {
             _endPoint = Routes.Prefixes.Corba;
             _responseBuilder = responseBuilders;
-            _restClient = restClient;
-            _restCsharpClient =
-                new RestClient(ServiceUrl); //TODO: This variable will be removed after all endpoints were moved to C#.
+            _restCsharpClient = restClient;
+      
         }
 
         public async Task<BaseResult<T>> ProcessBatchCorbaCall<T>(string functionName, string className,

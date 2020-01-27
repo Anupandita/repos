@@ -15,13 +15,12 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
     {
         private readonly string _endPoint;
         private readonly IResponseBuilder _responseBuilder;
-        private readonly IRestClient _restCsharpClient;
+        private readonly IRestCsharpClient _restCsharpClient;
 
-        public CommonGateway(IResponseBuilder responseBuilders, IRestClient restClient) : base(restClient)
+        public CommonGateway(IResponseBuilder responseBuilders, IRestCsharpClient restClient) : base(restClient)
         {
             _endPoint = Routes.Prefixes.Common;
             _responseBuilder = responseBuilders;
-            restClient.BaseUrl = new Uri(ServiceUrl);
             _restCsharpClient = restClient;
         }
 
