@@ -34,7 +34,7 @@ namespace Sfc.Wms.App.Api.Controllers
             var resultResponse = await _rbacService.SignInAsync(loginCredentials).ConfigureAwait(false);
             if (resultResponse.Payload != null && resultResponse.ResultType == ResultTypes.Ok)
             {
-                HttpContext.Current?.Response.Headers.Add(Constants.Token,
+                HttpContext.Current?.Response.Headers.Add(Constants.Authorization,
               $"{JwtConstants.Bearer} {resultResponse.Payload.Token}");
 
                 resultResponse = await _rbacService.GetPrinterValuesAsyc(resultResponse.Payload);
