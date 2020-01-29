@@ -124,7 +124,7 @@ namespace Sfc.Wms.App.Api.Controllers
         }
 
         [HttpPut]
-        [Route(Routes.Paths.LpnCommentsAdd)]
+        [Route(Routes.Paths.LpnCaseDetails)]
         [ResponseType(typeof(BaseResult))]
         public async Task<IHttpActionResult> UpdateLpnCaseDetailsAsync(LpnDetailsUpdateDto lpnCaseDetailsUpdate)
         {
