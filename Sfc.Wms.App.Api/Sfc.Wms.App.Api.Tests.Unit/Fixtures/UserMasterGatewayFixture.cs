@@ -10,19 +10,20 @@ using System.Net;
 using System.Threading.Tasks;
 using Sfc.Core.OnPrem.Security.Contracts.Dtos;
 using System.Collections.Generic;
+using Sfc.Wms.App.Api.Nuget.Interfaces;
 
 namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 {
     public abstract class UserMasterGatewayFixture
     {
         private readonly UserMasterGateway _userMasterGateway;
-        private readonly Mock<IRestClient> _restClient;
-        private readonly IEnumerable <PreferencesDto> _preferencesDto;
+        private readonly Mock<IRestCsharpClient> _restClient;
+        private readonly IEnumerable<PreferencesDto> _preferencesDto;
         private BaseResult manipulationTestResult;
 
         protected UserMasterGatewayFixture()
         {
-            _restClient = new Mock<IRestClient>();
+            _restClient = new Mock<IRestCsharpClient>();
             _preferencesDto = Generator.Default.List<PreferencesDto>();
             _userMasterGateway = new UserMasterGateway(new ResponseBuilder(), _restClient.Object);
         }
@@ -42,8 +43,8 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         {
             _restClient.Verify(x => x.ExecuteTaskAsync<T>(It.IsAny<IRestRequest>()));
         }
-        
-        #region Update User Preferences 
+
+        #region Update User Preferences
 
         protected void ValidParametersToUpdateUserPreferences()
         {
@@ -82,6 +83,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             Assert.AreEqual(ResultTypes.BadRequest, manipulationTestResult.ResultType);
         }
 
-        #endregion Update User Preferences 
+        #endregion Update User Preferences
+
     }
 }
