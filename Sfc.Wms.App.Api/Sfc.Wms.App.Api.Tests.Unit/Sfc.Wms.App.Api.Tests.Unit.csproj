@@ -223,7 +223,7 @@
       <Name>Sfc.Wms.App.Api.Contracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sfc.Wms.App.Api.Nuget\Sfc.Wms.App.Api.Nuget\Sfc.Wms.App.Api.Nuget.csproj">
-      <Project>{4df981bd-bcb8-4ad1-85b3-2097f974a17b}</Project>
+      <Project>{ff63668c-5451-46fb-be58-330afbc1f1e9}</Project>
       <Name>Sfc.Wms.App.Api.Nuget</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sfc.Wms.App.Api\Sfc.Wms.App.Api.csproj">

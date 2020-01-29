@@ -138,7 +138,7 @@ namespace Sfc.Wms.App.Api.Controllers
         public async Task<IHttpActionResult> UpdateCaseCommentAsync(CaseCommentDto caseCommentDto)
         {
             var response = await _caseCommentService.UpdateAsync(caseCommentDto).ConfigureAwait(false);
-            return ResponseHandler(response);
+            return ResponseHandler((BaseResult)response);
         }
 
         [HttpPost]
