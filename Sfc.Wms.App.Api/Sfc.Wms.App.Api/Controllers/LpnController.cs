@@ -124,7 +124,7 @@ namespace Sfc.Wms.App.Api.Controllers
         }
 
         [HttpPut]
-        [Route(Routes.Paths.LpnCaseDetails)]
+        [Route(Routes.Paths.LpnCommentsAdd)]
         [ResponseType(typeof(BaseResult))]
         public async Task<IHttpActionResult> UpdateLpnCaseDetailsAsync(LpnDetailsUpdateDto lpnCaseDetailsUpdate)
         {
@@ -133,9 +133,9 @@ namespace Sfc.Wms.App.Api.Controllers
         }
 
         [HttpPut]
-        [Route(Routes.Paths.LpnComments)]
+        [Route(Routes.Paths.LpnCommentUpdate)]
         [ResponseType(typeof(BaseResult))]
-        public async Task<IHttpActionResult> UpdateCaseCommentAsync(CaseCommentDto caseCommentDto)
+        public async Task<IHttpActionResult> UpdateLpnCommentAsync(CaseCommentDto caseCommentDto)
         {
             var response = await _caseCommentService.UpdateAsync(caseCommentDto).ConfigureAwait(false);
             return ResponseHandler((BaseResult)response);

@@ -150,13 +150,13 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        public async Task<BaseResult> UpdateCaseCommentAsync(CaseCommentDto caseCommentDto,
+        public async Task<BaseResult> UpdateLpnCommentAsync(CaseCommentDto caseCommentDto,
             string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
-                var resource = $"{_endPoint}/{Routes.Paths.LpnComments}";
+                var resource = $"{_endPoint}/{Routes.Paths.LpnCommentUpdate}";
                 var request = PutRequest(resource, caseCommentDto, token, Authorization);
                 var response = await _restCsharpClient.ExecuteTaskAsync<BaseResult>(request).ConfigureAwait(false);
 

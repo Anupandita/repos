@@ -509,7 +509,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void UpdateCaseCommentOperationInvoked()
         {
-            _testResponse = _lpnController.UpdateCaseCommentAsync(_updateLpnCommentRequest);
+            _testResponse = _lpnController.UpdateLpnCommentAsync(_updateLpnCommentRequest);
         }
 
         protected void TheUpdateOperationReturnedNotFoundResponse()

@@ -27,7 +27,7 @@ namespace Sfc.Wms.App.Api.Nuget.Interfaces
 
         Task<BaseResult> DeleteLpnCommentsAsync(string caseNumber, int commentSequenceNumber, string token);
 
-        Task<BaseResult> UpdateCaseCommentAsync(CaseCommentDto caseCommentDto, string token);
+        Task<BaseResult> UpdateLpnCommentAsync(CaseCommentDto caseCommentDto, string token);
 
         Task<BaseResult> UpdateLpnDetailsAsync(LpnDetailsUpdateDto lpnDetailsUpdateModel, string token);
 

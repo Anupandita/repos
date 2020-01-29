@@ -16,7 +16,6 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 {
     public class CommonControllerFixture
     {
-        
         private readonly CommonController _commonController;
         private readonly Mock<ISystemCodeService> _systemCodeService;
         private SystemCodeInputDto systemCodeInputDto;
