@@ -132,6 +132,15 @@ namespace Sfc.Wms.App.Api.Controllers
             return ResponseHandler(response);
         }
 
+        [HttpPut]
+        [Route(Routes.Paths.LpnComments)]
+        [ResponseType(typeof(BaseResult))]
+        public async Task<IHttpActionResult> UpdateCaseCommentAsync(CaseCommentDto caseCommentDto)
+        {
+            var response = await _caseCommentService.UpdateAsync(caseCommentDto).ConfigureAwait(false);
+            return ResponseHandler(response);
+        }
+
         [HttpPost]
         [Route(Routes.Paths.LpnMultipleUnlock)]
         [ResponseType(typeof(BaseResult<LpnMultipleUnlockResultDto>))]
@@ -145,7 +154,7 @@ namespace Sfc.Wms.App.Api.Controllers
         [Route(Routes.Paths.LpnMultiplelock)]
         [ResponseType(typeof(BaseResult<LpnMultipleUnlockResultDto>))]
         public async Task<IHttpActionResult> CaseLockCommentWithBatchCorbaAsync([FromBody]CaseLockCommentDto caseLockComment)
-        {           
+        {
             var response = await _caseCommentService.AddCaseLockCommentWithBatchCorbaAsync(caseLockComment).ConfigureAwait(false);
             return ResponseHandler(response);
         }
