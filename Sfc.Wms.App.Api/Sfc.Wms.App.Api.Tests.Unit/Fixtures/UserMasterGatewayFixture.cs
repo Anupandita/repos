@@ -10,19 +10,20 @@ using System.Net;
 using System.Threading.Tasks;
 using Sfc.Core.OnPrem.Security.Contracts.Dtos;
 using System.Collections.Generic;
+using Sfc.Wms.App.Api.Nuget.Interfaces;
 
 namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 {
     public abstract class UserMasterGatewayFixture
     {
         private readonly UserMasterGateway _userMasterGateway;
-        private readonly Mock<IRestClient> _restClient;
+        private readonly Mock<IRestCsharpClient> _restClient;
         private readonly IEnumerable <PreferencesDto> _preferencesDto;
         private BaseResult manipulationTestResult;
 
         protected UserMasterGatewayFixture()
         {
-            _restClient = new Mock<IRestClient>();
+            _restClient = new Mock<IRestCsharpClient>();
             _preferencesDto = Generator.Default.List<PreferencesDto>();
             _userMasterGateway = new UserMasterGateway(new ResponseBuilder(), _restClient.Object);
         }

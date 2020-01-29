@@ -11,18 +11,19 @@ using Sfc.Wms.Configuration.SystemCode.Contracts.Dtos;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Sfc.Wms.App.Api.Nuget.Interfaces;
 
 namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 {
     public class CommonGatewayFixture
     {
         private readonly CommonGateway _commonGateway;
-        private readonly Mock<IRestClient> _restClient;
+        private readonly Mock<IRestCsharpClient> _restClient;
         private SystemCodeInputDto systemCodeInputDto;
         private BaseResult<IEnumerable<SysCodeDto>> testBaseResult;
         protected CommonGatewayFixture()
         {
-            _restClient = new Mock<IRestClient>();
+            _restClient = new Mock<IRestCsharpClient>();
             _commonGateway = new CommonGateway(new ResponseBuilder(), _restClient.Object);
         }
 

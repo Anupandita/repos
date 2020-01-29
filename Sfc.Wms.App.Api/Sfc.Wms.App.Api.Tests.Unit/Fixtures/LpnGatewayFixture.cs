@@ -9,6 +9,7 @@ using RestSharp;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Core.RestResponse;
 using Sfc.Wms.App.Api.Nuget.Gateways;
+using Sfc.Wms.App.Api.Nuget.Interfaces;
 using Sfc.Wms.Foundation.InboundLpn.Contracts.Dtos;
 
 namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
@@ -18,7 +19,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         private readonly LpnParameterDto _findLpnRequest;
         private readonly List<LpnMultipleUnlockDto> _lpnMultipleUnlockDtos;
         private readonly LpnGateway _lpnGateway;
-        private readonly Mock<IRestClient> _restClient;
+        private readonly Mock<IRestCsharpClient> _restClient;
         private BaseResult<CaseCommentDto> caseCommentBaseResult;
         private BaseResult<List<CaseLockUnlockDto>> caseLockUnlockBaseResult;
         private BaseResult<List<CaseLockDto>> caseUnlockDetailsBaseResult;
@@ -30,7 +31,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected LpnGatewayFixture()
         {
-            _restClient = new Mock<IRestClient>();
+            _restClient = new Mock<IRestCsharpClient>();
             _findLpnRequest = Generator.Default.Single<LpnParameterDto>();
             _lpnMultipleUnlockDtos = Generator.Default.Single<List<LpnMultipleUnlockDto>>();
             _lpnGateway = new LpnGateway(new ResponseBuilder(), _restClient.Object);
