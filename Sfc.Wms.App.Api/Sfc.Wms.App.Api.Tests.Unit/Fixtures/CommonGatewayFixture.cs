@@ -21,6 +21,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         private readonly Mock<IRestCsharpClient> _restClient;
         private SystemCodeInputDto systemCodeInputDto;
         private BaseResult<IEnumerable<SysCodeDto>> testBaseResult;
+
         protected CommonGatewayFixture()
         {
             _restClient = new Mock<IRestCsharpClient>();
@@ -76,6 +77,5 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             Assert.IsNotNull(testBaseResult);
             Assert.AreEqual(ResultTypes.BadRequest, testBaseResult.ResultType);
         }
-
     }
 }

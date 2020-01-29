@@ -7,7 +7,6 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Controllers
     [TestClass]
     public class LpnControllerTest : LpnControllerFixture
     {
-       
         [TestMethod]
         [TestCategory(TestCategories.Unit)]
         public void LpnSearch_Invocation_With_Valid_Parameters_Returned_Ok_As_Returned_Response()
@@ -25,7 +24,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Controllers
             FindLpnOperationInvoked();
             TheFindLpnOperationReturnedBadRequestAsResponseStatus();
         }
-       
+
         [TestMethod]
         [TestCategory(TestCategories.Unit)]
         public void GetLpnHistory_Invocation_Returned_NotFound_As_Returned_Response()
@@ -120,9 +119,18 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Controllers
         [TestCategory(TestCategories.Unit)]
         public void LpnHeaderUpdate_Operation_Is_Invoked_With_Valid_Data_Returned_Ok_As_Response_Status()
         {
-            InputForUpdateLpnForWchichRecordExists();
+            InputForUpdateLpnForWhichRecordExists();
             UpdateLpnOperationInvoked();
             TheUpdateOperationReturnedOkResponse();
+        }
+
+        [TestMethod]
+        [TestCategory(TestCategories.Unit)]
+        public void CaseCommentUpdate_Operation_Is_Invoked_With_Valid_Data_Returned_Ok_As_Response_Status()
+        {
+            InputForUpdateCaseCommentForWhichRecordExists();
+            UpdateCaseCommentOperationInvoked();
+            TheUpdateCaseCommentOperationReturnedOkResponse();
         }
 
         [TestMethod]
@@ -131,6 +139,15 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Controllers
         {
             InvalidInputForUpdateLpn();
             UpdateLpnOperationInvoked();
+            TheUpdateOperationReturnedBadRequestResponse();
+        }
+
+        [TestMethod]
+        [TestCategory(TestCategories.Unit)]
+        public void CaseCommentUpdate_Operation_Is_Invoked_With_InValid_Data_Returned_BadRequest_As_Response_Status()
+        {
+            InvalidInputForUpdateCaseComment();
+            UpdateCaseCommentOperationInvoked();
             TheUpdateOperationReturnedBadRequestResponse();
         }
 
@@ -277,6 +294,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Controllers
             GetLpnDetailsOperationInvoked();
             TheGetLpnDetailsOperationReturnedOkResponse();
         }
+
         [TestMethod]
         [TestCategory(TestCategories.Unit)]
         public void GetLpnDetails_Invocation_Returned_BadRequest_As_Response_Status()
@@ -321,6 +339,5 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Controllers
             UnlockCommentWithBatchCorbaInvoked();
             UnlockCommentWithBatchCorbaReturnedOkResponse();
         }
-
     }
 }

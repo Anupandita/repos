@@ -18,7 +18,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
     {
         private readonly UserMasterGateway _userMasterGateway;
         private readonly Mock<IRestCsharpClient> _restClient;
-        private readonly IEnumerable <PreferencesDto> _preferencesDto;
+        private readonly IEnumerable<PreferencesDto> _preferencesDto;
         private BaseResult manipulationTestResult;
 
         protected UserMasterGatewayFixture()
@@ -43,8 +43,8 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         {
             _restClient.Verify(x => x.ExecuteTaskAsync<T>(It.IsAny<IRestRequest>()));
         }
-        
-        #region Update User Preferences 
+
+        #region Update User Preferences
 
         protected void ValidParametersToUpdateUserPreferences()
         {
@@ -83,6 +83,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             Assert.AreEqual(ResultTypes.BadRequest, manipulationTestResult.ResultType);
         }
 
-        #endregion Update User Preferences 
+        #endregion Update User Preferences
+
     }
 }
