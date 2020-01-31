@@ -19,7 +19,7 @@ namespace Sfc.Wms.App.Api.Contracts.Constants
             public const string Batch = "batch/" + CorbaParams;
             public const string CodeIds = "code-ids";
             public const string Comments = "comments";
-            public const string CorbaParams = "{functionName}/{className}/{isVector}";
+            public const string CorbaParams = "{functionName}/{isVector}";
             public const string Details = "details";
             public const string DrillASNDetails = "drill-asn-details";
             public const string DrillDownItemAttribute = "drill-down";

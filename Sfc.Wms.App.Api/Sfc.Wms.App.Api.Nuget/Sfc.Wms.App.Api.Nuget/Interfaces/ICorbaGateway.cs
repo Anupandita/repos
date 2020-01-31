@@ -1,17 +1,14 @@
-﻿using System.Threading.Tasks;
-using Sfc.Core.OnPrem.Result;
-using Sfc.Wms.App.Api.Contracts.Entities;
+﻿using Sfc.Core.OnPrem.Result;
+using Sfc.Wms.Foundation.Corba.Contracts.Dtos;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Sfc.Wms.App.Api.Nuget.Interfaces
 {
     public interface ICorbaGateway
     {
-        Task<BaseResult<T>> ProcessBatchCorbaCall<T>(string functionName, string className, string isVector,
-            string token,
-            params CorbaModel[] corbaModel);
+        Task<BaseResult> ProcessSingleCorbaCall(string functionName, string isVector, CorbaDto corbaDto, string token);
 
-        Task<BaseResult<T>> ProcessSingleCorbaCall<T>(string functionName, string className, string isVector,
-            string token,
-            params CorbaModel[] corbaModel);
+        Task<BaseResult<CorbaResponseDto>> ProcessBatchCorbaCall(string functionName, string isVector, List<CorbaDto> corbaDtos, string token);
     }
 }
