@@ -12,6 +12,7 @@ using System.Web.Http.Description;
 namespace Sfc.Wms.App.Api.Controllers
 {
     [RoutePrefix(Routes.Prefixes.Common)]
+    [Authorize]
     public class CommonController : SfcBaseController
     {
         private readonly ISystemCodeService _systemCodeService;
