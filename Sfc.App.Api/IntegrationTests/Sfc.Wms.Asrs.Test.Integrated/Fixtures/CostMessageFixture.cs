@@ -3,7 +3,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
 using RestSharp;
 using Newtonsoft.Json;
-using DefaultPossibleValue = Sfc.Wms.Interfaces.ParserAndTranslator.Contracts;
 using System.Configuration;
 using Sfc.Wms.Foundation.InboundLpn.Contracts.Dtos;
 using ValidationMessage = Sfc.Wms.Api.Asrs.Test.Integrated.TestData.ValidationMessage;
@@ -16,11 +15,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
     public class CostMessageFixture : DataBaseFixtureForCost
     {
         protected string CurrentCaseNbr;
-        protected string CostUrl = @ConfigurationManager.AppSettings["EmsToWmsUrl"];
+        protected string BaseUrl = @ConfigurationManager.AppSettings["BaseUrl"];
+        protected string CostUrl;
         protected CaseDetailDto CaseDetailDto;
         protected Cost Parameters;
         protected IRestResponse Response;
-        protected Int64 CurrentMsgKey;
         protected BaseResult Negativecase1;
         protected BaseResult Negativecase2;
         protected BaseResult NegativeCase3;
@@ -51,32 +50,15 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             InsertCostMessageForPickLocnDoesNotExist();
         }
 
-        protected void AValidMsgKey()
+        protected void ValidCostUrlMsgKeyAndProcessorIs(string url,Int64 currentMsgKey,string currentMsgProcessor)
         {
-            CurrentMsgKey = CostData.MsgKey;
+            CostUrl = $"{BaseUrl}{TestData.Parameter.EmsToWmsMessage}?{TestData.Parameter.MsgKey}={currentMsgKey}&{TestData.Parameter.MsgProcessor}={currentMsgProcessor}";
         }
-        protected void InvalidMsgKey()
-        {
-            CurrentMsgKey = 5;
-        }    
-        protected void InvalidCaseMsgKey()
-        {
-            CurrentMsgKey = CostData.InvalidKey;
-        }     
-        protected void TransInvnNotExistsMsgKey()
-        {
-            CurrentMsgKey = CostDataForTransInvnNotExist.MsgKey;
-        }
-        protected void PickLocationNotExistKey()
-        {
-            CurrentMsgKey = CostDataForPickLocnNotExist.MsgKey;
-        }  
         protected IRestResponse ApiIsCalled()
         {
             var client = new RestClient(CostUrl);
             var request = new RestRequest(Method.POST);
             request.AddHeader("content-type", Content.ContentType);
-            request.AddJsonBody(CurrentMsgKey);
             request.RequestFormat = DataFormat.Json;
             Response = client.Execute(request);           
             return Response;
@@ -146,17 +128,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected void ValidateResultForInvalidMessageKey()
         {
             Assert.AreEqual(ResultType.NotFound, Negativecase1.ResultType.ToString());
-            Assert.AreEqual(1, Negativecase1.ValidationMessages.Count);
+            Assert.AreEqual(Constants.ValidationCount, Negativecase1.ValidationMessages.Count);
             Assert.AreEqual(ValidationMessage.EmsToWms, Negativecase1.ValidationMessages[0].FieldName);
             Assert.AreEqual(ValidationMessage.InvalidMessageKey, Negativecase1.ValidationMessages[0].Message);
         }
         protected void ValidateResultForInvalidCaseNumber()
         {
-            Assert.AreEqual(2, Negativecase2.ValidationMessages.Count);
-            Assert.AreEqual(ValidationMessage.ContainerId, Negativecase2.ValidationMessages[0].FieldName);
-            Assert.AreEqual(ValidationMessage.Invalid, Negativecase2.ValidationMessages[0].Message);
-            Assert.AreEqual(ValidationMessage.Sku, Negativecase2.ValidationMessages[1].FieldName);
-            Assert.AreEqual(ValidationMessage.Invalid, Negativecase2.ValidationMessages[1].Message);
+            Assert.AreEqual(Constants.ValidationCount, Negativecase2.ValidationMessages.Count);
+            Assert.AreEqual(ValidationMessage.EmsToWms, Negativecase2.ValidationMessages[0].FieldName);            
         }
 
         protected void ValidateResultForTransInventoryNotExist()
@@ -165,10 +144,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         }
         protected void ValidateResultForPickLocnNotFound()
         {
-            Assert.AreEqual(1, NegativeCase4.ValidationMessages.Count);
-            /* Validation Messages are not proper */
-           // Assert.AreEqual(ValidationMessage.PickLocationDtl, negativeCase4.ValidationMessages[0].FieldName);
-            Assert.AreEqual(ValidationMessage.NotFound, NegativeCase4.ValidationMessages[0].Message);
+            Assert.AreEqual(Constants.ValidationCount, NegativeCase4.ValidationMessages.Count);
         }
     }
 }

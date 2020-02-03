@@ -8,8 +8,10 @@ using Sfc.Wms.Configuration.SystemCode.Contracts.Interfaces;
 using Sfc.Wms.Framework.Security.Token.Jwt.Jwt;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Sfc.Core.OnPrem.Pagination;
 
 namespace Sfc.Wms.App.App.Gateways
 {
@@ -27,7 +29,8 @@ namespace Sfc.Wms.App.App.Gateways
 
         public async Task<BaseResult<IEnumerable<SysCodeDto>>> GetPrinterValuesAsyc()
         {
-            return await _systemCodeService.GetSystemCodeAsync(PrinterDropdown.RecType,PrinterDropdown.CodeType,PrinterDropdown.CodeId,PrinterDropdown.OrderByColumn,PrinterDropdown.OrderBy);
+            return await _systemCodeService.GetSystemCodeAsync(PrinterDropdown.RecType,PrinterDropdown.CodeType,PrinterDropdown.CodeId,
+                new SortOption {  PropertyName = PrinterDropdown.OrderByColumn, OrderBy = ListSortDirection.Ascending});
         }
 
         public async Task<BaseResult<UserInfoDto>> SignInAsync(LoginCredentials loginCredentials)

@@ -20,8 +20,4 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
         public string Skubrcd { get; set; }
     }
 
-    //public class Content
-    //{
-    //    public const string ContentType = "application/json";
-    //}
 }

@@ -16,12 +16,15 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
     public abstract class LpnGatewayFixture
     {
         private readonly LpnParameterDto _findLpnRequest;
+        private readonly List<LpnMultipleUnlockDto> _lpnMultipleUnlockDtos;
         private readonly LpnGateway _lpnGateway;
         private readonly Mock<IRestClient> _restClient;
         private BaseResult<CaseCommentDto> caseCommentBaseResult;
         private BaseResult<List<CaseLockUnlockDto>> caseLockUnlockBaseResult;
+        private BaseResult<List<CaseLockDto>> caseUnlockDetailsBaseResult;
         private BaseResult<List<LpnHistoryDto>> lnpHistoryBaseResult;
         private BaseResult<List<CaseCommentDto>> lpnCommentsBaseResult;
+        private BaseResult<LpnMultipleUnlockResultDto> lpnMultipleUnlockResult;
         private BaseResult<LpnDetailsDto> lpnDetailsBaseResult;
         private BaseResult manipulationTestResult;
 
@@ -29,6 +32,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         {
             _restClient = new Mock<IRestClient>();
             _findLpnRequest = Generator.Default.Single<LpnParameterDto>();
+            _lpnMultipleUnlockDtos = Generator.Default.Single<List<LpnMultipleUnlockDto>>();
             _lpnGateway = new LpnGateway(new ResponseBuilder(), _restClient.Object);
         }
 
@@ -318,6 +322,55 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         #endregion
 
+        #region GetCaseUnLockDetails
+
+        protected void ValidInputParametersToGetCaseUnLockDetails()
+        {
+            var result = new BaseResult<List<CaseLockDto>> { ResultType = ResultTypes.Ok };
+            GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
+        }
+
+        protected void InValidInputParametersToGetCaseUnLockDetails()
+        {
+            var result = new BaseResult<List<CaseLockDto>> { ResultType = ResultTypes.BadRequest };
+            GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
+        }
+
+        protected void InputParametersToGetCaseUnLockDetailsForWhichNoDetailsExists()
+        {
+            var result = new BaseResult<List<CaseLockDto>> { ResultType = ResultTypes.NotFound };
+            GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
+        }
+
+        protected void GetCaseUnLockDetailsOperationInvoked()
+        {
+            caseUnlockDetailsBaseResult = _lpnGateway.GetCaseUnLockDetailsAsync(It.IsAny<IEnumerable<string>>(), It.IsAny<string>())
+                .Result;
+        }
+
+        protected void TheGetCaseUnLockDetailsReturnedOkAsResponseStatus()
+        {
+            VerifyRestClientInvocation<BaseResult<List<CaseLockDto>>>();
+            Assert.IsNotNull(caseUnlockDetailsBaseResult);
+            Assert.AreEqual(ResultTypes.Ok, caseUnlockDetailsBaseResult.ResultType);
+        }
+
+        protected void TheGetCaseUnLockDetailsReturnedBadRequestAsResponseStatus()
+        {
+            VerifyRestClientInvocation<BaseResult<List<CaseLockDto>>>();
+            Assert.IsNotNull(caseUnlockDetailsBaseResult);
+            Assert.AreEqual(ResultTypes.BadRequest, caseUnlockDetailsBaseResult.ResultType);
+        }
+
+        protected void TheGetCaseUnLockDetailsReturnedNotFoundAsResponseStatus()
+        {
+            VerifyRestClientInvocation<BaseResult<List<CaseLockDto>>>();
+            Assert.IsNotNull(caseUnlockDetailsBaseResult);
+            Assert.AreEqual(ResultTypes.NotFound, caseUnlockDetailsBaseResult.ResultType);
+        }
+
+        #endregion
+
         #region Update LpnHeader
 
         protected void ValidInputParametersToUpdateLpnHeader()
@@ -467,5 +520,75 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         }
 
         #endregion
+
+        #region AddCaseLockComments
+
+        protected void ValidParametersToAddCaseLockComments()
+        {
+            var result = new BaseResult<LpnMultipleUnlockResultDto> { ResultType = ResultTypes.Ok };
+            GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
+        }
+
+        protected void InvalidParametersToAddCaseLockComments()
+        {
+            var result = new BaseResult<LpnMultipleUnlockResultDto> { ResultType = ResultTypes.BadRequest };
+            GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
+        }
+
+        protected void AddCaseLockCommentsInvoked()
+        {
+            manipulationTestResult = _lpnGateway.CaseLockCommentWithBatchCorbaAsync(It.IsAny<CaseLockCommentDto>(), It.IsAny<string>()).Result;
+        }
+
+        protected void AddCaseLockCommentsReturnedOkResponse()
+        {
+            VerifyRestClientInvocation<BaseResult<LpnMultipleUnlockResultDto>>();
+            Assert.IsNotNull(manipulationTestResult);
+            Assert.AreEqual(ResultTypes.Ok, manipulationTestResult.ResultType);
+        }
+
+        protected void AddCaseLockCommentsReturnedNotFoundResponse()
+        {
+            VerifyRestClientInvocation<BaseResult<LpnMultipleUnlockResultDto>>();
+            Assert.IsNotNull(manipulationTestResult);
+            Assert.AreEqual(ResultTypes.BadRequest, manipulationTestResult.ResultType);
+        }
+
+        #endregion AddCaseLockComments
+
+        #region UnlockCommentWithBatchCorba
+
+        protected void ValidParametersToUnlockComment()
+        {
+            var result = new BaseResult<LpnMultipleUnlockResultDto> { ResultType = ResultTypes.Ok, Payload = Generator.Default.Single<LpnMultipleUnlockResultDto>() };
+            GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
+        }
+
+        protected void InvalidParametersToUnlockComment()
+        {
+            var result = new BaseResult<LpnMultipleUnlockResultDto> { ResultType = ResultTypes.BadRequest };
+            GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
+        }
+
+        protected void UnlockCommentWithBatchCorbaInvoked()
+        {
+            lpnMultipleUnlockResult = _lpnGateway.LpnMultipleUnlockAsync(_lpnMultipleUnlockDtos, It.IsAny<string>()).Result;
+        }
+
+        protected void UnlockCommentWithBatchCorbaReturnedOkResponse()
+        {
+            VerifyRestClientInvocation<BaseResult<LpnMultipleUnlockResultDto>>();
+            Assert.IsNotNull(lpnMultipleUnlockResult);
+            Assert.AreEqual(ResultTypes.Ok, lpnMultipleUnlockResult.ResultType);
+        }
+
+        protected void UnlockCommentWithBatchCorbaReturnedNotFoundResponse()
+        {
+            VerifyRestClientInvocation<BaseResult<LpnMultipleUnlockResultDto>>();
+            Assert.IsNotNull(lpnMultipleUnlockResult);
+            Assert.AreEqual(ResultTypes.BadRequest, lpnMultipleUnlockResult.ResultType);
+        }
+
+        #endregion UnlockCommentWithBatchCorba
     }
 }

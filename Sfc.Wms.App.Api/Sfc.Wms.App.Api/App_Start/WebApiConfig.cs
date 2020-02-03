@@ -14,6 +14,7 @@ namespace Sfc.Wms.App.Api
             config.MessageHandlers.Add(new SlidingExpirationHandler());
             var container = DependencyConfig.Register();
             FilterConfig.RegisterHttpFilters(GlobalConfiguration.Configuration.Filters, container.GetInstance<SfcLogger>());
+            FilterConfig.RegisterDbInterceptor();
             SfcMapper.Initialize();
             config.Routes.MapHttpRoute("DefaultApi", "api/{controller}/{id}");
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver =

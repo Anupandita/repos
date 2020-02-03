@@ -16,14 +16,14 @@
         public const string ActionCodeCost = "Arrival";
         public const string InvalidCase = "00000283000804736790";
         public const string MessageLengthCost = "00268";
-        public const string InBoundPallet = "Y";
+        public const string InboundPallet = "Y";
         public const string InvalidSku = "0909";
     }
 
     public class ResultType
     {
         public const string Created = "Created";
-        public const string NotFound = "Conflict";
+        public const string NotFound = "NotFound";
         public const string NotFounds = "NotFound";
     }
 }

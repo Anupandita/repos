@@ -33,15 +33,15 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected OracleCommand OracleCommand;
         public decimal UnitWeight1;
 
-
         public Cost GetCaseDetailsForInsertingCostMessage(OracleConnection db)
         {
             var costDataDto = new Cost();
-            SqlStatements = $"select swm_to_mhe.container_id,swm_to_mhe.sku_id,pick_locn_dtl.locn_id,swm_to_mhe.qty from swm_to_mhe inner join trans_invn" +
-                $" on trans_invn.sku_id = swm_to_mhe.sku_id inner join  pick_locn_dtl on swm_to_mhe.sku_id = pick_locn_dtl.sku_id  " +
-                $"inner join case_hdr on swm_to_mhe.container_id = case_hdr.case_nbr and swm_to_mhe.source_msg_status = 'Ready' and swm_to_mhe.qty!= 0 and case_hdr.stat_code = 96"+
-                $" and pick_locn_dtl.locn_id in (select lh.locn_id from locn_hdr lh inner join locn_grp lg on lg.locn_id = lh.locn_id inner join sys_code sc on sc.code_id = lg.grp_type and sc.code_type = '740' and sc.code_id = '18')";
+            SqlStatements = EmsToWmsQueries.CostQuery;
             Command = new OracleCommand(SqlStatements, db);
+            Command.Parameters.Add(new OracleParameter("statCode", Constants.StatusCodeConsumed));
+            Command.Parameters.Add(new OracleParameter("sysCodeType", Constants.SysCodeType));
+            Command.Parameters.Add(new OracleParameter("codeId", Constants.SysCodeIdForActiveLocation));
+            Command.Parameters.Add(new OracleParameter("ready",DefaultValues.Status));
             var validData = Command.ExecuteReader();
             if (validData.Read())
             {
@@ -63,7 +63,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-
         public void GetDataBeforeTrigger()
         {
             using (var db = GetOracleConnection())
@@ -72,7 +71,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 var costResult = CreateCostMessage(CostData.CaseNumber, CostData.SkuId, CostData.Qty, CostData.LocnId);
                 EmsToWmsParameters = new EmsToWmsDto
                 {
-                    Process = DefaultValues.Process,
+                    Process = DefaultPossibleValue.MessageProcessor,
                     MessageKey = Convert.ToInt64(CostData.MsgKey),
                     Status = DefaultValues.Status,
                     Transaction = TransactionCode.Cost,
@@ -91,12 +90,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             {
                 ActionCode = DefaultValues.ActionCodeCost,
                 ContainerReasonCodeMap = ReasonCode.Success,
-                ContainerId = "99076490900000000001",
+                ContainerId =  Constants.InvalidContainerId,
                 ContainerType = DefaultValues.ContainerType,
                 PhysicalContainerId = "",
-                CurrentLocationId = "87809",
+                CurrentLocationId = Constants.SampleCurrentLocnId,
                 StorageClassAttribute1 = skuId,
-                StorageClassAttribute2 = "100",
+                StorageClassAttribute2 = Constants.QtyToSend,
                 StorageClassAttribute3 = "",
                 StorageClassAttribute4 = "",
                 StorageClassAttribute5 = "",
@@ -111,7 +110,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.IsNotNull(testResult.Payload);
             return testResult.Payload;
         }
-
 
         public void InsertCostMessageForPickLocnDoesNotExist()
         {
@@ -138,14 +136,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 db.Open();
                 TransInvnDoesNotExistData(db);
             }
-
         }     
 
         public void InvalidCaseData(OracleConnection db)
         {
             Command = new OracleCommand(SqlStatements, db);
             var costmsg = CreateCostMessage(DefaultValues.InvalidCase, CostData.SkuId, CostData.Qty, CostData.LocnId);
-             var emsToWms = new EmsToWmsDto
+            var emsToWms = new EmsToWmsDto
             {
                 Process = DefaultValues.Process,
                 Status = DefaultValues.Status,
@@ -175,8 +172,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public Cost FetchCaseNumberWithoutTransInventry (OracleConnection db)
         {
             var costTransData = new Cost();
-            SqlStatements = $"select cd.SKU_ID,ch.CASE_NBR,tn.ACTL_INVN_UNITS,ch.STAT_CODE,pick_locn_dtl.locn_id from  CASE_HDR ch  inner join  case_dtl cd on cd.CASE_NBR = ch.CASE_NBR  inner join pick_locn_dtl on pick_locn_dtl.sku_id = cd.sku_id left join trans_invn tn on tn.SKU_ID = cd.SKU_ID and ch.STAT_CODE = 50 and tn.ACTL_INVN_UNITS >1 and trans_invn_type = '18' and tn.SKU_ID = null";
-            Command = new OracleCommand(SqlStatements, db);
+            SqlStatements = EmsToWmsQueries.CostFetchDataWithOutTransInvn;
+            Command = new OracleCommand(SqlStatements, db);           
+            Command.Parameters.Add(new OracleParameter("qty", Constants.MinQuantity));
+            Command.Parameters.Add(new OracleParameter("statCode", Constants.ReceivedCaseFromVendorStatCode));
+            Command.Parameters.Add(new OracleParameter("transInvnType", Constants.TransInvnType));
             var reader = Command.ExecuteReader();
             if (reader.Read())
             {
@@ -206,8 +206,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public Cost FetchPickLocnDoesNotExistData(OracleConnection db)
         {
             var costTransData = new Cost();
-            SqlStatements = $"select tn.ACTL_INVN_UNITS,cd.SKU_ID,ch.CASE_NBR,ch.STAT_CODE from  CASE_HDR ch  inner join  case_dtl cd on cd.CASE_NBR = ch.CASE_NBR  inner join trans_invn tn on tn.SKU_ID = cd.SKU_ID  left join pick_locn_dtl on pick_locn_dtl.sku_id = tn.sku_id  and ch.STAT_CODE = 96 and tn.ACTL_INVN_UNITS >1 and trans_invn_type = '18' and pick_locn_dtl.LOCN_ID = 0";
-            Command = new OracleCommand(SqlStatements, db);
+            SqlStatements = EmsToWmsQueries.CostPickLocnDoesNotExist;
+            Command = new OracleCommand(SqlStatements, db);           
+            Command.Parameters.Add(new OracleParameter("statCode", Constants.StatusCodeConsumed));
+            Command.Parameters.Add(new OracleParameter("qty", Constants.MinQuantity));
+            Command.Parameters.Add(new OracleParameter("transInvnType", Constants.MinQuantity));
             var reader = Command.ExecuteReader();
             if (reader.Read())
             {

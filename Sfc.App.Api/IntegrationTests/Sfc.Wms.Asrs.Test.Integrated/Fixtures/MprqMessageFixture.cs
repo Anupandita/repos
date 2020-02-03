@@ -12,23 +12,25 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
     public class MprqMessageFixture : DataBaseFixtureForMprq
     {
         protected Int64 CurrentMsgKey;
+        protected string CurrentMsgProcessor;
         protected IRestResponse Response;
-        protected string MprqUrl = @ConfigurationManager.AppSettings["EmsToWmsUrl"];
+        protected string BaseUrl = @ConfigurationManager.AppSettings["BaseUrl"];
+        protected string MprqUrl;
 
         protected void TestInitializeForValidMessage()
         {
             GetDataBeforeTrigger();
         }
-        protected void AValidMsgKey()
+        
+        protected void AValidMprqUrl(string url,Int64 currentMsgKey,string currentMsgProcessor)
         {
-            CurrentMsgKey = MprqData.MsgKey;
+            MprqUrl = $"{BaseUrl}{TestData.Parameter.EmsToWmsMessage}?{TestData.Parameter.MsgKey}={currentMsgKey}&{TestData.Parameter.MsgProcessor}={currentMsgProcessor}";
         }
         protected IRestResponse ApiIsCalled()
         {
             var client = new RestClient(MprqUrl);
             var request = new RestRequest(Method.POST);
-            request.AddHeader("content-type", Content.ContentType);
-            request.AddJsonBody(CurrentMsgKey);
+            request.AddHeader("content-type", Content.ContentType);          
             request.RequestFormat = DataFormat.Json;
             Response = client.Execute(request);
             return Response;
@@ -59,22 +61,16 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(EmsToWmsParameters.Transaction, SwmFromMhe.SourceMessageTransactionCode);
             Assert.AreEqual(EmsToWmsParameters.ResponseCode, SwmFromMhe.SourceMessageResponseCode);
             Assert.AreEqual(EmsToWmsParameters.MessageText, SwmFromMhe.SourceMessageText);
-
         }
 
         protected void VerifyMpidMessageWasInsertedIntoswmToMhe()
         {
             Assert.AreEqual(NextUpCounter.PrefixField + ((NextUpCounter.CurrentNumber)+1).ToString("000000000"), Mpid.MasterPackId);
-
         }
 
         protected void VerifyLocationMpid()
         {
             Assert.AreEqual(Mprq.LocationId, Mpid.LocationId);
         }
-
-
-    }
-
-   
+    }  
 }

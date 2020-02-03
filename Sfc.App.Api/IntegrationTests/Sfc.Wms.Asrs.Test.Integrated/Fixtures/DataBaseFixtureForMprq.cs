@@ -17,7 +17,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
     
     public class DataBaseFixtureForMprq :CommonFunction
     {
-
         protected EmsToWmsDto EmsToWmsParameters;
         protected Mprq MprqData = new Mprq();
         protected MprqDto MprqParameters;
@@ -26,10 +25,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected MpidDto Mpid = new MpidDto();
         protected new SwmFromMheDto SwmFromMhe = new SwmFromMheDto();
         protected new SwmToMheDto SwmToMhe = new SwmToMheDto();
-        protected string Query = "";
+        protected new string Query = "";
         protected  Entities.NextUpCounter NextUpCounter= new Entities.NextUpCounter();
-
-
 
         public void GetDataBeforeTrigger()
         {
@@ -39,7 +36,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 var mprqResult = CreateMprqMessage();
                 EmsToWmsParameters = new EmsToWmsDto
                 {
-                    Process = DefaultValues.Process,
+                    Process = DefaultPossibleValue.MessageProcessor,
                     MessageKey = Convert.ToInt64(MprqData.MsgKey),
                     Status = DefaultValues.Status,
                     Transaction = TransactionCode.Mprq,
@@ -55,14 +52,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public Entities.NextUpCounter Nxtupcnt(OracleConnection db)
         {
             var nextup = new Entities.NextUpCounter();
-            Query = $"select * from nxt_up_cnt where rec_type_id = 'TOT'";
+            Query = $"select * from nxt_up_cnt where rec_type_id = :recTypeId";
             Command = new OracleCommand(Query, db);
+            Command.Parameters.Add(new OracleParameter("recTypeId", Constants.RecTypeId));
             var nextUpCounterReader = Command.ExecuteReader();
             if (nextUpCounterReader.Read())
             {
-                nextup.CurrentNumber = Convert.ToInt32(nextUpCounterReader[FieldName.Currentnumber].ToString());
-                nextup.PrefixField = (nextUpCounterReader[FieldName.Prefixfield].ToString());
-                
+                nextup.CurrentNumber = Convert.ToInt32(nextUpCounterReader[FieldName.Currentnumber]);
+                nextup.PrefixField = nextUpCounterReader[FieldName.Prefixfield].ToString();           
             }
             return nextup;
         }
@@ -71,7 +68,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             MprqParameters = new MprqDto
             {
-                LocationId = "000898091",
+                LocationId = Constants.SampleCurrentLocnId,
                 TransactionCode = TransactionCode.Mprq,
                 MessageLength = MessageLength.Mprq
             };
@@ -90,14 +87,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 db.Open();
                 SwmFromMhe = SwmFromMhe(db, MprqData.MsgKey, TransactionCode.Mprq);
                 Mprq = JsonConvert.DeserializeObject<MprqDto>(SwmFromMhe.MessageJson);
-                SwmToMhe = SwmToMhe(db, TransactionCode.Mpid);
+                SwmToMhe = SwmToMhe(db, null,TransactionCode.Mpid,null);
                 Mpid = JsonConvert.DeserializeObject<MpidDto>(SwmToMhe.MessageJson);
-
-
             }
         }
-
-
-
     }
 }

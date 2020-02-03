@@ -235,6 +235,33 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Controllers
 
         [TestMethod]
         [TestCategory(TestCategories.Unit)]
+        public void GetCaseUnLockDetails_Invocation_Returned_NotFound_As_Response_Status()
+        {
+            GetCaseUnLockDetailsRecordDoesNotExists();
+            GetCaseUnLockDetailsOperationInvoked();
+            TheGetCaseUnLockDetailsReturnedNotFoundResponse();
+        }
+
+        [TestMethod]
+        [TestCategory(TestCategories.Unit)]
+        public void GetCaseUnLockDetails_Invocation_Returned_BadRequest_As_Response_Status()
+        {
+            InValidInputForGetCaseUnLockDetails();
+            GetCaseUnLockDetailsOperationInvoked();
+            ThGetCaseUnLockDetailsReturnedBadRequestResponse();
+        }
+
+        [TestMethod]
+        [TestCategory(TestCategories.Unit)]
+        public void GetCaseUnLockDetails_Invocation_Returned_Ok_As_Response_Status()
+        {
+            GetCaseUnLockDetailsRecordExists();
+            GetCaseUnLockDetailsOperationInvoked();
+            TheGetCaseUnLockDetailsReturnedOkResponse();
+        }
+
+        [TestMethod]
+        [TestCategory(TestCategories.Unit)]
         public void GetLpnDetails_Invocation_Returned_NotFound_As_Response_Status()
         {
             GetLpnDetailsRecordDoesNotExists();
@@ -257,6 +284,42 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Controllers
             InvalidInputForGetLpnDetails();
             GetLpnDetailsOperationInvoked();
             TheGetLpnDetailsOperationReturnedBadRequestResponse();
+        }
+
+        [TestMethod]
+        [TestCategory(TestCategories.Unit)]
+        public void Add_Lock_comments_Operation_Is_Invoked_With_Invalid_Record_NotFount_Is_Returned()
+        {
+            InvalidParametersToAddCaseLockComments();
+            AddCaseLockCommentsInvoked();
+            AddCaseLockCommentsOperationReturnedNotFoundResponse();
+        }
+
+        [TestMethod]
+        [TestCategory(TestCategories.Unit)]
+        public void Add_Lock_Comments_Operation_Is_Invoked_With_Valid_Data_Ok_Response_Is_Returned()
+        {
+            ValidParametersToAddCaseLockComments();
+            AddCaseLockCommentsInvoked();
+            AddCaseLockCommentsOperationReturnedOkResponse();
+        }
+
+        [TestMethod()]
+        [TestCategory(TestCategories.Unit)]
+        public void Unlock_Comments_Is_Invoked_With_Invalid_Record_NotFount_Is_Returned()
+        {
+            InvalidParametersToUnlockComment();
+            UnlockCommentWithBatchCorbaInvoked();
+            UnlockCommentWithBatchCorbaReturnedNotFoundResponse();
+        }
+
+        [TestMethod()]
+        [TestCategory(TestCategories.Unit)]
+        public void Unlock_Comments_Is_Invoked_With_Valid_Data_Ok_Response_Is_Returned()
+        {
+            ValidParametersToUnlockComment();
+            UnlockCommentWithBatchCorbaInvoked();
+            UnlockCommentWithBatchCorbaReturnedOkResponse();
         }
 
     }
