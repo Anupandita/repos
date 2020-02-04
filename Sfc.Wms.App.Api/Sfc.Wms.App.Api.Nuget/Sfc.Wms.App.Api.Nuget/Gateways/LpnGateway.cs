@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using RestSharp;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Core.RestResponse;
 using Sfc.Wms.App.Api.Contracts.Constants;
@@ -16,7 +15,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
         private readonly string _endPoint;
         private readonly IResponseBuilder _responseBuilder;
         private readonly IRestCsharpClient _restCsharpClient;
-        private readonly string Authorization = "Authorization";
+        private const string Authorization = "Authorization";
 
         public LpnGateway(IResponseBuilder responseBuilders, IRestCsharpClient restClient) : base(restClient)
         {
@@ -31,7 +30,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
-                var resource = $"{_endPoint}/{"lpn-comments"}/{caseNumber}/{commentSequenceNumber}";
+                var resource = $"{_endPoint}/{Routes.Paths.LpnCommentsAdd}/{caseNumber}/{commentSequenceNumber}";
                 var request = DeleteRequest(resource, token, Authorization);
                 var response = await _restCsharpClient.ExecuteTaskAsync<BaseResult>(request).ConfigureAwait(false);
 
@@ -44,7 +43,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
-                var resource = $"{_endPoint}/{"lpn-comments"}/{lpnId}";
+                var resource = $"{_endPoint}/{Routes.Paths.LpnCommentsAdd}/{lpnId}";
                 var request = GetRequest(token, resource, Authorization);
                 var response = await _restCsharpClient.ExecuteTaskAsync<BaseResult<List<CaseCommentDto>>>(request)
                     .ConfigureAwait(false);
@@ -156,7 +155,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
-                var resource = $"{_endPoint}/{Routes.Paths.LpnCommentUpdate}";
+                var resource = $"{_endPoint}/{Routes.Paths.LpnCommentsAdd}";
                 var request = PutRequest(resource, caseCommentDto, token, Authorization);
                 var response = await _restCsharpClient.ExecuteTaskAsync<BaseResult>(request).ConfigureAwait(false);
 

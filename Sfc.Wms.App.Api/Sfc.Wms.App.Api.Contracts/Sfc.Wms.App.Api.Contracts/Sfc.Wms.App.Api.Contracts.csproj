@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>5.5.0</Version>
+    <Version>5.5.1</Version>
     <Authors>Shamrock Foods (SOWL)</Authors>
     <Company>Shamrock Foods Company</Company>
     <Product>Wms.App</Product>

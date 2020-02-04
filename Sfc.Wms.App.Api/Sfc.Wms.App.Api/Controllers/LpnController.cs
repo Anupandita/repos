@@ -133,7 +133,7 @@ namespace Sfc.Wms.App.Api.Controllers
         }
 
         [HttpPut]
-        [Route(Routes.Paths.LpnCommentUpdate)]
+        [Route(Routes.Paths.LpnCommentsAdd)]
         [ResponseType(typeof(BaseResult))]
         public async Task<IHttpActionResult> UpdateLpnCommentAsync(CaseCommentDto caseCommentDto)
         {
