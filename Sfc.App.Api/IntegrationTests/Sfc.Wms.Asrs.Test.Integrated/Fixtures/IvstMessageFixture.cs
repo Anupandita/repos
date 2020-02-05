@@ -6,6 +6,8 @@ using Newtonsoft.Json;
 using System.Configuration;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
+using Sfc.Wms.Interfaces.Asrs.Dematic.Contracts.Dtos;
+using Sfc.Wms.Interfaces.Asrs.Shamrock.Contracts.Dtos;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Constants;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
@@ -15,25 +17,39 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
     {
         protected string BaseUrl = @ConfigurationManager.AppSettings["BaseUrl"];
         protected Int64 CurrentMsgKeys;
+        protected EmsToWmsDto ems = new EmsToWmsDto();
         protected Ivst Parameters;
         protected IRestResponse Response;
         protected long CurrentMsgKey;
         protected string CurrentMsgProcessor;
         public static string IvstUrl;
         protected OracleConnection Db;
-        protected void TestInitialize()
-        {
-            GetDataBeforeApiTrigger();
-        }
+      
         protected void ValidIvstUrlMsgKeyAndMsgProcessorIs(string url,Int64 currentMsgKey,string currentMsgProcessor)
         {
             IvstUrl = $"{BaseUrl}{TestData.Parameter.EmsToWmsMessage}?{TestData.Parameter.MsgKey}={currentMsgKey}&{TestData.Parameter.MsgProcessor}={currentMsgProcessor}";
         }
        
-        protected void TestDataForUnexpectedOverageException()
+        protected void TestDataForUnexpectedOverageExceptionScenario1()
         {
-            InsertIvstMessagetUnexpectedFunction();
+            InsertIvstMessageUnexpectedOverageWhenCaseHeaderStatusCodeIsLessthan90AndCaseDtlActlQtyIsGreaterThanZero();
         }
+
+        protected void TestDataForUnexpectedOverageExceptionScenario2()
+        {
+            IvstMessageUnexpectedOverageWhenCaseHeaderStatusCodeIsLessThanOrEqualTo90AndCaseDtlActlQtyIsEqualToZero();
+        }
+
+        protected void TestDataForUnexpectedOverageExceptionScenario3()
+        {
+            InsertIvstMessagetUnexpectedFunctionForstatus96AndNegativeTiAlreadyExists();
+        }
+
+        protected void TestDataForUnexpectedOverageExceptionScenario4()
+        {
+            InsertIvstMessagetUnexpectedFunctionForstatus96AndNegativeTiNotExists();
+        }
+
         protected void TestDataForInventoryException()
         {
             InsertIvstMessageForInventoryShortageInboundPalletIsY();
@@ -43,9 +59,22 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             InsertIvstMessageForInventoryShortageInboundPalletIsN();
         }
 
+        protected void TestDataForInventoryShortageScenario3()
+        {
+            InsertIvstMessageForInventoryShortageOutBoundAndPickLocnDtlQtyIsGreaterThanZeroButLesserThanIvstQty();
+        }
+        protected void TestDataForInventoryShortageScenario4()
+        {
+            InsertIvstMessageForInventoryShortageOutBoundAndPickLocnDtlQtyIsGreaterThanZeroButLesserThanIvstQtyForNegativePickDoesNotExists();
+        }
+
+        protected void TestDataForInventoryShortageScenario5()
+        {
+            InsertIvstMessageForInventoryShortageOutBoundAndPickLocnQtyLesserThanOrEqualToZero();
+        }
         protected void TestDataForDamageException()
         {
-            InsertIvstMessageDamageFunction();
+            InsertIvstMessageDamageForInboundPalletIsY();
         }
 
         protected void TestDataForDamageInboundPalletIsN()
@@ -53,23 +82,38 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             InsertIvstMessageDamageForInboundPalletIsN();
         }
 
+        protected void TestDataForDamageScenario3()
+        {
+            InsertIvstMessageDamageForInboundPalletIsYScenario3();
+        }
+
         protected void TestDataForWrongSkuException()
         {
             InsertIvstMessageWrongSkuFunction();
-        }
-
-        protected void TestDataForWrongSkuInboundPalletIsN()
-        {
-            InsertIvstMessageForWrongSkuInboundPalletIsN();
-        }
+        }     
 
         protected void TestDataForCycleCountAdjustmentPlus()
         {
             InsertIvstMessageForCycleCountWithAdjustmentPlus();
         }
+
+        protected void TestDataForCcAdjustmentMinusScenario3()
+        {
+            IvstMessageForCcAdjustmentMinusWherePickLocnDtlActlQtyIsGreaterThanZeroButLessThanIvstQty();
+        }
+
+        protected void TestDataForAdjustmentMinusScenario4()
+        {
+            IvstMessageForCcAdjustMentMinusWherePickLocnDtlActlQtyIsGreaterThanZeroButLessThanIvstQtyAndNegativeTiDoesNotExists();
+        }
+        protected void TestDataForAdjustmentMinusScenario5()
+        {
+            IvstMessageForCcAdjustmentMinusWherePickLocnQtyIsLessThanOrEqualToZeroAndLessThanIvstQuantity();
+        }
+
         protected void TestDataForCycleCountAdjustmentMinus()
         {
-            InsertIvstMessageForCycleCountWithAdjustmentMinus();
+            IvstMessageForCcAdjustmentMinusWherePickLocnDtlActlQtyIsGreaterThanIvstQty();
         }
 
         protected void TestDataForMixedInventory()
@@ -81,11 +125,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             InsertIvstMessageForNoExceptionScenario();
         }
-
+      
         protected void GetValidDataAfterTriggerForKey(long key)
         {
             GetDataAfterTrigger(key);
         }
+
         protected IRestResponse ApiIsCalled()
         {
             var client = new RestClient(IvstUrl);
@@ -106,10 +151,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var result = JsonConvert.DeserializeObject<BaseResult>(response.Content);
             return result;
         }
-        protected void VerifyIvstMessageWasInsertedIntoSwmFromMheForUnexceptedOverage()
+        protected void VerifyIvstMessageWasInsertedIntoSwmFromMheForUnexceptedOverage(long messageKey)
         {
             Assert.AreEqual(EmsToWmsParameters.Process, SwmFromMhe.SourceMessageProcess);
-            Assert.AreEqual(IvstData.Key, SwmFromMhe.SourceMessageKey);
+            Assert.AreEqual(messageKey, SwmFromMhe.SourceMessageKey);
             Assert.AreEqual(EmsToWmsParameters.Status, SwmFromMhe.SourceMessageStatus);
             Assert.AreEqual(EmsToWmsParameters.Transaction, SwmFromMhe.SourceMessageTransactionCode);
             Assert.AreEqual(EmsToWmsParameters.ResponseCode, SwmFromMhe.SourceMessageResponseCode);
@@ -161,7 +206,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(IvstException.WrongSku, Ivst.AdjustmentReasonCode);
             Assert.AreEqual(IvstData.SkuId, Ivst.Sku);
         }
-
+       
         protected void VerifyIvstMessageWasInsertedIntoSwmFromMheForCycleCountAndMsgKeyShouldBe(long messageKey, string actionCode)
         {
             Assert.AreEqual(EmsToWmsParametersCycleCount.Process, SwmFromMhe.SourceMessageProcess);
@@ -175,7 +220,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(IvstException.CycleCount,Ivst.AdjustmentReasonCode);
             Assert.AreEqual(IvstData.SkuId,Ivst.Sku);
         }
-
+       
         protected void VerifyIvstMessageWasInsertedIntoSwmFromMheForMixedInventoryAndMsgKeyShouldBe(long messageKey, string actionCode)
         {
             Assert.AreEqual(EmsToWmsParametersMixedInventory.Process, SwmFromMhe.SourceMessageProcess);
@@ -209,34 +254,97 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(PickLcnDtlBeforeApi.ActualInventoryQuantity + Convert.ToDecimal(Ivst.Quantity), PickLocnDtlAfterApi.ActualInventoryQuantity);
         }
 
+        protected void VerifyForCycleCountNegativePickRecordAlreadyExists()
+        {
+            Assert.AreEqual(TransInvnNegativePickBeforeApi.ActualInventoryUnits -(Convert.ToDecimal(Ivst.Quantity) - PickLcnDtlBeforeApi.ActualInventoryQuantity), TransInvnNegativePick.ActualInventoryUnits);
+            Assert.AreEqual(TransInvnNegativePickBeforeApi.ActualWeight -(TransInvnNegativePickBeforeApi.ActualInventoryUnits - Convert.ToDecimal(Ivst.Quantity)*UnitWeight), TransInvnNegativePick.ActualWeight);
+        }
+
+        protected void ValidateForInventoryShortageScenario3()
+        {
+            Assert.AreEqual(TransInvnNegativePickBeforeApi.ActualInventoryUnits - (Convert.ToDecimal(Ivst.Quantity) - PickLcnDtlBeforeApi.ActualInventoryQuantity), TransInvnNegativePick.ActualInventoryUnits);
+        }
+
+        protected void ValidateForInventoryShortageScenario4()
+        {
+            Assert.AreEqual(PickLcnDtlBeforeApi.ActualInventoryQuantity - Convert.ToDecimal(Ivst.Quantity), TransInvnNegativePick.ActualInventoryUnits);
+        }
+
+        protected void ValidateForInventoryShortageScenario5()
+        {
+            Assert.AreEqual(TransInvnNegativePickBeforeApi.ActualInventoryUnits - Convert.ToDecimal(Ivst.Quantity),TransInvnNegativePick.ActualInventoryUnits);
+        }      
+
+        protected void VerifyQtyReducedToZeroInPickLocnDtlTable()
+        {
+            Assert.AreEqual("0", PickLocnDtlAfterApi.ActualInventoryQuantity.ToString());
+        }
+
+        protected void VerifyForCycleCountWherePickLocnQtyIsLessThanIvstQtyandLessthanOrEqualToZero()
+        {
+            Assert.AreEqual(TransInvnNegativePickBeforeApi.ActualInventoryUnits - Convert.ToDecimal(Ivst.Quantity),TransInvnNegativePick.ActualInventoryUnits);
+            Assert.AreEqual(Convert.ToDecimal(TransInvnNegativePickBeforeApi.ActualWeight) - (UnitWeight * Convert.ToDecimal(Ivst.Quantity)), Convert.ToDecimal(TransInvnNegativePick.ActualWeight));
+        }
+        // negative pick already exists.
+        protected void ValidationForUnExpectedOverageWhereCaseHdrStatCode96AndNegativePickAlreadyExists()
+        {
+            Assert.AreEqual(TransInvnNegativePickBeforeApi.ActualInventoryUnits - Convert.ToDecimal(Ivst.Quantity), TransInvnNegativePick.ActualInventoryUnits);
+            Assert.AreEqual(Convert.ToDecimal(TransInvnNegativePickBeforeApi.ActualWeight) - (UnitWeight * Convert.ToDecimal(Ivst.Quantity)), Convert.ToDecimal(TransInvnNegativePick.ActualWeight));
+        }
+
+        // negative pick does not exists.
+        protected void ValidationForUnExpectedOverageWhereCaseHdrStatCode96AndNegativePickDoesNotExists()
+        {
+            Assert.AreEqual(Convert.ToDecimal(Ivst.Quantity) - PickLcnDtlBeforeApi.ActualInventoryQuantity, TransInvnNegativePick.ActualInventoryUnits);
+            Assert.AreEqual(UnitWeight * Convert.ToDecimal(Ivst.Quantity), Convert.ToDecimal(TransInvnNegativePick.ActualWeight));
+        }
+
         protected void VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForCycleCountAdjustmentPlus(string adjustmentType)
         {
             Assert.AreEqual(Constants.PixRsnCodeForCycleCount, Pixtran.ReasonCode);
             Assert.AreEqual(adjustmentType, Pixtran.InventoryAdjustmentType);
             Assert.AreEqual(Convert.ToDecimal(Ivst.Quantity), Pixtran.InventoryAdjustmentQuantity);
         }
-        protected void VerifyTheQuantityForUnexpectedOverageExceptionIntoTransInventoryTable()
+
+        protected void VerifyTheRecordInsertedInToPixTransactionForCycleCountNegativePickScenario(string adjustmentType)
         {
-            Assert.AreEqual(TrnsInvBeforeApi.ActualInventoryUnits + Convert.ToDecimal(Ivst.Quantity) , TrnsInvAfterApi.ActualInventoryUnits);
-            Assert.AreEqual(Convert.ToDecimal(TrnsInvBeforeApi.ActualWeight) + (UnitWeight * Convert.ToDecimal(Ivst.Quantity)), Convert.ToDecimal(TrnsInvAfterApi.ActualWeight));
-        }
-        protected void VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForUnexpectedOverageException()
-        {
-            Assert.AreEqual(Constants.PixRsnCodeForUnExpectedOverage, Pixtran.ReasonCode);
-            Assert.AreEqual("A", Pixtran.InventoryAdjustmentType);
-            Assert.AreEqual(Convert.ToDecimal(Ivst.Quantity), Pixtran.InventoryAdjustmentQuantity);
+            Assert.AreEqual(Constants.PixRsnCodeForCycleCount, Pixtran.ReasonCode);
+            Assert.AreEqual(adjustmentType, Pixtran.InventoryAdjustmentType);
+            Assert.AreEqual(Convert.ToDecimal(PickLcnDtlBeforeApi.ActualInventoryQuantity), Pixtran.InventoryAdjustmentQuantity);
         }
 
-        protected void VerifyTheQuantityAndWeightShouldBeReducedByIvstQtyInTransInventoryForInboundPalletIsY()
+        //common validation for all unexpected overage scenarios.
+        protected void VerifyTheQuantityForUnexpectedOverageExceptionIntoTransInventoryTableAndPickLocnTable()
         {
-            Assert.AreEqual(TrnsInvBeforeApi.ActualInventoryUnits - Convert.ToDecimal(Ivst.Quantity), TrnsInvAfterApi.ActualInventoryUnits);
-            Assert.AreEqual(Convert.ToDecimal(TrnsInvBeforeApi.ActualWeight) - (UnitWeight * Convert.ToDecimal(Ivst.Quantity)), Convert.ToDecimal(TrnsInvAfterApi.ActualWeight));
-            Assert.AreEqual(PickLcnDtlBeforeApi.ActualInventoryQuantity,PickLocnDtlAfterApi.ActualInventoryQuantity);
+            Assert.AreEqual(TrnsInvBeforeApi.ActualInventoryUnits + Convert.ToDecimal(Ivst.Quantity) , TrnsInvAfterApi.ActualInventoryUnits);
+            Assert.AreEqual(String.Format("{0:0.00}", Convert.ToDecimal(TrnsInvBeforeApi.ActualWeight) + (UnitWeight * Convert.ToDecimal(Ivst.Quantity))), String.Format("{0:0.00}", Convert.ToDecimal(TrnsInvAfterApi.ActualWeight)));
+            Assert.AreEqual(PickLcnDtlBeforeApi.ToBeFilledQty + Convert.ToDecimal(Ivst.Quantity), PickLocnDtlAfterApi.ToBeFilledQty);
+        }
+
+        protected void VerifyQtyForNegativePickWhenInsertedForUnExpectedOverageScenario3()
+        {
+            Assert.AreEqual(Convert.ToDecimal(Ivst.Quantity) - PickLcnDtlBeforeApi.ActualInventoryQuantity,TransInvnNegativePick.ActualInventoryUnits);
+        }
+        protected void ValidationForQuuantityInCaseDtlTableForUnExpectedOverageScenario1()
+        {        
+            Assert.AreEqual(Convert.ToDecimal(IvstData.CaseDtlQty) - Convert.ToDecimal(Ivst.Quantity),caseDtlAfterApi.ActualQuantity);
+        }
+
+        protected void ValidationForStatCodeShouldBeUpdatedTo96ForScenario2()
+        {
+            Assert.AreEqual(96,caseHdrAfterApi.StatusCode);
+        }
+
+        protected void VerifyTheQuantityAndWeightShouldBeReducedByIvstQtyInTransInventoryAndPicklocnForToBeFilledAndrInboundPalletIsY()
+        {
+            Assert.AreEqual(TrnsInvBeforeApi.ActualInventoryUnits - Convert.ToDecimal(Ivst.Quantity), TrnsInvAfterApi.ActualInventoryUnits);            
+            Assert.AreEqual(String.Format("{0:0.00}", Convert.ToDecimal(TrnsInvBeforeApi.ActualWeight) - (UnitWeight * Convert.ToDecimal(Ivst.Quantity))), string.Format("{0:0.00}",Convert.ToDecimal(TrnsInvAfterApi.ActualWeight)));
+            Assert.AreEqual(PickLcnDtlBeforeApi.ToBeFilledQty - Convert.ToDecimal(Ivst.Quantity), PickLocnDtlAfterApi.ToBeFilledQty);
         }
 
         protected void VerifyTheQuantityShouldBeReducedByIvstQtyInPickLocationForInboundPalletIsN()
         {
-            Assert.AreEqual(PickLcnDtlBeforeApi.ActualInventoryQuantity -Convert.ToDecimal(Ivst.Quantity),PickLocnDtlAfterApi.ActualInventoryQuantity);
+            Assert.AreEqual(PickLcnDtlBeforeApi.ActualInventoryQuantity - Convert.ToDecimal(Ivst.Quantity),PickLocnDtlAfterApi.ActualInventoryQuantity);
             Assert.AreEqual(TrnsInvBeforeApi.ActualInventoryUnits ,TrnsInvAfterApi.ActualInventoryUnits);
             Assert.AreEqual(TrnsInvBeforeApi.ActualWeight,TrnsInvAfterApi.ActualWeight);
         }
@@ -248,7 +356,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(TrnsInvBeforeApi.ActualWeight, TrnsInvAfterApi.ActualWeight);
         }
 
-
         protected void VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForInventoryShortageException()
         {
             Assert.AreEqual(Constants.PixRsnCodeForInventoryShortage, Pixtran.ReasonCode);
@@ -256,19 +363,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(Convert.ToDecimal(Ivst.Quantity), Pixtran.InventoryAdjustmentQuantity);
         }
 
-       
-        protected void VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForDamageException()
+
+        protected void VerifyForPixTransactionAndValidateReasonCodeForInventoryShortageExceptionWherePickLocnQtyIsSmallerThanIvstQty()
         {
-            Assert.AreEqual(Constants.PixRsnCodeForDamage, Pixtran.ReasonCode);
+            Assert.AreEqual(Constants.PixRsnCodeForInventoryShortage, Pixtran.ReasonCode);
             Assert.AreEqual("S", Pixtran.InventoryAdjustmentType);
-            Assert.AreEqual(Convert.ToDecimal(Ivst.Quantity), Pixtran.InventoryAdjustmentQuantity);
-        }
-       
-        protected void VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForWrongSkuException()
-        {
-            Assert.AreEqual(Constants.PixRsnCodeForWrongSku, Pixtran.ReasonCode);
-            Assert.AreEqual("S", Pixtran.InventoryAdjustmentType);
-            Assert.AreEqual(Convert.ToDecimal(Ivst.Quantity), Pixtran.InventoryAdjustmentQuantity);
+            Assert.AreEqual(PickLcnDtlBeforeApi.ActualInventoryQuantity, Pixtran.InventoryAdjustmentQuantity);
         }
         protected void VerifyTheQuantityShouldNotBeChanged()
         {
@@ -276,5 +376,22 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(TrnsInvBeforeApi.ActualInventoryUnits, TrnsInvAfterApi.ActualInventoryUnits);
             Assert.AreEqual(TrnsInvBeforeApi.ActualWeight, TrnsInvAfterApi.ActualWeight);
         }
+
+        protected void VerifyForCaseHdrAndCaseDtlRecordInsertedOrNotForDamageAndWrongSkuExceptions()
+        {         
+           Assert.AreEqual(Ivst.Quantity,caseDtlAfterApi.ActualQuantity);
+           Assert.AreEqual(UnitWeight*Convert.ToDecimal(Ivst.Quantity), caseHdrAfterApi.EstimatedWeight);
+           Assert.AreEqual(UnitWeight * Convert.ToDecimal(Ivst.Quantity), caseHdrAfterApi.ActualWeight);
+           Assert.AreEqual(Ivst.ContainerId, caseHdrAfterApi.CaseNumber);
+           Assert.AreEqual(10, caseHdrAfterApi.StatusCode);
+           Assert.AreEqual("Y", caseHdrAfterApi.SingleSkuId);
+           Assert.AreEqual("Y", caseHdrAfterApi.SpecialInstructionCode1);
+           Assert.AreEqual(Ivst.Quantity, caseDtlAfterApi.OriginalQuantity);
+           Assert.AreEqual(Ivst.Quantity, caseDtlAfterApi.ShippedAsnQuantity);
+           Assert.AreEqual(1,caseDtlAfterApi.CaseSequenceNumber);
+
+        }
+
+
     }
 }

@@ -4,6 +4,7 @@ using System.Configuration;
 using Oracle.ManagedDataAccess.Client;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
 using Sfc.Wms.Foundation.Carton.Contracts.Dtos;
+using Sfc.Wms.Foundation.InboundLpn.Contracts.Dtos;
 using Sfc.Wms.Foundation.Location.Contracts.Dtos;
 using Sfc.Wms.Foundation.TransitionalInventory.Contracts.Dtos;
 using Sfc.Wms.Interfaces.Asrs.Dematic.Contracts.Dtos;
@@ -131,7 +132,24 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
             return singleSkulocal;
         }
-        
+
+        public TransitionalInventoryDto FetchTransInvnentoryForNegative(OracleConnection db, string skuId)
+        {
+            var singleSkulocal = new TransitionalInventoryDto();
+            var query = CommonQueries.TransInventory;
+            Command = new OracleCommand(query, db);
+            Command.Parameters.Add(new OracleParameter("skuId", skuId));
+            Command.Parameters.Add(new OracleParameter("transInventoryType", Constants.TransInvnTypeForNegativePick));
+            var transInvnReader = Command.ExecuteReader();
+            if (transInvnReader.Read())
+            {
+                singleSkulocal.ActualInventoryUnits = Convert.ToDecimal(transInvnReader[FieldName.ActualInventoryUnits]);
+                singleSkulocal.ActualWeight = Convert.ToDecimal(transInvnReader[FieldName.ActlWt]);
+            }
+            return singleSkulocal;
+        }
+
+
         protected decimal FetchUnitWeight(OracleConnection db, string skuId)
         {
             var query = CommonQueries.ItemMaster;
@@ -150,6 +168,24 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return itemMaster;
         }
 
+        public CaseDetailDto FetchCaseDetailQty(OracleConnection db, string caseNbr)
+        {
+            var caseDtl = new CaseDetailDto();
+            var query = CommonQueries.CaseDtl;
+            Command = new OracleCommand(query, db);
+            Command.Parameters.Add(new OracleParameter("caseNbr", caseNbr));
+            var caseDtlReader = Command.ExecuteReader();
+            if(caseDtlReader.Read())
+            {
+                caseDtl.ActualQuantity = Convert.ToDecimal(caseDtlReader["ACTL_QTY"]);
+                caseDtl.TotalAllocatedQuantity = Convert.ToDecimal(caseDtlReader["TOTAL_ALLOC_QTY"]);
+                caseDtl.SkuId = caseDtlReader["SKU_ID"].ToString();
+                caseDtl.OriginalQuantity = Convert.ToDecimal(caseDtlReader["ORIG_QTY"]);
+                caseDtl.ShippedAsnQuantity = Convert.ToDecimal(caseDtlReader["SHPD_ASN_QTY"]);
+                caseDtl.CaseSequenceNumber = Convert.ToInt16(caseDtlReader["SHPD_ASN_QTY"]);
+            }
+            return caseDtl;
+        }
         public SwmFromMheDto SwmFromMhe(OracleConnection db, long msgKey, string trx)
         {
             var swmFromMheData = new SwmFromMheDto();
@@ -241,13 +277,32 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
             return cartonHdr;
         }
+        public CaseHeaderDto CaseHeaderDetails(OracleConnection db, string caseNbr)
+        {
+            var caseHdr = new CaseHeaderDto();
+            var query = CommonQueries.CaseHdr;
+            Command = new OracleCommand(query, db);
+            Command.Parameters.Add(new OracleParameter("caseNbr", caseNbr));
+            var cartonHdrReader = Command.ExecuteReader();
+            if (cartonHdrReader.Read())
+            {
+                caseHdr.StatusCode = Convert.ToInt16(cartonHdrReader["STAT_CODE"]);
+                caseHdr.PreviousLocationId = cartonHdrReader["PREV_LOCN_ID"].ToString();
+                caseHdr.LocationId = cartonHdrReader["LOCN_ID"].ToString();
+                caseHdr.Volume  = Convert.ToDecimal(cartonHdrReader["VOL"]);
+                caseHdr.EstimatedWeight = Convert.ToDecimal(cartonHdrReader["EST_WT"]);
+                caseHdr.ActualWeight = Convert.ToDecimal(cartonHdrReader["ACTL_WT"]);
+                caseHdr.SingleSkuId = cartonHdrReader["SNGL_SKU_CASE"].ToString();
+                caseHdr.SpecialInstructionCode1 = cartonHdrReader["SPL_INSTR_CODE_1"].ToString();
+            }
+            return caseHdr;
+        }
 
         public static int? ToNullableInt(object s)
         { if (s == System.DBNull.Value) return null;
             if (int.TryParse(s.ToString(), out var i))
              return i; return null;
         }
-
 
         public SwmFromMheDto SwmFromMheqtydefference(OracleConnection db, string sourceMessage)
         {

@@ -12,6 +12,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
         public string SkuId { get; set; }
         public string Qty { get; set; }
         public string LocnId { get; set; }
+        public string CaseDtlQty { get; set; }
     }
     public class Contents
     {

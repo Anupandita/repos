@@ -92,6 +92,8 @@
     <Compile Include="TestData\synd.cs" />
     <Compile Include="TestData\SynrQueries.cs" />
     <Compile Include="TestData\OrmtParams.cs" />
+    <Compile Include="TestData\IvstQueries.cs" />
+    <Compile Include="TestData\Pb2CorbaHdrDtl.cs" />
     <Compile Include="Tests\OrmtMessageTest.cs" />
     <Compile Include="Tests\OrstMessageTest.cs" />
     <Compile Include="Tests\OrmtNegativeCases.cs" />

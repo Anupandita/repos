@@ -3,7 +3,6 @@
    
     public class CommonQueries
     {
-
         public static string WmsToEms = $"select * from WMSTOEMS where TRX = :transCode and MSGKEY = :msgKey";
         public static string TransInventory = $"Select * from trans_invn where sku_id = :skuId and  trans_invn_type = :transInventoryType";
         public static string ItemMaster = $"select unit_wt from item_master where sku_id = :skuId";
@@ -15,5 +14,7 @@
         public static string CartonHdr = $"Select * from carton_hdr where carton_nbr = :cartonNumber";
         public static string TaskHdr = $"select * from task_hdr where sku_id = :skuId order by mod_date_time desc";
         public static string EmsToWms = $"select * from emstowms where msgKey = :msgKey";
+        public static string CaseDtl = $"select * from case_dtl where case_nbr = :caseNbr";
+        public static string CaseHdr = $"select * from case_hdr where case_nbr = :caseNbr";
     }
 }

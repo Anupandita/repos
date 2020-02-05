@@ -7,7 +7,6 @@ using Sfc.Wms.Foundation.Location.Contracts.Dtos;
 using Sfc.Wms.Foundation.Carton.Contracts.Dtos;
 using System.Collections.Generic;
 using System;
-using System.Drawing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sfc.Wms.Interfaces.Asrs.Shamrock.Contracts.Dtos;
 using Sfc.Wms.Interfaces.Asrs.Dematic.Contracts.Dtos;

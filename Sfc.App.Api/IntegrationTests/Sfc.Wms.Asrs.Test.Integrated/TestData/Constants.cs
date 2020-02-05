@@ -5,6 +5,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
     public class Constants
     {
         public const int TransInvnType = 18;
+        public const string TransInvnTypeForNegativePick = "10";
         public const string SysCodeType = "740";
         public const string SysCodeIdForActiveLocation = "18";
         public const string SysCodeIdForDropZone = "19";
@@ -17,6 +18,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
         public const int ReceivedCaseFromVendorStatCode = 50;
         public const int StatusCodeConsumed = 96;
         public const string MinQuantity = "2";
+        public const string IvstQuantity = "2";
         public const int NumZero = 0;
         public const string MiscNum1 = "0";
         public const string Dry = "D";

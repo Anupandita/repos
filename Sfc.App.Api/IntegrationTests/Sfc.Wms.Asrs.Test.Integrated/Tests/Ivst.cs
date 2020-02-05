@@ -19,30 +19,65 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
     public class Ivst : IvstMessageFixture
     {
-        [TestInitialize]
-        public void TestData()
-        {
-            TestInitialize();
-        }
 
         [TestMethod()]
-        [TestCategory("FUNCTIONAL")]
-        [Priority(3)]
+        [TestCategory("FUNCTIONAL")]       
         public void Ivst3UnexpectedOverageExceptionTestScenariosForInboundPalletIsY()
         {
-            this.Given(x => x.TestDataForUnexpectedOverageException())          
+            this.Given(x => x.TestDataForUnexpectedOverageExceptionScenario1())          
             .And(x => x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl,IvstData.Key,EmsToWmsParameters.Process))
             .When(x => x.IvstApiIsCalledCreatedIsReturned())
             .And(x => x.GetValidDataAfterTriggerForKey(IvstData.Key))
-            .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheForUnexceptedOverage())
-            .And(x => x.VerifyTheQuantityForUnexpectedOverageExceptionIntoTransInventoryTable())
-            .And(x => x.VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForUnexpectedOverageException())        
+            .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheForUnexceptedOverage(IvstData.Key))
+            .And(x=>x.ValidationForQuuantityInCaseDtlTableForUnExpectedOverageScenario1())
+            .And(x => x.VerifyTheQuantityForUnexpectedOverageExceptionIntoTransInventoryTableAndPickLocnTable())            
             .BDDfy("Test Case ID : 124721 Dematic - IVST- Test for UnExpected overage /Residual Quantity");
         }
 
         [TestMethod()]
-        [TestCategory("FUNCTIONAL")]
-        [Priority(4)]
+        [TestCategory("FUNCTIONAL")]      
+        public void Ivst3UnexpectedOverageExceptionTestScenariosForInboundPalletIsYScenario2()
+        {
+            this.Given(x => x.TestDataForUnexpectedOverageExceptionScenario2())
+            .And(x => x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl, IvstData.Key, EmsToWmsParameters.Process))
+            .When(x => x.IvstApiIsCalledCreatedIsReturned())
+            .And(x => x.GetValidDataAfterTriggerForKey(IvstData.Key))
+            .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheForUnexceptedOverage(IvstData.Key))
+            .And(x => x.ValidationForStatCodeShouldBeUpdatedTo96ForScenario2())
+            .And(x => x.VerifyTheQuantityForUnexpectedOverageExceptionIntoTransInventoryTableAndPickLocnTable())           
+            .BDDfy("Test Case ID : 124721 Dematic - IVST- Test for UnExpected overage /Residual Quantity");
+        }
+
+        [TestMethod()]
+        [TestCategory("FUNCTIONAL")]      
+        public void Ivst3UnexpectedOverageExceptionTestScenariosForInboundPalletIsYScenario3()
+        {
+            this.Given(x => x.TestDataForUnexpectedOverageExceptionScenario3())
+            .And(x => x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl, IvstData.Key, EmsToWmsParameters.Process))
+            .When(x => x.IvstApiIsCalledCreatedIsReturned())
+            .And(x => x.GetValidDataAfterTriggerForKey(IvstData.Key))
+            .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheForUnexceptedOverage(IvstData.Key))
+            .And(x => x.ValidationForUnExpectedOverageWhereCaseHdrStatCode96AndNegativePickAlreadyExists())     
+            .And(x => x.VerifyTheQuantityForUnexpectedOverageExceptionIntoTransInventoryTableAndPickLocnTable())
+            .BDDfy("Test Case ID : 124721 Dematic - IVST- Test for UnExpected overage /Residual Quantity");
+        }
+
+        [TestMethod()]
+        [TestCategory("FUNCTIONAL")]       
+        public void Ivst3UnexpectedOverageExceptionTestScenariosForInboundPalletIsYScenario4()
+        {
+            this.Given(x => x.TestDataForUnexpectedOverageExceptionScenario4())
+            .And(x => x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl, IvstData.Key, EmsToWmsParameters.Process))
+            .When(x => x.IvstApiIsCalledCreatedIsReturned())
+            .And(x => x.GetValidDataAfterTriggerForKey(IvstData.Key))
+            .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheForUnexceptedOverage(IvstData.Key))
+            .And(x => x.ValidationForUnExpectedOverageWhereCaseHdrStatCode96AndNegativePickDoesNotExists())
+            .And(x => x.VerifyTheQuantityForUnexpectedOverageExceptionIntoTransInventoryTableAndPickLocnTable())
+            .BDDfy("Test Case ID : 124721 Dematic - IVST- Test for UnExpected overage /Residual Quantity");
+        }
+
+        [TestMethod()]
+        [TestCategory("FUNCTIONAL")]        
         public void Ivst4InventoryShortageExceptionTestScenariosForInboundPalletIsY()
         {
             this.Given(x => x.TestDataForInventoryException())            
@@ -50,15 +85,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
             .When(x => x.IvstApiIsCalledCreatedIsReturned())
             .And(x => x.GetValidDataAfterTriggerForKey(InvShortageInbound.Key))
             .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheForInventoryShortageAndMsgKeyShouldBe(InvShortageInbound.Key))
-            .And(x => x.VerifyTheQuantityAndWeightShouldBeReducedByIvstQtyInTransInventoryForInboundPalletIsY())
+            .And(x => x.VerifyTheQuantityAndWeightShouldBeReducedByIvstQtyInTransInventoryAndPicklocnForToBeFilledAndrInboundPalletIsY())
             .And(x => x.VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForInventoryShortageException())
             .BDDfy("Test Case ID: 124725- Dematic - IVST- Test for Inventory Shortage Validate for all functionalities .");
         }
 
         [TestMethod()]
-        [TestCategory("FUNCTIONAL")]
-        [Priority(5)]
-
+        [TestCategory("FUNCTIONAL")]      
         public void Ivst5InventoryShortageExceptionTestScenariosForInboundPalletIsN()
         {
             this.Given(x => x.TestDataForInventoryShortageInboundPalletIsN())            
@@ -71,10 +104,51 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
             .BDDfy("Test Case ID: 124725- Dematic - IVST- Test for Inventory Shortage. Validate for all functionalities .");
         }
 
+        [TestMethod()]
+        [TestCategory("FUNCTIONAL")]       
+        public void Ivst5InventoryShortageExceptionTestScenariosForInboundPalletIsNScenario3()
+        {
+            this.Given(x => x.TestDataForInventoryShortageScenario3())
+            .And(x => x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl, InvShortageOutbound.Key, EmsToWmsParametersInventoryShortage.Process))
+            .When(x => x.IvstApiIsCalledCreatedIsReturned())
+            .And(x => x.GetValidDataAfterTriggerForKey(InvShortageOutbound.Key))
+            .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheForInventoryShortageAndMsgKeyShouldBe(InvShortageOutbound.Key))
+            .And(x => x.ValidateForInventoryShortageScenario3())
+            .And(x =>x.VerifyQtyReducedToZeroInPickLocnDtlTable())
+            .And(x => x.VerifyForPixTransactionAndValidateReasonCodeForInventoryShortageExceptionWherePickLocnQtyIsSmallerThanIvstQty())
+            .BDDfy("Test Case ID: 124725- Dematic - IVST- Test for Inventory Shortage. Validate for all functionalities .");
+        }
 
         [TestMethod()]
-        [TestCategory("FUNCTIONAL")]
-        [Priority(6)]
+        [TestCategory("FUNCTIONAL")]     
+        public void Ivst5InventoryShortageExceptionTestScenariosForInboundPalletIsNScenario4()
+        {
+            this.Given(x => x.TestDataForInventoryShortageScenario4())
+            .And(x => x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl, InvShortageOutbound.Key, EmsToWmsParametersInventoryShortage.Process))
+            .When(x => x.IvstApiIsCalledCreatedIsReturned())
+            .And(x => x.GetValidDataAfterTriggerForKey(InvShortageOutbound.Key))
+            .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheForInventoryShortageAndMsgKeyShouldBe(InvShortageOutbound.Key))
+            .And(x => x.ValidateForInventoryShortageScenario4())
+            .And(x => x.VerifyQtyReducedToZeroInPickLocnDtlTable())
+            .And(x => x.VerifyForPixTransactionAndValidateReasonCodeForInventoryShortageExceptionWherePickLocnQtyIsSmallerThanIvstQty())
+            .BDDfy("Test Case ID: 124725- Dematic - IVST- Test for Inventory Shortage. Validate for all functionalities .");
+        }
+
+        [TestMethod()]
+        [TestCategory("FUNCTIONAL")]      
+        public void Ivst5InventoryShortageExceptionTestScenariosForInboundPalletIsNScenario5()
+        {
+            this.Given(x => x.TestDataForInventoryShortageScenario5())
+            .And(x => x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl, InvShortageOutbound.Key, EmsToWmsParametersInventoryShortage.Process))
+            .When(x => x.IvstApiIsCalledCreatedIsReturned())
+            .And(x => x.GetValidDataAfterTriggerForKey(InvShortageOutbound.Key))
+            .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheForInventoryShortageAndMsgKeyShouldBe(InvShortageOutbound.Key))
+            .And(x => x.ValidateForInventoryShortageScenario5())             
+            .BDDfy("Test Case ID: 124725- Dematic - IVST- Test for Inventory Shortage. Validate for all functionalities .");
+        }
+
+        [TestMethod()]
+        [TestCategory("FUNCTIONAL")]    
         public void Ivst6DamageExceptionTestScenariosForInboundPalletIsY()
         {
             this.Given(x => x.TestDataForDamageException())            
@@ -82,14 +156,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
             .When(x => x.IvstApiIsCalledCreatedIsReturned())
             .And(x => x.GetValidDataAfterTriggerForKey(DamageInbound.Key))
             .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheForDamageAndMsgKeyShouldBe(DamageInbound.Key))
-            .And(x => x.VerifyTheQuantityAndWeightShouldBeReducedByIvstQtyInTransInventoryForInboundPalletIsY())
-            .And(x => x.VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForDamageException())
+            .And(x => x.VerifyTheQuantityAndWeightShouldBeReducedByIvstQtyInTransInventoryAndPicklocnForToBeFilledAndrInboundPalletIsY())
+            .And(x => x.VerifyForCaseHdrAndCaseDtlRecordInsertedOrNotForDamageAndWrongSkuExceptions())
             .BDDfy("Test Case ID :124726- Dematic - IVST- Test for Damage Exceptions for Inbound Pallet = Y and Validate for all functionalities");
         }
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        [Priority(7)]
+      
         public void Ivst7DamageExceptionTestScenariosForInboundPalletIsN()
         {
             this.Given(x =>x.TestDataForDamageInboundPalletIsN())              
@@ -98,13 +172,28 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                 .And(x => x.GetValidDataAfterTriggerForKey(DamageOutbound.Key))
                 .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheForDamageAndMsgKeyShouldBe(DamageOutbound.Key))
                 .And(x => x.VerifyTheQuantityShouldBeReducedByIvstQtyInPickLocationForInboundPalletIsN())
-                .And(x => x.VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForDamageException())
+                .And(x => x.VerifyForCaseHdrAndCaseDtlRecordInsertedOrNotForDamageAndWrongSkuExceptions())
                 .BDDfy("Test Case ID : 124726- Dematic - IVST- Test for Damage Exceptions for Inbound Pallet = N and Validate for all functionalities");
         }
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        [Priority(8)]
+        
+        public void Ivst7DamageExceptionTestScenariosForInboundPalletIsNScenario3()
+        {
+            this.Given(x => x.TestDataForDamageScenario3())
+                .And(x => x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl, DamageOutbound.Key, EmsToWmsParametersDamage.Process))
+                .When(x => x.IvstApiIsCalledCreatedIsReturned())
+                .And(x => x.GetValidDataAfterTriggerForKey(DamageOutbound.Key))
+                .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheForDamageAndMsgKeyShouldBe(DamageOutbound.Key))
+                .And(x => x.VerifyQtyReducedToZeroInPickLocnDtlTable())
+                .And(x => x.VerifyForCaseHdrAndCaseDtlRecordInsertedOrNotForDamageAndWrongSkuExceptions())
+                .BDDfy("Test Case ID : 124726- Dematic - IVST- Test for Damage Exceptions for Inbound Pallet = N and Validate for all functionalities");
+        }
+
+        [TestMethod()]
+        [TestCategory("FUNCTIONAL")]
+       
         public void Ivst8WrongSkuMessageTestScenariosForInboundPalletIsY()
         {
             this.Given(x => x.TestDataForWrongSkuException())           
@@ -112,29 +201,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
             .When(x => x.IvstApiIsCalledCreatedIsReturned())
             .And(x => x.GetValidDataAfterTriggerForKey(WrongSku.Key))
             .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheForWrongSkuAndMsgKeyShouldBe(WrongSku.Key))
-            .And(x => x.VerifyTheQuantityAndWeightShouldBeReducedByIvstQtyInTransInventoryForInboundPalletIsY())
-            .And(x => x.VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForWrongSkuException())
+            .And(x => x.VerifyTheQuantityAndWeightShouldBeReducedByIvstQtyInTransInventoryAndPicklocnForToBeFilledAndrInboundPalletIsY())    
+            .And(x =>x.VerifyForCaseHdrAndCaseDtlRecordInsertedOrNotForDamageAndWrongSkuExceptions())
             .BDDfy("Test Case ID : 124727-Dematic - IVST- Test for Wrong SKU for Inbound Pallet = Y and validate for all functionalities");
         }
-
+     
         [TestMethod()]
-        [TestCategory("FUNCTIONAL")]
-        [Priority(9)]
-        public void Ivst9WrongSkuTestScenariosForInboundPalletIsN()
-        {
-            this.Given(x => x.TestDataForWrongSkuInboundPalletIsN())          
-            .And(x => x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl, WrongSkuOutbound.Key, EmsToWmsParametersWrongSku.Process))
-            .When(x => x.IvstApiIsCalledCreatedIsReturned())
-            .And(x => x.GetValidDataAfterTriggerForKey(WrongSkuOutbound.Key))
-            .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheForWrongSkuAndMsgKeyShouldBe(WrongSkuOutbound.Key))
-            .And(x => x.VerifyTheQuantityShouldBeReducedByIvstQtyInPickLocationForInboundPalletIsN())
-            .And(x => x.VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForWrongSkuException())
-            .BDDfy("Test Case ID:124727 -Dematic - IVST- Test for Wrong SKU for Inbound Pallet = N and validate for all functionalities");
-        }
-
-        [TestMethod()]
-        [TestCategory("FUNCTIONAL")]
-        [Priority(1)]
+        [TestCategory("FUNCTIONAL")]     
         public void Ivst1CycleCountTestScenariosForAdjustmentPlus()
         {
             this.Given(x => x.TestDataForCycleCountAdjustmentPlus())            
@@ -148,8 +221,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         }
 
         [TestMethod()]
-        [TestCategory("FUNCTIONAL")]
-        [Priority(2)]
+        [TestCategory("FUNCTIONAL")]       
         public void Ivst2CycleCountTestScenariosForAdjustmentMinus()
         {
             this.Given(x => x.TestDataForCycleCountAdjustmentMinus())           
@@ -163,8 +235,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         }
 
         [TestMethod()]
-        [TestCategory("FUNCTIONAL")]
-        [Priority(10)]
+        [TestCategory("FUNCTIONAL")]       
         public void Ivst10MixedInventoryTestScenariosForAdjustmentMinus()
         {
             this.Given(x => x.TestDataForMixedInventory())
@@ -177,8 +248,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         }
 
         [TestMethod()]
-        [TestCategory("FUNCTIONAL")]
-        [Priority(11)]
+        [TestCategory("FUNCTIONAL")]        
         public void Ivst11NoExceptionTestScenariosForAdjustmentMinus()
         {
             this.Given(x => x.TestDataForNoException())
@@ -190,13 +260,45 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                 .BDDfy();
         }
 
+        [TestMethod()]
+        [TestCategory("FUNCTIONAL")]     
+        public void Ivst12CycleCountForActionCodeAdjustMentMinusScenario3()
+        {
+            this.Given(x => x.TestDataForCcAdjustmentMinusScenario3())
+                .And(x => x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl, CycleCountAdjustmentMinus.Key, EmsToWmsParametersCycleCount.Process))
+                .When(x => x.IvstApiIsCalledCreatedIsReturned())
+                .And(x => x.GetValidDataAfterTriggerForKey(CycleCountAdjustmentMinus.Key))          
+                .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheForCycleCountAndMsgKeyShouldBe(CycleCountAdjustmentMinus.Key, "AdjustmentMinus"))
+                .And(x => x.VerifyForCycleCountNegativePickRecordAlreadyExists())
+                .And(x => x.VerifyTheRecordInsertedInToPixTransactionForCycleCountNegativePickScenario("S"))
+                .BDDfy();
+        }
 
+        [TestMethod()]
+        [TestCategory("FUNCTIONAL")]
+        public void Ivst12CycleCountForActionCodeAdjustMentMinusScenario4()
+        {
+            this.Given(x => x.TestDataForAdjustmentMinusScenario4())
+                .And(x => x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl, CycleCountAdjustmentMinus.Key, EmsToWmsParametersCycleCount.Process))
+                .When(x => x.IvstApiIsCalledCreatedIsReturned())
+                .And(x => x.GetValidDataAfterTriggerForKey(CycleCountAdjustmentMinus.Key))
+                .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheForCycleCountAndMsgKeyShouldBe(CycleCountAdjustmentMinus.Key, "AdjustmentMinus"))
+                .And(x => x.VerifyQtyReducedToZeroInPickLocnDtlTable())
+                .And(x =>x.VerifyTheRecordInsertedInToPixTransactionForCycleCountNegativePickScenario("S"))
+                .BDDfy();
+        }
 
-
-
-
-
-
-
+        [TestMethod()]
+        [TestCategory("FUNCTIONAL")]
+        public void Ivst12CycleCountForActionCodeAdjustMentMinusScenario5()
+        {
+            this.Given(x => x.TestDataForAdjustmentMinusScenario5())
+                .And(x => x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl, CycleCountAdjustmentMinus.Key, EmsToWmsParametersCycleCount.Process))
+                .When(x => x.IvstApiIsCalledCreatedIsReturned())
+                .And(x => x.GetValidDataAfterTriggerForKey(CycleCountAdjustmentMinus.Key))
+                .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheForCycleCountAndMsgKeyShouldBe(CycleCountAdjustmentMinus.Key, "AdjustmentMinus"))
+                .And(x => x.VerifyForCycleCountWherePickLocnQtyIsLessThanIvstQtyandLessthanOrEqualToZero())              
+                .BDDfy();
+        }
     }
 }

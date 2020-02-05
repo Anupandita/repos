@@ -14,6 +14,7 @@ using Sfc.Wms.Interfaces.Asrs.Shamrock.Contracts.Dtos;
 using Sfc.Wms.Interfaces.Asrs.Dematic.Contracts.Dtos;
 using Sfc.Wms.Foundation.TransitionalInventory.Contracts.Dtos;
 using Sfc.Wms.Foundation.InboundLpn.Contracts.Enums;
+using Sfc.Wms.Foundation.InboundLpn.Contracts.Dtos;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
@@ -53,47 +54,101 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected PixTransactionDto Pixtran = new PixTransactionDto();
         protected TransitionalInventoryDto TrnsInvBeforeApi = new TransitionalInventoryDto();
         protected TransitionalInventoryDto TrnsInvAfterApi = new TransitionalInventoryDto();
+        protected TransitionalInventoryDto TransInvnNegativePick = new TransitionalInventoryDto();
+        protected TransitionalInventoryDto TransInvnNegativePickBeforeApi = new TransitionalInventoryDto();
         protected List<Scenarios> MsgkeyList = new List<Scenarios>();
+        protected CaseDetailDto caseDtlAfterApi = new CaseDetailDto();
+        protected CaseHeaderDto caseHdrAfterApi = new CaseHeaderDto();
 
-        public void GetDataBeforeApiTrigger()
+       
+
+        // Scenario 1
+        public void InsertIvstMessageUnexpectedOverageWhenCaseHeaderStatusCodeIsLessthan90AndCaseDtlActlQtyIsGreaterThanZero()
         {
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                IvstData = GetCaseDetailsForInsertingIvstMessage(db);
+                IvstData = GetCaseDetailsForInsertingIvstMessage(db, IvstQueries.CaseHdrStatCodeLesserThan90AndCaseDtlActlQtyGreaterThanZero);
                 Unitweight1 = FetchUnitWeight(db, IvstData.SkuId);
                 TrnsInvBeforeApi = FetchTransInvnentory(db, IvstData.SkuId);
-                PickLcnDtlBeforeApi = GetPickLocationDetails(db,IvstData.SkuId,null);                  
+                PickLcnDtlBeforeApi = GetPickLocationDetails(db, IvstData.SkuId, null);
+                InsertingUnexpectedOverage(db, IvstActionCode.AdjustmentPlus, IvstException.UnexpectedOverage, Constants.InboundPalletY,Constants.IvstQuantity);
+                IvstData.Key = InsertEmsToWms(db, EmsToWmsParameters);
             }
         }
 
-        public void InsertIvstMessagetUnexpectedFunction()
+        // Scenario 2
+        public void
+            IvstMessageUnexpectedOverageWhenCaseHeaderStatusCodeIsLessThanOrEqualTo90AndCaseDtlActlQtyIsEqualToZero()
         {
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                InsertingUnexpectedOverage(db, IvstActionCode.AdjustmentPlus, IvstException.UnexpectedOverage,Constants.InboundPalletY);
-                IvstData.Key = InsertEmsToWms(db, EmsToWmsParameters);           
+                IvstData = GetCaseDetailsForInsertingIvstMessage(db, IvstQueries.CaseHdrStatCodeLesserThan90AndCaseDtlActlQtyEqualToZero);
+                Unitweight1 = FetchUnitWeight(db, IvstData.SkuId);
+                TrnsInvBeforeApi = FetchTransInvnentory(db, IvstData.SkuId);
+                PickLcnDtlBeforeApi = GetPickLocationDetails(db, IvstData.SkuId, null);
+                InsertingUnexpectedOverage(db, IvstActionCode.AdjustmentPlus, IvstException.UnexpectedOverage, Constants.InboundPalletY,Constants.IvstQuantity);
+                IvstData.Key = InsertEmsToWms(db, EmsToWmsParameters);
             }
         }
-        
 
+        // Scenario 3
+        public void InsertIvstMessagetUnexpectedFunctionForstatus96AndNegativeTiAlreadyExists()
+        {
+            using (var db = GetOracleConnection())
+            {
+                db.Open();
+                IvstData = GetCaseDetailsForInsertingIvstMessage(db, IvstQueries.IvstQueryForTiNegativePickAlreadyExistsForStatus96);
+                Unitweight1 = FetchUnitWeight(db, IvstData.SkuId);
+                TrnsInvBeforeApi = FetchTransInvnentory(db, IvstData.SkuId);
+                TransInvnNegativePickBeforeApi = FetchTransInvnentoryForNegative(db, IvstData.SkuId);
+                PickLcnDtlBeforeApi = GetPickLocationDetails(db, IvstData.SkuId, null);
+                InsertingUnexpectedOverage(db, IvstActionCode.AdjustmentPlus, IvstException.UnexpectedOverage, Constants.InboundPalletY,Constants.IvstQuantity);
+                IvstData.Key = InsertEmsToWms(db, EmsToWmsParameters);
+            }
+        }
+        // Scenario 4 
+
+        public void InsertIvstMessagetUnexpectedFunctionForstatus96AndNegativeTiNotExists()
+        {
+            using (var db = GetOracleConnection())
+            {
+                db.Open();
+                IvstData = GetCaseDetailsForInsertingIvstMessage(db, IvstQueries.IvstQueryForTiNegativePickNotExistsForStatus96);
+                Unitweight1 = FetchUnitWeight(db, IvstData.SkuId);
+                TrnsInvBeforeApi = FetchTransInvnentory(db, IvstData.SkuId);
+                PickLcnDtlBeforeApi = GetPickLocationDetails(db, IvstData.SkuId, null);
+                InsertingUnexpectedOverage(db, IvstActionCode.AdjustmentPlus, IvstException.UnexpectedOverage, Constants.InboundPalletY,Constants.IvstQuantity);
+                IvstData.Key = InsertEmsToWms(db, EmsToWmsParameters);
+            }
+        }
+        // inventoryShortag - Scenario 1
         public void InsertIvstMessageForInventoryShortageInboundPalletIsY()
         {
             using (var db = GetOracleConnection())
             {
-                db.Open();             
+                db.Open();
+                IvstData = GetCaseDetailsForInsertingIvstMessage(db, IvstQueries.IvstQueryForPickLocnQtyGreaterThanIvstQty);
+                Unitweight1 = FetchUnitWeight(db, IvstData.SkuId);
+                TrnsInvBeforeApi = FetchTransInvnentory(db, IvstData.SkuId);
+                PickLcnDtlBeforeApi = GetPickLocationDetails(db, IvstData.SkuId, null);
                 InsertingInventoryShortage(db, IvstActionCode.AdjustmentMinus, IvstException.InventoryShortage,Constants.InboundPalletY);
                 InvShortageInbound.Key = InsertEmsToWms(db, EmsToWmsParametersInventoryShortage);
             }
         }
 
+        // inventoryShortag - Scenario 2
         public void InsertIvstMessageForInventoryShortageInboundPalletIsN()
         {
             using (var db = GetOracleConnection())
             {
-                db.Open();                
-                var ivstResult = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, IvstData.Qty, IvstActionCode.AdjustmentMinus, IvstException.InventoryShortage, Constants.InboundPalletN);
+                db.Open();
+                IvstData = GetCaseDetailsForInsertingIvstMessage(db, IvstQueries.IvstQueryForPickLocnQtyGreaterThanIvstQty);
+                Unitweight1 = FetchUnitWeight(db, IvstData.SkuId);
+                TrnsInvBeforeApi = FetchTransInvnentory(db, IvstData.SkuId);
+                PickLcnDtlBeforeApi = GetPickLocationDetails(db, IvstData.SkuId, null);
+                var ivstResult = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, Constants.IvstQuantity, IvstActionCode.AdjustmentMinus, IvstException.InventoryShortage, Constants.InboundPalletN);
                 EmsToWmsParametersInventoryShortage = new EmsToWmsDto
                 {
                     Process = DefaultPossibleValue.MessageProcessor,
@@ -102,17 +157,87 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                     MessageText = ivstResult
                 };
                 InvShortageOutbound.Key = InsertEmsToWms(db, EmsToWmsParametersInventoryShortage);
-               
+            }
+        }
+        //  inventoryShortag - Scenario 3
+        public void InsertIvstMessageForInventoryShortageOutBoundAndPickLocnDtlQtyIsGreaterThanZeroButLesserThanIvstQty()
+        {
+            using (var db = GetOracleConnection())
+            {
+                db.Open();
+                IvstData = GetCaseDetailsForInsertingIvstMessage(db, IvstQueries.IvstQueryForTiNegativePickAlreadyExists);
+                Unitweight1 = FetchUnitWeight(db, IvstData.SkuId);
+                TrnsInvBeforeApi = FetchTransInvnentory(db, IvstData.SkuId);
+                TransInvnNegativePickBeforeApi = FetchTransInvnentoryForNegative(db, IvstData.SkuId);
+                PickLcnDtlBeforeApi = GetPickLocationDetails(db, IvstData.SkuId, null);
+                var ivstResult = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, (PickLcnDtlBeforeApi.ActualInventoryQuantity + 1).ToString(), IvstActionCode.AdjustmentMinus, IvstException.InventoryShortage, Constants.InboundPalletN);
+                EmsToWmsParametersInventoryShortage = new EmsToWmsDto
+                {
+                    Process = DefaultPossibleValue.MessageProcessor,
+                    Status = RecordStatus.Ready.ToString(),
+                    Transaction = TransactionCode.Ivst,
+                    MessageText = ivstResult
+                };
+                InvShortageOutbound.Key = InsertEmsToWms(db, EmsToWmsParametersInventoryShortage);
             }
         }
 
+        public void InsertIvstMessageForInventoryShortageOutBoundAndPickLocnDtlQtyIsGreaterThanZeroButLesserThanIvstQtyForNegativePickDoesNotExists()
+        {
+            using (var db = GetOracleConnection())
+            {
+                db.Open();
+                IvstData = GetCaseDetailsForInsertingIvstMessage(db, IvstQueries.IvstQueryForTiNegativePickAlreadyExists);
+                DeleteTheRecordForTransInvnTypeIs10(db, IvstData.SkuId);
+                Unitweight1 = FetchUnitWeight(db, IvstData.SkuId);
+                TrnsInvBeforeApi = FetchTransInvnentory(db, IvstData.SkuId);
+                PickLcnDtlBeforeApi = GetPickLocationDetails(db, IvstData.SkuId, null);
+                var ivstResult = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, (PickLcnDtlBeforeApi.ActualInventoryQuantity + 1).ToString(), IvstActionCode.AdjustmentMinus, IvstException.InventoryShortage, Constants.InboundPalletN);
+                EmsToWmsParametersInventoryShortage = new EmsToWmsDto
+                {
+                    Process = DefaultPossibleValue.MessageProcessor,
+                    Status = RecordStatus.Ready.ToString(),
+                    Transaction = TransactionCode.Ivst,
+                    MessageText = ivstResult
+                };
+                InvShortageOutbound.Key = InsertEmsToWms(db, EmsToWmsParametersInventoryShortage);
+            }
+        }       
+
+
+        // IvstQueryForPickLocnQtyLesserThanOrEqualToZero - scenario 5
+        public void InsertIvstMessageForInventoryShortageOutBoundAndPickLocnQtyLesserThanOrEqualToZero()
+       {
+           using (var db = GetOracleConnection())
+           {
+               db.Open();
+               IvstData = GetCaseDetailsForInsertingIvstMessage(db, IvstQueries.IvstQueryForPickLocnQtyLesserThanOrEqualToZero);
+               Unitweight1 = FetchUnitWeight(db, IvstData.SkuId);
+               TrnsInvBeforeApi = FetchTransInvnentory(db, IvstData.SkuId);
+                TransInvnNegativePickBeforeApi = FetchTransInvnentoryForNegative(db,IvstData.SkuId);
+               PickLcnDtlBeforeApi = GetPickLocationDetails(db, IvstData.SkuId, null);
+               var ivstResult = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, (PickLcnDtlBeforeApi.ActualInventoryQuantity + 1).ToString(), IvstActionCode.AdjustmentMinus, IvstException.InventoryShortage, Constants.InboundPalletN);
+               EmsToWmsParametersInventoryShortage = new EmsToWmsDto
+               {
+                   Process = DefaultPossibleValue.MessageProcessor,
+                   Status = RecordStatus.Ready.ToString(),
+                   Transaction = TransactionCode.Ivst,
+                   MessageText = ivstResult
+               };
+               InvShortageOutbound.Key = InsertEmsToWms(db, EmsToWmsParametersInventoryShortage);
+           }
+       }
 
         public void InsertIvstMessageForMixedOrIncorrectInventory()
         {
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                var ivstResult = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, IvstData.Qty, IvstActionCode.AdjustmentMinus, "0009", Constants.InboundPalletN);
+                IvstData = GetCaseDetailsForInsertingIvstMessage(db, IvstQueries.IvstQueryForPickLocnQtyGreaterThanIvstQty);
+                Unitweight1 = FetchUnitWeight(db, IvstData.SkuId);
+                TrnsInvBeforeApi = FetchTransInvnentory(db, IvstData.SkuId);
+                PickLcnDtlBeforeApi = GetPickLocationDetails(db, IvstData.SkuId, null);
+                var ivstResult = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, "1", IvstActionCode.AdjustmentMinus, "0009", Constants.InboundPalletN);
                 EmsToWmsParametersMixedInventory = new EmsToWmsDto
                 {
                     Process = "IVSTProcessor",
@@ -129,7 +254,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                var ivstResult = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, IvstData.Qty, IvstActionCode.AdjustmentMinus, "0000", Constants.InboundPalletY);
+                var ivstResult = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, "1", IvstActionCode.AdjustmentMinus, "0000", Constants.InboundPalletY);
                 EmsToWmsParametersNoException = new EmsToWmsDto
                 {
                     Process = "IVSTProcessor",
@@ -146,7 +271,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                var ivstResult = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, IvstData.Qty, IvstActionCode.AdjustmentMinus, IvstException.Damage, Constants.InboundPalletN);
+                Command = new OracleCommand(Query, db);             
+                IvstData = GetCaseDetailsForInsertingIvstMessage(db, IvstQueries.IvstQueryForPickLocnQtyGreaterThanIvstQty);
+                Unitweight1 = FetchUnitWeight(db, IvstData.SkuId);
+                TrnsInvBeforeApi = FetchTransInvnentory(db, IvstData.SkuId);
+                PickLcnDtlBeforeApi = GetPickLocationDetails(db, IvstData.SkuId, null);
+                var ivstResult = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, "1", IvstActionCode.AdjustmentMinus, IvstException.Damage, Constants.InboundPalletN);
                 EmsToWmsParametersDamage = new EmsToWmsDto
                 {
                     Process = DefaultPossibleValue.MessageProcessor,
@@ -158,13 +288,33 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void InsertIvstMessageDamageFunction()
+        public void InsertIvstMessageDamageForInboundPalletIsY()
         {
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                InsertingDamage(db, IvstActionCode.AdjustmentMinus, IvstException.Damage,Constants.InboundPalletY);
+                Command = new OracleCommand(Query, db);           
+                IvstData = GetCaseDetailsForInsertingIvstMessage(db, IvstQueries.IvstQueryForPickLocnQtyGreaterThanIvstQty);
+                Unitweight1 = FetchUnitWeight(db, IvstData.SkuId);
+                TrnsInvBeforeApi = FetchTransInvnentory(db, IvstData.SkuId);
+                PickLcnDtlBeforeApi = GetPickLocationDetails(db, IvstData.SkuId, null);
+                InsertingDamageForInboundPalletY(db, IvstActionCode.AdjustmentMinus, IvstException.Damage,Constants.InboundPalletY,Constants.IvstQuantity);
                 DamageInbound.Key = InsertEmsToWms(db, EmsToWmsParametersDamage);
+            }
+        }
+//-- Scenario 3
+        public void InsertIvstMessageDamageForInboundPalletIsYScenario3()
+        {
+            using (var db = GetOracleConnection())
+            {
+                db.Open();
+                Command = new OracleCommand(Query, db);          
+                IvstData = GetCaseDetailsForInsertingIvstMessage(db, IvstQueries.IvstQueryForPickLocnQtyGreaterThanIvstQty);
+                Unitweight1 = FetchUnitWeight(db, IvstData.SkuId);
+                TrnsInvBeforeApi = FetchTransInvnentory(db, IvstData.SkuId);
+                PickLcnDtlBeforeApi = GetPickLocationDetails(db, IvstData.SkuId, null);
+                InsertingDamageForInboundPalletY(db, IvstActionCode.AdjustmentMinus, IvstException.Damage, Constants.InboundPalletN, (PickLcnDtlBeforeApi.ActualInventoryQuantity + Convert.ToDecimal(Constants.IvstQuantity)).ToString());
+                DamageOutbound.Key = InsertEmsToWms(db, EmsToWmsParametersDamage);
             }
         }
 
@@ -173,8 +323,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
+                IvstData = GetCaseDetailsForInsertingIvstMessage(db, IvstQueries.IvstQueryForPickLocnQtyGreaterThanIvstQty);
+                Unitweight1 = FetchUnitWeight(db, IvstData.SkuId);
+                TrnsInvBeforeApi = FetchTransInvnentory(db, IvstData.SkuId);
+                PickLcnDtlBeforeApi = GetPickLocationDetails(db, IvstData.SkuId, null);
                 InsertingWrongSku(db, IvstActionCode.AdjustmentMinus, IvstException.WrongSku,Constants.InboundPalletY);
-                WrongSku.Key = InsertEmsToWms(db, EmsToWmsParametersWrongSku);    
+                WrongSku.Key = InsertEmsToWms(db, EmsToWmsParametersWrongSku);            
             }
         }
 
@@ -183,7 +337,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                var ivstResult = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, IvstData.Qty, IvstActionCode.AdjustmentMinus, IvstException.WrongSku, Constants.InboundPalletN);
+                var ivstResult = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, "1", IvstActionCode.AdjustmentMinus, IvstException.WrongSku, Constants.InboundPalletN);
                 EmsToWmsParametersWrongSku = new EmsToWmsDto
                 {
                     Process = DefaultPossibleValue.MessageProcessor,
@@ -195,12 +349,18 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
+// right .. 1st scenario
+/// </summary>
         public void InsertIvstMessageForCycleCountWithAdjustmentPlus()
         {
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                var ivstResult = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, IvstData.Qty, IvstActionCode.AdjustmentPlus, IvstException.CycleCount, Constants.InboundPalletN);
+                IvstData = GetCaseDetailsForInsertingIvstMessage(db, IvstQueries.IvstQueryForPickLocnQtyGreaterThanIvstQty);
+                Unitweight1 = FetchUnitWeight(db, IvstData.SkuId);
+                TrnsInvBeforeApi = FetchTransInvnentory(db, IvstData.SkuId);
+                PickLcnDtlBeforeApi = GetPickLocationDetails(db, IvstData.SkuId, null);
+                var ivstResult = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, Constants.IvstQuantity, IvstActionCode.AdjustmentPlus, IvstException.CycleCount, Constants.InboundPalletN);
                 EmsToWmsParametersCycleCount = new EmsToWmsDto
                 {
                     Process = DefaultPossibleValue.MessageProcessor,
@@ -212,12 +372,41 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void InsertIvstMessageForCycleCountWithAdjustmentMinus()
+// right.. 2nd scenario
+        public void IvstMessageForCcAdjustmentMinusWherePickLocnDtlActlQtyIsGreaterThanIvstQty()
         {
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                var ivstResult = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, IvstData.Qty, IvstActionCode.AdjustmentMinus, IvstException.CycleCount, Constants.InboundPalletN);
+                IvstData = GetCaseDetailsForInsertingIvstMessage(db, IvstQueries.IvstQueryForPickLocnQtyGreaterThanIvstQty);
+                Unitweight1 = FetchUnitWeight(db, IvstData.SkuId);
+                TrnsInvBeforeApi = FetchTransInvnentory(db, IvstData.SkuId);
+                PickLcnDtlBeforeApi = GetPickLocationDetails(db, IvstData.SkuId, null);
+                var ivstResult = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, Constants.IvstQuantity, IvstActionCode.AdjustmentMinus, IvstException.CycleCount, Constants.InboundPalletN);
+                EmsToWmsParametersCycleCount = new EmsToWmsDto
+                {
+                    Process = DefaultPossibleValue.MessageProcessor,
+                    Status = RecordStatus.Ready.ToString(),
+                    Transaction = TransactionCode.Ivst,
+                    MessageText = ivstResult
+                };
+                CycleCountAdjustmentMinus.Key = InsertEmsToWms(db, EmsToWmsParametersCycleCount);
+            }
+        }
+// right 3rd scenario
+        // NegativePickRecord Exists
+        public void IvstMessageForCcAdjustmentMinusWherePickLocnDtlActlQtyIsGreaterThanZeroButLessThanIvstQty()
+        {
+            using (var db = GetOracleConnection())
+            {
+                db.Open();
+
+                IvstData = GetCaseDetailsForInsertingIvstMessage(db, IvstQueries.IvstQueryForTiNegativePickAlreadyExists);
+                Unitweight1 = FetchUnitWeight(db, IvstData.SkuId);
+                TrnsInvBeforeApi = FetchTransInvnentory(db, IvstData.SkuId);
+                TransInvnNegativePickBeforeApi = FetchTransInvnentoryForNegative(db,IvstData.SkuId);
+                PickLcnDtlBeforeApi = GetPickLocationDetails(db, IvstData.SkuId, null);
+                var ivstResult = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, (PickLcnDtlBeforeApi.ActualInventoryQuantity + Convert.ToDecimal(Constants.IvstQuantity)).ToString(), IvstActionCode.AdjustmentMinus, IvstException.CycleCount, Constants.InboundPalletN);
                 EmsToWmsParametersCycleCount = new EmsToWmsDto
                 {
                     Process = DefaultPossibleValue.MessageProcessor,
@@ -229,15 +418,64 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public Ivst GetCaseDetailsForInsertingIvstMessage(OracleConnection db)
+
+// right 4th scenario
+        // Negative Pick does not exists.
+        public void
+            IvstMessageForCcAdjustMentMinusWherePickLocnDtlActlQtyIsGreaterThanZeroButLessThanIvstQtyAndNegativeTiDoesNotExists()
+        {
+            using (var db = GetOracleConnection())
+            {
+                db.Open();
+                IvstData = GetCaseDetailsForInsertingIvstMessage(db, IvstQueries.IvstQueryForTiNegativePickNotExists);
+                DeleteTheRecordForTransInvnTypeIs10(db, IvstData.SkuId);
+                Unitweight1 = FetchUnitWeight(db, IvstData.SkuId);
+                TrnsInvBeforeApi = FetchTransInvnentory(db, IvstData.SkuId);
+                PickLcnDtlBeforeApi = GetPickLocationDetails(db, IvstData.SkuId, null);
+                var ivstResult = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, (PickLcnDtlBeforeApi.ActualInventoryQuantity + Convert.ToDecimal(Constants.IvstQuantity)).ToString(), IvstActionCode.AdjustmentMinus, IvstException.CycleCount, Constants.InboundPalletN);
+                EmsToWmsParametersCycleCount = new EmsToWmsDto
+                {
+                    Process = DefaultPossibleValue.MessageProcessor,
+                    Status = RecordStatus.Ready.ToString(),
+                    Transaction = TransactionCode.Ivst,
+                    MessageText = ivstResult
+                };
+                CycleCountAdjustmentMinus.Key = InsertEmsToWms(db, EmsToWmsParametersCycleCount);
+            }
+        }
+// right 5th scenario
+        public void IvstMessageForCcAdjustmentMinusWherePickLocnQtyIsLessThanOrEqualToZeroAndLessThanIvstQuantity()
+        {
+            using (var db = GetOracleConnection())
+            {
+                db.Open();
+                IvstData = GetCaseDetailsForInsertingIvstMessage(db, IvstQueries.IvstQueryForPickLocnQtyLesserThanOrEqualToZero);
+                Unitweight1 = FetchUnitWeight(db, IvstData.SkuId);
+                TrnsInvBeforeApi = FetchTransInvnentory(db, IvstData.SkuId);
+                TransInvnNegativePickBeforeApi = FetchTransInvnentoryForNegative(db,IvstData.SkuId);
+                PickLcnDtlBeforeApi = GetPickLocationDetails(db, IvstData.SkuId, null);
+                var ivstResult = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, (PickLcnDtlBeforeApi.ActualInventoryQuantity + Convert.ToDecimal(Constants.IvstQuantity)).ToString(), IvstActionCode.AdjustmentMinus, IvstException.CycleCount, Constants.InboundPalletN);
+                EmsToWmsParametersCycleCount = new EmsToWmsDto
+                {
+                    Process = DefaultPossibleValue.MessageProcessor,
+                    Status = RecordStatus.Ready.ToString(),
+                    Transaction = TransactionCode.Ivst,
+                    MessageText = ivstResult
+                };
+                CycleCountAdjustmentMinus.Key = InsertEmsToWms(db, EmsToWmsParametersCycleCount);
+            }
+        }
+        
+        
+        public Ivst GetCaseDetailsForInsertingIvstMessage(OracleConnection db,string query)
         {
             var ivstDataDto = new Ivst();
-            Query = EmsToWmsQueries.CostQuery;
-            Command = new OracleCommand(Query, db);
+            Command = new OracleCommand(query, db);
             Command.Parameters.Add(new OracleParameter("statCode", Constants.StatusCodeConsumed));
             Command.Parameters.Add(new OracleParameter("sysCodeType", Constants.SysCodeType));
             Command.Parameters.Add(new OracleParameter("codeId", Constants.SysCodeIdForActiveLocation));
             Command.Parameters.Add(new OracleParameter("ready", DefaultValues.Status));
+            Command.Parameters.Add(new OracleParameter("ivstQty", Constants.IvstQuantity));         
             var validData = Command.ExecuteReader();
             if (validData.Read())
             {
@@ -245,28 +483,28 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 ivstDataDto.SkuId = validData[FieldName.SkuId].ToString();
                 ivstDataDto.Qty = validData[FieldName.Qty].ToString();
                 ivstDataDto.LocnId = validData[FieldName.LocnId].ToString();
+                ivstDataDto.CaseDtlQty = validData["Actl_qty"].ToString();
             }
             return ivstDataDto;
         }
 
-        public void InsertingUnexpectedOverage(OracleConnection db, string actionCode, string exception, string inboundPallet)
+        public void InsertingUnexpectedOverage(OracleConnection db, string actionCode, string exception, string inboundPallet,string quantity)
         {
             Command = new OracleCommand(Query, db);
-            var ivstmsg = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, IvstData.Qty, actionCode, exception,inboundPallet);
+            var ivstmsg = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, quantity, actionCode, exception,inboundPallet);
             EmsToWmsParameters = new EmsToWmsDto
             {
                 Process = DefaultPossibleValue.MessageProcessor,
                 Status = RecordStatus.Ready.ToString(),
                 Transaction = TransactionCode.Ivst,
                 MessageText = ivstmsg
-            };
-            
+            };            
         }
 
         public void  InsertingInventoryShortage(OracleConnection db, string actionCode, string exception, string inboundPallet)
         {
             Command = new OracleCommand(Query, db);
-            var ivstmsg = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, IvstData.Qty, actionCode, exception, inboundPallet);
+            var ivstmsg = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, "1", actionCode, exception, inboundPallet);
             EmsToWmsParametersInventoryShortage = new EmsToWmsDto
             {
                 Process = DefaultPossibleValue.MessageProcessor,
@@ -275,10 +513,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 MessageText = ivstmsg
             };       
         }
-        public void InsertingDamage(OracleConnection db, string actionCode, string exception, string inboundPallet)
+        public void InsertingDamageForInboundPalletY(OracleConnection db, string actionCode, string exception, string inboundPallet, string quantity)
         {
-            Command = new OracleCommand(Query, db);
-            var ivstmsg = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, IvstData.Qty, actionCode, exception, inboundPallet);
+           
+            var ivstmsg = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, quantity, actionCode, exception, inboundPallet);
             EmsToWmsParametersDamage = new EmsToWmsDto
             {
                 Process = DefaultPossibleValue.MessageProcessor,
@@ -291,7 +529,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public void InsertingWrongSku(OracleConnection db, string actionCode, string exception, string inboundPallet)
         {
             Command = new OracleCommand(Query, db);
-            var ivstmsg = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, IvstData.Qty, actionCode, exception, inboundPallet);
+            var ivstmsg = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId,"1" , actionCode, exception, inboundPallet);
             EmsToWmsParametersWrongSku = new EmsToWmsDto
             {
                 Process = DefaultPossibleValue.MessageProcessor,
@@ -301,14 +539,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             };           
         }
 
-        public string CreateIvstMessage(string containerNbr, string skuId, string locationId, string actionCode, string adjustmentReasonCode,string inboundPallet)
+        public string CreateIvstMessage(string containerNbr, string skuId, string quantity, string actionCode, string adjustmentReasonCode,string inboundPallet)
         {
             IvstParameters = new IvstDto
             {
                 ActionCode = actionCode,
                 AdjustmentReasonCode = adjustmentReasonCode,
                 ContainerId = containerNbr,
-                Quantity = Constants.MinQuantity,
+                Quantity = quantity,
                 Sku = skuId,
                 Owner = Constants.Owner,
                 UserName = Constants.UserName,
@@ -337,8 +575,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 TrnsInvAfterApi = FetchTransInvnentory(db, Ivst.Sku);
                 PickLocnDtlAfterApi = GetPickLocationDetails(db, Ivst.Sku,null);                  
                 UnitWeight = FetchUnitWeight(db, Ivst.Sku);
-                var pixTrnAfterApi = PixTransactionTable(Ivst.AdjustmentReasonCode);
+                var pixTrnAfterApi = PixTransactionTable(Ivst.AdjustmentReasonCode);          
                 Pixtran = GetPixtransaction(db, pixTrnAfterApi, SwmFromMhe.ContainerId);
+
+                caseDtlAfterApi = FetchCaseDetailQty(db, SwmFromMhe.ContainerId);
+                caseHdrAfterApi = CaseHeaderDetails(db, SwmFromMhe.ContainerId);
+                TransInvnNegativePick = FetchTransInvnentoryForNegative(db, Ivst.Sku);
             }
         }
 
@@ -359,6 +601,21 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return pixtran;
         }
 
+
+        public void DeleteTheRecordForTransInvnTypeIs10(OracleConnection db,string skuId)
+        {
+           Transaction = db.BeginTransaction();
+            var transInvn = new TransitionalInventoryDto();
+           Query = $"Delete trans_invn where sku_id = '{skuId}' and trans_invn_type = '10'";
+           Command = new OracleCommand(Query, db);
+           Command.ExecuteNonQuery();
+           Transaction.Commit();
+        }
+
+
+
+
+
         public string PixTransactionTable(string adjustmentReasonCode)
         {
             switch (adjustmentReasonCode)
@@ -377,8 +634,5 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                     return Constants.PixRsnCodeForCycleCount;
             }
         }
-
-
-
     }
 }

@@ -21,6 +21,7 @@
         public string DestLocnId { get; set; }
         public string ShipWCtrlNbr { get; set; }
         public string LocnId { get; set; }
+        public string TempZone { get; set; }
 
     }
 
