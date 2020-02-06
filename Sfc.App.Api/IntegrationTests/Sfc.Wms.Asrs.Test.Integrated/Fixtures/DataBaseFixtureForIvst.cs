@@ -59,8 +59,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected List<Scenarios> MsgkeyList = new List<Scenarios>();
         protected CaseDetailDto caseDtlAfterApi = new CaseDetailDto();
         protected CaseHeaderDto caseHdrAfterApi = new CaseHeaderDto();
-
-       
+        protected List<Pb2CorbaHdrDtl> pb = new List<Pb2CorbaHdrDtl>();
+     
 
         // Scenario 1
         public void InsertIvstMessageUnexpectedOverageWhenCaseHeaderStatusCodeIsLessthan90AndCaseDtlActlQtyIsGreaterThanZero()
@@ -254,6 +254,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
+                IvstData = GetCaseDetailsForInsertingIvstMessage(db, IvstQueries.IvstQueryForPickLocnQtyGreaterThanIvstQty);
+                Unitweight1 = FetchUnitWeight(db, IvstData.SkuId);
+                TrnsInvBeforeApi = FetchTransInvnentory(db, IvstData.SkuId);
+                PickLcnDtlBeforeApi = GetPickLocationDetails(db, IvstData.SkuId, null);
                 var ivstResult = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, "1", IvstActionCode.AdjustmentMinus, "0000", Constants.InboundPalletY);
                 EmsToWmsParametersNoException = new EmsToWmsDto
                 {
@@ -577,10 +581,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 UnitWeight = FetchUnitWeight(db, Ivst.Sku);
                 var pixTrnAfterApi = PixTransactionTable(Ivst.AdjustmentReasonCode);          
                 Pixtran = GetPixtransaction(db, pixTrnAfterApi, SwmFromMhe.ContainerId);
-
-                caseDtlAfterApi = FetchCaseDetailQty(db, SwmFromMhe.ContainerId);
-                caseHdrAfterApi = CaseHeaderDetails(db, SwmFromMhe.ContainerId);
+               
                 TransInvnNegativePick = FetchTransInvnentoryForNegative(db, Ivst.Sku);
+                Int64 maxId = FetchMaxIdFromPb2CorbaHdr(db);
+                pb = FetchPbHdrDetails(db, maxId);
+                caseDtlAfterApi = FetchCaseDetailQty(db,pb[0].ParmValue);
+                caseHdrAfterApi = CaseHeaderDetails(db, pb[0].ParmValue);
             }
         }
 
@@ -601,7 +607,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return pixtran;
         }
 
-
         public void DeleteTheRecordForTransInvnTypeIs10(OracleConnection db,string skuId)
         {
            Transaction = db.BeginTransaction();
@@ -611,10 +616,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
            Command.ExecuteNonQuery();
            Transaction.Commit();
         }
-
-
-
-
 
         public string PixTransactionTable(string adjustmentReasonCode)
         {

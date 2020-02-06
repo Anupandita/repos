@@ -48,7 +48,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected PickLocationDetailsDto PickLocnAfterCallingApi = new PickLocationDetailsDto();
         protected PickLocationDetailsDto PickLocnBeforeCallingApi = new PickLocationDetailsDto();
 
-
         public DataBaseFixture()
         {
             _canParseMessage = new MessageHeaderParser();

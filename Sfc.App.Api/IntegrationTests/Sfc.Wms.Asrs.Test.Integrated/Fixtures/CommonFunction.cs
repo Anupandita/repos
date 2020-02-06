@@ -182,7 +182,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 caseDtl.SkuId = caseDtlReader["SKU_ID"].ToString();
                 caseDtl.OriginalQuantity = Convert.ToDecimal(caseDtlReader["ORIG_QTY"]);
                 caseDtl.ShippedAsnQuantity = Convert.ToDecimal(caseDtlReader["SHPD_ASN_QTY"]);
-                caseDtl.CaseSequenceNumber = Convert.ToInt16(caseDtlReader["SHPD_ASN_QTY"]);
+                caseDtl.CaseSequenceNumber = Convert.ToInt16(caseDtlReader["CASE_SEQ_NBR"]);
             }
             return caseDtl;
         }
@@ -294,6 +294,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 caseHdr.ActualWeight = Convert.ToDecimal(cartonHdrReader["ACTL_WT"]);
                 caseHdr.SingleSkuId = cartonHdrReader["SNGL_SKU_CASE"].ToString();
                 caseHdr.SpecialInstructionCode1 = cartonHdrReader["SPL_INSTR_CODE_1"].ToString();
+                caseHdr.CaseNumber = cartonHdrReader["CASE_NBR"].ToString();
             }
             return caseHdr;
         }
@@ -325,6 +326,41 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
             return swmFromMheData;
         }
+
+        public Int64  FetchMaxIdFromPb2CorbaHdr(OracleConnection db)
+        {
+            var query = IvstQueries.MaxIdForPb2CorbaHdr;
+            Command = new OracleCommand(query, db);
+            Int64 maxId = Convert.ToInt64(Command.ExecuteScalar());
+            return maxId;
+        }
+
+        public List<Pb2CorbaHdrDtl> FetchPbHdrDetails(OracleConnection db, Int64 maxId)
+        {
+            var pbHdrDtlList = new List<Pb2CorbaHdrDtl>();
+            var query = $"select * from pb2_corba_hdr ph inner join pb2_corba_dtl pd on ph.id=pd.id " +
+                $"where func_name like '%printCaseLabelPB' and " +
+                $"workstation_id = (select TRIM(SUBSTR(MISC_FLAGS, 13, 15)) " +
+                $"from whse_sys_code where code_type = '309' and rec_type = 'C' and code_id = 'Dry') " +
+                $"and ph.id = '{maxId}' order by parm_name asc";
+            var command = new OracleCommand(query, db);
+            var pbHdrDtlReader = command.ExecuteReader();
+            while (pbHdrDtlReader.Read())
+            {
+                var set = new Pb2CorbaHdrDtl
+                {
+                    Status = pbHdrDtlReader["STATUS"].ToString(),
+                    WorkStationId = pbHdrDtlReader["WORKSTATION_ID"].ToString(),
+                    ParmName = pbHdrDtlReader["PARM_NAME"].ToString(),
+                    ParmType = pbHdrDtlReader["PARM_TYPE"].ToString(),
+                    ParmValue = pbHdrDtlReader["PARM_VALUE"].ToString(),
+                    ChgUser = pbHdrDtlReader["CHG_USER"].ToString(),
+                };
+                pbHdrDtlList.Add(set);
+            }
+            return pbHdrDtlList;
+        }
+
 
     }
 }

@@ -59,5 +59,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
 
         public static string Pb2CorbaHdrAndDtl = $"select * from pb2_corba_hdr ph inner join pb2_corba_dtl pd on ph.id=pd.id where " +
             $"func_name like '%printCaseLabelPB' and workstation_id = (select TRIM(SUBSTR(MISC_FLAGS,13,15)) from whse_sys_code where code_type = '309' and rec_type = 'C'  and code_id = 'Dry') order by ph.id desc";
+        public static string MaxIdForPb2CorbaHdr = $"select max(Id) from pb2_corba_hdr  where workstation_id = (select TRIM(SUBSTR(MISC_FLAGS,13,15))from whse_sys_code where code_type = '309' and rec_type = 'C' and code_id = 'Dry')";
+        public static string Pb2CorbaHdrDtl = $"select * from pb2_corba_hdr ph inner join pb2_corba_dtl pd on ph.id=pd.id where func_name like '%printCaseLabelPB' and workstation_id = (select TRIM(SUBSTR(MISC_FLAGS,13,15)) from whse_sys_code where code_type = '309' and rec_type = 'C' and code_id = 'Dry') and ph.id = '10865079' order by parm_name asc";
+
     }
 }

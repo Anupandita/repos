@@ -151,12 +151,16 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         [TestCategory("FUNCTIONAL")]    
         public void Ivst6DamageExceptionTestScenariosForInboundPalletIsY()
         {
-            this.Given(x => x.TestDataForDamageException())            
+            this.Given(x => x.TestDataForDamageException())
             .And(x => x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl, DamageInbound.Key, EmsToWmsParametersDamage.Process))
             .When(x => x.IvstApiIsCalledCreatedIsReturned())
             .And(x => x.GetValidDataAfterTriggerForKey(DamageInbound.Key))
             .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheForDamageAndMsgKeyShouldBe(DamageInbound.Key))
             .And(x => x.VerifyTheQuantityAndWeightShouldBeReducedByIvstQtyInTransInventoryAndPicklocnForToBeFilledAndrInboundPalletIsY())
+            .And(x => x.VerifyForCorbaHdrDtlRecords())
+            .And(x => x.VerifyForParmname())
+            .And(x => x.VerifyParamType())
+            .And(x => x.VerifyParamValue())
             .And(x => x.VerifyForCaseHdrAndCaseDtlRecordInsertedOrNotForDamageAndWrongSkuExceptions())
             .BDDfy("Test Case ID :124726- Dematic - IVST- Test for Damage Exceptions for Inbound Pallet = Y and Validate for all functionalities");
         }
@@ -172,13 +176,16 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                 .And(x => x.GetValidDataAfterTriggerForKey(DamageOutbound.Key))
                 .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheForDamageAndMsgKeyShouldBe(DamageOutbound.Key))
                 .And(x => x.VerifyTheQuantityShouldBeReducedByIvstQtyInPickLocationForInboundPalletIsN())
+                .And(x => x.VerifyForCorbaHdrDtlRecords())
+                .And(x => x.VerifyForParmname())
+                .And(x => x.VerifyParamType())
+                .And(x => x.VerifyParamValue())
                 .And(x => x.VerifyForCaseHdrAndCaseDtlRecordInsertedOrNotForDamageAndWrongSkuExceptions())
                 .BDDfy("Test Case ID : 124726- Dematic - IVST- Test for Damage Exceptions for Inbound Pallet = N and Validate for all functionalities");
         }
 
         [TestMethod()]
-        [TestCategory("FUNCTIONAL")]
-        
+        [TestCategory("FUNCTIONAL")]        
         public void Ivst7DamageExceptionTestScenariosForInboundPalletIsNScenario3()
         {
             this.Given(x => x.TestDataForDamageScenario3())
@@ -187,6 +194,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                 .And(x => x.GetValidDataAfterTriggerForKey(DamageOutbound.Key))
                 .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheForDamageAndMsgKeyShouldBe(DamageOutbound.Key))
                 .And(x => x.VerifyQtyReducedToZeroInPickLocnDtlTable())
+                .And(x => x.VerifyForCorbaHdrDtlRecords())
+                .And(x => x.VerifyForParmname())
+                .And(x => x.VerifyParamType())
+                .And(x => x.VerifyParamValue())
                 .And(x => x.VerifyForCaseHdrAndCaseDtlRecordInsertedOrNotForDamageAndWrongSkuExceptions())
                 .BDDfy("Test Case ID : 124726- Dematic - IVST- Test for Damage Exceptions for Inbound Pallet = N and Validate for all functionalities");
         }
@@ -202,7 +213,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
             .And(x => x.GetValidDataAfterTriggerForKey(WrongSku.Key))
             .Then(x => x.VerifyIvstMessageWasInsertedIntoSwmFromMheForWrongSkuAndMsgKeyShouldBe(WrongSku.Key))
             .And(x => x.VerifyTheQuantityAndWeightShouldBeReducedByIvstQtyInTransInventoryAndPicklocnForToBeFilledAndrInboundPalletIsY())    
-            .And(x =>x.VerifyForCaseHdrAndCaseDtlRecordInsertedOrNotForDamageAndWrongSkuExceptions())
+            .And(x => x.VerifyForCorbaHdrDtlRecords())
+            .And(x => x.VerifyForParmname())
+            .And(x => x.VerifyParamType())
+            .And(x => x.VerifyParamValue())
+            .And(x => x.VerifyForCaseHdrAndCaseDtlRecordInsertedOrNotForDamageAndWrongSkuExceptions())
             .BDDfy("Test Case ID : 124727-Dematic - IVST- Test for Wrong SKU for Inbound Pallet = Y and validate for all functionalities");
         }
      
