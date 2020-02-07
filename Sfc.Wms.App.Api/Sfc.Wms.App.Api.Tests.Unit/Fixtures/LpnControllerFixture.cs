@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Results;
@@ -7,6 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.App.Api.Controllers;
+using Sfc.Wms.Data.Entities;
 using Sfc.Wms.Foundation.InboundLpn.Contracts.Dtos;
 using Sfc.Wms.Foundation.InboundLpn.Contracts.Interfaces;
 
@@ -15,6 +17,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
     public abstract class LpnControllerFixture
     {
         private readonly CaseCommentDto _addLpnCommentRequest;
+        private readonly CaseCommentDto _updateLpnCommentRequest;
         private readonly LpnController _lpnController;
         private readonly LpnParameterDto _lpnSearchRequest;
         private readonly Mock<ICaseCommentService> _mockCaseCommentService;
@@ -30,7 +33,6 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         private string warehouse, lpnNumber, faceLocationId;
         private IEnumerable<string> lpnIds;
 
-
         protected LpnControllerFixture()
         {
             _mockLpnService = new Mock<ILpnService>(MockBehavior.Default);
@@ -42,6 +44,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             _updateLpnHeaderUpdateDto = Generator.Default.Single<LpnHeaderUpdateDto>();
             _updateLpnCaseDetailsRequest = Generator.Default.Single<LpnDetailsUpdateDto>();
             _addLpnCommentRequest = Generator.Default.Single<CaseCommentDto>();
+            _updateLpnCommentRequest = Generator.Default.Single<CaseCommentDto>();
             _caseLockCommentDto = Generator.Default.Single<CaseLockCommentDto>();
             _lpnMultipleUnlockDtos = Generator.Default.Single<List<LpnMultipleUnlockDto>>();
             _lpnController = new LpnController(_mockLpnService.Object, _mockCaseCommentService.Object,
@@ -124,6 +127,11 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             _mockLpnService.Verify(el => el.UpdateLpnDetailsAsync(It.IsAny<LpnHeaderUpdateDto>()));
         }
 
+        private void VerifyCaseCommentUpdate()
+        {
+            _mockCaseCommentService.Verify(el => el.UpdateAsync(It.IsAny<CaseCommentDto>()));
+        }
+
         private void MockLpnUpdate(ResultTypes resultType)
         {
             var response = new BaseResult
@@ -132,6 +140,17 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             };
             _mockLpnService.Setup(el => el.UpdateLpnDetailsAsync(It.IsAny<LpnHeaderUpdateDto>()))
                 .Returns(Task.FromResult(response));
+        }
+
+        private void MockCaseCommentUpdate(ResultTypes resultType)
+        {
+            var response = new BaseResult<CaseCommentDto>
+            {
+                ResultType = resultType,
+                Payload = _updateLpnCommentRequest
+            };
+                _mockCaseCommentService.Setup(el => el.UpdateAsync(It.IsAny<CaseCommentDto>()))
+                    .Returns(Task.FromResult(response));
         }
 
         private void VerifyUpdateLpnCaseDetails()
@@ -177,7 +196,6 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             _mockCaseLockService.Verify(el =>
                 el.GetCaseUnLockDetailsAsync(It.IsAny<IEnumerable<string>>()));
         }
-        
 
         private void MockGetLpnComments(ResultTypes resultType)
         {
@@ -264,7 +282,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             _mockCaseCommentService.Verify(el => el.UnlockCommentWithBatchCorbaAsync(It.IsAny<List<LpnMultipleUnlockDto>>()));
         }
 
-        #endregion
+        #endregion Mock
 
         #region Lpn Search
 
@@ -301,7 +319,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             Assert.AreEqual(ResultTypes.BadRequest, result.Content.ResultType);
         }
 
-        #endregion
+        #endregion Lpn Search
 
         #region LpnHistory
 
@@ -352,7 +370,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             Assert.AreEqual(ResultTypes.BadRequest, result.Content.ResultType);
         }
 
-        #endregion
+        #endregion LpnHistory
 
         #region AisleTransaction
 
@@ -403,7 +421,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             Assert.AreEqual(ResultTypes.BadRequest, result.Content.ResultType);
         }
 
-        #endregion
+        #endregion AisleTransaction
 
         #region DeleteLpnComments
 
@@ -455,7 +473,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             Assert.AreEqual(ResultTypes.Ok, result.Content.ResultType);
         }
 
-        #endregion
+        #endregion DeleteLpnComments
 
         #region LpnHeaderUpdate
 
@@ -464,9 +482,14 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             MockLpnUpdate(ResultTypes.NotFound);
         }
 
-        protected void InputForUpdateLpnForWchichRecordExists()
+        protected void InputForUpdateLpnForWhichRecordExists()
         {
             MockLpnUpdate(ResultTypes.Ok);
+        }
+
+        protected void InputForUpdateCaseCommentForWhichRecordExists()
+        {
+            MockCaseCommentUpdate(ResultTypes.Ok);
         }
 
         protected void InvalidInputForUpdateLpn()
@@ -474,9 +497,19 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             MockLpnUpdate(ResultTypes.BadRequest);
         }
 
+        protected void InvalidInputForUpdateCaseComment()
+        {
+            MockCaseCommentUpdate(ResultTypes.BadRequest);
+        }
+
         protected void UpdateLpnOperationInvoked()
         {
             _testResponse = _lpnController.UpdateLpnHeaderAsync(_updateLpnHeaderUpdateDto);
+        }
+
+        protected void UpdateCaseCommentOperationInvoked()
+        {
+            _testResponse = _lpnController.UpdateLpnCommentAsync(_updateLpnCommentRequest);
         }
 
         protected void TheUpdateOperationReturnedNotFoundResponse()
@@ -505,7 +538,16 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             Assert.AreEqual(ResultTypes.Ok, result.Content.ResultType);
         }
 
-        #endregion
+        protected void TheUpdateCaseCommentOperationReturnedOkResponse()
+        {
+            VerifyCaseCommentUpdate();
+            Assert.IsNotNull(_testResponse);
+            var result = _testResponse.Result as OkNegotiatedContentResult<BaseResult>;
+            Assert.IsNotNull(result);
+            Assert.AreEqual(ResultTypes.Ok, result.Content.ResultType);
+        }
+
+        #endregion LpnHeaderUpdate
 
         #region UpdateLpnCaseDetails
 
@@ -555,7 +597,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             Assert.AreEqual(ResultTypes.Ok, result.Content.ResultType);
         }
 
-        #endregion
+        #endregion UpdateLpnCaseDetails
 
         #region GetLpnComments
 
@@ -593,7 +635,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             Assert.AreEqual(ResultTypes.Ok, result.Content.ResultType);
         }
 
-        #endregion
+        #endregion GetLpnComments
 
         #region AddLpnComments
 
@@ -630,7 +672,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         {
             VerifyAddLpnComments();
             Assert.IsNotNull(_testResponse);
-            var result = _testResponse.Result as CreatedAtRouteNegotiatedContentResult<BaseResult<CaseCommentDto>>; 
+            var result = _testResponse.Result as CreatedAtRouteNegotiatedContentResult<BaseResult<CaseCommentDto>>;
             Assert.IsNotNull(result);
             Assert.AreEqual(ResultTypes.Created, result.Content.ResultType);
         }
@@ -644,7 +686,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             Assert.AreEqual(ResultTypes.BadRequest, result.Content.ResultType);
         }
 
-        #endregion
+        #endregion AddLpnComments
 
         #region GetLpnDetails
 
@@ -695,7 +737,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             Assert.AreEqual(ResultTypes.Ok, result.Content.ResultType);
         }
 
-        #endregion
+        #endregion GetLpnDetails
 
         #region GetLpnLockUnlock
 
@@ -796,13 +838,63 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             Assert.AreEqual(ResultTypes.Ok, result.Content.ResultType);
         }
 
-        #endregion
+        #endregion GetLpnLockUnlock
+
+        #region GetLpnUnlockDetails
+
+        protected void GetCaseUnLockDetailsRecordDoesNotExists()
+        {
+            MockGetLpnUnlockDetails(ResultTypes.NotFound);
+        }
+
+        protected void GetCaseUnLockDetailsRecordExists()
+        {
+            MockGetLpnUnlockDetails(ResultTypes.Ok);
+        }
+
+        protected void InValidInputForGetCaseUnLockDetails()
+        {
+            MockGetLpnUnlockDetails(ResultTypes.BadRequest);
+        }
+
+        protected void GetCaseUnLockDetailsOperationInvoked()
+        {
+            _testResponse = _lpnController.GetCaseUnLockDetailsAsync(lpnIds);
+        }
+
+        protected void TheGetCaseUnLockDetailsReturnedNotFoundResponse()
+        {
+            VerifyGetLpnUnlockDetails();
+            Assert.IsNotNull(_testResponse);
+            var result = _testResponse.Result as NegotiatedContentResult<BaseResult<List<CaseLockDto>>>;
+            Assert.IsNotNull(result);
+            Assert.AreEqual(ResultTypes.NotFound, result.Content.ResultType);
+        }
+
+        protected void ThGetCaseUnLockDetailsReturnedBadRequestResponse()
+        {
+            Assert.IsNotNull(_testResponse);
+            var result = _testResponse.Result as NegotiatedContentResult<BaseResult<List<CaseLockDto>>>;
+            Assert.IsNotNull(result);
+            Assert.AreEqual(ResultTypes.BadRequest, result.Content.ResultType);
+        }
+
+        protected void TheGetCaseUnLockDetailsReturnedOkResponse()
+        {
+            VerifyGetLpnUnlockDetails();
+            Assert.IsNotNull(_testResponse);
+            var result = _testResponse.Result as OkNegotiatedContentResult<BaseResult<List<CaseLockDto>>>;
+            Assert.IsNotNull(result);
+            Assert.AreEqual(ResultTypes.Ok, result.Content.ResultType);
+        }
+
+        #endregion GetLpnUnlockDetails
 
         #region AddCaseLockComment
 
         protected void ValidParametersToAddCaseLockComments()
         {
-            MockAddCaseLockComment(ResultTypes.Ok);
+            MockAddCaseLockComment(ResultTypes.Created);
         }
 
         protected void InvalidParametersToAddCaseLockComments()

@@ -9,6 +9,7 @@ using RestSharp;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Core.RestResponse;
 using Sfc.Wms.App.Api.Nuget.Gateways;
+using Sfc.Wms.App.Api.Nuget.Interfaces;
 using Sfc.Wms.Foundation.InboundLpn.Contracts.Dtos;
 
 namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
@@ -18,7 +19,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         private readonly LpnParameterDto _findLpnRequest;
         private readonly List<LpnMultipleUnlockDto> _lpnMultipleUnlockDtos;
         private readonly LpnGateway _lpnGateway;
-        private readonly Mock<IRestClient> _restClient;
+        private readonly Mock<IRestCsharpClient> _restClient;
         private BaseResult<CaseCommentDto> caseCommentBaseResult;
         private BaseResult<List<CaseLockUnlockDto>> caseLockUnlockBaseResult;
         private BaseResult<List<CaseLockDto>> caseUnlockDetailsBaseResult;
@@ -30,7 +31,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected LpnGatewayFixture()
         {
-            _restClient = new Mock<IRestClient>();
+            _restClient = new Mock<IRestCsharpClient>();
             _findLpnRequest = Generator.Default.Single<LpnParameterDto>();
             _lpnMultipleUnlockDtos = Generator.Default.Single<List<LpnMultipleUnlockDto>>();
             _lpnGateway = new LpnGateway(new ResponseBuilder(), _restClient.Object);
@@ -57,13 +58,13 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         protected void ValidLpnSearchParametersAsInput()
         {
             var result = new BaseResult<LpnSearchResultsDto>
-                {ResultType = ResultTypes.Ok, Payload = Generator.Default.Single<LpnSearchResultsDto>()};
+            { ResultType = ResultTypes.Ok, Payload = Generator.Default.Single<LpnSearchResultsDto>() };
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
         protected void InValidLpnSearchParameters()
         {
-            var result = new BaseResult<LpnSearchResultsDto> {ResultType = ResultTypes.BadRequest};
+            var result = new BaseResult<LpnSearchResultsDto> { ResultType = ResultTypes.BadRequest };
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
@@ -87,19 +88,19 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             Assert.AreEqual(ResultTypes.BadRequest, manipulationTestResult.ResultType);
         }
 
-        #endregion
+        #endregion Lpn search
 
         #region Get Lpn Details By LpnId
 
         protected void ValidInputParametersToGetLpnDetails()
         {
-            var result = new BaseResult<LpnDetailsDto> {ResultType = ResultTypes.Ok};
+            var result = new BaseResult<LpnDetailsDto> { ResultType = ResultTypes.Ok };
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
         protected void InValidInputParametersToGetLpnDetails()
         {
-            var result = new BaseResult<LpnDetailsDto> {ResultType = ResultTypes.BadRequest};
+            var result = new BaseResult<LpnDetailsDto> { ResultType = ResultTypes.BadRequest };
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
@@ -123,25 +124,25 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             Assert.AreEqual(ResultTypes.BadRequest, lpnDetailsBaseResult.ResultType);
         }
 
-        #endregion
+        #endregion Get Lpn Details By LpnId
 
         #region Get Lpn Details By LpnId
 
         protected void ValidInputParametersToInsertLpnComments()
         {
-            var result = new BaseResult<CaseCommentDto> {ResultType = ResultTypes.Created};
+            var result = new BaseResult<CaseCommentDto> { ResultType = ResultTypes.Created };
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
         protected void InValidInputParametersToInsertLpnComments()
         {
-            var result = new BaseResult<CaseCommentDto> {ResultType = ResultTypes.BadRequest};
+            var result = new BaseResult<CaseCommentDto> { ResultType = ResultTypes.BadRequest };
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
         protected void InputParametersToInsertLpnCommentsForWhichRecordExists()
         {
-            var result = new BaseResult<CaseCommentDto> {ResultType = ResultTypes.Conflict};
+            var result = new BaseResult<CaseCommentDto> { ResultType = ResultTypes.Conflict };
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
@@ -172,25 +173,25 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             Assert.AreEqual(ResultTypes.Conflict, caseCommentBaseResult.ResultType);
         }
 
-        #endregion
+        #endregion Get Lpn Details By LpnId
 
         #region Get Lpn Comments By LpnId
 
         protected void ValidInputParametersToGetLpnComments()
         {
-            var result = new BaseResult<List<CaseCommentDto>> {ResultType = ResultTypes.Ok};
+            var result = new BaseResult<List<CaseCommentDto>> { ResultType = ResultTypes.Ok };
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
         protected void InValidInputParametersToGetLpnComments()
         {
-            var result = new BaseResult<List<CaseCommentDto>> {ResultType = ResultTypes.BadRequest};
+            var result = new BaseResult<List<CaseCommentDto>> { ResultType = ResultTypes.BadRequest };
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
         protected void InputParametersToGetLpnCommentsForNoCommentsExists()
         {
-            var result = new BaseResult<List<CaseCommentDto>> {ResultType = ResultTypes.NotFound};
+            var result = new BaseResult<List<CaseCommentDto>> { ResultType = ResultTypes.NotFound };
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
@@ -221,25 +222,25 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             Assert.AreEqual(ResultTypes.NotFound, lpnCommentsBaseResult.ResultType);
         }
 
-        #endregion
+        #endregion Get Lpn Comments By LpnId
 
         #region GetLpnHistory
 
         protected void ValidInputParametersToGetLpnHistory()
         {
-            var result = new BaseResult<List<LpnHistoryDto>> {ResultType = ResultTypes.Ok};
+            var result = new BaseResult<List<LpnHistoryDto>> { ResultType = ResultTypes.Ok };
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
         protected void InValidInputParametersToGetLpnHistory()
         {
-            var result = new BaseResult<List<LpnHistoryDto>> {ResultType = ResultTypes.BadRequest};
+            var result = new BaseResult<List<LpnHistoryDto>> { ResultType = ResultTypes.BadRequest };
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
         protected void InputParametersToGetLpnHistoryForWhichNoCommentsExists()
         {
-            var result = new BaseResult<List<LpnHistoryDto>> {ResultType = ResultTypes.NotFound};
+            var result = new BaseResult<List<LpnHistoryDto>> { ResultType = ResultTypes.NotFound };
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
@@ -271,25 +272,25 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             Assert.AreEqual(ResultTypes.NotFound, lnpHistoryBaseResult.ResultType);
         }
 
-        #endregion
+        #endregion GetLpnHistory
 
         #region Get Lpn LockUnlock By LpnId
 
         protected void ValidInputParametersToGetLpnLockUnlockDetails()
         {
-            var result = new BaseResult<List<CaseLockUnlockDto>> {ResultType = ResultTypes.Ok};
+            var result = new BaseResult<List<CaseLockUnlockDto>> { ResultType = ResultTypes.Ok };
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
         protected void InValidInputParametersToGetLpnLockUnlockDetails()
         {
-            var result = new BaseResult<List<CaseLockUnlockDto>> {ResultType = ResultTypes.BadRequest};
+            var result = new BaseResult<List<CaseLockUnlockDto>> { ResultType = ResultTypes.BadRequest };
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
         protected void InputParametersToGetLpnLockUnlockByLpnIdForWhichNoDetailsExists()
         {
-            var result = new BaseResult<List<CaseLockUnlockDto>> {ResultType = ResultTypes.NotFound};
+            var result = new BaseResult<List<CaseLockUnlockDto>> { ResultType = ResultTypes.NotFound };
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
@@ -320,7 +321,56 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             Assert.AreEqual(ResultTypes.NotFound, caseLockUnlockBaseResult.ResultType);
         }
 
-        #endregion
+        #endregion Get Lpn LockUnlock By LpnId
+
+        #region GetCaseUnLockDetails
+
+        protected void ValidInputParametersToGetCaseUnLockDetails()
+        {
+            var result = new BaseResult<List<CaseLockDto>> { ResultType = ResultTypes.Ok };
+            GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
+        }
+
+        protected void InValidInputParametersToGetCaseUnLockDetails()
+        {
+            var result = new BaseResult<List<CaseLockDto>> { ResultType = ResultTypes.BadRequest };
+            GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
+        }
+
+        protected void InputParametersToGetCaseUnLockDetailsForWhichNoDetailsExists()
+        {
+            var result = new BaseResult<List<CaseLockDto>> { ResultType = ResultTypes.NotFound };
+            GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
+        }
+
+        protected void GetCaseUnLockDetailsOperationInvoked()
+        {
+            caseUnlockDetailsBaseResult = _lpnGateway.GetCaseUnLockDetailsAsync(It.IsAny<IEnumerable<string>>(), It.IsAny<string>())
+                .Result;
+        }
+
+        protected void TheGetCaseUnLockDetailsReturnedOkAsResponseStatus()
+        {
+            VerifyRestClientInvocation<BaseResult<List<CaseLockDto>>>();
+            Assert.IsNotNull(caseUnlockDetailsBaseResult);
+            Assert.AreEqual(ResultTypes.Ok, caseUnlockDetailsBaseResult.ResultType);
+        }
+
+        protected void TheGetCaseUnLockDetailsReturnedBadRequestAsResponseStatus()
+        {
+            VerifyRestClientInvocation<BaseResult<List<CaseLockDto>>>();
+            Assert.IsNotNull(caseUnlockDetailsBaseResult);
+            Assert.AreEqual(ResultTypes.BadRequest, caseUnlockDetailsBaseResult.ResultType);
+        }
+
+        protected void TheGetCaseUnLockDetailsReturnedNotFoundAsResponseStatus()
+        {
+            VerifyRestClientInvocation<BaseResult<List<CaseLockDto>>>();
+            Assert.IsNotNull(caseUnlockDetailsBaseResult);
+            Assert.AreEqual(ResultTypes.NotFound, caseUnlockDetailsBaseResult.ResultType);
+        }
+
+        #endregion GetCaseUnLockDetails
 
         #region GetCaseUnLockDetails
 
@@ -375,19 +425,19 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void ValidInputParametersToUpdateLpnHeader()
         {
-            var result = new BaseResult {ResultType = ResultTypes.Ok};
+            var result = new BaseResult { ResultType = ResultTypes.Ok };
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
         protected void InValidInputParametersToUpdateLpnHeader()
         {
-            var result = new BaseResult {ResultType = ResultTypes.BadRequest};
+            var result = new BaseResult { ResultType = ResultTypes.BadRequest };
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
         protected void InputParametersToUpdateLpnHeaderForWhichNoDetailsExists()
         {
-            var result = new BaseResult {ResultType = ResultTypes.NotFound};
+            var result = new BaseResult { ResultType = ResultTypes.NotFound };
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
@@ -419,25 +469,25 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             Assert.AreEqual(ResultTypes.NotFound, manipulationTestResult.ResultType);
         }
 
-        #endregion
+        #endregion Update LpnHeader
 
         #region DeleteLpnComments
 
         protected void ValidInputParametersToDeleteLpnComment()
         {
-            var result = new BaseResult {ResultType = ResultTypes.Ok};
+            var result = new BaseResult { ResultType = ResultTypes.Ok };
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
         protected void InValidInputParametersToDeleteLpnComment()
         {
-            var result = new BaseResult {ResultType = ResultTypes.BadRequest};
+            var result = new BaseResult { ResultType = ResultTypes.BadRequest };
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
         protected void InputParametersToDeleteLpnCommentForWhichNoDetailsExists()
         {
-            var result = new BaseResult {ResultType = ResultTypes.NotFound};
+            var result = new BaseResult { ResultType = ResultTypes.NotFound };
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
@@ -469,25 +519,25 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             Assert.AreEqual(ResultTypes.NotFound, manipulationTestResult.ResultType);
         }
 
-        #endregion
+        #endregion DeleteLpnComments
 
         #region Update Case Details
 
         protected void ValidInputParametersToUpdateLpnDetail()
         {
-            var result = new BaseResult {ResultType = ResultTypes.Ok};
+            var result = new BaseResult { ResultType = ResultTypes.Ok };
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
         protected void InValidInputParametersToUpdateLpnDetail()
         {
-            var result = new BaseResult {ResultType = ResultTypes.BadRequest};
+            var result = new BaseResult { ResultType = ResultTypes.BadRequest };
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
         protected void InputParametersToUpdateLpnDetailForWhichNoDetailsExists()
         {
-            var result = new BaseResult {ResultType = ResultTypes.NotFound};
+            var result = new BaseResult { ResultType = ResultTypes.NotFound };
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
@@ -519,7 +569,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             Assert.AreEqual(ResultTypes.NotFound, manipulationTestResult.ResultType);
         }
 
-        #endregion
+        #endregion Update Case Details
 
         #region AddCaseLockComments
 
