@@ -372,6 +372,55 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         #endregion GetCaseUnLockDetails
 
+        #region GetCaseUnLockDetails
+
+        protected void ValidInputParametersToGetCaseUnLockDetails()
+        {
+            var result = new BaseResult<List<CaseLockDto>> { ResultType = ResultTypes.Ok };
+            GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
+        }
+
+        protected void InValidInputParametersToGetCaseUnLockDetails()
+        {
+            var result = new BaseResult<List<CaseLockDto>> { ResultType = ResultTypes.BadRequest };
+            GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
+        }
+
+        protected void InputParametersToGetCaseUnLockDetailsForWhichNoDetailsExists()
+        {
+            var result = new BaseResult<List<CaseLockDto>> { ResultType = ResultTypes.NotFound };
+            GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
+        }
+
+        protected void GetCaseUnLockDetailsOperationInvoked()
+        {
+            caseUnlockDetailsBaseResult = _lpnGateway.GetCaseUnLockDetailsAsync(It.IsAny<IEnumerable<string>>(), It.IsAny<string>())
+                .Result;
+        }
+
+        protected void TheGetCaseUnLockDetailsReturnedOkAsResponseStatus()
+        {
+            VerifyRestClientInvocation<BaseResult<List<CaseLockDto>>>();
+            Assert.IsNotNull(caseUnlockDetailsBaseResult);
+            Assert.AreEqual(ResultTypes.Ok, caseUnlockDetailsBaseResult.ResultType);
+        }
+
+        protected void TheGetCaseUnLockDetailsReturnedBadRequestAsResponseStatus()
+        {
+            VerifyRestClientInvocation<BaseResult<List<CaseLockDto>>>();
+            Assert.IsNotNull(caseUnlockDetailsBaseResult);
+            Assert.AreEqual(ResultTypes.BadRequest, caseUnlockDetailsBaseResult.ResultType);
+        }
+
+        protected void TheGetCaseUnLockDetailsReturnedNotFoundAsResponseStatus()
+        {
+            VerifyRestClientInvocation<BaseResult<List<CaseLockDto>>>();
+            Assert.IsNotNull(caseUnlockDetailsBaseResult);
+            Assert.AreEqual(ResultTypes.NotFound, caseUnlockDetailsBaseResult.ResultType);
+        }
+
+        #endregion
+
         #region Update LpnHeader
 
         protected void ValidInputParametersToUpdateLpnHeader()

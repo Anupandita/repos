@@ -99,28 +99,28 @@ namespace Sfc.Wms.App.Api
                                                      && !reg.service.FullName.Contains(nameof(SfcLoggerSerilogs)))
                     {
                         container.Register(reg.service, reg.implementation, Lifestyle.Scoped);
-                        if (reg.service.FullName.Contains(".Contracts") && !reg.implementation.FullName.Contains(nameof(MessageDetailService)) &&
-                            !reg.implementation.FullName.Contains(nameof(MessageMasterService)) &&
-                            !reg.implementation.FullName.Contains(nameof(MessageLogService)) &&
-                            !reg.implementation.FullName.Contains("Aop"))
-                        {
-                            container.InterceptWith<MonitoringInterceptor>(type => type == reg.service);
-                        }
+                        //if (reg.service.FullName.Contains(".Contracts") && !reg.implementation.FullName.Contains(nameof(MessageDetailService)) &&
+                        //    !reg.implementation.FullName.Contains(nameof(MessageMasterService)) &&
+                        //    !reg.implementation.FullName.Contains(nameof(MessageLogService)) &&
+                        //    !reg.implementation.FullName.Contains("Aop"))
+                        //{
+                        //    container.InterceptWith<MonitoringInterceptor>(type => type == reg.service);
+                        //}
                     }
                     else if (reg.implementation.IsGenericTypeDefinition)
                     {
                         container.Register(reg.service.GetGenericTypeDefinition(),
                             reg.implementation.GetGenericTypeDefinition(), Lifestyle.Scoped);
 
-                        if (reg.service.FullName != null && reg.service.FullName.Contains(".Contracts") && reg.implementation.FullName != null &&
-                                                             !reg.implementation.FullName.Contains(nameof(MessageDetailService)) &&
-                                                              !reg.implementation.FullName.Contains(nameof(MessageMasterService)) &&
-                                                              !reg.implementation.FullName.Contains(nameof(MessageLogService)) &&
-                                                             !reg.implementation.FullName.Contains("Aop"))
-                        {
-                            container.InterceptWith<MonitoringInterceptor>(type =>
-                                type == reg.service.GetGenericTypeDefinition());
-                        }
+                        //if (reg.service.FullName != null && reg.service.FullName.Contains(".Contracts") && reg.implementation.FullName != null &&
+                        //                                     !reg.implementation.FullName.Contains(nameof(MessageDetailService)) &&
+                        //                                      !reg.implementation.FullName.Contains(nameof(MessageMasterService)) &&
+                        //                                      !reg.implementation.FullName.Contains(nameof(MessageLogService)) &&
+                        //                                     !reg.implementation.FullName.Contains("Aop"))
+                        //{
+                        //    container.InterceptWith<MonitoringInterceptor>(type =>
+                        //        type == reg.service.GetGenericTypeDefinition());
+                        //}
                     }
                 }
             }
