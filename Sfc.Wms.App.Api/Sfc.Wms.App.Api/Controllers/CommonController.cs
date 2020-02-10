@@ -23,7 +23,6 @@ namespace Sfc.Wms.App.Api.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         [Route(Routes.Paths.CodeIds)]
         [ResponseType(typeof(BaseResult<IEnumerable<SysCodeDto>>))]
         public async Task<IHttpActionResult> GetSystemCodesAsync([FromUri] SystemCodeInputDto systemCodeInputDto)
