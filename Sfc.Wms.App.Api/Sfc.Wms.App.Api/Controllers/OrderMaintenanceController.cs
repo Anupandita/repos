@@ -14,10 +14,13 @@ namespace Sfc.Wms.App.Api.Controllers
     public class OrderMaintenanceController : SfcBaseController
     {
         private readonly IWmsToEmsMessageProcessorService _wmsToEmsMessageProcessorService;
+        private readonly IWmsToEmsParallelProcessService _wmsToEmsParallelProcessService;
 
-        public OrderMaintenanceController(IWmsToEmsMessageProcessorService wmsToEmsMessageProcessorService)
+        public OrderMaintenanceController(IWmsToEmsMessageProcessorService wmsToEmsMessageProcessorService,
+            IWmsToEmsParallelProcessService wmsToEmsParallelProcessService)
         {
             _wmsToEmsMessageProcessorService = wmsToEmsMessageProcessorService;
+            _wmsToEmsParallelProcessService = wmsToEmsParallelProcessService;
         }
 
         [HttpPost]
@@ -42,6 +45,21 @@ namespace Sfc.Wms.App.Api.Controllers
         public async Task<IHttpActionResult> CreateOrmtMessageByWaveNumberAsync(string waveNumber)
         {
             var result = await _wmsToEmsMessageProcessorService.GetOrmtMessageByWaveNumberAsync(waveNumber)
+                .ConfigureAwait(false);
+
+            return Content(Enum.TryParse(result.ResultType.ToString(), out HttpStatusCode statusCode)
+                ? statusCode
+                : HttpStatusCode.ExpectationFailed, result);
+        }
+
+        [HttpPost]
+        [Route(Routes.Paths.OrmtByWaveNumberUsingParallel)]
+        [ResponseType(typeof(BaseResult))]
+        [AllowAnonymous]
+        public async Task<IHttpActionResult> CreateOrmtMessageByWaveNumberParallelAsync(string waveNumber)
+        {
+            var container = DependencyConfig.Register();
+            var result = await _wmsToEmsParallelProcessService.GetOrmtMessageByWaveNumberParallelAsync(container,waveNumber)
                 .ConfigureAwait(false);
 
             return Content(Enum.TryParse(result.ResultType.ToString(), out HttpStatusCode statusCode)
