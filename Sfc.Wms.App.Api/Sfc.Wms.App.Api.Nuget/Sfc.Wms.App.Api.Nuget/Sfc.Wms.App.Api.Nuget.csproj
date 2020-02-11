@@ -9,7 +9,7 @@
     <Description>Nuget package containing the calls for Wms.App.Api</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>Sfc.Wms.App.Api.Nuget</PackageId>
-    <Version>10.1.0</Version>
+    <Version>10.2.0</Version>
     <PackageReleaseNotes>Fixed the route name</PackageReleaseNotes>
     <Copyright>2019</Copyright>
   </PropertyGroup>
@@ -22,7 +22,7 @@
     <PackageReference Include="Sfc.Wms.Configuration.SystemCode.Contracts" Version="[3.0.0,4.0)" />
     <PackageReference Include="Sfc.Wms.Configuration.UserMaster.Contracts" Version="[1.0.2,2.0)" />
     <PackageReference Include="Sfc.Wms.Foundation.Corba.Contracts" Version="[2.0,3.0)" />
-    <PackageReference Include="Sfc.Wms.Foundation.InboundLpn.Contracts" Version="[5.4.0,6.0)" />
+    <PackageReference Include="Sfc.Wms.Foundation.InboundLpn.Contracts" Version="[5.5.0,6.0)" />
     <PackageReference Include="Sfc.Wms.Interfaces.Asrs.Contracts" Version="[2.1.0,3.0)" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.6.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.6.0" />
