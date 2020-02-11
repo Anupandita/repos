@@ -27,8 +27,8 @@ namespace Sfc.Wms.App.Api.Controllers
         [ResponseType(typeof(BaseResult<IEnumerable<SysCodeDto>>))]
         public async Task<IHttpActionResult> GetSystemCodesAsync([FromUri] SystemCodeInputDto systemCodeInputDto)
         {
-            var response = await _systemCodeService.GetSystemCodeAsync(systemCodeInputDto.RecType,
-                     systemCodeInputDto.CodeType, systemCodeInputDto.CodeId, systemCodeInputDto.SortOption);
+            var response = await _systemCodeService.GetSystemCodeAsync(systemCodeInputDto?.RecType,
+                     systemCodeInputDto?.CodeType, systemCodeInputDto?.CodeId, systemCodeInputDto?.SortOption);
 
             return ResponseHandler(response);
         }
