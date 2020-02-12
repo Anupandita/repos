@@ -58,10 +58,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected TransitionalInventoryDto TransInvnNegativePickBeforeApi = new TransitionalInventoryDto();
         protected List<Scenarios> MsgkeyList = new List<Scenarios>();
         protected CaseDetailDto caseDtlAfterApi = new CaseDetailDto();
+        protected CaseDetailDto caseDtlQty = new CaseDetailDto();
         protected CaseHeaderDto caseHdrAfterApi = new CaseHeaderDto();
+        protected CaseHeaderDto caseHdrStatCode = new CaseHeaderDto();
         protected List<Pb2CorbaHdrDtl> pb = new List<Pb2CorbaHdrDtl>();
-     
+        private  CaseDetailDto _caseDetailDto;
+        
 
+    
         // Scenario 1
         public void InsertIvstMessageUnexpectedOverageWhenCaseHeaderStatusCodeIsLessthan90AndCaseDtlActlQtyIsGreaterThanZero()
         {
@@ -85,6 +89,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             {
                 db.Open();
                 IvstData = GetCaseDetailsForInsertingIvstMessage(db, IvstQueries.CaseHdrStatCodeLesserThan90AndCaseDtlActlQtyEqualToZero);
+                UpdatetheRecordForStatus96Tobellow90(db, IvstData.CaseNumber);
                 Unitweight1 = FetchUnitWeight(db, IvstData.SkuId);
                 TrnsInvBeforeApi = FetchTransInvnentory(db, IvstData.SkuId);
                 PickLcnDtlBeforeApi = GetPickLocationDetails(db, IvstData.SkuId, null);
@@ -116,6 +121,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             {
                 db.Open();
                 IvstData = GetCaseDetailsForInsertingIvstMessage(db, IvstQueries.IvstQueryForTiNegativePickNotExistsForStatus96);
+                DeleteTheRecordForTransInvnTypeIs10(db, IvstData.SkuId);
                 Unitweight1 = FetchUnitWeight(db, IvstData.SkuId);
                 TrnsInvBeforeApi = FetchTransInvnentory(db, IvstData.SkuId);
                 PickLcnDtlBeforeApi = GetPickLocationDetails(db, IvstData.SkuId, null);
@@ -297,7 +303,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                Command = new OracleCommand(Query, db);           
+                Command = new OracleCommand(Query, db);
+                UpdatetheQuantity(db);
                 IvstData = GetCaseDetailsForInsertingIvstMessage(db, IvstQueries.IvstQueryForPickLocnQtyGreaterThanIvstQty);
                 Unitweight1 = FetchUnitWeight(db, IvstData.SkuId);
                 TrnsInvBeforeApi = FetchTransInvnentory(db, IvstData.SkuId);
@@ -327,6 +334,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
+                UpdatetheQuantity(db);
                 IvstData = GetCaseDetailsForInsertingIvstMessage(db, IvstQueries.IvstQueryForPickLocnQtyGreaterThanIvstQty);
                 Unitweight1 = FetchUnitWeight(db, IvstData.SkuId);
                 TrnsInvBeforeApi = FetchTransInvnentory(db, IvstData.SkuId);
@@ -581,12 +589,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 UnitWeight = FetchUnitWeight(db, Ivst.Sku);
                 var pixTrnAfterApi = PixTransactionTable(Ivst.AdjustmentReasonCode);          
                 Pixtran = GetPixtransaction(db, pixTrnAfterApi, SwmFromMhe.ContainerId);
-               
+                caseDtlQty = FetchCaseDetailQty(db, SwmFromMhe.ContainerId);
+                caseHdrStatCode = CaseHeaderDetails(db, SwmFromMhe.ContainerId);
                 TransInvnNegativePick = FetchTransInvnentoryForNegative(db, Ivst.Sku);
                 Int64 maxId = FetchMaxIdFromPb2CorbaHdr(db);
                 pb = FetchPbHdrDetails(db, maxId);
                 caseDtlAfterApi = FetchCaseDetailQty(db,pb[0].ParmValue);
                 caseHdrAfterApi = CaseHeaderDetails(db, pb[0].ParmValue);
+               
             }
         }
 
@@ -609,13 +619,30 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         public void DeleteTheRecordForTransInvnTypeIs10(OracleConnection db,string skuId)
         {
-           Transaction = db.BeginTransaction();
-            var transInvn = new TransitionalInventoryDto();
+           Transaction = db.BeginTransaction();           
            Query = $"Delete trans_invn where sku_id = '{skuId}' and trans_invn_type = '10'";
            Command = new OracleCommand(Query, db);
            Command.ExecuteNonQuery();
            Transaction.Commit();
         }
+
+        public void UpdatetheRecordForStatus96Tobellow90(OracleConnection db,string caseNbr)
+        {
+            Transaction = db.BeginTransaction();           
+            Query = $"update case_hdr set stat_code = 80  where case_nbr = '{caseNbr}'";
+            Command = new OracleCommand(Query, db);
+            Command.ExecuteNonQuery();
+            Transaction.Commit();
+        }
+        public void UpdatetheQuantity(OracleConnection db)
+        {
+            Transaction = db.BeginTransaction();
+            Query = $"update pick_locn_dtl set actl_invn_qty = 99 where sku_id = '3300121'";
+            Command = new OracleCommand(Query, db);
+            Command.ExecuteNonQuery();
+            Transaction.Commit();
+        }
+
 
         public string PixTransactionTable(string adjustmentReasonCode)
         {

@@ -49,7 +49,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 ContainerType = DefaultValues.ContainerType,
                 ParentContainerId = currentCaseNbr,
                 AttributeBitmap = DefaultValues.AttributeBitMap,
-                QuantityToInduct = DefaultValues.QuantityToInduct
+                QuantityToInduct = DefaultValues.QuantityToInduct,
+                SourceLpn = currentCaseNbr
             };
         }
         public void AValidNewIvmtMessageRecordWhereCaseNumberAndSkuIs(string currentCaseNbr, string skuId)
@@ -61,7 +62,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 ContainerType = DefaultValues.ContainerType,
                 ParentContainerId = currentCaseNbr,
                 AttributeBitmap = DefaultValues.AttributeBitMap,
-                QuantityToInduct = DefaultValues.QuantityToInduct
+                QuantityToInduct = DefaultValues.QuantityToInduct,
+                SourceLpn = currentCaseNbr
             };
         }
         public void AValidNewCaseReturnedRecordWhereCaseNumberAndSkuIdIs(string currentCaseNbr,string skuId)
@@ -73,7 +75,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 ContainerType = DefaultValues.ContainerType,
                 ParentContainerId = currentCaseNbr,
                 AttributeBitmap = DefaultValues.AttributeBitMap,
-                QuantityToInduct = DefaultValues.QuantityToInduct
+                QuantityToInduct = DefaultValues.QuantityToInduct,
+                SourceLpn = currentCaseNbr
             };
         }
         protected IRestResponse ApiIsCalled(string url, IvmtParam parameters)

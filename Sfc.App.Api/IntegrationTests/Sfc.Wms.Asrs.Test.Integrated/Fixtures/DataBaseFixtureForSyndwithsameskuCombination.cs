@@ -168,7 +168,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 PldSnapQtyDefference = PldSnapTable(db, Synd.Sku, Convert.ToInt32(Synd.SynchronizationId));
                 PickLocnAfterApi = PicklocationTable(db, Synd.Sku);
                 WmsSyndData = FetchSyndData(db, Synd.SynchronizationId, Synd.Sku);
-
             }
         }
 

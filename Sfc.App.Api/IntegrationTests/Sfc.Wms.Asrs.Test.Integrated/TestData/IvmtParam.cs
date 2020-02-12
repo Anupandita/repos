@@ -9,5 +9,6 @@
         public string ParentContainerId { get; set; }
         public string AttributeBitmap { get; set; }
         public string QuantityToInduct { get; set; }
+        public string SourceLpn { get; set; }
     }
 }

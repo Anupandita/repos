@@ -39,7 +39,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
             $"inner join  pick_locn_dtl on swm_to_mhe.sku_id = pick_locn_dtl.sku_id   " +
             $"inner join case_hdr on swm_to_mhe.container_id = case_hdr.case_nbr " +
             $"inner join case_dtl on swm_to_mhe.container_id = case_dtl.case_nbr " +
-            $"and swm_to_mhe.source_msg_status = 'Ready' and swm_to_mhe.qty!= 0 and case_hdr.stat_code <90 and case_dtl.actl_qty = 0 " +
+            $"and swm_to_mhe.source_msg_status = 'Ready' and swm_to_mhe.qty!= 0 and case_hdr.stat_code = 96 and case_dtl.actl_qty = 0 " +
             $"and  pick_locn_dtl.locn_id in (select lh.locn_id from locn_hdr lh inner join locn_grp lg on lg.locn_id = lh.locn_id inner join sys_code sc on sc.code_id = lg.grp_type and sc.code_type = '740' and sc.code_id = 18)  order by swm_to_mhe.created_date_time desc";
    
         public static string IvstQueryForPickLocnQtyLesserThanOrEqualToZero =

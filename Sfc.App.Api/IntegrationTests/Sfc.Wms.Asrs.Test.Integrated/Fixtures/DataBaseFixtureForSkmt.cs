@@ -75,7 +75,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return ItemMaster;
         }
 
-
         public ItemMasterView ChildSkufunction(OracleConnection db, string colordesc)
         {
             var query = $"select * from Item_master WHERE COLOR_DESC= :colordesc";

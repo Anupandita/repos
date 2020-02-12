@@ -257,7 +257,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected void VerifyForCycleCountNegativePickRecordAlreadyExists()
         {
             Assert.AreEqual(TransInvnNegativePickBeforeApi.ActualInventoryUnits -(Convert.ToDecimal(Ivst.Quantity) - PickLcnDtlBeforeApi.ActualInventoryQuantity), TransInvnNegativePick.ActualInventoryUnits);
-            Assert.AreEqual(TransInvnNegativePickBeforeApi.ActualWeight -(TransInvnNegativePickBeforeApi.ActualInventoryUnits - Convert.ToDecimal(Ivst.Quantity)*UnitWeight), TransInvnNegativePick.ActualWeight);
+            Assert.AreEqual(TransInvnNegativePickBeforeApi.ActualWeight -((Convert.ToDecimal(Ivst.Quantity)- PickLcnDtlBeforeApi.ActualInventoryQuantity)*UnitWeight), TransInvnNegativePick.ActualWeight);
         }
 
         protected void ValidateForInventoryShortageScenario3()
@@ -283,8 +283,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected void VerifyForCycleCountWherePickLocnQtyIsLessThanIvstQtyandLessthanOrEqualToZero()
         {
             Assert.AreEqual(TransInvnNegativePickBeforeApi.ActualInventoryUnits - Convert.ToDecimal(Ivst.Quantity),TransInvnNegativePick.ActualInventoryUnits);
-            Assert.AreEqual(Convert.ToDecimal(TransInvnNegativePickBeforeApi.ActualWeight) - (UnitWeight * Convert.ToDecimal(Ivst.Quantity)), Convert.ToDecimal(TransInvnNegativePick.ActualWeight));
-        }
+            Assert.AreEqual(String.Format("{0:0.00}", Convert.ToDecimal(TransInvnNegativePickBeforeApi.ActualWeight) - (UnitWeight * Convert.ToDecimal(Ivst.Quantity))), string.Format("{0:0.00}", Convert.ToDecimal(TransInvnNegativePick.ActualWeight)));
+
+                 }
         // negative pick already exists.
         protected void ValidationForUnExpectedOverageWhereCaseHdrStatCode96AndNegativePickAlreadyExists()
         {
@@ -295,8 +296,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         // negative pick does not exists.
         protected void ValidationForUnExpectedOverageWhereCaseHdrStatCode96AndNegativePickDoesNotExists()
         {
-            Assert.AreEqual(Convert.ToDecimal(Ivst.Quantity) - PickLcnDtlBeforeApi.ActualInventoryQuantity, TransInvnNegativePick.ActualInventoryUnits);
-            Assert.AreEqual(UnitWeight * Convert.ToDecimal(Ivst.Quantity), Convert.ToDecimal(TransInvnNegativePick.ActualWeight));
+            Assert.AreEqual(-Convert.ToDecimal(Ivst.Quantity) , TransInvnNegativePick.ActualInventoryUnits);
+            Assert.AreEqual(-(UnitWeight * Convert.ToDecimal(Ivst.Quantity)), Convert.ToDecimal(TransInvnNegativePick.ActualWeight));
         }
 
         protected void VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForCycleCountAdjustmentPlus(string adjustmentType)
@@ -327,12 +328,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         }
         protected void ValidationForQuuantityInCaseDtlTableForUnExpectedOverageScenario1()
         {        
-            Assert.AreEqual(Convert.ToDecimal(IvstData.CaseDtlQty) - Convert.ToDecimal(Ivst.Quantity),caseDtlAfterApi.ActualQuantity);
+            Assert.AreEqual(Convert.ToDecimal(IvstData.CaseDtlQty) - Convert.ToDecimal(Ivst.Quantity), caseDtlQty.ActualQuantity);
         }
 
         protected void ValidationForStatCodeShouldBeUpdatedTo96ForScenario2()
         {
-            Assert.AreEqual(96,caseHdrAfterApi.StatusCode);
+            Assert.AreEqual(96,caseHdrStatCode.StatusCode);
         }
 
         protected void VerifyTheQuantityAndWeightShouldBeReducedByIvstQtyInTransInventoryAndPicklocnForToBeFilledAndrInboundPalletIsY()
