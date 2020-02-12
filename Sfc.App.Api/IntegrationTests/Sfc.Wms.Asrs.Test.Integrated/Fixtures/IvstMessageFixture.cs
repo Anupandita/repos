@@ -297,7 +297,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected void ValidationForUnExpectedOverageWhereCaseHdrStatCode96AndNegativePickDoesNotExists()
         {
             Assert.AreEqual(-Convert.ToDecimal(Ivst.Quantity) , TransInvnNegativePick.ActualInventoryUnits);
-            Assert.AreEqual(-(UnitWeight * Convert.ToDecimal(Ivst.Quantity)), Convert.ToDecimal(TransInvnNegativePick.ActualWeight));
+            Assert.AreEqual(String.Format("{0:0.00}",- UnitWeight * Convert.ToDecimal(Ivst.Quantity)), String.Format("{0:0.00}", Convert.ToDecimal(TransInvnNegativePick.ActualWeight)));
         }
 
         protected void VerifyTheRecordInsertedIntoPixTransactionAndValidateReasonCodeForCycleCountAdjustmentPlus(string adjustmentType)
@@ -381,8 +381,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected void VerifyForCaseHdrAndCaseDtlRecordInsertedOrNotForDamageAndWrongSkuExceptions()
         {         
            Assert.AreEqual(Convert.ToDecimal(Ivst.Quantity),caseDtlAfterApi.ActualQuantity);
-           Assert.AreEqual(UnitWeight*Convert.ToDecimal(Ivst.Quantity), caseHdrAfterApi.EstimatedWeight);
-           Assert.AreEqual(UnitWeight * Convert.ToDecimal(Ivst.Quantity), caseHdrAfterApi.ActualWeight);
+           Assert.AreEqual(String.Format("{0:0.00}", UnitWeight *Convert.ToDecimal(Ivst.Quantity)), String.Format("{0:0.00}", caseHdrAfterApi.EstimatedWeight));
+           Assert.AreEqual(String.Format("{0:0.00}", UnitWeight * Convert.ToDecimal(Ivst.Quantity)), String.Format("{0:0.00}", caseHdrAfterApi.ActualWeight));
            //Assert.AreEqual(Ivst.ContainerId, caseHdrAfterApi.CaseNumber);
            Assert.AreEqual(10, caseHdrAfterApi.StatusCode);
            Assert.AreEqual("Y", caseHdrAfterApi.SingleSkuId);

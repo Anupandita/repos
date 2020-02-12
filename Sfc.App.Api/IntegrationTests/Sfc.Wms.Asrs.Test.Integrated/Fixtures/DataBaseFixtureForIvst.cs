@@ -637,7 +637,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public void UpdatetheQuantity(OracleConnection db)
         {
             Transaction = db.BeginTransaction();
-            Query = $"update pick_locn_dtl set actl_invn_qty = 99 where sku_id = '3300121'";
+            Query = $"update pick_locn_dtl set actl_invn_qty = 999 where sku_id = '2346701'";
             Command = new OracleCommand(Query, db);
             Command.ExecuteNonQuery();
             Transaction.Commit();
