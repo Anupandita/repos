@@ -47,6 +47,7 @@ namespace Sfc.Wms.App.Api.Contracts.Constants
             public const string MenusById = "menus/{menuId}";
             public const string OrmtByCartonNumber = "carton-number";
             public const string OrmtByWaveNumber = "wave-number";
+            public const string OrmtByWaveNumberUsingParallel = "wave-number-parallel";
             public const string PageNo = "pageNo=";
             public const string QueryParamAnd = "&";
             public const string QueryParamSeperator = "/";
