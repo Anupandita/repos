@@ -2,6 +2,7 @@
 using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.App.Api.Contracts.Constants;
 using Sfc.Wms.Interfaces.Asrs.Contracts.Interfaces;
+using SimpleInjector.Lifestyles;
 using System;
 using System.Net;
 using System.Threading.Tasks;
@@ -14,13 +15,10 @@ namespace Sfc.Wms.App.Api.Controllers
     public class OrderMaintenanceController : SfcBaseController
     {
         private readonly IWmsToEmsMessageProcessorService _wmsToEmsMessageProcessorService;
-        private readonly IWmsToEmsParallelProcessService _wmsToEmsParallelProcessService;
 
-        public OrderMaintenanceController(IWmsToEmsMessageProcessorService wmsToEmsMessageProcessorService,
-            IWmsToEmsParallelProcessService wmsToEmsParallelProcessService)
+        public OrderMaintenanceController(IWmsToEmsMessageProcessorService wmsToEmsMessageProcessorService)
         {
             _wmsToEmsMessageProcessorService = wmsToEmsMessageProcessorService;
-            _wmsToEmsParallelProcessService = wmsToEmsParallelProcessService;
         }
 
         [HttpPost]
@@ -59,12 +57,17 @@ namespace Sfc.Wms.App.Api.Controllers
         public async Task<IHttpActionResult> CreateOrmtMessageByWaveNumberParallelAsync(string waveNumber)
         {
             var container = DependencyConfig.Register();
-            var result = await _wmsToEmsParallelProcessService.GetOrmtMessageByWaveNumberParallelAsync(container,waveNumber)
-                .ConfigureAwait(false);
+            using (var scope = AsyncScopedLifestyle.BeginScope(container))
+            {
+                var wmsToEmsParallelProcessService = scope.GetInstance<IWmsToEmsParallelProcessService>();
+                var result = await wmsToEmsParallelProcessService
+                   .GetOrmtMessageByWaveNumberParallelAsync(container, waveNumber)
+                   .ConfigureAwait(false);
 
-            return Content(Enum.TryParse(result.ResultType.ToString(), out HttpStatusCode statusCode)
-                ? statusCode
-                : HttpStatusCode.ExpectationFailed, result);
+                return Content(Enum.TryParse(result.ResultType.ToString(), out HttpStatusCode statusCode)
+                    ? statusCode
+                    : HttpStatusCode.ExpectationFailed, result);
+            }
         }
     }
 }
