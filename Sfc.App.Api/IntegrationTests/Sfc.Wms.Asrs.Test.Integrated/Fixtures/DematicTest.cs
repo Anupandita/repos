@@ -19,6 +19,8 @@ using Sfc.Wms.Foundation.TransitionalInventory.Contracts.Dtos;
 using Sfc.Wms.Interfaces.Builder.MessageBuilder;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Validation;
 using Sfc.Core.OnPrem.ParserAndTranslator.Dtos;
+using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Interfaces;
+using Sfc.Wms.Data.Context;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {   
@@ -55,8 +57,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 wmsToEms = FetchDataFromWmsToEms(db);
                 UpdatetheStatusInWmsToEms(db, wmsToEms.MessageKey);
                 testResult = ParserTestforMsgText(wmsToEms.Transaction, wmsToEms.MessageText);
-                BaseResult<ComtDto> comtDto =(BaseResult<ComtDto>)testResult;
-                var costResult = CreateCostMessage(testResult.Payload., CostData.SkuId, CostData.Qty, CostData.LocnId);
+                BaseResult<IvmtDto> ivmtDto =(BaseResult<IvmtDto>)testResult;
+                var costResult = CreateCostMessage(ivmtDto.Payload.ContainerId, ivmtDto.Payload.Sku, ivmtDto.Payload.Quantity, "56789");
                 EmsToWmsParameters = new EmsToWmsDto
                 {
                     Process = DefaultPossibleValue.MessageProcessor,
@@ -69,6 +71,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
       
+
+        
         public void UpdatetheStatusInWmsToEms(OracleConnection db, Int64 msgKey)
         {
             Transaction = db.BeginTransaction();
