@@ -16,6 +16,7 @@ using Sfc.Wms.Foundation.Location.Contracts.Dtos;
 using Sfc.Wms.Interfaces.Parser.Parsers;
 using Sfc.Wms.Foundation.Tasks.Contracts.Dtos;
 using Sfc.Wms.Foundation.TransitionalInventory.Contracts.Dtos;
+using Sfc.Core.OnPrem.ParserAndTranslator.Dtos;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
@@ -398,9 +399,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return caseHdrDtl;
         }
         
-        protected BaseResult ParserTestforMsgText(string transactionCode,string sourceTextMsg)
+        protected BaseResult<MessageHeaderDto> ParserTestforMsgText(string transactionCode,string sourceTextMsg)
         {
-            var testResult = _canParseMessage.ParseMessage(transactionCode, sourceTextMsg);
+            BaseResult<MessageHeaderDto> testResult = _canParseMessage.ParseMessage(transactionCode, sourceTextMsg);
+         
             return testResult;
         }
         protected void VerifyComtMessageWasInsertedIntoSwmToMhe(ComtDto comt, SwmToMheDto swmToMhe,string caseNbr)
