@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Security.Permissions;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using Sfc.Wms.Interfaces.Asrs.Dematic.Contracts.Dtos;
 
-namespace DataGenerator.Fixtures
+namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
     public class WmsToEmsFixture
     {
