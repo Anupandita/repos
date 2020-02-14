@@ -401,8 +401,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         
         protected BaseResult<MessageHeaderDto> ParserTestforMsgText(string transactionCode,string sourceTextMsg)
         {
-            BaseResult<MessageHeaderDto> testResult = _canParseMessage.ParseMessage(transactionCode, sourceTextMsg);
-         
+            BaseResult<MessageHeaderDto> testResult = _canParseMessage.ParseMessage(transactionCode, sourceTextMsg);       
             return testResult;
         }
         protected void VerifyComtMessageWasInsertedIntoSwmToMhe(ComtDto comt, SwmToMheDto swmToMhe,string caseNbr)
