@@ -29,10 +29,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                     WaveNumber = validData["WAVE_NBR"].ToString()
                 };
                 swmEligibleOrmtCarton.Add(set);
-
             }
             return swmEligibleOrmtCarton;
-        }
+        }   
 
         
         public void GetValidCartonAndWaveNumberFromSwmEligibleOrmtCarton()
