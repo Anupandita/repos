@@ -159,6 +159,9 @@
     <Reference Include="Sfc.Core.OnPrem.Pagination, Version=2.13.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Core.OnPrem.Pagination.2.13.1\lib\net472\Sfc.Core.OnPrem.Pagination.dll</HintPath>
     </Reference>
+    <Reference Include="Sfc.Core.OnPrem.ParallelAndSequentialProcessing, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Core.OnPrem.ParallelAndSequentialProcessing.1.2.0\lib\net472\Sfc.Core.OnPrem.ParallelAndSequentialProcessing.dll</HintPath>
+    </Reference>
     <Reference Include="Sfc.Core.OnPrem.ParserAndTranslator, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Core.OnPrem.ParserAndTranslator.2.0.0\lib\net472\Sfc.Core.OnPrem.ParserAndTranslator.dll</HintPath>
     </Reference>
@@ -372,8 +375,8 @@
     <Reference Include="Sfc.Wms.Inbound.TransitionalInventory.App, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Inbound.TransitionalInventory.App.1.2.0\lib\net472\Sfc.Wms.Inbound.TransitionalInventory.App.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Interfaces.Asrs.App, Version=3.15.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Interfaces.Asrs.App.3.15.2\lib\net472\Sfc.Wms.Interfaces.Asrs.App.dll</HintPath>
+    <Reference Include="Sfc.Wms.Interfaces.Asrs.App, Version=3.15.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Interfaces.Asrs.App.3.15.5\lib\net472\Sfc.Wms.Interfaces.Asrs.App.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Interfaces.Asrs.Contracts, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Interfaces.Asrs.Contracts.2.4.0\lib\net472\Sfc.Wms.Interfaces.Asrs.Contracts.dll</HintPath>
@@ -411,8 +414,8 @@
     <Reference Include="Sfc.Wms.Outbound.Carton.App, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Outbound.Carton.App.2.1.0\lib\net472\Sfc.Wms.Outbound.Carton.App.dll</HintPath>
     </Reference>
-    <Reference Include="SimpleInjector, Version=4.7.1.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
-      <HintPath>..\packages\SimpleInjector.4.7.1\lib\net45\SimpleInjector.dll</HintPath>
+    <Reference Include="SimpleInjector, Version=4.8.1.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.4.8.1\lib\net45\SimpleInjector.dll</HintPath>
     </Reference>
     <Reference Include="SimpleInjector.Integration.WebApi, Version=4.7.1.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
       <HintPath>..\packages\SimpleInjector.Integration.WebApi.4.7.1\lib\net45\SimpleInjector.Integration.WebApi.dll</HintPath>
@@ -466,6 +469,7 @@
       <HintPath>..\packages\System.Linq.Dynamic.1.0.7\lib\net40\System.Linq.Dynamic.dll</HintPath>
     </Reference>
     <Reference Include="System.Linq.Expressions" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.3\lib\netstandard2.0\System.Memory.dll</HintPath>
     </Reference>

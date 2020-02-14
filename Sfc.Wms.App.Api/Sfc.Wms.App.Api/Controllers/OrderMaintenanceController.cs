@@ -36,22 +36,10 @@ namespace Sfc.Wms.App.Api.Controllers
                 : HttpStatusCode.ExpectationFailed, result);
         }
 
+        
+
         [HttpPost]
         [Route(Routes.Paths.OrmtByWaveNumber)]
-        [ResponseType(typeof(BaseResult))]
-        [AllowAnonymous]
-        public async Task<IHttpActionResult> CreateOrmtMessageByWaveNumberAsync(string waveNumber)
-        {
-            var result = await _wmsToEmsMessageProcessorService.GetOrmtMessageByWaveNumberAsync(waveNumber)
-                .ConfigureAwait(false);
-
-            return Content(Enum.TryParse(result.ResultType.ToString(), out HttpStatusCode statusCode)
-                ? statusCode
-                : HttpStatusCode.ExpectationFailed, result);
-        }
-
-        [HttpPost]
-        [Route(Routes.Paths.OrmtByWaveNumberUsingParallel)]
         [ResponseType(typeof(BaseResult))]
         [AllowAnonymous]
         public async Task<IHttpActionResult> CreateOrmtMessageByWaveNumberParallelAsync(string waveNumber)
