@@ -1,14 +1,23 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures;
+using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
+using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Constants;
+using TestStack.BDDfy;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 {
     [TestClass]
-    public class UnitTest1
+    [Story(
+             )]
+
+    public class DematicMessagesTest:DematicTest
     {
-        [TestMethod]
-        public void TestMethod1()
+        [TestMethod()]
+        [TestCategory("FUNCTIONAL")]
+        public void TestData()
         {
+            DematicTestProcessFlow();
         }
+
     }
 }

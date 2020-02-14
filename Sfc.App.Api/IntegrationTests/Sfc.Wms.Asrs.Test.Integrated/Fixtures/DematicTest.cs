@@ -49,7 +49,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return wmsToEmsData;
         }
 
-        public void  GetData()
+        public void  DematicTestProcessFlow()
         {
             using (var db = GetOracleConnection())
             {
