@@ -31,10 +31,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected Cost CostData = new Cost();
         protected EmsToWmsDto EmsToWmsParameters;
         protected BaseResult<MessageHeaderDto> testResult;
-        public WmsToEmsDto FetchDataFromWmsToEms(OracleConnection db)
+        public WmsToEmsDto FetchDataFromWmsToEms(OracleConnection db,string trx)
         {
             var wmsToEmsData  = new WmsToEmsDto();
-            var q = "Select * from wmstoems where trx = 'COMT' and STS = 'Ready' Order by adddate desc";
+            var q = "Select * from wmstoems where trx = '{trx}' and STS = 'Ready' Order by adddate desc";
             Command = new OracleCommand(q, db);
             var wmsToEmsReader = Command.ExecuteReader();
             if (wmsToEmsReader.Read())
@@ -54,11 +54,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                wmsToEms = FetchDataFromWmsToEms(db);
+                wmsToEms = FetchDataFromWmsToEms(db,TransactionCode.Ivmt);
                 UpdatetheStatusInWmsToEms(db, wmsToEms.MessageKey);
                 testResult = ParserTestforMsgText(wmsToEms.Transaction, wmsToEms.MessageText);
-                BaseResult<IvmtDto> ivmtDto =(BaseResult<IvmtDto>)testResult;
-                var costResult = CreateCostMessage(ivmtDto.Payload.ContainerId, ivmtDto.Payload.Sku, ivmtDto.Payload.Quantity, "56789");
+                IvmtDto ivmtDto =(IvmtDto)testResult.Payload;
+                var costResult = CreateCostMessage(ivmtDto.ContainerId, ivmtDto.Sku, ivmtDto.Quantity, "56789");
                 EmsToWmsParameters = new EmsToWmsDto
                 {
                     Process = DefaultPossibleValue.MessageProcessor,
@@ -71,7 +71,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
       
-
         
         public void UpdatetheStatusInWmsToEms(OracleConnection db, Int64 msgKey)
         {

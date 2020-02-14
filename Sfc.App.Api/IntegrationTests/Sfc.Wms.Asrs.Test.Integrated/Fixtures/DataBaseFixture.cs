@@ -23,31 +23,31 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
     public class DataBaseFixture : CommonFunction
     {
         public decimal UnitWeight;
-        protected CaseViewDto SingleSkuCase = new CaseViewDto();
-        protected CaseViewDto CaseHdrMultiSku = new CaseViewDto();
-        protected SwmToMheDto SwmToMheComt = new SwmToMheDto();
-        protected SwmToMheDto SwmToMheIvmt = new SwmToMheDto();
-        protected PickLocationDetailsDto PickLocn = new PickLocationDetailsDto();
-        protected IvmtDto Ivmt = new IvmtDto();
-        protected ComtDto Comt = new ComtDto();
-        protected WmsToEmsDto WmsToEmsIvmt = new WmsToEmsDto();
-        protected WmsToEmsDto WmsToEmsComt = new WmsToEmsDto();
-        protected List<TransitionalInventoryDto> TrnList = new List<TransitionalInventoryDto>();
-        protected List<CaseViewDto> CaseList = new List<CaseViewDto>();
-        protected List<CaseViewDto> CaseDtoList = new List<CaseViewDto>();
-        protected TaskHeaderDto TaskMultiSku= new TaskHeaderDto();
-        protected TaskHeaderDto TaskSingleSku = new TaskHeaderDto();
-        protected TransitionalInventoryDto TransInvnAfterTrigger = new TransitionalInventoryDto();
-        protected TransitionalInventoryDto TransInvnBeforeTrigger  = new TransitionalInventoryDto();
+        public CaseViewDto SingleSkuCase = new CaseViewDto();
+        public CaseViewDto CaseHdrMultiSku = new CaseViewDto();
+        public SwmToMheDto SwmToMheComt = new SwmToMheDto();
+        public SwmToMheDto SwmToMheIvmt = new SwmToMheDto();
+        public PickLocationDetailsDto PickLocn = new PickLocationDetailsDto();
+        public IvmtDto Ivmt = new IvmtDto();
+        public ComtDto Comt = new ComtDto();
+        public WmsToEmsDto WmsToEmsIvmt = new WmsToEmsDto();
+        public WmsToEmsDto WmsToEmsComt = new WmsToEmsDto();
+        public List<TransitionalInventoryDto> TrnList = new List<TransitionalInventoryDto>();
+        public List<CaseViewDto> CaseList = new List<CaseViewDto>();
+        public List<CaseViewDto> CaseDtoList = new List<CaseViewDto>();
+        public TaskHeaderDto TaskMultiSku= new TaskHeaderDto();
+        public TaskHeaderDto TaskSingleSku = new TaskHeaderDto();
+        public TransitionalInventoryDto TransInvnAfterTrigger = new TransitionalInventoryDto();
+        public TransitionalInventoryDto TransInvnBeforeTrigger  = new TransitionalInventoryDto();
         private readonly MessageHeaderParser _canParseMessage;
-        protected string LocnId;
-        protected dynamic TrnInvnBeforeCallingApi;
-        protected CaseViewDto CaseDtlAfterApi  = new CaseViewDto();
-        protected  CaseViewDto CaseDtlBeforeApi =new CaseViewDto();
-        protected CaseViewDto CaseHdrDtl = new CaseViewDto();
-        protected CaseHeaderDto NotEnoughInvCase = new CaseHeaderDto();
-        protected PickLocationDetailsDto PickLocnAfterCallingApi = new PickLocationDetailsDto();
-        protected PickLocationDetailsDto PickLocnBeforeCallingApi = new PickLocationDetailsDto();
+        public string LocnId;
+        public dynamic TrnInvnBeforeCallingApi;
+        public CaseViewDto CaseDtlAfterApi  = new CaseViewDto();
+        public  CaseViewDto CaseDtlBeforeApi =new CaseViewDto();
+        public CaseViewDto CaseHdrDtl = new CaseViewDto();
+        public CaseHeaderDto NotEnoughInvCase = new CaseHeaderDto();
+        public PickLocationDetailsDto PickLocnAfterCallingApi = new PickLocationDetailsDto();
+        public PickLocationDetailsDto PickLocnBeforeCallingApi = new PickLocationDetailsDto();
 
         public DataBaseFixture()
         {
@@ -311,7 +311,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        protected CaseViewDto FetchCaseDetailsTriger(OracleConnection db)
+        public CaseViewDto FetchCaseDetailsTriger(OracleConnection db)
         {
             var caseDtl = new CaseViewDto();
             var query = ComtQueries.CaseHdrDtlTransInvnJoin;
@@ -330,7 +330,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return caseDtl;
         }
         
-        protected TaskHeaderDto FetchTaskDetails(OracleConnection db,string skuId)
+        public TaskHeaderDto FetchTaskDetails(OracleConnection db,string skuId)
         {
             var task = new TaskHeaderDto();
             var query = CommonQueries.TaskHdr;
@@ -382,7 +382,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        protected CaseViewDto CaseHdrAndDtlDataAfterCallingApi(OracleConnection db)
+        public CaseViewDto CaseHdrAndDtlDataAfterCallingApi(OracleConnection db)
         {
             var caseHdrDtl = new CaseViewDto();
             var query = ComtQueries.CaseHdrDtlJoin;
@@ -399,12 +399,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return caseHdrDtl;
         }
         
-        protected BaseResult<MessageHeaderDto> ParserTestforMsgText(string transactionCode,string sourceTextMsg)
+        public BaseResult<MessageHeaderDto> ParserTestforMsgText(string transactionCode,string sourceTextMsg)
         {
             BaseResult<MessageHeaderDto> testResult = _canParseMessage.ParseMessage(transactionCode, sourceTextMsg);       
             return testResult;
         }
-        protected void VerifyComtMessageWasInsertedIntoSwmToMhe(ComtDto comt, SwmToMheDto swmToMhe,string caseNbr)
+        public void VerifyComtMessageWasInsertedIntoSwmToMhe(ComtDto comt, SwmToMheDto swmToMhe,string caseNbr)
         {
             Assert.AreEqual(DefaultValues.Status, SwmToMheComt.SourceMessageStatus);
             Assert.AreEqual(Constants.ReasonCode, SwmToMheComt.SourceMessageResponseCode);
@@ -416,7 +416,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(DefaultValues.ContainerType, SwmToMheComt.ContainerType);
             Assert.AreEqual(Constants.MessageStatus, SwmToMheComt.MessageStatus);
         }
-        protected void VerifyComtMessageWasInsertedIntoWmsToEms(WmsToEmsDto wte1)
+        public void VerifyComtMessageWasInsertedIntoWmsToEms(WmsToEmsDto wte1)
         {
             Assert.AreEqual(SwmToMheComt.SourceMessageProcess, wte1.Process);
             Assert.AreEqual(SwmToMheComt.SourceMessageKey,wte1.MessageKey);
@@ -441,29 +441,29 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(DefaultValues.InboundPallet,ivmt.InboundPallet);
         }
 
-        protected void VerifyIvmtMessageWasInsertedIntoWmsToEms(WmsToEmsDto wmsToEms)
+        public void VerifyIvmtMessageWasInsertedIntoWmsToEms(WmsToEmsDto wmsToEms)
         {
             Assert.AreEqual(SwmToMheIvmt.SourceMessageStatus, wmsToEms.Status);
             Assert.AreEqual(TransactionCode.Ivmt, wmsToEms.Transaction);
             Assert.AreEqual(Convert.ToInt16(SwmToMheIvmt.SourceMessageResponseCode), wmsToEms.ResponseCode);
         }
-        protected void VerifyQuantityIsIncreasedIntoTransInvn(TransitionalInventoryDto trnInvnAfterApi, TransitionalInventoryDto trnInvnBeforeApi)
+        public void VerifyQuantityIsIncreasedIntoTransInvn(TransitionalInventoryDto trnInvnAfterApi, TransitionalInventoryDto trnInvnBeforeApi)
         {
             Assert.AreEqual(TransInvnBeforeTrigger.ActualInventoryUnits + Convert.ToDecimal(Ivmt.Quantity), TransInvnAfterTrigger.ActualInventoryUnits);
             Assert.AreEqual((UnitWeight * Convert.ToDecimal(Ivmt.Quantity)) + SingleSkuCase.ActualWeight, Convert.ToDecimal(CaseDtlAfterApi.ActualWeight));
         }
-        protected void VerifyQuantityisReducedIntoCaseDetailForMultiSku()
+        public void VerifyQuantityisReducedIntoCaseDetailForMultiSku()
         {
             for (var j = 0; j < CaseList.Count; j++)
             {
                 Assert.AreEqual(0, CaseList[j].TotalAllocQty);
             }
         }
-        protected void VerifyStatusIsUpdatedIntoCaseHeader(int caseHdrstatcode)
+        public void VerifyStatusIsUpdatedIntoCaseHeader(int caseHdrstatcode)
         {
             Assert.AreEqual(DefaultValues.CaseHdrStatCode, caseHdrstatcode);
         }
-        protected void VerifyStatusIsUpdatedIntoTaskHeader(int statcode)
+        public void VerifyStatusIsUpdatedIntoTaskHeader(int statcode)
         {
             try
             {

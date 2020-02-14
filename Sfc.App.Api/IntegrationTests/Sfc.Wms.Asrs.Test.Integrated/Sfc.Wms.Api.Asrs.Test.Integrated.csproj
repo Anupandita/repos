@@ -119,6 +119,7 @@
     <Compile Include="Tests\OrmtTestWhenTriggerIsOn.cs" />
     <Compile Include="Tests\Synr.cs" />
     <Compile Include="Tests\QueueManagementTest.cs" />
+    <Compile Include="Tests\DematicMessagesTest.cs" />
     <Compile Include="Tests\ValidateforNegativeQtyDiffForSyncMessage.cs" />
     <Compile Include="Tests\ValidateforSyndwithsameskuCombination.cs" />
   </ItemGroup>

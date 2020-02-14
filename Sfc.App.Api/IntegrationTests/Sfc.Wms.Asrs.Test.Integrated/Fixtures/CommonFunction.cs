@@ -15,16 +15,16 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
     public class CommonFunction
     {
-        protected OracleCommand Command;
-        protected List<TransitionalInventoryDto> TransInvnList = new List<TransitionalInventoryDto>();
-        protected OracleTransaction Transaction;
-        protected string Query = "";
+        public OracleCommand Command;
+        public List<TransitionalInventoryDto> TransInvnList = new List<TransitionalInventoryDto>();
+        public OracleTransaction Transaction;
+        public string Query = "";
         public OracleConnection GetOracleConnection()
         {
             return new OracleConnection(ConfigurationManager.ConnectionStrings["SfcRbacContextModel"].ConnectionString);
         }
 
-        protected WmsToEmsDto WmsToEmsData(OracleConnection db, int msgKey, string trx)
+        public WmsToEmsDto WmsToEmsData(OracleConnection db, int msgKey, string trx)
         {
             var wmsToEmsDto = new WmsToEmsDto();
             var query = CommonQueries.WmsToEms;
@@ -45,7 +45,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return wmsToEmsDto;
         }
 
-        protected SwmToMheDto SwmToMhe(OracleConnection db, string containerNbr, string trx, string skuId)
+        public SwmToMheDto SwmToMhe(OracleConnection db, string containerNbr, string trx, string skuId)
         {
             var swmtomhedata = new SwmToMheDto();
             var sku = $" and sku_id = '{skuId}' ";
@@ -150,7 +150,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         }
 
 
-        protected decimal FetchUnitWeight(OracleConnection db, string skuId)
+        public decimal FetchUnitWeight(OracleConnection db, string skuId)
         {
             var query = CommonQueries.ItemMaster;
             Command = new OracleCommand(query, db);           
