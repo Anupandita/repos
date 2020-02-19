@@ -336,6 +336,9 @@
     <Reference Include="Sfc.Wms.Framework.ItemMaster.App, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.ItemMaster.App.1.0.2\lib\net472\Sfc.Wms.Framework.ItemMaster.App.dll</HintPath>
     </Reference>
+    <Reference Include="Sfc.Wms.Framework.ItemMasters.App, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.ItemMasters.App.1.0.0\lib\net472\Sfc.Wms.Framework.ItemMasters.App.dll</HintPath>
+    </Reference>
     <Reference Include="Sfc.Wms.Framework.Location.App, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.Location.App.1.1.1\lib\net472\Sfc.Wms.Framework.Location.App.dll</HintPath>
     </Reference>
@@ -617,12 +620,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Framework\Sfc.Wms.Framework.ItemMasters\Sfc.Wms.Framework.ItemMasters.App\Sfc.Wms.Framework.ItemMasters.App\Sfc.Wms.Framework.ItemMasters.App.csproj">
-      <Project>{92fcdcae-ec01-4924-99ea-568236bc2320}</Project>
-      <Name>Sfc.Wms.Framework.ItemMasters.App</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
