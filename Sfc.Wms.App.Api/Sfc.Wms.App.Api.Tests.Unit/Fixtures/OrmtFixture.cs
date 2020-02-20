@@ -1,11 +1,11 @@
-﻿using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Results;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.App.Api.Controllers;
 using Sfc.Wms.Interfaces.Asrs.Contracts.Interfaces;
+using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Results;
 
 namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 {
@@ -54,12 +54,6 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         {
             MockGetOrmtMessageByCartonNumber();
             _testResult = _ormtController.CreateOrmtMessageByCartonNumberAsync(It.IsAny<string>(), It.IsAny<string>());
-        }
-
-        protected void CreateOrmtMessagesByWaveNumber()
-        {
-            MockGetOrmtMessageByWaveNumber();
-            _testResult = _ormtController.CreateOrmtMessageByWaveNumberAsync(It.IsAny<string>());
         }
 
         protected void OrmtMessageShouldBeProcessed()
