@@ -117,7 +117,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected void VerifyTheQuantityWasDecreasedInToTransInventory()
         {
             Assert.AreEqual(TrnInvBeforeApi.ActualInventoryUnits - (Convert.ToDecimal(Cost.StorageClassAttribute2)/100), TrnInvAfterApi.ActualInventoryUnits);
-            Assert.AreEqual(TrnInvBeforeApi.ActualWeight - (UnitWeight1 * (Convert.ToDecimal(Cost.StorageClassAttribute2)/100)), TrnInvAfterApi.ActualWeight);
+            Assert.AreEqual(String.Format("{0:0.00}",TrnInvBeforeApi.ActualWeight - (UnitWeight1 * (Convert.ToDecimal(Cost.StorageClassAttribute2)/100))), String.Format("{0:0.00}", TrnInvAfterApi.ActualWeight));
         }
 
         protected void VerifyTheQuantityWasIncreasedIntoPickLocationTable()

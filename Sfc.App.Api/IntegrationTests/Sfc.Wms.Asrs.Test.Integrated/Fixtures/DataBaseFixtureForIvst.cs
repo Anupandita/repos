@@ -15,6 +15,7 @@ using Sfc.Wms.Interfaces.Asrs.Dematic.Contracts.Dtos;
 using Sfc.Wms.Foundation.TransitionalInventory.Contracts.Dtos;
 using Sfc.Wms.Foundation.InboundLpn.Contracts.Enums;
 using Sfc.Wms.Foundation.InboundLpn.Contracts.Dtos;
+using System.Diagnostics;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
@@ -594,9 +595,15 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 TransInvnNegativePick = FetchTransInvnentoryForNegative(db, Ivst.Sku);
                 Int64 maxId = FetchMaxIdFromPb2CorbaHdr(db);
                 pb = FetchPbHdrDetails(db, maxId);
-                caseDtlAfterApi = FetchCaseDetailQty(db,pb[0].ParmValue);
-                caseHdrAfterApi = CaseHeaderDetails(db, pb[0].ParmValue);
-               
+                try
+                {
+                    caseDtlAfterApi = FetchCaseDetailQty(db, pb[0].ParmValue);
+                    caseHdrAfterApi = CaseHeaderDetails(db, pb[0].ParmValue);
+                }
+                catch
+                {
+                    Debug.Print("No Data Found");
+                }
             }
         }
 

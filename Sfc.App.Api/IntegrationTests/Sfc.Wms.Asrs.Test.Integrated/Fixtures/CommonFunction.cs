@@ -36,7 +36,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             {
                 wmsToEmsDto.Status = wmsToEmsReader[WmsToEms.Status].ToString();
                 wmsToEmsDto.ResponseCode = Convert.ToInt16(wmsToEmsReader[WmsToEms.ReasonCode]);
-                wmsToEmsDto.MessageKey = Convert.ToUInt16(wmsToEmsReader[WmsToEms.MsgKey]);
+                wmsToEmsDto.MessageKey = Convert.ToInt32(wmsToEmsReader[WmsToEms.MsgKey]);
                 wmsToEmsDto.Transaction = wmsToEmsReader[WmsToEms.Trx].ToString();
                 wmsToEmsDto.MessageText = wmsToEmsReader[WmsToEms.MsgTxt].ToString();
                 wmsToEmsDto.Process = wmsToEmsReader["PRC"].ToString();
