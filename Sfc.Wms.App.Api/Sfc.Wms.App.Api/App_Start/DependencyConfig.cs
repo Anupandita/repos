@@ -56,7 +56,7 @@ namespace Sfc.Wms.App.Api
                      SfcRbacMapper.CreateMaps(cfg);
                      PrinterValuesMapper.CreateMaps(cfg);
                      SfcAsrsMapper.CreateMaps(cfg);
-                     SfcItemMasterMapper.CreateMaps(cfg);
+                     SfcItemAttributeMapper.CreateMaps(cfg);
                      cfg.CreateMap<VendorMaster, VendorDetailDto>(MemberList.None).ReverseMap();
                      cfg.CreateMap<VendorMaster, VendorMasterDto>(MemberList.None).ReverseMap();
 

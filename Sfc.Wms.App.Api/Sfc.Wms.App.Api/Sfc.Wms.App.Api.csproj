@@ -195,9 +195,6 @@
     <Reference Include="Sfc.Wms.Configuration.ItemMaster.Contracts, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Confguration.ItemMaster.Contracts.4.0.0\lib\net472\Sfc.Wms.Configuration.ItemMaster.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Configuration.ItemMaster.Repository, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Configuration.ItemMaster.Repository.3.1.0\lib\net472\Sfc.Wms.Configuration.ItemMaster.Repository.dll</HintPath>
-    </Reference>
     <Reference Include="Sfc.Wms.Configuration.ItemMasters.Contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Confguration.ItemMasters.Contracts.1.0.0\lib\net472\Sfc.Wms.Configuration.ItemMasters.Contracts.dll</HintPath>
     </Reference>
@@ -333,11 +330,8 @@
     <Reference Include="Sfc.Wms.Framework.DockDoor.App, Version=2.2.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.DockDoor.App.2.2.5\lib\net472\Sfc.Wms.Framework.DockDoor.App.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Framework.Interceptor.App, Version=3.6.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Framework.Interceptor.App.3.6.0\lib\net472\Sfc.Wms.Framework.Interceptor.App.dll</HintPath>
-    </Reference>
-    <Reference Include="Sfc.Wms.Framework.ItemMaster.App, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Framework.ItemMaster.App.1.0.2\lib\net472\Sfc.Wms.Framework.ItemMaster.App.dll</HintPath>
+    <Reference Include="Sfc.Wms.Framework.Interceptor.App, Version=3.6.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.Interceptor.App.3.6.1\lib\net472\Sfc.Wms.Framework.Interceptor.App.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Framework.ItemMasters.App, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.ItemMasters.App.1.0.0\lib\net472\Sfc.Wms.Framework.ItemMasters.App.dll</HintPath>
@@ -390,8 +384,8 @@
     <Reference Include="Sfc.Wms.Inbound.TransitionalInventory.App, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Inbound.TransitionalInventory.App.1.2.0\lib\net472\Sfc.Wms.Inbound.TransitionalInventory.App.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Interfaces.Asrs.App, Version=3.15.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Interfaces.Asrs.App.3.15.5\lib\net472\Sfc.Wms.Interfaces.Asrs.App.dll</HintPath>
+    <Reference Include="Sfc.Wms.Interfaces.Asrs.App, Version=3.16.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Interfaces.Asrs.App.3.16.1\lib\net472\Sfc.Wms.Interfaces.Asrs.App.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Interfaces.Asrs.Contracts, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Interfaces.Asrs.Contracts.2.4.0\lib\net472\Sfc.Wms.Interfaces.Asrs.Contracts.dll</HintPath>
