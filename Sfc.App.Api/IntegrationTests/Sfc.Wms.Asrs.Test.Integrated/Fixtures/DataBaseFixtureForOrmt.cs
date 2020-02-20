@@ -43,6 +43,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected string DestinationLocationForNormalCarton;
         protected string DestinationLocationForEpickCarton;
         protected List<PickLocationDetailsExtenstionDto> ActiveOrmtCountList = new List<PickLocationDetailsExtenstionDto>();
+        public string Uom;
        
 
         public void GetDataBeforeTriggerOrmtForPrintingOfCartons()
@@ -54,6 +55,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 PrintCarton = GetValidOrderDetails(db,"5","0","0");               
                 PickLcnDtlExtBeforeApi = GetPickLocnDtlExt(db, PrintCarton.SkuId, null);
                 DestinationLocationForNormalCarton = CartonHeaderDestinationLocationMatchForNormalCarton(PrintCarton.TempZone);
+                var UOM = GetUnitOfMeasureFromItemMaster(db, PrintCarton.SkuId);
+                Uom = ItemMasterUnitOfMeasure(UOM);
             }
         }    
 
@@ -66,6 +69,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                // var waveNumber = GetWaveNumber(db);
                 OrderList = GetValidOrderDetailsForWaveRelease(db, null);
                 ActiveOrmtCountList = FetchActiveOrmtCount(db);
+
             }
        }
 
@@ -98,6 +102,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 CancelOrder = GetValidOrderDetails(db, "99", "0","90");
                 PickLcnDtlExtBeforeApi = GetPickLocnDtlExt(db, CancelOrder.SkuId,null);
                 DestinationLocationForNormalCarton = CartonHeaderDestinationLocationMatchForNormalCarton(PrintCarton.TempZone);
+                var UOM = GetUnitOfMeasureFromItemMaster(db, CancelOrder.SkuId);
+                Uom = ItemMasterUnitOfMeasure(UOM);
             }
         }
         
@@ -111,6 +117,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 EPick = GetValidOrderDetails(db, "12", "1","90");
                 PickLcnDtlExtBeforeApi = GetPickLocnDtlExt(db, EPick.SkuId, EPick.LocnId);
                 DestinationLocationForEpickCarton = CartonHeaderDestinationMatchForEPickCarton(EPick.TempZone);
+                var UOM = GetUnitOfMeasureFromItemMaster(db, EPick.SkuId);
+                Uom = ItemMasterUnitOfMeasure(UOM);
             }
         }
 

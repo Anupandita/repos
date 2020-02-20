@@ -18,7 +18,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected WmsToEmsDto WmsToEmsSkmt = new WmsToEmsDto();
         protected SwmToMheDto SwmToMheSkmt = new SwmToMheDto();
         protected SkmtDto Skmt = new SkmtDto();
-
+        public string Uom;
 
         public void GetDataBeforeTriggerSkmt()
         {
@@ -26,6 +26,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             {
                 db.Open();
                 Normal = TriggerOnItemMaster(db, null);
+                var UOM = GetUnitOfMeasureFromItemMaster(db, Normal.SkuId);
+                Uom = ItemMasterUnitOfMeasure(UOM);
             }
         }
 
@@ -35,6 +37,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             {
                 db.Open();
                 ParentSku = TriggerOnItemMaster(db, Constants.Child);
+                var UOM = GetUnitOfMeasureFromItemMaster(db, ParentSku.SkuId);
+                Uom = ItemMasterUnitOfMeasure(UOM);
 
             }
         }
@@ -46,6 +50,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 ParentSku = TriggerOnItemMaster(db, Constants.Child);
                 ChildSku = TriggerOnItemMaster(db, Constants.Parent);
                 Childskuassertion = ChildSkufunction(db, ParentSku.SkuId);
+                var UOM = GetUnitOfMeasureFromItemMaster(db, ParentSku.SkuId);
+                Uom = ItemMasterUnitOfMeasure(UOM);
             }
         }
 

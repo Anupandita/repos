@@ -166,7 +166,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(OrmtActionCode.AddRelease, Ormt.ActionCode);
             Assert.AreEqual(PrintCarton.SkuId, Ormt.Sku);
             Assert.AreEqual(PrintCarton.TotalQty, Ormt.Quantity);
-            Assert.AreEqual(UnitOfMeasures.Case, Ormt.UnitOfMeasure);
+            Assert.AreEqual(Uom, Ormt.UnitOfMeasure);
             Assert.AreEqual(PrintCarton.CartonNbr, Ormt.OrderId);
             Assert.AreEqual(Constants.OrderLineId,Ormt.OrderLineId);
             Assert.AreEqual(DefaultPossibleValue.OrderType,Ormt.OrderType);
@@ -185,7 +185,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(OrmtActionCode.Cancel, OrmtCancel.ActionCode);
             Assert.AreEqual(CancelOrder.SkuId, OrmtCancel.Sku);
             Assert.AreEqual(CancelOrder.TotalQty, OrmtCancel.Quantity);
-            Assert.AreEqual(UnitOfMeasures.Case, OrmtCancel.UnitOfMeasure);
+            Assert.AreEqual(Uom, OrmtCancel.UnitOfMeasure);
             Assert.AreEqual(CancelOrder.CartonNbr, OrmtCancel.OrderId);
             Assert.AreEqual(Constants.OrderLineId, OrmtCancel.OrderLineId);
             Assert.AreEqual(DefaultPossibleValue.OrderType, OrmtCancel.OrderType);
@@ -203,7 +203,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(OrmtActionCode.AddRelease, OrmtEPick.ActionCode);
             Assert.AreEqual(EPick.SkuId, OrmtEPick.Sku);
             Assert.AreEqual(EPick.TotalQty, OrmtEPick.Quantity);
-            Assert.AreEqual(UnitOfMeasures.Case, OrmtEPick.UnitOfMeasure);
+            Assert.AreEqual(Uom, OrmtEPick.UnitOfMeasure);
             Assert.AreEqual(EPick.CartonNbr, OrmtEPick.OrderId);
             Assert.AreEqual(Constants.OrderLineId, OrmtEPick.OrderLineId);
             Assert.AreEqual(DefaultPossibleValue.OrderType, OrmtEPick.OrderType);

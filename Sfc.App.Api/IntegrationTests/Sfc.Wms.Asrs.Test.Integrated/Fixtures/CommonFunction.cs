@@ -168,6 +168,23 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return itemMaster;
         }
 
+        public string GetUnitOfMeasureFromItemMaster(OracleConnection db, string skuId)
+        {
+            var query = "select spl_instr_code_3 from item_master where sku_id = '{skuId}' and spl_instr_code_5 ! = 'C'";
+            Command = new OracleCommand(query, db);
+            string unitOfMeasure = Command.ExecuteReader().ToString();
+            return unitOfMeasure;
+        }
+        public string ItemMasterUnitOfMeasure(string unitOfMeasure)
+        {
+            switch (unitOfMeasure)
+            {
+                case "N":
+                    return "Case";
+                default:
+                    return "Each";
+            }
+        }
         public CaseDetailDto FetchCaseDetailQty(OracleConnection db, string caseNbr)
         {
             var caseDtl = new CaseDetailDto();

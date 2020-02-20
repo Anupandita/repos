@@ -27,6 +27,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             GetDataBeforeTriggerComt();
         }
 
+
         protected void InitializeReceivedCaseTestData()
         {
             GetDataBeforeTriggerforReceivedCaseComt();
@@ -40,13 +41,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             GetDataBeforeTriggerForComtIvmt();
         }
+        
         public void AValidNewComtMessageRecordWhereCaseNumberAndSkuIs(string currentCaseNbr,string skuId)
         {
             ComtParameters = new ComtParams
             {
                 ActionCode = ActionCodeConstants.Create,                
                 ContainerId = currentCaseNbr,
-                ContainerType = DefaultValues.ContainerType,
+                ContainerType = Uom,
                 ParentContainerId = currentCaseNbr,
                 AttributeBitmap = DefaultValues.AttributeBitMap,
                 QuantityToInduct = DefaultValues.QuantityToInduct,
@@ -59,7 +61,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             {
                 ActionCode = ActionCodeConstants.Create,                
                 ContainerId = currentCaseNbr,
-                ContainerType = DefaultValues.ContainerType,
+                ContainerType = Uom,
                 ParentContainerId = currentCaseNbr,
                 AttributeBitmap = DefaultValues.AttributeBitMap,
                 QuantityToInduct = DefaultValues.QuantityToInduct,
@@ -72,7 +74,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             {
                 ActionCode = ActionCodeConstants.Create,               
                 ContainerId = currentCaseNbr,
-                ContainerType = DefaultValues.ContainerType,
+                ContainerType = Uom,
                 ParentContainerId = currentCaseNbr,
                 AttributeBitmap = DefaultValues.AttributeBitMap,
                 QuantityToInduct = DefaultValues.QuantityToInduct,

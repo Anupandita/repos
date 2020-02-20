@@ -48,6 +48,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public CaseHeaderDto NotEnoughInvCase = new CaseHeaderDto();
         public PickLocationDetailsDto PickLocnAfterCallingApi = new PickLocationDetailsDto();
         public PickLocationDetailsDto PickLocnBeforeCallingApi = new PickLocationDetailsDto();
+        public string Uom;
 
         public DataBaseFixture()
         {
@@ -67,10 +68,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 SingleSkuCase.StatusCode = caseheader.StatusCode;
                 SingleSkuCase.SkuId = caseDto[0].SkuId;
                 SingleSkuCase.TotalAllocQty = Convert.ToInt32(caseDto[0].TotalAllocQty);
+                var UOM = GetUnitOfMeasureFromItemMaster(db,SingleSkuCase.SkuId);
+                Uom = ItemMasterUnitOfMeasure(UOM);
                 MultiSkuData(db);
                 NotEnoughInvCase = QueryForNotEnoughInventoryInCase(db, 1);
             }
         }
+
+      
 
         public void GetDataBeforeTriggerForComtIvmt()
         {
