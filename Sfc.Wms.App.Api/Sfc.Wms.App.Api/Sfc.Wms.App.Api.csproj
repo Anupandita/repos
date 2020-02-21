@@ -138,8 +138,8 @@
     <Reference Include="Sfc.Core.Aop.WebApi, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Core.Aop.WebApi.3.3.0\lib\net472\Sfc.Core.Aop.WebApi.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Core.BaseApiController, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Core.BaseApiController.2.0.3\lib\net472\Sfc.Core.BaseApiController.dll</HintPath>
+    <Reference Include="Sfc.Core.BaseApiController, Version=2.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Core.BaseApiController.2.0.4\lib\net472\Sfc.Core.BaseApiController.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Core.Cache.Contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Core.Cache.Contracts.1.0.0\lib\net472\Sfc.Core.Cache.Contracts.dll</HintPath>
@@ -180,8 +180,8 @@
     <Reference Include="Sfc.Wms..Configuration.Security.Rbac.Repository, Version=4.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.Security.Rbac.Repository.4.1.0\lib\net472\Sfc.Wms..Configuration.Security.Rbac.Repository.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.App.Api.Contracts, Version=5.6.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.App.Api.Contracts.5.6.0\lib\net472\Sfc.Wms.App.Api.Contracts.dll</HintPath>
+    <Reference Include="Sfc.Wms.App.Api.Contracts, Version=5.8.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.App.Api.Contracts.5.8.0\lib\net472\Sfc.Wms.App.Api.Contracts.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.App.App, Version=3.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.App.App.3.1.2\lib\net472\Sfc.Wms.App.App.dll</HintPath>
@@ -195,8 +195,11 @@
     <Reference Include="Sfc.Wms.Configuration.ItemMaster.Contracts, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Confguration.ItemMaster.Contracts.4.0.0\lib\net472\Sfc.Wms.Configuration.ItemMaster.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Configuration.ItemMaster.Repository, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Configuration.ItemMaster.Repository.3.1.0\lib\net472\Sfc.Wms.Configuration.ItemMaster.Repository.dll</HintPath>
+    <Reference Include="Sfc.Wms.Configuration.ItemMasters.Contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Confguration.ItemMasters.Contracts.1.0.0\lib\net472\Sfc.Wms.Configuration.ItemMasters.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Configuration.ItemMasters.Repository, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Configuration.ItemMasters.Repository.1.0.0\lib\net472\Sfc.Wms.Configuration.ItemMasters.Repository.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Configuration.MessageLogger.Contracts, Version=4.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.MessageLogger.Contracts.4.0.2\lib\net472\Sfc.Wms.Configuration.MessageLogger.Contracts.dll</HintPath>
@@ -234,11 +237,17 @@
     <Reference Include="Sfc.Wms.Configuration.UserMaster.Repository, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.UserMaster.Repository.1.1.0\lib\net472\Sfc.Wms.Configuration.UserMaster.Repository.dll</HintPath>
     </Reference>
+    <Reference Include="Sfc.Wms.Configuration.VendorMasters.Contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Confguration.VendorMasters.Contracts.1.0.0\lib\net472\Sfc.Wms.Configuration.VendorMasters.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Configuration.VendorMasters.Repository, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Configuration.VendorMasters.Repository.1.0.0\lib\net472\Sfc.Wms.Configuration.VendorMasters.Repository.dll</HintPath>
+    </Reference>
     <Reference Include="Sfc.Wms.Configuration.WarehouseMaster.Contracts, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.WarehouseMaster.Contracts.3.0.0\lib\net472\Sfc.Wms.Configuration.WarehouseMaster.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Data, Version=5.9.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Data.5.9.2\lib\net472\Sfc.Wms.Data.dll</HintPath>
+    <Reference Include="Sfc.Wms.Data, Version=5.10.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Data.5.10.0\lib\net472\Sfc.Wms.Data.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Foundation.AllocationInventory.Contracts, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.AllocationInventory.Contracts.3.0.0\lib\net472\Sfc.Wms.Foundation.AllocationInventory.Contracts.dll</HintPath>
@@ -264,14 +273,11 @@
     <Reference Include="Sfc.Wms.Foundation.InboundLpn.Repository, Version=5.1.6.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.InboundLpn.Repository.5.1.6\lib\net472\Sfc.Wms.Foundation.InboundLpn.Repository.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Foundation.Location.App, Version=3.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Foundation.Location.App.3.2.0\lib\net472\Sfc.Wms.Foundation.Location.App.dll</HintPath>
+    <Reference Include="Sfc.Wms.Foundation.Location.Contracts, Version=4.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.Location.Contracts.4.2.3\lib\net472\Sfc.Wms.Foundation.Location.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Foundation.Location.Contracts, Version=4.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Foundation.Location.Contracts.4.1.0\lib\net472\Sfc.Wms.Foundation.Location.Contracts.dll</HintPath>
-    </Reference>
-    <Reference Include="Sfc.Wms.Foundation.Location.Repository, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Foundation.Location.Repository.2.3.0\lib\net472\Sfc.Wms.Foundation.Location.Repository.dll</HintPath>
+    <Reference Include="Sfc.Wms.Foundation.Location.Repository, Version=2.4.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.Location.Repository.2.4.3\lib\net472\Sfc.Wms.Foundation.Location.Repository.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Foundation.Message.Contracts, Version=5.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.Message.Contracts.5.0.1\lib\net472\Sfc.Wms.Foundation.Message.Contracts.dll</HintPath>
@@ -324,14 +330,14 @@
     <Reference Include="Sfc.Wms.Framework.DockDoor.App, Version=2.2.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.DockDoor.App.2.2.5\lib\net472\Sfc.Wms.Framework.DockDoor.App.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Framework.Interceptor.App, Version=3.6.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Framework.Interceptor.App.3.6.0\lib\net472\Sfc.Wms.Framework.Interceptor.App.dll</HintPath>
+    <Reference Include="Sfc.Wms.Framework.Interceptor.App, Version=3.6.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.Interceptor.App.3.6.1\lib\net472\Sfc.Wms.Framework.Interceptor.App.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Framework.ItemMaster.App, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Framework.ItemMaster.App.1.0.2\lib\net472\Sfc.Wms.Framework.ItemMaster.App.dll</HintPath>
+    <Reference Include="Sfc.Wms.Framework.ItemMasters.App, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.ItemMasters.App.1.0.1\lib\net472\Sfc.Wms.Framework.ItemMasters.App.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Framework.Location.App, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Framework.Location.App.1.0.1\lib\net472\Sfc.Wms.Framework.Location.App.dll</HintPath>
+    <Reference Include="Sfc.Wms.Framework.Location.App, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.Location.App.1.1.1\lib\net472\Sfc.Wms.Framework.Location.App.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Framework.MessageLogger.App, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.MessageLogger.App.1.0.3\lib\net472\Sfc.Wms.Framework.MessageLogger.App.dll</HintPath>
@@ -360,11 +366,14 @@
     <Reference Include="Sfc.Wms.Framework.SystemCode.App, Version=4.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.SystemCode.App.4.0.1\lib\net472\Sfc.Wms.Framework.SystemCode.App.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Framework.UnitOfWork, Version=4.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Framework.UnitOfWork.4.0.3\lib\net472\Sfc.Wms.Framework.UnitOfWork.dll</HintPath>
+    <Reference Include="Sfc.Wms.Framework.UnitOfWork, Version=4.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.UnitOfWork.4.0.4\lib\net472\Sfc.Wms.Framework.UnitOfWork.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Framework.UserMaster.App, Version=1.0.9.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.UserMaster.App.1.0.9\lib\net472\Sfc.Wms.Framework.UserMaster.App.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Framework.VendorMasters.App, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.VendorMasters.App.1.0.1\lib\net472\Sfc.Wms.Framework.VendorMasters.App.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Inbound.InboundLpn.App, Version=6.5.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.InboundLpn.App.6.5.1\lib\net472\Sfc.Wms.Inbound.InboundLpn.App.dll</HintPath>
@@ -375,8 +384,8 @@
     <Reference Include="Sfc.Wms.Inbound.TransitionalInventory.App, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Inbound.TransitionalInventory.App.1.2.0\lib\net472\Sfc.Wms.Inbound.TransitionalInventory.App.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Interfaces.Asrs.App, Version=3.15.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Interfaces.Asrs.App.3.15.5\lib\net472\Sfc.Wms.Interfaces.Asrs.App.dll</HintPath>
+    <Reference Include="Sfc.Wms.Interfaces.Asrs.App, Version=3.16.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Interfaces.Asrs.App.3.16.1\lib\net472\Sfc.Wms.Interfaces.Asrs.App.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Interfaces.Asrs.Contracts, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Interfaces.Asrs.Contracts.2.4.0\lib\net472\Sfc.Wms.Interfaces.Asrs.Contracts.dll</HintPath>
@@ -564,6 +573,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\CorbaController.cs" />
+    <Compile Include="Controllers\ItemAttributeController.cs" />
     <Compile Include="Controllers\ReleaseAndConnectionInfoController.cs" />
     <Compile Include="Controllers\SynchronizationRequestController.cs" />
     <Compile Include="Controllers\SkuMaintenanceController.cs" />

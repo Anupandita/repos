@@ -22,7 +22,7 @@ namespace Sfc.Wms.App.Api.Contracts.Constants
             public const string CorbaParams = "{functionName}/{isVector}";
             public const string Details = "details";
             public const string DrillASNDetails = "drill-asn-details";
-            public const string DrillDownItemAttribute = "drill-down";
+            public const string DrillDownItemAttribute = "{itemId}";
             public const string Find = "find";
             public const string FindByShipmentDetails = "find?shipmtNumber={shipmtNumber}&statusFrom={statusFrom}&statusTo={statusTo}&poNumber={poNumber}&vendorName={vendorName}&shippedDate={shippedDate}&expectedDate={expectedDate}&scheduledDate={scheduledDate}";
             public const string FromSortation = "from-sortation";
@@ -109,7 +109,7 @@ namespace Sfc.Wms.App.Api.Contracts.Constants
             public const string DematicMessageSkmt = "api/sku-maintenance";
             public const string DematicMessageSynr = "api/synchronization-request";
             public const string EmsToWmsMessage = "api/emstowms-message";
-            public const string ItemAttribute = "item-attribute";
+            public const string ItemAttribute = "api/item-attributes";
             public const string LocationGroup = "location-grp";
             public const string LocationGroupTypesAll = "location-group-types-all";
             public const string LocationLPN = "locations-lpn";
