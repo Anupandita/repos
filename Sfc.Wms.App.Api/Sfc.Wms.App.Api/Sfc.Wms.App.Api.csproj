@@ -333,8 +333,8 @@
     <Reference Include="Sfc.Wms.Framework.Interceptor.App, Version=3.6.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.Interceptor.App.3.6.1\lib\net472\Sfc.Wms.Framework.Interceptor.App.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Framework.ItemMasters.App, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Framework.ItemMasters.App.1.0.0\lib\net472\Sfc.Wms.Framework.ItemMasters.App.dll</HintPath>
+    <Reference Include="Sfc.Wms.Framework.ItemMasters.App, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.ItemMasters.App.1.0.1\lib\net472\Sfc.Wms.Framework.ItemMasters.App.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Framework.Location.App, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.Location.App.1.1.1\lib\net472\Sfc.Wms.Framework.Location.App.dll</HintPath>
