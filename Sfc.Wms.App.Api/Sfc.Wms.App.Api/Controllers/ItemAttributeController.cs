@@ -1,11 +1,8 @@
 ﻿using Sfc.Core.BaseApiController;
-using Sfc.Core.OnPrem.Pagination;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.App.Api.Contracts.Constants;
 using Sfc.Wms.Configuration.ItemMasters.Contracts.Dtos;
 using Sfc.Wms.Configuration.ItemMasters.Contracts.Interface;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -24,7 +21,7 @@ namespace Sfc.Wms.App.Api.Controllers
         }
 
         [HttpGet]
-        [Route(Routes.Paths.Find)]
+        [Route(Routes.Paths.Search)]
         [ResponseType(typeof(BaseResult<ItemAttributeSearchResultDto>))]
         public async Task<IHttpActionResult> SearchAsync([FromUri]ItemAttributeSearchInputDto attributeSearchInputDto)
         {
