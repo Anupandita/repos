@@ -45,7 +45,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
-                var resource = $"{_endPoint}/{Routes.Paths.DrillDownItemAttribute}/{item}";
+                var resource = $"{_endPoint}/{item}";
                 var request = GetRequest(token, resource, Authorization);
 
                 var response = await _restCsharpClient.ExecuteTaskAsync<BaseResult<ItemAttributeDetailsDto>>(request)
