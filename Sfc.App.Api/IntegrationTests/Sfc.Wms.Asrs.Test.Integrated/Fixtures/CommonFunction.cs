@@ -170,9 +170,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         public string GetUnitOfMeasureFromItemMaster(OracleConnection db, string skuId)
         {
-            var query = "select spl_instr_code_3 from item_master where sku_id = '{skuId}' and spl_instr_code_5 ! = 'C'";
+            var query = $"select spl_instr_code_3 from item_master where sku_id = {skuId} and spl_instr_code_5 ! = 'C'";
             Command = new OracleCommand(query, db);
-            string unitOfMeasure = Command.ExecuteReader().ToString();
+            var unitOfMeasure = Command.ExecuteScalar().ToString();
             return unitOfMeasure;
         }
         public string ItemMasterUnitOfMeasure(string unitOfMeasure)
