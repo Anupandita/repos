@@ -788,56 +788,6 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             Assert.AreEqual(ResultTypes.Ok, result.Content.ResultType);
         }
 
-        #endregion
-
-        #region GetLpnUnlockDetails
-
-        protected void GetCaseUnLockDetailsRecordDoesNotExists()
-        {
-            MockGetLpnUnlockDetails(ResultTypes.NotFound);
-        }
-
-        protected void GetCaseUnLockDetailsRecordExists()
-        {
-            MockGetLpnUnlockDetails(ResultTypes.Ok);
-        }
-
-        protected void InValidInputForGetCaseUnLockDetails()
-        {
-            MockGetLpnUnlockDetails(ResultTypes.BadRequest);
-        }
-
-        protected void GetCaseUnLockDetailsOperationInvoked()
-        {
-            _testResponse = _lpnController.GetCaseUnLockDetailsAsync(lpnIds);
-        }
-
-        protected void TheGetCaseUnLockDetailsReturnedNotFoundResponse()
-        {
-            VerifyGetLpnUnlockDetails();
-            Assert.IsNotNull(_testResponse);
-            var result = _testResponse.Result as NegotiatedContentResult<BaseResult<List<CaseLockDto>>>;
-            Assert.IsNotNull(result);
-            Assert.AreEqual(ResultTypes.NotFound, result.Content.ResultType);
-        }
-
-        protected void ThGetCaseUnLockDetailsReturnedBadRequestResponse()
-        {
-            Assert.IsNotNull(_testResponse);
-            var result = _testResponse.Result as NegotiatedContentResult<BaseResult<List<CaseLockDto>>>;
-            Assert.IsNotNull(result);
-            Assert.AreEqual(ResultTypes.BadRequest, result.Content.ResultType);
-        }
-
-        protected void TheGetCaseUnLockDetailsReturnedOkResponse()
-        {
-            VerifyGetLpnUnlockDetails();
-            Assert.IsNotNull(_testResponse);
-            var result = _testResponse.Result as OkNegotiatedContentResult<BaseResult<List<CaseLockDto>>>;
-            Assert.IsNotNull(result);
-            Assert.AreEqual(ResultTypes.Ok, result.Content.ResultType);
-        }
-
         #endregion GetLpnLockUnlock
 
         #region GetLpnUnlockDetails

@@ -2,6 +2,7 @@
 using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.App.Api.Contracts.Constants;
 using Sfc.Wms.Interfaces.Asrs.Contracts.Interfaces;
+using SimpleInjector.Lifestyles;
 using System;
 using System.Net;
 using System.Threading.Tasks;
@@ -35,18 +36,26 @@ namespace Sfc.Wms.App.Api.Controllers
                 : HttpStatusCode.ExpectationFailed, result);
         }
 
+        
+
         [HttpPost]
         [Route(Routes.Paths.OrmtByWaveNumber)]
         [ResponseType(typeof(BaseResult))]
         [AllowAnonymous]
-        public async Task<IHttpActionResult> CreateOrmtMessageByWaveNumberAsync(string waveNumber)
+        public async Task<IHttpActionResult> CreateOrmtMessageByWaveNumberParallelAsync(string waveNumber)
         {
-            var result = await _wmsToEmsMessageProcessorService.GetOrmtMessageByWaveNumberAsync(waveNumber)
-                .ConfigureAwait(false);
+            var container = DependencyConfig.Register();
+            using (var scope = AsyncScopedLifestyle.BeginScope(container))
+            {
+                var wmsToEmsParallelProcessService = scope.GetInstance<IWmsToEmsParallelProcessService>();
+                var result = await wmsToEmsParallelProcessService
+                   .GetOrmtMessageByWaveNumberParallelAsync(container, waveNumber)
+                   .ConfigureAwait(false);
 
-            return Content(Enum.TryParse(result.ResultType.ToString(), out HttpStatusCode statusCode)
-                ? statusCode
-                : HttpStatusCode.ExpectationFailed, result);
+                return Content(Enum.TryParse(result.ResultType.ToString(), out HttpStatusCode statusCode)
+                    ? statusCode
+                    : HttpStatusCode.ExpectationFailed, result);
+            }
         }
     }
 }
