@@ -1,11 +1,11 @@
-using Swashbuckle.Application;
 using System.Web.Http;
+using Sfc.Wms.App.Api;
+using Swashbuckle.Application;
 using WebActivatorEx;
-using Wms.App.Api;
 
 [assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
-namespace Wms.App.Api
+namespace Sfc.Wms.App.Api
 {
     public class SwaggerConfig
     {
