@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using AutoMapper.Extensions.ExpressionMapping;
 using Sfc.Core.Aop.WebApi.Interface;
 using Sfc.Core.Aop.WebApi.Logging;
 using Sfc.Core.Cache.Contracts;
@@ -28,6 +27,7 @@ using System.Runtime.Caching;
 using System.Web.Http;
 using Sfc.Wms.Configuration.VendorMasters.Contracts.Dtos;
 using Sfc.Wms.Framework.ItemMasters.App.AutoMapper;
+using AutoMapper.Extensions.ExpressionMapping;
 
 namespace Sfc.Wms.App.Api
 {
