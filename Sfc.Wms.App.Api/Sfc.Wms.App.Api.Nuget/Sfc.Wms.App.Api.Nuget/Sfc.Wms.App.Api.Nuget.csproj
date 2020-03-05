@@ -9,8 +9,8 @@
     <Description>Nuget package containing the calls for Wms.App.Api</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>Sfc.Wms.App.Api.Nuget</PackageId>
-    <Version>11.1.0</Version>
-    <PackageReleaseNotes>Upgraded lpn contracts package</PackageReleaseNotes>
+    <Version>11.0.1</Version>
+    <PackageReleaseNotes>Fixed the route name</PackageReleaseNotes>
     <Copyright>2019</Copyright>
   </PropertyGroup>
   <ItemGroup>
