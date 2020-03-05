@@ -18,7 +18,6 @@ using Sfc.Wms.Framework.MessageLogger.App.Services;
 using Sfc.Wms.Framework.MessageMaster.App.Services;
 using Sfc.Wms.Framework.Security.Rbac.AutoMapper;
 using Sfc.Wms.Inbound.InboundLpn.App.Validators;
-using Sfc.Wms.Interfaces.Asrs.App.Mappers;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Interfaces;
 using SimpleInjector.Integration.WebApi;
 using SimpleInjector.Lifestyles;
@@ -28,6 +27,7 @@ using System.Linq;
 using System.Runtime.Caching;
 using System.Web.Http;
 using System;
+using Sfc.Wms.Interfaces.Asrs.App.Mappers;
 
 namespace Sfc.Wms.App.Api
 {
