@@ -10,6 +10,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sfc.Wms.Interfaces.Asrs.Shamrock.Contracts.Dtos;
 using Sfc.Wms.Interfaces.Asrs.Dematic.Contracts.Dtos;
+using Sfc.Wms.Foundation.Message.Contracts.Dtos;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
@@ -42,10 +43,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected List<CartonView> OrderList = new List<CartonView>();
         protected string DestinationLocationForNormalCarton;
         protected string DestinationLocationForEpickCarton;
+        protected MessageToSortViewDto MsgToSv = new MessageToSortViewDto();
         protected List<PickLocationDetailsExtenstionDto> ActiveOrmtCountList = new List<PickLocationDetailsExtenstionDto>();
         public string Uom;
-       
-
+        public Int32  ForeCastCountBeforeApi;
+        public Int32 ForeCastCountAfterApi;
+           
         public void GetDataBeforeTriggerOrmtForPrintingOfCartons()
         {
             OracleConnection db;
@@ -56,7 +59,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 PickLcnDtlExtBeforeApi = GetPickLocnDtlExt(db, PrintCarton.SkuId, null);
                 DestinationLocationForNormalCarton = CartonHeaderDestinationLocationMatchForNormalCarton(PrintCarton.TempZone);
                 var UOM = GetUnitOfMeasureFromItemMaster(db, PrintCarton.SkuId);
-                Uom = ItemMasterUnitOfMeasure(UOM);
+                Uom = ItemMasterUnitOfMeasure(UOM);                 
+                ForeCastCountBeforeApi = CalculateTheForeCaseCountFromMsgToCWCTable(db, PrintCarton.WaveNbr);
             }
         }    
 
@@ -69,9 +73,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                // var waveNumber = GetWaveNumber(db);
                 OrderList = GetValidOrderDetailsForWaveRelease(db, null);
                 ActiveOrmtCountList = FetchActiveOrmtCount(db);
+                ForeCastCountBeforeApi = CalculateTheForeCaseCountFromMsgToCWCTable(db, OrderList[1].WaveNbr);
 
             }
-       }
+        }
 
         public List<PickLocationDetailsExtenstionDto> FetchActiveOrmtCount(OracleConnection db)
         {
@@ -144,7 +149,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 WmsToEmsAddRelease = WmsToEmsData(db, SwmToMheAddRelease.SourceMessageKey, TransactionCode.Ormt);
                 CartonHdr = GetStatusCodeFromCartonHdr(db,PrintCarton.CartonNbr);
                 PickLcnDtlExtAfterApi = GetPickLocnDtlExt(db,PrintCarton.SkuId,PrintCarton.LocnId);
-                Status = GetStatusCodeFromEligibleOrmtCount(db, PrintCarton.CartonNbr);             
+                Status = GetStatusCodeFromEligibleOrmtCount(db, PrintCarton.CartonNbr);
+                MsgToSv = GetMsgTosvDetail(db, SwmToMheAddRelease.OrderId,"ADD");
+                Assert.AreEqual(SwmToMheAddRelease.OrderId, MsgToSv.Ptn);
+                ForeCastCountAfterApi = CalculateTheForeCaseCountFromMsgToCWCTable(db, SwmToMheAddRelease.WaveNumber);
             }
         }
     
@@ -168,7 +176,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                     Assert.AreEqual(ActiveOrmtCountList[i].ActiveOrmtCount + 1, PickLcnDtlExtAfterApi.ActiveOrmtCount);
                     Status = GetStatusCodeFromEligibleOrmtCount(db, OrderList[i].CartonNbr);
                     Assert.AreEqual(90, Convert.ToInt32(Status.Status));
+                    MsgToSv = GetMsgTosvDetail(db, SwmToMheAddRelease.OrderId, "ADD");
+                    Assert.AreEqual(SwmToMheAddRelease.OrderId, MsgToSv.Ptn);
+
                 }
+                ForeCastCountAfterApi = CalculateTheForeCaseCountFromMsgToCWCTable(db, PrintCarton.WaveNbr);
+
             }
         }
    
@@ -442,8 +455,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(swmToMheAddRelease.ZplData, wmsToEmsAddRelease.ZplData);
         }
 
-       
-
+     
         public string CartonHeaderDestinationLocationMatchForNormalCarton(string tempZone)
         {
             switch (tempZone)
@@ -469,15 +481,5 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                     return "";
             }
         }
-
-
-
-
-
-
-
-
-
-
     }
 }

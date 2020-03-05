@@ -297,5 +297,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             Assert.AreEqual(Constants.OrmtCancelMessageSent, Status.Status);
         }
+
+        protected void VerifyForCwcCounts()
+        {
+            Assert.IsTrue(ForeCastCountBeforeApi< ForeCastCountAfterApi);
+        }
     }
 }

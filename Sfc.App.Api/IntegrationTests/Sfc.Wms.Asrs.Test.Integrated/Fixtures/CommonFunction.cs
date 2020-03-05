@@ -6,6 +6,7 @@ using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
 using Sfc.Wms.Foundation.Carton.Contracts.Dtos;
 using Sfc.Wms.Foundation.InboundLpn.Contracts.Dtos;
 using Sfc.Wms.Foundation.Location.Contracts.Dtos;
+using Sfc.Wms.Foundation.Message.Contracts.Dtos;
 using Sfc.Wms.Foundation.TransitionalInventory.Contracts.Dtos;
 using Sfc.Wms.Interfaces.Asrs.Dematic.Contracts.Dtos;
 using Sfc.Wms.Interfaces.Asrs.Shamrock.Contracts.Dtos;
@@ -28,7 +29,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var wmsToEmsDto = new WmsToEmsDto();
             var query = CommonQueries.WmsToEms;
-            Command = new OracleCommand(query, db);            
+            Command = new OracleCommand(query, db);
             Command.Parameters.Add(new OracleParameter("transCode", trx));
             Command.Parameters.Add(new OracleParameter("msgKey", msgKey));
             var wmsToEmsReader = Command.ExecuteReader();
@@ -105,7 +106,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var singleSkulocal = new CaseViewDto();
             var query = CommonQueries.TransInventory;
-            Command = new OracleCommand(query, db);            
+            Command = new OracleCommand(query, db);
             Command.Parameters.Add(new OracleParameter("skuId", skuId));
             Command.Parameters.Add(new OracleParameter("transInventoryType", Constants.TransInvnType));
             var transInvnReader = Command.ExecuteReader();
@@ -121,7 +122,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var singleSkulocal = new TransitionalInventoryDto();
             var query = CommonQueries.TransInventory;
-            Command = new OracleCommand(query, db);            
+            Command = new OracleCommand(query, db);
             Command.Parameters.Add(new OracleParameter("skuId", skuId));
             Command.Parameters.Add(new OracleParameter("transInventoryType", Constants.TransInvnType));
             var transInvnReader = Command.ExecuteReader();
@@ -153,18 +154,18 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public decimal FetchUnitWeight(OracleConnection db, string skuId)
         {
             var query = CommonQueries.ItemMaster;
-            Command = new OracleCommand(query, db);           
+            Command = new OracleCommand(query, db);
             Command.Parameters.Add(new OracleParameter("skuId", skuId));
             var unitWeight = Convert.ToDecimal(Command.ExecuteScalar());
             return unitWeight;
         }
 
         public string GetTempZone(OracleConnection db, string skuId)
-        {          
+        {
             var query = CommonQueries.TempZone;
-            Command = new OracleCommand(query, db);           
+            Command = new OracleCommand(query, db);
             Command.Parameters.Add(new OracleParameter("skuId", skuId));
-            string itemMaster = Command.ExecuteReader().ToString();            
+            string itemMaster = Command.ExecuteReader().ToString();
             return itemMaster;
         }
 
@@ -192,7 +193,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Command = new OracleCommand(query, db);
             Command.Parameters.Add(new OracleParameter("caseNbr", caseNbr));
             var caseDtlReader = Command.ExecuteReader();
-            if(caseDtlReader.Read())
+            if (caseDtlReader.Read())
             {
                 caseDtl.ActualQuantity = Convert.ToDecimal(caseDtlReader["ACTL_QTY"]);
                 caseDtl.TotalAllocatedQuantity = Convert.ToDecimal(caseDtlReader["TOTAL_ALLOC_QTY"]);
@@ -250,7 +251,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var pickLocnDtl = new PickLocationDetailsDto();
             var pickLocnView = CommonQueries.PickLocnDtl;
-            Command = new OracleCommand(pickLocnView, db);           
+            Command = new OracleCommand(pickLocnView, db);
             Command.Parameters.Add(new OracleParameter("skuId", skuId));
             Command.Parameters.Add(new OracleParameter("sysCodeType", Constants.SysCodeType));
             Command.Parameters.Add(new OracleParameter("sysCodeId", Constants.SysCodeIdForActiveLocation));
@@ -269,7 +270,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var pickLocnDtlExt = new PickLocationDetailsExtenstionDto();
             var query = CommonQueries.PickLocnDtlExt;
-            Command = new OracleCommand(query, db);           
+            Command = new OracleCommand(query, db);
             Command.Parameters.Add(new OracleParameter("skuId", skuId));
             Command.Parameters.Add(new OracleParameter("sysCodeType", Constants.SysCodeType));
             Command.Parameters.Add(new OracleParameter("sysCodeId", Constants.SysCodeIdForActiveLocation));
@@ -285,7 +286,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var cartonHdr = new CartonHeaderDto();
             var query = CommonQueries.CartonHdr;
-            Command = new OracleCommand(query, db);            
+            Command = new OracleCommand(query, db);
             Command.Parameters.Add(new OracleParameter("cartonNumber", cartonNbr));
             var cartonHdrReader = Command.ExecuteReader();
             if (cartonHdrReader.Read())
@@ -306,7 +307,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 caseHdr.StatusCode = Convert.ToInt16(cartonHdrReader["STAT_CODE"]);
                 caseHdr.PreviousLocationId = cartonHdrReader["PREV_LOCN_ID"].ToString();
                 caseHdr.LocationId = cartonHdrReader["LOCN_ID"].ToString();
-                caseHdr.Volume  = Convert.ToDecimal(cartonHdrReader["VOL"]);
+                caseHdr.Volume = Convert.ToDecimal(cartonHdrReader["VOL"]);
                 caseHdr.EstimatedWeight = Convert.ToDecimal(cartonHdrReader["EST_WT"]);
                 caseHdr.ActualWeight = Convert.ToDecimal(cartonHdrReader["ACTL_WT"]);
                 caseHdr.SingleSkuId = cartonHdrReader["SNGL_SKU_CASE"].ToString();
@@ -319,7 +320,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public static int? ToNullableInt(object s)
         { if (s == System.DBNull.Value) return null;
             if (int.TryParse(s.ToString(), out var i))
-             return i; return null;
+                return i; return null;
         }
 
         public SwmFromMheDto SwmFromMheqtydefference(OracleConnection db, string sourceMessage)
@@ -344,7 +345,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return swmFromMheData;
         }
 
-        public Int64  FetchMaxIdFromPb2CorbaHdr(OracleConnection db)
+        public Int64 FetchMaxIdFromPb2CorbaHdr(OracleConnection db)
         {
             var query = IvstQueries.MaxIdForPb2CorbaHdr;
             Command = new OracleCommand(query, db);
@@ -378,6 +379,79 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return pbHdrDtlList;
         }
 
+        public MessageToSortViewDto GetMsgTosvDetail(OracleConnection db, string cartonNo, string msgType)
+        {
+            var messageTosv = new MessageToSortViewDto();
+            var query = OrstQueries.MsgToSortView;
+            Command = new OracleCommand(query, db);
+            Command.Parameters.Add(new OracleParameter("cartonNo", cartonNo));
+            Command.Parameters.Add(new OracleParameter("msgType", msgType));
+            var msgToSvReader = Command.ExecuteReader();
+            if (msgToSvReader.Read())
+            {
+                messageTosv.Ptn = msgToSvReader[MessageToSv.Ptn].ToString();
+            }
+            return messageTosv;
+        }    
 
+        public int CountOfMasterPackId(OracleConnection db, string masterPackId)
+        {
+            var query = $"select Count(*) from msg_to_sv where message_type= 'ADD'  and PTN = '{masterPackId}' order by message_id desc";
+            Command = new OracleCommand(query,db);
+            var Count = Convert.ToInt16(Command.ExecuteScalar());
+            return Count;
+        }
+
+
+        public int CalculateTheForecastCountFromCartonInfoTable(OracleConnection db)
+        {
+            var query = $"Select Count(*) from swm_multishuttle_carton_info sm inner join locn_grp lg on sm.cwc_zone_nbr =lg.grp_attr where sm.ptn_wave_nbr = '20200210176' and lg.whse = '008' " +
+                $"and grp_type = 20 and lg.locn_id in (select lh.locn_id from locn_hdr lh inner join locn_grp lg on lg.locn_id = lh.locn_id inner join sys_code sc on sc.code_id = lg.grp_type and " +
+                $"sc.code_type = '740' and sc.code_id = '18') group by cwc_zone_nbr";
+            Command = new OracleCommand(query,db);
+            var foreCastCount = Convert.ToInt32(Command.ExecuteScalar());
+            return foreCastCount;
+        }
+
+        public int CalculateTheForeCaseCountFromMsgToCWCTable(OracleConnection db, string waveNbr)
+        {
+            var query = $"select count(*) from MSG_TO_CWC  inner join locn_grp lg on MSG_TO_CWC.cwc_zone_nbr =lg.grp_attr where MSG_TO_CWC.pkms_wave_nbr = '{waveNbr}'  and lg.whse = '008' and grp_type = 20 and lg.locn_id in (select lh.locn_id from locn_hdr lh inner join locn_grp lg on lg.locn_id=lh.locn_id inner join sys_code sc on sc.code_id=lg.grp_type and sc.code_type='740' and sc.code_id='18')";
+            Command = new OracleCommand(query,db);
+            var foreCaseCount = Convert.ToInt32(Command.ExecuteScalar());
+            return foreCaseCount;
+        }
+    
+        public SwmMultiShuttleCartonInfoDto GetCartonInfoDetails(OracleConnection db,string skuId)
+        {
+            var sm = new SwmMultiShuttleCartonInfoDto();
+            var query = $"select Ptn_Est_Wt,IM_MHE_WT_TOL_AMNT from swm_multishuttle_carton_info  where ptn_sku_id = '{skuId}' order by create_date_time desc";
+            Command = new OracleCommand(query, db);
+            var smReader = Command.ExecuteReader();
+            if(smReader.Read())
+            {
+                sm.PtnEstWt = Convert.ToDecimal(smReader["Ptn_Est_Wt"]);
+                sm.ImMheWtTotalAmount = Convert.ToInt16(smReader["IM_MHE_WT_TOL_AMNT"]);
+            }
+            return sm;
+        }
+
+        private void CalculateWeightLimit(OracleConnection db, out decimal? lowerWtLmt, out decimal? upperWtLmt)
+        {
+            var swmDematicCartonInfoDto = GetCartonInfoDetails(db,"sku");
+            if (swmDematicCartonInfoDto.ImMheWtTotalType == DefaultPossibleValue.SplInstrCodeForParent)
+            {
+                lowerWtLmt = swmDematicCartonInfoDto.PtnEstWt * (1 - (decimal)swmDematicCartonInfoDto.ImMheWtTotalAmount / 100);
+                upperWtLmt = swmDematicCartonInfoDto.PtnEstWt * (1 - (decimal)swmDematicCartonInfoDto.ImMheWtTotalAmount / 100);
+            }
+            else
+            {
+                lowerWtLmt = swmDematicCartonInfoDto.PtnEstWt - swmDematicCartonInfoDto.ImMheWtTotalAmount;
+                upperWtLmt = swmDematicCartonInfoDto.PtnEstWt + swmDematicCartonInfoDto.ImMheWtTotalAmount;
+            }
+
+            if (upperWtLmt < 1000) return;
+            lowerWtLmt = 0;
+            upperWtLmt = (decimal)999.99;
+        }
     }
 }

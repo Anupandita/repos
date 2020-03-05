@@ -36,7 +36,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                 .And(x => x.ReadDataAfterApiForActionCodeAllocated())
                 .Then(x => x.VerifyOrstMessageWasInsertedIntoSwmFromMheForActionCodeAllocated())
                 .And(x => x.VerifyPickTicketStatusHasChangedToInPickingForActionCodeAllocated())
-                .And(x => x.VerifyCartonStatusHasChangedToInPackingForActionCodeAllocated())              
+                .And(x => x.VerifyCartonStatusHasChangedToInPackingForActionCodeAllocated())   
+                
              .BDDfy("Test Case Id:134866 -Dematic :  ORST : Test For Message when ActionCode = 'Allocated'");
         }
 
@@ -57,6 +58,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                 .And(x => x.ValidateForQuantitiesInToPickLocationTableForActionCodeComplete())
                 .And(x => x.ValidateForOrmtCountHasReducedForActionCodeComplete())
                 .And(x => x.VerifyAllocationStatusHasChangedToCompleteForActionCodeComplete())
+                .And(x =>x.ValidateForMessageToSvCountForOrstCompletedMessage())
+                .And(x =>x.ValidateForMessageToCWVCount())
              .BDDfy("Test Case Id:134867 -Dematic : ORST : Test Message when Action Code = complete with order reason code map = 0");
         }
 
