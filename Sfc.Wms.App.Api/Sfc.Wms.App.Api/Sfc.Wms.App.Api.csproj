@@ -156,8 +156,8 @@
     <Reference Include="Sfc.Core.OnPrem.LabelGenerator, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Core.OnPrem.LabelGenerator.1.2.0\lib\net472\Sfc.Core.OnPrem.LabelGenerator.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Core.OnPrem.Pagination, Version=2.13.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Core.OnPrem.Pagination.2.13.1\lib\net472\Sfc.Core.OnPrem.Pagination.dll</HintPath>
+    <Reference Include="Sfc.Core.OnPrem.Pagination, Version=2.13.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Core.OnPrem.Pagination.2.13.3\lib\net472\Sfc.Core.OnPrem.Pagination.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Core.OnPrem.ParallelAndSequentialProcessing, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Core.OnPrem.ParallelAndSequentialProcessing.1.2.0\lib\net472\Sfc.Core.OnPrem.ParallelAndSequentialProcessing.dll</HintPath>
