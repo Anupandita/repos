@@ -27,6 +27,7 @@ using System.Linq;
 using System.Runtime.Caching;
 using System.Web.Http;
 using Sfc.Wms.Configuration.VendorMasters.Contracts.Dtos;
+using Sfc.Wms.Framework.Corba.App.AutoMapper;
 using Sfc.Wms.Framework.ItemMasters.App.AutoMapper;
 
 namespace Sfc.Wms.App.Api
@@ -57,6 +58,7 @@ namespace Sfc.Wms.App.Api
                      PrinterValuesMapper.CreateMaps(cfg);
                      SfcAsrsMapper.CreateMaps(cfg);
                      SfcItemAttributeMapper.CreateMaps(cfg);
+                     SfcCorbaMapper.CreateMaps(cfg);
                      cfg.CreateMap<VendorMaster, VendorDetailDto>(MemberList.None).ReverseMap();
                      cfg.CreateMap<VendorMaster, VendorMasterDto>(MemberList.None).ReverseMap();
 
