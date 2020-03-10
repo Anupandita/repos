@@ -264,8 +264,8 @@
     <Reference Include="Sfc.Wms.Foundation.Corba.Contracts, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.Corba.Contracts.2.1.0\lib\net472\Sfc.Wms.Foundation.Corba.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Foundation.Corba.Repository, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Foundation.Corba.Repository.2.0.0\lib\net472\Sfc.Wms.Foundation.Corba.Repository.dll</HintPath>
+    <Reference Include="Sfc.Wms.Foundation.Corba.Repository, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.Corba.Repository.2.1.0\lib\net472\Sfc.Wms.Foundation.Corba.Repository.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Foundation.InboundLpn.Contracts, Version=5.6.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.InboundLpn.Contracts.5.6.0\lib\net472\Sfc.Wms.Foundation.InboundLpn.Contracts.dll</HintPath>
@@ -324,8 +324,8 @@
     <Reference Include="Sfc.Wms.Framework.AllocationInventory.App, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.AllocationInventory.App.1.0.0\lib\net472\Sfc.Wms.Framework.AllocationInventory.App.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Framework.Corba.App, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Framework.Corba.App.2.0.0\lib\net472\Sfc.Wms.Framework.Corba.App.dll</HintPath>
+    <Reference Include="Sfc.Wms.Framework.Corba.App, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.Corba.App.2.1.0\lib\net472\Sfc.Wms.Framework.Corba.App.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Framework.DockDoor.App, Version=2.2.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.DockDoor.App.2.2.5\lib\net472\Sfc.Wms.Framework.DockDoor.App.dll</HintPath>
@@ -408,8 +408,8 @@
     <Reference Include="Sfc.Wms.Interfaces.Message.App, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Interfaces.Message.App.3.0.0\lib\net472\Sfc.Wms.Interfaces.Message.App.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Interfaces.MessageSource.App, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Interfaces.MessageSource.App.1.1.1\lib\net472\Sfc.Wms.Interfaces.MessageSource.App.dll</HintPath>
+    <Reference Include="Sfc.Wms.Interfaces.MessageSource.App, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Interfaces.MessageSource.App.1.1.2\lib\net472\Sfc.Wms.Interfaces.MessageSource.App.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Interfaces.Parser, Version=2.7.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Interfaces.Parser.2.7.0\lib\net472\Sfc.Wms.Interfaces.Parser.dll</HintPath>
