@@ -79,11 +79,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var sqlStatement = OrstQueries.ValidDataForInsertingOrstMessage;
             if (completed)
             {
-                sqlStatement = sqlStatement + $" where sm.source_msg_status = '{DefaultValues.Status}' and ch.stat_code = '{cartonStatusCode}' and ph.pkt_stat_code = '{pktStatusCode}' and pd.pkt_seq_nbr > {Constants.NumZero} and  sm.source_msg_text like '%AddRelease%' order by sm.created_date_time desc";
+                sqlStatement = sqlStatement + $" where sm.source_msg_status = '{DefaultValues.Status}' and ch.stat_code = '{cartonStatusCode}' and ph.pkt_stat_code = '{pktStatusCode}' and pd.pkt_seq_nbr > {Constants.NumZero} order by sm.created_date_time desc";
             }
             else
             {
-                sqlStatement = sqlStatement + $" where sm.source_msg_status = '{DefaultValues.Status}' and ch.stat_code ='{cartonStatusCode}' and ph.pkt_stat_code < '{pktStatusCode}' and pd.pkt_seq_nbr > {Constants.NumZero} and sm.source_msg_text like '%AddRelease%' order by sm.created_date_time desc";
+                sqlStatement = sqlStatement + $" where sm.source_msg_status = '{DefaultValues.Status}' and ch.stat_code ='{cartonStatusCode}' and ph.pkt_stat_code < '{pktStatusCode}' and pd.pkt_seq_nbr > {Constants.NumZero} order by sm.created_date_time desc";
             }
             Command = new OracleCommand(sqlStatement, db);
             var swmToMheReader = Command.ExecuteReader();
@@ -285,7 +285,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 Sku = skuId,
                 Owner = owner,
                 UnitOfMeasure = UnitOfMeasures.Each,
-                ParentContainerId = "0000028300028324860",
+                ParentContainerId = "",
                 QuantityOrdered = qty,
                 QuantityDelivered = Constants.QuantityDelivered,
                 DestinationLocationId = destinationLocnId,
