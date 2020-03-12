@@ -4,7 +4,7 @@ using Sfc.Wms.App.Api.Tests.Unit.Fixtures;
 
 namespace Sfc.Wms.App.Api.Tests.Unit.Controllers
 {
-    [TestClass]
+    [TestClass,TestCategory(TestCategories.Unit)]
     public class MessageLogControllerTest : MessageLogControllerFixture
     {
         [TestMethod]

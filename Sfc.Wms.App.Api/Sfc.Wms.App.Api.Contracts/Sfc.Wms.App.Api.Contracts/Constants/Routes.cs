@@ -1,4 +1,7 @@
 ﻿// ReSharper disable InconsistentNaming
+
+using System.Dynamic;
+
 namespace Sfc.Wms.App.Api.Contracts.Constants
 {
     public static class Routes
@@ -89,6 +92,7 @@ namespace Sfc.Wms.App.Api.Contracts.Constants
             public const string LpnMultipleUnlock = "multiple-unlock";
             public const string CaseUnlock = "case-unlock";
             public const string RefreshToken = "refresh-token";
+            public const string UiSpecificMessages = "ui-messages";
         }
 
         public static class Prefixes
