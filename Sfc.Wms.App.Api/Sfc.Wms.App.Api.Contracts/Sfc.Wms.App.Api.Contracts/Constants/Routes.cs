@@ -1,6 +1,5 @@
 ﻿// ReSharper disable InconsistentNaming
 
-using System.Dynamic;
 
 namespace Sfc.Wms.App.Api.Contracts.Constants
 {
