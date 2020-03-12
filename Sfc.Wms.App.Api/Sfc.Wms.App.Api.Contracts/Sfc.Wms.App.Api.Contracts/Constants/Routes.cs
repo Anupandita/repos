@@ -133,6 +133,8 @@ namespace Sfc.Wms.App.Api.Contracts.Constants
             public const string UserRoles = "user-roles";
             public const string VelocityMaster = "velocity";
             public const string WorkAreaMaster = "work-area-master";
+            public const string MessageLogger = "api/message-logs";
+            public const string MessageMaster = "api/message-masters";
         }
     }
 }
