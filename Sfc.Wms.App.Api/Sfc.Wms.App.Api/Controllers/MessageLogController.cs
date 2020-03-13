@@ -10,7 +10,7 @@ using System.Web.Http.Description;
 
 namespace Sfc.Wms.App.Api.Controllers
 {
-    [Authorize, Route(Routes.Prefixes.MessageLogger)]
+    [Authorize, RoutePrefix(Routes.Prefixes.MessageLogger)]
     public class MessageLogController : SfcBaseController
     {
         private readonly IMessageLogService _messageLogService;
@@ -21,6 +21,7 @@ namespace Sfc.Wms.App.Api.Controllers
         }
 
         [HttpPost]
+        [Route(Routes.Paths.IsDbTransactionAllowed)]
         [ResponseType(typeof(BaseResult))]
         public async Task<IHttpActionResult> BatchInsertAsync(IEnumerable<MessageLogDto> messageLogDtos, bool isDbTransactionAllowed = false)
         {
