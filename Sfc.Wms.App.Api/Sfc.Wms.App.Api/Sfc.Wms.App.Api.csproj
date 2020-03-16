@@ -135,7 +135,7 @@
     <Reference Include="SFC.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SFC.Core.3.0.2\lib\net472\SFC.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Core.Aop.WebApi">
+    <Reference Include="Sfc.Core.Aop.WebApi, Version=3.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Core.Aop.WebApi.3.4.0\lib\net472\Sfc.Core.Aop.WebApi.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Core.BaseApiController, Version=2.0.4.0, Culture=neutral, processorArchitecture=MSIL">
@@ -590,9 +590,7 @@
     <Compile Include="Services\RbacService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
