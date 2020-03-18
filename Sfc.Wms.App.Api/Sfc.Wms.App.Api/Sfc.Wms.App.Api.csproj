@@ -339,8 +339,8 @@
     <Reference Include="Sfc.Wms.Framework.Location.App, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.Location.App.1.2.0\lib\net472\Sfc.Wms.Framework.Location.App.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Framework.MessageLogger.App, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Framework.MessageLogger.App.1.1.0\lib\net472\Sfc.Wms.Framework.MessageLogger.App.dll</HintPath>
+    <Reference Include="Sfc.Wms.Framework.MessageLogger.App, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.MessageLogger.App.1.1.1\lib\net472\Sfc.Wms.Framework.MessageLogger.App.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Framework.MessageMaster.App, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.MessageMaster.App.1.1.0\lib\net472\Sfc.Wms.Framework.MessageMaster.App.dll</HintPath>
