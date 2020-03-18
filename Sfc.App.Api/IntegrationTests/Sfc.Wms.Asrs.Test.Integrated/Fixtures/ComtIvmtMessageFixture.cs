@@ -14,6 +14,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
     public class ComtIvmtMessageFixture : DataBaseFixture
     {
+        
         protected string ComtUrl = ConfigurationManager.AppSettings["BaseUrl"] +TestData.Parameter.ContainerMaintenance;
         protected string IvmtUrl = ConfigurationManager.AppSettings["BaseUrl"] +TestData.Parameter.InventoryMaintenance;
         protected ComtParams ComtParameters;
@@ -228,5 +229,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             Assert.AreEqual(PickLocnBeforeCallingApi.ToBeFilledQty + Convert.ToInt16(Ivmt.Quantity),PickLocnAfterCallingApi.ToBeFilledQty );
         }
+
+        protected void VerifyWeightAndVolumeIsReducedInResrvLocnHdrTable()
+        {
+                Assert.AreEqual(String.Format("{0:0.00}", RsvBeforeApi.CurrentWeight - (UnitWeight * Convert.ToDecimal(Ivmt.Quantity))), RsvAfterApi.CurrentWeight);
+                Assert.AreEqual(String.Format("{0:0.00}", RsvBeforeApi.CurrentVolume - (UnitVol * Convert.ToDecimal(Ivmt.Quantity))), RsvAfterApi.CurrentVolume);
+                Assert.AreEqual(RsvBeforeApi.CurrentUnitOfMeasureQuantity - 1, RsvAfterApi.CurrentUnitOfMeasureQuantity);
+        }
+
+       
     }
 }

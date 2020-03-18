@@ -23,6 +23,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
     public class DataBaseFixture : CommonFunction
     {
         public decimal UnitWeight;
+        public decimal UnitVol;
         public CaseViewDto SingleSkuCase = new CaseViewDto();
         public CaseViewDto CaseHdrMultiSku = new CaseViewDto();
         public SwmToMheDto SwmToMheComt = new SwmToMheDto();
@@ -49,6 +50,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public PickLocationDetailsDto PickLocnAfterCallingApi = new PickLocationDetailsDto();
         public PickLocationDetailsDto PickLocnBeforeCallingApi = new PickLocationDetailsDto();
         public string Uom;
+        public string TempZone;
+        public string CurrentLocationId;
+        public ReserveLocationHeaderDto RsvBeforeApi = new ReserveLocationHeaderDto();
+        public ReserveLocationHeaderDto RsvAfterApi = new ReserveLocationHeaderDto();
 
         public DataBaseFixture()
         {
@@ -66,12 +71,15 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 SingleSkuCase.CaseNumber = caseheader.CaseNumber;
                 SingleSkuCase.LocationId = caseheader.LocationId;
                 SingleSkuCase.StatusCode = caseheader.StatusCode;
+                SingleSkuCase.Cons_prty_date = caseheader.Cons_prty_date;
                 SingleSkuCase.SkuId = caseDto[0].SkuId;
                 SingleSkuCase.TotalAllocQty = Convert.ToInt32(caseDto[0].TotalAllocQty);
                 var UOM = GetUnitOfMeasureFromItemMaster(db,SingleSkuCase.SkuId);
                 Uom = ItemMasterUnitOfMeasure(UOM);
                 MultiSkuData(db);
                 NotEnoughInvCase = QueryForNotEnoughInventoryInCase(db, 1);
+                RsvBeforeApi = GetResrvLocnDetails(db, SingleSkuCase.LocationId);
+                TempZone = GetTempZone(db, SingleSkuCase.SkuId);
             }
         }
 
@@ -108,6 +116,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 SingleSkuCase.SkuId = receivedcaseDto[0].SkuId;
                 SingleSkuCase.ActlQty = Convert.ToInt32(receivedcaseDto[0].ActlQty);
                 PickLocnBeforeCallingApi = GetPickLocationDetails(db, SingleSkuCase.SkuId, null);
+                RsvBeforeApi = GetResrvLocnDetails(db, SingleSkuCase.LocationId);
+                TempZone = GetTempZone(db, SingleSkuCase.SkuId);
             }
         }
 
@@ -125,6 +135,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 SingleSkuCase.StatusCode = returncaseheader.StatusCode;
                 SingleSkuCase.SkuId = receivedcaseDto[0].SkuId;
                 SingleSkuCase.ActlQty = Convert.ToInt32(receivedcaseDto[0].ActlQty);
+                RsvBeforeApi = GetResrvLocnDetails(db, SingleSkuCase.LocationId);
+                TempZone = GetTempZone(db, SingleSkuCase.SkuId);
             }
         }
 
@@ -169,6 +181,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 caseheader.CaseNumber = caseHeaderReader[CaseHeader.CaseNumber].ToString();
                 caseheader.LocationId = caseHeaderReader[CaseHeader.LocationId].ToString();
                 caseheader.StatusCode = Convert.ToInt32(caseHeaderReader[CaseHeader.StatusCode].ToString());
+                caseheader.Cons_prty_date = caseHeaderReader["cons_prty_date"].ToString();
             }
             return caseheader;
         }
@@ -278,7 +291,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 WmsToEmsIvmt = WmsToEmsData(db, SwmToMheIvmt.SourceMessageKey, TransactionCode.Ivmt);
                 CaseDtlAfterApi = FetchCaseDetailsTriger(db);
                 UnitWeight = FetchUnitWeight(db, SingleSkuCase.SkuId);
+                UnitVol = FetchUnitVol(db, SingleSkuCase.SkuId);
                 TaskSingleSku = FetchTaskDetails(db, SingleSkuCase.SkuId);
+                CurrentLocationId = VerifyLocnIdAfterApi(TempZone);
             }
         }
 
@@ -295,8 +310,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 CaseDtlAfterApi = FetchCaseDetailsTriger(db);
                 TransInvnAfterTrigger = FetchTransInvnentory(db, SingleSkuCase.SkuId);
                 UnitWeight = FetchUnitWeight(db, SingleSkuCase.SkuId);
+                UnitVol = FetchUnitVol(db, SingleSkuCase.SkuId);
                 TaskSingleSku = FetchTaskDetails(db, SingleSkuCase.SkuId);
                 PickLocnAfterCallingApi = GetPickLocationDetails(db, SingleSkuCase.SkuId,null);
+                RsvAfterApi = GetResrvLocnDetails(db, SingleSkuCase.LocationId);
             }
         }
 
@@ -312,6 +329,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 WmsToEmsIvmt = WmsToEmsData(db, SwmToMheIvmt.SourceMessageKey, TransactionCode.Ivmt);
                 CaseDtlAfterApi = FetchCaseDetailsTriger(db);
                 UnitWeight = FetchUnitWeight(db, SingleSkuCase.SkuId);
+                UnitVol = FetchUnitVol(db, SingleSkuCase.SkuId);
                 TaskSingleSku = FetchTaskDetails(db, SingleSkuCase.SkuId);
             }
         }
@@ -368,6 +386,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                     WmsToEmsIvmt = WmsToEmsData(db, SwmToMheIvmt.SourceMessageKey, TransactionCode.Ivmt);
                     VerifyIvmtMessageWasInsertedIntoWmsToEms(WmsToEmsIvmt);
                     UnitWeight = FetchUnitWeight(db, CaseDtoList[i].SkuId);
+                    UnitVol = FetchUnitVol(db, SingleSkuCase.SkuId);
                     TransInvnAfterTrigger =FetchTransInvnentory(db, CaseDtoList[i].SkuId);
                     var trnInvnAfterApi = TransInvnList[i];
                     try
@@ -413,13 +432,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             Assert.AreEqual(DefaultValues.Status, SwmToMheComt.SourceMessageStatus);
             Assert.AreEqual(Constants.ReasonCode, SwmToMheComt.SourceMessageResponseCode);
-            Assert.AreEqual(DefaultValues.ContainerType, SwmToMheComt.ContainerType);
+            Assert.AreEqual("Pallet", SwmToMheComt.ContainerType);
             Assert.AreEqual(TransactionCode.Comt, comt.TransactionCode);
             Assert.AreEqual(MessageLength.Comt, comt.MessageLength);
             Assert.AreEqual(ActionCodeConstants.Create, comt.ActionCode);
             Assert.AreEqual(caseNbr, SwmToMheComt.ContainerId);
             Assert.AreEqual(DefaultValues.ContainerType, SwmToMheComt.ContainerType);
             Assert.AreEqual(Constants.MessageStatus, SwmToMheComt.MessageStatus);
+            Assert.AreEqual(CurrentLocationId, comt.CurrentLocationId);
         }
         public void VerifyComtMessageWasInsertedIntoWmsToEms(WmsToEmsDto wte1)
         {
@@ -444,6 +464,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(DefaultValues.ContainerType, ivmt.UnitOfMeasure);          
             Assert.AreEqual(DefaultValues.DataControl, ivmt.DateControl);
             Assert.AreEqual(DefaultValues.InboundPallet,ivmt.InboundPallet);
+            Assert.AreEqual(SingleSkuCase.Cons_prty_date,ivmt.FifoDate);
         }
 
         public void VerifyIvmtMessageWasInsertedIntoWmsToEms(WmsToEmsDto wmsToEms)
@@ -477,6 +498,19 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             catch
             {
                 Debug.Print("No Task Found");
+            }
+        }
+
+        protected string VerifyLocnIdAfterApi(string tempZone)
+        {
+            switch (tempZone)
+            {
+                case "D":
+                    return "AM-PALLET-INDUCT";
+                case "F":
+                    return "AM-PALLET-INDUCT";
+                default:
+                    return "";
             }
         }
     }

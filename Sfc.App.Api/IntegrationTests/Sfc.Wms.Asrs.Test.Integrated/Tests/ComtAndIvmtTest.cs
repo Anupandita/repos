@@ -37,7 +37,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                 .And(x => x.VerifyTheQuantityIsIncreasedInToTransInventory())
                 .And(x => x.VerifyQuantityisReducedIntoCaseDetail())
                 .And(x => x.VerifyStatusIsUpdatedIntoCaseHeader())
-                .And(x => x.VerifyStatusIsUpdatedIntoTaskHeader())             
+                .And(x => x.VerifyStatusIsUpdatedIntoTaskHeader())   
+                .And(x=>x.VerifyWeightAndVolumeIsReducedInResrvLocnHdrTable())
                 .BDDfy("Test Case ID : 120959 -Dematic - COMT,IVMT : Single Sku Case-Case received from Vendor, Call the Comt Api and Verify all its functionalities");
         }
 

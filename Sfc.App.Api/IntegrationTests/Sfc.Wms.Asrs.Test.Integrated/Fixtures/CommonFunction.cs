@@ -159,6 +159,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var unitWeight = Convert.ToDecimal(Command.ExecuteScalar());
             return unitWeight;
         }
+        public decimal FetchUnitVol(OracleConnection db, string skuId)
+        {
+            var query = $"select unit_vol from item_master where sku_id = '{skuId}'";
+            Command = new OracleCommand(query, db);
+            Command.Parameters.Add(new OracleParameter("skuId", skuId));
+            var unitVol = Convert.ToDecimal(Command.ExecuteScalar());
+            return unitVol;
+        }
 
         public string GetTempZone(OracleConnection db, string skuId)
         {
@@ -175,7 +183,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Command = new OracleCommand(query, db);
             var unitOfMeasure = Command.ExecuteScalar().ToString();
             return unitOfMeasure;
-        }
+        }     
+
         public string ItemMasterUnitOfMeasure(string unitOfMeasure)
         {
             switch (unitOfMeasure)
@@ -393,6 +402,22 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
             return messageTosv;
         }    
+
+        public ReserveLocationHeaderDto GetResrvLocnDetails(OracleConnection db, string locnId )
+        {
+            var rsv = new ReserveLocationHeaderDto();
+            var query = $"select * from resv_locn_hdr where locn_id  = '{locnId}' order by create_date_time desc";
+            Command = new OracleCommand(query,db);
+            var reader = Command.ExecuteReader();
+            if(reader.Read())
+            {
+                rsv.CurrentWeight = Convert.ToDecimal(reader["CURR_WT"]);
+                rsv.CurrentVolume = Convert.ToDecimal(reader["CURR_VOL"]);
+                rsv.CurrentUnitOfMeasureQuantity = Convert.ToDecimal(reader["CURR_UOM_QTY"]);
+            }
+            return rsv;
+        }
+
 
         public int CountOfMasterPackId(OracleConnection db, string masterPackId)
         {

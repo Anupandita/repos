@@ -11,6 +11,8 @@
         public decimal ActualInventoryUnits { get; set; }
         public decimal ActualWeight { get; set; }      
         public string TempZone { get; set; }
+
+        public string Cons_prty_date { get; set; }
     }
 
     
