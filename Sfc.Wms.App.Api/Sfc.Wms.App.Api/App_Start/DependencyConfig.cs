@@ -12,12 +12,14 @@ using Sfc.Wms.Data.Context;
 using Sfc.Wms.Data.Entities;
 using Sfc.Wms.Foundation.InboundLpn.Contracts.Dtos;
 using Sfc.Wms.Foundation.Location.Contracts.Dtos;
+using Sfc.Wms.Framework.Corba.App.AutoMapper;
 using Sfc.Wms.Framework.Interceptor.App.interceptors;
 using Sfc.Wms.Framework.ItemMasters.App.AutoMapper;
 using Sfc.Wms.Framework.MessageLogger.App.Services;
 using Sfc.Wms.Framework.MessageMaster.App.Services;
 using Sfc.Wms.Framework.Security.Rbac.AutoMapper;
 using Sfc.Wms.Inbound.InboundLpn.App.Validators;
+using Sfc.Wms.Interfaces.Asrs.App.Mappers;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Interfaces;
 using SimpleInjector.Integration.WebApi;
 using SimpleInjector.Lifestyles;
@@ -27,7 +29,6 @@ using System.Linq;
 using System.Runtime.Caching;
 using System.Web.Http;
 using System;
-using Sfc.Wms.Interfaces.Asrs.App.Mappers;
 
 namespace Sfc.Wms.App.Api
 {
@@ -57,6 +58,7 @@ namespace Sfc.Wms.App.Api
                      PrinterValuesMapper.CreateMaps(cfg);
                      SfcAsrsMapper.CreateMaps(cfg);
                      SfcItemAttributeMapper.CreateMaps(cfg);
+                     SfcCorbaMapper.CreateMaps(cfg);
                      cfg.CreateMap<VendorMaster, VendorDetailDto>(MemberList.None).ReverseMap();
                      cfg.CreateMap<VendorMaster, VendorMasterDto>(MemberList.None).ReverseMap();
 
