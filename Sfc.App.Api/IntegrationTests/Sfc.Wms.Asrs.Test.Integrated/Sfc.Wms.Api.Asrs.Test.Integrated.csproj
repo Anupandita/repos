@@ -123,9 +123,6 @@
     <PackageReference Include="DataGenerator">
       <Version>4.0.0.31</Version>
     </PackageReference>
-    <PackageReference Include="Humanizer.Core">
-      <Version>2.6.2</Version>
-    </PackageReference>
     <PackageReference Include="Microsoft.CSharp">
       <Version>4.5.0</Version>
     </PackageReference>
