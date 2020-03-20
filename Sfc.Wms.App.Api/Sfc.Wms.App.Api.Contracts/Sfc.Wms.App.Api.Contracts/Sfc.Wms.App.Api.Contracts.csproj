@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>5.8.0</Version>
+    <Version>5.9.1</Version>
     <Authors>Shamrock Foods (SOWL)</Authors>
     <Company>Shamrock Foods Company</Company>
     <Product>Wms.App</Product>
@@ -17,8 +17,5 @@
     <PackageReference Include="Sfc.Core.OnPrem.Result" Version="[2.3.0,3.0)" />
     <PackageReference Include="Sfc.Core.OnPrem.Security.Contracts" Version="[2.1.3,3.0)" />
     <PackageReference Include="Sfc.Wms.Foundation.InboundLpn.Contracts" Version="[5.4.0,6.0)" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
+  </ItemGroup> 
 </Project>
