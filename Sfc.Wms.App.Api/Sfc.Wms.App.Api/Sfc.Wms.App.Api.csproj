@@ -180,8 +180,8 @@
     <Reference Include="Sfc.Wms..Configuration.Security.Rbac.Repository, Version=4.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.Security.Rbac.Repository.4.1.0\lib\net472\Sfc.Wms..Configuration.Security.Rbac.Repository.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.App.Api.Contracts, Version=5.8.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.App.Api.Contracts.5.8.0\lib\net472\Sfc.Wms.App.Api.Contracts.dll</HintPath>
+    <Reference Include="Sfc.Wms.App.Api.Contracts, Version=5.9.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.App.Api.Contracts.5.9.1\lib\net472\Sfc.Wms.App.Api.Contracts.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.App.App, Version=3.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.App.App.3.1.2\lib\net472\Sfc.Wms.App.App.dll</HintPath>
@@ -201,17 +201,17 @@
     <Reference Include="Sfc.Wms.Configuration.ItemMasters.Repository, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.ItemMasters.Repository.1.0.0\lib\net472\Sfc.Wms.Configuration.ItemMasters.Repository.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Configuration.MessageLogger.Contracts, Version=4.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Configuration.MessageLogger.Contracts.4.0.2\lib\net472\Sfc.Wms.Configuration.MessageLogger.Contracts.dll</HintPath>
+    <Reference Include="Sfc.Wms.Configuration.MessageLogger.Contracts, Version=4.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Configuration.MessageLogger.Contracts.4.1.0\lib\net472\Sfc.Wms.Configuration.MessageLogger.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Configuration.MessageLogger.Repository, Version=4.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Configuration.MessageLogger.Repository.4.2.0\lib\net472\Sfc.Wms.Configuration.MessageLogger.Repository.dll</HintPath>
+    <Reference Include="Sfc.Wms.Configuration.MessageLogger.Repository, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Configuration.MessageLogger.Repository.5.0.0\lib\net472\Sfc.Wms.Configuration.MessageLogger.Repository.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Configuration.MessageMaster.Contracts, Version=1.0.8.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Configuration.MessageMaster.Contracts.1.0.8\lib\net472\Sfc.Wms.Configuration.MessageMaster.Contracts.dll</HintPath>
+    <Reference Include="Sfc.Wms.Configuration.MessageMaster.Contracts, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Configuration.MessageMaster.Contracts.1.1.0\lib\net472\Sfc.Wms.Configuration.MessageMaster.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Configuration.MessageMaster.Repository, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Configuration.MessageMaster.Repository.1.1.0\lib\net472\Sfc.Wms.Configuration.MessageMaster.Repository.dll</HintPath>
+    <Reference Include="Sfc.Wms.Configuration.MessageMaster.Repository, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Configuration.MessageMaster.Repository.1.2.0\lib\net472\Sfc.Wms.Configuration.MessageMaster.Repository.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Configuration.MessageTypes.Contracts, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.MessageTypes.Contracts.4.0.0\lib\net472\Sfc.Wms.Configuration.MessageTypes.Contracts.dll</HintPath>
@@ -330,8 +330,8 @@
     <Reference Include="Sfc.Wms.Framework.DockDoor.App, Version=2.2.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.DockDoor.App.2.2.5\lib\net472\Sfc.Wms.Framework.DockDoor.App.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Framework.Interceptor.App, Version=3.6.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Framework.Interceptor.App.3.6.3\lib\net472\Sfc.Wms.Framework.Interceptor.App.dll</HintPath>
+    <Reference Include="Sfc.Wms.Framework.Interceptor.App, Version=3.8.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.Interceptor.App.3.8.0\lib\net472\Sfc.Wms.Framework.Interceptor.App.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Framework.ItemMasters.App, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.ItemMasters.App.1.0.1\lib\net472\Sfc.Wms.Framework.ItemMasters.App.dll</HintPath>
@@ -339,11 +339,11 @@
     <Reference Include="Sfc.Wms.Framework.Location.App, Version=1.3.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.Location.App.1.3.2\lib\net472\Sfc.Wms.Framework.Location.App.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Framework.MessageLogger.App, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Framework.MessageLogger.App.1.0.3\lib\net472\Sfc.Wms.Framework.MessageLogger.App.dll</HintPath>
+    <Reference Include="Sfc.Wms.Framework.MessageLogger.App, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.MessageLogger.App.1.1.1\lib\net472\Sfc.Wms.Framework.MessageLogger.App.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Framework.MessageMaster.App, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Framework.MessageMaster.App.1.0.2\lib\net472\Sfc.Wms.Framework.MessageMaster.App.dll</HintPath>
+    <Reference Include="Sfc.Wms.Framework.MessageMaster.App, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.MessageMaster.App.1.1.0\lib\net472\Sfc.Wms.Framework.MessageMaster.App.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Framework.MessageTypes.App, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.MessageTypes.App.2.1.0\lib\net472\Sfc.Wms.Framework.MessageTypes.App.dll</HintPath>
@@ -574,6 +574,8 @@
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\CorbaController.cs" />
     <Compile Include="Controllers\ItemAttributeController.cs" />
+    <Compile Include="Controllers\MessageLogController.cs" />
+    <Compile Include="Controllers\MessageMasterController.cs" />
     <Compile Include="Controllers\ReleaseAndConnectionInfoController.cs" />
     <Compile Include="Controllers\SynchronizationRequestController.cs" />
     <Compile Include="Controllers\SkuMaintenanceController.cs" />
