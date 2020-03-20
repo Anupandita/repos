@@ -345,6 +345,9 @@
     <Reference Include="Sfc.Wms.Framework.MessageMaster.App, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.MessageMaster.App.1.1.0\lib\net472\Sfc.Wms.Framework.MessageMaster.App.dll</HintPath>
     </Reference>
+    <Reference Include="Sfc.Wms.Framework.MessageTypes.App, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.MessageTypes.App.2.1.0\lib\net472\Sfc.Wms.Framework.MessageTypes.App.dll</HintPath>
+    </Reference>
     <Reference Include="Sfc.Wms.Framework.NextUpCounter.App, Version=5.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.NextUpCounter.App.5.0.2\lib\net472\Sfc.Wms.Framework.NextUpCounter.App.dll</HintPath>
     </Reference>
