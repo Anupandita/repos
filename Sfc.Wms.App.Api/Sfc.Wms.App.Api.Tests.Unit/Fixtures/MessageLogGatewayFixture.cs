@@ -59,7 +59,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void BatchInsertionOperationInvoked()
         {
-            testResponse = _messageLogController.BatchInsertAsync(logs, It.IsAny<bool>(), It.IsAny<string>()).Result;
+            testResponse = _messageLogController.BatchInsertAsync(logs, It.IsAny<string>()).Result;
         }
 
         protected void TheReturnedBadRequestResponse()

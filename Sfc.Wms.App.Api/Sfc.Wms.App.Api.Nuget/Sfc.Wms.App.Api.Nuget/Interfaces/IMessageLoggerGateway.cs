@@ -7,6 +7,6 @@ namespace Sfc.Wms.App.Api.Nuget.Interfaces
 {
     public interface IMessageLoggerGateway
     {
-        Task<BaseResult> BatchInsertAsync(IEnumerable<MessageLogDto> messageLogDtos, bool isDbTransactionAllowed, string token);
+        Task<BaseResult> BatchInsertAsync(IEnumerable<MessageLogDto> messageLogDtos,  string token);
     }
 }

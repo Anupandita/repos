@@ -21,13 +21,12 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             _restCsharpClient = restClient;
         }
 
-        public async Task<BaseResult> BatchInsertAsync(IEnumerable<MessageLogDto> messageLogDtos, bool isDbTransactionAllowed, string token)
+        public async Task<BaseResult> BatchInsertAsync(IEnumerable<MessageLogDto> messageLogDtos, string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
-                var resource = $"{_endPoint}{Routes.Paths.QueryParamSeperator}{isDbTransactionAllowed}";
-                var request = PostRequest(resource, messageLogDtos, token, Constants.Authorization);
+                var request = PostRequest(_endPoint, messageLogDtos, token, Constants.Authorization);
                 var response = await _restCsharpClient.ExecuteTaskAsync<BaseResult>(request)
                     .ConfigureAwait(false);
                 return _responseBuilder.GetBaseResult(response);

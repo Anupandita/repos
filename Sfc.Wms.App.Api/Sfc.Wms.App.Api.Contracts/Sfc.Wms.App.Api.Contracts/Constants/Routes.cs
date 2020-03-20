@@ -92,7 +92,6 @@ namespace Sfc.Wms.App.Api.Contracts.Constants
             public const string CaseUnlock = "case-unlock";
             public const string RefreshToken = "refresh-token";
             public const string UiSpecificMessages = "ui-messages";
-            public const string IsDbTransactionAllowed = "{isDbTransactionAllowed}";
         }
 
         public static class Prefixes
