@@ -15,7 +15,9 @@ using Sfc.Wms.Foundation.Location.Contracts.Dtos;
 using Sfc.Wms.Framework.Corba.App.AutoMapper;
 using Sfc.Wms.Framework.Interceptor.App.interceptors;
 using Sfc.Wms.Framework.ItemMasters.App.AutoMapper;
+using Sfc.Wms.Framework.MessageLogger.App.AutoMapper;
 using Sfc.Wms.Framework.MessageLogger.App.Services;
+using Sfc.Wms.Framework.MessageMaster.App.AutoMapper;
 using Sfc.Wms.Framework.MessageMaster.App.Services;
 using Sfc.Wms.Framework.Security.Rbac.AutoMapper;
 using Sfc.Wms.Inbound.InboundLpn.App.Validators;
@@ -28,7 +30,6 @@ using System.Configuration;
 using System.Linq;
 using System.Runtime.Caching;
 using System.Web.Http;
-using System;
 
 namespace Sfc.Wms.App.Api
 {
@@ -59,6 +60,8 @@ namespace Sfc.Wms.App.Api
                      SfcAsrsMapper.CreateMaps(cfg);
                      SfcItemAttributeMapper.CreateMaps(cfg);
                      SfcCorbaMapper.CreateMaps(cfg);
+                     SfcMessageMaster.CreateMaps(cfg);
+                     SfcMessageLogger.CreateMaps(cfg);
                      cfg.CreateMap<VendorMaster, VendorDetailDto>(MemberList.None).ReverseMap();
                      cfg.CreateMap<VendorMaster, VendorMasterDto>(MemberList.None).ReverseMap();
 

@@ -1,4 +1,6 @@
 ﻿// ReSharper disable InconsistentNaming
+
+
 namespace Sfc.Wms.App.Api.Contracts.Constants
 {
     public static class Routes
@@ -89,6 +91,7 @@ namespace Sfc.Wms.App.Api.Contracts.Constants
             public const string LpnMultipleUnlock = "multiple-unlock";
             public const string CaseUnlock = "case-unlock";
             public const string RefreshToken = "refresh-token";
+            public const string UiSpecificMessages = "ui-messages";
         }
 
         public static class Prefixes
@@ -133,6 +136,8 @@ namespace Sfc.Wms.App.Api.Contracts.Constants
             public const string UserRoles = "user-roles";
             public const string VelocityMaster = "velocity";
             public const string WorkAreaMaster = "work-area-master";
+            public const string MessageLogger = "api/message-logs";
+            public const string MessageMaster = "api/message-masters";
         }
     }
 }
