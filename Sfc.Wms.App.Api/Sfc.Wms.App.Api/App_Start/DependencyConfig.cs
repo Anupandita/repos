@@ -1,4 +1,5 @@
-﻿using AutoMapper.Extensions.ExpressionMapping;
+﻿using System;
+using AutoMapper.Extensions.ExpressionMapping;
 using AutoMapper;
 using Sfc.Core.Aop.WebApi.Interface;
 using Sfc.Core.Aop.WebApi.Logging;
