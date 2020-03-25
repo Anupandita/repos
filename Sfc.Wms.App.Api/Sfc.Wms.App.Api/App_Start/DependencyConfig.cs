@@ -21,6 +21,7 @@ using Sfc.Wms.Framework.MessageMaster.App.AutoMapper;
 using Sfc.Wms.Framework.MessageMaster.App.Services;
 using Sfc.Wms.Framework.Security.Rbac.AutoMapper;
 using Sfc.Wms.Inbound.InboundLpn.App.Validators;
+using Sfc.Wms.Interfaces.Asrs.App.Mappers;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Interfaces;
 using SimpleInjector;
 using SimpleInjector.Integration.WebApi;
