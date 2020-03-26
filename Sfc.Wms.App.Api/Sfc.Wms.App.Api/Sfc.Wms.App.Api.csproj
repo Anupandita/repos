@@ -324,8 +324,8 @@
     <Reference Include="Sfc.Wms.Framework.AllocationInventory.App, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.AllocationInventory.App.1.0.0\lib\net472\Sfc.Wms.Framework.AllocationInventory.App.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Framework.Corba.App, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Framework.Corba.App.2.1.0\lib\net472\Sfc.Wms.Framework.Corba.App.dll</HintPath>
+    <Reference Include="Sfc.Wms.Framework.Corba.App, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.Corba.App.2.1.1\lib\net472\Sfc.Wms.Framework.Corba.App.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Framework.DockDoor.App, Version=2.2.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.DockDoor.App.2.2.5\lib\net472\Sfc.Wms.Framework.DockDoor.App.dll</HintPath>
