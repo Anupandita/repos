@@ -44,6 +44,8 @@ namespace Sfc.Wms.App.Api.Contracts.Constants
             public const string LpnMultiplelock = "multiple-lock";
             public const string LpnCaseUnLockDetails = "{lpnIds}/unlocks";
             public const string LpnUpdateDetails = "lpn-details";
+            public const string MultipleLpnUpdate = "multiple-lpn-details";
+            public const string MultipleLpnCommentsAddition = "multiple-lpn-comments";
             public const string LpnVendors = "vendors";
             public const string Menu = "menu";
             public const string MenusById = "menus/{menuId}";
