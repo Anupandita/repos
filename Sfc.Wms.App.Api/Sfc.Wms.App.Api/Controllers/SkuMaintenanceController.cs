@@ -7,6 +7,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using SimpleInjector.Lifestyles;
 
 namespace Sfc.Wms.App.Api.Controllers
 {
@@ -40,12 +41,18 @@ namespace Sfc.Wms.App.Api.Controllers
         [AllowAnonymous]
         public async Task<IHttpActionResult> CreateAsync(string actionCode)
         {
-            var result = await _wmsToEmsMessageProcessorService.GetAllSkmtMessageAsync(actionCode)
-                .ConfigureAwait(false);
+            var container = DependencyConfig.Register();
+            using (var scope = AsyncScopedLifestyle.BeginScope(container))
+            {
+                var wmsToEmsParallelProcessService = scope.GetInstance<IWmsToEmsParallelProcessService>();
+                var result = await wmsToEmsParallelProcessService
+                    .GetSkmtParallelAsync(container, actionCode)
+                    .ConfigureAwait(false);
 
-            return Content(Enum.TryParse(result.ResultType.ToString(), out HttpStatusCode statusCode)
-                ? statusCode
-                : HttpStatusCode.ExpectationFailed, result);
+                return Content(Enum.TryParse(result.ResultType.ToString(), out HttpStatusCode statusCode)
+                    ? statusCode
+                    : HttpStatusCode.ExpectationFailed, result);
+            }
         }
     }
 }
