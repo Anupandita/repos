@@ -129,8 +129,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             Assert.AreEqual(ResultType.NotFound, Negativecase1.ResultType.ToString());
             Assert.AreEqual(Constants.ValidationCount, Negativecase1.ValidationMessages.Count);
-            Assert.AreEqual(ValidationMessage.EmsToWms, Negativecase1.ValidationMessages[0].FieldName);
-            Assert.AreEqual(ValidationMessage.InvalidMessageKey, Negativecase1.ValidationMessages[0].Message);
+            
+            
         }
         protected void ValidateResultForInvalidCaseNumber()
         {

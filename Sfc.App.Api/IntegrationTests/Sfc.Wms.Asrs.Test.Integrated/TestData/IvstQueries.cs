@@ -58,8 +58,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
             $" pick_locn_dtl.actl_invn_qty > 0 and trans_invn.trans_invn_type not in (select code_id from sys_code where rec_type='B' and code_type='052' and code_desc=' Negative Pick') and pick_locn_dtl.locn_id in (select lh.locn_id from locn_hdr lh inner join locn_grp lg on lg.locn_id = lh.locn_id inner join sys_code sc on sc.code_id = lg.grp_type and sc.code_type = :sysCodeType and sc.code_id = :codeId) order by swm_to_mhe.created_date_time desc";
 
         public static string Pb2CorbaHdrAndDtl = $"select * from pb2_corba_hdr ph inner join pb2_corba_dtl pd on ph.id=pd.id where " +
-            $"func_name like '%printCaseLabelPB' and workstation_id = (select TRIM(SUBSTR(MISC_FLAGS,13,15)) from whse_sys_code where code_type = '309' and rec_type = 'C'  and code_id = 'Dry') order by ph.id desc";
-        public static string MaxIdForPb2CorbaHdr = $"select max(Id) from pb2_corba_hdr  where workstation_id = (select TRIM(SUBSTR(MISC_FLAGS,13,15))from whse_sys_code where code_type = '309' and rec_type = 'C' and code_id = 'Dry')";
+            $"func_name like '%printCaseLabelPB' and workstation_id = (select TRIM(SUBSTR(MISC_FLAGS,13,15)) from whse_sys_code where code_type = '309' and rec_type = 'C'  and code_id = 'Freezer') order by ph.id desc";
+        public static string MaxIdForPb2CorbaHdr = $"select max(Id) from pb2_corba_hdr  where workstation_id = (select TRIM(SUBSTR(MISC_FLAGS,13,15))from whse_sys_code where code_type = '309' and rec_type = 'C' and code_id = 'Freezer')";
         public static string Pb2CorbaHdrDtl = $"select * from pb2_corba_hdr ph inner join pb2_corba_dtl pd on ph.id=pd.id where func_name like '%printCaseLabelPB' and workstation_id = (select TRIM(SUBSTR(MISC_FLAGS,13,15)) from whse_sys_code where code_type = '309' and rec_type = 'C' and code_id = 'Dry') and ph.id = '10865079' order by parm_name asc";
 
     }

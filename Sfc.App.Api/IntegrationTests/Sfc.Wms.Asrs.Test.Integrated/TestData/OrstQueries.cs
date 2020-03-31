@@ -9,7 +9,9 @@
                 "inner join pkt_hdr ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr " +
                 "inner join alloc_invn_dtl al ON al.task_cmpl_ref_nbr = ch.carton_nbr " +
                 "inner join pick_locn_dtl pl ON pl.sku_id = sm.sku_id " +
-                "inner join pkt_dtl pd ON pd.pkt_ctrl_nbr =ch.pkt_ctrl_nbr";
+                "inner join pkt_dtl pd ON pd.pkt_ctrl_nbr =ch.pkt_ctrl_nbr "+
+                "inner join swm_elgbl_ormt_cartons  ON swm_elgbl_ormt_cartons.carton_nbr = sm.order_id";
+
         public static string PickTktSeqNbrIsLessThan1 = $"select sm.order_id,sm.sku_id,sm.qty,sm.msg_json,ch.curr_locn_id,pl.locn_id,ph.ship_w_ctrl_nbr,ch.dest_locn_id from swm_to_mhe sm " +
                 "inner join carton_hdr ch ON sm.order_id = ch.carton_nbr " +
                 "inner join pkt_hdr ph ON ph.pkt_ctrl_nbr = ch.pkt_ctrl_nbr " +

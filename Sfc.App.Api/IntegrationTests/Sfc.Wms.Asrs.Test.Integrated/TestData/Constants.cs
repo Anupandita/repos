@@ -16,7 +16,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
         public const int CaseSeqNumberForSingleSku = 1;
         public const int ReceivedCaseFromReturnStatusCode = 30;
         public const int ReceivedCaseFromVendorStatCode = 50;
-        public const int StatusCodeConsumed = 96;
+        public const int StatusCodeConsumed = 95;
         public const string MinQuantity = "2";
         public const string IvstQuantity = "2";
         public const int NumZero = 0;
@@ -33,7 +33,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
         public const string Owner = "008";
         public const string UserName = "TestUser";
         public const string LotId = "1231";
-        public const string Po = "2445";
+        public const string Po = "No PO";
         public const string PixRsnCodeForCycleCount = "CC";
         public const string PixRsnCodeForUnExpectedOverage = "CO";
         public const string PixRsnCodeForInventoryShortage = "CS";
@@ -69,6 +69,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
         public const string AvailableSatus = "Available";
         public const string HoldStatus = "Y";
         public const int SyndStatus = 90;
+        public const string MasterPackId = "0000028300028377093";
 
     }
 }

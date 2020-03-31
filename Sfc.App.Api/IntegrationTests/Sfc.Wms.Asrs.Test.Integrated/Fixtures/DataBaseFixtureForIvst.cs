@@ -63,11 +63,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected CaseHeaderDto caseHdrAfterApi = new CaseHeaderDto();
         protected CaseHeaderDto caseHdrStatCode = new CaseHeaderDto();
         protected List<Pb2CorbaHdrDtl> pb = new List<Pb2CorbaHdrDtl>();
-        private  CaseDetailDto _caseDetailDto;
+      
         
-
-    
-        // Scenario 1
         public void InsertIvstMessageUnexpectedOverageWhenCaseHeaderStatusCodeIsLessthan90AndCaseDtlActlQtyIsGreaterThanZero()
         {
             using (var db = GetOracleConnection())
@@ -82,7 +79,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        // Scenario 2
         public void
             IvstMessageUnexpectedOverageWhenCaseHeaderStatusCodeIsLessThanOrEqualTo90AndCaseDtlActlQtyIsEqualToZero()
         {
@@ -99,7 +95,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        // Scenario 3
+
         public void InsertIvstMessagetUnexpectedFunctionForstatus96AndNegativeTiAlreadyExists()
         {
             using (var db = GetOracleConnection())
@@ -114,7 +110,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 IvstData.Key = InsertEmsToWms(db, EmsToWmsParameters);
             }
         }
-        // Scenario 4 
 
         public void InsertIvstMessagetUnexpectedFunctionForstatus96AndNegativeTiNotExists()
         {
@@ -130,7 +125,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 IvstData.Key = InsertEmsToWms(db, EmsToWmsParameters);
             }
         }
-        // inventoryShortag - Scenario 1
+
         public void InsertIvstMessageForInventoryShortageInboundPalletIsY()
         {
             using (var db = GetOracleConnection())
@@ -145,7 +140,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        // inventoryShortag - Scenario 2
         public void InsertIvstMessageForInventoryShortageInboundPalletIsN()
         {
             using (var db = GetOracleConnection())
@@ -166,7 +160,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 InvShortageOutbound.Key = InsertEmsToWms(db, EmsToWmsParametersInventoryShortage);
             }
         }
-        //  inventoryShortag - Scenario 3
+
         public void InsertIvstMessageForInventoryShortageOutBoundAndPickLocnDtlQtyIsGreaterThanZeroButLesserThanIvstQty()
         {
             using (var db = GetOracleConnection())
@@ -211,8 +205,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }       
 
-
-        // IvstQueryForPickLocnQtyLesserThanOrEqualToZero - scenario 5
         public void InsertIvstMessageForInventoryShortageOutBoundAndPickLocnQtyLesserThanOrEqualToZero()
        {
            using (var db = GetOracleConnection())
@@ -235,7 +227,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
            }
        }
 
-        public void InsertIvstMessageForMixedOrIncorrectInventory()
+        public void InsertIvstMessageForMixedOrIncorrectInventory(String actionCode)
         {
             using (var db = GetOracleConnection())
             {
@@ -244,7 +236,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 Unitweight1 = FetchUnitWeight(db, IvstData.SkuId);
                 TrnsInvBeforeApi = FetchTransInvnentory(db, IvstData.SkuId);
                 PickLcnDtlBeforeApi = GetPickLocationDetails(db, IvstData.SkuId, null);
-                var ivstResult = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, "1", IvstActionCode.AdjustmentMinus, "0009", Constants.InboundPalletN);
+                var ivstResult = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, "1",actionCode, "0009", Constants.InboundPalletN);
                 EmsToWmsParametersMixedInventory = new EmsToWmsDto
                 {
                     Process = "IVSTProcessor",
@@ -314,7 +306,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 DamageInbound.Key = InsertEmsToWms(db, EmsToWmsParametersDamage);
             }
         }
-//-- Scenario 3
+
         public void InsertIvstMessageDamageForInboundPalletIsYScenario3()
         {
             using (var db = GetOracleConnection())
@@ -362,8 +354,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-// right .. 1st scenario
-/// </summary>
         public void InsertIvstMessageForCycleCountWithAdjustmentPlus()
         {
             using (var db = GetOracleConnection())
@@ -385,7 +375,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-// right.. 2nd scenario
         public void IvstMessageForCcAdjustmentMinusWherePickLocnDtlActlQtyIsGreaterThanIvstQty()
         {
             using (var db = GetOracleConnection())
@@ -406,8 +395,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 CycleCountAdjustmentMinus.Key = InsertEmsToWms(db, EmsToWmsParametersCycleCount);
             }
         }
-// right 3rd scenario
-        // NegativePickRecord Exists
+
         public void IvstMessageForCcAdjustmentMinusWherePickLocnDtlActlQtyIsGreaterThanZeroButLessThanIvstQty()
         {
             using (var db = GetOracleConnection())
@@ -431,9 +419,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-
-// right 4th scenario
-        // Negative Pick does not exists.
         public void
             IvstMessageForCcAdjustMentMinusWherePickLocnDtlActlQtyIsGreaterThanZeroButLessThanIvstQtyAndNegativeTiDoesNotExists()
         {
@@ -456,7 +441,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 CycleCountAdjustmentMinus.Key = InsertEmsToWms(db, EmsToWmsParametersCycleCount);
             }
         }
-// right 5th scenario
+
         public void IvstMessageForCcAdjustmentMinusWherePickLocnQtyIsLessThanOrEqualToZeroAndLessThanIvstQuantity()
         {
             using (var db = GetOracleConnection())
@@ -592,11 +577,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 Pixtran = GetPixtransaction(db, pixTrnAfterApi, SwmFromMhe.ContainerId);
                 caseDtlQty = FetchCaseDetailQty(db, SwmFromMhe.ContainerId);
                 caseHdrStatCode = CaseHeaderDetails(db, SwmFromMhe.ContainerId);
-                TransInvnNegativePick = FetchTransInvnentoryForNegative(db, Ivst.Sku);
-                Int64 maxId = FetchMaxIdFromPb2CorbaHdr(db);
-                pb = FetchPbHdrDetails(db, maxId);
+                TransInvnNegativePick = FetchTransInvnentoryForNegative(db, Ivst.Sku);        
                 try
                 {
+                    Int64 maxId = FetchMaxIdFromPb2CorbaHdr(db);
+                    pb = FetchPbHdrDetails(db, maxId);
                     caseDtlAfterApi = FetchCaseDetailQty(db, pb[0].ParmValue);
                     caseHdrAfterApi = CaseHeaderDetails(db, pb[0].ParmValue);
                 }
@@ -669,11 +654,5 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                     return Constants.PixRsnCodeForCycleCount;
             }
         }
-
-
-
-
-       
-
     }
 }

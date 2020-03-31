@@ -13,6 +13,8 @@ using Sfc.Wms.Foundation.Carton.Contracts.Dtos;
 using PickTicketDetail = Sfc.Wms.Data.Entities.PickTicketDetail;
 using Sfc.Wms.Foundation.Message.Contracts.Dtos;
 using Sfc.Wms.Configuration.NextUpCounter.Contracts.Interfaces;
+using Sfc.Wms.Foundation.PixTransaction.Contracts.Dtos;
+using System.Diagnostics;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
@@ -132,8 +134,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 Allocated = GetCartonDetailsForInsertingOrstMessage(db, Constants.CartonStatusForReleased,Constants.PktStatusForInPacking, false);
                 OrmtCase1 = JsonConvert.DeserializeObject<OrmtDto>(Allocated.MessageJson);
                 OrstMessageCreatedForAllocatedStatus(db);
-                EmsToWmsAllocated = GetEmsToWmsData(db, MsgKeyForAllocated.MsgKey);
-               
+                EmsToWmsAllocated = GetEmsToWmsData(db, MsgKeyForAllocated.MsgKey);               
             }
         }
 
@@ -143,16 +144,16 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             {
                 db.Open();
                 Complete = GetCartonDetailsForInsertingOrstMessage(db, Constants.CartonStatusForInPacking, Constants.PktStatusForInPacking);
-                OrmtCase2 = JsonConvert.DeserializeObject<OrmtDto>(Complete.MessageJson);
-                OrstMessageCreatedForCompletedStatus(db);
-                EmsToWmsCompleted = GetEmsToWmsData(db, MsgKeyForCompleted.MsgKey);
+                OrmtCase2 = JsonConvert.DeserializeObject<OrmtDto>(Complete.MessageJson);              
                 CartonDtlCase2BeforeApi = GetCartonDetails(db, Complete.OrderId);
                 GetCartonHeaderDetails(db, Complete.OrderId);
                 PickTktDtlCase2BeforeApi = GetPickTicketDetailData(db, Complete.OrderId, Constants.PickSeqNumber);
                 AllocInvnDtlCompletedBeforeApi = GetAllocInvnDetails(db, Complete.OrderId);
                 PickLcnCase2BeforeApi = GetPickLocationDetails(db, OrmtCase2.Sku,null);
                 PickLcnExtCase2BeforeApi = GetPickLocnDtlExt(db,  Complete.SkuId, PickLcnCase2BeforeApi.LocationId);
-                CwcCountBeforeApi = CalculateTheForeCaseCountFromMsgToCWCTable(db, SwmFromMheComplete.WaveNumber);
+                CwcCountBeforeApi = CalculateTheForeCaseCountFromMsgToCWCTable(db, OrmtCase2.WaveId);
+                OrstMessageCreatedForCompletedStatus(db);
+                EmsToWmsCompleted = GetEmsToWmsData(db, MsgKeyForCompleted.MsgKey);
             }
         }
 
@@ -209,6 +210,19 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 PickLcnExtCase2 = GetPickLocnDtlExt(db, OrstCompleted.Sku,PickLcnCase1BeforeApi.LocationId);
                 MasterPackIdCount = CountOfMasterPackId(db, OrstCompleted.ParentContainerId);
                 CwcCount = CalculateTheForeCaseCountFromMsgToCWCTable(db, SwmFromMheComplete.WaveNumber);
+                try
+                {
+                    Data.Entities.AltSku altSku = GetAltSkuInfo(db, OrstCompleted.Sku);
+                    PixTransactionDto parentSku =  GetPixTranDetails(db, altSku.ParentSkuId);
+                    PixTransactionDto childSku =  GetPixTranDetails(db, altSku.ChildSkuId);
+                    Assert.AreEqual(altSku.QuantityChildPerParent, childSku.InventoryAdjustmentQuantity);                   
+                    Assert.AreEqual(1, parentSku.InventoryAdjustmentQuantity);
+                }
+                catch
+                {
+                    Debug.Print("NO PIX INSERTED");
+                }
+
             }
         }
 
@@ -285,7 +299,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 Sku = skuId,
                 Owner = owner,
                 UnitOfMeasure = UnitOfMeasures.Each,
-                ParentContainerId = "",
+                ParentContainerId = Constants.MasterPackId,
                 QuantityOrdered = qty,
                 QuantityDelivered = Constants.QuantityDelivered,
                 DestinationLocationId = destinationLocnId,
@@ -306,7 +320,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var orstmsg = CreateOrstMessage(OrstActionCode.Allocated,Allocated.OrderId,Allocated.SkuId, OrmtCase1.Quantity, OrmtCase1.WaveId,Constants.OrderReasonCodeMap, OrmtCase1.Owner,null,Allocated.DestLocnId);
             var emsToWms = new EmsToWmsDto
             {
-                Process = "Test",
+                Process = DefaultValues.Process,
                 Status = DefaultValues.Status,
                 Transaction = TransactionCode.Orst,
                 ResponseCode = (short)int.Parse(ReasonCode.Success),
@@ -320,21 +334,21 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var orstmsg = CreateOrstMessage(OrstActionCode.Complete, Complete.OrderId, Complete.SkuId, OrmtCase2.Quantity, OrmtCase2.WaveId,Constants.OrderReasonCodeMap,OrmtCase2.Owner,null,Complete.DestLocnId);
             var emsToWms = new EmsToWmsDto
             {
-                Process = "Test",
+                Process = DefaultValues.Process,
                 Status = DefaultValues.Status,
                 Transaction = TransactionCode.Orst,
                 ResponseCode = (short)int.Parse(ReasonCode.Success),
                 MessageText = orstmsg
             };
             MsgKeyForCompleted.MsgKey = InsertEmsToWms(db, emsToWms);
-        }
+            }
 
         public void OrstMessageCreatedForCompletedStatusWithBitsEnabled(OracleConnection db)
         {
             var orstmsg = CreateOrstMessage(OrstActionCode.Complete, Complete.OrderId, Complete.SkuId, OrmtCase2.Quantity, OrmtCase2.WaveId, Constants.OrderRsnCodeBitsEnabled, OrmtCase2.Owner, Constants.SampleCurrentLocnId, Complete.DestLocnId);
             var emsToWms = new EmsToWmsDto
             {
-                Process = "Test",
+                Process = DefaultValues.Process,
                 Status = DefaultValues.Status,
                 Transaction = TransactionCode.Orst,
                 ResponseCode = (short)int.Parse(ReasonCode.Success),
@@ -349,7 +363,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var orstmsg = CreateOrstMessage(OrstActionCode.Deallocate, Deallocate.OrderId, Deallocate.SkuId, OrmtCase3.Quantity, OrmtCase3.WaveId,"05",null,null,Deallocate.DestLocnId);
             var emsToWms = new EmsToWmsDto
             {
-                Process = "Test",
+                Process = DefaultValues.Process,
                 Status = DefaultValues.Status,
                 Transaction = TransactionCode.Orst,
                 ResponseCode = (short)int.Parse(ReasonCode.Success),
@@ -363,7 +377,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var orstmsg = CreateOrstMessage(OrstActionCode.Canceled, Canceled.OrderId, Canceled.SkuId, OrmtCase4.Quantity, OrmtCase4.WaveId,"06",null,null,Canceled.DestLocnId);
             var emsToWms = new EmsToWmsDto
             {
-                Process = "Test",
+                Process = DefaultValues.Process,
                 Status = DefaultValues.Status,
                 Transaction = TransactionCode.Orst,
                 ResponseCode = (short)int.Parse(ReasonCode.Success),
@@ -467,6 +481,21 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 emsToWms.Transaction = emsToWmsReader[EmsToWms.Trx].ToString();
             }
             return emsToWms;
+        }
+
+        public PixTransactionDto GetPixTranDetails(OracleConnection db ,string skuId )
+        {
+            var pixTran  = new PixTransactionDto();
+            var query = $"Select * from pix_tran  where sku_id = '{skuId}' and PROC_STAT_CODE in (Select case when substr(misc_flags,1,1)= 'Y' then 11 else 10  end pix_stat_code from sys_code where code_type = '051' and rec_type = 'C' )and case_nbr is null   order by create_date_time desc";
+            Command = new OracleCommand(query,db);
+            var pixTranReader = Command.ExecuteReader();
+            if(pixTranReader.Read())
+            {
+                pixTran.ProcessedStatusCode = Convert.ToInt32(pixTranReader[""]);
+                pixTran.InventoryAdjustmentQuantity = Convert.ToInt32(pixTranReader["INVN_ADJMT_QTY"]);
+                pixTran.InventoryAdjustmentType = pixTranReader["INVN_ADJMT_TYPE"].ToString();
+            }
+            return pixTran;
         }
     }
 }

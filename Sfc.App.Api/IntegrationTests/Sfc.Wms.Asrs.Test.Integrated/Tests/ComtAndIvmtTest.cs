@@ -46,7 +46,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         [TestCategory("FUNCTIONAL")]
         public void ComtAndIvmtTestForMultiSkuScenarios()
         {
-            this.Given(x => x.AValidNewComtMessageRecordWhereCaseNumberAndSkuIs(CaseHdrMultiSku.CaseNumber, CaseHdrMultiSku.SkuId))
+            this.Given(x => x.AValidNewComtMessageRecordWhereCaseNumberAndSkuIs(CaseHdrMultiSku.CaseNumber, CaseHdrMultiSku.SingleSkuId))
               .When(x => x.ComtApiIsCalledCreatedIsReturnedWithValidUrlIs(ComtUrl))
               .Then(x => x.GetDataAndValidateForIvmtMessageHasInsertedIntoBothTables())
               .And(x => x.VerifyComtMessageWasInsertedIntoSwmToMheForMultiSku())

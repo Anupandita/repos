@@ -173,15 +173,15 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var query = CommonQueries.TempZone;
             Command = new OracleCommand(query, db);
             Command.Parameters.Add(new OracleParameter("skuId", skuId));
-            string itemMaster = Command.ExecuteReader().ToString();
+            var  itemMaster = Command.ExecuteScalar().ToString();
             return itemMaster;
         }
 
         public string GetUnitOfMeasureFromItemMaster(OracleConnection db, string skuId)
         {
-            var query = $"select spl_instr_code_3 from item_master where sku_id = {skuId} and spl_instr_code_5 ! = 'C'";
+            var query = $"select spl_instr_code_3 from item_master where sku_id = {skuId}";
             Command = new OracleCommand(query, db);
-            var unitOfMeasure = Command.ExecuteScalar().ToString();
+            var  unitOfMeasure = Command.ExecuteScalar().ToString();
             return unitOfMeasure;
         }     
 
@@ -249,13 +249,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             Transaction = db.BeginTransaction();
             var msgKey = GetSeqNbrEmsToWms(db);
-            var insertQuery = $"insert into emstowms values ('{emsToWmsDto.Process}','{msgKey}','{emsToWmsDto.Status}','{emsToWmsDto.Transaction}','{emsToWmsDto.MessageText}','{emsToWmsDto.ResponseCode}','TestUser','{DateTime.Now.ToString("dd-MMM-yy")}','{DateTime.Now.ToString("dd-MMM-yy")}')";
+            var insertQuery = $"insert into emstowms values ('{emsToWmsDto.Process}','{msgKey}','{emsToWmsDto.Status}','{emsToWmsDto.Transaction}','{emsToWmsDto.MessageText}','{emsToWmsDto.ResponseCode}','TestUser',SYSDATE,SYSDATE)";
             Command = new OracleCommand(insertQuery, db);
             Command.ExecuteNonQuery();
             Transaction.Commit();
             return msgKey;
         }
 
+        
         public PickLocationDetailsDto GetPickLocationDetails(OracleConnection db, string skuId, string locnId)
         {
             var pickLocnDtl = new PickLocationDetailsDto();
@@ -358,7 +359,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var query = IvstQueries.MaxIdForPb2CorbaHdr;
             Command = new OracleCommand(query, db);
-            Int64 maxId = Convert.ToInt64(Command.ExecuteScalar());
+            long maxId = Convert.ToInt64(Command.ExecuteScalar());
             return maxId;
         }
 
@@ -418,7 +419,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return rsv;
         }
 
-
         public int CountOfMasterPackId(OracleConnection db, string masterPackId)
         {
             var query = $"select Count(*) from msg_to_sv where message_type= 'ADD'  and PTN = '{masterPackId}' order by message_id desc";
@@ -426,7 +426,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var Count = Convert.ToInt16(Command.ExecuteScalar());
             return Count;
         }
-
 
         public int CalculateTheForecastCountFromCartonInfoTable(OracleConnection db)
         {
@@ -460,6 +459,21 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return sm;
         }
 
+        public Data.Entities.AltSku GetAltSkuInfo(OracleConnection db, string sku)
+        {
+            var ats = new Data.Entities.AltSku();
+            var query = $"select * from alt_sku where parent_sku_id ='{sku}' or child_sku_id = '{sku}'";
+            Command = new OracleCommand(query,db);
+            var atsReader = Command.ExecuteReader();
+            if(atsReader.Read())
+            {
+                ats.ChildSkuId = atsReader["CHILD_SKU_ID"].ToString();
+                ats.ParentSkuId = atsReader["PARENT_SKU_ID"].ToString();
+                ats.QuantityChildPerParent = Convert.ToInt32(atsReader["QTY_CHILD_PER_PARENT"]);
+            }
+            return ats;
+        }
+
         private void CalculateWeightLimit(OracleConnection db, out decimal? lowerWtLmt, out decimal? upperWtLmt)
         {
             var swmDematicCartonInfoDto = GetCartonInfoDetails(db,"sku");
@@ -478,5 +492,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             lowerWtLmt = 0;
             upperWtLmt = (decimal)999.99;
         }
+
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
+﻿using System;
+
+namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
 {
     public class CaseViewDto
     {
@@ -11,9 +13,8 @@
         public decimal ActualInventoryUnits { get; set; }
         public decimal ActualWeight { get; set; }      
         public string TempZone { get; set; }
-
-        public string Cons_prty_date { get; set; }
+        public DateTime? Cons_prty_date { get; set; }
+        public string PoNbr { get; set; }
     }
-
     
 }

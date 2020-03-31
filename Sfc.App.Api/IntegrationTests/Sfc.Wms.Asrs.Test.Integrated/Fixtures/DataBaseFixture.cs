@@ -25,7 +25,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public decimal UnitWeight;
         public decimal UnitVol;
         public CaseViewDto SingleSkuCase = new CaseViewDto();
-        public CaseViewDto CaseHdrMultiSku = new CaseViewDto();
+        public CaseHeaderDto CaseHdrMultiSku = new CaseHeaderDto();
         public SwmToMheDto SwmToMheComt = new SwmToMheDto();
         public SwmToMheDto SwmToMheIvmt = new SwmToMheDto();
         public PickLocationDetailsDto PickLocn = new PickLocationDetailsDto();
@@ -71,7 +71,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 SingleSkuCase.CaseNumber = caseheader.CaseNumber;
                 SingleSkuCase.LocationId = caseheader.LocationId;
                 SingleSkuCase.StatusCode = caseheader.StatusCode;
-                SingleSkuCase.Cons_prty_date = caseheader.Cons_prty_date;
+                SingleSkuCase.Cons_prty_date = caseheader.ConsumePriorityDate;
                 SingleSkuCase.SkuId = caseDto[0].SkuId;
                 SingleSkuCase.TotalAllocQty = Convert.ToInt32(caseDto[0].TotalAllocQty);
                 var UOM = GetUnitOfMeasureFromItemMaster(db,SingleSkuCase.SkuId);
@@ -163,9 +163,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return receivedcaseheader;
         }
 
-        public CaseViewDto TriggerOnCaseHeader(OracleConnection db, int seqNumber)
+        public CaseHeaderDto TriggerOnCaseHeader(OracleConnection db, int seqNumber)
         {
-            var caseheader = new CaseViewDto();
+            var caseheader = new CaseHeaderDto();
             var q = ComtQueries.ReceivedCaseFromVendors;
             Command = new OracleCommand(q, db);            
             Command.Parameters.Add(new OracleParameter("sysCodeType", Constants.SysCodeType));
@@ -181,7 +181,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 caseheader.CaseNumber = caseHeaderReader[CaseHeader.CaseNumber].ToString();
                 caseheader.LocationId = caseHeaderReader[CaseHeader.LocationId].ToString();
                 caseheader.StatusCode = Convert.ToInt32(caseHeaderReader[CaseHeader.StatusCode].ToString());
-                caseheader.Cons_prty_date = caseHeaderReader["cons_prty_date"].ToString();
+                caseheader.ConsumePriorityDate = Convert.ToDateTime(caseHeaderReader["cons_prty_date"]);
+                caseheader.PoNumber = caseHeaderReader["PO_NBR"].ToString();
+                
             }
             return caseheader;
         }
@@ -293,9 +295,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 UnitWeight = FetchUnitWeight(db, SingleSkuCase.SkuId);
                 UnitVol = FetchUnitVol(db, SingleSkuCase.SkuId);
                 TaskSingleSku = FetchTaskDetails(db, SingleSkuCase.SkuId);
+                var tempZone  = GetTempZone(db, SingleSkuCase.SkuId);
                 CurrentLocationId = VerifyLocnIdAfterApi(TempZone);
             }
         }
+
+
 
         public void GetDataAfterTriggerOfComtForReceivedCaseSingleSku()
         {
@@ -437,7 +442,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(MessageLength.Comt, comt.MessageLength);
             Assert.AreEqual(ActionCodeConstants.Create, comt.ActionCode);
             Assert.AreEqual(caseNbr, SwmToMheComt.ContainerId);
-            Assert.AreEqual(DefaultValues.ContainerType, SwmToMheComt.ContainerType);
+            Assert.AreEqual("Pallet", SwmToMheComt.ContainerType);
             Assert.AreEqual(Constants.MessageStatus, SwmToMheComt.MessageStatus);
             Assert.AreEqual(CurrentLocationId, comt.CurrentLocationId);
         }
@@ -465,6 +470,15 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(DefaultValues.DataControl, ivmt.DateControl);
             Assert.AreEqual(DefaultValues.InboundPallet,ivmt.InboundPallet);
             Assert.AreEqual(SingleSkuCase.Cons_prty_date,ivmt.FifoDate);
+            if(SingleSkuCase.PoNbr != null)
+            {
+                Assert.AreEqual(SingleSkuCase.PoNbr, ivmt.Po);
+            }
+            else
+            {
+                Assert.AreEqual("No PO", ivmt.Po);
+            }
+          
         }
 
         public void VerifyIvmtMessageWasInsertedIntoWmsToEms(WmsToEmsDto wmsToEms)
@@ -508,7 +522,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 case "D":
                     return "AM-PALLET-INDUCT";
                 case "F":
-                    return "AM-PALLET-INDUCT";
+                    return "FR-PALLET-INDUCT";
                 default:
                     return "";
             }

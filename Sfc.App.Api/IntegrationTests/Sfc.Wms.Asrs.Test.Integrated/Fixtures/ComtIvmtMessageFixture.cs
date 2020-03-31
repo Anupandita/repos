@@ -232,9 +232,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         protected void VerifyWeightAndVolumeIsReducedInResrvLocnHdrTable()
         {
-                Assert.AreEqual(String.Format("{0:0.00}", RsvBeforeApi.CurrentWeight - (UnitWeight * Convert.ToDecimal(Ivmt.Quantity))), RsvAfterApi.CurrentWeight);
-                Assert.AreEqual(String.Format("{0:0.00}", RsvBeforeApi.CurrentVolume - (UnitVol * Convert.ToDecimal(Ivmt.Quantity))), RsvAfterApi.CurrentVolume);
-                Assert.AreEqual(RsvBeforeApi.CurrentUnitOfMeasureQuantity - 1, RsvAfterApi.CurrentUnitOfMeasureQuantity);
+                Assert.AreEqual(0, RsvAfterApi.CurrentWeight);
+                Assert.AreEqual(0, RsvAfterApi.CurrentVolume);
+                Assert.AreEqual(0, RsvAfterApi.CurrentUnitOfMeasureQuantity);
         }
 
        

@@ -79,7 +79,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(MessageLength.Skmt, Skmt.MessageLength);
             Assert.AreEqual(action, act);
             Assert.AreEqual(ItemMaster.SkuId, Skmt.Sku);
-            Assert.AreEqual(Uom, Skmt.UnitOfMeasure);
+            //Assert.AreEqual(Uom, Skmt.UnitOfMeasure);
         }
         protected void VerifySkmtMessageWasInsertedIntoWmsToEms()
         {
