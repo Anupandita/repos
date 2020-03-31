@@ -214,5 +214,29 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
                 return _responseBuilder.GetBaseResult<LpnMultipleUnlockResultDto>(response);
             }).ConfigureAwait(false);
         }
+
+        public async Task<BaseResult> MultipleLpnsCommentsAddAsync(IEnumerable<CaseCommentDto> caseCommentDtos, string token)
+        {
+            var retryPolicy = Proxy();
+            return await retryPolicy.ExecuteAsync(async () =>
+            {
+                var resource = $"{_endPoint}/{Routes.Paths.MultipleLpnCommentsAddition}";
+                var request = PostRequest(resource, caseCommentDtos, token, Authorization);
+                var response = await _restCsharpClient.ExecuteTaskAsync<BaseResult>(request).ConfigureAwait(false);
+                return _responseBuilder.GetBaseResult(response);
+            }).ConfigureAwait(false);
+        }
+
+        public async Task<BaseResult> MultipleLpnsUpdateAsync(LpnBatchUpdateDto lpnBatchUpdateDto, string token)
+        {
+            var retryPolicy = Proxy();
+            return await retryPolicy.ExecuteAsync(async () =>
+            {
+                var resource = $"{_endPoint}/{Routes.Paths.MultipleLpnUpdate}";
+                var request = PutRequest(resource, lpnBatchUpdateDto, token, Authorization);
+                var response = await _restCsharpClient.ExecuteTaskAsync<BaseResult>(request).ConfigureAwait(false);
+                return _responseBuilder.GetBaseResult(response);
+            }).ConfigureAwait(false);
+        }
     }
 }
