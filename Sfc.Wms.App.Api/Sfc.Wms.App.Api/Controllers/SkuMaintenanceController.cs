@@ -3,8 +3,10 @@ using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.App.Api.Contracts.Constants;
 using Sfc.Wms.Interfaces.Asrs.Contracts.Interfaces;
 using System;
+using System.Configuration;
 using System.Net;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using SimpleInjector.Lifestyles;
@@ -41,6 +43,10 @@ namespace Sfc.Wms.App.Api.Controllers
         [AllowAnonymous]
         public async Task<IHttpActionResult> CreateAsync(string actionCode)
         {
+            int.TryParse(ConfigurationManager.AppSettings["SkmtWrapperTimeout"], out var skmtWrapperTimeout);
+            int.TryParse(ConfigurationManager.AppSettings["DefaultTimeout"], out var defaultTimeout);
+            HttpContext.Current.Server.ScriptTimeout = skmtWrapperTimeout;
+
             var container = DependencyConfig.Register();
             using (var scope = AsyncScopedLifestyle.BeginScope(container))
             {
@@ -48,6 +54,8 @@ namespace Sfc.Wms.App.Api.Controllers
                 var result = await wmsToEmsParallelProcessService
                     .GetSkmtParallelAsync(container, actionCode)
                     .ConfigureAwait(false);
+
+                HttpContext.Current.Server.ScriptTimeout = defaultTimeout;
 
                 return Content(Enum.TryParse(result.ResultType.ToString(), out HttpStatusCode statusCode)
                     ? statusCode
