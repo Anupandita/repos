@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Results;
-using DataGenerator;
+﻿using DataGenerator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.App.Api.Controllers;
-using Sfc.Wms.Data.Entities;
 using Sfc.Wms.Foundation.InboundLpn.Contracts.Dtos;
 using Sfc.Wms.Foundation.InboundLpn.Contracts.Interfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Results;
 
 namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 {
@@ -20,10 +18,13 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         private readonly CaseCommentDto _updateLpnCommentRequest;
         private readonly LpnController _lpnController;
         private readonly LpnParameterDto _lpnSearchRequest;
+        private IEnumerable<CaseCommentDto> caseCommentDtos;
+        private LpnBatchUpdateDto lpnBatchUpdateDto;
         private readonly Mock<ICaseCommentService> _mockCaseCommentService;
         private readonly Mock<ICaseDetailService> _mockCaseDetailService;
         private readonly Mock<ICaseLockService> _mockCaseLockService;
         private readonly Mock<ILpnService> _mockLpnService;
+        private readonly Mock<ICaseHeaderService> _mockCaseHeaderService;
         private readonly LpnDetailsUpdateDto _updateLpnCaseDetailsRequest;
         private readonly LpnHeaderUpdateDto _updateLpnHeaderUpdateDto;
         private readonly CaseLockCommentDto _caseLockCommentDto;
@@ -46,15 +47,19 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             _addLpnCommentRequest = Generator.Default.Single<CaseCommentDto>();
             _updateLpnCommentRequest = Generator.Default.Single<CaseCommentDto>();
             _caseLockCommentDto = Generator.Default.Single<CaseLockCommentDto>();
+
             _lpnMultipleUnlockDtos = Generator.Default.Single<List<LpnMultipleUnlockDto>>();
+            _mockCaseHeaderService = new Mock<ICaseHeaderService>(MockBehavior.Default);
             _lpnController = new LpnController(_mockLpnService.Object, _mockCaseCommentService.Object,
-                _mockCaseDetailService.Object, _mockCaseLockService.Object);
+                _mockCaseDetailService.Object, _mockCaseLockService.Object, _mockCaseHeaderService.Object);
             lpnNumber = "00100283000512198200";
             warehouse = "008";
             faceLocationId = "A07E06706N";
             commentSequenceNumber = 204;
             var lpnNumbers = new List<string>() { "00100283000828329862,00100283000694052673,00100283009301204498" };
             lpnIds = lpnNumbers;
+            lpnBatchUpdateDto = Generator.Default.Single<LpnBatchUpdateDto>();
+            caseCommentDtos = Generator.Default.List<CaseCommentDto>(2);
         }
 
         #region Mock
@@ -149,8 +154,8 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
                 ResultType = resultType,
                 Payload = _updateLpnCommentRequest
             };
-                _mockCaseCommentService.Setup(el => el.UpdateAsync(It.IsAny<CaseCommentDto>()))
-                    .Returns(Task.FromResult(response));
+            _mockCaseCommentService.Setup(el => el.UpdateAsync(It.IsAny<CaseCommentDto>()))
+                .Returns(Task.FromResult(response));
         }
 
         private void VerifyUpdateLpnCaseDetails()
@@ -913,5 +918,125 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         }
 
         #endregion UnlockCommentWithBatchCorba
+
+        #region Lpn Batch update
+
+        private void MockLpnBatchUpdate(ResultTypes resultTypes)
+        {
+            _mockCaseHeaderService.Setup(el => el.LpnBatchUpdateAsync(It.IsAny<LpnBatchUpdateDto>(), It.IsAny<bool>()))
+                .Returns(Task.FromResult(new BaseResult { ResultType = resultTypes }));
+        }
+        private void VerifyLpnBatchUpdate()
+        {
+            _mockCaseHeaderService.Verify(el => el.LpnBatchUpdateAsync(It.IsAny<LpnBatchUpdateDto>(), It.IsAny<bool>()));
+        }
+
+        protected void EmptyOrNullInputForLpnBatchUpdate()
+        {
+            lpnBatchUpdateDto = null;
+            MockLpnBatchUpdate(ResultTypes.BadRequest);
+        }
+
+        protected void InputForMultipleLpnUpdate()
+        {
+            MockLpnBatchUpdate(ResultTypes.NotFound);
+        }
+
+        protected void ValidInputForMultipleLpnUpdate()
+        {
+            MockLpnBatchUpdate(ResultTypes.Ok);
+        }
+
+        protected void LpnBatchUpdateInvocation()
+        {
+            _testResponse = _lpnController.MultipleLpnUpdateAsync(lpnBatchUpdateDto);
+        }
+        protected void LpnBatchUpdateReturnedOkAsResponseStatus()
+        {
+            VerifyLpnBatchUpdate();
+            Assert.IsNotNull(_testResponse);
+            var result = _testResponse.Result as OkNegotiatedContentResult<BaseResult>;
+            Assert.IsNotNull(result);
+            Assert.AreEqual(ResultTypes.Ok, result.Content.ResultType);
+        }
+
+        protected void LpnBatchUpdateReturnedNotFoundAsResponseStatus()
+        {
+            VerifyLpnBatchUpdate();
+            Assert.IsNotNull(_testResponse);
+            var result = _testResponse.Result as NegotiatedContentResult<BaseResult>;
+            Assert.IsNotNull(result);
+            Assert.AreEqual(ResultTypes.NotFound, result.Content.ResultType);
+        }
+
+        protected void LpnBatchUpdateReturnedBadRequestAsResponseStatus()
+        {
+            VerifyLpnBatchUpdate();
+            Assert.IsNotNull(_testResponse);
+            var result = _testResponse.Result as NegotiatedContentResult<BaseResult>;
+            Assert.IsNotNull(result);
+            Assert.AreEqual(ResultTypes.BadRequest, result.Content.ResultType);
+        }
+        #endregion
+
+        #region Batch Case comments insertion
+
+        private void MockBatchCommentsInsertion(ResultTypes resultTypes)
+        {
+            _mockCaseCommentService.Setup(el => el.BatchInsertAsync(It.IsAny<IEnumerable<CaseCommentDto>>()))
+                .Returns(Task.FromResult(new BaseResult { ResultType = resultTypes }));
+        }
+        private void VerifyBatchCommentsInsertion()
+        {
+            _mockCaseCommentService.Verify(el => el.BatchInsertAsync(It.IsAny<IEnumerable<CaseCommentDto>>()));
+        }
+
+        protected void EmptyOrNullInputForBatchCommentsInsertion()
+        {
+            caseCommentDtos = null;
+            MockBatchCommentsInsertion(ResultTypes.BadRequest);
+        }
+
+        protected void InputForBatchCommentsInsertion()
+        {
+            MockBatchCommentsInsertion(ResultTypes.NotFound);
+        }
+
+        protected void ValidInputForBatchCommentsInsertion()
+        {
+            MockBatchCommentsInsertion(ResultTypes.Created);
+        }
+
+        protected void BatchCommentsInsertionInvocation()
+        {
+            _testResponse = _lpnController.MultipleLpnCommentsAddAsync(caseCommentDtos);
+        }
+        protected void BatchCommentsInsertionReturnedCreatedAsResponseStatus()
+        {
+            VerifyBatchCommentsInsertion();
+            Assert.IsNotNull(_testResponse);
+            var result = _testResponse.Result as OkNegotiatedContentResult<BaseResult>;
+            Assert.IsNotNull(result);
+            Assert.AreEqual(ResultTypes.Created, result.Content.ResultType);
+        }
+
+        protected void BatchCommentsInsertionReturnedNotFoundAsResponseStatus()
+        {
+            VerifyBatchCommentsInsertion();
+            Assert.IsNotNull(_testResponse);
+            var result = _testResponse.Result as NegotiatedContentResult<BaseResult>;
+            Assert.IsNotNull(result);
+            Assert.AreEqual(ResultTypes.NotFound, result.Content.ResultType);
+        }
+
+        protected void BatchCommentsInsertionReturnedBadRequestAsResponseStatus()
+        {
+            VerifyBatchCommentsInsertion();
+            Assert.IsNotNull(_testResponse);
+            var result = _testResponse.Result as NegotiatedContentResult<BaseResult>;
+            Assert.IsNotNull(result);
+            Assert.AreEqual(ResultTypes.BadRequest, result.Content.ResultType);
+        }
+        #endregion
     }
 }

@@ -28,6 +28,8 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         private BaseResult<LpnMultipleUnlockResultDto> lpnMultipleUnlockResult;
         private BaseResult<LpnDetailsDto> lpnDetailsBaseResult;
         private BaseResult manipulationTestResult;
+        private LpnBatchUpdateDto lpnBatchUpdateDto;
+        private IEnumerable<CaseCommentDto> caseCommentDtos;
 
         protected LpnGatewayFixture()
         {
@@ -35,6 +37,8 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             _findLpnRequest = Generator.Default.Single<LpnParameterDto>();
             _lpnMultipleUnlockDtos = Generator.Default.Single<List<LpnMultipleUnlockDto>>();
             _lpnGateway = new LpnGateway(new ResponseBuilder(), _restClient.Object);
+            lpnBatchUpdateDto = Generator.Default.Single<LpnBatchUpdateDto>();
+            caseCommentDtos = Generator.Default.List<CaseCommentDto>(2);
         }
 
         private void GetRestResponse<T>(T entity, HttpStatusCode statusCode, ResponseStatus responseStatus)
@@ -591,5 +595,108 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         }
 
         #endregion UnlockCommentWithBatchCorba
+
+        #region Bacth lpn update
+
+      
+        protected void ValidInputParametersToMultipleLpnUpdate()
+        {
+            var result = new BaseResult { ResultType = ResultTypes.Ok };
+            GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
+        }
+
+        protected void InValidInputParametersToMultipleLpnUpdate()
+        {
+            var result = new BaseResult { ResultType = ResultTypes.BadRequest };
+            GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
+        }
+
+        protected void InputParametersToMultipleLpnUpdateForWhichNoDetailsExists()
+        {
+            var result = new BaseResult { ResultType = ResultTypes.NotFound };
+            GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
+        }
+
+        protected void MultipleLpnUpdateOperationInvoked()
+        {
+            manipulationTestResult = _lpnGateway
+                .MultipleLpnsUpdateAsync(It.IsAny<LpnBatchUpdateDto>(),  It.IsAny<string>())
+                .Result;
+        }
+
+        protected void TheMultipleLpnUpdateReturnedOkAsResponseStatus()
+        {
+            VerifyRestClientInvocation<BaseResult>();
+            Assert.IsNotNull(manipulationTestResult);
+            Assert.AreEqual(ResultTypes.Ok, manipulationTestResult.ResultType);
+        }
+
+        protected void TheMultipleLpnUpdateReturnedBadRequestAsResponseStatus()
+        {
+            VerifyRestClientInvocation<BaseResult>();
+            Assert.IsNotNull(manipulationTestResult);
+            Assert.AreEqual(ResultTypes.BadRequest, manipulationTestResult.ResultType);
+        }
+
+        protected void TheMultipleLpnUpdateReturnedNotFoundAsResponseStatus()
+        {
+            VerifyRestClientInvocation<BaseResult>();
+            Assert.IsNotNull(manipulationTestResult);
+            Assert.AreEqual(ResultTypes.NotFound, manipulationTestResult.ResultType);
+        }
+
+        #endregion DeleteLpnComments
+
+
+        #region Bacth Case Comments Insertion
+
+
+        protected void ValidInputParametersToBatchCommentsInsertion()
+        {
+            var result = new BaseResult { ResultType = ResultTypes.Ok };
+            GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
+        }
+
+        protected void InValidInputParametersToBatchCommentsInsertion()
+        {
+            var result = new BaseResult { ResultType = ResultTypes.BadRequest };
+            GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
+        }
+
+        protected void InputParametersToBatchCommentsInsertionForWhichNoDetailsExists()
+        {
+            var result = new BaseResult { ResultType = ResultTypes.NotFound };
+            GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
+        }
+
+        protected void BatchCommentsInsertionOperationInvoked()
+        {
+            manipulationTestResult = _lpnGateway
+                .MultipleLpnsCommentsAddAsync(It.IsAny<IEnumerable<CaseCommentDto>>(), It.IsAny<string>())
+                .Result;
+        }
+
+        protected void TheBatchCommentsInsertionReturnedOkAsResponseStatus()
+        {
+            VerifyRestClientInvocation<BaseResult>();
+            Assert.IsNotNull(manipulationTestResult);
+            Assert.AreEqual(ResultTypes.Ok, manipulationTestResult.ResultType);
+        }
+
+        protected void TheBatchCommentsInsertionReturnedBadRequestAsResponseStatus()
+        {
+            VerifyRestClientInvocation<BaseResult>();
+            Assert.IsNotNull(manipulationTestResult);
+            Assert.AreEqual(ResultTypes.BadRequest, manipulationTestResult.ResultType);
+        }
+
+        protected void TheBatchCommentsInsertionReturnedNotFoundAsResponseStatus()
+        {
+            VerifyRestClientInvocation<BaseResult>();
+            Assert.IsNotNull(manipulationTestResult);
+            Assert.AreEqual(ResultTypes.NotFound, manipulationTestResult.ResultType);
+        }
+
+        #endregion DeleteLpnComments
     }
 }
