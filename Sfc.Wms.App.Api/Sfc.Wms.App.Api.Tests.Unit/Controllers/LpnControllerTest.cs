@@ -339,5 +339,59 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Controllers
             UnlockCommentWithBatchCorbaInvoked();
             UnlockCommentWithBatchCorbaReturnedOkResponse();
         }
+
+        [TestMethod]
+        [TestCategory(TestCategories.Unit)]
+        public void Lpn_Batch_Update_Is_Invoked_With_Valid_Data_Returned_Ok_As_Response()
+        {
+            ValidInputForMultipleLpnUpdate();
+            LpnBatchUpdateInvocation();
+            LpnBatchUpdateReturnedOkAsResponseStatus();
+        }
+
+        [TestMethod]
+        [TestCategory(TestCategories.Unit)]
+        public void Lpn_Batch_Update_Is_Invoked_With_Valid_Data_Returned_NotFound_As_Response()
+        {
+            InputForMultipleLpnUpdate();
+            LpnBatchUpdateInvocation();
+            LpnBatchUpdateReturnedNotFoundAsResponseStatus();
+        }
+
+        [TestMethod]
+        [TestCategory(TestCategories.Unit)]
+        public void Lpn_Batch_Update_Is_Invoked_With_Empty_Input_Data_Returned_BadRequest_As_Response()
+        {
+            EmptyOrNullInputForLpnBatchUpdate();
+            LpnBatchUpdateInvocation();
+            LpnBatchUpdateReturnedBadRequestAsResponseStatus();
+        }
+
+        [TestMethod]
+        [TestCategory(TestCategories.Unit)]
+        public void Batch_Case_Comments_Insertion_Is_Invoked_With_Valid_Data_Returned_Created_As_Response()
+        {
+            ValidInputForBatchCommentsInsertion();
+            BatchCommentsInsertionInvocation();
+            BatchCommentsInsertionReturnedCreatedAsResponseStatus();
+        }
+
+        [TestMethod]
+        [TestCategory(TestCategories.Unit)]
+        public void Batch_Case_Comments_Insertion_Is_Invoked_With_Valid_Data_Returned_NotFound_As_Response()
+        {
+            InputForBatchCommentsInsertion();
+            BatchCommentsInsertionInvocation();
+            BatchCommentsInsertionReturnedNotFoundAsResponseStatus();
+        }
+
+        [TestMethod]
+        [TestCategory(TestCategories.Unit)]
+        public void Batch_Case_Comments_Insertion_Is_Invoked_With_Empty_Input_Data_Returned_BadRequest_As_Response()
+        {
+            EmptyOrNullInputForBatchCommentsInsertion();
+            BatchCommentsInsertionInvocation();
+            BatchCommentsInsertionReturnedBadRequestAsResponseStatus();
+        }
     }
 }

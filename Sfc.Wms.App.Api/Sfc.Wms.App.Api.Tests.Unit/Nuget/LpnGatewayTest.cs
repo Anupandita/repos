@@ -295,5 +295,60 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Nuget
             UnlockCommentWithBatchCorbaReturnedOkResponse();
         }
 
+        
+        [TestMethod]
+        [TestCategory(TestCategories.Unit)]
+        public void MultipleLpnUpdate_Operation_Returned_Ok_As_Response_Status()
+        {
+            ValidInputParametersToMultipleLpnUpdate();
+            MultipleLpnUpdateOperationInvoked();
+            TheMultipleLpnUpdateReturnedOkAsResponseStatus();
+        }
+
+        [TestMethod]
+        [TestCategory(TestCategories.Unit)]
+        public void MultipleLpnUpdate_Operation_Returned_BadRequest_As_Response_Status()
+        {
+            InValidInputParametersToMultipleLpnUpdate();
+            MultipleLpnUpdateOperationInvoked();
+            TheMultipleLpnUpdateReturnedBadRequestAsResponseStatus();
+        }
+
+        [TestMethod]
+        [TestCategory(TestCategories.Unit)]
+        public void MultipleLpnUpdate_Operation_Returned_NotFound_As_Response_Status()
+        {
+            InputParametersToMultipleLpnUpdateForWhichNoDetailsExists();
+            MultipleLpnUpdateOperationInvoked();
+            TheMultipleLpnUpdateReturnedNotFoundAsResponseStatus();
+        }
+
+
+        [TestMethod]
+        [TestCategory(TestCategories.Unit)]
+        public void BatchCommentsInsertion_Operation_Returned_Ok_As_Response_Status()
+        {
+            ValidInputParametersToBatchCommentsInsertion();
+            BatchCommentsInsertionOperationInvoked();
+            TheBatchCommentsInsertionReturnedOkAsResponseStatus();
+        }
+
+        [TestMethod]
+        [TestCategory(TestCategories.Unit)]
+        public void BatchCommentsInsertion_Operation_Returned_BadRequest_As_Response_Status()
+        {
+            InValidInputParametersToBatchCommentsInsertion();
+            BatchCommentsInsertionOperationInvoked();
+            TheBatchCommentsInsertionReturnedBadRequestAsResponseStatus();
+        }
+
+        [TestMethod]
+        [TestCategory(TestCategories.Unit)]
+        public void BatchCommentsInsertion_Operation_Returned_NotFound_As_Response_Status()
+        {
+            InputParametersToBatchCommentsInsertionForWhichNoDetailsExists();
+            BatchCommentsInsertionOperationInvoked();
+            TheBatchCommentsInsertionReturnedNotFoundAsResponseStatus();
+        }
     }
 }

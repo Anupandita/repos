@@ -18,14 +18,16 @@ namespace Sfc.Wms.App.Api.Controllers
         private readonly ICaseCommentService _caseCommentService;
         private readonly ICaseDetailService _caseDetailService;
         private readonly ICaseLockService _caseLockService;
+        private readonly ICaseHeaderService _caseHeaderService;
 
         public LpnController(ILpnService lpnService, ICaseCommentService caseCommentService,
-            ICaseDetailService caseDetailService, ICaseLockService caseLockService)
+            ICaseDetailService caseDetailService, ICaseLockService caseLockService, ICaseHeaderService caseHeaderService)
         {
             _lpnService = lpnService;
             _caseCommentService = caseCommentService;
             _caseDetailService = caseDetailService;
             _caseLockService = caseLockService;
+            _caseHeaderService = caseHeaderService;
         }
 
         [HttpPost]
@@ -154,6 +156,24 @@ namespace Sfc.Wms.App.Api.Controllers
         public async Task<IHttpActionResult> CaseLockCommentWithBatchCorbaAsync([FromBody]CaseLockCommentDto caseLockComment)
         {
             var response = await _caseCommentService.AddCaseLockCommentWithBatchCorbaAsync(caseLockComment).ConfigureAwait(false);
+            return ResponseHandler(response);
+        }
+
+        [HttpPost]
+        [Route(Routes.Paths.MultipleLpnCommentsAddition)]
+        [ResponseType(typeof(BaseResult))]
+        public async Task<IHttpActionResult> MultipleLpnCommentsAddAsync([FromBody]IEnumerable<CaseCommentDto> caseCommentDtos)
+        {
+            var response = await _caseCommentService.BatchInsertAsync(caseCommentDtos).ConfigureAwait(false);
+            return ResponseHandler(response);
+        }
+
+        [HttpPut]
+        [Route(Routes.Paths.MultipleLpnUpdate)]
+        [ResponseType(typeof(BaseResult))]
+        public async Task<IHttpActionResult> MultipleLpnUpdateAsync([FromBody]LpnBatchUpdateDto lpnBatchUpdateDto)
+        {
+            var response = await _caseHeaderService.LpnBatchUpdateAsync(lpnBatchUpdateDto).ConfigureAwait(false);
             return ResponseHandler(response);
         }
     }

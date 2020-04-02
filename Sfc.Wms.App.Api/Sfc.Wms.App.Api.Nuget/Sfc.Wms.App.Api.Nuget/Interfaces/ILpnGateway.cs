@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Sfc.Core.OnPrem.Result;
+﻿using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.App.Api.Contracts.Entities;
 using Sfc.Wms.Foundation.InboundLpn.Contracts.Dtos;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Sfc.Wms.App.Api.Nuget.Interfaces
 {
@@ -36,5 +36,9 @@ namespace Sfc.Wms.App.Api.Nuget.Interfaces
         Task<BaseResult<LpnMultipleUnlockResultDto>> LpnMultipleUnlockAsync(List<LpnMultipleUnlockDto> lpnMultipleUnlockDto, string token);
 
         Task<BaseResult<LpnMultipleUnlockResultDto>> CaseLockCommentWithBatchCorbaAsync(CaseLockCommentDto caseLockComment, string token);
+
+        Task<BaseResult> MultipleLpnsCommentsAddAsync(IEnumerable<CaseCommentDto> caseCommentDtos, string token);
+
+        Task<BaseResult> MultipleLpnsUpdateAsync(LpnBatchUpdateDto lpnBatchUpdateDto, string token);
     }
 }
