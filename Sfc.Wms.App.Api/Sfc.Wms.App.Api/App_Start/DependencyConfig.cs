@@ -31,6 +31,7 @@ using System.Configuration;
 using System.Linq;
 using System.Runtime.Caching;
 using System.Web.Http;
+using Sfc.Core.OnPrem.AutoMapping.Initialize;
 
 namespace Sfc.Wms.App.Api
 {
@@ -55,6 +56,7 @@ namespace Sfc.Wms.App.Api
              {
                  var mapper = new Mapper(new MapperConfiguration(cfg =>
                  {
+                     cfg.Advanced.AllowAdditiveTypeMapCreation = true;
                      cfg.AddExpressionMapping();
                      SfcRbacMapper.CreateMaps(cfg);
                      PrinterValuesMapper.CreateMaps(cfg);
@@ -74,12 +76,19 @@ namespace Sfc.Wms.App.Api
                      cfg.CreateMap<LpnParameterDto, PageOptions>(MemberList.None).ReverseMap();
                      cfg.CreateMap<PageOptions, LpnSearchResultsDto>(MemberList.None).ReverseMap();
                      cfg.CreateMap<LocationHeaderDto, ContactLocationDto>(MemberList.None);
+
+                     var assemblyList = AppDomain.CurrentDomain.GetAssemblies().Where(p => !p.IsDynamic && p.FullName.StartsWith("Sfc.")).ToList();
+
+                     cfg.AddMaps(assemblyList);
+                     AutoProfilerConfigurator
+                         .LoadMapsFromAssemblies(cfg, assemblyList);
                  }));
 #if DEBUG
                  mapper.DefaultContext.ConfigurationProvider.AssertConfigurationIsValid();
 #endif
                  return mapper;
              });
+            DependencyConfigUoW.RegisterTypes(container);
 
             container.Register(() => new ShamrockContext(ConfigurationManager.ConnectionStrings["SfcOracleDbContext"].ConnectionString),
                 Lifestyle.Scoped);
@@ -110,7 +119,10 @@ namespace Sfc.Wms.App.Api
                                                      && !reg.implementation.IsGenericTypeDefinition
                                                      && !reg.service.FullName.Contains(nameof(SfcLoggerSerilogs)))
                     {
-                        container.Register(reg.service, reg.implementation, Lifestyle.Scoped);
+                        if (!reg.implementation.FullName.Contains(".UoW"))
+                        {
+                            container.Register(reg.service, reg.implementation, Lifestyle.Scoped);
+                        }
                         if (reg.service.FullName.Contains(".Contracts") && !reg.implementation.FullName.Contains(nameof(MessageDetailService)) &&
                             !reg.implementation.FullName.Contains(nameof(MessageMasterService)) &&
                             !reg.implementation.FullName.Contains(nameof(MessageLogService)) &&
@@ -121,8 +133,11 @@ namespace Sfc.Wms.App.Api
                     }
                     else if (reg.implementation.IsGenericTypeDefinition)
                     {
-                        container.Register(reg.service.GetGenericTypeDefinition(),
-                            reg.implementation.GetGenericTypeDefinition(), Lifestyle.Scoped);
+                        if (reg.implementation.FullName != null && !reg.implementation.FullName.Contains(".UoW"))
+                        {
+                            container.Register(reg.service.GetGenericTypeDefinition(),
+                                reg.implementation.GetGenericTypeDefinition(), Lifestyle.Scoped);
+                        }
 
                         if (reg.service.FullName != null && reg.service.FullName.Contains(".Contracts") && reg.implementation.FullName != null &&
                                                              !reg.implementation.FullName.Contains(nameof(MessageDetailService)) &&
