@@ -32,6 +32,7 @@ using System.Linq;
 using System.Runtime.Caching;
 using System.Web.Http;
 using Sfc.Core.OnPrem.AutoMapping.Initialize;
+using Sfc.Wms.Foundation.Receiving.Domain.AutoMapper;
 
 namespace Sfc.Wms.App.Api
 {
@@ -65,6 +66,7 @@ namespace Sfc.Wms.App.Api
                      SfcCorbaMapper.CreateMaps(cfg);
                      SfcMessageMaster.CreateMaps(cfg);
                      SfcMessageLogger.CreateMaps(cfg);
+                     SfcReceivingMapper.CreateMaps(cfg);
                      cfg.CreateMap<VendorMaster, VendorDetailDto>(MemberList.None).ReverseMap();
                      cfg.CreateMap<VendorMaster, VendorMasterDto>(MemberList.None).ReverseMap();
 
