@@ -192,9 +192,6 @@
     <Reference Include="Sfc.Wms..Configuration.Security.Rbac.Repository, Version=4.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.Security.Rbac.Repository.4.1.0\lib\net472\Sfc.Wms..Configuration.Security.Rbac.Repository.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.App.Api.Contracts, Version=5.9.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.App.Api.Contracts.5.9.2\lib\net472\Sfc.Wms.App.Api.Contracts.dll</HintPath>
-    </Reference>
     <Reference Include="Sfc.Wms.App.App, Version=3.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.App.App.3.1.2\lib\net472\Sfc.Wms.App.App.dll</HintPath>
     </Reference>
@@ -737,6 +734,10 @@
     <ProjectReference Include="..\..\..\Inbound\Sfc.Wms.Inbound.Receiving.App.UoW\Sfc.Wms.Inbound.Receiving.App.UoW\Sfc.Wms.Inbound.Receiving.App.UoW.csproj">
       <Project>{b91d5898-e422-4c3d-9594-29f7d14d7c43}</Project>
       <Name>Sfc.Wms.Inbound.Receiving.App.UoW</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sfc.Wms.App.Api.Contracts\Sfc.Wms.App.Api.Contracts\Sfc.Wms.App.Api.Contracts.csproj">
+      <Project>{a1e7bc09-04d9-4aa9-973b-439885d1d81f}</Project>
+      <Name>Sfc.Wms.App.Api.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

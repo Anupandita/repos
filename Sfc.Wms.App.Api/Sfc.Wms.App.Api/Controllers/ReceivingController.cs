@@ -3,14 +3,16 @@ using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.Foundation.Receiving.Contracts.UoW.Dtos;
 using Sfc.Wms.Foundation.Receiving.Contracts.UoW.Interfaces;
 using System.Collections.Generic;
+using System.Data;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Sfc.Wms.App.Api.Contracts.Constants;
 using Wms.App.Contracts.Entities;
 
 namespace Sfc.Wms.App.Api.Controllers
 {
-    [Authorize, RoutePrefix("receiving")]
+    [Authorize, RoutePrefix(Routes.Prefixes.Receiving)]
     public class ReceivingController : SfcBaseController
     {
         private readonly IInboundReceivingService _receivingService;
@@ -35,7 +37,7 @@ namespace Sfc.Wms.App.Api.Controllers
             return ResponseHandler(result);
         }
 
-        [HttpGet, Route("asn-details")]
+        [HttpGet, Route(Routes.Paths.GetAsnDetails)]
         [AllowAnonymous]
         [ResponseType(typeof(BaseResult<IEnumerable<AsnDrillDownDetailsDto>>))]
         public async Task<IHttpActionResult> GetAsnDetailsAsync(string shipmentNumber)
@@ -45,7 +47,7 @@ namespace Sfc.Wms.App.Api.Controllers
             return ResponseHandler(result);
         }
 
-        [HttpPost]
+        [HttpPost,Route(Routes.Paths.QuestionsAnswers)]
         [AllowAnonymous]
         [ResponseType(typeof(BaseResult))]
         public async Task<IHttpActionResult> UpdateAnswerTextAsync(AnswerTextDto answerTextDto)
@@ -55,7 +57,7 @@ namespace Sfc.Wms.App.Api.Controllers
             return ResponseHandler(result);
         }
 
-        [HttpGet, Route("questions")]
+        [HttpGet, Route(Routes.Paths.GetQvDetails)]
         [AllowAnonymous]
         [ResponseType(typeof(BaseResult<List<QVDetails>>))]
         public async Task<IHttpActionResult> GetQvDetails(string shipmentNumber)
@@ -64,7 +66,7 @@ namespace Sfc.Wms.App.Api.Controllers
             return ResponseHandler(result);
         }
 
-        [HttpGet, Route("lot-tracking-details")]
+        [HttpGet, Route(Routes.Paths.GetAsnLotTrackingDetails)]
         [AllowAnonymous]
         [ResponseType(typeof(BaseResult<IEnumerable<AsnLotTrackingDto>>))]
         public async Task<IHttpActionResult> GetAsnLotTrackByShipmentAndSkuIdAsync(string shipmentNumber, string skuId)
