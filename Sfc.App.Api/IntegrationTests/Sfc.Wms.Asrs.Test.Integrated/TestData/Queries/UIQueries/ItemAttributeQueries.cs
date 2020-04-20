@@ -3,7 +3,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
 {
     public static class ItemAttributeQueries
     {
-        public const string FetchItemNumberInItemAttributeSql = "SELECT * FROM(select distinct sku_id from item_master ORDER BY dbms_random.value) where rownum=1";
+        public const string FetchItemNumberInItemAttributeSql = "SELECT * FROM(select distinct im.sku_id from item_master im inner join asn_dtl ad on ad.sku_id= im.sku_id inner join PICK_LOCN_DTL pld  on pld.sku_id=im.sku_id where ad.vendor_item_nbr is not null ORDER BY dbms_random.value) where rownum=1";
         public const string FetchItemDescriptionSql = "SELECT * FROM(select distinct sku_desc from item_master group by sku_desc ORDER BY dbms_random.value) where rownum=1";
         public const string FetchVendorItemNumberSql = "SELECT * FROM(select distinct vendor_item_nbr,count(*) from item_master group by vendor_item_nbr ORDER BY dbms_random.value) where rownum=1";
         public const string FetchTempZoneSql = "SELECT * FROM(select distinct itma.temp_zone,count(*) from item_master itma inner join ITEM_WHSE_MASTER iwm  on itma.sku_id = iwm.sku_id where temp_zone is not null group by itma.temp_zone ORDER BY dbms_random.value) where rownum=1";
@@ -26,10 +26,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
                      ltrim(to_char(itma.critcl_dim_3,'{UIConstants.DecimalFormat}')) height,ltrim(to_char(itma.critcl_dim_1,'{UIConstants.DecimalFormat}')) length,
                      ltrim(to_char(itma.critcl_dim_2,'{UIConstants.DecimalFormat}')) width,ltrim(to_char(itma.unit_wt,'{UIConstants.HeightFormat}')) weight
                     FROM ITEM_MASTER itma inner join ITEM_WHSE_MASTER iwm  on itma.sku_id = iwm.sku_id WHERE itma.sku_id='{UIConstants.ItemNumber}'";
-        }
-        public static string FetchItemDrillHeaderDtSql()
-        {
-            return $@"select sku_id ""Item"" ,Sku_desc ""Description"",get_sc_desc ('B','722',stat_code,NULL) ""Status"" from item_master where sku_id='{UIConstants.ItemNumber}'";
         }
         public static string FetchVendorDtSql()
         {

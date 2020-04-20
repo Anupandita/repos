@@ -53,6 +53,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData.Constant
         public static string TempZone;
         public static string VendorItemNumberCount;
         public static string TempZoneCount;
+        public static string ItemAttributeSearchUrl;
+        public static string ItemAttributeDetailsUrl;
         public static DataTable UpdateTable(DataTable dt, bool isGrid)
         {
             var temp = new DataTable();

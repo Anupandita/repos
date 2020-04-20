@@ -29,7 +29,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         public void ItemAttributeSearchApi_SearchWithItemNbr() 
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("Item"))
-            .When(x => x.CallItemAttributeSearchApiWithInputs(ItemAttributeSearchUrl))
+            .When(x => x.CallItemAttributeSearchApiWithInputs(UIConstants.ItemAttributeSearchUrl))
             .And(x => x.VerifyOutputAgainstDbOutput())
             .BDDfy("Test Case ID : ");
         }
@@ -38,8 +38,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         public void ItemAttributeSearchApi_SearchWithItemDescription()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("ItemDescription"))
-            .When(x => x.CallItemAttributeSearchApiWithInputs(ItemAttributeSearchUrl))
-            .And(x => x.VerifyOutputAgainstDbOutput())
+            .When(x => x.CallItemAttributeSearchApiWithInputs(UIConstants.ItemAttributeSearchUrl))
+            .And(x => x.VerifyItemDescriptionInApiOutput())
             .BDDfy("Test Case ID : ");
         }
         [TestMethod()]
@@ -47,7 +47,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         public void ItemAttributeSearchApi_SearchWithVendorItemNbr()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("VendorItemNumber"))
-            .When(x => x.CallItemAttributeSearchApiWithInputs(ItemAttributeSearchUrl))
+            .When(x => x.CallItemAttributeSearchApiWithInputs(UIConstants.ItemAttributeSearchUrl))
             .And(x => x.VerifyOutputTotalReordsAgainstDbCount(UIConstants.VendorItemNumberCount))
             .BDDfy("Test Case ID : ");
         }
@@ -56,8 +56,18 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         public void ItemAttributeSearchApi_SearchWithTempZone()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("TempZone"))
-            .When(x => x.CallItemAttributeSearchApiWithInputs(ItemAttributeSearchUrl))
+            .When(x => x.CallItemAttributeSearchApiWithInputs(UIConstants.ItemAttributeSearchUrl))
             .And(x => x.VerifyOutputTotalReordsAgainstDbCount(UIConstants.TempZoneCount))
+            .BDDfy("Test Case ID : ");
+        }
+        [TestMethod()]
+        [TestCategory("UI_FUNCTIONAL")]
+        public void ItemAttributeDrilldownApi()
+        {
+            this.Given(x=>x.CreateUrlAndInputParamForApiUsing("ItemDetails"))
+            .When(x => x.CallItemAttributeDetailsApi(UIConstants.ItemAttributeDetailsUrl))
+            .Then(x => x.VerifyOutputForActiveLocationsListInOutput())
+            .And(x => x.VerifyOutputForVendorsListInOutput())
             .BDDfy("Test Case ID : ");
         }
     }
