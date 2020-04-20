@@ -98,9 +98,10 @@ namespace Sfc.Wms.App.Api.Contracts.Constants
             public const string RefreshToken = "refresh-token";
             public const string UiSpecificMessages = "ui-messages";
 
-            public const string GetAsnDetails = "asn-details/{shipmentNumber}";
+            public const string AsnLotTracking = "lot-tracking-details";
+            public const string GetAsnDetails = AsnDetails + "/{shipmentNumber}";
             public const string GetQvDetails = QuestionsAnswers + "/{shipmentNumber}";
-            public const string GetAsnLotTrackingDetails = "lot-tracking-details/{shipmentNumber}/{skuId}";
+            public const string GetAsnLotTrackingDetails = AsnLotTracking + "/{shipmentNumber}/{skuId}";
             public const string QuestionsAnswers = "questions-answers";
             public const string GetShipmentDetails = ShipmentDetails + "/{shipmentNumber}";
         }

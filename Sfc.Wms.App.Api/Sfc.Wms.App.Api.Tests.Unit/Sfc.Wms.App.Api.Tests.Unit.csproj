@@ -112,6 +112,7 @@
     <Compile Include="Fixtures\MessageMasterControllerFixture.cs" />
     <Compile Include="Fixtures\MessageMasterGatewayFixture.cs" />
     <Compile Include="Fixtures\ReceivingControllerFixture.cs" />
+    <Compile Include="Fixtures\ReceivingGatewayFixture.cs" />
     <Compile Include="Fixtures\SynrFixture.cs" />
     <Compile Include="Fixtures\SkmtFixture.cs" />
     <Compile Include="Fixtures\ComtFixture.cs" />
@@ -138,6 +139,7 @@
     <Compile Include="Nuget\MessageLogGatewayTest.cs" />
     <Compile Include="Nuget\MessageMasterGatewayTest.cs" />
     <Compile Include="Nuget\OrmtGatewayTest.cs" />
+    <Compile Include="Nuget\ReceivingGatewayTest.cs" />
     <Compile Include="Nuget\UserMasterGatewayTest.cs" />
     <Compile Include="Nuget\UserRbacGatewayTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
