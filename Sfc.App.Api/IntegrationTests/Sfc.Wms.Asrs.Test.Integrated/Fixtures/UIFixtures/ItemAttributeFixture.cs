@@ -95,7 +95,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
                 i = i+1;
                 foreach (DataColumn dc in ItemAttributeSearchQueryDt.Columns)
                    
-                    Assert.AreEqual(dr[dc].ToString(), ItemAttributeSearchResultDt.Rows[i][dc.ColumnName]);
+                    Assert.AreEqual(dr[dc].ToString(), ItemAttributeSearchResultDt.Rows[i][dc.ColumnName],dc.ColumnName+" : Values are not equal");
             }
             
         }
