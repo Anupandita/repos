@@ -1,13 +1,12 @@
 ﻿using Sfc.Core.BaseApiController;
 using Sfc.Core.OnPrem.Result;
+using Sfc.Wms.App.Api.Contracts.Constants;
 using Sfc.Wms.Foundation.Receiving.Contracts.UoW.Dtos;
 using Sfc.Wms.Foundation.Receiving.Contracts.UoW.Interfaces;
 using System.Collections.Generic;
-using System.Data;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using Sfc.Wms.App.Api.Contracts.Constants;
 using Wms.App.Contracts.Entities;
 
 namespace Sfc.Wms.App.Api.Controllers
@@ -28,7 +27,6 @@ namespace Sfc.Wms.App.Api.Controllers
         }
 
         [HttpGet, Route("")]
-        [AllowAnonymous]
         [ResponseType(typeof(BaseResult<SearchResultDto>))]
         public async Task<IHttpActionResult> SearchAsync([FromUri]ReceiptInquiryDto receiptInquiryDto)
         {
@@ -38,7 +36,6 @@ namespace Sfc.Wms.App.Api.Controllers
         }
 
         [HttpGet, Route(Routes.Paths.GetAsnDetails)]
-        [AllowAnonymous]
         [ResponseType(typeof(BaseResult<IEnumerable<AsnDrillDownDetailsDto>>))]
         public async Task<IHttpActionResult> GetAsnDetailsAsync(string shipmentNumber)
         {
@@ -47,8 +44,7 @@ namespace Sfc.Wms.App.Api.Controllers
             return ResponseHandler(result);
         }
 
-        [HttpPost,Route(Routes.Paths.QuestionsAnswers)]
-        [AllowAnonymous]
+        [HttpPost, Route(Routes.Paths.QuestionsAnswers)]
         [ResponseType(typeof(BaseResult))]
         public async Task<IHttpActionResult> UpdateAnswerTextAsync(AnswerTextDto answerTextDto)
         {
@@ -58,7 +54,6 @@ namespace Sfc.Wms.App.Api.Controllers
         }
 
         [HttpGet, Route(Routes.Paths.GetQvDetails)]
-        [AllowAnonymous]
         [ResponseType(typeof(BaseResult<List<QVDetails>>))]
         public async Task<IHttpActionResult> GetQvDetails(string shipmentNumber)
         {
@@ -67,12 +62,19 @@ namespace Sfc.Wms.App.Api.Controllers
         }
 
         [HttpGet, Route(Routes.Paths.GetAsnLotTrackingDetails)]
-        [AllowAnonymous]
         [ResponseType(typeof(BaseResult<IEnumerable<AsnLotTrackingDto>>))]
         public async Task<IHttpActionResult> GetAsnLotTrackByShipmentAndSkuIdAsync(string shipmentNumber, string skuId)
         {
             var result = await _lotTrackingService.GetByShipmentAndSkuIdAsync(shipmentNumber, skuId).ConfigureAwait(false);
 
+            return ResponseHandler(result);
+        }
+        
+        [HttpGet, Route(Routes.Paths.GetShipmentDetails)]
+        [ResponseType(typeof(BaseResult<ShipmentDetailsDto>))]
+        public async Task<IHttpActionResult> GetShipmentDetails(string shipmentNumber)
+        {
+            var result = await _receivingService.GetShipmentDetailsAsync(shipmentNumber).ConfigureAwait(false);
             return ResponseHandler(result);
         }
 

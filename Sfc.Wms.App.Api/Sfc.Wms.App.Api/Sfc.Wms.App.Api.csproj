@@ -267,8 +267,8 @@
     <Reference Include="Sfc.Wms.Configuration.NextUpCounter.Repository, Version=5.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.NextUpCounter.Repository.5.1.0\lib\net472\Sfc.Wms.Configuration.NextUpCounter.Repository.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Configuration.NextUpCounter.UOW, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Configuration.NextUpCounter.UoW.1.2.0\lib\net472\Sfc.Wms.Configuration.NextUpCounter.UOW.dll</HintPath>
+    <Reference Include="Sfc.Wms.Configuration.NextUpCounter.UoW, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Configuration.NextUpCounter.UoW.1.3.0\lib\net472\Sfc.Wms.Configuration.NextUpCounter.UoW.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Configuration.SystemCode.Contracts, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.SystemCode.Contracts.3.0.0\lib\net472\Sfc.Wms.Configuration.SystemCode.Contracts.dll</HintPath>
@@ -380,6 +380,12 @@
     </Reference>
     <Reference Include="Sfc.Wms.Foundation.Receiving.Contracts, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.Receiving.Contracts.2.0.0\lib\net472\Sfc.Wms.Foundation.Receiving.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Foundation.Receiving.Contracts.UoW, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.Receiving.Contracts.UoW.1.0.0\lib\net472\Sfc.Wms.Foundation.Receiving.Contracts.UoW.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Foundation.Receiving.Domain, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.Receiving.Domain.1.0.0\lib\net472\Sfc.Wms.Foundation.Receiving.Domain.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Foundation.Receiving.Repository, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.Receiving.Repository.1.1.0\lib\net472\Sfc.Wms.Foundation.Receiving.Repository.dll</HintPath>
@@ -719,20 +725,12 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Foundation\Sfc.Wms.Foundation.Receiving.Contracts.UoW\Sfc.Wms.Foundation.Receiving.Contracts.UoW\Sfc.Wms.Foundation.Receiving.Contracts.UoW.csproj">
-      <Project>{2fe45dd2-6d83-455e-bec7-7641c4b9761d}</Project>
-      <Name>Sfc.Wms.Foundation.Receiving.Contracts.UoW</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Foundation\Sfc.Wms.Foundation.Receiving.Domain\Sfc.Wms.Foundation.Receiving.Domain\Sfc.Wms.Foundation.Receiving.Domain.csproj">
-      <Project>{72054b29-937c-4f47-8700-097743399bdc}</Project>
-      <Name>Sfc.Wms.Foundation.Receiving.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Foundation\Sfc.Wms.Foundation.Receiving.UoW\Sfc.Wms.Foundation.Receiving.UoW\Sfc.Wms.Foundation.Receiving.UoW.csproj">
-      <Project>{9d18b00d-4702-4143-9238-e6148a2a2272}</Project>
+    <ProjectReference Include="..\..\..\Foundation\Receiving.UoW\Sfc.Wms.Foundation.Receiving.UoW\Sfc.Wms.Foundation.Receiving.UoW\Sfc.Wms.Foundation.Receiving.UoW.csproj">
+      <Project>{f7ca77f1-56cd-4869-b5fa-3d4b87944972}</Project>
       <Name>Sfc.Wms.Foundation.Receiving.UoW</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Inbound\Sfc.Wms.Inbound.Receiving.App.UoW\Sfc.Wms.Inbound.Receiving.App.UoW\Sfc.Wms.Inbound.Receiving.App.UoW.csproj">
-      <Project>{b91d5898-e422-4c3d-9594-29f7d14d7c43}</Project>
+    <ProjectReference Include="..\..\..\Inbound\Receiving.UoW\Sfc.Wms.Inbound.Receiving.App.UoW\Sfc.Wms.Inbound.Receiving.App.UoW\Sfc.Wms.Inbound.Receiving.App.UoW.csproj">
+      <Project>{bb8fc9fe-fada-420d-804a-601c0447de50}</Project>
       <Name>Sfc.Wms.Inbound.Receiving.App.UoW</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sfc.Wms.App.Api.Contracts\Sfc.Wms.App.Api.Contracts\Sfc.Wms.App.Api.Contracts.csproj">

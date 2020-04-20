@@ -26,7 +26,10 @@ namespace Sfc.Wms.App.Api.Contracts.Constants
             public const string DrillASNDetails = "drill-asn-details";
             public const string DrillDownItemAttribute = "{itemId}";
             public const string Find = "find";
-            public const string FindByShipmentDetails = "find?shipmtNumber={shipmtNumber}&statusFrom={statusFrom}&statusTo={statusTo}&poNumber={poNumber}&vendorName={vendorName}&shippedDate={shippedDate}&expectedDate={expectedDate}&scheduledDate={scheduledDate}";
+
+            public const string FindByShipmentDetails =
+                "find?shipmtNumber={shipmtNumber}&statusFrom={statusFrom}&statusTo={statusTo}&poNumber={poNumber}&vendorName={vendorName}&shippedDate={shippedDate}&expectedDate={expectedDate}&scheduledDate={scheduledDate}";
+
             public const string FromSortation = "from-sortation";
             public const string GetStatusCodes = "GetStatusCodes";
             public const string GridGroupTypes = "grid_grp_types=";
@@ -99,6 +102,7 @@ namespace Sfc.Wms.App.Api.Contracts.Constants
             public const string GetQvDetails = QuestionsAnswers + "/{shipmentNumber}";
             public const string GetAsnLotTrackingDetails = "lot-tracking-details/{shipmentNumber}/{skuId}";
             public const string QuestionsAnswers = "questions-answers";
+            public const string GetShipmentDetails = ShipmentDetails + "/{shipmentNumber}";
         }
 
         public static class Prefixes

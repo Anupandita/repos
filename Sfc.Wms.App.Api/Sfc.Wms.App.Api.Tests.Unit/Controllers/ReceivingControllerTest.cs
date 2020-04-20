@@ -103,5 +103,29 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Controllers
             UpdateAnswerTextOperationInvoked();
             TheUpdateAnswerTextOperationReturnedNotFoundAsResponse();
         }
+
+        [TestMethod, TestCategory(TestCategories.Unit)]
+        public void Get_Shipment_Details_Operation_Returned_Ok_As_Response_Status()
+        {
+            InputToFetchShipmentDetails();
+            FetchShipmentDetailsOperationInvoked();
+            TheFetchShipmentDetailsOperationReturnedOkResponse();
+        }
+
+        [TestMethod, TestCategory(TestCategories.Unit)]
+        public void Get_Shipment_Details_Operation_Returned_BadRequest_As_Response_Status()
+        {
+            EmptyOrNullInputToFetchShipmentDetails();
+            FetchShipmentDetailsOperationInvoked();
+            TheFetchShipmentDetailsOperationReturnedBadRequestResponse();
+        }
+
+        [TestMethod, TestCategory(TestCategories.Unit)]
+        public void Get_Shipment_Details_Operation_Returned_NotFound_As_Response_Status()
+        {
+            InputToFetchShipmentDetailsForWhichNoRecordExists();
+            FetchShipmentDetailsOperationInvoked();
+            TheFetchShipmentDetailsOperationReturnedNotFoundResponse();
+        }
     }
 }

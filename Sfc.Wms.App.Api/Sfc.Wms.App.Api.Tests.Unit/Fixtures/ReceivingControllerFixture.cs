@@ -261,7 +261,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             Assert.AreEqual(ResultTypes.Ok, result.Content.ResultType);
         }
 
-       private void MockUpdateAnswerText(ResultTypes resultType)
+        private void MockUpdateAnswerText(ResultTypes resultType)
         {
             var result = new BaseResult
             {
@@ -323,6 +323,75 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             VerifyUpdateAnswerText();
             Assert.IsNotNull(testResponse);
             var result = testResponse.Result as OkNegotiatedContentResult<BaseResult>;
+            Assert.IsNotNull(result);
+            Assert.AreEqual(ResultTypes.Ok, result.Content.ResultType);
+        }
+
+        private void MockShipmentDetails(ResultTypes resultType)
+        {
+            var result = new BaseResult<ShipmentDetailsDto>
+            {
+                ResultType = resultType,
+                Payload = resultType == ResultTypes.Ok ? Generator.Default.Single<ShipmentDetailsDto>() : null
+            };
+
+            _receivingService.Setup(el => el.GetShipmentDetailsAsync(It.IsAny<string>()))
+                .Returns(Task.FromResult(result));
+        }
+
+        private void VerifyShipmentDetails()
+        {
+            _receivingService.Verify(el => el.GetShipmentDetailsAsync(It.IsAny<string>()));
+        }
+
+        protected void InputToFetchShipmentDetails()
+        {
+            shipmentNumber = Generator.Default.Single<ReceiptInquiryDto>().ShipmentNumber;
+            MockShipmentDetails(ResultTypes.Ok);
+        }
+
+        protected void InputToFetchShipmentDetailsForWhichNoRecordExists()
+        {
+            shipmentNumber = Generator.Default.Single<ReceiptInquiryDto>().ShipmentNumber;
+            MockShipmentDetails(ResultTypes.NotFound);
+        }
+
+        protected void EmptyOrNullInputToFetchShipmentDetails()
+        {
+            shipmentNumber = null;
+            MockShipmentDetails(ResultTypes.BadRequest);
+        }
+
+        protected void FetchShipmentDetailsOperationInvoked()
+        {
+            testResponse = _receivingController.GetShipmentDetails(shipmentNumber);
+        }
+
+        protected void TheFetchShipmentDetailsOperationReturnedBadRequestResponse()
+        {
+            VerifyShipmentDetails();
+            Assert.IsNotNull(testResponse);
+            var result =
+                testResponse.Result as NegotiatedContentResult<BaseResult<ShipmentDetailsDto>>;
+            Assert.IsNotNull(result);
+            Assert.AreEqual(ResultTypes.BadRequest, result.Content.ResultType);
+        }
+
+        protected void TheFetchShipmentDetailsOperationReturnedNotFoundResponse()
+        {
+            VerifyShipmentDetails();
+            Assert.IsNotNull(testResponse);
+            var result = testResponse.Result as NegotiatedContentResult<BaseResult<ShipmentDetailsDto>>;
+            Assert.IsNotNull(result);
+            Assert.AreEqual(ResultTypes.NotFound, result.Content.ResultType);
+        }
+
+        protected void TheFetchShipmentDetailsOperationReturnedOkResponse()
+        {
+            VerifyShipmentDetails();
+            Assert.IsNotNull(testResponse);
+            var result =
+                testResponse.Result as OkNegotiatedContentResult<BaseResult<ShipmentDetailsDto>>;
             Assert.IsNotNull(result);
             Assert.AreEqual(ResultTypes.Ok, result.Content.ResultType);
         }
