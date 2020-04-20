@@ -14,10 +14,13 @@ namespace Sfc.Wms.App.Api.Controllers
     public class SkuMaintenanceController : SfcBaseController
     {
         private readonly IWmsToEmsMessageProcessorService _wmsToEmsMessageProcessorService;
+        private readonly IWmsToEmsParallelProcessService _wmsToEmsParallelProcessService;
 
-        public SkuMaintenanceController(IWmsToEmsMessageProcessorService wmsToEmsMessageProcessorService)
+        public SkuMaintenanceController(IWmsToEmsMessageProcessorService wmsToEmsMessageProcessorService,
+            IWmsToEmsParallelProcessService wmsToEmsParallelProcessService)
         {
             _wmsToEmsMessageProcessorService = wmsToEmsMessageProcessorService;
+            _wmsToEmsParallelProcessService = wmsToEmsParallelProcessService;
         }
 
         [HttpPost]
@@ -27,6 +30,20 @@ namespace Sfc.Wms.App.Api.Controllers
         public async Task<IHttpActionResult> CreateAsync(string skuId, string actionCode)
         {
             var result = await _wmsToEmsMessageProcessorService.GetSkmtMessageAsync(skuId, actionCode)
+                .ConfigureAwait(false);
+
+            return Content(Enum.TryParse(result.ResultType.ToString(), out HttpStatusCode statusCode)
+                ? statusCode
+                : HttpStatusCode.ExpectationFailed, result);
+        }
+
+        [HttpPost]
+        [Route(Routes.Paths.SkmtWrapper)]
+        [ResponseType(typeof(BaseResult))]
+        [AllowAnonymous]
+        public async Task<IHttpActionResult> CreateAsync(string actionCode)
+        {
+            var result = await _wmsToEmsParallelProcessService.StartSkmtWrapperAsync(actionCode)
                 .ConfigureAwait(false);
 
             return Content(Enum.TryParse(result.ResultType.ToString(), out HttpStatusCode statusCode)

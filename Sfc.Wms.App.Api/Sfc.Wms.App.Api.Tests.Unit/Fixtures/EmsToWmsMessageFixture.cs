@@ -28,7 +28,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
                 ResultType = ResultTypes.Created
             };
 
-            _emsToWmsMessageProcessorService.Setup(el => el.GetMessageAsync(It.IsAny<long>()))
+            _emsToWmsMessageProcessorService.Setup(el => el.GetMessageAsync(It.IsAny<long>(), It.IsAny<string>()))
                 .Returns(Task.FromResult(response));
         }
 
@@ -39,13 +39,13 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
                 ResultType = ResultTypes.BadRequest
             };
 
-            _emsToWmsMessageProcessorService.Setup(el => el.GetMessageAsync(It.IsAny<long>()))
+            _emsToWmsMessageProcessorService.Setup(el => el.GetMessageAsync(It.IsAny<long>(), It.IsAny<string>()))
                 .Returns(Task.FromResult(response));
         }
 
         protected void EmsToWmsMessageProcessorInvoked()
         {
-            testResult = _emsToWmsMessageController.CreateAsync(It.IsAny<long>());
+            testResult = _emsToWmsMessageController.CreateAsync(It.IsAny<long>(), It.IsAny<string>());
         }
 
         protected void EmsToWmsMessageShouldBeProcessed()

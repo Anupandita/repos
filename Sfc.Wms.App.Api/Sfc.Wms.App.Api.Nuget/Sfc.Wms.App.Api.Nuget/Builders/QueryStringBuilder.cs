@@ -1,4 +1,5 @@
-﻿using Sfc.Wms.App.Api.Contracts.Constants;
+﻿using System;
+using Sfc.Wms.App.Api.Contracts.Constants;
 
 namespace Sfc.Wms.App.Api.Nuget.Builders
 {
@@ -12,6 +13,11 @@ namespace Sfc.Wms.App.Api.Nuget.Builders
                 return query;
             }
             if ((value != null && value is int) && value != 0)
+            {
+                query = $"{query}{(firstCondition ? "" : Routes.Paths.QueryParamAnd)}{field}{value}";
+                return query;
+            }
+            if (value != null && value is DateTime)
             {
                 query = $"{query}{(firstCondition ? "" : Routes.Paths.QueryParamAnd)}{field}{value}";
                 return query;

@@ -11,11 +11,12 @@ using JwtConstants = Sfc.Wms.Framework.Security.Token.Jwt.Jwt.Constants;
 
 namespace Sfc.Wms.App.Api.Controllers
 {
+    [Authorize]
     [RoutePrefix(Routes.Prefixes.User)]
     public class UserRbacController : SfcBaseController
     {
         private readonly IRbacService _rbacService;
-       
+
         public UserRbacController(IRbacService rbacService)
         {
             _rbacService = rbacService;
@@ -33,7 +34,7 @@ namespace Sfc.Wms.App.Api.Controllers
             var resultResponse = await _rbacService.SignInAsync(loginCredentials).ConfigureAwait(false);
             if (resultResponse.Payload != null && resultResponse.ResultType == ResultTypes.Ok)
             {
-                HttpContext.Current?.Response.Headers.Add(Constants.Token,
+                HttpContext.Current?.Response.Headers.Add(Constants.Authorization,
               $"{JwtConstants.Bearer} {resultResponse.Payload.Token}");
 
                 resultResponse = await _rbacService.GetPrinterValuesAsyc(resultResponse.Payload);
@@ -41,6 +42,14 @@ namespace Sfc.Wms.App.Api.Controllers
             }
 
             return ResponseHandler(resultResponse);
+        }
+
+        [HttpGet]
+        [Route(Routes.Paths.RefreshToken)]
+        [ResponseType(typeof(BaseResult))]
+        public async Task<IHttpActionResult> RefreshAuthToken()
+        {
+            return await Task.FromResult(ResponseHandler(new BaseResult { ResultType = ResultTypes.Ok }));
         }
     }
 }

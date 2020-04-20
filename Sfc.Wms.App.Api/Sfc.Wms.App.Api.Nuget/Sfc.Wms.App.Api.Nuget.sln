@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29306.81
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.902
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfc.Wms.App.Api.Nuget", "Sfc.Wms.App.Api.Nuget\Sfc.Wms.App.Api.Nuget.csproj", "{57638794-9DC7-4136-8896-48F0A51CEE6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfc.Wms.App.Api.Nuget", "Sfc.Wms.App.Api.Nuget\Sfc.Wms.App.Api.Nuget.csproj", "{B7B35C73-CA49-4121-B6EC-FBF2C6BF7A34}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,16 +14,16 @@ Global
 		UAT|Any CPU = UAT|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{57638794-9DC7-4136-8896-48F0A51CEE6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{57638794-9DC7-4136-8896-48F0A51CEE6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{57638794-9DC7-4136-8896-48F0A51CEE6E}.PROD|Any CPU.ActiveCfg = PROD|Any CPU
-		{57638794-9DC7-4136-8896-48F0A51CEE6E}.PROD|Any CPU.Build.0 = PROD|Any CPU
-		{57638794-9DC7-4136-8896-48F0A51CEE6E}.QA|Any CPU.ActiveCfg = QA|Any CPU
-		{57638794-9DC7-4136-8896-48F0A51CEE6E}.QA|Any CPU.Build.0 = QA|Any CPU
-		{57638794-9DC7-4136-8896-48F0A51CEE6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{57638794-9DC7-4136-8896-48F0A51CEE6E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{57638794-9DC7-4136-8896-48F0A51CEE6E}.UAT|Any CPU.ActiveCfg = UAT|Any CPU
-		{57638794-9DC7-4136-8896-48F0A51CEE6E}.UAT|Any CPU.Build.0 = UAT|Any CPU
+		{B7B35C73-CA49-4121-B6EC-FBF2C6BF7A34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7B35C73-CA49-4121-B6EC-FBF2C6BF7A34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7B35C73-CA49-4121-B6EC-FBF2C6BF7A34}.PROD|Any CPU.ActiveCfg = PROD|Any CPU
+		{B7B35C73-CA49-4121-B6EC-FBF2C6BF7A34}.PROD|Any CPU.Build.0 = PROD|Any CPU
+		{B7B35C73-CA49-4121-B6EC-FBF2C6BF7A34}.QA|Any CPU.ActiveCfg = QA|Any CPU
+		{B7B35C73-CA49-4121-B6EC-FBF2C6BF7A34}.QA|Any CPU.Build.0 = QA|Any CPU
+		{B7B35C73-CA49-4121-B6EC-FBF2C6BF7A34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7B35C73-CA49-4121-B6EC-FBF2C6BF7A34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7B35C73-CA49-4121-B6EC-FBF2C6BF7A34}.UAT|Any CPU.ActiveCfg = UAT|Any CPU
+		{B7B35C73-CA49-4121-B6EC-FBF2C6BF7A34}.UAT|Any CPU.Build.0 = UAT|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

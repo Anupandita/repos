@@ -8,7 +8,7 @@ using Sfc.Core.OnPrem.Security.Contracts.Dtos;
 using Sfc.Core.RestResponse;
 using Sfc.Wms.App.Api.Contracts.Constants;
 using Sfc.Wms.App.Api.Contracts.Entities;
-using Sfc.Wms.App.Api.Contracts.Interfaces;
+using Sfc.Wms.App.Api.Nuget.Interfaces;
 
 namespace Sfc.Wms.App.Api.Nuget.Gateways
 {
@@ -18,7 +18,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
         private readonly IResponseBuilder _responseBuilder;
         private readonly IRestClient _restClient;
 
-        public UserGateway(IResponseBuilder responseBuilders, IRestClient restClient)
+        public UserGateway(IResponseBuilder responseBuilders, IRestClient restClient) : base(restClient)
         {
             _endPoint = Routes.Prefixes.User;
             _responseBuilder = responseBuilders;
@@ -95,7 +95,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        public async Task<BaseResult<string>> SignInAsync(LoginCredentials loginCredentials)
+        public async Task<BaseResult<UserInfoDto>> SignInAsync(LoginCredentials loginCredentials)
         {
             return await Proxy().ExecuteAsync(async () =>
             {
@@ -103,9 +103,10 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
                 var cResponse = await _restClient.ExecuteTaskAsync<UserInfoDto>(cRequest).ConfigureAwait(false);
                 var nodeRequest = SignInRequest(loginCredentials, _restClient.BaseUrl.ToString());
                 var nodeResponse = await _restClient.ExecuteTaskAsync<UserInfoDto>(nodeRequest).ConfigureAwait(false);
-                var tokenHeaderParameter = new Parameter(Constants.NodeToken, nodeResponse.Data.Token, ParameterType.HttpHeader);
+                var tokenHeaderParameter =
+                    new Parameter(Constants.NodeToken, nodeResponse.Data?.Token, ParameterType.HttpHeader);
                 cResponse.Headers.Add(tokenHeaderParameter);
-                return _responseBuilder.GetCResponseData<UserInfoDto>(cResponse);
+                return _responseBuilder.GetBaseResult<UserInfoDto>(cResponse);
             }).ConfigureAwait(false);
         }
 
@@ -114,16 +115,6 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             return await Proxy().ExecuteAsync(async () =>
             {
                 var request = UpdateUserRolesRequest(userRoleModel, token);
-                var response = await _restClient.ExecuteTaskAsync<List<object>>(request).ConfigureAwait(false);
-                return _responseBuilder.GetResponseData<List<object>>(response);
-            }).ConfigureAwait(false);
-        }
-
-        public async Task<BaseResult<string>> UserPreferences(UserPreferencesModel userPreferencesModel, string token)
-        {
-            return await Proxy().ExecuteAsync(async () =>
-            {
-                var request = UpdateUserPreferencesRequest(userPreferencesModel, token);
                 var response = await _restClient.ExecuteTaskAsync<List<object>>(request).ConfigureAwait(false);
                 return _responseBuilder.GetResponseData<List<object>>(response);
             }).ConfigureAwait(false);
@@ -172,6 +163,12 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             return GetRequest(token, resource);
         }
 
+        private RestRequest RefreshAuthTokenRequest(string token)
+        {
+            var resource = $"{_endPoint}{Routes.Paths.RefreshToken}";
+            return GetRequest(token, resource);
+        }
+
         private RestRequest PostChangePasswordRequest(ChangePasswordModel changePasswordModel, string token)
         {
             var resource = $"{_endPoint}{Routes.Paths.QueryParamSeperator}{Routes.Prefixes.ChangePassword}";
@@ -189,11 +186,6 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             return PostRequest(resource, body, null);
         }
 
-        private RestRequest UpdateUserPreferencesRequest(UserPreferencesModel userPreferencesModel, string token)
-        {
-            var resource = $"{_endPoint}{Routes.Paths.QueryParamSeperator}{Routes.Prefixes.UserPreferences}";
-            return PutRequest(resource, userPreferencesModel, token);
-        }
 
         private RestRequest UpdateUserRolesRequest(UserRoleModel userRoleModel, string token)
         {

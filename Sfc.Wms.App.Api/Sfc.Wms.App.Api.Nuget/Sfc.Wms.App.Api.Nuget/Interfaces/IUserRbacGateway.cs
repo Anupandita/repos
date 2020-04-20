@@ -7,5 +7,7 @@ namespace Sfc.Wms.App.Api.Nuget.Interfaces
     public interface IUserRbacGateway
     {
         Task<BaseResult<UserInfoDto>> SignInAsync(LoginCredentials loginCredentials);
+
+        Task<BaseResult> RefreshAuthTokenAsync(string token);
     }
 }

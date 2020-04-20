@@ -4,7 +4,7 @@ using Sfc.Core.OnPrem.Result;
 using Sfc.Core.RestResponse;
 using Sfc.Wms.App.Api.Contracts.Constants;
 using Sfc.Wms.App.Api.Contracts.Entities;
-using Sfc.Wms.App.Api.Contracts.Interfaces;
+using Sfc.Wms.App.Api.Nuget.Interfaces;
 
 namespace Sfc.Wms.App.Api.Nuget.Gateways
 {
@@ -14,7 +14,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
         private readonly IResponseBuilder _responseBuilder;
         private readonly IRestClient _restClient;
 
-        public ReceiptGateway(IResponseBuilder responseBuilders,IRestClient restClient)
+        public ReceiptGateway(IResponseBuilder responseBuilders, IRestClient restClient) : base(restClient)
         {
             _endPoint = Routes.Prefixes.Receipt;
             _responseBuilder = responseBuilders;
@@ -62,7 +62,8 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        public async Task<BaseResult<string>> GetDrillAsnDetailsAsync(string token, string whse, string shipmentNumber, string skuId)
+        public async Task<BaseResult<string>> GetDrillAsnDetailsAsync(string token, string whse, string shipmentNumber,
+            string skuId)
         {
             return await Proxy().ExecuteAsync(async () =>
             {
@@ -128,7 +129,8 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
 
         private RestRequest GetAppoitmentSchedule(string token, string shipmentNumber)
         {
-            var resource = $"{_endPoint}/{Routes.Paths.ApprointmentSchedule}?{Routes.Params.ShipmentNumber}={shipmentNumber}";
+            var resource =
+                $"{_endPoint}/{Routes.Paths.ApprointmentSchedule}?{Routes.Params.ShipmentNumber}={shipmentNumber}";
             return GetRequest(token, resource);
         }
 
@@ -147,9 +149,6 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
         private RestRequest GetReceiptRequest(string token, string resourceParams)
         {
             return GetRequest(token, resourceParams);
-
         }
-        
-
     }
 }

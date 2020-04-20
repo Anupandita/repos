@@ -1,11 +1,11 @@
-﻿using RestSharp;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using RestSharp;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Core.RestResponse;
 using Sfc.Wms.App.Api.Contracts.Constants;
 using Sfc.Wms.App.Api.Contracts.Entities;
-using Sfc.Wms.App.Api.Contracts.Interfaces;
 using Sfc.Wms.App.Api.Nuget.Builders;
+using Sfc.Wms.App.Api.Nuget.Interfaces;
 
 namespace Sfc.Wms.App.Api.Nuget.Gateways
 {
@@ -15,7 +15,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
         private readonly IResponseBuilder _responseBuilder;
         private readonly IRestClient _restClient;
 
-        public CartonInquiryGateway(IResponseBuilder responseBuilder , IRestClient restClient)
+        public CartonInquiryGateway(IResponseBuilder responseBuilder, IRestClient restClient) : base(restClient)
         {
             _endPoint = Routes.Prefixes.Carton;
             _responseBuilder = responseBuilder;
@@ -27,20 +27,19 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
-                var request = GetCartonRequest(Routes.Paths.Comments,cartonNumber, token);
+                var request = GetCartonRequest(Routes.Paths.Comments, cartonNumber, token);
                 var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
                 return _responseBuilder.GetResponseData<string>(response);
             }).ConfigureAwait(false);
         }
 
-        
 
         public async Task<BaseResult<string>> CartonDetails(string cartonNumber, string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
-                var request = GetCartonRequest(Routes.Paths.Details,cartonNumber, token);
+                var request = GetCartonRequest(Routes.Paths.Details, cartonNumber, token);
                 var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
                 return _responseBuilder.GetResponseData<string>(response);
             }).ConfigureAwait(false);
@@ -101,32 +100,42 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        private RestRequest GetCartonRequest(string paramName , string cartonNumber, string token)
+        private RestRequest GetCartonRequest(string paramName, string cartonNumber, string token)
         {
-            var resource = $"{_endPoint}{Routes.Paths.QueryParamSeperator}{paramName}{Routes.Paths.QueryParamSeperator}{cartonNumber}";
+            var resource =
+                $"{_endPoint}{Routes.Paths.QueryParamSeperator}{paramName}{Routes.Paths.QueryParamSeperator}{cartonNumber}";
             return GetRequest(token, resource);
         }
 
-        private RestRequest GetSearchCartonInquiryRequest(CartonInquiryModel cartonInquiryModel , string token)
+        private RestRequest GetSearchCartonInquiryRequest(CartonInquiryModel cartonInquiryModel, string token)
         {
             var url = $"{_endPoint}/{Routes.Paths.Search}?";
-            url = QueryStringBuilder.BuildQuery("inpt_exact_carton_nbr=", cartonInquiryModel.inpt_exact_carton_nbr, url, true);
-            url = QueryStringBuilder.BuildQuery("inpt_exact_pktctrl_nbr=", cartonInquiryModel.inpt_exact_pktctrl_nbr, url, false);
+            url = QueryStringBuilder.BuildQuery("inpt_exact_carton_nbr=", cartonInquiryModel.inpt_exact_carton_nbr, url,
+                true);
+            url = QueryStringBuilder.BuildQuery("inpt_exact_pktctrl_nbr=", cartonInquiryModel.inpt_exact_pktctrl_nbr,
+                url, false);
             url = QueryStringBuilder.BuildQuery("inpt_shpmt_nbr=", cartonInquiryModel.inpt_shpmt_nbr, url, false);
             url = QueryStringBuilder.BuildQuery("inpt_from_stat=", cartonInquiryModel.inpt_from_stat, url, false);
             url = QueryStringBuilder.BuildQuery("inpt_to_stat=", cartonInquiryModel.inpt_to_stat, url, false);
             url = QueryStringBuilder.BuildQuery("inpt_sku_id=", cartonInquiryModel.inpt_sku_id, url, false);
             url = QueryStringBuilder.BuildQuery("inpt_wave_nbr=", cartonInquiryModel.inpt_wave_nbr, url, false);
             url = QueryStringBuilder.BuildQuery("inpt_pallet_id=", cartonInquiryModel.inpt_pallet_id, url, false);
-            url = QueryStringBuilder.BuildQuery("inpt_from_carton_nbr=", cartonInquiryModel.inpt_from_carton_nbr, url, false);
-            url = QueryStringBuilder.BuildQuery("inpt_to_carton_nbr=", cartonInquiryModel.inpt_to_carton_nbr, url, false);
-            url = QueryStringBuilder.BuildQuery("inpt_masterpack_id=", cartonInquiryModel.inpt_masterpack_id, url, false);
-            url = QueryStringBuilder.BuildQuery("inpt_to_pkt_control_nbr=", cartonInquiryModel.inpt_to_pkt_control_nbr, url, false);
-            url = QueryStringBuilder.BuildQuery("inpt_from_pkt_control_nbr=", cartonInquiryModel.inpt_from_pkt_control_nbr, url, false);
+            url = QueryStringBuilder.BuildQuery("inpt_from_carton_nbr=", cartonInquiryModel.inpt_from_carton_nbr, url,
+                false);
+            url = QueryStringBuilder.BuildQuery("inpt_to_carton_nbr=", cartonInquiryModel.inpt_to_carton_nbr, url,
+                false);
+            url = QueryStringBuilder.BuildQuery("inpt_masterpack_id=", cartonInquiryModel.inpt_masterpack_id, url,
+                false);
+            url = QueryStringBuilder.BuildQuery("inpt_to_pkt_control_nbr=", cartonInquiryModel.inpt_to_pkt_control_nbr,
+                url, false);
+            url = QueryStringBuilder.BuildQuery("inpt_from_pkt_control_nbr=",
+                cartonInquiryModel.inpt_from_pkt_control_nbr, url, false);
             url = QueryStringBuilder.BuildQuery("inpt_pnh_ctrl_nbr=", cartonInquiryModel.inpt_pnh_ctrl_nbr, url, false);
-            url = QueryStringBuilder.BuildQuery("inpt_from_wave_nbr=", cartonInquiryModel.inpt_from_wave_nbr, url, false);
+            url = QueryStringBuilder.BuildQuery("inpt_from_wave_nbr=", cartonInquiryModel.inpt_from_wave_nbr, url,
+                false);
             url = QueryStringBuilder.BuildQuery("inpt_to_wave_nbr=", cartonInquiryModel.inpt_to_wave_nbr, url, false);
-            url = QueryStringBuilder.BuildQuery("inpt_shortage_type=", cartonInquiryModel.inpt_shortage_type, url, false);
+            url = QueryStringBuilder.BuildQuery("inpt_shortage_type=", cartonInquiryModel.inpt_shortage_type, url,
+                false);
             url = QueryStringBuilder.BuildQuery("inpt_curr_zone=", cartonInquiryModel.inpt_curr_zone, url, false);
             url = QueryStringBuilder.BuildQuery("inpt_curr_aisle=", cartonInquiryModel.inpt_curr_aisle, url, false);
             url = QueryStringBuilder.BuildQuery("inpt_curr_bay=", cartonInquiryModel.inpt_curr_bay, url, false);

@@ -30,7 +30,8 @@ namespace Sfc.Wms.App.Api.Controllers
                 Payload = new ConnectionInfo()
                 {
                     Database = server?.Split('.')[0],
-                    Environment = ConfigurationManager.AppSettings.Get(nameof(Environment))
+                    Environment = ConfigurationManager.AppSettings.Get(nameof(Environment)),
+                    Version = GetType().Assembly.GetName().Version.ToString()
                 }
             };
             return Json(releaseAndConnectionInfo);

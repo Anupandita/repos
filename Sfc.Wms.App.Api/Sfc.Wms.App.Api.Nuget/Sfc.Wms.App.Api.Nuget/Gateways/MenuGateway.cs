@@ -1,10 +1,10 @@
-﻿using RestSharp;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using RestSharp;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Core.RestResponse;
 using Sfc.Wms.App.Api.Contracts.Constants;
 using Sfc.Wms.App.Api.Contracts.Entities;
-using Sfc.Wms.App.Api.Contracts.Interfaces;
+using Sfc.Wms.App.Api.Nuget.Interfaces;
 
 namespace Sfc.Wms.App.Api.Nuget.Gateways
 {
@@ -14,8 +14,8 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
         private readonly IResponseBuilder _responseBuilder;
         private readonly IRestClient _restClient;
 
-       
-        public MenuGateway(IResponseBuilder responseBuilders, IRestClient restClient)
+
+        public MenuGateway(IResponseBuilder responseBuilders, IRestClient restClient) : base(restClient)
         {
             _endPoint = Routes.Prefixes.Menus;
             _responseBuilder = responseBuilders;
@@ -50,7 +50,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             return await retryPolicy.ExecuteAsync(async () =>
             {
                 var request = GetAllMenuRequest(token);
-                var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false); 
+                var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
                 return _responseBuilder.GetResponseData<object>(response);
             }).ConfigureAwait(false);
         }
@@ -61,18 +61,18 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             return await retryPolicy.ExecuteAsync(async () =>
             {
                 var request = GetMenuByIdRequest(menuId, token);
-                var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false); 
+                var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
                 return _responseBuilder.GetResponseData<object>(response);
             }).ConfigureAwait(false);
         }
 
-        public async Task<BaseResult<string>> DeleteById(string menuId,string token)
+        public async Task<BaseResult<string>> DeleteById(string menuId, string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
-                var request = DeleteMenuRequest(menuId,token);
-                var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false); 
+                var request = DeleteMenuRequest(menuId, token);
+                var response = await _restClient.ExecuteTaskAsync<object>(request).ConfigureAwait(false);
                 return _responseBuilder.GetResponseData<object>(response);
             }).ConfigureAwait(false);
         }
@@ -89,15 +89,17 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             return PostRequest(resource, menuMainModel, token);
         }
 
-        private RestRequest DeleteMenuRequest(string menuId,string token)
+        private RestRequest DeleteMenuRequest(string menuId, string token)
         {
-            var resource = $"{_endPoint}{Routes.Paths.QueryParamSeperator}{Routes.Paths.Menu}{Routes.Paths.QueryParamSeperator}{menuId}";
+            var resource =
+                $"{_endPoint}{Routes.Paths.QueryParamSeperator}{Routes.Paths.Menu}{Routes.Paths.QueryParamSeperator}{menuId}";
             return DeleteRequest(resource, token);
         }
 
         private RestRequest GetMenuByIdRequest(string menuId, string token)
         {
-            var resource = $"{_endPoint}{Routes.Paths.QueryParamSeperator}{Routes.Paths.Menu}{Routes.Paths.QueryParamSeperator}{menuId}";
+            var resource =
+                $"{_endPoint}{Routes.Paths.QueryParamSeperator}{Routes.Paths.Menu}{Routes.Paths.QueryParamSeperator}{menuId}";
             return GetRequest(token, resource);
         }
 
