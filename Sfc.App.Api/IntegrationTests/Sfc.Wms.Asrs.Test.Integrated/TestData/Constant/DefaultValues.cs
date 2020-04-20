@@ -25,5 +25,6 @@
         public const string Created = "Created";
         public const string NotFound = "NotFound";
         public const string NotFounds = "NotFound";
+        public const string Ok = "Ok";
     }
 }

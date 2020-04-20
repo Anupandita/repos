@@ -177,6 +177,17 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return itemMaster;
         }
 
+        public string GetLotId(OracleConnection db, string caseNbr)
+        {
+            var query = CommonQueries.FetchLotId;
+            Command = new OracleCommand(query, db);
+            Command.Parameters.Add(new OracleParameter("caseNbr", caseNbr));
+            var LotId = Command.ExecuteReader();
+            if (LotId.RowSize > 1)
+                return "multi";
+            return LotId["TRKG_DATA"].ToString();
+        }
+
         public string GetUnitOfMeasureFromItemMaster(OracleConnection db, string skuId)
         {
             var query = $"select spl_instr_code_3 from item_master where sku_id = {skuId}";

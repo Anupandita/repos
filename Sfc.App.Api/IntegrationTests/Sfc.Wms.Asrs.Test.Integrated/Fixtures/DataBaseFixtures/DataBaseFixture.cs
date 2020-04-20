@@ -51,6 +51,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public PickLocationDetailsDto PickLocnBeforeCallingApi = new PickLocationDetailsDto();
         public string Uom;
         public string TempZone;
+        public string LotId;
         public string CurrentLocationId;
         public ReserveLocationHeaderDto RsvBeforeApi = new ReserveLocationHeaderDto();
         public ReserveLocationHeaderDto RsvAfterApi = new ReserveLocationHeaderDto();
@@ -80,6 +81,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 NotEnoughInvCase = QueryForNotEnoughInventoryInCase(db, 1);
                 RsvBeforeApi = GetResrvLocnDetails(db, SingleSkuCase.LocationId);
                 TempZone = GetTempZone(db, SingleSkuCase.SkuId);
+                LotId = GetLotId(db, caseheader.CaseNumber);
             }
         }
 
@@ -97,7 +99,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 SingleSkuCase.LocationId = caseheader.LocationId;
                 SingleSkuCase.StatusCode = caseheader.StatusCode;
                 SingleSkuCase.SkuId = caseDto[0].SkuId;
-                SingleSkuCase.TotalAllocQty = Convert.ToInt32(caseDto[0].TotalAllocQty);                
+                SingleSkuCase.TotalAllocQty = Convert.ToInt32(caseDto[0].TotalAllocQty);
+                LotId = GetLotId(db, caseheader.CaseNumber);
+
             }
         }
 
@@ -118,6 +122,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 PickLocnBeforeCallingApi = GetPickLocationDetails(db, SingleSkuCase.SkuId, null);
                 RsvBeforeApi = GetResrvLocnDetails(db, SingleSkuCase.LocationId);
                 TempZone = GetTempZone(db, SingleSkuCase.SkuId);
+                LotId = GetLotId(db, returncaseheader.CaseNumber);
             }
         }
 
@@ -327,7 +332,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                Command = new OracleCommand();
                 SwmToMheIvmt = SwmToMhe(db, SingleSkuCase.CaseNumber, TransactionCode.Ivmt, SingleSkuCase.SkuId);
                 Ivmt = JsonConvert.DeserializeObject<IvmtDto>(SwmToMheIvmt.MessageJson);
                 ParserTestforMsgText(TransactionCode.Ivmt, SwmToMheIvmt.SourceMessageText);
@@ -470,7 +474,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(DefaultValues.DataControl, ivmt.DateControl);
             Assert.AreEqual(DefaultValues.InboundPallet,ivmt.InboundPallet);
             Assert.AreEqual(SingleSkuCase.Cons_prty_date,ivmt.FifoDate);
-            if(SingleSkuCase.PoNbr != null)
+            Assert.AreEqual(LotId, SwmToMheIvmt.LotId);
+            if (SingleSkuCase.PoNbr != null)
             {
                 Assert.AreEqual(SingleSkuCase.PoNbr, ivmt.Po);
             }

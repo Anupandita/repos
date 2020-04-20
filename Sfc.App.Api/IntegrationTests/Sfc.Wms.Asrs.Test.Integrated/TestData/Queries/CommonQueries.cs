@@ -16,5 +16,6 @@
         public static string EmsToWms = $"select * from emstowms where msgKey = :msgKey";
         public static string CaseDtl = $"select * from case_dtl where case_nbr = :caseNbr";
         public static string CaseHdr = $"select * from case_hdr where case_nbr = :caseNbr";
+        public static string FetchLotId = $"select nvl(altt.lot_trkg_data,'*') as trkg_data,altt.lot_trkg_type,ch.case_nbr,ch.stat_code from case_hdr ch inner join case_dtl cd on cd.case_nbr=ch.case_nbr left outer join asn_lot_trkg_tbl altt on altt.shpmt_nbr= ch.rcvd_shpmt_nbr and cd.sku_id= altt.sku_id where altt.lot_trkg_type='EDIT' and ch.case_nbr = :caseNbr";
     }
 }
