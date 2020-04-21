@@ -3,6 +3,7 @@ using Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData.Constant;
 using TestStack.BDDfy;
 
+
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
 {
     [TestClass]
@@ -18,10 +19,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
     {
         [TestInitialize]
         public void AValidTestData()
-        {
-            
+        {          
             LoginToFetchToken();
-            PickAnItemTestDataFromDbFromDB();
+            PickAnItemTestDataFromDb();
         }
 
         [TestMethod()]

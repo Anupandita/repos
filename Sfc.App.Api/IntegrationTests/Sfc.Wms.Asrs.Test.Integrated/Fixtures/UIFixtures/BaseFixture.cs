@@ -8,6 +8,7 @@ using Sfc.Core.OnPrem.Result;
 using System.Data;
 using System.Reflection;
 using System.Collections.Generic;
+using System.Configuration;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
 {
@@ -65,8 +66,29 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             var request = new RestRequest(Method.GET);
             request.AddHeader("content-type", Content.ContentType);
             request.AddHeader("Authorization", UIConstants.BearerToken);
+            return client.Execute(request);           
+        }
+
+        public IRestResponse CallPutApi(string url,string inp)
+        {
+            var client = new RestClient(url);
+            var request = new RestRequest(Method.PUT);
+            request.AddHeader("content-type", Content.ContentType);
+            request.AddHeader("Authorization", UIConstants.BearerToken);            
+            request.AddJsonBody(JsonConvert.DeserializeObject(inp));
+            request.RequestFormat = DataFormat.Json;
             return client.Execute(request);
-           
+        }
+
+        public IRestResponse CallPostApi(string url,string inp)
+        {
+            var client = new RestClient(url);
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("content-type", Content.ContentType);
+            request.AddHeader("Authorization", UIConstants.BearerToken);
+            request.AddJsonBody(JsonConvert.DeserializeObject(inp));
+            request.RequestFormat = DataFormat.Json;
+            return client.Execute(request);
         }
         public void VerifyOkResultAndStoreBearerToken(IRestResponse response)
         {           
@@ -74,6 +96,28 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             Assert.AreEqual(ResultType.Ok, result.ResultType.ToString());
             UIConstants.BearerToken = response.Headers[1].Value.ToString();
             
+        }
+
+        public void CreateUrlAndInputParamForApiUsing(string criteria)
+        {
+            switch (criteria)
+            {
+                case "Item":
+                    UIConstants.ItemAttributeSearchUrl = ConfigurationManager.AppSettings["BaseUrl"] + UIConstants.ItemAttributes + UIConstants.Search + UIConstants.SearchInputItemId + UIConstants.ItemNumber;
+                    return;
+                case "ItemDescription":
+                    UIConstants.ItemAttributeSearchUrl = ConfigurationManager.AppSettings["BaseUrl"] + UIConstants.ItemAttributes + UIConstants.Search + UIConstants.SearchInputItemDescription + UIConstants.ItemDescription;
+                    return;
+                case "VendorItemNumber":
+                    UIConstants.ItemAttributeSearchUrl = ConfigurationManager.AppSettings["BaseUrl"] + UIConstants.ItemAttributes + UIConstants.Search + UIConstants.SearchInputVendorItemNumber + UIConstants.VendorItemNumber;
+                    return;
+                case "TempZone":
+                    UIConstants.ItemAttributeSearchUrl = ConfigurationManager.AppSettings["BaseUrl"] + UIConstants.ItemAttributes + UIConstants.Search + UIConstants.SearchInputTempZone + UIConstants.TempZone;
+                    return;
+                case "ItemDetails":
+                    UIConstants.ItemAttributeDetailsUrl = ConfigurationManager.AppSettings["BaseUrl"] + UIConstants.ItemAttributes + UIConstants.ItemNumber;
+                    return;
+            }
         }
     }
 }

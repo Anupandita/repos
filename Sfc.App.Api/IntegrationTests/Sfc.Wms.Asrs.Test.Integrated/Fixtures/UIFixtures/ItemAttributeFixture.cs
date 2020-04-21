@@ -19,7 +19,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
         protected DataTable VendorDt = new DataTable();
         protected DataTable ActiveLocnDt = new DataTable();
         ItemAttributeDetailsDto itemAttributeDetailsDto;
-        public void PickAnItemTestDataFromDbFromDB()
+        public void PickAnItemTestDataFromDb()
         {
             using (var db = new OracleConnection())
             {
@@ -57,27 +57,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             }
         }
 
-        public void CreateUrlAndInputParamForApiUsing(string criteria)
-        {
-            switch (criteria)
-            {
-                case "Item":
-                    UIConstants.ItemAttributeSearchUrl = ConfigurationManager.AppSettings["BaseUrl"] + UIConstants.ItemAttributes + UIConstants.Search + UIConstants.SearchInputItemId + UIConstants.ItemNumber;
-                    return;
-                case "ItemDescription":
-                    UIConstants.ItemAttributeSearchUrl = ConfigurationManager.AppSettings["BaseUrl"] + UIConstants.ItemAttributes + UIConstants.Search + UIConstants.SearchInputItemDescription + UIConstants.ItemDescription;
-                    return;
-                case "VendorItemNumber":
-                    UIConstants.ItemAttributeSearchUrl = ConfigurationManager.AppSettings["BaseUrl"] + UIConstants.ItemAttributes + UIConstants.Search + UIConstants.SearchInputVendorItemNumber + UIConstants.VendorItemNumber;
-                    return;
-                case "TempZone":
-                    UIConstants.ItemAttributeSearchUrl = ConfigurationManager.AppSettings["BaseUrl"] + UIConstants.ItemAttributes + UIConstants.Search + UIConstants.SearchInputTempZone + UIConstants.TempZone;
-                    return;
-                case "ItemDetails":
-                    UIConstants.ItemAttributeDetailsUrl = ConfigurationManager.AppSettings["BaseUrl"] + UIConstants.ItemAttributes + UIConstants.ItemNumber;
-                    return;
-            }
-        }
+       
         public void CallItemAttributeSearchApiWithInputs(string url)
         {
             var response=CallGetApi(url);
