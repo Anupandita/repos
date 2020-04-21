@@ -471,6 +471,10 @@
     <Reference Include="Sfc.Wms.Inbound.InboundLpn.App, Version=6.10.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.InboundLpn.App.6.10.0\lib\net472\Sfc.Wms.Inbound.InboundLpn.App.dll</HintPath>
     </Reference>
+    <Reference Include="Sfc.Wms.Inbound.Receiving.App.UoW, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Inbound\Receiving.UoW\Sfc.Wms.Inbound.Receiving.App.UoW\Sfc.Wms.Inbound.Receiving.App.UoW\bin\Debug\net472\Sfc.Wms.Inbound.Receiving.App.UoW.dll</HintPath>
+    </Reference>
     <Reference Include="Sfc.Wms.Inbound.Tasks.App, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Inbound.Tasks.App.2.0.0\lib\net472\Sfc.Wms.Inbound.Tasks.App.dll</HintPath>
     </Reference>
@@ -728,10 +732,6 @@
     <ProjectReference Include="..\..\..\Foundation\Receiving.UoW\Sfc.Wms.Foundation.Receiving.UoW\Sfc.Wms.Foundation.Receiving.UoW\Sfc.Wms.Foundation.Receiving.UoW.csproj">
       <Project>{f7ca77f1-56cd-4869-b5fa-3d4b87944972}</Project>
       <Name>Sfc.Wms.Foundation.Receiving.UoW</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Inbound\Receiving.UoW\Sfc.Wms.Inbound.Receiving.App.UoW\Sfc.Wms.Inbound.Receiving.App.UoW\Sfc.Wms.Inbound.Receiving.App.UoW.csproj">
-      <Project>{bb8fc9fe-fada-420d-804a-601c0447de50}</Project>
-      <Name>Sfc.Wms.Inbound.Receiving.App.UoW</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sfc.Wms.App.Api.Contracts\Sfc.Wms.App.Api.Contracts\Sfc.Wms.App.Api.Contracts.csproj">
       <Project>{a1e7bc09-04d9-4aa9-973b-439885d1d81f}</Project>

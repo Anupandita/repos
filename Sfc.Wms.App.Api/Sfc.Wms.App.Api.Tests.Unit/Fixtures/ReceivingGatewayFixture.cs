@@ -82,55 +82,6 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             Assert.AreEqual(ResultTypes.BadRequest, searchResult.ResultType);
         }
 
-        #region Shipment Details
-
-        protected void InputToFetchShipmentDetails()
-        {
-            var result = new BaseResult<ShipmentDetailsDto>
-            { ResultType = ResultTypes.Ok, Payload = Generator.Default.Single<ShipmentDetailsDto>() };
-            GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
-        }
-
-        protected void InputToFetchShipmentDetailsForWhichNoDetailsExists()
-        {
-            var result = new BaseResult<ShipmentDetailsDto> { ResultType = ResultTypes.NotFound };
-            GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
-        }
-
-        protected void EmptyOrNullToFetchShipmentDetails()
-        {
-            var result = new BaseResult<ShipmentDetailsDto> { ResultType = ResultTypes.BadRequest };
-            GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
-        }
-
-        protected void FetchShipmentDetailsOperationInvoked()
-        {
-            shipmentDetails = _receivingGateway.GetShipmentDetailsAsync(receiptInquiryDto.ShipmentNumber, It.IsAny<string>()).Result;
-        }
-
-        protected void FetchShipmentDetailsReturnedOkAsResponseStatus()
-        {
-            VerifyRestClientInvocation<BaseResult<ShipmentDetailsDto>>();
-            Assert.IsNotNull(shipmentDetails);
-            Assert.AreEqual(ResultTypes.Ok, shipmentDetails.ResultType);
-        }
-
-        protected void FetchShipmentDetailsReturnedBadRequestAsResponseStatus()
-        {
-            VerifyRestClientInvocation<BaseResult<ShipmentDetailsDto>>();
-            Assert.IsNotNull(shipmentDetails);
-            Assert.AreEqual(ResultTypes.BadRequest, shipmentDetails.ResultType);
-        }
-
-        protected void FetchShipmentDetailsReturnedNotFoundAsResponseStatus()
-        {
-            VerifyRestClientInvocation<BaseResult<ShipmentDetailsDto>>();
-            Assert.IsNotNull(shipmentDetails);
-            Assert.AreEqual(ResultTypes.NotFound, shipmentDetails.ResultType);
-        }
-
-        #endregion
-
         #region Update Answer text
 
         protected void InputToUpdateAnswerText()

@@ -1,12 +1,11 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sfc.Wms.App.Api.Tests.Unit.Constants;
 using Sfc.Wms.App.Api.Tests.Unit.Fixtures;
 
 namespace Sfc.Wms.App.Api.Tests.Unit.Controllers
 {
     [TestClass, TestCategory(TestCategories.Unit)]
-    public class ReceivingControllerTest:ReceivingControllerFixture
+    public class ReceivingControllerTest : ReceivingControllerFixture
     {
         [TestMethod, TestCategory(TestCategories.Unit)]
         public void Receipt_Inquiry_Search_Operation_Returned_Ok_As_Response_Status()
@@ -102,30 +101,6 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Controllers
             InputToUpdateAnswerTextForWhichNoRecordExists();
             UpdateAnswerTextOperationInvoked();
             TheUpdateAnswerTextOperationReturnedNotFoundAsResponse();
-        }
-
-        [TestMethod, TestCategory(TestCategories.Unit)]
-        public void Get_Shipment_Details_Operation_Returned_Ok_As_Response_Status()
-        {
-            InputToFetchShipmentDetails();
-            FetchShipmentDetailsOperationInvoked();
-            TheFetchShipmentDetailsOperationReturnedOkResponse();
-        }
-
-        [TestMethod, TestCategory(TestCategories.Unit)]
-        public void Get_Shipment_Details_Operation_Returned_BadRequest_As_Response_Status()
-        {
-            EmptyOrNullInputToFetchShipmentDetails();
-            FetchShipmentDetailsOperationInvoked();
-            TheFetchShipmentDetailsOperationReturnedBadRequestResponse();
-        }
-
-        [TestMethod, TestCategory(TestCategories.Unit)]
-        public void Get_Shipment_Details_Operation_Returned_NotFound_As_Response_Status()
-        {
-            InputToFetchShipmentDetailsForWhichNoRecordExists();
-            FetchShipmentDetailsOperationInvoked();
-            TheFetchShipmentDetailsOperationReturnedNotFoundResponse();
         }
     }
 }

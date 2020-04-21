@@ -24,31 +24,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Nuget
             TheReceivingSearchOperationReturnedBadRequestAsResponseStatus();
         }
 
-        [TestMethod, TestCategory(TestCategories.Unit)]
-        public void Get_Shipment_Details_Operation_Returned_Ok_As_Response_Status()
-        {
-            InputToFetchShipmentDetails();
-            FetchShipmentDetailsOperationInvoked();
-            FetchShipmentDetailsReturnedOkAsResponseStatus();
-        }
-
-        [TestMethod, TestCategory(TestCategories.Unit)]
-        public void Get_Shipment_Details_Operation_Returned_BadRequest_As_Response_Status()
-        {
-            EmptyOrNullToFetchShipmentDetails();
-            FetchShipmentDetailsOperationInvoked();
-            FetchShipmentDetailsReturnedBadRequestAsResponseStatus();
-        }
-
-        [TestMethod, TestCategory(TestCategories.Unit)]
-        public void Get_Shipment_Details_Operation_Returned_NotFound_As_Response_Status()
-        {
-            InputToFetchShipmentDetailsForWhichNoDetailsExists();
-            FetchShipmentDetailsOperationInvoked();
-            FetchShipmentDetailsReturnedNotFoundAsResponseStatus();
-        }
-
-        [TestMethod, TestCategory(TestCategories.Unit)]
+       [TestMethod, TestCategory(TestCategories.Unit)]
         public void Get_AsnLotTracking_Details_Operation_Returned_Ok_As_Response_Status()
         {
             InputToFetchAsnLotTrackingDetails();

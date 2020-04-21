@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Sfc.Core.OnPrem.Result;
+﻿using Sfc.Core.OnPrem.Result;
 using Sfc.Core.RestResponse;
 using Sfc.Wms.App.Api.Contracts.Constants;
 using Sfc.Wms.App.Api.Nuget.Interfaces;
 using Sfc.Wms.Foundation.Receiving.Contracts.UoW.Dtos;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Sfc.Wms.App.Api.Nuget.Gateways
 {
@@ -19,7 +19,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
 
         public ReceivingGateway(IResponseBuilder responseBuilders, IRestCsharpClient restClient) : base(restClient)
         {
-            _endPoint = Routes.Prefixes.Receiving;
+            _endPoint = Routes.Prefixes.Api;
             _responseBuilder = responseBuilders;
             restClient.BaseUrl = new Uri(ServiceUrl);
             _restCsharpClient = restClient;
@@ -30,7 +30,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
-                var request = GetRequest(_endPoint, receiptInquiryDto, token, Authorization);
+                var request = GetRequest($"{_endPoint}/{Routes.Paths.Receipt}", receiptInquiryDto, token, Authorization);
                 var response = await _restCsharpClient.ExecuteTaskAsync<BaseResult<SearchResultDto>>(request)
                     .ConfigureAwait(false);
                 return _responseBuilder.GetBaseResult<SearchResultDto>(response);
@@ -43,7 +43,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
-                var resource = $"{_endPoint}/{Routes.Paths.AsnDetails}/{shipmentNumber}";
+                var resource = $"{_endPoint}/{Routes.Paths.AdvanceShipmentNotice}/{shipmentNumber}";
                 var request = GetRequest(token, resource, Authorization);
                 var response = await _restCsharpClient
                     .ExecuteTaskAsync<BaseResult<IEnumerable<AsnDrillDownDetailsDto>>>(request)
@@ -57,7 +57,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
-                var resource = $"{_endPoint}/{Routes.Paths.QuestionsAnswers}/{shipmentNumber}";
+                var resource = $"{_endPoint}/{Routes.Paths.AdvanceShipmentNotice}/{shipmentNumber}/{Routes.Paths.QvDetails}";
                 var request = GetRequest(token, resource, Authorization);
                 var response = await _restCsharpClient.ExecuteTaskAsync<BaseResult<IEnumerable<QvDetailsDto>>>(request)
                     .ConfigureAwait(false);
@@ -85,24 +85,11 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
-                var resource = $"{_endPoint}/{Routes.Paths.QuestionsAnswers}";
-                var request = PostRequest(resource, asnAnswerTextDto, Authorization);
+                var resource = $"{_endPoint}/{Routes.Paths.UpdateQvDetails}";
+                var request = PostRequest(resource, asnAnswerTextDto,token, Authorization);
                 var response = await _restCsharpClient.ExecuteTaskAsync<BaseResult>(request)
                     .ConfigureAwait(false);
                 return _responseBuilder.GetBaseResult(response);
-            }).ConfigureAwait(false);
-        }
-
-        public async Task<BaseResult<ShipmentDetailsDto>> GetShipmentDetailsAsync(string shipmentNumber, string token)
-        {
-            var retryPolicy = Proxy();
-            return await retryPolicy.ExecuteAsync(async () =>
-            {
-                var resource = $"{_endPoint}/{Routes.Paths.ShipmentDetails}/{shipmentNumber}";
-                var request = GetRequest(resource, resource, Authorization);
-                var response = await _restCsharpClient.ExecuteTaskAsync<BaseResult<ShipmentDetailsDto>>(request)
-                    .ConfigureAwait(false);
-                return _responseBuilder.GetBaseResult<ShipmentDetailsDto>(response);
             }).ConfigureAwait(false);
         }
     }

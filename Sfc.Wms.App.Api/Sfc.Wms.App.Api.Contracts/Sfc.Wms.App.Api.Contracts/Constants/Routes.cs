@@ -99,11 +99,12 @@ namespace Sfc.Wms.App.Api.Contracts.Constants
             public const string UiSpecificMessages = "ui-messages";
 
             public const string AsnLotTracking = "lot-tracking-details";
-            public const string GetAsnDetails = AsnDetails + "/{shipmentNumber}";
-            public const string GetQvDetails = QuestionsAnswers + "/{shipmentNumber}";
-            public const string GetAsnLotTrackingDetails = AsnLotTracking + "/{shipmentNumber}/{skuId}";
-            public const string QuestionsAnswers = "questions-answers";
-            public const string GetShipmentDetails = ShipmentDetails + "/{shipmentNumber}";
+            public const string AdvanceShipmentNotice = "advanced-shipment-notices";
+            public const string GetAsnDetails = AdvanceShipmentNotice + "/{shipmentNumber}";
+            public const string GetQvDetails = AdvanceShipmentNotice + "/{shipmentNumber}/" + QvDetails;
+            public const string GetAsnLotTrackingDetails = AsnLotTracking+"/{shipmentNumber}/{skuId}";
+            public const string Receipt = "receipts";
+            public const string UpdateQvDetails = AdvanceShipmentNotice + "/" + QvDetails;
         }
 
         public static class Prefixes
@@ -151,7 +152,7 @@ namespace Sfc.Wms.App.Api.Contracts.Constants
             public const string MessageLogger = "api/message-logs";
             public const string MessageMaster = "api/message-masters";
 
-            public const string Receiving = "api/receiving";
+            public const string Api = "api";
         }
     }
 }

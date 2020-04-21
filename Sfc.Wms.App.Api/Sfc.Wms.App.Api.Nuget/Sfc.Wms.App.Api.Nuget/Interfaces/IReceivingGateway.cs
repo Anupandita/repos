@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Sfc.Core.OnPrem.Result;
+﻿using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.Foundation.Receiving.Contracts.UoW.Dtos;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Sfc.Wms.App.Api.Nuget.Interfaces
 {
@@ -16,8 +16,5 @@ namespace Sfc.Wms.App.Api.Nuget.Interfaces
         Task<BaseResult<IEnumerable<AsnLotTrackingDto>>> GetAsnLotTrackingDetailsAsync(string shipmentNumber, string skuId, string token);
 
         Task<BaseResult> UpdateAnswerTextAsync(AnswerTextDto asnAnswerTextDto, string token);
-
-        Task<BaseResult<ShipmentDetailsDto>> GetShipmentDetailsAsync(string shipmentNumber, string token);
-
     }
 }

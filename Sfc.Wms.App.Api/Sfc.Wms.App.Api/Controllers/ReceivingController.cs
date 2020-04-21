@@ -11,7 +11,7 @@ using Wms.App.Contracts.Entities;
 
 namespace Sfc.Wms.App.Api.Controllers
 {
-    [Authorize, RoutePrefix(Routes.Prefixes.Receiving)]
+    [Authorize, RoutePrefix(Routes.Prefixes.Api)]
     public class ReceivingController : SfcBaseController
     {
         private readonly IInboundReceivingService _receivingService;
@@ -26,7 +26,7 @@ namespace Sfc.Wms.App.Api.Controllers
             _answerService = answerService;
         }
 
-        [HttpGet, Route("")]
+        [HttpGet, Route(Routes.Paths.Receipt)]
         [ResponseType(typeof(BaseResult<SearchResultDto>))]
         public async Task<IHttpActionResult> SearchAsync([FromUri]ReceiptInquiryDto receiptInquiryDto)
         {
@@ -44,7 +44,7 @@ namespace Sfc.Wms.App.Api.Controllers
             return ResponseHandler(result);
         }
 
-        [HttpPost, Route(Routes.Paths.QuestionsAnswers)]
+        [HttpPost, Route(Routes.Paths.UpdateQvDetails)]
         [ResponseType(typeof(BaseResult))]
         public async Task<IHttpActionResult> UpdateAnswerTextAsync(AnswerTextDto answerTextDto)
         {
@@ -67,14 +67,6 @@ namespace Sfc.Wms.App.Api.Controllers
         {
             var result = await _lotTrackingService.GetByShipmentAndSkuIdAsync(shipmentNumber, skuId).ConfigureAwait(false);
 
-            return ResponseHandler(result);
-        }
-        
-        [HttpGet, Route(Routes.Paths.GetShipmentDetails)]
-        [ResponseType(typeof(BaseResult<ShipmentDetailsDto>))]
-        public async Task<IHttpActionResult> GetShipmentDetails(string shipmentNumber)
-        {
-            var result = await _receivingService.GetShipmentDetailsAsync(shipmentNumber).ConfigureAwait(false);
             return ResponseHandler(result);
         }
 
