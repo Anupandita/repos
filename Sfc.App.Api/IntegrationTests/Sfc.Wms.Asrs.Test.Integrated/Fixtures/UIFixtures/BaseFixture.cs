@@ -14,14 +14,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
 {
     public class BaseFixture
     {
-        
+
         LoginCredentials loginCredentials;
         protected void CreateLoginDto()
         {
-             loginCredentials = new LoginCredentials()
-            { 
+            loginCredentials = new LoginCredentials()
+            {
                 UserName = "PSI",
-                Password="WOLF"            
+                Password = "WOLF"
             };
         }
 
@@ -66,21 +66,21 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             var request = new RestRequest(Method.GET);
             request.AddHeader("content-type", Content.ContentType);
             request.AddHeader("Authorization", UIConstants.BearerToken);
-            return client.Execute(request);           
+            return client.Execute(request);
         }
 
-        public IRestResponse CallPutApi(string url,string inp)
+        public IRestResponse CallPutApi(string url, string inp)
         {
             var client = new RestClient(url);
             var request = new RestRequest(Method.PUT);
             request.AddHeader("content-type", Content.ContentType);
-            request.AddHeader("Authorization", UIConstants.BearerToken);            
+            request.AddHeader("Authorization", UIConstants.BearerToken);
             request.AddJsonBody(JsonConvert.DeserializeObject(inp));
             request.RequestFormat = DataFormat.Json;
             return client.Execute(request);
         }
 
-        public IRestResponse CallPostApi(string url,string inp)
+        public IRestResponse CallPostApi(string url, string inp)
         {
             var client = new RestClient(url);
             var request = new RestRequest(Method.POST);
@@ -91,12 +91,23 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             return client.Execute(request);
         }
         public void VerifyOkResultAndStoreBearerToken(IRestResponse response)
-        {           
+        {
             var result = JsonConvert.DeserializeObject<BaseResult>(response.Content);
             Assert.AreEqual(ResultType.Ok, result.ResultType.ToString());
             UIConstants.BearerToken = response.Headers[1].Value.ToString();
-            
+
         }
+        public void VerifyApiOutputAgainstDbOutput(DataTable queryDt, DataTable ApiDt)
+        { var i = -1;
+
+            foreach (DataRow dr in queryDt.Rows)
+            {
+                i = i+1;
+                foreach (DataColumn dc in queryDt.Columns)
+                   
+                    Assert.AreEqual(dr[dc].ToString(), ApiDt.Rows[i][dc.ColumnName],dc.ColumnName+" : Values are not equal");
+        }
+}
 
         public void CreateUrlAndInputParamForApiUsing(string criteria)
         {

@@ -70,6 +70,7 @@
     <Compile Include="Fixtures\MessageFixture\SynrQtyDefferenceMessageFixture.cs" />
     <Compile Include="Fixtures\UIFixtures\BaseFixture.cs" />
     <Compile Include="Fixtures\UIFixtures\ItemAttributeFixture.cs" />
+    <Compile Include="Fixtures\UIFixtures\MessageMasterFixture.cs" />
     <Compile Include="TestData\Constant\UIConstants.cs" />
     <Compile Include="TestData\Dtos\CaseViewDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="TestData\Queries\UIQueries\CartonInqSql.cs" />
     <Compile Include="TestData\Queries\UIQueries\ItemAttributeQueries.cs" />
     <Compile Include="TestData\Queries\UIQueries\LPNQueries.cs" />
+    <Compile Include="TestData\Queries\UIQueries\MessageMasterQueries.cs" />
     <Compile Include="TestData\Queries\UIQueries\PixTransSql.cs" />
     <Compile Include="TestData\Queries\UIQueries\ReceiptInquiryQueries.cs" />
     <Compile Include="TestData\Queries\UIQueries\ReserveLocationQueries.cs" />
@@ -131,6 +133,7 @@
     <Compile Include="Tests\OrmtTestWhenTriggerIsOn.cs" />
     <Compile Include="Tests\Synr.cs" />
     <Compile Include="Tests\UITests\ItemAttributeApiTest.cs" />
+    <Compile Include="Tests\UITests\MessageMasterApiTest.cs" />
     <Compile Include="Tests\ValidateforNegativeQtyDiffForSyncMessage.cs" />
     <Compile Include="Tests\ValidateforSyndwithsameskuCombination.cs" />
   </ItemGroup>

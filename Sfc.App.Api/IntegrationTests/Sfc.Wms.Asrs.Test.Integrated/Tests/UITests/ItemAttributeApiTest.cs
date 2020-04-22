@@ -30,7 +30,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("Item"))
             .When(x => x.CallItemAttributeSearchApiWithInputs(UIConstants.ItemAttributeSearchUrl))
-            .And(x => x.VerifyOutputAgainstDbOutput())
+            .And(x => x.VerifyItemSearchOutputAgainstDbOutput())
             .BDDfy("Test Case ID : ");
         }
         [TestMethod()]
