@@ -43,7 +43,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
-                var resource = $"{_endPoint}/{Routes.Paths.AdvanceShipmentNotice}/{shipmentNumber}";
+                var resource = $"{_endPoint}/{Routes.Paths.AdvanceShipmentNotices}/{shipmentNumber}";
                 var request = GetRequest(token, resource, Authorization);
                 var response = await _restCsharpClient
                     .ExecuteTaskAsync<BaseResult<IEnumerable<AsnDrillDownDetailsDto>>>(request)
@@ -52,12 +52,12 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        public async Task<BaseResult<IEnumerable<QvDetailsDto>>> GetQvDetailsAsync(string shipmentNumber, string token)
+        public async Task<BaseResult<IEnumerable<QvDetailsDto>>> GetQualityVerificationsDetailsAsync(string shipmentNumber, string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
-                var resource = $"{_endPoint}/{Routes.Paths.AdvanceShipmentNotice}/{shipmentNumber}/{Routes.Paths.QvDetails}";
+                var resource = $"{_endPoint}/{Routes.Paths.AdvanceShipmentNotices}/{shipmentNumber}/{Routes.Paths.QualityVerifications}";
                 var request = GetRequest(token, resource, Authorization);
                 var response = await _restCsharpClient.ExecuteTaskAsync<BaseResult<IEnumerable<QvDetailsDto>>>(request)
                     .ConfigureAwait(false);
@@ -71,7 +71,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
-                var resource = $"{_endPoint}/{Routes.Paths.AsnLotTracking}/{shipmentNumber}/{skuId}";
+                var resource = $"{_endPoint}/{Routes.Paths.AdvanceShipmentNotices}/{shipmentNumber}/{Routes.Paths.Skus}/{skuId}";
                 var request = GetRequest(token, resource, Authorization);
                 var response = await _restCsharpClient
                     .ExecuteTaskAsync<BaseResult<IEnumerable<AsnLotTrackingDto>>>(request)
@@ -80,13 +80,13 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        public async Task<BaseResult> UpdateAnswerTextAsync(AnswerTextDto asnAnswerTextDto, string token)
+        public async Task<BaseResult> UpdateQualityVerificationsAsync(AnswerTextDto asnAnswerTextDto, string shipmentNumber, string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
-                var resource = $"{_endPoint}/{Routes.Paths.UpdateQvDetails}";
-                var request = PostRequest(resource, asnAnswerTextDto,token, Authorization);
+                var resource = $"{_endPoint}/{Routes.Paths.AdvanceShipmentNotices}/{shipmentNumber}/{Routes.Paths.QualityVerifications}";
+                var request = PutRequest(resource, asnAnswerTextDto,token, Authorization);
                 var response = await _restCsharpClient.ExecuteTaskAsync<BaseResult>(request)
                     .ConfigureAwait(false);
                 return _responseBuilder.GetBaseResult(response);

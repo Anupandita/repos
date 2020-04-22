@@ -104,7 +104,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void UpdateAnswerTextOperationInvoked()
         {
-            updateResult = _receivingGateway.UpdateAnswerTextAsync(answerTextDto, It.IsAny<string>()).Result;
+            updateResult = _receivingGateway.UpdateQualityVerificationsAsync(answerTextDto,It.IsAny<string>(), It.IsAny<string>()).Result;
         }
 
         protected void UpdateAnswerTextReturnedOkAsResponseStatus()
@@ -263,7 +263,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void FetchQvDetailsOperationInvoked()
         {
-            qvDetails = _receivingGateway.GetQvDetailsAsync(It.IsAny<string>(), It.IsAny<string>()).Result;
+            qvDetails = _receivingGateway.GetQualityVerificationsDetailsAsync(It.IsAny<string>(), It.IsAny<string>()).Result;
         }
 
         protected void FetchQvDetailsReturnedOkAsResponseStatus()

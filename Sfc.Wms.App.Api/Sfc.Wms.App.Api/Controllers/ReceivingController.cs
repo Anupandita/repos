@@ -44,18 +44,18 @@ namespace Sfc.Wms.App.Api.Controllers
             return ResponseHandler(result);
         }
 
-        [HttpPost, Route(Routes.Paths.UpdateQvDetails)]
+        [HttpPut, Route(Routes.Paths.UpdateQualityVerifications)]
         [ResponseType(typeof(BaseResult))]
-        public async Task<IHttpActionResult> UpdateAnswerTextAsync(AnswerTextDto answerTextDto)
+        public async Task<IHttpActionResult> UpdateQualityVerificationsAsync(AnswerTextDto answerTextDto)
         {
             var result = await _answerService.UpdateAnswerTextAsync(answerTextDto).ConfigureAwait(false);
 
             return ResponseHandler(result);
         }
 
-        [HttpGet, Route(Routes.Paths.GetQvDetails)]
+        [HttpGet, Route(Routes.Paths.GetQualityVerifications)]
         [ResponseType(typeof(BaseResult<List<QVDetails>>))]
-        public async Task<IHttpActionResult> GetQvDetails(string shipmentNumber)
+        public async Task<IHttpActionResult> GetQualityVerificationsDetailsAsync(string shipmentNumber)
         {
             var result = await _receivingService.GetQvDetailsAsync(shipmentNumber).ConfigureAwait(false);
             return ResponseHandler(result);

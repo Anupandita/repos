@@ -171,7 +171,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void GetQvDetailsOperationInvoked()
         {
-            testResponse = _receivingController.GetQvDetails(shipmentNumber);
+            testResponse = _receivingController.GetQualityVerificationsDetailsAsync(shipmentNumber);
         }
 
         protected void TheGetQvDetailsOperationReturnedBadRequestResponse()
@@ -297,7 +297,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void UpdateAnswerTextOperationInvoked()
         {
-            testResponse = _receivingController.UpdateAnswerTextAsync(answerTextDto);
+            testResponse = _receivingController.UpdateQualityVerificationsAsync(answerTextDto);
         }
 
         protected void TheUpdateAnswerTextOperationReturnedBadRequestResponse()

@@ -11,10 +11,10 @@ namespace Sfc.Wms.App.Api.Nuget.Interfaces
 
         Task<BaseResult<IEnumerable<AsnDrillDownDetailsDto>>> GetAsnDetailsAsync(string shipmentNumber, string token);
 
-        Task<BaseResult<IEnumerable<QvDetailsDto>>> GetQvDetailsAsync(string shipmentNumber, string token);
+        Task<BaseResult<IEnumerable<QvDetailsDto>>> GetQualityVerificationsDetailsAsync(string shipmentNumber, string token);
 
         Task<BaseResult<IEnumerable<AsnLotTrackingDto>>> GetAsnLotTrackingDetailsAsync(string shipmentNumber, string skuId, string token);
 
-        Task<BaseResult> UpdateAnswerTextAsync(AnswerTextDto asnAnswerTextDto, string token);
+        Task<BaseResult> UpdateQualityVerificationsAsync(AnswerTextDto asnAnswerTextDto, string shipmentNumber, string token);
     }
 }
