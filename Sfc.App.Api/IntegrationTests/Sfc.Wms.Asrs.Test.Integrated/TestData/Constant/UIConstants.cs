@@ -59,6 +59,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData.Constant
         public static string ItemAttributeDetailsUrl;
         public static string MessageLoggerUrl= ConfigurationManager.AppSettings["BaseUrl"] +"message-logs";
         public static string MessageMasterUrl = ConfigurationManager.AppSettings["BaseUrl"] + "message-masters/ui-messages";
+        public const string Module = "ARCHLAYER";
+        public const string MessageId = "MA-0234";
+        public const string Message = "API Testing Message";
+
+              
         public static DataTable UpdateTable(DataTable dt, bool isGrid)
         {
             var temp = new DataTable();

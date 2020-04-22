@@ -71,6 +71,9 @@
     <Compile Include="Fixtures\UIFixtures\BaseFixture.cs" />
     <Compile Include="Fixtures\UIFixtures\ItemAttributeFixture.cs" />
     <Compile Include="Fixtures\UIFixtures\MessageLoggerFixture.cs" />
+    <Compile Include="Fixtures\UIFixtures\MessageMasterFixture.cs" />
+    <Compile Include="TestData\Queries\UIQueries\MessageMasterQueries.cs" />
+    <Compile Include="Tests\UITests\MessageMasterApiTest.cs" />
     <Compile Include="TestData\Constant\UIConstants.cs" />
     <Compile Include="TestData\Dtos\CaseViewDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
