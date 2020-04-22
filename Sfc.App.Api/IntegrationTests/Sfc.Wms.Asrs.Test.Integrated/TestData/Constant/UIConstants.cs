@@ -1,4 +1,5 @@
 ﻿using Castle.Core.Internal;
+using System.Configuration;
 using System.Data;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData.Constant
@@ -13,6 +14,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData.Constant
         public const string LpnDetails = "lpn-details";
         public const string LpnHistory = "lpn-history";
         public const string Find = "find";
+      
         public const string SearchInputItemId = "attributeSearchInputDto.itemId=";
         public const string SearchInputItemDescription = "attributeSearchInputDto.itemDescription=";
         public const string SearchInputTempZone = "attributeSearchInputDto.tempZone=";
@@ -55,6 +57,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData.Constant
         public static string TempZoneCount;
         public static string ItemAttributeSearchUrl;
         public static string ItemAttributeDetailsUrl;
+        public static string MessageLoggerUrl= ConfigurationManager.AppSettings["BaseUrl"] +"message-logs";
+        public static string MessageMasterUrl = ConfigurationManager.AppSettings["BaseUrl"] + "message-masters/ui-messages";
         public static DataTable UpdateTable(DataTable dt, bool isGrid)
         {
             var temp = new DataTable();
