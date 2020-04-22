@@ -66,17 +66,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             ItemAttributeSearchResultDt = ToDataTable(payload.ItemAttributeDetailsDtos);
             TotalRecords = payload.TotalRecords;
         }
-        public void VerifyOutputAgainstDbOutput() 
+        public void VerifyItemSearchOutputAgainstDbOutput() 
         {
-            var i = -1;
-
-            foreach (DataRow dr in ItemAttributeSearchQueryDt.Rows)
-            {
-                i = i+1;
-                foreach (DataColumn dc in ItemAttributeSearchQueryDt.Columns)
-                   
-                    Assert.AreEqual(dr[dc].ToString(), ItemAttributeSearchResultDt.Rows[i][dc.ColumnName],dc.ColumnName+" : Values are not equal");
-            }
+            VerifyApiOutputAgainstDbOutput(ItemAttributeSearchQueryDt, ItemAttributeSearchResultDt);          
             
         }
 
