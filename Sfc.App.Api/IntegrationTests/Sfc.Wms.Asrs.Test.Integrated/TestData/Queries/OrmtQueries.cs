@@ -37,8 +37,8 @@
                 "lg.locn_id=lh.locn_id inner join sys_code sc on sc.code_id=lg.grp_type and sc.code_type= :sysType and sc.code_id= :sysCodeId)) " +
                 "and stat_code = 5 and ch.misc_instr_code_5 is null and misc_num_1 = 0 and pl.actl_invn_qty > 0";
 
-        public static string CartonHeader = $"Select * from carton_hdr where carton_nbr = :cartonNbr";
-        public static string SwmElgblOrmtCount = $"Select * from SWM_ELGBL_ORMT_CARTONS where carton_nbr = :cartonNbr order by updated_date_time desc";
+        public static string CartonHeader = $"Select * from carton_hdr where carton_nbr = :carton-number";
+        public static string SwmElgblOrmtCount = $"Select * from SWM_ELGBL_ORMT_CARTONS where carton_nbr = :carton-number order by updated_date_time desc";
 
         public static string ActiveLocnNotFound = $"select ch.carton_nbr,ch.sku_id,pl.locn_id,ch.wave_nbr from carton_hdr ch inner join " +
                 "Pick_Locn_dtl pl ON pl.sku_id = ch.sku_id where locn_id not in (select lh.locn_id from locn_hdr lh " +

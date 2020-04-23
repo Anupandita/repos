@@ -108,9 +108,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var orstTestData = new OrstTestData();
             var sqlStatement = OrstQueries.PickTktSeqNbrIsLessThan1;
                 Command = new OracleCommand(sqlStatement, db);
-                Command.Parameters.Add(new OracleParameter("status", DefaultValues.Status));
-                Command.Parameters.Add(new OracleParameter("cartonStatusCode", cartonStatusCode));
-                Command.Parameters.Add(new OracleParameter("pktStatusCode", pktStatusCode));               
+                Command.Parameters.Add(new OracleParameter(Parameter.Status, DefaultValues.Status));
+                Command.Parameters.Add(new OracleParameter(Parameter.CartonStatusCode, cartonStatusCode));
+                Command.Parameters.Add(new OracleParameter(Parameter.PktStatusCode, pktStatusCode));               
                 var swmToMheReader = Command.ExecuteReader();
                 if (swmToMheReader.Read())
                 {
@@ -392,7 +392,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var cartonHeader = new CartonHeaderDto();
             var query = OrstQueries.CartonHeader;
             Command = new OracleCommand(query,db);
-            Command.Parameters.Add(new OracleParameter("cartonNumber", cartonNumber));
+            Command.Parameters.Add(new OracleParameter(Parameter.CartonNumber, cartonNumber));
             var cartonHeaderReader = Command.ExecuteReader();
             if (cartonHeaderReader.Read())
             {
@@ -407,7 +407,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var cartonDtl = new CartonDetailDto();
             var query = OrstQueries.CartonDetail;
             Command = new OracleCommand(query, db);
-            Command.Parameters.Add(new OracleParameter("cartonNumber", cartonNumber));
+            Command.Parameters.Add(new OracleParameter(Parameter.CartonNumber, cartonNumber));
             var cartonReader = Command.ExecuteReader();
             if(cartonReader.Read())
             {
@@ -423,7 +423,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var pkTktHeader = new PickTicketHeaderDto();
             var query = OrstQueries.PickTktHeader;
             Command = new OracleCommand(query,db);
-            Command.Parameters.Add(new OracleParameter("cartonNumber", cartonNumber));
+            Command.Parameters.Add(new OracleParameter(Parameter.CartonNumber, cartonNumber));
             var pickTktHeaderReader = Command.ExecuteReader();
             if (pickTktHeaderReader.Read())
             {        
@@ -437,8 +437,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var pickTktDtl = new PickTicketDetail();
             var query = OrstQueries.PickTktDtl;
             Command = new OracleCommand(query, db);
-            Command.Parameters.Add(new OracleParameter("cartonNbr", cartonNbr));
-            Command.Parameters.Add(new OracleParameter("pktSeqNbr", pktSeqNbr));
+            Command.Parameters.Add(new OracleParameter(Parameter.CartonNbr, cartonNbr));
+            Command.Parameters.Add(new OracleParameter(Parameter.PktSeqNbr, pktSeqNbr));
             var pickTktDtlReader = Command.ExecuteReader();
             if(pickTktDtlReader.Read())
             {
@@ -453,7 +453,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var allocInvnDtl = new AllocInvnDtl();
             var query = OrstQueries.AllocInventory;
             Command = new OracleCommand(query,db);
-            Command.Parameters.Add(new OracleParameter("cntrNbr", cntrNbr));
+            Command.Parameters.Add(new OracleParameter(Parameter.CntrNbr, cntrNbr));
             var allocInvnDtlReader = Command.ExecuteReader();
             if(allocInvnDtlReader.Read())
             {
@@ -469,7 +469,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var emsToWms = new EmsToWmsDto();
             var query = CommonQueries.EmsToWms;
             Command = new OracleCommand(query,db);
-            Command.Parameters.Add(new OracleParameter("msgKey", msgKey));
+            Command.Parameters.Add(new OracleParameter(Parameter.MsgKey, msgKey));
             var emsToWmsReader = Command.ExecuteReader();
             if(emsToWmsReader.Read())
             {

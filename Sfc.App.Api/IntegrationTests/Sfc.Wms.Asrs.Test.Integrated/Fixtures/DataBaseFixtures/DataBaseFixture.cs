@@ -150,14 +150,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var receivedcaseheader = new CaseViewDto();
             var query = ComtQueries.ReceivedCaseFromReturns;
             Command = new OracleCommand(query, db);            
-            Command.Parameters.Add(new OracleParameter("sysCodeType", Constants.SysCodeType));
-            Command.Parameters.Add(new OracleParameter("sysCodeId", Constants.SysCodeIdForActiveLocation));           
-            Command.Parameters.Add(new OracleParameter("seqNbr", Constants.CaseSeqNumberForSingleSku));
-            Command.Parameters.Add(new OracleParameter("codeIdForDropZone", Constants.SysCodeIdForDropZone));
-            Command.Parameters.Add(new OracleParameter("dry", Constants.Dry));
-            Command.Parameters.Add(new OracleParameter("freezer", Constants.Freezer));
-            Command.Parameters.Add(new OracleParameter("statCode", Constants.ReceivedCaseFromReturnStatusCode));
-            Command.Parameters.Add(new OracleParameter("listSkuAssign", Constants.ListSquAssign));
+            Command.Parameters.Add(new OracleParameter(Parameter.SysCodeType, Constants.SysCodeType));
+            Command.Parameters.Add(new OracleParameter(Parameter.SysCodeId, Constants.SysCodeIdForActiveLocation));           
+            Command.Parameters.Add(new OracleParameter(Parameter.SeqNbr, Constants.CaseSeqNumberForSingleSku));
+            Command.Parameters.Add(new OracleParameter(Parameter.CodeIdForDropZone, Constants.SysCodeIdForDropZone));
+            Command.Parameters.Add(new OracleParameter(Parameter.Dry, Constants.Dry));
+            Command.Parameters.Add(new OracleParameter(Parameter.Freezer, Constants.Freezer));
+            Command.Parameters.Add(new OracleParameter(Parameter.StatCode, Constants.ReceivedCaseFromReturnStatusCode));
+            Command.Parameters.Add(new OracleParameter(Parameter.ListSkuAssign, Constants.ListSquAssign));
             var receivedcaseHeaderReader = Command.ExecuteReader();
             if (receivedcaseHeaderReader.Read())
             {
@@ -173,21 +173,21 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var caseheader = new CaseHeaderDto();
             var q = ComtQueries.ReceivedCaseFromVendors;
             Command = new OracleCommand(q, db);            
-            Command.Parameters.Add(new OracleParameter("sysCodeType", Constants.SysCodeType));
-            Command.Parameters.Add(new OracleParameter("sysCodeId", Constants.SysCodeIdForActiveLocation));
-            Command.Parameters.Add(new OracleParameter("seqNbr", Constants.CaseSeqNumberForSingleSku));
-            Command.Parameters.Add(new OracleParameter("codeIdForDropZone", Constants.SysCodeIdForDropZone));
-            Command.Parameters.Add(new OracleParameter("dry", Constants.Dry));
-            Command.Parameters.Add(new OracleParameter("freezer", Constants.Freezer));
-            Command.Parameters.Add(new OracleParameter("statCode", Constants.ReceivedCaseFromVendorStatCode));
+            Command.Parameters.Add(new OracleParameter(Parameter.SysCodeType, Constants.SysCodeType));
+            Command.Parameters.Add(new OracleParameter(Parameter.SysCodeId, Constants.SysCodeIdForActiveLocation));
+            Command.Parameters.Add(new OracleParameter(Parameter.SeqNbr, Constants.CaseSeqNumberForSingleSku));
+            Command.Parameters.Add(new OracleParameter(Parameter.CodeIdForDropZone, Constants.SysCodeIdForDropZone));
+            Command.Parameters.Add(new OracleParameter(Parameter.Dry, Constants.Dry));
+            Command.Parameters.Add(new OracleParameter(Parameter.Freezer, Constants.Freezer));
+            Command.Parameters.Add(new OracleParameter(Parameter.StatCode, Constants.ReceivedCaseFromVendorStatCode));
             var caseHeaderReader = Command.ExecuteReader();
             if (caseHeaderReader.Read())
             {
                 caseheader.CaseNumber = caseHeaderReader[CaseHeader.CaseNumber].ToString();
                 caseheader.LocationId = caseHeaderReader[CaseHeader.LocationId].ToString();
                 caseheader.StatusCode = Convert.ToInt32(caseHeaderReader[CaseHeader.StatusCode].ToString());
-                caseheader.ConsumePriorityDate = Convert.ToDateTime(caseHeaderReader["cons_prty_date"]);
-                caseheader.PoNumber = caseHeaderReader["PO_NBR"].ToString();
+                caseheader.ConsumePriorityDate = Convert.ToDateTime(caseHeaderReader[CaseHeader.ConsPrtyDate]);
+                caseheader.PoNumber = caseHeaderReader[CaseHeader.PoNumber].ToString();
                 
             }
             return caseheader;
@@ -269,8 +269,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             {
                 var query = ComtQueries.TransInvnForMultiSku;
                 Command = new OracleCommand(query, db);               
-                Command.Parameters.Add(new OracleParameter("skuId", CaseDtoList[j].SkuId));
-                Command.Parameters.Add(new OracleParameter("transInvnType", Constants.TransInvnType));
+                Command.Parameters.Add(new OracleParameter(Parameter.SkuId, CaseDtoList[j].SkuId));
+                Command.Parameters.Add(new OracleParameter(Parameter.TransInvnType, Constants.TransInvnType));
                 var transInvnMultiSku = Command.ExecuteReader();
                 if (transInvnMultiSku.Read())
                 {
@@ -348,8 +348,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var caseDtl = new CaseViewDto();
             var query = ComtQueries.CaseHdrDtlTransInvnJoin;
             Command = new OracleCommand(query, db);           
-            Command.Parameters.Add(new OracleParameter("caseNumber", SingleSkuCase.CaseNumber));
-            Command.Parameters.Add(new OracleParameter("transInvnType", Constants.TransInvnType));
+            Command.Parameters.Add(new OracleParameter(Parameter.CaseNumber, SingleSkuCase.CaseNumber));
+            Command.Parameters.Add(new OracleParameter(Parameter.TransInvnType, Constants.TransInvnType));
             var caseHdrDtlTrnReader = Command.ExecuteReader();
             if (caseHdrDtlTrnReader.Read())
             {
@@ -367,7 +367,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var task = new TaskHeaderDto();
             var query = CommonQueries.TaskHdr;
             Command = new OracleCommand(query, db);          
-            Command.Parameters.Add(new OracleParameter("skuId", skuId));
+            Command.Parameters.Add(new OracleParameter(Parameter.SkuId, skuId));
             var taskHdr = Command.ExecuteReader();
             if (taskHdr.Read())
             {
@@ -420,7 +420,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var caseHdrDtl = new CaseViewDto();
             var query = ComtQueries.CaseHdrDtlJoin;
             Command = new OracleCommand(query, db);          
-            Command.Parameters.Add(new OracleParameter("caseNumber", CaseHdrMultiSku.CaseNumber));
+            Command.Parameters.Add(new OracleParameter(Parameter.CaseNumber, CaseHdrMultiSku.CaseNumber));
             var caseReader = Command.ExecuteReader();
             if (caseReader.Read())
             {
@@ -481,7 +481,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
             else
             {
-                Assert.AreEqual("No PO", ivmt.Po);
+                Assert.AreEqual(Constants.NoPO, ivmt.Po);
             }
           
         }
@@ -524,10 +524,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             switch (tempZone)
             {
-                case "D":
-                    return "AM-PALLET-INDUCT";
-                case "F":
-                    return "FR-PALLET-INDUCT";
+                case Constants.Dry:
+                    return Constants.DryLocnValue;
+                case Constants.Freezer:
+                    return Constants.FreezerLocnValue;
                 default:
                     return "";
             }

@@ -246,14 +246,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var cartonView = new CartonView();
             var query = OrmtQueries.ValidCartonsForAddRelease;
             var command = new OracleCommand(query, db);
-            command.Parameters.Add(new OracleParameter("statCode", statCode));
-            command.Parameters.Add(new OracleParameter("miscNum1", miscNum1));
-            command.Parameters.Add(new OracleParameter("status", status));
+            command.Parameters.Add(new OracleParameter(Parameter.StatCode, statCode));
+            command.Parameters.Add(new OracleParameter(Parameter.MiscNum1, miscNum1));
+            command.Parameters.Add(new OracleParameter(Parameter.Status, status));
             var reader = command.ExecuteReader();
             if (reader.Read())
             {
                 cartonView.PickTktCtrlNbr = reader[PickTicketHeader.PickTktCtrlNbr].ToString();
-                cartonView.SkuId = reader["SKU_ID"].ToString();
+                cartonView.SkuId = reader[PickLocationDetail.SkuId].ToString();
                 cartonView.WaveNbr = reader["WAVE_NBR"].ToString();
                 cartonView.Whse = reader[PickTicketHeader.Whse].ToString();
                 cartonView.Co = reader[PickTicketHeader.Co].ToString();
@@ -261,7 +261,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 cartonView.SplInstrCode1 = reader[ItemMaster.SplInstrCode1].ToString();
                 cartonView.SplInstrCode5 = reader[ItemMaster.SplInstrCode5].ToString();
                 cartonView.TotalQty = reader["TOTAL_QTY"].ToString();
-                cartonView.CartonNbr = reader["CARTON_NBR"].ToString();
+                cartonView.CartonNbr = reader[CartonHeader.CartonNbr].ToString();
                 cartonView.DestLocnId = reader["DEST_LOCN_ID"].ToString();
                 cartonView.ShipWCtrlNbr = reader["SHIP_W_CTRL_NBR"].ToString();
                 cartonView.LocnId = reader["LOCN_ID"].ToString();
@@ -278,9 +278,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var reader = command.ExecuteReader();
             if (reader.Read())
             {
-                onproCostView.CartonNbr = reader["CARTON_NBR"].ToString();
+                onproCostView.CartonNbr = reader[PickTicketHeader.CartonNumber].ToString();
                 onproCostView.PickTktCtrlNbr = reader[PickTicketHeader.PickTktCtrlNbr].ToString();
-                onproCostView.SkuId = reader["SKU_ID"].ToString();
+                onproCostView.SkuId = reader[PickLocationDetail.SkuId].ToString();
                 onproCostView.WaveNbr = reader["WAVE_NBR"].ToString();
                 onproCostView.Whse = reader[PickTicketHeader.Whse].ToString();
                 onproCostView.Co = reader[PickTicketHeader.Co].ToString();
@@ -288,7 +288,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 onproCostView.SplInstrCode1 = reader[ItemMaster.SplInstrCode1].ToString();
                 onproCostView.SplInstrCode5 = reader[ItemMaster.SplInstrCode5].ToString();
                 onproCostView.TotalQty = reader["TOTAL_QTY"].ToString();
-                onproCostView.CartonNbr = reader["CARTON_NBR"].ToString();
+                onproCostView.CartonNbr = reader[PickTicketHeader.CartonNumber].ToString();
                 onproCostView.DestLocnId = reader["DEST_LOCN_ID"].ToString();
                 onproCostView.ShipWCtrlNbr = reader["SHIP_W_CTRL_NBR"].ToString();
                 onproCostView.LocnId = reader["LOCN_ID"].ToString();
@@ -302,8 +302,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Transaction = db.BeginTransaction();
             var updateQuery = OrmtQueries.UpdatePickStatCode;
             Command = new OracleCommand(updateQuery, db);
-            Command.Parameters.Add(new OracleParameter("pktStatCode", pktStatCode));
-            Command.Parameters.Add(new OracleParameter("pktCtrlNbr", pktCtrlNbr));
+            Command.Parameters.Add(new OracleParameter(Parameter.PktStatCode, pktStatCode));
+            Command.Parameters.Add(new OracleParameter(Parameter.PktCtrlNbr, pktCtrlNbr));
             Command.ExecuteNonQuery();
             Transaction.Commit();
         }
@@ -312,10 +312,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {         
             var query = OrmtQueries.WaveRelease;             
             Command = new OracleCommand(query,db);
-            Command.Parameters.Add(new OracleParameter("miscNum1", Constants.MiscNum1));
-            Command.Parameters.Add(new OracleParameter("sysType", Constants.SysCodeType));
-            Command.Parameters.Add(new OracleParameter("sysCodeId", Constants.SysCodeIdForActiveLocation));
-            Command.Parameters.Add(new OracleParameter("status", Constants.EgblOrmtStatus));
+            Command.Parameters.Add(new OracleParameter(Parameter.MiscNum1, Constants.MiscNum1));
+            Command.Parameters.Add(new OracleParameter(Parameter.SysCodeType, Constants.SysCodeType));
+            Command.Parameters.Add(new OracleParameter(Parameter.SysCodeId, Constants.SysCodeIdForActiveLocation));
+            Command.Parameters.Add(new OracleParameter(Parameter.Status, Constants.EgblOrmtStatus));
             var waveNbr = Command.ExecuteScalar().ToString();
             return waveNbr;
         }
@@ -330,7 +330,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             {
                 var cartonView = new CartonView();
                 cartonView.PickTktCtrlNbr = reader[PickTicketHeader.PickTktCtrlNbr].ToString();
-                cartonView.SkuId = reader["SKU_ID"].ToString();
+                cartonView.SkuId = reader[PickLocationDetail.SkuId].ToString();
                 cartonView.WaveNbr = reader["WAVE_NBR"].ToString();
                 cartonView.Whse = reader[PickTicketHeader.Whse].ToString();
                 cartonView.Co = reader[PickTicketHeader.Co].ToString();
@@ -338,7 +338,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 cartonView.SplInstrCode1 = reader[ItemMaster.SplInstrCode1].ToString();
                 cartonView.SplInstrCode5 = reader[ItemMaster.SplInstrCode5].ToString();
                 cartonView.TotalQty = reader["TOTAL_QTY"].ToString();
-                cartonView.CartonNbr = reader["CARTON_NBR"].ToString();
+                cartonView.CartonNbr = reader[CartonHeader.CartonNbr].ToString();
                 cartonView.DestLocnId = reader["DEST_LOCN_ID"].ToString();
                 cartonView.ShipWCtrlNbr = reader["SHIP_W_CTRL_NBR"].ToString();
                 orderdtls.Add(cartonView);
@@ -351,14 +351,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var cartonView = new CartonView();
             var query = OrmtQueries.ActiveOrmtNotFound;
             var command = new OracleCommand(query, db);
-            command.Parameters.Add(new OracleParameter("sysType", Constants.SysCodeType));
-            command.Parameters.Add(new OracleParameter("sysCodeId", Constants.SysCodeIdForActiveLocation));           
+            command.Parameters.Add(new OracleParameter(Parameter.SysCodeType, Constants.SysCodeType));
+            command.Parameters.Add(new OracleParameter(Parameter.SysCodeId, Constants.SysCodeIdForActiveLocation));           
             var reader = command.ExecuteReader();
             if (reader.Read())
             {
-                cartonView.CartonNbr = reader["CARTON_NBR"].ToString();
-                cartonView.SkuId = reader["SKU_ID"].ToString();
-                cartonView.WaveNbr = reader["WAVE_NBR"].ToString();
+                cartonView.CartonNbr = reader[CartonHeader.CartonNbr].ToString();
+                cartonView.SkuId = reader[CartonDetail.SkuId].ToString();
+                cartonView.WaveNbr = reader[CartonHeader.WaveNbr].ToString();
             }
             return cartonView;
         }
@@ -368,14 +368,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var cartonView = new CartonView();
             var query = OrmtQueries.PickLocnNotFound;
             var command = new OracleCommand(query, db);
-            command.Parameters.Add(new OracleParameter("sysType", Constants.SysCodeType));
-            command.Parameters.Add(new OracleParameter("sysCodeId", Constants.SysCodeIdForActiveLocation));     
+            command.Parameters.Add(new OracleParameter(Parameter.SysCodeType, Constants.SysCodeType));
+            command.Parameters.Add(new OracleParameter(Parameter.SysCodeId, Constants.SysCodeIdForActiveLocation));     
             var reader = command.ExecuteReader();
             if (reader.Read())
             {
-                cartonView.CartonNbr = reader["CARTON_NBR"].ToString();
-                cartonView.SkuId = reader["SKU_ID"].ToString();
-                cartonView.WaveNbr = reader["WAVE_NBR"].ToString();
+                cartonView.CartonNbr = reader[CartonHeader.CartonNbr].ToString();
+                cartonView.SkuId = reader[CartonDetail.SkuId].ToString();
+                cartonView.WaveNbr = reader[CartonHeader.WaveNbr].ToString();
             }
             return cartonView;
         }
@@ -385,7 +385,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
            var cartonHdrView = new CartonHeaderDto();
            var query = OrmtQueries.CartonHeader;
            var command = new OracleCommand(query, db);
-           command.Parameters.Add(new OracleParameter("cartonNbr", cartonNbr));
+           command.Parameters.Add(new OracleParameter(Parameter.CartonNbr, cartonNbr));
            var cartonHdrReader = command.ExecuteReader();
            if (cartonHdrReader.Read())
            {              
@@ -399,7 +399,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var swmEligibleOrmtCount = new SwmEligibleOrmtCartonDto();
             var query = OrmtQueries.SwmElgblOrmtCount;
             var command = new OracleCommand(query,db);
-            command.Parameters.Add(new OracleParameter("cartonNbr", cartonNbr));
+            command.Parameters.Add(new OracleParameter(Parameter.CartonNbr, cartonNbr));
             var reader = command.ExecuteReader();
             if(reader.Read())
             {
@@ -413,13 +413,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var cartonView = new CartonView();
             var query = OrmtQueries.ActiveLocnNotFound;
             var command = new OracleCommand(query, db);
-            command.Parameters.Add(new OracleParameter("sysCodeType", Constants.SysCodeType));
-            command.Parameters.Add(new OracleParameter("sysCodeId", Constants.SysCodeIdForActiveLocation));            
+            command.Parameters.Add(new OracleParameter(Parameter.SysCodeType, Constants.SysCodeType));
+            command.Parameters.Add(new OracleParameter(Parameter.SysCodeId, Constants.SysCodeIdForActiveLocation));            
             var reader = command.ExecuteReader();
             if (reader.Read())
             {
-                cartonView.CartonNbr = reader["CARTON_NBR"].ToString();
-                cartonView.SkuId = reader["SKU_ID"].ToString();
+                cartonView.CartonNbr = reader[CartonHeader.CartonNbr].ToString();
+                cartonView.SkuId = reader[CartonDetail.SkuId].ToString();
                 cartonView.WaveNbr = reader["WAVE_NBR"].ToString();
             }
             return cartonView;
@@ -460,9 +460,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             switch (tempZone)
             {
-                case "D":
+                case Constants.Dry:
                     return "AM-SHIP";
-                case "F":
+                case Constants.Freezer:
                     return "FR-SHIP";
                 default:
                     return "";
@@ -473,9 +473,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             switch (tempZone)
             {
-                case "D":
+                case Constants.Dry:
                     return "AM-REJECT";
-                case "F":
+                case Constants.Freezer:
                     return "FR-REJECT";
                 default:
                     return "";

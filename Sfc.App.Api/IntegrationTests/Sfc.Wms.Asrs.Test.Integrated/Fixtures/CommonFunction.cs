@@ -30,8 +30,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var wmsToEmsDto = new WmsToEmsDto();
             var query = CommonQueries.WmsToEms;
             Command = new OracleCommand(query, db);
-            Command.Parameters.Add(new OracleParameter("transCode", trx));
-            Command.Parameters.Add(new OracleParameter("msgKey", msgKey));
+            Command.Parameters.Add(new OracleParameter(Parameter.TransCode, trx));
+            Command.Parameters.Add(new OracleParameter(Parameter.MsgKey, msgKey));
             var wmsToEmsReader = Command.ExecuteReader();
             if (wmsToEmsReader.Read())
             {
@@ -107,8 +107,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var singleSkulocal = new CaseViewDto();
             var query = CommonQueries.TransInventory;
             Command = new OracleCommand(query, db);
-            Command.Parameters.Add(new OracleParameter("skuId", skuId));
-            Command.Parameters.Add(new OracleParameter("transInventoryType", Constants.TransInvnType));
+            Command.Parameters.Add(new OracleParameter(Parameter.SkuId, skuId));
+            Command.Parameters.Add(new OracleParameter(Parameter.TransInvnType, Constants.TransInvnType));
             var transInvnReader = Command.ExecuteReader();
             if (transInvnReader.Read())
             {
@@ -123,8 +123,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var singleSkulocal = new TransitionalInventoryDto();
             var query = CommonQueries.TransInventory;
             Command = new OracleCommand(query, db);
-            Command.Parameters.Add(new OracleParameter("skuId", skuId));
-            Command.Parameters.Add(new OracleParameter("transInventoryType", Constants.TransInvnType));
+            Command.Parameters.Add(new OracleParameter(Parameter.SkuId, skuId));
+            Command.Parameters.Add(new OracleParameter(Parameter.TransInvnType, Constants.TransInvnType));
             var transInvnReader = Command.ExecuteReader();
             if (transInvnReader.Read())
             {
@@ -139,8 +139,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var singleSkulocal = new TransitionalInventoryDto();
             var query = CommonQueries.TransInventory;
             Command = new OracleCommand(query, db);
-            Command.Parameters.Add(new OracleParameter("skuId", skuId));
-            Command.Parameters.Add(new OracleParameter("transInventoryType", Constants.TransInvnTypeForNegativePick));
+            Command.Parameters.Add(new OracleParameter(Parameter.SkuId, skuId));
+            Command.Parameters.Add(new OracleParameter(Parameter.TransInvnType, Constants.TransInvnTypeForNegativePick));
             var transInvnReader = Command.ExecuteReader();
             if (transInvnReader.Read())
             {
@@ -155,7 +155,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var query = CommonQueries.ItemMaster;
             Command = new OracleCommand(query, db);
-            Command.Parameters.Add(new OracleParameter("skuId", skuId));
+            Command.Parameters.Add(new OracleParameter(Parameter.SkuId, skuId));
             var unitWeight = Convert.ToDecimal(Command.ExecuteScalar());
             return unitWeight;
         }
@@ -163,7 +163,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var query = $"select unit_vol from item_master where sku_id = '{skuId}'";
             Command = new OracleCommand(query, db);
-            Command.Parameters.Add(new OracleParameter("skuId", skuId));
+            Command.Parameters.Add(new OracleParameter(Parameter.SkuId, skuId));
             var unitVol = Convert.ToDecimal(Command.ExecuteScalar());
             return unitVol;
         }
@@ -172,7 +172,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var query = CommonQueries.TempZone;
             Command = new OracleCommand(query, db);
-            Command.Parameters.Add(new OracleParameter("skuId", skuId));
+            Command.Parameters.Add(new OracleParameter(Parameter.SkuId, skuId));
             var  itemMaster = Command.ExecuteScalar().ToString();
             return itemMaster;
         }
@@ -181,7 +181,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var query = CommonQueries.FetchLotId;
             Command = new OracleCommand(query, db);
-            Command.Parameters.Add(new OracleParameter("caseNbr", caseNbr));
+            Command.Parameters.Add(new OracleParameter(Parameter.CaseNumber, caseNbr));
             var LotId = Command.ExecuteReader();
             if (LotId.RowSize > 1)
                 return "multi";
@@ -211,13 +211,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var caseDtl = new CaseDetailDto();
             var query = CommonQueries.CaseDtl;
             Command = new OracleCommand(query, db);
-            Command.Parameters.Add(new OracleParameter("caseNbr", caseNbr));
+            Command.Parameters.Add(new OracleParameter(Parameter.CaseNumber, caseNbr));
             var caseDtlReader = Command.ExecuteReader();
             if (caseDtlReader.Read())
             {
                 caseDtl.ActualQuantity = Convert.ToDecimal(caseDtlReader["ACTL_QTY"]);
                 caseDtl.TotalAllocatedQuantity = Convert.ToDecimal(caseDtlReader["TOTAL_ALLOC_QTY"]);
-                caseDtl.SkuId = caseDtlReader["SKU_ID"].ToString();
+                caseDtl.SkuId = caseDtlReader[CartonDetail.SkuId].ToString();
                 caseDtl.OriginalQuantity = Convert.ToDecimal(caseDtlReader["ORIG_QTY"]);
                 caseDtl.ShippedAsnQuantity = Convert.ToDecimal(caseDtlReader["SHPD_ASN_QTY"]);
                 caseDtl.CaseSequenceNumber = Convert.ToInt16(caseDtlReader["CASE_SEQ_NBR"]);
@@ -229,8 +229,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var swmFromMheData = new SwmFromMheDto();
             var swmFromMheView = CommonQueries.SwmFromMhe;
             Command = new OracleCommand(swmFromMheView, db);
-            Command.Parameters.Add(new OracleParameter("transCode", trx));
-            Command.Parameters.Add(new OracleParameter("messageKey", msgKey));
+            Command.Parameters.Add(new OracleParameter(Parameter.TransCode, trx));
+            Command.Parameters.Add(new OracleParameter(Parameter.MsgKey, msgKey));
             var swmFromMheReader = Command.ExecuteReader();
             if (swmFromMheReader.Read())
             {
@@ -273,9 +273,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var pickLocnDtl = new PickLocationDetailsDto();
             var pickLocnView = CommonQueries.PickLocnDtl;
             Command = new OracleCommand(pickLocnView, db);
-            Command.Parameters.Add(new OracleParameter("skuId", skuId));
-            Command.Parameters.Add(new OracleParameter("sysCodeType", Constants.SysCodeType));
-            Command.Parameters.Add(new OracleParameter("sysCodeId", Constants.SysCodeIdForActiveLocation));
+            Command.Parameters.Add(new OracleParameter(Parameter.SkuId, skuId));
+            Command.Parameters.Add(new OracleParameter(Parameter.SysCodeType, Constants.SysCodeType));
+            Command.Parameters.Add(new OracleParameter(Parameter.SysCodeId, Constants.SysCodeIdForActiveLocation));
             var pickLocnDtlReader = Command.ExecuteReader();
             if (pickLocnDtlReader.Read())
             {
@@ -292,9 +292,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var pickLocnDtlExt = new PickLocationDetailsExtenstionDto();
             var query = CommonQueries.PickLocnDtlExt;
             Command = new OracleCommand(query, db);
-            Command.Parameters.Add(new OracleParameter("skuId", skuId));
-            Command.Parameters.Add(new OracleParameter("sysCodeType", Constants.SysCodeType));
-            Command.Parameters.Add(new OracleParameter("sysCodeId", Constants.SysCodeIdForActiveLocation));
+            Command.Parameters.Add(new OracleParameter(Parameter.SkuId, skuId));
+            Command.Parameters.Add(new OracleParameter(Parameter.SysCodeType, Constants.SysCodeType));
+            Command.Parameters.Add(new OracleParameter(Parameter.SysCodeId, Constants.SysCodeIdForActiveLocation));
             var pickLocnDtlExtReader = Command.ExecuteReader();
             if (pickLocnDtlExtReader.Read())
             {
@@ -308,7 +308,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var cartonHdr = new CartonHeaderDto();
             var query = CommonQueries.CartonHdr;
             Command = new OracleCommand(query, db);
-            Command.Parameters.Add(new OracleParameter("cartonNumber", cartonNbr));
+            Command.Parameters.Add(new OracleParameter(Parameter.CartonNumber, cartonNbr));
             var cartonHdrReader = Command.ExecuteReader();
             if (cartonHdrReader.Read())
             {
@@ -321,7 +321,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var caseHdr = new CaseHeaderDto();
             var query = CommonQueries.CaseHdr;
             Command = new OracleCommand(query, db);
-            Command.Parameters.Add(new OracleParameter("caseNbr", caseNbr));
+            Command.Parameters.Add(new OracleParameter(Parameter.CaseNumber, caseNbr));
             var cartonHdrReader = Command.ExecuteReader();
             if (cartonHdrReader.Read())
             {
@@ -405,8 +405,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var messageTosv = new MessageToSortViewDto();
             var query = OrstQueries.MsgToSortView;
             Command = new OracleCommand(query, db);
-            Command.Parameters.Add(new OracleParameter("cartonNo", cartonNo));
-            Command.Parameters.Add(new OracleParameter("msgType", msgType));
+            Command.Parameters.Add(new OracleParameter(Parameter.CartonNbr, cartonNo));
+            Command.Parameters.Add(new OracleParameter(Parameter.MsgType, msgType));
             var msgToSvReader = Command.ExecuteReader();
             if (msgToSvReader.Read())
             {

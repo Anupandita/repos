@@ -38,10 +38,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var costDataDto = new Cost();
             SqlStatements = EmsToWmsQueries.CostQuery;
             Command = new OracleCommand(SqlStatements, db);
-            Command.Parameters.Add(new OracleParameter("statCode", Constants.StatusCodeConsumed));
-            Command.Parameters.Add(new OracleParameter("sysCodeType", Constants.SysCodeType));
-            Command.Parameters.Add(new OracleParameter("codeId", Constants.SysCodeIdForActiveLocation));
-            Command.Parameters.Add(new OracleParameter("ready", DefaultValues.Status));
+           Command.Parameters.Add(new OracleParameter(Parameter.StatCode, Constants.StatusCodeConsumed));
+            Command.Parameters.Add(new OracleParameter(Parameter.SysCodeType, Constants.SysCodeType));
+           Command.Parameters.Add(new OracleParameter(Parameter.SysCodeId, Constants.SysCodeIdForActiveLocation));
+            Command.Parameters.Add(new OracleParameter(Parameter.Ready, DefaultValues.Status));
             var validData = Command.ExecuteReader();
             if (validData.Read())
             {
@@ -195,9 +195,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var costTransData = new Cost();
             SqlStatements = EmsToWmsQueries.CostFetchDataWithOutTransInvn;
             Command = new OracleCommand(SqlStatements, db);
-            Command.Parameters.Add(new OracleParameter("qty", Constants.MinQuantity));
-            Command.Parameters.Add(new OracleParameter("statCode", Constants.ReceivedCaseFromVendorStatCode));
-            Command.Parameters.Add(new OracleParameter("transInvnType", Constants.TransInvnType));
+            Command.Parameters.Add(new OracleParameter(Parameter.Qty, Constants.MinQuantity));
+           Command.Parameters.Add(new OracleParameter(Parameter.StatCode, Constants.ReceivedCaseFromVendorStatCode));
+            Command.Parameters.Add(new OracleParameter(Parameter.TransInvnType, Constants.TransInvnType));
             var reader = Command.ExecuteReader();
             if (reader.Read())
             {
@@ -229,9 +229,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var costTransData = new Cost();
             SqlStatements = EmsToWmsQueries.CostPickLocnDoesNotExist;
             Command = new OracleCommand(SqlStatements, db);
-            Command.Parameters.Add(new OracleParameter("statCode", Constants.StatusCodeConsumed));
-            Command.Parameters.Add(new OracleParameter("qty", Constants.MinQuantity));
-            Command.Parameters.Add(new OracleParameter("transInvnType", Constants.MinQuantity));
+           Command.Parameters.Add(new OracleParameter(Parameter.StatCode, Constants.StatusCodeConsumed));
+            Command.Parameters.Add(new OracleParameter(Parameter.Qty, Constants.MinQuantity));
+            Command.Parameters.Add(new OracleParameter(Parameter.TransInvnType, Constants.MinQuantity));
             var reader = Command.ExecuteReader();
             if (reader.Read())
             {

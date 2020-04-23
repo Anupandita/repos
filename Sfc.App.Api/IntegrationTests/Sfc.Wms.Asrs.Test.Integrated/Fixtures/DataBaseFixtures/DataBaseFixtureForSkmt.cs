@@ -85,7 +85,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var query = $"select * from Item_master WHERE COLOR_DESC= :colordesc";
             Command = new OracleCommand(query, db);
-            Command.Parameters.Add(new OracleParameter("colordesc", colordesc));
+            Command.Parameters.Add(new OracleParameter(TestData.Parameter.Colordesc, colordesc));
             var colordescReader = Command.ExecuteReader();
             if (colordescReader.Read())
             {

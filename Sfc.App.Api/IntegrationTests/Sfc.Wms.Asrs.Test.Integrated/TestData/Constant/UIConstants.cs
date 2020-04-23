@@ -63,7 +63,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData.Constant
         public const string Module = "ARCHLAYER";
         public const string MessageId = "MA-0234";
         public static string Message = "API Testing Message";
-              
+        public const string RefCode = "RN";
+        public const string RefValue = "Test";
+
+
         public static DataTable UpdateTable(DataTable dt, bool isGrid)
         {
             var temp = new DataTable();

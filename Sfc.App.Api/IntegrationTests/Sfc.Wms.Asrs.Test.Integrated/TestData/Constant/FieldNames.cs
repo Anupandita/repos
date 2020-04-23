@@ -5,6 +5,8 @@
         public const string CaseNumber = "CASE_NBR";
         public const string LocationId = "LOCN_ID";
         public const string StatusCode = "STAT_CODE";
+        public const string ConsPrtyDate = "cons_prty_date";
+        public const string PoNumber = "PO_NBR";
     }
     public class CaseDetail 
     {
@@ -190,6 +192,7 @@
     public class CartonDetail
     {
         public const string CartonNumber = "CARTON_NBR";
+        public const string SkuId = "SKU_ID";
         public const string UnitsPakd = "UNITS_PAKD";
         public const string ModificationDateTime = "MOD_DATE_TIME";
         public const string UserId = "USER_ID";

@@ -71,7 +71,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var query = $"{SynrQueries.NextupCountQuery}";
             Command = new OracleCommand(query, db);
-            Command.Parameters.Add(new OracleParameter("RecTypeID", Constants.RectTypeId));
+            Command.Parameters.Add(new OracleParameter(TestData.Parameter.RecTypeId, Constants.RectTypeId));
             var nextUpCounterReader = Convert.ToInt64(Command.ExecuteScalar().ToString());
             return nextUpCounterReader;
         }
@@ -81,8 +81,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             PickLocnViewquery = $"{SynrQueries.PickLocnCountQuery}";
             Command = new OracleCommand(PickLocnViewquery, db);
-            Command.Parameters.Add(new OracleParameter("sysCodeType", Constants.SysCodeType));
-            Command.Parameters.Add(new OracleParameter("sysCodeId", Constants.SysCodeIdForActiveLocation));
+            Command.Parameters.Add(new OracleParameter(TestData.Parameter.SysCodeType, Constants.SysCodeType));
+            Command.Parameters.Add(new OracleParameter(TestData.Parameter.SysCodeId, Constants.SysCodeIdForActiveLocation));
             var pickLocnDtlReader = Command.ExecuteScalar().ToString();
             return pickLocnDtlReader;
         }
@@ -105,9 +105,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var querypld = $"{SynrQueries.PLdSnapShotQuery}";
             Command = new OracleCommand(querypld, db);
-            Command.Parameters.Add(new OracleParameter("syncId", syncId));
-            Command.Parameters.Add(new OracleParameter("sysCodeType", Constants.SysCodeType));
-            Command.Parameters.Add(new OracleParameter("sysCodeId", Constants.SysCodeIdForActiveLocation));
+          Command.Parameters.Add(new OracleParameter(TestData.Parameter.SyncId, syncId));
+            Command.Parameters.Add(new OracleParameter(TestData.Parameter.SysCodeType, Constants.SysCodeType));
+            Command.Parameters.Add(new OracleParameter(TestData.Parameter.SysCodeId, Constants.SysCodeIdForActiveLocation));
 
             var pldsnapshotReader = Convert.ToInt64(Command.ExecuteScalar().ToString());
             return pldsnapshotReader;
@@ -215,8 +215,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var syndtDataDto = new Data.Entities.SwmSyndData();
             SqlStatements = $"{SynrQueries.SyndDataQuery}";
             Command = new OracleCommand(SqlStatements, db);
-            Command.Parameters.Add(new OracleParameter("SyncId", syncId));
-            Command.Parameters.Add(new OracleParameter("Skuid", skuid));
+          Command.Parameters.Add(new OracleParameter(TestData.Parameter.SyncId, syncId));
+            Command.Parameters.Add(new OracleParameter(TestData.Parameter.SkuId, skuid));
             var validData = Command.ExecuteReader();
             if (validData.Read())
             {
@@ -317,8 +317,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var querysyndqty = $"{SynrQueries.SyndDataQty}";
             Command = new OracleCommand(querysyndqty, db);
-            Command.Parameters.Add(new OracleParameter("SyncId", syncId));
-            Command.Parameters.Add(new OracleParameter("Status", Constants.SyndStatus));
+            Command.Parameters.Add(new OracleParameter(TestData.Parameter.SyncId, syncId));
+            Command.Parameters.Add(new OracleParameter(TestData.Parameter.Status, Constants.SyndStatus));
             var syndDataQtyReader = Command.ExecuteScalar().ToString();
             return syndDataQtyReader;
         }
@@ -326,9 +326,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var querypldqty = $"{SynrQueries.PldQtyQuery}";
             Command = new OracleCommand(querypldqty, db);
-            Command.Parameters.Add(new OracleParameter("syncId", syncId));
-            Command.Parameters.Add(new OracleParameter("sysCodeType", Constants.SysCodeType));
-            Command.Parameters.Add(new OracleParameter("sysCodeId", Constants.SysCodeIdForActiveLocation));
+          Command.Parameters.Add(new OracleParameter(TestData.Parameter.SyncId, syncId));
+            Command.Parameters.Add(new OracleParameter(TestData.Parameter.SysCodeType, Constants.SysCodeType));
+            Command.Parameters.Add(new OracleParameter(TestData.Parameter.SysCodeId, Constants.SysCodeIdForActiveLocation));
             var pldsnapshotQtyReader = Command.ExecuteScalar().ToString();
             return pldsnapshotQtyReader;
         }
@@ -337,9 +337,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var querypld = $"{SynrQueries.PLdSnapShotQuery}";
             Command = new OracleCommand(querypld, db);
-            Command.Parameters.Add(new OracleParameter("syncId", syncId));
-            Command.Parameters.Add(new OracleParameter("sysCodeType", Constants.SysCodeType));
-            Command.Parameters.Add(new OracleParameter("sysCodeId", Constants.SysCodeIdForActiveLocation));
+          Command.Parameters.Add(new OracleParameter(TestData.Parameter.SyncId, syncId));
+            Command.Parameters.Add(new OracleParameter(TestData.Parameter.SysCodeType, Constants.SysCodeType));
+            Command.Parameters.Add(new OracleParameter(TestData.Parameter.SysCodeId, Constants.SysCodeIdForActiveLocation));
             var pldsnapshotReader = Command.ExecuteScalar().ToString();
             return pldsnapshotReader;
         }
@@ -348,8 +348,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var querysynd = $"{SynrQueries.SyndData}";
             Command = new OracleCommand(querysynd, db);
-            Command.Parameters.Add(new OracleParameter("SyncId", syncId));
-            Command.Parameters.Add(new OracleParameter("Status", Constants.SyndStatus));
+          Command.Parameters.Add(new OracleParameter(TestData.Parameter.SyncId, syncId));
+            Command.Parameters.Add(new OracleParameter(TestData.Parameter.Status, Constants.SyndStatus));
             var syndDataReader = Command.ExecuteScalar().ToString();
             return syndDataReader;
         }

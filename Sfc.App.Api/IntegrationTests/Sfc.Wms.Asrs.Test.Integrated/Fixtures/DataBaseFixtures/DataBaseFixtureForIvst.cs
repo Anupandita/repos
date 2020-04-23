@@ -469,11 +469,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var ivstDataDto = new Ivst();
             Command = new OracleCommand(query, db);
-            Command.Parameters.Add(new OracleParameter("statCode", Constants.StatusCodeConsumed));
-            Command.Parameters.Add(new OracleParameter("sysCodeType", Constants.SysCodeType));
-            Command.Parameters.Add(new OracleParameter("codeId", Constants.SysCodeIdForActiveLocation));
-            Command.Parameters.Add(new OracleParameter("ready", DefaultValues.Status));
-            Command.Parameters.Add(new OracleParameter("ivstQty", Constants.IvstQuantity));         
+           Command.Parameters.Add(new OracleParameter(Parameter.StatCode, Constants.StatusCodeConsumed));
+            Command.Parameters.Add(new OracleParameter(Parameter.SysCodeType, Constants.SysCodeType));
+      Command.Parameters.Add(new OracleParameter(Parameter.SysCodeId, Constants.SysCodeIdForActiveLocation));
+            Command.Parameters.Add(new OracleParameter(Parameter.Ready, DefaultValues.Status));
+            Command.Parameters.Add(new OracleParameter(Parameter.IvstQty, Constants.IvstQuantity));         
             var validData = Command.ExecuteReader();
             if (validData.Read())
             {
@@ -595,10 +595,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public PixTransactionDto GetPixtransaction(OracleConnection db, string rsnCode, string caseNbr)
         {
             var pixtran = new PixTransactionDto();
-            Query = $"select * from Pix_tran where rsn_code= :reasonCode  and case_nbr = :caseNbr order by create_date_time desc";
+            Query = $"select * from Pix_tran where rsn_code= :reasonCode  and case_nbr = :caseNumber order by create_date_time desc";
             Command = new OracleCommand(Query, db);
-            Command.Parameters.Add(new OracleParameter("reasonCode", rsnCode));
-            Command.Parameters.Add(new OracleParameter("caseNbr", caseNbr));
+            Command.Parameters.Add(new OracleParameter(Parameter.ReasonCode, rsnCode));
+            Command.Parameters.Add(new OracleParameter(Parameter.CaseNumber, caseNbr));
             var rsn = Command.ExecuteReader();
             if (rsn.Read())
             {

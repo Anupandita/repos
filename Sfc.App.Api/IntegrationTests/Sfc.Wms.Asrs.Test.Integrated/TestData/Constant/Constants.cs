@@ -70,6 +70,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
         public const string HoldStatus = "Y";
         public const int SyndStatus = 90;
         public const string MasterPackId = "0000028300028377093";
+        public const string DryLocnValue = "AM-PALLET-INDUCT";
+        public const string FreezerLocnValue = "FR-PALLET-INDUCT";
+        public const string NoPO= "No PO";
+
 
     }
 }

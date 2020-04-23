@@ -54,7 +54,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var nextup = new Entities.NextUpCounter();
             Query = $"select * from nxt_up_cnt where rec_type_id = :recTypeId";
             Command = new OracleCommand(Query, db);
-            Command.Parameters.Add(new OracleParameter("recTypeId", Constants.RecTypeId));
+            Command.Parameters.Add(new OracleParameter(Parameter.RecTypeId, Constants.RecTypeId));
             var nextUpCounterReader = Command.ExecuteReader();
             if (nextUpCounterReader.Read())
             {
