@@ -80,16 +80,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             return client.Execute(request);
         }
 
-        public IRestResponse CallPostApi(string url, string inp)
-        {
-            var client = new RestClient(url);
+        public IRestRequest CallPostApi()
+        {          
             var request = new RestRequest(Method.POST);
             request.AddHeader("content-type", Content.ContentType);
-            request.AddHeader("Authorization", UIConstants.BearerToken);
-            //  request.AddJsonBody(JsonConvert.DeserializeObject(inp));
-            request.AddJsonBody(inp);
+            request.AddHeader("Authorization", UIConstants.BearerToken);       
             request.RequestFormat = DataFormat.Json;
-            return client.Execute(request);
+            return request;
         }
         public void VerifyOkResultAndStoreBearerToken(IRestResponse response)
         {
@@ -99,8 +96,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
 
         }
 
-        public void VerifyCreatedResultAndStoreBearerToken(IRestResponse response)
+        public void VerifyCreatedResultAndStoreBearerToken(string url,IRestRequest request)
         {
+            var client = new RestClient(url);
+            var response= client.Execute(request);
             var result = JsonConvert.DeserializeObject<BaseResult>(response.Content);
             Assert.AreEqual(ResultType.Created, result.ResultType.ToString());
             UIConstants.BearerToken = response.Headers[1].Value.ToString();

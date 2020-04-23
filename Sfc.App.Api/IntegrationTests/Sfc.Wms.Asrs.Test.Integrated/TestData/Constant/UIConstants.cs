@@ -1,4 +1,5 @@
 ﻿using Castle.Core.Internal;
+using System;
 using System.Configuration;
 using System.Data;
 
@@ -14,7 +15,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData.Constant
         public const string LpnDetails = "lpn-details";
         public const string LpnHistory = "lpn-history";
         public const string Find = "find";
-      
+        public static DateTime LogDate;
         public const string SearchInputItemId = "attributeSearchInputDto.itemId=";
         public const string SearchInputItemDescription = "attributeSearchInputDto.itemDescription=";
         public const string SearchInputTempZone = "attributeSearchInputDto.tempZone=";
@@ -61,8 +62,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData.Constant
         public static string MessageMasterUrl = ConfigurationManager.AppSettings["BaseUrl"] + "message-masters/ui-messages";
         public const string Module = "ARCHLAYER";
         public const string MessageId = "MA-0234";
-        public const string Message = "API Testing Message";
-
+        public static string Message = "API Testing Message";
               
         public static DataTable UpdateTable(DataTable dt, bool isGrid)
         {
