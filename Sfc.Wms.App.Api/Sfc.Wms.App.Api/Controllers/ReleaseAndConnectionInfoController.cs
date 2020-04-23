@@ -22,7 +22,8 @@ namespace Sfc.Wms.App.Api.Controllers
             {
                 ConnectionString = ConfigurationManager.ConnectionStrings["SfcOracleDbContext"].ConnectionString
             };
-
+            var version = ConfigurationManager.AppSettings["Version"] as string;
+            if (!string.IsNullOrEmpty(version)) version = $"-{version}";
             var server = builder["Data Source"] as string;
             var releaseAndConnectionInfo = new BaseResult<ConnectionInfo>()
             {
@@ -31,7 +32,7 @@ namespace Sfc.Wms.App.Api.Controllers
                 {
                     Database = server?.Split('.')[0],
                     Environment = ConfigurationManager.AppSettings.Get(nameof(Environment)),
-                    Version = GetType().Assembly.GetName().Version.ToString()
+                    Version = $"{GetType().Assembly.GetName().Version}{version}"
                 }
             };
             return Json(releaseAndConnectionInfo);
