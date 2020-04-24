@@ -1,12 +1,12 @@
 ﻿using Oracle.ManagedDataAccess.Client;
 using Sfc.Core.OnPrem.Cache.InMemory;
 using Sfc.Core.OnPrem.UnitOfWork.Contracts.UoW.Interfaces;
-using Sfc.Wms.Configuration.SystemCode.Contracts.UoW.Interfaces;
 using Sfc.Wms.Data.Domain;
 using Sfc.Wms.Data.Domain.Interfaces;
 using Sfc.Wms.Data.UoW;
+using Sfc.Wms.Foundation.Corba.Contracts.UoW.Interfaces;
 using Sfc.Wms.Foundation.Receiving.Contracts.UoW.Interfaces;
-using Sfc.Wms.Framework.SystemCode.App.UoW.Services;
+using Sfc.Wms.Framework.Corba.App.UoW.Services;
 using Sfc.Wms.Inbound.Receiving.App.UoW.Services;
 using SimpleInjector;
 using System.Configuration;
@@ -22,13 +22,14 @@ namespace Sfc.Wms.App.Api
             container.Register<IUoWFactory, DbUoWFactory>(Lifestyle.Scoped);
             container.Register<IEntityMapper, EntityMapper>(Lifestyle.Singleton);
 
-            container.Register<ISystemCodeService, SystemCodeService>(Lifestyle.Scoped);
+            //   container.Register<ISystemCodeService, SystemCodeService>(Lifestyle.Scoped);
             container.Register<ISfcInMemoryCache>(() => new SfcInMemoryCache(MemoryCache.Default), Lifestyle.Singleton);
 
             container.Register<IInboundReceivingService, InboundReceivingService>(Lifestyle.Transient);
             container.Register<IAsnDetailService, AsnDetailService>(Lifestyle.Transient);
             container.Register<IAsnHeaderService, AsnHeaderService>(Lifestyle.Transient);
             container.Register<IAsnLotTrackingService, AsnLotTrackingService>(Lifestyle.Transient);
+            container.Register<ICorbaService, CorbaService>(Lifestyle.Transient);
 
             container.Register<IQuestionAnswerService, QuestionAnswerService>(Lifestyle.Transient);
             container.Register<IQuestionMasterService, QuestionMasterService>(Lifestyle.Transient);

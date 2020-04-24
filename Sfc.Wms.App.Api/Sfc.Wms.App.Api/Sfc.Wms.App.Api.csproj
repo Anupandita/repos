@@ -153,11 +153,11 @@
     <Reference Include="Sfc.Core.ListManagement.Contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Core.ListManagement.Contracts.1.0.0\lib\net472\Sfc.Core.ListManagement.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Core.OnPrem.Auditing, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Core.OnPrem.Auditing.1.1.0-prerelease\lib\net472\Sfc.Core.OnPrem.Auditing.dll</HintPath>
+    <Reference Include="Sfc.Core.OnPrem.Auditing, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Core.OnPrem.Auditing.1.2.0\lib\net472\Sfc.Core.OnPrem.Auditing.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Core.OnPrem.AutoMapping, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Core.OnPrem.AutoMapping.2.3.0-prerelease\lib\net472\Sfc.Core.OnPrem.AutoMapping.dll</HintPath>
+    <Reference Include="Sfc.Core.OnPrem.AutoMapping, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Core.OnPrem.AutoMapping.2.4.0\lib\net472\Sfc.Core.OnPrem.AutoMapping.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Core.OnPrem.Cache.InMemory, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Core.OnPrem.Cache.InMemory.1.0.0-prerelease\lib\net472\Sfc.Core.OnPrem.Cache.InMemory.dll</HintPath>
@@ -174,8 +174,8 @@
     <Reference Include="Sfc.Core.OnPrem.ParserAndTranslator, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Core.OnPrem.ParserAndTranslator.2.0.0\lib\net472\Sfc.Core.OnPrem.ParserAndTranslator.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Core.OnPrem.Result, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Core.OnPrem.Result.2.3.0\lib\net472\Sfc.Core.OnPrem.Result.dll</HintPath>
+    <Reference Include="Sfc.Core.OnPrem.Result, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Core.OnPrem.Result.2.4.0\lib\net472\Sfc.Core.OnPrem.Result.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Core.OnPrem.Security.Contracts, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Core.OnPrem.Security.Contracts.2.2.0\lib\net472\Sfc.Core.OnPrem.Security.Contracts.dll</HintPath>
@@ -183,14 +183,17 @@
     <Reference Include="Sfc.Core.OnPrem.UnitOfWork.Contracts, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Core.OnPrem.UnitOfWork.Contracts.1.0.1\lib\net472\Sfc.Core.OnPrem.UnitOfWork.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Core.OnPrem.UnitOfWork.Contracts.UoW, Version=5.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Core.OnPrem.UnitOfWork.Contracts.UoW.5.1.0-prerelease\lib\net472\Sfc.Core.OnPrem.UnitOfWork.Contracts.UoW.dll</HintPath>
+    <Reference Include="Sfc.Core.Onprem.UnitOfWork.Contracts.UoW, Version=5.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Core.OnPrem.UnitOfWork.Contracts.UoW.5.4.0\lib\net472\Sfc.Core.Onprem.UnitOfWork.Contracts.UoW.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Core.RestResponse, Version=1.4.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Core.RestResponse.1.4.5\lib\net472\Sfc.Core.RestResponse.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms..Configuration.Security.Rbac.Repository, Version=4.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.Security.Rbac.Repository.4.1.0\lib\net472\Sfc.Wms..Configuration.Security.Rbac.Repository.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.App.Api.Contracts, Version=5.10.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.App.Api.Contracts.5.10.0\lib\net472\Sfc.Wms.App.Api.Contracts.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.App.App, Version=3.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.App.App.3.1.2\lib\net472\Sfc.Wms.App.App.dll</HintPath>
@@ -237,17 +240,17 @@
     <Reference Include="Sfc.Wms.Configuration.MessageMaster.Contracts, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.MessageMaster.Contracts.1.1.0\lib\net472\Sfc.Wms.Configuration.MessageMaster.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Configuration.MessageMaster.Contracts.UoW, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Configuration.MessageMaster.Contracts.UoW.2.3.0-prerelease\lib\net472\Sfc.Wms.Configuration.MessageMaster.Contracts.UoW.dll</HintPath>
+    <Reference Include="Sfc.Wms.Configuration.MessageMaster.Contracts.UoW, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Configuration.MessageMaster.Contracts.UoW.2.4.0\lib\net472\Sfc.Wms.Configuration.MessageMaster.Contracts.UoW.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Configuration.MessageMaster.Domain, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Configuration.MessageMaster.Domain.1.3.0-prerelease\lib\net472\Sfc.Wms.Configuration.MessageMaster.Domain.dll</HintPath>
+    <Reference Include="Sfc.Wms.Configuration.MessageMaster.Domain, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Configuration.MessageMaster.Domain.1.4.0\lib\net472\Sfc.Wms.Configuration.MessageMaster.Domain.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Configuration.MessageMaster.Repository, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.MessageMaster.Repository.1.2.0\lib\net472\Sfc.Wms.Configuration.MessageMaster.Repository.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Configuration.MessageMaster.UoW, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Configuration.MessageMaster.UoW.1.2.0-prerelease\lib\net472\Sfc.Wms.Configuration.MessageMaster.UoW.dll</HintPath>
+    <Reference Include="Sfc.Wms.Configuration.MessageMaster.UoW, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Configuration.MessageMaster.UoW.1.3.0\lib\net472\Sfc.Wms.Configuration.MessageMaster.UoW.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Configuration.MessageTypes.Contracts, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.MessageTypes.Contracts.4.0.0\lib\net472\Sfc.Wms.Configuration.MessageTypes.Contracts.dll</HintPath>
@@ -273,17 +276,17 @@
     <Reference Include="Sfc.Wms.Configuration.SystemCode.Contracts, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.SystemCode.Contracts.3.0.0\lib\net472\Sfc.Wms.Configuration.SystemCode.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Configuration.SystemCode.Contracts.UoW, Version=4.6.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Configuration.SystemCode.Contracts.UoW.4.6.0-prerelease\lib\net472\Sfc.Wms.Configuration.SystemCode.Contracts.UoW.dll</HintPath>
+    <Reference Include="Sfc.Wms.Configuration.SystemCode.Contracts.UoW, Version=4.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Configuration.SystemCode.Contracts.UoW.4.9.0\lib\net472\Sfc.Wms.Configuration.SystemCode.Contracts.UoW.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Configuration.SystemCode.Domain, Version=2.7.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Configuration.SystemCode.Domain.2.7.0-prerelease\lib\net472\Sfc.Wms.Configuration.SystemCode.Domain.dll</HintPath>
+    <Reference Include="Sfc.Wms.Configuration.SystemCode.Domain, Version=2.11.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Configuration.SystemCode.Domain.2.11.0\lib\net472\Sfc.Wms.Configuration.SystemCode.Domain.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Configuration.SystemCode.Repository, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.SystemCode.Repository.4.0.0\lib\net472\Sfc.Wms.Configuration.SystemCode.Repository.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Configuration.SystemCode.UoW, Version=5.8.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Configuration.SystemCode.UoW.5.8.0-prerelease\lib\net472\Sfc.Wms.Configuration.SystemCode.UoW.dll</HintPath>
+    <Reference Include="Sfc.Wms.Configuration.SystemCode.UoW, Version=5.10.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Configuration.SystemCode.UoW.5.10.0\lib\net472\Sfc.Wms.Configuration.SystemCode.UoW.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Configuration.UserMaster.Contracts, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.UserMaster.Contracts.1.1.0\lib\net472\Sfc.Wms.Configuration.UserMaster.Contracts.dll</HintPath>
@@ -291,14 +294,14 @@
     <Reference Include="Sfc.Wms.Configuration.UserMaster.Repository, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.UserMaster.Repository.1.1.0\lib\net472\Sfc.Wms.Configuration.UserMaster.Repository.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Configuration.VendorMaster.Contracts.UoW, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Configuration.VendorMaster.Contracts.UoW.2.1.0-Prerelease\lib\net472\Sfc.Wms.Configuration.VendorMaster.Contracts.UoW.dll</HintPath>
+    <Reference Include="Sfc.Wms.Configuration.VendorMaster.Contracts.UoW, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Configuration.VendorMaster.Contracts.UoW.2.2.0\lib\net472\Sfc.Wms.Configuration.VendorMaster.Contracts.UoW.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Configuration.VendorMaster.Domain, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Configuration.VendorMaster.Domain.1.1.0-Prerelease\lib\net472\Sfc.Wms.Configuration.VendorMaster.Domain.dll</HintPath>
+    <Reference Include="Sfc.Wms.Configuration.VendorMaster.Domain, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Configuration.VendorMaster.Domain.1.2.0\lib\net472\Sfc.Wms.Configuration.VendorMaster.Domain.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Configuration.VendorMaster.UoW, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Configuration.VendorMaster.UoW.1.0.0-Prerelease\lib\net472\Sfc.Wms.Configuration.VendorMaster.UoW.dll</HintPath>
+    <Reference Include="Sfc.Wms.Configuration.VendorMaster.UoW, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Configuration.VendorMaster.UoW.1.1.0\lib\net472\Sfc.Wms.Configuration.VendorMaster.UoW.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Configuration.VendorMasters.Contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Confguration.VendorMasters.Contracts.1.0.0\lib\net472\Sfc.Wms.Configuration.VendorMasters.Contracts.dll</HintPath>
@@ -339,8 +342,17 @@
     <Reference Include="Sfc.Wms.Foundation.Corba.Contracts, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.Corba.Contracts.2.1.0\lib\net472\Sfc.Wms.Foundation.Corba.Contracts.dll</HintPath>
     </Reference>
+    <Reference Include="Sfc.Wms.Foundation.Corba.Contracts.UoW, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.Corba.Contracts.UoW.1.0.0\lib\net472\Sfc.Wms.Foundation.Corba.Contracts.UoW.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Foundation.Corba.Domain, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.Corba.Domain.1.0.0\lib\net472\Sfc.Wms.Foundation.Corba.Domain.dll</HintPath>
+    </Reference>
     <Reference Include="Sfc.Wms.Foundation.Corba.Repository, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.Corba.Repository.2.1.0\lib\net472\Sfc.Wms.Foundation.Corba.Repository.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Foundation.Corba.UoW, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.Corba.UoW.1.0.0\lib\net472\Sfc.Wms.Foundation.Corba.UoW.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Foundation.InboundLpn.Contracts, Version=5.11.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.InboundLpn.Contracts.5.11.0\lib\net472\Sfc.Wms.Foundation.InboundLpn.Contracts.dll</HintPath>
@@ -381,11 +393,11 @@
     <Reference Include="Sfc.Wms.Foundation.Receiving.Contracts, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.Receiving.Contracts.2.0.0\lib\net472\Sfc.Wms.Foundation.Receiving.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Foundation.Receiving.Contracts.UoW, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Foundation.Receiving.Contracts.UoW.1.0.0\lib\net472\Sfc.Wms.Foundation.Receiving.Contracts.UoW.dll</HintPath>
+    <Reference Include="Sfc.Wms.Foundation.Receiving.Contracts.UoW, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.Receiving.Contracts.UoW.1.0.2\lib\net472\Sfc.Wms.Foundation.Receiving.Contracts.UoW.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Foundation.Receiving.Domain, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Foundation.Receiving.Domain.1.0.0\lib\net472\Sfc.Wms.Foundation.Receiving.Domain.dll</HintPath>
+    <Reference Include="Sfc.Wms.Foundation.Receiving.Domain, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Foundation.Receiving.Domain.1.0.2\lib\net472\Sfc.Wms.Foundation.Receiving.Domain.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Foundation.Receiving.Repository, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Foundation.Receiving.Repository.1.1.0\lib\net472\Sfc.Wms.Foundation.Receiving.Repository.dll</HintPath>
@@ -413,6 +425,9 @@
     </Reference>
     <Reference Include="Sfc.Wms.Framework.Corba.App, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.Corba.App.2.1.1\lib\net472\Sfc.Wms.Framework.Corba.App.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Framework.Corba.App.UoW, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.Corba.App.UoW.1.0.1\lib\net472\Sfc.Wms.Framework.Corba.App.UoW.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Framework.DockDoor.App, Version=2.2.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.DockDoor.App.2.2.5\lib\net472\Sfc.Wms.Framework.DockDoor.App.dll</HintPath>
@@ -456,9 +471,6 @@
     <Reference Include="Sfc.Wms.Framework.SystemCode.App, Version=4.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.SystemCode.App.4.0.1\lib\net472\Sfc.Wms.Framework.SystemCode.App.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Framework.SystemCode.App.UoW, Version=5.9.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Framework.SystemCode.App.UoW.5.9.0-prerelease\lib\net472\Sfc.Wms.Framework.SystemCode.App.UoW.dll</HintPath>
-    </Reference>
     <Reference Include="Sfc.Wms.Framework.UnitOfWork, Version=4.0.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.UnitOfWork.4.0.4\lib\net472\Sfc.Wms.Framework.UnitOfWork.dll</HintPath>
     </Reference>
@@ -470,10 +482,6 @@
     </Reference>
     <Reference Include="Sfc.Wms.Inbound.InboundLpn.App, Version=6.10.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.InboundLpn.App.6.10.0\lib\net472\Sfc.Wms.Inbound.InboundLpn.App.dll</HintPath>
-    </Reference>
-    <Reference Include="Sfc.Wms.Inbound.Receiving.App.UoW, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Inbound\Receiving.UoW\Sfc.Wms.Inbound.Receiving.App.UoW\Sfc.Wms.Inbound.Receiving.App.UoW\bin\Debug\net472\Sfc.Wms.Inbound.Receiving.App.UoW.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Inbound.Tasks.App, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Inbound.Tasks.App.2.0.0\lib\net472\Sfc.Wms.Inbound.Tasks.App.dll</HintPath>
@@ -690,7 +698,6 @@
     <Compile Include="Controllers\InventoryMaintenanceController.cs" />
     <Compile Include="Controllers\LpnController.cs" />
     <Compile Include="Controllers\OrderMaintenanceController.cs" />
-    <Compile Include="Controllers\SystemCodeController.cs" />
     <Compile Include="Controllers\UserMasterController.cs" />
     <Compile Include="Controllers\UserRbacController.cs" />
     <Compile Include="Global.asax.cs">
@@ -733,9 +740,9 @@
       <Project>{f7ca77f1-56cd-4869-b5fa-3d4b87944972}</Project>
       <Name>Sfc.Wms.Foundation.Receiving.UoW</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Sfc.Wms.App.Api.Contracts\Sfc.Wms.App.Api.Contracts\Sfc.Wms.App.Api.Contracts.csproj">
-      <Project>{a1e7bc09-04d9-4aa9-973b-439885d1d81f}</Project>
-      <Name>Sfc.Wms.App.Api.Contracts</Name>
+    <ProjectReference Include="..\..\..\Inbound\Receiving.UoW\Sfc.Wms.Inbound.Receiving.App.UoW\Sfc.Wms.Inbound.Receiving.App.UoW\Sfc.Wms.Inbound.Receiving.App.UoW.csproj">
+      <Project>{bb8fc9fe-fada-420d-804a-601c0447de50}</Project>
+      <Name>Sfc.Wms.Inbound.Receiving.App.UoW</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

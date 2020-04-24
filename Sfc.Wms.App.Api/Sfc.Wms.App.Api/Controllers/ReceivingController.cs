@@ -53,11 +53,21 @@ namespace Sfc.Wms.App.Api.Controllers
             return ResponseHandler(result);
         }
 
+        [HttpPut, Route(Routes.Paths.UpdateAsnDetails)]
+        [ResponseType(typeof(BaseResult))]
+        public async Task<IHttpActionResult> UpdateAdvanceShipmentNoticesDetailsAsync(UpdateAsnDto updateAsnDto)
+        {
+            var result = await _receivingService.UpdateAdvanceShipmentNoticesDetailsAsync(updateAsnDto).ConfigureAwait(false);
+
+            return ResponseHandler(result);
+        }
+
         [HttpGet, Route(Routes.Paths.GetQualityVerifications)]
         [ResponseType(typeof(BaseResult<List<QVDetails>>))]
         public async Task<IHttpActionResult> GetQualityVerificationsDetailsAsync(string shipmentNumber)
         {
             var result = await _receivingService.GetQvDetailsAsync(shipmentNumber).ConfigureAwait(false);
+
             return ResponseHandler(result);
         }
 

@@ -4,6 +4,7 @@ using Sfc.Core.Aop.WebApi.Interface;
 using Sfc.Core.Aop.WebApi.Logging;
 using Sfc.Core.Cache.Contracts;
 using Sfc.Core.Cache.InMemory;
+using Sfc.Core.OnPrem.AutoMapping.Initialize;
 using Sfc.Core.OnPrem.Pagination;
 using Sfc.Core.OnPrem.Security.Contracts.Extensions;
 using Sfc.Wms.App.App.AutoMapper;
@@ -31,8 +32,6 @@ using System.Configuration;
 using System.Linq;
 using System.Runtime.Caching;
 using System.Web.Http;
-using Sfc.Core.OnPrem.AutoMapping.Initialize;
-using Sfc.Wms.Foundation.Receiving.Domain.AutoMapper;
 
 namespace Sfc.Wms.App.Api
 {
@@ -66,7 +65,6 @@ namespace Sfc.Wms.App.Api
                      SfcCorbaMapper.CreateMaps(cfg);
                      SfcMessageMaster.CreateMaps(cfg);
                      SfcMessageLogger.CreateMaps(cfg);
-                     SfcReceivingMapper.CreateMaps(cfg);
                      cfg.CreateMap<VendorMaster, VendorDetailDto>(MemberList.None).ReverseMap();
                      cfg.CreateMap<VendorMaster, VendorMasterDto>(MemberList.None).ReverseMap();
 

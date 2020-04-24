@@ -1,12 +1,11 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sfc.Wms.App.Api.Tests.Unit.Constants;
 using Sfc.Wms.App.Api.Tests.Unit.Fixtures;
 
 namespace Sfc.Wms.App.Api.Tests.Unit.Nuget
 {
     [TestClass, TestCategory(TestCategories.Unit)]
-    public class ReceivingGatewayTest:ReceivingGatewayFixture
+    public class ReceivingGatewayTest : ReceivingGatewayFixture
     {
         [TestMethod, TestCategory(TestCategories.Unit)]
         public void Receiving_Search_Operation_Returned_Ok_As_Response_Status()
@@ -24,7 +23,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Nuget
             TheReceivingSearchOperationReturnedBadRequestAsResponseStatus();
         }
 
-       [TestMethod, TestCategory(TestCategories.Unit)]
+        [TestMethod, TestCategory(TestCategories.Unit)]
         public void Get_AsnLotTracking_Details_Operation_Returned_Ok_As_Response_Status()
         {
             InputToFetchAsnLotTrackingDetails();
@@ -118,6 +117,30 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Nuget
             InputToFetchQvDetailsForWhichNoDetailsExists();
             FetchQvDetailsOperationInvoked();
             FetchQvDetailsReturnedNotFoundAsResponseStatus();
+        }
+
+        [TestMethod, TestCategory(TestCategories.Unit)]
+        public void Update_Asn_Details_Operation_Returned_Ok_As_Response_Status()
+        {
+            InputToUpdateAsnDetails();
+            UpdateAsnDetailsOperationInvoked();
+            UpdateAsnDetailsReturnedOkAsResponseStatus();
+        }
+
+        [TestMethod, TestCategory(TestCategories.Unit)]
+        public void Update_Asn_Details_Operation_Returned_BadRequest_As_Response_Status()
+        {
+            EmptyOrNullToUpdateAsnDetails();
+            UpdateAsnDetailsOperationInvoked();
+            UpdateAsnDetailsReturnedBadRequestAsResponseStatus();
+        }
+
+        [TestMethod, TestCategory(TestCategories.Unit)]
+        public void Update_Asn_Details_Operation_Returned_NotFound_As_Response_Status()
+        {
+            InputToUpdateAsnDetailsForWhichNoDetailsExists();
+            UpdateAsnDetailsOperationInvoked();
+            UpdateAsnDetailsReturnedNotFoundAsResponseStatus();
         }
     }
 }

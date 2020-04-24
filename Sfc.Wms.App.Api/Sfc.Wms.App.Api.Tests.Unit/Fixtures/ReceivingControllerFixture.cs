@@ -21,6 +21,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         private readonly Mock<IAsnLotTrackingService> _lotService;
         private ReceiptInquiryDto receiptInquiryDto;
         private AnswerTextDto answerTextDto;
+        private UpdateAsnDto updateAsnDto;
         private string shipmentNumber;
         private string skuId;
         private Task<IHttpActionResult> testResponse;
@@ -33,7 +34,6 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             _receivingController =
                 new ReceivingController(_receivingService.Object, _lotService.Object, _answerService.Object);
         }
-
 
         private void MockReceiptSearch(ResultTypes resultType)
         {
@@ -321,6 +321,84 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         protected void TheUpdateAnswerTextOperationReturnedOkResponse()
         {
             VerifyUpdateAnswerText();
+            Assert.IsNotNull(testResponse);
+            var result = testResponse.Result as OkNegotiatedContentResult<BaseResult>;
+            Assert.IsNotNull(result);
+            Assert.AreEqual(ResultTypes.Ok, result.Content.ResultType);
+        }
+
+        private void MockUpdateAsn(ResultTypes resultType)
+        {
+            var result = new BaseResult {ResultType = resultType};
+
+            _receivingService.Setup(el => el.UpdateAdvanceShipmentNoticesDetailsAsync(It.IsAny<UpdateAsnDto>()))
+                .Returns(Task.FromResult(result));
+        }
+
+        private void VerifyUpdateAsn()
+        {
+            _receivingService.Verify(el => el.UpdateAdvanceShipmentNoticesDetailsAsync(It.IsAny<UpdateAsnDto>()));
+        }
+
+        protected void InputToUpdateAsn()
+        {
+            updateAsnDto = Generator.Default.Single<UpdateAsnDto>();
+            MockUpdateAsn(ResultTypes.Ok);
+        }
+
+        protected void InputToUpdateAsnForWhichNoRecordExists()
+        {
+            updateAsnDto = Generator.Default.Single<UpdateAsnDto>();
+            MockUpdateAsn(ResultTypes.NotFound);
+        }
+
+        protected void InvalidInputToUpdateAsn()
+        {
+            updateAsnDto = Generator.Default.Single<UpdateAsnDto>();
+            MockUpdateAsn(ResultTypes.ExpectationFailed);
+        }
+
+        protected void EmptyOrNullInputToUpdateAsn()
+        {
+            answerTextDto = null;
+            MockUpdateAsn(ResultTypes.BadRequest);
+        }
+
+        protected void UpdateAsnOperationInvoked()
+        {
+            testResponse = _receivingController.UpdateAdvanceShipmentNoticesDetailsAsync(updateAsnDto);
+        }
+
+        protected void TheUpdateAsnOperationReturnedBadRequestResponse()
+        {
+            VerifyUpdateAsn();
+            Assert.IsNotNull(testResponse);
+            var result = testResponse.Result as NegotiatedContentResult<BaseResult>;
+            Assert.IsNotNull(result);
+            Assert.AreEqual(ResultTypes.BadRequest, result.Content.ResultType);
+        }
+
+        protected void TheUpdateAsnOperationReturnedNotFoundAsResponse()
+        {
+            VerifyUpdateAsn();
+            Assert.IsNotNull(testResponse);
+            var result = testResponse.Result as NegotiatedContentResult<BaseResult>;
+            Assert.IsNotNull(result);
+            Assert.AreEqual(ResultTypes.NotFound, result.Content.ResultType);
+        }
+
+        protected void TheUpdateAsnOperationReturnedExpectationFailedAsResponse()
+        {
+            VerifyUpdateAsn();
+            Assert.IsNotNull(testResponse);
+            var result = testResponse.Result as NegotiatedContentResult<BaseResult>;
+            Assert.IsNotNull(result);
+            Assert.AreEqual(ResultTypes.ExpectationFailed, result.Content.ResultType);
+        }
+
+        protected void TheUpdateAsnOperationReturnedOkResponse()
+        {
+            VerifyUpdateAsn();
             Assert.IsNotNull(testResponse);
             var result = testResponse.Result as OkNegotiatedContentResult<BaseResult>;
             Assert.IsNotNull(result);

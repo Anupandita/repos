@@ -102,5 +102,37 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Controllers
             UpdateAnswerTextOperationInvoked();
             TheUpdateAnswerTextOperationReturnedNotFoundAsResponse();
         }
+
+        [TestMethod, TestCategory(TestCategories.Unit)]
+        public void Update_Asn_Operation_Returned_Ok_As_Response_Status()
+        {
+            InputToUpdateAsn();
+            UpdateAsnOperationInvoked();
+            TheUpdateAsnOperationReturnedOkResponse();
+        }
+
+        [TestMethod, TestCategory(TestCategories.Unit)]
+        public void Update_Asn_Operation_Returned_BadRequest_As_Response_Status()
+        {
+            EmptyOrNullInputToUpdateAsn();
+            UpdateAsnOperationInvoked();
+            TheUpdateAsnOperationReturnedBadRequestResponse();
+        }
+
+        [TestMethod, TestCategory(TestCategories.Unit)]
+        public void Update_Asn_Operation_Returned_NotFound_As_Response_Status()
+        {
+            InputToUpdateAsnForWhichNoRecordExists();
+            UpdateAsnOperationInvoked();
+            TheUpdateAsnOperationReturnedNotFoundAsResponse();
+        }
+
+        [TestMethod, TestCategory(TestCategories.Unit)]
+        public void Update_Asn_Operation_Returned_Exception_As_Response_Status()
+        {
+            InvalidInputToUpdateAsn();
+            UpdateAsnOperationInvoked();
+            TheUpdateAsnOperationReturnedExpectationFailedAsResponse();
+        }
     }
 }

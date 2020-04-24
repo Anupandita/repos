@@ -19,6 +19,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         private readonly Mock<IRestCsharpClient> _restClient;
         private ReceiptInquiryDto receiptInquiryDto;
         private AnswerTextDto answerTextDto;
+        private UpdateAsnDto updateAsnDto;
         private BaseResult<SearchResultDto> searchResult;
         private BaseResult<ShipmentDetailsDto> shipmentDetails;
         private BaseResult<IEnumerable<AsnLotTrackingDto>> lotTrackingDetails;
@@ -32,6 +33,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             _restClient = new Mock<IRestCsharpClient>();
             answerTextDto = Generator.Default.Single<AnswerTextDto>();
             receiptInquiryDto = Generator.Default.Single<ReceiptInquiryDto>();
+            updateAsnDto = Generator.Default.Single<UpdateAsnDto>();
             _receivingGateway = new ReceivingGateway(new ResponseBuilder(), _restClient.Object);
         }
 
@@ -285,6 +287,54 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             VerifyRestClientInvocation<BaseResult<IEnumerable<QvDetailsDto>>>();
             Assert.IsNotNull(qvDetails);
             Assert.AreEqual(ResultTypes.NotFound, qvDetails.ResultType);
+        }
+
+        #endregion
+
+        #region Update Answer text
+
+        protected void InputToUpdateAsnDetails()
+        {
+            var result = new BaseResult { ResultType = ResultTypes.Ok };
+            GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
+        }
+
+        protected void InputToUpdateAsnDetailsForWhichNoDetailsExists()
+        {
+            var result = new BaseResult { ResultType = ResultTypes.NotFound };
+            GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
+        }
+
+        protected void EmptyOrNullToUpdateAsnDetails()
+        {
+            var result = new BaseResult { ResultType = ResultTypes.BadRequest };
+            GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
+        }
+
+        protected void UpdateAsnDetailsOperationInvoked()
+        {
+            updateResult = _receivingGateway.UpdateAdvanceShipmentNoticesDetailsAsync(updateAsnDto, It.IsAny<string>()).Result;
+        }
+
+        protected void UpdateAsnDetailsReturnedOkAsResponseStatus()
+        {
+            VerifyRestClientInvocation<BaseResult>();
+            Assert.IsNotNull(updateResult);
+            Assert.AreEqual(ResultTypes.Ok, updateResult.ResultType);
+        }
+
+        protected void UpdateAsnDetailsReturnedBadRequestAsResponseStatus()
+        {
+            VerifyRestClientInvocation<BaseResult>();
+            Assert.IsNotNull(updateResult);
+            Assert.AreEqual(ResultTypes.BadRequest, updateResult.ResultType);
+        }
+
+        protected void UpdateAsnDetailsReturnedNotFoundAsResponseStatus()
+        {
+            VerifyRestClientInvocation<BaseResult>();
+            Assert.IsNotNull(updateResult);
+            Assert.AreEqual(ResultTypes.NotFound, updateResult.ResultType);
         }
 
         #endregion

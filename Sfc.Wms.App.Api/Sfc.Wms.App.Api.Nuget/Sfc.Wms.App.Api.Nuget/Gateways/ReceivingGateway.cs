@@ -86,11 +86,25 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             return await retryPolicy.ExecuteAsync(async () =>
             {
                 var resource = $"{_endPoint}/{Routes.Paths.AdvanceShipmentNotices}/{shipmentNumber}/{Routes.Paths.QualityVerifications}";
-                var request = PutRequest(resource, asnAnswerTextDto,token, Authorization);
+                var request = PutRequest(resource, asnAnswerTextDto, token, Authorization);
                 var response = await _restCsharpClient.ExecuteTaskAsync<BaseResult>(request)
                     .ConfigureAwait(false);
                 return _responseBuilder.GetBaseResult(response);
             }).ConfigureAwait(false);
+        }
+
+        public async Task<BaseResult> UpdateAdvanceShipmentNoticesDetailsAsync(UpdateAsnDto updateAsnDto, string token)
+        {
+            var retryPolicy = Proxy();
+            return await retryPolicy.ExecuteAsync(async () =>
+            {
+                var resource = $"{_endPoint}/{Routes.Paths.AdvanceShipmentNotices}/{updateAsnDto.ShipmentNumber}";
+                var request = PutRequest(resource, updateAsnDto, token, Authorization);
+                var response = await _restCsharpClient.ExecuteTaskAsync<BaseResult>(request)
+                    .ConfigureAwait(false);
+                return _responseBuilder.GetBaseResult(response);
+            }).ConfigureAwait(false);
+
         }
     }
 }

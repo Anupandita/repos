@@ -16,5 +16,7 @@ namespace Sfc.Wms.App.Api.Nuget.Interfaces
         Task<BaseResult<IEnumerable<AsnLotTrackingDto>>> GetAsnLotTrackingDetailsAsync(string shipmentNumber, string skuId, string token);
 
         Task<BaseResult> UpdateQualityVerificationsAsync(AnswerTextDto asnAnswerTextDto, string shipmentNumber, string token);
+
+        Task<BaseResult> UpdateAdvanceShipmentNoticesDetailsAsync(UpdateAsnDto updateAsnDto, string token);
     }
 }
