@@ -105,7 +105,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var querypld = $"{SynrQueries.PLdSnapShotQuery}";
             Command = new OracleCommand(querypld, db);
-          Command.Parameters.Add(new OracleParameter(TestData.Parameter.SyncId, syncId));
+            Command.Parameters.Add(new OracleParameter(TestData.Parameter.SyncId, syncId));
             Command.Parameters.Add(new OracleParameter(TestData.Parameter.SysCodeType, Constants.SysCodeType));
             Command.Parameters.Add(new OracleParameter(TestData.Parameter.SysCodeId, Constants.SysCodeIdForActiveLocation));
 
@@ -129,6 +129,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var pldsnap = new List<PickLocndto>();
             var pldQuerys = $"{SynrQueries.ListPldSkuQuery}";
             var command = new OracleCommand(pldQuerys, db);
+            command.Parameters.Add(new OracleParameter(TestData.Parameter.SysCodeType, Constants.SysCodeType));
+            command.Parameters.Add(new OracleParameter(TestData.Parameter.SysCodeId, Constants.SysCodeIdForActiveLocation));
             var pldReader = command.ExecuteReader();
             while (pldReader.Read())
             {
@@ -215,7 +217,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var syndtDataDto = new Data.Entities.SwmSyndData();
             SqlStatements = $"{SynrQueries.SyndDataQuery}";
             Command = new OracleCommand(SqlStatements, db);
-          Command.Parameters.Add(new OracleParameter(TestData.Parameter.SyncId, syncId));
+            Command.Parameters.Add(new OracleParameter(TestData.Parameter.SyncId, syncId));
             Command.Parameters.Add(new OracleParameter(TestData.Parameter.SkuId, skuid));
             var validData = Command.ExecuteReader();
             if (validData.Read())

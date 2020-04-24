@@ -108,6 +108,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         public string CreateCostMessage(string containerNbr, string skuId, string qty, string locationId)
         {
+            var quantity = Int32.Parse(qty) * 100;
             CostParameters = new CostDto
             {
                 ActionCode = DefaultValues.ActionCodeCost,
@@ -117,7 +118,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 PhysicalContainerId = "",
                 CurrentLocationId = Constants.SampleCurrentLocnId,
                 StorageClassAttribute1 = skuId,
-                StorageClassAttribute2 = Constants.QtyToSend,
+                StorageClassAttribute2 = quantity.ToString(),
                 StorageClassAttribute3 = "",
                 StorageClassAttribute4 = "",
                 StorageClassAttribute5 = "",

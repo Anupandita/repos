@@ -60,15 +60,19 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         public Int64 FetchNextupCount(OracleConnection db)
         {
-            var query = $"select max(CURR_NBR) from nxt_up_cnt where rec_type_id = 'SYN'";
+            var query = $"{SynrQueries.NextupCountQuery}";
             Command = new OracleCommand(query, db);
+            Command.Parameters.Add(new OracleParameter(TestData.Parameter.RecTypeId, Constants.RectTypeId));
             var nextUpCounterReader = Convert.ToInt64(Command.ExecuteScalar().ToString());
             return nextUpCounterReader;
         }
         public string GetPickLocationDetail(OracleConnection db)
         {
-            PickLocnViewquery = $"select Count(*) from pick_locn_dtl p join item_master i on  p.sku_id = i.sku_id where  locn_id||(DECODE(i.temp_zone, 'D', 'Dry', 'Freezer')) in (select lh.locn_id||lg.grp_attr from locn_hdr lh inner join locn_grp lg on lg.locn_id = lh.locn_id inner join sys_code sc on sc.code_id = lg.grp_type and sc.code_type = '740' and sc.code_id = '18')";
+            
+            PickLocnViewquery = $"{SynrQueries.PickLocnCountQuery}";
             Command = new OracleCommand(PickLocnViewquery, db);
+            Command.Parameters.Add(new OracleParameter(TestData.Parameter.SysCodeType, Constants.SysCodeType));
+            Command.Parameters.Add(new OracleParameter(TestData.Parameter.SysCodeId, Constants.SysCodeIdForActiveLocation));
             var pickLocnDtlReader = Command.ExecuteScalar().ToString();
             return pickLocnDtlReader;
         }
@@ -87,8 +91,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         }
         public Int64 FetchPldsnapshottable(OracleConnection db, string syncId)
         {
-            var querypld = $"select Count(*) from SWM_SYNR_PLD_SNAPSHOT pld join item_master i on  pld.sku_id = i.sku_id where pld.SYNC_ID = '{syncId}' and locn_id|| (DECODE(i.temp_zone, 'D', 'Dry', 'Freezer')) in (select lh.locn_id || lg.grp_attr from locn_hdr lh inner join locn_grp lg on lg.locn_id = lh.locn_id inner join sys_code sc on sc.code_id = lg.grp_type and sc.code_type = '740' and sc.code_id = '18')";
+            var querypld = $"{SynrQueries.PLdSnapShotQuery}";
             Command = new OracleCommand(querypld, db);
+            Command.Parameters.Add(new OracleParameter(TestData.Parameter.SysCodeType, Constants.SysCodeType));
+            Command.Parameters.Add(new OracleParameter(TestData.Parameter.SysCodeId, Constants.SysCodeIdForActiveLocation));
             var pldsnapshotReader = Convert.ToInt64(Command.ExecuteScalar().ToString());
             return pldsnapshotReader;
 
@@ -109,8 +115,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public PickLocationDetailsDto PicklocationDetail(OracleConnection db)
         {
             var pickLocnDtl = new PickLocationDetailsDto();
-            var pickLocnView = $"select * from pick_locn_dtl p join item_master i on  p.sku_id = i.sku_id where p.ACTL_INVN_QTY! = 0 and  locn_id||(DECODE(i.temp_zone, 'D', 'Dry', 'Freezer')) in (select lh.locn_id||lg.grp_attr from locn_hdr lh inner join locn_grp lg on lg.locn_id = lh.locn_id inner join sys_code sc on sc.code_id = lg.grp_type and sc.code_type = '740' and sc.code_id = '18') ";
+            var pickLocnView = $"{SynrQueries.PldTableQuery}";
             Command = new OracleCommand(pickLocnView, db);
+            Command.Parameters.Add(new OracleParameter(TestData.Parameter.SysCodeType, Constants.SysCodeType));
+            Command.Parameters.Add(new OracleParameter(TestData.Parameter.SysCodeId, Constants.SysCodeIdForActiveLocation));
             var pickLocnDtlReader = Command.ExecuteReader();
             if (pickLocnDtlReader.Read())
             {
@@ -187,8 +195,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public PickLocationDetailsDto PicklocationTable(OracleConnection db, string skuid)
         {
             var pickLocnDtl = new PickLocationDetailsDto();
-            var pickLocnView = $"select * from pick_locn_dtl p join item_master i on  p.sku_id = i.sku_id where p.SKU_ID='{skuid}' and p.ACTL_INVN_QTY! = 0 and  locn_id||(DECODE(i.temp_zone, 'D', 'Dry', 'Freezer')) in (select lh.locn_id||lg.grp_attr from locn_hdr lh inner join locn_grp lg on lg.locn_id = lh.locn_id inner join sys_code sc on sc.code_id = lg.grp_type and sc.code_type = '740' and sc.code_id = '18') ";
+            var pickLocnView = $"{SynrQueries.PldFromSku}";
             Command = new OracleCommand(pickLocnView, db);
+            Command.Parameters.Add(new OracleParameter(TestData.Parameter.SkuId, skuid));
+            Command.Parameters.Add(new OracleParameter(TestData.Parameter.SysCodeType, Constants.SysCodeType));
+            Command.Parameters.Add(new OracleParameter(TestData.Parameter.SysCodeId, Constants.SysCodeIdForActiveLocation));
             var pickLocnDtlReader = Command.ExecuteReader();
             if (pickLocnDtlReader.Read())
             {
@@ -201,8 +212,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public Data.Entities.SwmSyndData FetchSyndData(OracleConnection db, string syncId, string skuid)
         {
             var syndtDataDto = new Data.Entities.SwmSyndData();
-            SqlStatements = $"select * from SWM_SYND_DATA where SYNCHRONIZATION_ID='{syncId}' and SKU='{skuid}'";
+            SqlStatements = $"{SynrQueries.SyndDataQuery}";
             Command = new OracleCommand(SqlStatements, db);
+            Command.Parameters.Add(new OracleParameter(TestData.Parameter.SyncId, syncId));
+            Command.Parameters.Add(new OracleParameter(TestData.Parameter.SkuId, skuid));
             var validData = Command.ExecuteReader();
             if (validData.Read())
             {
@@ -234,7 +247,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public Data.Entities.SwmSyndData SyndDataTable(OracleConnection db)
         {
             var syndData = new Data.Entities.SwmSyndData();
-            var syndDataQuery = $"select * from SWM_SYND_DATA where status= 90 order by SYNCHRONIZATION_ID desc ";
+            var syndDataQuery = $"{SynrQueries.SyndDataFilterQuery}";
             Command = new OracleCommand(syndDataQuery, db);
             var syndReader = Command.ExecuteReader();
             if (syndReader.Read())
@@ -250,8 +263,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public PickLocationDetailsDto PickLocnTable(OracleConnection db)
         {
             var pldsnap = new PickLocationDetailsDto();
-            var pldQuerys = $"select * from pick_locn_dtl p join item_master i on  p.sku_id = i.sku_id where p.ACTL_INVN_QTY! = 0 and  locn_id||(DECODE(i.temp_zone, 'D', 'Dry', 'Freezer')) in (select lh.locn_id||lg.grp_attr from locn_hdr lh inner join locn_grp lg on lg.locn_id = lh.locn_id inner join sys_code sc on sc.code_id = lg.grp_type and sc.code_type = '740' and sc.code_id = '18')";
+            var pldQuerys = $"{SynrQueries.PldTableQuery}";
             var command = new OracleCommand(pldQuerys, db);
+            Command.Parameters.Add(new OracleParameter(TestData.Parameter.SysCodeType, Constants.SysCodeType));
+            Command.Parameters.Add(new OracleParameter(TestData.Parameter.SysCodeId, Constants.SysCodeIdForActiveLocation));
             var pldReader = command.ExecuteReader();
             if (pldReader.Read())
             {
@@ -318,8 +333,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         public int GetSyndData(OracleConnection db, string synchronization, string skuId)
         {
-            Syndquery = $"select SUM(SWM_SYND_DATA.Quantity) from SWM_SYND_DATA where SYNCHRONIZATION_ID = '{synchronization}'and SKU ='{skuId}'";
+            Syndquery = $"{SynrQueries.SynrDataQty}";
             Command = new OracleCommand(Syndquery, db);
+            Command.Parameters.Add(new OracleParameter(TestData.Parameter.SyncId, synchronization));
+            Command.Parameters.Add(new OracleParameter(TestData.Parameter.SkuId, skuId));
             var syndReader = Convert.ToInt32(Command.ExecuteScalar().ToString());
             return syndReader;
         }
