@@ -8,7 +8,6 @@ using Sfc.Core.OnPrem.Result;
 using System.Data;
 using System.Reflection;
 using System.Collections.Generic;
-using System.Configuration;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
 {
@@ -28,15 +27,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
         public void LoginToFetchToken()
         {
             CreateLoginDto();
-            var client = new RestClient(UIConstants.LoginUrl);
-            var request = new RestRequest(Method.POST);
-            request.AddHeader("content-type", Content.ContentType);
-            request.AddJsonBody(loginCredentials);
-            request.RequestFormat = DataFormat.Json;
-            var response = client.Execute(request);
-            var result = JsonConvert.DeserializeObject<BaseResult>(response.Content);
-            Assert.AreEqual(ResultType.Ok, result.ResultType.ToString());
-            UIConstants.BearerToken = response.Headers[1].Value.ToString();
+            var request = CallPostApi();
+            request.AddJsonBody(loginCredentials);            
+            var response = ExecuteRequest(UIConstants.LoginUrl, request);
+            VerifyOkResultAndStoreBearerToken(response);
         }
 
         public DataTable ToDataTable<T>(List<T> items)
@@ -95,48 +89,32 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             UIConstants.BearerToken = response.Headers[1].Value.ToString();
 
         }
-
-        public void VerifyCreatedResultAndStoreBearerToken(string url,IRestRequest request)
+        public IRestResponse ExecuteRequest(string url,IRestRequest request)
         {
             var client = new RestClient(url);
-            var response= client.Execute(request);
+            var response = client.Execute(request);
+            return response;
+        }
+        public void VerifyCreatedResultAndStoreBearerToken(IRestResponse response)
+        {             
             var result = JsonConvert.DeserializeObject<BaseResult>(response.Content);
             Assert.AreEqual(ResultType.Created, result.ResultType.ToString());
-            UIConstants.BearerToken = response.Headers[1].Value.ToString();
+            UIConstants.BearerToken = response.Headers[1].Value.ToString();            
 
         }
         public void VerifyApiOutputAgainstDbOutput(DataTable queryDt, DataTable ApiDt)
-        { var i = -1;
+        {
+            Assert.AreEqual(queryDt.Rows.Count, ApiDt.Rows.Count,"Api and Db count donot match");
+            var i = -1;
 
             foreach (DataRow dr in queryDt.Rows)
             {
                 i = i+1;
                 foreach (DataColumn dc in queryDt.Columns)
                    
-                    Assert.AreEqual(dr[dc].ToString(), ApiDt.Rows[i][dc.ColumnName],dc.ColumnName+" : Values are not equal");
-        }
-}
-
-        public void CreateUrlAndInputParamForApiUsing(string criteria)
-        {
-            switch (criteria)
-            {
-                case "Item":
-                    UIConstants.ItemAttributeSearchUrl = ConfigurationManager.AppSettings["BaseUrl"] + UIConstants.ItemAttributes + UIConstants.Search + UIConstants.SearchInputItemId + UIConstants.ItemNumber;
-                    return;
-                case "ItemDescription":
-                    UIConstants.ItemAttributeSearchUrl = ConfigurationManager.AppSettings["BaseUrl"] + UIConstants.ItemAttributes + UIConstants.Search + UIConstants.SearchInputItemDescription + UIConstants.ItemDescription;
-                    return;
-                case "VendorItemNumber":
-                    UIConstants.ItemAttributeSearchUrl = ConfigurationManager.AppSettings["BaseUrl"] + UIConstants.ItemAttributes + UIConstants.Search + UIConstants.SearchInputVendorItemNumber + UIConstants.VendorItemNumber;
-                    return;
-                case "TempZone":
-                    UIConstants.ItemAttributeSearchUrl = ConfigurationManager.AppSettings["BaseUrl"] + UIConstants.ItemAttributes + UIConstants.Search + UIConstants.SearchInputTempZone + UIConstants.TempZone;
-                    return;
-                case "ItemDetails":
-                    UIConstants.ItemAttributeDetailsUrl = ConfigurationManager.AppSettings["BaseUrl"] + UIConstants.ItemAttributes + UIConstants.ItemNumber;
-                    return;
-            }
-        }
+                    Assert.AreEqual(dr[dc].ToString(), ApiDt.Rows[i][dc.ColumnName].ToString(),dc.ColumnName+" : Values are not equal");
+             }
+         }
+              
     }
 }

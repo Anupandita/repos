@@ -20,7 +20,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             {
                 db.ConnectionString = ConfigurationManager.ConnectionStrings["SfcRbacContextModel"].ToString();
                 db.Open();
-                var _command = new OracleCommand(MessageMasterQueries.MsgMasterSql, db);
+                var _command = new OracleCommand(UIApiQueries.MsgMasterSql, db);
                 MsgMasterDt.Load(_command.ExecuteReader());
             }
             }

@@ -1,5 +1,4 @@
 ﻿using System.Data;
-using Sfc.Wms.Api.Asrs.Test.Integrated.TestData.Constant;
 using Oracle.ManagedDataAccess.Client;
 namespace FunctionalTestProject.SQLQueries
 {
@@ -19,14 +18,14 @@ namespace FunctionalTestProject.SQLQueries
             _command = new OracleCommand(sql, db);
             var tempDt = new DataTable();
             tempDt.Load(_command.ExecuteReader());
-            return UIConstants.UpdateTable(tempDt, false);
+            return tempDt;
         }
         public DataTable GetDataTableFromDbForGrid(string sql, OracleConnection db)
         {
             _command = new OracleCommand(sql, db);
             var tempDt = new DataTable();
             tempDt.Load(_command.ExecuteReader());
-            return UIConstants.UpdateTable(tempDt, true);
+            return tempDt;
         }
     }
 }

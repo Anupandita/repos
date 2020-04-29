@@ -42,8 +42,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
         public void CallMessageLoggerApiWithUrl(string url)
         {            
             var request = CallPostApi();           
-            request.AddJsonBody(new List<MessageLogDto> { messageLogDto });           
-            VerifyCreatedResultAndStoreBearerToken(url,request);
+            request.AddJsonBody(new List<MessageLogDto> { messageLogDto });
+            var response = ExecuteRequest(url, request);
+            VerifyCreatedResultAndStoreBearerToken(response);
         }
 
         public void VerifyLogInsteredInMessageLogTableInDb()
@@ -53,7 +54,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
                 db.ConnectionString = ConfigurationManager.ConnectionStrings["SfcRbacContextModel"].ToString();
                 db.Open();
 
-                var _command = new OracleCommand(MessageLoggerQueries.FetchMessageLoggerDtSql, db);
+                var _command = new OracleCommand(UIApiQueries.FetchMessageLoggerDtSql, db);
                 var tempdt = new DataTable();
                 tempdt.Load(_command.ExecuteReader());
                 Assert.AreEqual(UIConstants.Module,tempdt.Rows[0][0]);

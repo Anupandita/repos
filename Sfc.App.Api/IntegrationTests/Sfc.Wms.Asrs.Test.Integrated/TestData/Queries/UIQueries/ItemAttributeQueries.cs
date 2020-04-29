@@ -21,7 +21,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
                     pick_wt_tol_amnt pickWeightTolerance,pick_wt_tol_type pickWeightToleranceType,mhe_wt_tol_amnt mheWeightTolerance,mhe_wt_tol_type mheWeightToleranceType,
                     get_sc_desc('B', '669', itma.PROD_LINE, NULL) pickLocationType,get_sc_desc('B', '667', iwm.PUTWY_TYPE, NULL) putWayType,
                     get_sc_desc('B', '325', iwm.alloc_type, NULL) allocationType,get_sc_desc('C', '144', itma.SPL_INSTR_CODE_10, NULL) climateZone,
-                    get_sc_desc('B', '332', itma.trlr_temp_zone, NULL) loadTempZone,SPL_INSTR_CODE_6 iceCream,avg_dly_dmnd averageDailyDemand,volty_code velocityCode,
+                    get_sc_desc('B', '332', itma.trlr_temp_zone, NULL) loadTempZone,SPL_INSTR_CODE_6 iceCream,ltrim(to_char(avg_dly_dmnd,'{UIConstants.HeightFormat}')) averageDailyDemand,volty_code velocityCode,
                      ltrim(to_char(itma.std_case_qty,'{UIConstants.HeightFormat}')) lpnQuantity,ltrim(to_char(itma.unit_vol,'{UIConstants.VolumeDecimalFormat}')) volume,
                      ltrim(to_char(itma.critcl_dim_3,'{UIConstants.DecimalFormat}')) height,ltrim(to_char(itma.critcl_dim_1,'{UIConstants.DecimalFormat}')) length,
                      ltrim(to_char(itma.critcl_dim_2,'{UIConstants.DecimalFormat}')) width,ltrim(to_char(itma.unit_wt,'{UIConstants.HeightFormat}')) weight
