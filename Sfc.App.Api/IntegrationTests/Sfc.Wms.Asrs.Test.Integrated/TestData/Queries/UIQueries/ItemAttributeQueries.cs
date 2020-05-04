@@ -11,7 +11,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
         {
             return $@"SELECT itma.sku_id  item, itma.sku_desc description, get_sc_desc ('B','722',itma.stat_code,NULL) status,
                      get_sc_desc ('B','332',itma.temp_zone,NULL) standardTempZone,itma.spl_instr_code_5 childParent,iwm.case_size_type lpnSize,
-                     ltrim(to_char(itma.unit_price,'{UIConstants.DecimalFormat}')) price,itma.sku_brcd barcode,iwm.carton_per_tier ti,iwm.tier_per_plt hi,
+                     ltrim(to_char(itma.unit_price,'{UIConstants.HeightFormat}')) price,itma.sku_brcd barcode,iwm.carton_per_tier ti,iwm.tier_per_plt hi,
                     itma.purch_uom PurchaseUintOfMeasure,DECODE(itma.catch_wt,'2','Y',itma.catch_wt) catchWeight,ltrim(to_char(itma.nest_vol,'{UIConstants.HeightFormat}')) || '/' || rtrim(itma.dflt_cons_date) || ' ' ||itma.purch_uom AS packSize,
                      itma.PROD_LIFE_IN_DAY shelfLife,itma.MAX_RECV_TO_XPIRE_DAYS requiredShelfLife,iwm.VIOLATE_FIFO_ALLOC_QTY_MATCH violateFifoFullPalletPull,
                      itma.STD_UOM allowFullPalletPull,itma.PKG_TYPE replenishPartialLpnQuantity,itma.SPL_INSTR_CODE_4 crossDock,itma.SPL_INSTR_CODE_8 asrs,itma.PROD_TYPE conveyable,
@@ -21,7 +21,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
                     pick_wt_tol_amnt pickWeightTolerance,pick_wt_tol_type pickWeightToleranceType,mhe_wt_tol_amnt mheWeightTolerance,mhe_wt_tol_type mheWeightToleranceType,
                     get_sc_desc('B', '669', itma.PROD_LINE, NULL) pickLocationType,get_sc_desc('B', '667', iwm.PUTWY_TYPE, NULL) putWayType,
                     get_sc_desc('B', '325', iwm.alloc_type, NULL) allocationType,get_sc_desc('C', '144', itma.SPL_INSTR_CODE_10, NULL) climateZone,
-                    get_sc_desc('B', '332', itma.trlr_temp_zone, NULL) loadTempZone,SPL_INSTR_CODE_6 iceCream,ltrim(to_char(avg_dly_dmnd,'{UIConstants.HeightFormat}')) averageDailyDemand,volty_code velocityCode,
+                    get_sc_desc('B', '332', itma.trlr_temp_zone, NULL) loadTempZone,SPL_INSTR_CODE_6 iceCream,ltrim(to_char(avg_dly_dmnd,'{UIConstants.HeightFormat}')) averageDailyDemand,
                      ltrim(to_char(itma.std_case_qty,'{UIConstants.HeightFormat}')) lpnQuantity,ltrim(to_char(itma.unit_vol,'{UIConstants.VolumeDecimalFormat}')) volume,
                      ltrim(to_char(itma.critcl_dim_3,'{UIConstants.DecimalFormat}')) height,ltrim(to_char(itma.critcl_dim_1,'{UIConstants.DecimalFormat}')) length,
                      ltrim(to_char(itma.critcl_dim_2,'{UIConstants.DecimalFormat}')) width,ltrim(to_char(itma.unit_wt,'{UIConstants.HeightFormat}')) weight

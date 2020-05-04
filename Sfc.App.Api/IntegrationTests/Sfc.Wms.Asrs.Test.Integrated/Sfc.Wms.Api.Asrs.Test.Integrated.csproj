@@ -69,6 +69,8 @@
     <Compile Include="Fixtures\MessageFixture\SynrMessageFixture.cs" />
     <Compile Include="Fixtures\MessageFixture\SynrQtyDefferenceMessageFixture.cs" />
     <Compile Include="Fixtures\UIFixtures\BaseFixture.cs" />
+    <Compile Include="Fixtures\UIFixtures\LpnFixture.cs" />
+    <Compile Include="Fixtures\UIFixtures\ReceivingFixture.cs" />
     <Compile Include="Fixtures\UIFixtures\ItemAttributeFixture.cs" />
     <Compile Include="Fixtures\UIFixtures\MessageLoggerFixture.cs" />
     <Compile Include="Fixtures\UIFixtures\CorbaFixture.cs" />
@@ -78,6 +80,8 @@
     <Compile Include="Fixtures\UIFixtures\MessageMasterFixture.cs" />
     <Compile Include="TestData\Queries\UIQueries\UIApiQueries.cs" />
     <Compile Include="Tests\UITests\CorbaApiTest.cs" />
+    <Compile Include="Tests\UITests\LpnApiTest.cs" />
+    <Compile Include="Tests\UITests\ReceivingApiTest.cs" />
     <Compile Include="Tests\UITests\MessageMasterApiTest.cs" />
     <Compile Include="TestData\Constant\UIConstants.cs" />
     <Compile Include="TestData\Dtos\CaseViewDto.cs" />
