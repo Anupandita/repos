@@ -79,24 +79,35 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData.Constant
         public const string UserMasterUrl = "http://dev.az.app.api.wms.shamrockfoods.com/user/preferences";
         public const string UnconstrainedValue = "[{\"colId\":\"actions\",\"hide\":false,\"aggFunc\":null,\"width\":150,\"pivotIndex\":null,\"pinned\":\"left\",\"rowGroupIndex\":null},{\"colId\":\"caseNumber\",\"hide\":false,\"aggFunc\":null,\"width\":182,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"displayLocation\",\"hide\":false,\"aggFunc\":null,\"width\":109,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"skuId\",\"hide\":false,\"aggFunc\":null,\"width\":93,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"skuDescription\",\"hide\":false,\"aggFunc\":null,\"width\":255,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"receivedShipmentNumber\",\"hide\":false,\"aggFunc\":null,\"width\":100,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"distributionCenterOrderNumber\",\"hide\":false,\"aggFunc\":null,\"width\":139,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"lockCount\",\"hide\":false,\"aggFunc\":null,\"width\":109,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"lockCount_1\",\"hide\":false,\"aggFunc\":null,\"width\":106,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"consumeCasePriority\",\"hide\":false,\"aggFunc\":null,\"width\":140,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"consumePriorityDate\",\"hide\":false,\"aggFunc\":null,\"width\":144,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"consumeSequence\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"manufacturingOn\",\"hide\":false,\"aggFunc\":null,\"width\":150,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"receivedOn\",\"hide\":false,\"aggFunc\":null,\"width\":150,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"expiryDate\",\"hide\":false,\"aggFunc\":null,\"width\":150,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"processImmediateNeeds\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"volume\",\"hide\":false,\"aggFunc\":null,\"width\":90,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"estimateWeight\",\"hide\":false,\"aggFunc\":null,\"width\":90,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"actualWeight\",\"hide\":false,\"aggFunc\":null,\"width\":90,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"poNumber\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"codeDescription\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"vendorName\",\"hide\":false,\"aggFunc\":null,\"width\":120,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"physicalEntityCode\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"plantId\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"singleSkuCase\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"specialInstructionCode1\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"specialInstructionCode2\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"specialInstructionCode3\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"specialInstructionCode4\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"specialInstructionCode5\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"shippedAsnQuantity\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"originalQuantity\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"actualQuantity\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"totalAllocatedQuantity\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"varianceQuantity\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"cutNumber\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"createdOn\",\"hide\":false,\"aggFunc\":null,\"width\":90,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"updatedOn\",\"hide\":false,\"aggFunc\":null,\"width\":90,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"userName\",\"hide\":false,\"aggFunc\":null,\"width\":90,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"comment\",\"hide\":false,\"aggFunc\":null,\"width\":90,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"vendorItemNumber\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null}]";
         public static int PreferenceId;
-    
-        public static string ReceivingSearchUrl = ConfigurationManager.AppSettings["BaseUrl"] + "receipts?";
-
-        // http://qa.api.wms.shamrockfoods.com/api/receipts?statusFrom=10&statusTo=50&totalRows=0&pageNo=1&rowsPerPage=50
-        public static string ReceivingDrilldownUrl;
-        public static string VendorVendorNumberCount;
+        public static string VendorNameCount;
         public static string ReceivingStatusCount;
         public static string VerifiedDateRangeCount;
         public static string ShipmentNbrCount;
+        public static string ShipmentNbr;
+        public static string VendorName;
+        public static string VerifiedFrom;
+        public static string VerifiedTo;
+        public static string QvShipmentNbr;
+        public static string UnAnsQvShipmentNbr;
+        public static string QuesAnswerId;
+   
 
+        public static string ReceivingSearchUrl = ConfigurationManager.AppSettings["BaseUrl"] + "receipts?";
+
+        // http://qa.api.wms.shamrockfoods.com/api/receipts?statusFrom=10&statusTo=50&totalRows=0&pageNo=1&rowsPerPage=50
+   
         public static string ReceivingDetailsUrl = ConfigurationManager.AppSettings["BaseUrl"] + "advanced-shipment-notices/";
        // http://qa.api.wms.shamrockfoods.com/api/advanced-shipment-notices/12335721
         public static string ReceivingDetailsDrilldownUrl = "/sku/";
-       // http://qa.api.wms.shamrockfoods.com/api/advanced-shipment-notices/12335721/sku/1061561 
+        // http://qa.api.wms.shamrockfoods.com/api/advanced-shipment-notices/12335721/sku/1061561 
         public static string ReceivingQvDetailsUrl = "/quality-verifications";
-
-        public static string ShipmentNbr;
+  
         // http://qa.api.wms.shamrockfoods.com/api/advanced-shipment-notices/12335721/quality-verifications
 
+    }
+    public class FuncName
+    {            
+        public const string PrintShipment= "printShipmentPB";
+        public const string VerifyShipment = "verifyShipmentPB";
     }
 }

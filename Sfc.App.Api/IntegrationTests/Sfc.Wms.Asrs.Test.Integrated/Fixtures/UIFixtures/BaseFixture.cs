@@ -63,15 +63,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             return client.Execute(request);
         }
 
-        public IRestResponse CallPutApi(string url, string inp)
-        {
-            var client = new RestClient(url);
+        public IRestRequest CallPutApi()
+        {        
             var request = new RestRequest(Method.PUT);
             request.AddHeader("content-type", Content.ContentType);
             request.AddHeader("Authorization", UIConstants.BearerToken);
-            request.AddJsonBody(JsonConvert.DeserializeObject(inp));
             request.RequestFormat = DataFormat.Json;
-            return client.Execute(request);
+            return request;
         }
 
         public IRestRequest CallPostApi()

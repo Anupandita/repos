@@ -9,7 +9,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
 /*If you drop a custom stylesheet named BDDfyCustom.css in your output folder it gets embedded here. This way you can apply some custom styles over your html report.*/
 
     </style>
-    <title>BDDfy Test Result 30-04-2020</title>
+    <title>BDDfy Test Result 05-05-2020</title>
   </head>
   <body>
     <div id='main'>
@@ -70,19 +70,22 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
           <li>
             <div class='story Passed'>
               <div class='storyMetadata'>
-                <div class='storyTitle'><a href='http://tfsapp1:8080/tfs/ShamrockCollection/Portfolio-SOWL/_workitems?id=129461&_a=edit'>Story: Cost message test</a></div>
+                <div class='storyTitle'><a href='http://tfsapp1:8080/tfs/ShamrockCollection/Portfolio-SOWL/_workitems?id=143479&_a=edit'>Story: Synchronization Messages</a></div>
                 <ul class='storyNarrative'>
-                  <li>As a Authorized User test for cost message from emstowms</li>
-                  <li>I want To Verify COST message is inserted in to SWM_FROM_MHE table with appropriate data And verify COST message is inserted in to swm_from_mhe table with appropriate data  Verify in TransInventory table for Allocation Inventory units and actual weight Verify in Case Detail table for Quantity, CaseHeader and task detail table for status code </li>
-                  <li>So that I can validate for message fields in COST message, in Internal Table SWM_FROM_MHE and validate the quantity,weight,statuscode in the caseheader, casedetail, task header tables</li>
+                  <li>As a Authorized User test for Synr,Synd and Sync messages</li>
+                  <li>I want To Verify All the Records in pick location table w.r.t active location should be inserted into pld_snap_shot table And Validate for Synd data table for all rows inserted from pld snap shot w.r.t sync id , sku, location combinationAnd Verify the quanties in both table should be same </li>
+                  <li>So that I can validate for SYNR message should insert into Swm_to_mhe Validate SYND message should insert into Swm_from_mhe Validate SYNC message should insert into Swm_from_mhe</li>
                 </ul>
               </div>
               <div class='scenarios'>
                 <div class='scenario'>
-                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-1'>Test Case ID :122681 - Dematic - COST  - Call the Cost api and verify all its funtionalities in EmsToWms, Swm_from_Mhe, Trans_Invn ,Pick_Location tables</div>
+                  <div class='Passed canToggle scenarioTitle' data-toggle-target='scenario-1'>Test Case ID:146661 TestCase: SYNC -test for message if the sku count is same in both the tables ( SWM_SYNR_PLD_SNAPSHOT and SWM_SYND_DATA). for sync_id</div>
                   <ul class='steps' id='scenario-1'>
                     <li class='step Passed  SetupState ' data-toggle-target='step-1-1' >
-                      <span>Given test initialize for valid message</span>
+                      <span>Given sync test initialize</span>
+                    </li>
+                    <li class='step Passed  ConsecutiveSetupState ' data-toggle-target='step-1-2' >
+                      <span>And sync test initialize for valid message</span>
                     </li>
                   </ul>
                 </div>
@@ -90,7 +93,7 @@ body{margin:0;padding:0;padding-bottom:40px;max-width:100%;background-color:#fff
             </div>
           </li>
         </ul>
-        <p><span>Tested at: 30-04-2020 22:01:15</span></p>
+        <p><span>Tested at: 05-05-2020 13:25:59</span></p>
       </div>
     </div>
     <div class='footer'>Powered by <a href='https://github.com/TestStack/TestStack.BDDfy'>BDDfy</a> framework</div>

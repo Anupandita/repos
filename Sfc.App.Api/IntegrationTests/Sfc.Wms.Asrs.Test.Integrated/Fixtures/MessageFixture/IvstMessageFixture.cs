@@ -7,7 +7,6 @@ using System.Configuration;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
 using Sfc.Wms.Interfaces.Asrs.Dematic.Contracts.Dtos;
-using Sfc.Wms.Interfaces.Asrs.Shamrock.Contracts.Dtos;
 using Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.Constants;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
