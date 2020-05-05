@@ -159,14 +159,14 @@
     <Reference Include="Sfc.Core.OnPrem.Pagination, Version=2.13.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Core.OnPrem.Pagination.2.13.4\lib\net472\Sfc.Core.OnPrem.Pagination.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Core.OnPrem.ParallelAndSequentialProcessing, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Core.OnPrem.ParallelAndSequentialProcessing.1.2.0\lib\net472\Sfc.Core.OnPrem.ParallelAndSequentialProcessing.dll</HintPath>
+    <Reference Include="Sfc.Core.OnPrem.ParallelAndSequentialProcessing, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Core.OnPrem.ParallelAndSequentialProcessing.1.2.1\lib\net472\Sfc.Core.OnPrem.ParallelAndSequentialProcessing.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Core.OnPrem.ParserAndTranslator, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Core.OnPrem.ParserAndTranslator.2.0.0\lib\net472\Sfc.Core.OnPrem.ParserAndTranslator.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Core.OnPrem.Result, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Core.OnPrem.Result.2.4.0\lib\net472\Sfc.Core.OnPrem.Result.dll</HintPath>
+    <Reference Include="Sfc.Core.OnPrem.Result, Version=2.5.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Core.OnPrem.Result.2.5.1\lib\net472\Sfc.Core.OnPrem.Result.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Core.OnPrem.Security.Contracts, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Core.OnPrem.Security.Contracts.2.2.0\lib\net472\Sfc.Core.OnPrem.Security.Contracts.dll</HintPath>
@@ -336,8 +336,8 @@
     <Reference Include="Sfc.Wms.Framework.DockDoor.App, Version=2.2.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.DockDoor.App.2.2.5\lib\net472\Sfc.Wms.Framework.DockDoor.App.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Framework.Interceptor.App, Version=3.8.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Framework.Interceptor.App.3.8.0\lib\net472\Sfc.Wms.Framework.Interceptor.App.dll</HintPath>
+    <Reference Include="Sfc.Wms.Framework.Interceptor.App, Version=3.10.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.Interceptor.App.3.10.1\lib\net472\Sfc.Wms.Framework.Interceptor.App.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Framework.ItemMasters.App, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.ItemMasters.App.1.2.0\lib\net472\Sfc.Wms.Framework.ItemMasters.App.dll</HintPath>
