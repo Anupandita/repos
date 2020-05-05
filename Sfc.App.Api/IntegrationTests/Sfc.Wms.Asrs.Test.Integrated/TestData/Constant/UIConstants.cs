@@ -7,13 +7,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData.Constant
     {
         public const string LoginUrl = "http://dev.az.app.api.wms.shamrockfoods.com/user/login";
         public const string ItemAttributes = "item-attributes/";
-        public const string Lpn = "lpn/";
-        public const string Search = "search?";
-        public const string LpnComments = "lpn-comments";
-        public const string LpnDetails = "lpn-details";
-        public const string LpnHistory = "lpn-history";
-        public const string Find = "find";
-        public static DateTime LogDate;
         public const string SearchInputItemId = "attributeSearchInputDto.itemId=";
         public const string SearchInputItemDescription = "attributeSearchInputDto.itemDescription=";
         public const string SearchInputTempZone = "attributeSearchInputDto.tempZone=";
@@ -90,7 +83,40 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData.Constant
         public static string QvShipmentNbr;
         public static string UnAnsQvShipmentNbr;
         public static string QuesAnswerId;
-   
+        public const string LpnLockUnlock = "lpn-lock-unlock/";
+        public const string Find = "find?";
+        public const string slash = "/";
+        public static string PalletId;
+        public static string PalletIdCount;
+        public static string CreatedDateCount;
+        public static string CreatedDate;
+        public static string StatusCount;
+        public static DateTime LogDate;
+
+        public const string Lpn = "http://dev.az.app.api.wms.shamrockfoods.com/lpn/";
+        public const string Search = "search?";
+        public const string LpnComments = "lpn-comments/";
+        public const string LpnDetails = "lpn-details";
+        public const string LpnHistory = "lpn-history/";
+
+        public static string LpnSearchUrl;
+        public static string LpnCommentsUrl;
+        public static string LpnHistoryUrl;
+        public static string LpnLockUnlockUrl;
+        public static string ItemNumberCount;
+        public const string QuantityFormat = "99990.0";
+        public const string SearchInputSkuId = "lpnParamDto.skuId=";
+        public const string SearchInputPalletId = "lpnParamDto.palletId=";
+        public const string SearchInputZone = "lpnParamDto.zone=";
+        public const string SearchInputAisle = "lpnParamDto.aisle=";
+        public const string SearchInputSlot = "lpnParamDto.slot=";
+        public const string SearchInputLevel = "lpnParamDto.level=";
+        public const string SearchInputCreatedDate = "lpnParamDto.createdDate=";
+        public const string SearchInputFromDate = "lpnParamDto.statusFrom=";
+        public const string SearchInputToDate = "&lpnParamDto.statusTo=";
+
+     public const string SearchInputLpnNumber = "lpnParamDto.lpnNumber=";
+
 
         public static string ReceivingSearchUrl = ConfigurationManager.AppSettings["BaseUrl"] + "receipts?";
 
