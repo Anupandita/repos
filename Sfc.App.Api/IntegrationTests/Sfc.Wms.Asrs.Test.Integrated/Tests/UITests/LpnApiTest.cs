@@ -155,6 +155,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         public void LpnAddCommentsApi()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("AddComments"))
+            .And(x=>x.CreateInputDtoForAddCommentsApi())
             .When(x => x.CallLpnAddCommentsApi(UIConstants.LpnAddCommentsUrl))
             .And(x => x.VerifyCommentsIsInsertedinDb())
             .BDDfy("Test Case ID : ");
@@ -164,6 +165,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         public void LpnEditCommentsApi()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("EditComments"))
+            .And(x => x.CreateInputDtoForEditCommentApi())
             .When(x => x.CallLpnEditCommentsApi(UIConstants.LpnEditCommentsUrl))
             .And(x => x.VerifyCommentsIsUpdatedInDb())
             .BDDfy("Test Case ID : ");
@@ -182,6 +184,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         public void LpnUpdateApi()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("Update"))
+            .And(x => x.CreateInputDtoForLpnUpdateApi())
             .When(x => x.CallLpnUpdateApi(UIConstants.LpnUpdateUrl))
             .And(x => x.VerifyUpdateFieldsAreUpdatedInDb())
             .BDDfy("Test Case ID : ");
@@ -191,6 +194,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         public void LpnEditItemsApi()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("Items"))
+            .And(x => x.CreateInputDtoForEditItemApi())
             .When(x => x.CallLpnItemsApi(UIConstants.LpnItemsUrl))
             .And(x => x.VerifyItemFieldsAreUpdatedInDb())
             .BDDfy("Test Case ID : ");
@@ -200,6 +204,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         public void LpnMultiUnlockApi()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("MultiUnlock"))
+            .And(x => x.CreateInputDtoForMultiUnlockApi())
             .When(x => x.CallLpnMultiUnlockApi(UIConstants.LpnMultiUnlockUrl))
             .And(x => x.VerifyLocksAreDeletedinDb())
             .BDDfy("Test Case ID : ");
@@ -209,6 +214,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         public void LpnMultiLockApi()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("MultiLock"))
+            .And(x => x.CreateInputDtoForMultiLockApi())
             .When(x => x.CallLpnMultiLockApi(UIConstants.LpnMultiLockUrl))
             .And(x => x.VerifyLocksAreAddedInDb())
             .BDDfy("Test Case ID : ");
@@ -218,6 +224,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         public void LpnMultiCommentsApi()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("MultiComments"))
+            .And(x => x.CreateInputDtoForMultiCommentsApi())
             .When(x => x.CallLpnMultiCommentsApi(UIConstants.LpnMultiCommentsUrl))
             .And(x => x.VerifyMultiCommentsAreAddedInDb())
             .BDDfy("Test Case ID : ");
@@ -227,6 +234,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         public void LpnMultiEditApi()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("MultiEdit"))
+            .And(x => x.CreateInputDtoForMultiEditApi())
             .When(x => x.CallLpnMultiEditApi(UIConstants.LpnMultiEditUrl))
             .And(x => x.VerifyMultiEditAreAddedInDb())
             .BDDfy("Test Case ID : ");

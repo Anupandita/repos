@@ -32,28 +32,17 @@ namespace FunctionalTestProject.SQLQueries
                    INNER JOIN ITEM_MASTER im ON im.sku_id = cd.sku_id  INNER JOIN whse_master wm ON wm.whse = ch.whse left outer join LOCN_HDR  lh ON lh.locn_id = ch.locn_id LEFT OUTER JOIN CASE_LOCK_CNT
                    clc ON clc.case_nbr = ch.case_nbr LEFT OUTER JOIN VENDOR_MASTER vm ON vm.vendor_id = ch.vendor_id left outer join case_cmnt cm on cm.case_nbr = ch.case_nbr left outer join swm_user_master sw on sw.user_name = ch.user_id 
                    left outer join asn_dtl ad on ch.orig_shpmt_nbr= ad.shpmt_nbr and cd.sku_id = ad.sku_id WHERE ch.case_nbr = '{UIConstants.LpnNumber}'";
-        public static string FetchLpnHeaderDtOnLPNInqDetailsSql()
-        {
-            return $@"SELECT ch.case_nbr ""LPN Number:"" ,
-                      to_char(ch.stat_date_time,'{UIConstants.FormatDateTime}')||  ' - '|| get_sc_desc ('B','509',ch.stat_code,NULL)""Status:"",
-                      cd.SKU_ID || ' - ' || SKU_DESC ""Item:"" FROM CASE_HDR ch INNER JOIN CASE_DTL cd ON cd.case_nbr = ch.case_nbr 
-                      INNER JOIN ITEM_MASTER im ON im.sku_id = cd.sku_id WHERE ch.case_nbr = '{UIConstants.LpnNumber}'";
-        }
         public static string FetchGetLpnCount()
         {
             return $@"SELECT count(*) from case_hdr ch inner join case_dtl cd on ch.case_nbr = cd.case_nbr where ch.stat_code >={UIConstants.LpnFromStatus} and ch.stat_code <={UIConstants.LpnToStatus}";
         }
 
-        public static string FetchLpnNbrFromShpmtNbrUpdated()
-        {
-            return $@"select  case_nbr,po_nbr,orig_shpmt_nbr,dc_ord_nbr from case_hdr where po_nbr is not null and orig_shpmt_nbr is not null and dc_ord_nbr is not null and stat_code <='45'ORDER BY dbms_random.value";
-        }
         public static string FetchHistoryGridDtSql()
         {
             return $@"SELECT audit_seq_nbr AuditSequenceNumber,event,audit_datetime auditDateTime,getlocation (whse, bf_locn_id) beforeLocationId,
-                       getlocation(whse, bf_prev_locn_id) beforePreviousLocationId,ltrim(to_char(bf_actl_wt,'{UIConstants.DecimalFormat}')) beforeActualWeight,rtrim(get_sc_desc('B','509',bf_stat_code,NULL)) beforeStatusCode, bf_rsn_code,
+                       getlocation(whse, bf_prev_locn_id) beforePreviousLocationId,ltrim(to_char(bf_actl_wt,'{UIConstants.DecimalFormat}')) beforeActualWeight,rtrim(get_sc_desc('B','509',bf_stat_code,NULL)) beforeStatusCode, bf_rsn_code BeforeReasonCode,
                        to_char(bf_create_date_time,'{UIConstants.FormatDateTime}') beforeCreateDateTime,to_char(bf_mod_date_time,'{UIConstants.FormatDateTime}') beforeModifiedDateTime,s1.first_name ||' '||s1.last_name beforeUser,getlocation(whse, af_locn_id) afterLocationId,getlocation(whse, af_prev_locn_id) afterPrevLocn,
-                       getlocation (whse, af_prev_locn_id) afterPreviousLocationId,ltrim(to_char(af_actl_wt,'{UIConstants.DecimalFormat}')) afterActualWeight,rtrim(get_sc_desc('B','509',af_stat_code,NULL)) afterStatusCode,af_rsn_code,to_char(af_create_date_time,'{UIConstants.FormatDateTime}') afterCreateDateTime,to_char(af_mod_date_time,'{UIConstants.FormatDateTime}') afterModifiedDateTime,
+                       getlocation (whse, af_prev_locn_id) afterPreviousLocationId,ltrim(to_char(af_actl_wt,'{UIConstants.DecimalFormat}')) afterActualWeight,rtrim(get_sc_desc('B','509',af_stat_code,NULL)) afterStatusCode,af_rsn_code AfterReasonCode,to_char(af_create_date_time,'{UIConstants.FormatDateTime}') afterCreateDateTime,to_char(af_mod_date_time,'{UIConstants.FormatDateTime}') afterModifiedDateTime,
                        s2.first_name ||' '||s2.last_name afterUser,af_plt_id afterPalletId,bf_rsn_code beforeReasonCode, af_rsn_code afterReasonCode,case_nbr,af_cons_case_prty afterConsCasePriority,af_db_user afterDbUser,to_char(af_cons_prty_date,'{UIConstants.FormatDateTime}') afterConsPriorityDate FROM sfc_audit_case_hdr sc left outer join swm_user_master s1 on s1.user_name=sc.bf_user_id left outer join swm_user_master s2 on s2.user_name=sc.af_user_id WHERE whse = '{UIConstants.Whse}'
                        AND case_nbr = '{UIConstants.LpnNumberForHistory}' order by audit_seq_nbr";
         }

@@ -100,6 +100,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             UIConstants.BearerToken = response.Headers[1].Value.ToString();            
 
         }
+        public void VerifyOutputTotalReordsAgainstDbCount(string count,string totalrecords)
+        {
+            Assert.AreEqual(count, totalrecords);
+        }
         public void VerifyApiOutputAgainstDbOutput(DataTable queryDt, DataTable ApiDt)
         {
             Assert.AreEqual(queryDt.Rows.Count, ApiDt.Rows.Count,"Api and Db count donot match");

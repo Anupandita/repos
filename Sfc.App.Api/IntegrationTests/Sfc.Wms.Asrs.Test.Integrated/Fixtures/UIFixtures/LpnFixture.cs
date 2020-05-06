@@ -1,7 +1,6 @@
 ﻿using System.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
-using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData.Constant;
 using Oracle.ManagedDataAccess.Client;
 using System.Data;
@@ -13,11 +12,11 @@ using System;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
 {
-    public class LpnFixture:BaseFixture
+    public class LpnFixture : BaseFixture
     {
 
         protected int TotalRecords = 0;
-        protected DataTable LpnSearchQueryDt=new DataTable();
+        protected DataTable LpnSearchQueryDt = new DataTable();
         protected DataTable LpnSearchResultDt = new DataTable();
         protected DataTable LpnCommentsResultDt = new DataTable();
         protected DataTable LpnCommentsQueryDt = new DataTable();
@@ -27,8 +26,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
         protected DataTable LpnLockUnlockResultDt = new DataTable();
         protected DataTable LpnCaseUnlockResultDt = new DataTable();
         LpnDetailsDto lpnDetailsDto;
-        CaseCommentDto caseCommentDto;
-        LpnMultipleUnlockResultDto lpnMultipleUnlockResultDto;
+        CaseCommentDto caseCommentDto, caseCommentDto2;
+        LpnMultipleUnlockDto lpnMultipleUnlockDto1, lpnMultipleUnlockDto2;
+        CaseLockCommentDto caseLockCommentDto;
+        LpnBatchUpdateDto lpnBatchUpdateDto;
+        LpnHeaderUpdateDto lpnUpdate;
+        LpnDetailsUpdateDto lpnCaseDetailsUpdate;
 
         public void PickAnLpnTestDataFromDb()
         {
@@ -40,10 +43,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
                 var _command = new OracleCommand(LpnQueries.FetchLpnNumberSql, db);
                 UIConstants.LpnNumber = _command.ExecuteScalar().ToString();
 
-                 _command = new OracleCommand(LpnQueries.FetchLpnNumberForHistory, db);
+                _command = new OracleCommand(LpnQueries.FetchLpnNumberForHistory, db);
                 UIConstants.LpnNumberForHistory = _command.ExecuteScalar().ToString();
-                
-                  _command = new OracleCommand(LpnQueries.FetchLpnNbrForLockUnlock, db);
+
+                _command = new OracleCommand(LpnQueries.FetchLpnNbrForLockUnlock, db);
                 UIConstants.LpnNbrForLockUnlock = _command.ExecuteScalar().ToString();
 
                 _command = new OracleCommand(LpnQueries.FetchPalletIdSql, db);
@@ -109,7 +112,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             switch (criteria)
             {
                 case "LpnNumber":
-                    UIConstants.LpnSearchUrl =  UIConstants.Lpn + UIConstants.Find + UIConstants.SearchInputLpnNumber + UIConstants.LpnNumber;
+                    UIConstants.LpnSearchUrl = UIConstants.Lpn + UIConstants.Find + UIConstants.SearchInputLpnNumber + UIConstants.LpnNumber;
                     return;
                 case "ItemNumber":
                     UIConstants.LpnSearchUrl = UIConstants.Lpn + UIConstants.Find + UIConstants.SearchInputSkuId + UIConstants.ItemNumber;
@@ -118,37 +121,37 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
                     UIConstants.LpnSearchUrl = UIConstants.Lpn + UIConstants.Find + UIConstants.SearchInputPalletId + UIConstants.PalletId;
                     return;
                 case "Zone":
-                    UIConstants.LpnSearchUrl =  UIConstants.Lpn + UIConstants.Find + UIConstants.SearchInputZone + UIConstants.Zone;
+                    UIConstants.LpnSearchUrl = UIConstants.Lpn + UIConstants.Find + UIConstants.SearchInputZone + UIConstants.Zone;
                     return;
                 case "Aisle":
-                    UIConstants.LpnSearchUrl =  UIConstants.Lpn + UIConstants.Find + UIConstants.SearchInputAisle + UIConstants.Aisle;
+                    UIConstants.LpnSearchUrl = UIConstants.Lpn + UIConstants.Find + UIConstants.SearchInputAisle + UIConstants.Aisle;
                     return;
                 case "Slot":
-                    UIConstants.LpnSearchUrl =  UIConstants.Lpn + UIConstants.Find + UIConstants.SearchInputSlot + UIConstants.Slot;
+                    UIConstants.LpnSearchUrl = UIConstants.Lpn + UIConstants.Find + UIConstants.SearchInputSlot + UIConstants.Slot;
                     return;
                 case "Level":
-                    UIConstants.LpnSearchUrl =  UIConstants.Lpn + UIConstants.Find + UIConstants.SearchInputLevel + UIConstants.Level;
+                    UIConstants.LpnSearchUrl = UIConstants.Lpn + UIConstants.Find + UIConstants.SearchInputLevel + UIConstants.Level;
                     return;
                 case "CreatedDate":
-                    UIConstants.LpnSearchUrl =  UIConstants.Lpn + UIConstants.Find + UIConstants.SearchInputCreatedDate + UIConstants.CreatedDate;
+                    UIConstants.LpnSearchUrl = UIConstants.Lpn + UIConstants.Find + UIConstants.SearchInputCreatedDate + UIConstants.CreatedDate;
                     return;
                 case "Status":
-                    UIConstants.LpnSearchUrl =  UIConstants.Lpn + UIConstants.Find + UIConstants.SearchInputFromDate + UIConstants.LpnFromStatus + UIConstants.SearchInputToDate + UIConstants.LpnToStatus;
+                    UIConstants.LpnSearchUrl = UIConstants.Lpn + UIConstants.Find + UIConstants.SearchInputFromDate + UIConstants.LpnFromStatus + UIConstants.SearchInputToDate + UIConstants.LpnToStatus;
                     return;
                 case "Comments":
-                    UIConstants.LpnCommentsUrl =  UIConstants.Lpn + UIConstants.LpnComments +UIConstants.slash + UIConstants.LpnNumber;
+                    UIConstants.LpnCommentsUrl = UIConstants.Lpn + UIConstants.LpnComments + UIConstants.slash + UIConstants.LpnNumber;
                     return;
                 case "History":
-                    UIConstants.LpnHistoryUrl =  UIConstants.Lpn + UIConstants.LpnHistory + UIConstants.LpnNumberForHistory + UIConstants.slash+ UIConstants.Whse;
+                    UIConstants.LpnHistoryUrl = UIConstants.Lpn + UIConstants.LpnHistory + UIConstants.LpnNumberForHistory + UIConstants.slash + UIConstants.Whse;
                     return;
                 case "LockUnlock":
-                    UIConstants.LpnLockUnlockUrl =  UIConstants.Lpn + UIConstants.LpnLockUnlock + UIConstants.LpnNbrForLockUnlock;
+                    UIConstants.LpnLockUnlockUrl = UIConstants.Lpn + UIConstants.LpnLockUnlock + UIConstants.LpnNbrForLockUnlock;
                     return;
                 case "CaseUnlock":
-                    UIConstants.LpnCaseUnlockUrl = UIConstants.Lpn + UIConstants.LpnCaseUnlock + UIConstants.LpnIds + UIConstants.LpnNbrForLockUnlock ;
+                    UIConstants.LpnCaseUnlockUrl = UIConstants.Lpn + UIConstants.LpnCaseUnlock + UIConstants.LpnIds + UIConstants.LpnNbrForLockUnlock;
                     return;
                 case "Details":
-                    UIConstants.LpnDetailsUrl = UIConstants.Lpn + UIConstants.LpnDetails +UIConstants.slash+ UIConstants.LpnNumber;
+                    UIConstants.LpnDetailsUrl = UIConstants.Lpn + UIConstants.LpnDetails + UIConstants.slash + UIConstants.LpnNumber;
                     return;
                 case "AddComments":
                     UIConstants.LpnAddCommentsUrl = UIConstants.Lpn + UIConstants.LpnComments;
@@ -182,7 +185,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
         string displayLocation = "";
         public void CallLpnSearchApiWithInputs(string url)
         {
-            var response=CallGetApi(url);
+            var response = CallGetApi(url);
             VerifyOkResultAndStoreBearerToken(response);
             var payload = JsonConvert.DeserializeObject<BaseResult<LpnSearchResultsDto>>(response.Content).Payload;
             LpnSearchResultDt = ToDataTable(payload.LpnSearchDetails);
@@ -206,10 +209,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
         {
             Assert.AreEqual(UIConstants.Level, displayLocation.Substring(7, 2));
         }
-        public void VerifyLpnSearchOutputAgainstDbOutput() 
+        public void VerifyLpnSearchOutputAgainstDbOutput()
         {
-            VerifyApiOutputAgainstDbOutput(LpnSearchQueryDt, LpnSearchResultDt);          
-            
+            VerifyApiOutputAgainstDbOutput(LpnSearchQueryDt, LpnSearchResultDt);
+
         }
 
         public void CallLpnCommentsApiWithInputs(string url)
@@ -238,20 +241,17 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             VerifyApiOutputAgainstDbOutput(LpnHistoryQueryDt, LpnHistoryResultDt);
 
         }
-        string InventoryLockCode = "";
         public void CallLpnLockUnlockApiWithInputs(string url)
         {
             var response = CallGetApi(url);
             VerifyOkResultAndStoreBearerToken(response);
             var payload = JsonConvert.DeserializeObject<BaseResult<List<CaseLockUnlockDto>>>(response.Content).Payload;
             LpnLockUnlockResultDt = ToDataTable(payload);
-            InventoryLockCode = LpnLockUnlockResultDt.Rows[0]["InventoryLockCode"].ToString();
         }
 
         public void VerifyLpnLockUnlockOutputAgainstDbOutput()
         {
             VerifyApiOutputAgainstDbOutput(LpnLockUnlockQueryDt, LpnLockUnlockResultDt);
-
         }
 
         public void CallLpnCaseUnlockApiWithInputs(string url)
@@ -265,50 +265,131 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
 
         public void VerifyLpnCaseUnlockOutputAgainstDbOutput()
         {
-         //   VerifyApiOutputAgainstDbOutput(LpnLockUnlockQueryDt, LpnCaseUnlockResultDt);
-            Assert.AreEqual(LpnCaseUnlockResultDt.Rows[0]["InventoryLockCode"].ToString(), LpnLockUnlockResultDt.Rows[0]["InventoryLockId"].ToString());
+            Assert.AreEqual(LpnLockUnlockResultDt.Rows.Count, LpnCaseUnlockResultDt.Rows.Count, "Api and Db count donot match");
+            var i = -1;
 
+            foreach (DataRow dr in LpnLockUnlockResultDt.Rows)
+            {
+                i = i + 1;
+                Assert.AreEqual(dr["InventoryLockCode"].ToString(), LpnCaseUnlockResultDt.Rows[i]["InventoryLockCode"].ToString(), "InventoryLockCode : Values are not equal");
+            }
         }
 
         public void CreateInputDtoForAddCommentsApi()
         {
             UIConstants.Message = Guid.NewGuid().ToString("n").Substring(0, 8);
-            UIConstants.LogDate = System.DateTime.Today;   
             caseCommentDto = new CaseCommentDto()
             {
-                CaseNumber = UIConstants.LpnNumber ,
-                CommentCode =UIConstants.CommentCode ,
+                CaseNumber = UIConstants.LpnNumber,
+                CommentCode = UIConstants.CommentCode,
                 CommentText = UIConstants.Message,
-                CommentType = UIConstants.CommentCode ,
-                SystemCodeCommentCode = UIConstants.SystemCodeCommentCode ,
+                CommentType = UIConstants.CommentCode,
+                SystemCodeCommentCode = UIConstants.SystemCodeCommentCode,
                 SystemCodeCommentType = UIConstants.SystemCodeCommentType
             };
 
         }
+        public void CallLpnDetailsApi(string url)
+        {
+            var response = CallGetApi(url);
+            VerifyOkResultAndStoreBearerToken(response);
+            lpnDetailsDto = JsonConvert.DeserializeObject<BaseResult<LpnDetailsDto>>(response.Content).Payload;
+        }
+        public void CreateInputDtoForMultiUnlockApi()
+        {
+            lpnMultipleUnlockDto1 = new LpnMultipleUnlockDto()
+            {
+                LpnNumber = UIConstants.LpnNumber,
+                WorkStationId = UIConstants.WorkStation,
+                LockCount=Convert.ToInt32(UIConstants.LockCount)
+                
+            };
 
-        public void CreateInputDtoForMultipleLockApi()
+            lpnMultipleUnlockDto2= new LpnMultipleUnlockDto()
+            {
+                LpnNumber = UIConstants.LpnNumber2,
+                WorkStationId = UIConstants.WorkStation,
+                LockCount = Convert.ToInt32(UIConstants.LockCount)
+            };
+        }
+        public void CreateInputDtoForMultiLockApi()
         {
             UIConstants.Message = Guid.NewGuid().ToString("n").Substring(0, 8);
-            UIConstants.LogDate = System.DateTime.Today;
-            lpnMultipleUnlockResultDto = new LpnMultipleUnlockResultDto()
+            caseLockCommentDto = new CaseLockCommentDto()
             {
-                Message = UIConstants.Message
+                WorkStationId = UIConstants.WorkStation,
+                LpnIds = new List<string>() { UIConstants.LpnNumber, UIConstants.LpnNumber2 },
+                Comments = new CaseCommentDto()
+                {
+                    CommentCode = UIConstants.CommentCode,
+                    CommentText = UIConstants.Message,
+                    CommentType = UIConstants.CommentCode,
+                    SystemCodeCommentCode = UIConstants.SystemCodeCommentCode,
+                    SystemCodeCommentType = UIConstants.SystemCodeCommentType
+                }
+
             };
 
         }
-
-
+        public void CreateInputDtoForMultiCommentsApi() 
+        {
+            caseCommentDto = new CaseCommentDto()
+            {
+                CaseNumber = UIConstants.LpnNumber,
+                CommentCode = UIConstants.CommentCode,
+                CommentText = UIConstants.Message,
+                CommentType = UIConstants.CommentCode,
+                SystemCodeCommentCode = UIConstants.SystemCodeCommentCode,
+                SystemCodeCommentType = UIConstants.SystemCodeCommentType
+            };
+            caseCommentDto2 = new CaseCommentDto()
+            {
+                CaseNumber = UIConstants.LpnNumber2,
+                CommentCode = UIConstants.CommentCode,
+                CommentText = UIConstants.Message,
+                CommentType = UIConstants.CommentCode,
+                SystemCodeCommentCode = UIConstants.SystemCodeCommentCode,
+                SystemCodeCommentType = UIConstants.SystemCodeCommentType
+            };
+        }
         public void CallLpnAddCommentsApi(string url)
         {
-
+            var request = CallPostApi();
+            request.AddJsonBody(caseCommentDto);
+            var response = ExecuteRequest(url, request);
+            VerifyCreatedResultAndStoreBearerToken(response);
         }
-
+        public void CallLpnMultiUnlockApi(string url)
+        {
+            var request = CallPostApi();
+            request.AddJsonBody(new List<LpnMultipleUnlockDto> { lpnMultipleUnlockDto1, lpnMultipleUnlockDto2 });
+            var response = ExecuteRequest(url, request);
+            VerifyOkResultAndStoreBearerToken(response);
+        }
+        public void CallLpnMultiLockApi(string url)
+        {
+            var request = CallPostApi();
+            request.AddJsonBody(caseLockCommentDto);
+            var response = ExecuteRequest(url, request);
+            VerifyOkResultAndStoreBearerToken(response);
+        }
+        public void CallLpnMultiCommentsApi(string url)
+        {
+            var request = CallPostApi();
+            request.AddJsonBody(new List<CaseCommentDto>() { caseCommentDto, caseCommentDto2 });
+            var response = ExecuteRequest(url, request);
+            VerifyOkResultAndStoreBearerToken(response);
+        }
         public void VerifyCommentsIsInsertedinDb()
         {
         }
 
         public void CallLpnEditCommentsApi(string url)
         {
+            var request = CallPutApi();
+            request.AddJsonBody(caseCommentDto);
+            var response = ExecuteRequest(url, request);
+            VerifyOkResultAndStoreBearerToken(response);
         }
 
         public void VerifyCommentsIsUpdatedInDb()
@@ -324,6 +405,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
         }
         public void CallLpnUpdateApi(string url)
         {
+            var request = CallPutApi();
+            request.AddJsonBody(lpnUpdate);
+            var response = ExecuteRequest(url, request);
+            VerifyOkResultAndStoreBearerToken(response);
         }
 
         public void VerifyUpdateFieldsAreUpdatedInDb()
@@ -331,34 +416,36 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
         }
         public void CallLpnItemsApi(string url)
         {
+            var request = CallPutApi();
+            request.AddJsonBody(lpnCaseDetailsUpdate);
+            var response = ExecuteRequest(url, request);
+            VerifyOkResultAndStoreBearerToken(response);
         }
 
         public void VerifyItemFieldsAreUpdatedInDb()
         {
         }
-        public void CallLpnMultiUnlockApi(string url)
-        {
-        }
+       
 
         public void VerifyLocksAreDeletedinDb()
         {
         }
-        public void CallLpnMultiLockApi(string url)
-        {
-        }
+     
 
         public void VerifyLocksAreAddedInDb()
         {
         }
-        public void CallLpnMultiCommentsApi(string url)
-        {
-        }
+        
 
         public void VerifyMultiCommentsAreAddedInDb()
         {
         }
         public void CallLpnMultiEditApi(string url)
         {
+            var request = CallPutApi();
+            request.AddJsonBody(lpnBatchUpdateDto);
+            var response = ExecuteRequest(url, request);
+            VerifyOkResultAndStoreBearerToken(response);
         }
 
         public void VerifyMultiEditAreAddedInDb()
@@ -367,28 +454,69 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
 
         public void VerifyOutputTotalReordsAgainstDbCount(string count)
         {
-            Assert.AreEqual(count, TotalRecords.ToString());
+            VerifyOutputTotalReordsAgainstDbCount(count, TotalRecords.ToString());
+        }
+        public void CreateInputDtoForEditCommentApi() 
+        {
+            UIConstants.Message = Guid.NewGuid().ToString("n").Substring(0, 10);
+            caseCommentDto = new CaseCommentDto()
+            {
+                CaseNumber = UIConstants.LpnNumber,
+                CommentCode = UIConstants.CommentCode,
+                CommentText = UIConstants.Message,
+                CommentType = UIConstants.CommentCode,
+                SystemCodeCommentCode = UIConstants.SystemCodeCommentCode,
+                SystemCodeCommentType = UIConstants.SystemCodeCommentType
+            };
+        }
+        public void CreateInputDtoForEditItemApi() 
+        {
+            lpnCaseDetailsUpdate = new LpnDetailsUpdateDto()
+            {
+                CaseNumber = UIConstants.LpnNumber,
+                CutNumber = UIConstants.CutNumber,
+                AssortmentNumber = UIConstants.AssortNumber,
+                SkuId=UIConstants.ItemNumber
+            };
+        }
+        public void CreateInputDtoForMultiEditApi()
+        {
+            lpnBatchUpdateDto = new LpnBatchUpdateDto()
+            {
+                ManufacturingDate = UIConstants.ManufacturingDate,
+                ExpireDate = UIConstants.ExpireDate,
+                ConsumePriority = UIConstants.ConsumePriority
+            };
+        }
+        public void CreateInputDtoForLpnUpdateApi() 
+        {
+            lpnUpdate = new LpnHeaderUpdateDto()
+            {
+                ReceivedShipmentNumber=UIConstants.ShipmentNbr,
+                ExpireDate = UIConstants.ExpireDate,
+                ManufacturingDate = UIConstants.ManufacturingDate,
+                ConsumeCasePriority = UIConstants.ConsumePriority,
+                ConsumePriorityDate = UIConstants.ConsumePriorityDate,
+                ConsumeSequence = UIConstants.ConsumeSequence,
+                CaseNumber = UIConstants.LpnNumber,
+                EstimatedWeight=UIConstants.EstWt,
+                ActualWeight=UIConstants.ActlWt,
+                DistributionCenterOrderNumber=UIConstants.DcOrderNbr,
+                PoNumber=UIConstants.PoNumber,
+                Volume=UIConstants.Volume,
+                VendorId=UIConstants.VendorId,
+                SpecialInstructionCode1=UIConstants.SpclInstCode1,
+                SpecialInstructionCode2 = UIConstants.SpclInstCode2,
+                SpecialInstructionCode3 = UIConstants.SpclInstCode3,
+                SpecialInstructionCode4 = UIConstants.SpclInstCode4,
+                SpecialInstructionCode5 = UIConstants.SpclInstCode5,
+                ValidShipmentNumber=true
+
+            };
         }
 
-        public void  CallLpnDetailsApi(string url) 
-        {
-            var response = CallGetApi(url);
-            VerifyOkResultAndStoreBearerToken(response);
-            lpnDetailsDto = JsonConvert.DeserializeObject<BaseResult<LpnDetailsDto>>(response.Content).Payload;
-           
-        }
         public void VerifyLpnDetailsOutputAgainstDbOutput()
         {
-        }
-        public void VerifyOutputForActiveLocationsListInOutput() 
-        {
-            //foreach (DataRow dr in ActiveLocnDt.Rows)
-            //    Assert.IsTrue(lpnDetailsDto.ActiveLocations.Contains(dr[0].ToString()));
-        }
-        public void VerifyOutputForVendorsListInOutput() 
-        {
-            //foreach (DataRow dr in VendorDt.Rows)
-            //    Assert.IsTrue(itemAttributeDetailsDto.VendorNames.Contains(dr[0].ToString()));            
-        }
+        }       
     }
 }

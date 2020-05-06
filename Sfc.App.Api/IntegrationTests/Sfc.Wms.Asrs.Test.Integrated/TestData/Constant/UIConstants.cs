@@ -134,10 +134,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData.Constant
         public const string SearchInputCreatedDate = "lpnParamDto.createdDate=";
         public const string SearchInputFromDate = "lpnParamDto.statusFrom=";
         public const string SearchInputToDate = "&lpnParamDto.statusTo=";
-
-     public const string SearchInputLpnNumber = "lpnParamDto.lpnNumber=";
-
-
+        public const string SearchInputLpnNumber = "lpnParamDto.lpnNumber=";
         public static string ReceivingSearchUrl = ConfigurationManager.AppSettings["BaseUrl"] + "receipts?";
 
         // http://qa.api.wms.shamrockfoods.com/api/receipts?statusFrom=10&statusTo=50&totalRows=0&pageNo=1&rowsPerPage=50
@@ -147,7 +144,27 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData.Constant
         public static string ReceivingDetailsDrilldownUrl = "/sku/";
         // http://qa.api.wms.shamrockfoods.com/api/advanced-shipment-notices/12335721/sku/1061561 
         public static string ReceivingQvDetailsUrl = "/quality-verifications";
-  
+        public static string LockCount;
+        public static string LpnNumber2;
+
+        public static DateTime? ManufacturingDate;
+        public static DateTime? ExpireDate;
+        public static string ConsumePriority;
+
+        public static DateTime? ConsumePriorityDate { get; internal set; }
+        public static string SpclInstCode2 { get; internal set; }
+        public static string SpclInstCode4 { get; internal set; }
+        public static string SpclInstCode3 { get; internal set; }
+        public static string SpclInstCode5 { get; internal set; }
+        public static decimal Volume { get; internal set; }
+        public static string DcOrderNbr { get; internal set; }
+        public static string VendorId { get; internal set; }
+        public static string SpclInstCode1 { get; internal set; }
+        public static decimal ActlWt { get; internal set; }
+        public static decimal EstWt { get; internal set; }
+        public static string ConsumeSequence { get; internal set; }
+        public static string AssortNumber { get; internal set; }
+        public static string CutNumber { get; internal set; }
         // http://qa.api.wms.shamrockfoods.com/api/advanced-shipment-notices/12335721/quality-verifications
 
     }

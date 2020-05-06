@@ -139,7 +139,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
 
         public void VerifyOutputTotalReordsAgainstDbCount(string count)
         {
-            Assert.AreEqual(count, TotalRecords.ToString());
+            VerifyOutputTotalReordsAgainstDbCount(count, TotalRecords.ToString());
         }
 
          public void CallReceivingDetailsApi(string url)
