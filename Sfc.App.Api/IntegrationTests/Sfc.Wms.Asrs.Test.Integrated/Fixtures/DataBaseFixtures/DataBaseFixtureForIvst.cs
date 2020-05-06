@@ -257,7 +257,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 Unitweight1 = FetchUnitWeight(db, IvstData.SkuId);
                 TrnsInvBeforeApi = FetchTransInvnentory(db, IvstData.SkuId);
                 PickLcnDtlBeforeApi = GetPickLocationDetails(db, IvstData.SkuId, null);
-                var ivstResult = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, "1", IvstActionCode.AdjustmentMinus, "0000", Constants.InboundPalletY);
+                var ivstResult = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, IvstData.Qty, IvstActionCode.AdjustmentPlus, "0000", Constants.InboundPalletY);
                 EmsToWmsParametersNoException = new EmsToWmsDto
                 {
                     Process = "IVSTProcessor",
@@ -469,9 +469,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var ivstDataDto = new Ivst();
             Command = new OracleCommand(query, db);
-           Command.Parameters.Add(new OracleParameter(Parameter.StatCode, Constants.StatusCodeConsumed));
+            Command.Parameters.Add(new OracleParameter(Parameter.StatCode, Constants.StatusCodeConsumed));
             Command.Parameters.Add(new OracleParameter(Parameter.SysCodeType, Constants.SysCodeType));
-      Command.Parameters.Add(new OracleParameter(Parameter.SysCodeId, Constants.SysCodeIdForActiveLocation));
+            Command.Parameters.Add(new OracleParameter(Parameter.SysCodeId, Constants.SysCodeIdForActiveLocation));
             Command.Parameters.Add(new OracleParameter(Parameter.Ready, DefaultValues.Status));
             Command.Parameters.Add(new OracleParameter(Parameter.IvstQty, Constants.IvstQuantity));         
             var validData = Command.ExecuteReader();

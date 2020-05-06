@@ -164,16 +164,16 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                         MessageText = syndResult,
                     };
                     SyndData.MsgKey = InsertEmsToWms(db, EmsToWmsParameters);
-                    SyndUrl = $"{BaseUrl}{TestData.Parameter.EmsToWmsMessage}?{TestData.Parameter.MsgKey}={SyndData.MsgKey}&{TestData.Parameter.MsgProcessor}={EmsToWmsParameters.Process}";
-                    var response = ApiIsCalled(SyndUrl);
-                    var result = JsonConvert.DeserializeObject<BaseResult>(response.Content);
-                    Assert.AreEqual(ResultTypes.Created.ToString(), result.ResultType.ToString());
-                    SwmFromMheSynd = SwmFromMhe(db, SyndData.MsgKey, "SYND");
-                    Synd = JsonConvert.DeserializeObject<SyndDto>(SwmFromMheSynd.MessageJson);
-                    var syndDtl = PldList[i];
-                    VerifySyndMessageWasInsertedIntoSwmFromMhe(Synd, syndDtl);
-                    WmsSyndData = FetchSyndData(db, Synd.SynchronizationId, PldList[i].Skuid);
-                    VerifySyndMessageWasInsertedIntoSwmFromMheTableandSyndDataTable();
+                    //SyndUrl = $"{BaseUrl}{TestData.Parameter.EmsToWmsMessage}?{TestData.Parameter.MsgKey}={SyndData.MsgKey}&{TestData.Parameter.MsgProcessor}={EmsToWmsParameters.Process}";
+                    //var response = ApiIsCalled(SyndUrl);
+                    //var result = JsonConvert.DeserializeObject<BaseResult>(response.Content);
+                    //Assert.AreEqual(ResultTypes.Created.ToString(), result.ResultType.ToString());
+                    //SwmFromMheSynd = SwmFromMhe(db, SyndData.MsgKey, "SYND");
+                    //Synd = JsonConvert.DeserializeObject<SyndDto>(SwmFromMheSynd.MessageJson);
+                    //var syndDtl = PldList[i];
+                    //VerifySyndMessageWasInsertedIntoSwmFromMhe(Synd, syndDtl);
+                    //WmsSyndData = FetchSyndData(db, Synd.SynchronizationId, PldList[i].Skuid);
+                    //VerifySyndMessageWasInsertedIntoSwmFromMheTableandSyndDataTable();
                 }
 
             }

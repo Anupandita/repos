@@ -30,7 +30,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("PoNumber"))
             .When(x => x.CallReceivingSearchApiWithInputs(UIConstants.ReceivingSearchUrl))
-            .And(x => x.VerifyReceivingSearchOutputAgainstDbOutput())
+            .Then(x => x.VerifyReceivingSearchOutputAgainstDbOutput())
             .BDDfy("Test Case ID : ");
         }
         [TestMethod()]
@@ -39,7 +39,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("ShipmentNumber"))
             .When(x => x.CallReceivingSearchApiWithInputs(UIConstants.ReceivingSearchUrl))
-            .And(x => x.VerifyOutputTotalReordsAgainstDbCount(UIConstants.ShipmentNbrCount))
+            .Then(x => x.VerifyOutputTotalReordsAgainstDbCount(UIConstants.ShipmentNbrCount))
             .BDDfy("Test Case ID : ");
         }
         [TestMethod()]
@@ -48,7 +48,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("VendorName"))
             .When(x => x.CallReceivingSearchApiWithInputs(UIConstants.ReceivingSearchUrl))
-            .And(x => x.VerifyOutputTotalReordsAgainstDbCount(UIConstants.VendorVendorNumberCount))
+            .Then(x => x.VerifyOutputTotalReordsAgainstDbCount(UIConstants.VendorNameCount))
             .BDDfy("Test Case ID : ");
         }
         [TestMethod()]
@@ -57,7 +57,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("StatusRange"))
             .When(x => x.CallReceivingSearchApiWithInputs(UIConstants.ReceivingSearchUrl))
-            .And(x => x.VerifyOutputTotalReordsAgainstDbCount(UIConstants.ReceivingStatusCount))
+            .Then(x => x.VerifyOutputTotalReordsAgainstDbCount(UIConstants.ReceivingStatusCount))
             .BDDfy("Test Case ID : ");
         }
         [TestMethod()]
@@ -66,26 +66,17 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("VerifiedDateRange"))
             .When(x => x.CallReceivingSearchApiWithInputs(UIConstants.ReceivingSearchUrl))
-            .And(x => x.VerifyOutputTotalReordsAgainstDbCount(UIConstants.VerifiedDateRangeCount))
+            .Then(x => x.VerifyOutputTotalReordsAgainstDbCount(UIConstants.VerifiedDateRangeCount))
             .BDDfy("Test Case ID : ");
         }
 
-        [TestMethod()]
-        [TestCategory("UI_FUNCTIONAL")]
-        public void ReceivingDrilldownApi()
-        {
-            this.Given(x => x.CreateUrlAndInputParamForApiUsing("Drilldown"))
-            .When(x => x.CallReceivingDrilldownApi(UIConstants.ReceivingDrilldownUrl))
-            .Then(x => x.VerifyOutputForReceivingDrilldownInApiOutput())
-            .BDDfy("Test Case ID : ");
-        }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
         public void ReceivingDetailsApi()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("Details"))
             .When(x => x.CallReceivingDetailsApi(UIConstants.ReceivingDetailsUrl))
-            .And(x => x.VerifyOutputForReceivingDetailsInApiOutput())
+            .Then(x => x.VerifyOutputForReceivingDetailsInApiOutput())
             .BDDfy("Test Case ID : ");
         }
         [TestMethod()]
@@ -94,7 +85,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("DetailsDrilldown"))
             .When(x => x.CallReceivingDetailsDrilldownApi(UIConstants.ReceivingDetailsDrilldownUrl))
-            .And(x => x.VerifyOutputForReceivingDetailsDrilldownInApiOutput())
+            .Then(x => x.VerifyOutputForReceivingDetailsDrilldownInApiOutput())
             .BDDfy("Test Case ID : ");
         }
         [TestMethod()]
@@ -103,7 +94,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("QvDetails"))
             .When(x => x.CallReceivingQvDetailsApi(UIConstants.ReceivingQvDetailsUrl))
-            .And(x => x.VerifyOutputForQvDetailsInApiOutput())
+            .Then(x => x.VerifyOutputForQvDetailsInApiOutput())
             .BDDfy("Test Case ID : ");
         }
         [TestMethod()]
@@ -111,8 +102,40 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         public void ReceivingQvDetailsUpdateApi()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("UpdateQvDetails"))
+            .And(x=>x.CreateAnswerInput())
             .When(x => x.CallReceivingUpdateQvDetailsApi(UIConstants.ReceivingQvDetailsUrl))
-            .And(x => x.VerifyQVDetailsUpdatedInDb())
+            .Then(x => x.VerifyQVDetailsUpdatedInDb())
+            .BDDfy("Test Case ID : ");
+        }
+
+        [TestMethod()]
+        [TestCategory("UI_FUNCTIONAL")]
+        public void VerifyReceiptButtonCall()
+        {
+            this.Given(x => x.CreateUrlAndInputParamForApiUsing("Details"))
+            .And(x => x.CreateInputDtoFor("Verify Receipt"))
+            .When(x => x.CallReceivingCorbaApi(UIConstants.ReceivingDetailsUrl))
+            .Then(x => x.VerifyCorbaResultFromDbFor("Verify Receipt"))
+            .BDDfy("Test Case ID : ");
+        }
+        [TestMethod()]
+        [TestCategory("UI_FUNCTIONAL")]
+        public void MultiItemButtonCall()
+        {
+            this.Given(x => x.CreateUrlAndInputParamForApiUsing("Details"))
+            .And(x => x.CreateInputDtoFor("Multi Item"))
+            .When(x => x.CallReceivingCorbaApi(UIConstants.ReceivingDetailsUrl))
+            .Then(x => x.VerifyCorbaResultFromDbFor("Multi Item"))
+            .BDDfy("Test Case ID : ");
+        }
+        [TestMethod()]
+        [TestCategory("UI_FUNCTIONAL")]
+        public void NllButtonCall()
+        {
+            this.Given(x => x.CreateUrlAndInputParamForApiUsing("Details"))
+            .And(x => x.CreateInputDtoFor("NLL"))
+            .When(x => x.CallReceivingCorbaApi(UIConstants.ReceivingDetailsUrl))
+            .Then(x => x.VerifyCorbaResultFromDbFor("NLL"))
             .BDDfy("Test Case ID : ");
         }
     }
