@@ -137,8 +137,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         public void LpnCaseUnlockApi()
         {
             this.Given(x=>x.CreateUrlAndInputParamForApiUsing("CaseUnlock"))
-            .When(x => x.CallLpnDetailsApi(UIConstants.LpnCaseUnlockUrl))
-            .And(x => x.VerifyLpnLockUnlockOutputAgainstDbOutput())
+            .When(x => x.CallLpnCaseUnlockApiWithInputs(UIConstants.LpnCaseUnlockUrl))
+            .And(x => x.VerifyLpnCaseUnlockOutputAgainstDbOutput())
             .BDDfy("Test Case ID : ");
         }
         [TestMethod()]
@@ -147,7 +147,88 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("Details"))
             .When(x => x.CallLpnDetailsApi(UIConstants.LpnDetailsUrl))
-            .And(x => x.VerifyLpnLockUnlockOutputAgainstDbOutput())
+            .And(x => x.VerifyLpnDetailsOutputAgainstDbOutput())
+            .BDDfy("Test Case ID : ");
+        }
+        [TestMethod()]
+        [TestCategory("UI_FUNCTIONAL")]
+        public void LpnAddCommentsApi()
+        {
+            this.Given(x => x.CreateUrlAndInputParamForApiUsing("AddComments"))
+            .When(x => x.CallLpnAddCommentsApi(UIConstants.LpnAddCommentsUrl))
+            .And(x => x.VerifyCommentsIsInsertedinDb())
+            .BDDfy("Test Case ID : ");
+        }
+        [TestMethod()]
+        [TestCategory("UI_FUNCTIONAL")]
+        public void LpnEditCommentsApi()
+        {
+            this.Given(x => x.CreateUrlAndInputParamForApiUsing("EditComments"))
+            .When(x => x.CallLpnEditCommentsApi(UIConstants.LpnEditCommentsUrl))
+            .And(x => x.VerifyCommentsIsUpdatedInDb())
+            .BDDfy("Test Case ID : ");
+        }
+        [TestMethod()]
+        [TestCategory("UI_FUNCTIONAL")]
+        public void LpnDeleteCommentsApi()
+        {
+            this.Given(x => x.CreateUrlAndInputParamForApiUsing("DeleteComments"))
+            .When(x => x.CallLpnDeleteCommentsApi(UIConstants.LpnDeleteCommentsUrl))
+            .And(x => x.VerifyCommentsIsDeletedInDb())
+            .BDDfy("Test Case ID : ");
+        }
+        [TestMethod()]
+        [TestCategory("UI_FUNCTIONAL")]
+        public void LpnUpdateApi()
+        {
+            this.Given(x => x.CreateUrlAndInputParamForApiUsing("Update"))
+            .When(x => x.CallLpnUpdateApi(UIConstants.LpnUpdateUrl))
+            .And(x => x.VerifyUpdateFieldsAreUpdatedInDb())
+            .BDDfy("Test Case ID : ");
+        }
+        [TestMethod()]
+        [TestCategory("UI_FUNCTIONAL")]
+        public void LpnEditItemsApi()
+        {
+            this.Given(x => x.CreateUrlAndInputParamForApiUsing("Items"))
+            .When(x => x.CallLpnItemsApi(UIConstants.LpnItemsUrl))
+            .And(x => x.VerifyItemFieldsAreUpdatedInDb())
+            .BDDfy("Test Case ID : ");
+        }
+        [TestMethod()]
+        [TestCategory("UI_FUNCTIONAL")]
+        public void LpnMultiUnlockApi()
+        {
+            this.Given(x => x.CreateUrlAndInputParamForApiUsing("MultiUnlock"))
+            .When(x => x.CallLpnMultiUnlockApi(UIConstants.LpnMultiUnlockUrl))
+            .And(x => x.VerifyLocksAreDeletedinDb())
+            .BDDfy("Test Case ID : ");
+        }
+        [TestMethod()]
+        [TestCategory("UI_FUNCTIONAL")]
+        public void LpnMultiLockApi()
+        {
+            this.Given(x => x.CreateUrlAndInputParamForApiUsing("MultiLock"))
+            .When(x => x.CallLpnMultiLockApi(UIConstants.LpnMultiLockUrl))
+            .And(x => x.VerifyLocksAreAddedInDb())
+            .BDDfy("Test Case ID : ");
+        }
+        [TestMethod()]
+        [TestCategory("UI_FUNCTIONAL")]
+        public void LpnMultiCommentsApi()
+        {
+            this.Given(x => x.CreateUrlAndInputParamForApiUsing("MultiComments"))
+            .When(x => x.CallLpnMultiCommentsApi(UIConstants.LpnMultiCommentsUrl))
+            .And(x => x.VerifyMultiCommentsAreAddedInDb())
+            .BDDfy("Test Case ID : ");
+        }
+        [TestMethod()]
+        [TestCategory("UI_FUNCTIONAL")]
+        public void LpnMultiEditApi()
+        {
+            this.Given(x => x.CreateUrlAndInputParamForApiUsing("MultiEdit"))
+            .When(x => x.CallLpnMultiEditApi(UIConstants.LpnMultiEditUrl))
+            .And(x => x.VerifyMultiEditAreAddedInDb())
             .BDDfy("Test Case ID : ");
         }
     }

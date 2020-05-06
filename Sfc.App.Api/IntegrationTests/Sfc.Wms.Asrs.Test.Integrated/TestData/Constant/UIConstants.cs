@@ -22,6 +22,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData.Constant
         public const string VolumeDecimalFormat = "99990.0000";
         public const string DecimalFormat = "99990.00";
         public const string HeightFormat = "99990.09";
+        public const string CommentCode = "LOT";
+        public const string SystemCodeCommentCode = "Lot Data";
+        public const string SystemCodeCommentType = "Lot Tracking";
         public static string ItemNumber;
         public static string CartonNbr;
         public static string PoNumber;
@@ -95,16 +98,31 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData.Constant
 
         public const string Lpn = "http://dev.az.app.api.wms.shamrockfoods.com/lpn/";
         public const string Search = "search?";
-        public const string LpnComments = "lpn-comments/";
-        public const string LpnDetails = "lpn-details";
+        public const string LpnComments = "lpn-comments";
+        public const string LpnDetails = "lpn-details";        
         public const string LpnHistory = "lpn-history/";
-
+        public const string LpnCaseUnlock = "case-unlock?";
+        public const string LpnCaseDetails = "lpn-case-details";
+        public const string LpnIds = "lpnIds=";
+        public const string LpnMultiUnlock = "multiple-unlock";
+        public const string LpnMultiLock = "multiple-lock";
+        public const string LpnMultiComments = "multiple-lpn-comments";
+        public const string LpnMultiEdit = "multiple-lpn-details";
         public static string LpnSearchUrl;
         public static string LpnCommentsUrl;
         public static string LpnHistoryUrl;
         public static string LpnLockUnlockUrl;
         public static string LpnCaseUnlockUrl;
         public static string LpnDetailsUrl;
+        public static string LpnAddCommentsUrl;
+        public static string LpnEditCommentsUrl;
+        public static string LpnDeleteCommentsUrl;
+        public static string LpnUpdateUrl;
+        public static string LpnItemsUrl;
+        public static string LpnMultiUnlockUrl;
+        public static string LpnMultiLockUrl;
+        public static string LpnMultiCommentsUrl;
+        public static string LpnMultiEditUrl;
         public static string ItemNumberCount;
         public const string QuantityFormat = "99990.0";
         public const string SearchInputSkuId = "lpnParamDto.skuId=";
