@@ -9,8 +9,8 @@
     <Description>Nuget package containing the calls for Wms.App.Api</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>Sfc.Wms.App.Api.Nuget</PackageId>
-    <Version>11.4.0</Version>
-    <PackageReleaseNotes>Update Lpn gateway for multiple lpn update and batch comments insertion</PackageReleaseNotes>
+    <Version>11.4.1</Version>
+    <PackageReleaseNotes>Update Receiving to point C# end point</PackageReleaseNotes>
     <Copyright>2020</Copyright>
   </PropertyGroup>
   <ItemGroup>
@@ -18,7 +18,7 @@
     <PackageReference Include="RestSharp" Version="106.6.10" />
     <PackageReference Include="Sfc.Core.ListManagement.Contracts" Version="[1.0.0, 2.0.0)" />
     <PackageReference Include="Sfc.Core.RestResponse" Version="[1.4.5,2.0)" />
-    <PackageReference Include="Sfc.Wms.App.Api.Contracts" Version="5.10.0" />
+    <PackageReference Include="Sfc.Wms.App.Api.Contracts" Version="[5.10.1,6.0)" />
     <PackageReference Include="Sfc.Wms.Confguration.ItemMasters.Contracts" Version="[1.0.0,2.0)" />
     <PackageReference Include="Sfc.Wms.Configuration.MessageLogger.Contracts" Version="[4.1.0,5.0)" />
     <PackageReference Include="Sfc.Wms.Configuration.MessageMaster.Contracts" Version="[1.1,2.0)" />
@@ -26,7 +26,7 @@
     <PackageReference Include="Sfc.Wms.Configuration.UserMaster.Contracts" Version="[1.0.2,2.0)" />
     <PackageReference Include="Sfc.Wms.Foundation.Corba.Contracts" Version="[2.0,3.0)" />
     <PackageReference Include="Sfc.Wms.Foundation.InboundLpn.Contracts" Version="[5.8.0,6.0)" />
-    <PackageReference Include="Sfc.Wms.Foundation.Receiving.Contracts.UoW" Version="1.0.2" />
+    <PackageReference Include="Sfc.Wms.Foundation.Receiving.Contracts.UoW" Version="1.0.3" />
     <PackageReference Include="Sfc.Wms.Interfaces.Asrs.Contracts" Version="[2.1.0,3.0)" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.6.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.6.0" />
