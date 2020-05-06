@@ -103,6 +103,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData.Constant
         public static string LpnCommentsUrl;
         public static string LpnHistoryUrl;
         public static string LpnLockUnlockUrl;
+        public static string LpnCaseUnlockUrl;
+        public static string LpnDetailsUrl;
         public static string ItemNumberCount;
         public const string QuantityFormat = "99990.0";
         public const string SearchInputSkuId = "lpnParamDto.skuId=";

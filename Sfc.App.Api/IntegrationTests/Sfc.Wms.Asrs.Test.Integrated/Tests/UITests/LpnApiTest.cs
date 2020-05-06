@@ -134,12 +134,20 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void ItemAttributeDrilldownApi()
+        public void LpnCaseUnlockApi()
         {
-            this.Given(x=>x.CreateUrlAndInputParamForApiUsing("LpnComments"))
-            .When(x => x.CallLpnDetailsApi(UIConstants.LpnCommentsUrl))
-            .Then(x => x.VerifyOutputForActiveLocationsListInOutput())
-            .And(x => x.VerifyOutputForVendorsListInOutput())
+            this.Given(x=>x.CreateUrlAndInputParamForApiUsing("CaseUnlock"))
+            .When(x => x.CallLpnDetailsApi(UIConstants.LpnCaseUnlockUrl))
+            .And(x => x.VerifyLpnLockUnlockOutputAgainstDbOutput())
+            .BDDfy("Test Case ID : ");
+        }
+        [TestMethod()]
+        [TestCategory("UI_FUNCTIONAL")]
+        public void LpnDetailsApi()
+        {
+            this.Given(x => x.CreateUrlAndInputParamForApiUsing("Details"))
+            .When(x => x.CallLpnDetailsApi(UIConstants.LpnDetailsUrl))
+            .And(x => x.VerifyLpnLockUnlockOutputAgainstDbOutput())
             .BDDfy("Test Case ID : ");
         }
     }

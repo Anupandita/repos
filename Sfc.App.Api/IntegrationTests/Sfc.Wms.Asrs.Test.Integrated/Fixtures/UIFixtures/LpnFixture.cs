@@ -113,16 +113,16 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
                     UIConstants.LpnSearchUrl = UIConstants.Lpn + UIConstants.Find + UIConstants.SearchInputPalletId + UIConstants.PalletId;
                     return;
                 case "Zone":
-                    UIConstants.LpnSearchUrl =  UIConstants.Lpn + UIConstants.Find + UIConstants.SearchInputZone;
+                    UIConstants.LpnSearchUrl =  UIConstants.Lpn + UIConstants.Find + UIConstants.SearchInputZone + UIConstants.Zone;
                     return;
                 case "Aisle":
-                    UIConstants.LpnSearchUrl =  UIConstants.Lpn + UIConstants.Find + UIConstants.SearchInputAisle;
+                    UIConstants.LpnSearchUrl =  UIConstants.Lpn + UIConstants.Find + UIConstants.SearchInputAisle + UIConstants.Aisle;
                     return;
                 case "Slot":
-                    UIConstants.LpnSearchUrl =  UIConstants.Lpn + UIConstants.Find + UIConstants.SearchInputSlot;
+                    UIConstants.LpnSearchUrl =  UIConstants.Lpn + UIConstants.Find + UIConstants.SearchInputSlot + UIConstants.Slot;
                     return;
                 case "Level":
-                    UIConstants.LpnSearchUrl =  UIConstants.Lpn + UIConstants.Find + UIConstants.SearchInputLevel;
+                    UIConstants.LpnSearchUrl =  UIConstants.Lpn + UIConstants.Find + UIConstants.SearchInputLevel + UIConstants.Level;
                     return;
                 case "CreatedDate":
                     UIConstants.LpnSearchUrl =  UIConstants.Lpn + UIConstants.Find + UIConstants.SearchInputCreatedDate + UIConstants.CreatedDate;
