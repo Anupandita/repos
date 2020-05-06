@@ -437,7 +437,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var pickTktDtl = new PickTicketDetail();
             var query = OrstQueries.PickTktDtl;
             Command = new OracleCommand(query, db);
-            Command.Parameters.Add(new OracleParameter(Parameter.CartonNbr, cartonNbr));
+            Command.Parameters.Add(new OracleParameter(Parameter.CartonNumber, cartonNbr));
             Command.Parameters.Add(new OracleParameter(Parameter.PktSeqNbr, pktSeqNbr));
             var pickTktDtlReader = Command.ExecuteReader();
             if(pickTktDtlReader.Read())

@@ -25,7 +25,7 @@
         public static string PickTktHeader = $"select PKT_HDR.PKT_STAT_CODE,PKT_HDR.MOD_DATE_TIME,PKT_HDR.USER_ID from PKT_HDR " +
                 "WHERE PKT_CTRL_NBR = (SELECT PKT_CTRL_NBR FROM CARTON_HDR WHERE CARTON_NBR = :cartonNumber)";
         public static string PickTktDtl = $"select PKT_DTL.UNITS_PAKD,PKT_DTL.MOD_DATE_TIME,PKT_DTL.USER_ID ,PKT_DTL.VERF_AS_PAKD,PKT_DTL.PKT_CTRL_NBR from PKT_DTL " +
-                "where PKT_DTL.PKT_CTRL_NBR = (SELECT PKT_CTRL_NBR FROM CARTON_HDR WHERE CARTON_NBR= :carton-number) AND PKT_SEQ_NBR= :pktSeqNbr";
+                "where PKT_DTL.PKT_CTRL_NBR = (SELECT PKT_CTRL_NBR FROM CARTON_HDR WHERE CARTON_NBR= :cartonNumber) AND PKT_SEQ_NBR= :pktSeqNbr";
         public static string AllocInventory = $"select * from ALLOC_INVN_DTL WHERE task_cmpl_ref_nbr= :cntrNbr order by mod_date_time desc";
         
     }
