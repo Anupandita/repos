@@ -313,7 +313,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void UpdateAsnDetailsOperationInvoked()
         {
-            updateResult = _receivingGateway.UpdateAdvanceShipmentNoticesDetailsAsync(updateAsnDto, It.IsAny<string>()).Result;
+            updateResult = _receivingGateway.UpdateAdvanceShipmentNoticesDetailsAsync(updateAsnDto, It.IsAny<string>(), It.IsAny<string>()).Result;
         }
 
         protected void UpdateAsnDetailsReturnedOkAsResponseStatus()

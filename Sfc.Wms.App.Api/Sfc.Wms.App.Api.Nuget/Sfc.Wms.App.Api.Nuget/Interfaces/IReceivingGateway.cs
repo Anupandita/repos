@@ -17,6 +17,6 @@ namespace Sfc.Wms.App.Api.Nuget.Interfaces
 
         Task<BaseResult> UpdateQualityVerificationsAsync(AnswerTextDto asnAnswerTextDto, string shipmentNumber, string token);
 
-        Task<BaseResult> UpdateAdvanceShipmentNoticesDetailsAsync(UpdateAsnDto updateAsnDto, string token);
+        Task<BaseResult> UpdateAdvanceShipmentNoticesDetailsAsync(UpdateAsnDto updateAsnDto, string shipmentNumber, string token);
     }
 }

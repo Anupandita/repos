@@ -55,9 +55,10 @@ namespace Sfc.Wms.App.Api.Controllers
 
         [HttpPut, Route(Routes.Paths.UpdateAsnDetails)]
         [ResponseType(typeof(BaseResult))]
-        public async Task<IHttpActionResult> UpdateAdvanceShipmentNoticesDetailsAsync(UpdateAsnDto updateAsnDto)
+        public async Task<IHttpActionResult> UpdateAdvanceShipmentNoticesDetailsAsync(string shipmentNumber, UpdateAsnDto updateAsnDto)
         {
-            var result = await _receivingService.UpdateAdvanceShipmentNoticesDetailsAsync(updateAsnDto).ConfigureAwait(false);
+            var result = await _receivingService.UpdateAdvanceShipmentNoticesDetailsAsync(updateAsnDto, shipmentNumber)
+                .ConfigureAwait(false);
 
             return ResponseHandler(result);
         }

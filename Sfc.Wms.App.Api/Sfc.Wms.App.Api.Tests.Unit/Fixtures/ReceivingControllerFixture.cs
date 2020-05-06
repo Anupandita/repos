@@ -366,7 +366,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void UpdateAsnOperationInvoked()
         {
-            testResponse = _receivingController.UpdateAdvanceShipmentNoticesDetailsAsync(updateAsnDto);
+            testResponse = _receivingController.UpdateAdvanceShipmentNoticesDetailsAsync(shipmentNumber, updateAsnDto);
         }
 
         protected void TheUpdateAsnOperationReturnedBadRequestResponse()
