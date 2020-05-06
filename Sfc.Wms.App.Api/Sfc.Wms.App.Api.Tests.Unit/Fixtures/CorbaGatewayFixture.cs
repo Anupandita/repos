@@ -7,7 +7,7 @@ using Sfc.Core.OnPrem.Result;
 using Sfc.Core.RestResponse;
 using Sfc.Wms.App.Api.Nuget.Gateways;
 using Sfc.Wms.App.Api.Nuget.Interfaces;
-using Sfc.Wms.Foundation.Corba.Contracts.Dtos;
+using Sfc.Wms.Foundation.Corba.Contracts.UoW.Dtos;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;

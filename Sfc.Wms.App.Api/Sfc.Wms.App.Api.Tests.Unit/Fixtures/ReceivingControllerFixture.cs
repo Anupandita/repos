@@ -329,15 +329,15 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         private void MockUpdateAsn(ResultTypes resultType)
         {
-            var result = new BaseResult {ResultType = resultType};
+            var result = new BaseResult { ResultType = resultType };
 
-            _receivingService.Setup(el => el.UpdateAdvanceShipmentNoticesDetailsAsync(It.IsAny<UpdateAsnDto>()))
+            _receivingService.Setup(el => el.UpdateAdvanceShipmentNoticesDetailsAsync(It.IsAny<UpdateAsnDto>(), It.IsAny<string>()))
                 .Returns(Task.FromResult(result));
         }
 
         private void VerifyUpdateAsn()
         {
-            _receivingService.Verify(el => el.UpdateAdvanceShipmentNoticesDetailsAsync(It.IsAny<UpdateAsnDto>()));
+            _receivingService.Verify(el => el.UpdateAdvanceShipmentNoticesDetailsAsync(It.IsAny<UpdateAsnDto>(), It.IsAny<string>()));
         }
 
         protected void InputToUpdateAsn()
