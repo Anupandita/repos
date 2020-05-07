@@ -94,6 +94,7 @@ namespace Sfc.Wms.App.Api.Contracts.Constants
             public const string CaseUnlock = "case-unlock";
             public const string RefreshToken = "refresh-token";
             public const string UiSpecificMessages = "ui-messages";
+            public const string ImageUrlsParams = "{sku}/{gtin?}";
         }
 
         public static class Prefixes
@@ -140,6 +141,7 @@ namespace Sfc.Wms.App.Api.Contracts.Constants
             public const string WorkAreaMaster = "work-area-master";
             public const string MessageLogger = "api/message-logs";
             public const string MessageMaster = "api/message-masters";
+            public const string ImageUrls = "api/image-urls";
         }
     }
 }
