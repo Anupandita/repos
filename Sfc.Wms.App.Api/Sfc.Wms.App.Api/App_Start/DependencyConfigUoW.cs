@@ -4,13 +4,15 @@ using Sfc.Core.OnPrem.UnitOfWork.Contracts.UoW.Interfaces;
 using Sfc.Wms.Data.Domain;
 using Sfc.Wms.Data.Domain.Interfaces;
 using Sfc.Wms.Data.UoW;
-using Sfc.Wms.Foundation.Corba.Contracts.UoW.Interfaces;
-using Sfc.Wms.Foundation.Receiving.Contracts.UoW.Interfaces;
-using Sfc.Wms.Framework.Corba.App.UoW.Services;
-using Sfc.Wms.Inbound.Receiving.App.UoW.Services;
+using Sfc.Wms.Framework.Interceptor.App.interceptors;
+using Sfc.Wms.Framework.MessageLogger.App.Services;
+using Sfc.Wms.Framework.MessageMaster.App.Services;
 using SimpleInjector;
+using System;
 using System.Configuration;
 using System.Data.Common;
+using System.Linq;
+using System.Linq.Dynamic;
 using System.Runtime.Caching;
 
 namespace Sfc.Wms.App.Api
@@ -19,25 +21,48 @@ namespace Sfc.Wms.App.Api
     {
         public static void RegisterTypes(Container container)
         {
+            var connectionString = ConfigurationManager.ConnectionStrings["SfcOracleDbContext"].ConnectionString;
+            container.Register<DbConnection>(() => new OracleConnection(connectionString), Lifestyle.Scoped);
+
             container.Register<IUoWFactory, DbUoWFactory>(Lifestyle.Scoped);
             container.Register<IEntityMapper, EntityMapper>(Lifestyle.Singleton);
-
-            //   container.Register<ISystemCodeService, SystemCodeService>(Lifestyle.Scoped);
             container.Register<ISfcInMemoryCache>(() => new SfcInMemoryCache(MemoryCache.Default), Lifestyle.Singleton);
 
-            container.Register<IInboundReceivingService, InboundReceivingService>(Lifestyle.Transient);
-            container.Register<IAsnDetailService, AsnDetailService>(Lifestyle.Transient);
-            container.Register<IAsnHeaderService, AsnHeaderService>(Lifestyle.Transient);
-            container.Register<IAsnLotTrackingService, AsnLotTrackingService>(Lifestyle.Transient);
-            container.Register<ICorbaService, CorbaService>(Lifestyle.Transient);
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(e => e.FullName.Contains(".App.UoW")).ToList();
 
-            container.Register<IQuestionAnswerService, QuestionAnswerService>(Lifestyle.Transient);
-            container.Register<IQuestionMasterService, QuestionMasterService>(Lifestyle.Transient);
-            container.Register<IAsnCommentService, AsnCommentService>(Lifestyle.Transient);
+            foreach (var assemblyInfo in assemblies)
+            {
+                var registrations = (from type in assemblyInfo.GetExportedTypes()
+                                     where type.IsClass && !type.IsAbstract && !type.IsInterface
+                                           && type.Namespace != null && type.Namespace.StartsWith("Sfc")
+                                     from service in type.GetInterfaces()
+                                     select new { service, implementation = type }).ToList();
 
-            var connectionString = ConfigurationManager.ConnectionStrings["SfcOracleDbContext"].ConnectionString;
-            container.Register<DbConnection>(() => new OracleConnection(connectionString),
-            Lifestyle.Scoped);
+                foreach (var reg in registrations)
+                {
+                    if (reg.implementation.Namespace?.Contains(".App.UoW") == true)
+                    {
+                        if (reg.service.IsGenericTypeDefinition)
+                            container.Register(reg.service.GetGenericTypeDefinition(),
+                                reg.implementation.GetGenericTypeDefinition(), Lifestyle.Scoped);
+                        else
+                            container.Register(reg.service, reg.implementation, Lifestyle.Scoped);
+                    }
+
+                    if (reg.service.FullName?.Contains(".Contracts.UoW") != true ||
+                        reg.implementation.FullName == null ||
+                        reg.implementation.FullName.Contains(nameof(MessageDetailService)) ||
+                        reg.implementation.FullName.Contains(nameof(MessageMasterService)) ||
+                        reg.implementation.FullName.Contains(nameof(MessageLogService)) ||
+                        reg.implementation.FullName.Contains("Aop")) continue;
+
+                    if (reg.implementation.IsGenericTypeDefinition)
+                        container.InterceptWith<MonitoringInterceptor>(type =>
+                            type == reg.service.GetGenericTypeDefinition());
+                    else
+                        container.InterceptWith<MonitoringInterceptor>(type => type == reg.service);
+                }
+            }
 
             container.Options.AllowOverridingRegistrations = true;
         }

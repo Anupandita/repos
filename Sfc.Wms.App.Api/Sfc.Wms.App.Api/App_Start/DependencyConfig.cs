@@ -105,7 +105,7 @@ namespace Sfc.Wms.App.Api
             {
                 var registrations = from type in assemblyInfo.GetExportedTypes()
                                     where type.Namespace != null && type.Namespace.StartsWith("Sfc") && type.IsClass
-                                          && !type.IsAbstract && !type.IsInterface
+                                          && !type.IsAbstract && !type.IsInterface && type.FullName?.Contains("UoW") != true
                                     from service in type.GetInterfaces()
                                     select new { service, implementation = type };
                 foreach (var reg in registrations)
@@ -119,10 +119,8 @@ namespace Sfc.Wms.App.Api
                                                      && !reg.implementation.IsGenericTypeDefinition
                                                      && !reg.service.FullName.Contains(nameof(SfcLoggerSerilogs)))
                     {
-                        if (!reg.implementation.FullName.Contains(".UoW"))
-                        {
-                            container.Register(reg.service, reg.implementation, Lifestyle.Scoped);
-                        }
+                        container.Register(reg.service, reg.implementation, Lifestyle.Scoped);
+
                         if (reg.service.FullName.Contains(".Contracts") && !reg.implementation.FullName.Contains(nameof(MessageDetailService)) &&
                             !reg.implementation.FullName.Contains(nameof(MessageMasterService)) &&
                             !reg.implementation.FullName.Contains(nameof(MessageLogService)) &&
@@ -130,14 +128,12 @@ namespace Sfc.Wms.App.Api
                         {
                             container.InterceptWith<MonitoringInterceptor>(type => type == reg.service);
                         }
+
                     }
                     else if (reg.implementation.IsGenericTypeDefinition)
                     {
-                        if (reg.implementation.FullName != null && !reg.implementation.FullName.Contains(".UoW"))
-                        {
-                            container.Register(reg.service.GetGenericTypeDefinition(),
-                                reg.implementation.GetGenericTypeDefinition(), Lifestyle.Scoped);
-                        }
+                        container.Register(reg.service.GetGenericTypeDefinition(),
+                            reg.implementation.GetGenericTypeDefinition(), Lifestyle.Scoped);
 
                         if (reg.service.FullName != null && reg.service.FullName.Contains(".Contracts") && reg.implementation.FullName != null &&
                                                              !reg.implementation.FullName.Contains(nameof(MessageDetailService)) &&
