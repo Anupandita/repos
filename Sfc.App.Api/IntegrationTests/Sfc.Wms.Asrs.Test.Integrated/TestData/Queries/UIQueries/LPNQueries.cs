@@ -3,7 +3,7 @@ namespace FunctionalTestProject.SQLQueries
 {
     public static class LpnQueries
     {
-        public const string FetchLpnNumberSql = "SELECT distinct ch.case_nbr FROM case_hdr ch inner join case_dtl cd ON cd.case_nbr = ch.case_nbr left outer join " +
+        public const string FetchLpnNumberSql = "SELECT distinct ch.case_nbr, cd.sku_id FROM case_hdr ch inner join case_dtl cd ON cd.case_nbr = ch.case_nbr left outer join " +
                    "locn_hdr lh ON lh.locn_id = ch.locn_id inner join case_cmnt cm on ch.case_nbr= cm.case_nbr " +
                     "WHERE cm.cmnt_type in('INV','LOT','GEN') and ch.stat_code='30'and lh.aisle like '0%' ORDER BY dbms_random.value";
         public const string FetchLpnNbrForUpdateShpmtNbr = "select distinct case_nbr from case_hdr where po_nbr is null and orig_shpmt_nbr is null and dc_ord_nbr is null and stat_code <='45' ORDER BY dbms_random.value";
@@ -11,7 +11,6 @@ namespace FunctionalTestProject.SQLQueries
                                                         "and lock_cnt >='1' and ch.stat_code in('10','15','30','45','90','91') ORDER BY dbms_random.value";
         
         public const string FetchLpnNumberForDeallocate = "SELECT distinct case_nbr from case_hdr where stat_code in('45','50') ORDER BY dbms_random.value";
-        public const string FetchLpnNumberForItems = "SELECT distinct ch.case_nbr FROM case_hdr ch inner join case_dtl cd ON cd.case_nbr = ch.case_nbr where ch.stat_code in('45','50','90') ORDER BY dbms_random.value";
         public const string FetchItemNumberSql = "SELECT * FROM(SELECT distinct cd.sku_id,count(*) FROM case_hdr ch inner join case_dtl cd ON cd.case_nbr = ch.case_nbr left outer join locn_hdr lh " +
                     "ON lh.locn_id = ch.locn_id WHERE cd.sku_id IS NOT NULL group by cd.sku_id ORDER BY dbms_random.value) where rownum=1";
         public const string FetchPalletIdSql = "SELECT * FROM(SELECT distinct ch.plt_id, count(*) FROM case_hdr ch inner join case_dtl cd ON cd.case_nbr = ch.case_nbr left outer join locn_hdr lh ON " +
@@ -42,7 +41,7 @@ namespace FunctionalTestProject.SQLQueries
         }
         public static string FetchLpnNbrFromShpmtNbrUpdated()
         {
-            return $@"select  case_nbr,po_nbr,orig_shpmt_nbr,dc_ord_nbr from case_hdr where po_nbr is not null and orig_shpmt_nbr is not null and dc_ord_nbr is not null and stat_code <='45'ORDER BY dbms_random.value";
+            return $@"select  po_nbr,orig_shpmt_nbr,dc_ord_nbr from case_hdr where po_nbr is not null and orig_shpmt_nbr is not null and dc_ord_nbr is not null and stat_code <='45'ORDER BY dbms_random.value";
         }
         public static string FetchGetLpnCount()
         {
@@ -74,20 +73,31 @@ namespace FunctionalTestProject.SQLQueries
                 INNER JOIN CASE_DTL cd ON cd.case_nbr = ch.case_nbr
                 LEFT OUTER JOIN VENDOR_MASTER vm ON vm.vendor_id = ch.vendor_id WHERE ch.case_nbr = '{UIConstants.LpnNumber}'";
         }
+
+        public static string FetchDetailsDtSql()
+        {
+            return $@"Select cd.CNTRY_OF_ORGN CountryOfOrigin,cd.STD_SUB_PACK_QTY StandardSubPackQuantity,cd.SPL_INSTR_CODE_5 SpecialInstructionCode5,cd.SPL_INSTR_CODE_4 SpecialInstructionCode4,cd.SPL_INSTR_CODE_3 SpecialInstructionCode3,cd.SPL_INSTR_CODE_2 SpecialInstructionCode2,cd.SPL_INSTR_CODE_1 SpecialInstructionCode1,cd.CUT_NBR CutNumber,cd.ASSORT_NBR AssortmentNumber,cd.PPACK_GRP_CODE PrePackGroupCode,cd.TOTAL_ALLOC_QTY TotalAllocatedQuantity,cd.STD_PACK_QTY StandardPackQuantity,cd.SHPD_ASN_QTY ShippedAsnQuantity,cd.ORIG_QTY OriginalQuantity,cd.SKU_ATTR_5 SkuAttribute5,cd.SKU_ATTR_4 SkuAttribute4,cd.SKU_ATTR_3 SkuAttribute3,cd.SKU_ATTR_2 SkuAttribute2,cd.SKU_ATTR_1 SkuAttribute1,cd.BATCH_NBR BatchNumber,cd.PROD_STAT ProdStatus,cd.INVN_TYPE InventoryType,cd.SKU_ID SkuId,cd.CASE_SEQ_NBR CaseSequenceNumber,cd.CASE_NBR CaseNumber,cd.ACTL_QTY ActualQuantity,cd.dirct_qty DirectedQuantity,vm.vendor_id VendorId,vm.vendor_name VendorName FROM case_dtl cd
+                INNER JOIN CASE_hdr ch ON cd.case_nbr = ch.case_nbr
+                LEFT OUTER JOIN VENDOR_MASTER vm ON vm.vendor_id = ch.vendor_id WHERE ch.case_nbr = '{UIConstants.LpnNumber}'"; 
+        }
         public static string FetchCaseLockDtSql()
         {
             return $@"Select cl.invn_lock_code InventoryLockId, get_sc_desc('B','527',cl.invn_lock_code,NULL) inventoryLockCode, cm.cmnt lockComment, cl.create_date_time lockDateTime,cm.cmnt_seq_nbr CommentSequenceNumber from case_lock cl 
-                left outer join case_cmnt cm on cm.case_nbr=cl.case_nbr and cm.cmnt_code=cl.invn_lock_code where cl.case_nbr = '{UIConstants.LpnNbrForLockUnlock}' order by cm.create_date_time asc";
+                left outer join case_cmnt cm on cm.case_nbr=cl.case_nbr and cm.cmnt_code=cl.invn_lock_code where cl.case_nbr = '{UIConstants.LpnNbrForLockUnlock}' order by cm.create_date_time desc";
         }
         public static string FetchCaseCommentsDtSql() => $@"select cm.cmnt_type CommentType,get_sc_desc ('B','346',cm.cmnt_type,NULL) SystemCodeCommentType ,cm.cmnt_code CommentCode,get_sc_desc ('B','347',cm.cmnt_code,NULL) SystemCodeCommentCode , cm.cmnt CommentText,cm.cmnt_seq_nbr CommentSequenceNumber from case_cmnt cm 
-                                     where cm.case_nbr = '{UIConstants.LpnNumber}' order by CommentSequenceNumber desc";
+                                     where cm.case_nbr = '{UIConstants.LpnNumber}' order by cm.create_date_time asc";
         public static string FetchMultiCaseCommentsDtSql() => $@"select case_nbr,cm.cmnt_type CommentType,get_sc_desc ('B','346',cm.cmnt_type,NULL) SystemCodeCommentType ,cm.cmnt_code CommentCode,get_sc_desc ('B','347',cm.cmnt_code,NULL) SystemCodeCommentCode , cm.cmnt CommentText,cm.cmnt_seq_nbr CommentSequenceNumber from case_cmnt cm 
                                      where cm.case_nbr in( '{UIConstants.LpnNbrForLockUnlock}','{UIConstants.LpnNbrForLockUnlock1}')";
-        public static string FetchItemsDtSql() => $@"SELECT SKU_ID skuId,CUT_NBR cutNumber, ASSORT_NBR assortmentNumber,SHPD_ASN_QTY shippedAsnQuantity,ORIG_QTY originalQuantity,ACTL_QTY actualQuantity,TOTAL_ALLOC_QTY totalAllocatedQuantity,to_char(CREATE_DATE_TIME,'{UIConstants.FormatDateTime}') createdOn from case_dtl where case_nbr = '{UIConstants.LpnNumber}'";
+        public static string FetchItemsDtSql() => $@"SELECT cd.CUT_NBR cutNumber, cd.ASSORT_NBR assortmentNumber from case_dtl cd inner join case_hdr ch on cd.case_nbr= ch.case_nbr where ch.case_nbr = '{UIConstants.LpnNumber}' and cd.sku_id = '{UIConstants.SkuId}'";
 
         public static string FetchMultiLockDtSql() => $@"select case_nbr, lock_cnt from case_lock_cnt where case_nbr in('{UIConstants.LpnNbrForLockUnlock}' ,'{UIConstants.LpnNbrForLockUnlock1}')";
 
         public static string FetchMultiEditDtSql() => $@"select case_nbr,CONS_CASE_PRTY consumeCasePriority,ch.MFG_DATE manufacturingOn,ch.XPIRE_DATE expiryDate from case_hdr where case_nbr in('{UIConstants.LpnNbrForLockUnlock}' ,'{UIConstants.LpnNbrForLockUnlock1}')";
 
+        public static string FetchEditedCommentSql()
+        {
+            return $@"Select cmnt from case_cmnt where case_nbr= '{UIConstants.LpnNumber}' and cmnt_type = '{UIConstants.CommentCode}' and cmnt_code= '{UIConstants.CommentCode}'and cmnt= '{UIConstants.Message}' ";
+        }
     }
 }

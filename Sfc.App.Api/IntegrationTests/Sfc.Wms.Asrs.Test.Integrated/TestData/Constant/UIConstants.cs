@@ -167,6 +167,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData.Constant
         public static string LpnNbrForLockUnlock1 { get; internal set; }
         public static string LockCount1 { get; internal set; }
         public static int CommentSequenceNumber { get; internal set; }
+        public static string SkuId { get; internal set; }
         // http://qa.api.wms.shamrockfoods.com/api/advanced-shipment-notices/12335721/quality-verifications
 
     }

@@ -214,7 +214,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
                         {
                             Action = "verify-receipt",
                             WorkStationId = UIConstants.WorkStation,
-                            ShipmentNumber = UIConstants.ShipmentNbr       
+                                   
                             
                         }; 
                             break;
@@ -226,7 +226,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
                         {
                             Action = "multi-item",
                             WorkStationId = UIConstants.WorkStation,
-                            ShipmentNumber = UIConstants.ShipmentNbr
+                            
 
                         }; 
                         break;}
@@ -236,7 +236,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
                         {
                             Action = "nll",
                             WorkStationId = UIConstants.WorkStation,
-                            ShipmentNumber = UIConstants.ShipmentNbr
+                            
 
                         }; 
                         break;

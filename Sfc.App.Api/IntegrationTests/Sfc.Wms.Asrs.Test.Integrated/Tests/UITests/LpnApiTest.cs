@@ -136,7 +136,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         [TestCategory("UI_FUNCTIONAL")]
         public void LpnCaseUnlockApi()
         {
-            this.Given(x=>x.CreateUrlAndInputParamForApiUsing("CaseUnlock"))
+            this.Given(x => x.CreateUrlAndInputParamForApiUsing("CaseUnlock"))
             .When(x => x.CallLpnCaseUnlockApiWithInputs(UIConstants.LpnCaseUnlockUrl))
             .And(x => x.VerifyLpnCaseUnlockOutputAgainstDbOutput())
             .BDDfy("Test Case ID : ");

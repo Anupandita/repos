@@ -26,6 +26,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
         protected DataTable LpnLockUnlockResultDt = new DataTable();
         protected DataTable LpnCaseUnlockResultDt = new DataTable();
         protected DataTable LpnItemskResultDt = new DataTable();
+        protected DataTable LpnDetailsQueryDt = new DataTable();
+        protected DataTable LpnDetailsResultDt = new DataTable();
         LpnDetailsDto lpnDetailsDto;
         CaseCommentDto caseCommentDto, caseCommentDto2;
         LpnMultipleUnlockDto lpnMultipleUnlockDto1, lpnMultipleUnlockDto2;
@@ -42,7 +44,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
                 db.Open();
                 DataTable tempDt = new DataTable();
                 var _command = new OracleCommand(LpnQueries.FetchLpnNumberSql, db);
-                UIConstants.LpnNumber = _command.ExecuteScalar().ToString();
+                tempDt.Load(_command.ExecuteReader());
+                UIConstants.LpnNumber = tempDt.Rows[0][0].ToString();
+                UIConstants.SkuId = tempDt.Rows[0][1].ToString();
+                tempDt.Clear();
+                tempDt.Columns.Clear();
 
                 _command = new OracleCommand(LpnQueries.FetchLpnNumberForHistory, db);
                 UIConstants.LpnNumberForHistory = _command.ExecuteScalar().ToString();
@@ -91,12 +97,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
 
                 _command = new OracleCommand(LpnQueries.FetchLpnPageGridDtSql(), db);
                 LpnSearchQueryDt.Load(_command.ExecuteReader());
-                UIConstants.ExpireDate = DateTime.Today.AddDays(10);
+                UIConstants.ExpireDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")).AddDays(10);
+                   
 
               //  UIConstants.ExpireDate = Convert.ToDateTime(Convert.ToDateTime(LpnSearchQueryDt.Rows[0]["expiryDate"]).AddDays(10).ToString("MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture));
                 // UIConstants.ManufacturingDate = Convert.ToDateTime(Convert.ToDateTime(LpnSearchQueryDt.Rows[0]["manufacturingOn"]).AddDays(10).ToString("MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture));
-                UIConstants.ManufacturingDate = DateTime.Today.AddDays(-10);
-                UIConstants.ConsumePriorityDate = DateTime.Today;
+                UIConstants.ManufacturingDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")).AddDays(-10);
+                UIConstants.ConsumePriorityDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"));
                 //UIConstants.ConsumePriorityDate = Convert.ToDateTime(Convert.ToDateTime(LpnSearchQueryDt.Rows[0]["consumePriorityDate"]).AddDays(10).ToString("MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture));
                 UIConstants.ConsumePriority = LpnSearchQueryDt.Rows[0]["consumeCasePriority"].ToString() + "1";
                 UIConstants.ConsumeSequence = LpnSearchQueryDt.Rows[0]["consumeSequence"].ToString() + "1";
@@ -126,6 +133,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
 
                 _command = new OracleCommand(LpnQueries.FetchCaseLockDtSql(), db);
                 LpnLockUnlockQueryDt.Load(_command.ExecuteReader());
+
+                _command = new OracleCommand(LpnQueries.FetchDetailsDtSql(), db);
+                LpnDetailsQueryDt.Load(_command.ExecuteReader());
 
                 _command = new OracleCommand(LpnQueries.FetchItemsDtSql(), db);
                 tempDt.Load(_command.ExecuteReader());
@@ -332,7 +342,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
         {
             var response = CallGetApi(url);
             VerifyOkResultAndStoreBearerToken(response);
-            lpnDetailsDto = JsonConvert.DeserializeObject<BaseResult<LpnDetailsDto>>(response.Content).Payload;
+            var payload = JsonConvert.DeserializeObject<BaseResult<LpnDetailsDto>>(response.Content).Payload;
+            LpnDetailsResultDt = ToDataTable(payload.CaseDetailDtos);
+
+          //  jj = ToDataTable(payload.VendorDtos);
         }
         public void CreateInputDtoForMultiUnlockApi()
         {
@@ -426,14 +439,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
                 db.ConnectionString = ConfigurationManager.ConnectionStrings["SfcRbacContextModel"].ToString();
                 db.Open();
 
-                var _command = new OracleCommand(LpnQueries.FetchCaseCommentsDtSql(), db);
-                var tempdt = new DataTable();
-                tempdt.Load(_command.ExecuteReader());
-                Assert.AreEqual(UIConstants.CommentCode, tempdt.Rows[0][0]);
-                Assert.AreEqual(UIConstants.SystemCodeCommentType, tempdt.Rows[0][1]);
-                Assert.AreEqual(UIConstants.CommentCode, tempdt.Rows[0][2]);
-                Assert.AreEqual(UIConstants.SystemCodeCommentCode, tempdt.Rows[0][3]);
-                Assert.AreEqual(UIConstants.Message, tempdt.Rows[0][4]);
+                var _command = new OracleCommand(LpnQueries.FetchEditedCommentSql(), db);
+                Assert.IsNotNull(_command.ExecuteScalar());
+
             }
         }
 
@@ -454,15 +462,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
                 db.ConnectionString = ConfigurationManager.ConnectionStrings["SfcRbacContextModel"].ToString();
                 db.Open();
 
-                var _command = new OracleCommand(LpnQueries.FetchCaseCommentsDtSql(), db);
-                var tempdt = new DataTable();
-                tempdt.Load(_command.ExecuteReader());
-                Assert.AreEqual(UIConstants.CommentCode, tempdt.Rows[0][0]);
-                Assert.AreEqual(UIConstants.SystemCodeCommentType, tempdt.Rows[0][1]);
-                Assert.AreEqual(UIConstants.CommentCode, tempdt.Rows[0][2]);
-                Assert.AreEqual(UIConstants.SystemCodeCommentCode, tempdt.Rows[0][3]);
-                Assert.AreEqual(UIConstants.Message, tempdt.Rows[0][4]);
-                Assert.AreEqual(UIConstants.CommentSequenceNumber, tempdt.Rows[0][5]);
+                var _command = new OracleCommand(LpnQueries.FetchEditedCommentSql(), db);
+                Assert.IsNotNull(_command.ExecuteScalar());
 
             }
         }
@@ -533,9 +534,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
                 var _command = new OracleCommand(LpnQueries.FetchItemsDtSql(), db);
                 var tempdt = new DataTable();
                 tempdt.Load(_command.ExecuteReader());
-                Assert.AreEqual(UIConstants.ItemNumber, tempdt.Rows[0][0]);
-                Assert.AreEqual(UIConstants.CutNumber, tempdt.Rows[0][1]);
-                Assert.AreEqual(UIConstants.AssortNumber, tempdt.Rows[0][3]);
+                Assert.AreEqual(UIConstants.CutNumber, tempdt.Rows[0][0]);
+                Assert.AreEqual(UIConstants.AssortNumber, tempdt.Rows[0][1]);
             }
         }
 
@@ -547,7 +547,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
                 db.ConnectionString = ConfigurationManager.ConnectionStrings["SfcRbacContextModel"].ToString();
                 db.Open();
                 var _command = new OracleCommand(LpnQueries.FetchMultiLockDtSql(), db);
-                Assert.IsNull(_command.ExecuteScalar().ToString());
+                Assert.IsNull(_command.ExecuteScalar());
             }
         }
 
@@ -662,7 +662,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
                 CaseNumber = UIConstants.LpnNumber,
                 CutNumber = UIConstants.CutNumber,
                 AssortmentNumber = UIConstants.AssortNumber,
-                SkuId = UIConstants.ItemNumber
+                SkuId = UIConstants.SkuId
             };
         }
         public void CreateInputDtoForMultiEditApi()
@@ -703,6 +703,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
 
         public void VerifyLpnDetailsOutputAgainstDbOutput()
         {
+            VerifyApiOutputAgainstDbOutput(LpnDetailsQueryDt, LpnDetailsResultDt);
         }
     }
 }
