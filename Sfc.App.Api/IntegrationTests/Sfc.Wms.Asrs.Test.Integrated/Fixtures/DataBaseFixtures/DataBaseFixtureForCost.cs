@@ -78,9 +78,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                     ResponseCode = (short)int.Parse(ReasonCode.Success),
                     MessageText = costResult,
                 };
-                CostData.MsgKey = InsertEmsToWms(db, EmsToWmsParameters);
                 TrnInvBeforeApi = FetchTransInvn(db, CostData.SkuId);
                 PickLcnDtlBeforeApi = GetPickLocationDetails(db, CostData.SkuId, CostData.LocnId);
+                CostData.MsgKey = InsertEmsToWms(db, EmsToWmsParameters);
+               
             }
         }
 

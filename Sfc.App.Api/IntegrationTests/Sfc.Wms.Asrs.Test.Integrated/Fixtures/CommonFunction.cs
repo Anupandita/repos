@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Threading;
 using Oracle.ManagedDataAccess.Client;
 using Sfc.Wms.Api.Asrs.Test.Integrated.TestData;
 using Sfc.Wms.Foundation.Carton.Contracts.Dtos;
@@ -264,6 +265,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Command = new OracleCommand(insertQuery, db);
             Command.ExecuteNonQuery();
             Transaction.Commit();
+            Thread.Sleep(30000);
             return msgKey;
         }
 
@@ -405,7 +407,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var messageTosv = new MessageToSortViewDto();
             var query = OrstQueries.MsgToSortView;
             Command = new OracleCommand(query, db);
-            Command.Parameters.Add(new OracleParameter(Parameter.CartonNbr, cartonNo));
+            Command.Parameters.Add(new OracleParameter(Parameter.CartonNumber, cartonNo));
             Command.Parameters.Add(new OracleParameter(Parameter.MsgType, msgType));
             var msgToSvReader = Command.ExecuteReader();
             if (msgToSvReader.Read())

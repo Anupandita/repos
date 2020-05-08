@@ -28,9 +28,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
         public void CallCorbaApi(string corbaUrl)
         {
             var request = CallPostApi();
-            request.AddJsonBody(new List<CorbaDto> { corbaDto });
+            request.AddJsonBody(corbaDto);
             var response=ExecuteRequest(corbaUrl, request);
-            VerifyCreatedResultAndStoreBearerToken(response);
+            VerifyOkResultAndStoreBearerToken(response);
         }
         protected void VerifyCorbaApiOutputInDb() 
         {

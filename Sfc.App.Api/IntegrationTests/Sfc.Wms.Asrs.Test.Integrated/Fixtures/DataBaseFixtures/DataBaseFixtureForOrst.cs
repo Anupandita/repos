@@ -12,13 +12,12 @@ using System;
 using Sfc.Wms.Foundation.Carton.Contracts.Dtos;
 using PickTicketDetail = Sfc.Wms.Data.Entities.PickTicketDetail;
 using Sfc.Wms.Foundation.Message.Contracts.Dtos;
-using Sfc.Wms.Configuration.NextUpCounter.Contracts.Interfaces;
 using Sfc.Wms.Foundation.PixTransaction.Contracts.Dtos;
 using System.Diagnostics;
 
 namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 {
-   
+
     public class DataBaseFixtureForOrst : DataBaseFixtureForOrmt
     {
         protected OrstTestData Allocated = new OrstTestData();
@@ -75,7 +74,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected int CwcCountBeforeApi;
 
 
-        public OrstTestData GetCartonDetailsForInsertingOrstMessage(OracleConnection db,int cartonStatusCode, int pktStatusCode, bool completed = true)
+        public OrstTestData GetCartonDetailsForInsertingOrstMessage(OracleConnection db,int cartonStatusCode, int pktStatusCode, bool completed)
         {
             var orstTestData = new OrstTestData();
             var sqlStatement = OrstQueries.ValidDataForInsertingOrstMessage;
@@ -132,9 +131,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             {
                 db.Open();
                 Allocated = GetCartonDetailsForInsertingOrstMessage(db, Constants.CartonStatusForReleased,Constants.PktStatusForInPacking, false);
+                Assert.IsNotNull(Allocated.MessageJson,"No Data Available");
                 OrmtCase1 = JsonConvert.DeserializeObject<OrmtDto>(Allocated.MessageJson);
                 OrstMessageCreatedForAllocatedStatus(db);
-                EmsToWmsAllocated = GetEmsToWmsData(db, MsgKeyForAllocated.MsgKey);               
+                EmsToWmsAllocated = GetEmsToWmsData(db, MsgKeyForAllocated.MsgKey);
+               
             }
         }
 
@@ -143,7 +144,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                Complete = GetCartonDetailsForInsertingOrstMessage(db, Constants.CartonStatusForInPacking, Constants.PktStatusForInPacking);
+                Complete = GetCartonDetailsForInsertingOrstMessage(db, Constants.CartonStatusForInPacking, Constants.PktStatusForInPacking,false);
+                Assert.IsNotNull(Complete.MessageJson, "No Data Available");
                 OrmtCase2 = JsonConvert.DeserializeObject<OrmtDto>(Complete.MessageJson);              
                 CartonDtlCase2BeforeApi = GetCartonDetails(db, Complete.OrderId);
                 GetCartonHeaderDetails(db, Complete.OrderId);
@@ -162,7 +164,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                Deallocate = GetCartonDetailsForInsertingOrstMessage(db, Constants.CartonStatusForInPacking, Constants.PktStatusForInPacking);
+                Deallocate = GetCartonDetailsForInsertingOrstMessage(db, Constants.CartonStatusForPicked, Constants.PktStatusForInPacking,true);
+                Assert.IsNotNull(Deallocate.MessageJson, "No Data Available");
                 OrmtCase3 = JsonConvert.DeserializeObject<OrmtDto>(Deallocate.MessageJson);
                 OrstMessageCreatedForDeallocateStatus(db);
                 EmsToWmsDeallocated  = GetEmsToWmsData(db, MsgKeyForDeallocated.MsgKey);
@@ -174,11 +177,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                Canceled = GetCartonDetailsForInsertingOrstMessage(db, Constants.CartonStatusForPicked,Constants.PktWeighed);
+                Canceled = GetCartonDetailsForInsertingOrstMessage(db, Constants.CartonStatusForCancelled,Constants.PktCancelled,true);
+                Assert.IsNotNull(Canceled.MessageJson, "No Data Available");
                 OrmtCase4 = JsonConvert.DeserializeObject<OrmtDto>(Canceled.MessageJson);
+                PickLcnExtCase4BeforeApi = GetPickLocnDtlExt(db, OrmtCase4.Sku, PickLcnCase4BeforeApi.LocationId);
                 OrstMessageCreatedForCancelledStatus(db);
                 EmsToWmsCanceled = GetEmsToWmsData(db, MsgKeyForCanceled.MsgKey);
-                PickLcnExtCase4BeforeApi = GetPickLocnDtlExt(db, OrmtCase4.Sku, PickLcnCase4BeforeApi.LocationId);
+                
             }
         }
 
@@ -254,13 +259,16 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                Complete = GetCartonDetailsForInsertingOrstMessage(db, Constants.CartonStatusForInPacking, Constants.PktStatusForInPacking);
+                Complete = GetCartonDetailsForInsertingOrstMessage(db, Constants.CartonStatusForInPacking, Constants.PktStatusForInPacking,false);
+                Assert.IsNotNull(Complete.MessageJson, "No Data Available");
                 OrmtCase2 = JsonConvert.DeserializeObject<OrmtDto>(Complete.MessageJson);
-                OrstMessageCreatedForCompletedStatusWithBitsEnabled(db);
-                EmsToWmsCompleted = GetEmsToWmsData(db, MsgKeysForCase5.MsgKey);
-                GetCartonHeaderDetails(db, Complete.OrderId);
                 PickLcnCase2BeforeApi = GetPickLocationDetails(db, OrmtCase2.Sku, null);
                 PickLcnExtCase2BeforeApi = GetPickLocnDtlExt(db, Complete.SkuId, PickLcnCase2BeforeApi.LocationId);
+                GetCartonHeaderDetails(db, Complete.OrderId);
+                OrstMessageCreatedForCompletedStatusWithBitsEnabled(db);
+                EmsToWmsCompleted = GetEmsToWmsData(db, MsgKeysForCase5.MsgKey);
+               
+               
             }
         }
 
@@ -470,7 +478,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             var query = CommonQueries.EmsToWms;
             Command = new OracleCommand(query,db);
             Command.Parameters.Add(new OracleParameter(Parameter.MsgKey, msgKey));
-            var emsToWmsReader = Command.ExecuteReader();
+            var emsToWmsReader = Command.ExecuteReader();            
             if(emsToWmsReader.Read())
             {
                 emsToWms.MessageKey = Convert.ToInt64(emsToWmsReader[EmsToWms.MsgKey]);
