@@ -4,8 +4,8 @@ using Sfc.Core.OnPrem.UnitOfWork.Contracts.UoW.Interfaces;
 using Sfc.Wms.Data.Domain;
 using Sfc.Wms.Data.Domain.Interfaces;
 using Sfc.Wms.Data.UoW;
-using Sfc.Wms.Framework.Interceptor.App.interceptors;
-using Sfc.Wms.Framework.MessageLogger.App.Services;
+using Sfc.Wms.Framework.Interceptor.App.UoW.interceptors;
+using Sfc.Wms.Framework.MessageLogger.App.UoW.Services;
 using Sfc.Wms.Framework.MessageMaster.App.UoW.Services;
 using SimpleInjector;
 using System;
@@ -20,6 +20,8 @@ namespace Sfc.Wms.App.Api
     {
         public static void RegisterTypes(Container container)
         {
+            container.Options.AllowOverridingRegistrations = true;
+
             var connectionString = ConfigurationManager.ConnectionStrings["SfcOracleDbContext"].ConnectionString;
             container.Register<DbConnection>(() => new OracleConnection(connectionString), Lifestyle.Scoped);
 
@@ -34,6 +36,7 @@ namespace Sfc.Wms.App.Api
                 var registrations = (from type in assemblyInfo.GetExportedTypes()
                                      where type.IsClass && !type.IsAbstract && !type.IsInterface
                                            && type.Namespace != null && type.Namespace.StartsWith("Sfc")
+                                            && !type.FullName.Contains(nameof(MonitoringInterceptorUoW))
                                      from service in type.GetInterfaces()
                                      select new { service, implementation = type }).ToList();
 
@@ -56,14 +59,13 @@ namespace Sfc.Wms.App.Api
                         reg.implementation.FullName.Contains("Aop")) continue;
 
                     if (reg.implementation.IsGenericTypeDefinition)
-                        container.InterceptWith<MonitoringInterceptor>(type =>
+                        container.InterceptWith<MonitoringInterceptorUoW>(type =>
                             type == reg.service.GetGenericTypeDefinition());
                     else
-                        container.InterceptWith<MonitoringInterceptor>(type => type == reg.service);
+                        container.InterceptWith<MonitoringInterceptorUoW>(type => type == reg.service);
                 }
             }
 
-            container.Options.AllowOverridingRegistrations = true;
         }
     }
 }
