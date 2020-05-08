@@ -19,7 +19,7 @@
                 "inner join pick_locn_dtl pl ON pl.sku_id = sm.sku_id " +
                 "inner join pkt_dtl pd ON pd.pkt_ctrl_nbr =ch.pkt_ctrl_nbr" +
                 " where sm.source_msg_status = :status and ch.stat_code = :cartonStatusCode and ph.pkt_stat_code < :pktStatusCode and pd.pkt_seq_nbr <= 0";
-        public static string MsgToSortView = $"select * from msg_to_sv where message_type= :msgType and PTN= :carton-number";
+        public static string MsgToSortView = $"select * from msg_to_sv where message_type= :msgType and PTN= :cartonNumber";
         public static string CartonHeader = $"select CURR_LOCN_ID, DEST_LOCN_ID,MOD_DATE_TIME, USER_ID, STAT_CODE from CARTON_HDR where CARTON_NBR= :cartonNumber";
         public static string CartonDetail = $"select * from carton_dtl where carton_nbr = :cartonNumber";
         public static string PickTktHeader = $"select PKT_HDR.PKT_STAT_CODE,PKT_HDR.MOD_DATE_TIME,PKT_HDR.USER_ID from PKT_HDR " +

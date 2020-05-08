@@ -74,6 +74,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData
         public const string FreezerLocnValue = "FR-PALLET-INDUCT";
         public const string NoPO= "No PO";
 
-
+        public const int PktCancelled = 99;
+        public const int CartonStatusForCancelled = 99;
     }
 }
