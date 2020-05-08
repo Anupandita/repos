@@ -25,6 +25,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
         protected DataTable LpnLockUnlockQueryDt = new DataTable();
         protected DataTable LpnLockUnlockResultDt = new DataTable();
         protected DataTable LpnCaseUnlockResultDt = new DataTable();
+        protected DataTable LpnItemskResultDt = new DataTable();
         LpnDetailsDto lpnDetailsDto;
         CaseCommentDto caseCommentDto, caseCommentDto2;
         LpnMultipleUnlockDto lpnMultipleUnlockDto1, lpnMultipleUnlockDto2;
@@ -39,7 +40,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             {
                 db.ConnectionString = ConfigurationManager.ConnectionStrings["SfcRbacContextModel"].ToString();
                 db.Open();
-
+                DataTable tempDt = new DataTable();
                 var _command = new OracleCommand(LpnQueries.FetchLpnNumberSql, db);
                 UIConstants.LpnNumber = _command.ExecuteScalar().ToString();
 
@@ -47,10 +48,15 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
                 UIConstants.LpnNumberForHistory = _command.ExecuteScalar().ToString();
 
                 _command = new OracleCommand(LpnQueries.FetchLpnNbrForLockUnlock, db);
-                UIConstants.LpnNbrForLockUnlock = _command.ExecuteScalar().ToString();
+                tempDt.Load(_command.ExecuteReader());
+                UIConstants.LpnNbrForLockUnlock = tempDt.Rows[0][0].ToString();
+                UIConstants.LpnNbrForLockUnlock1 = tempDt.Rows[1][0].ToString();
+                UIConstants.LockCount = tempDt.Rows[0][1].ToString();
+                UIConstants.LockCount1 = tempDt.Rows[1][1].ToString();
+                tempDt.Clear();
+                tempDt.Columns.Clear();
 
                 _command = new OracleCommand(LpnQueries.FetchPalletIdSql, db);
-                DataTable tempDt = new DataTable();
                 tempDt.Load(_command.ExecuteReader());
                 UIConstants.PalletId = tempDt.Rows[0][0].ToString();
                 UIConstants.PalletIdCount = tempDt.Rows[0][1].ToString();
@@ -85,15 +91,48 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
 
                 _command = new OracleCommand(LpnQueries.FetchLpnPageGridDtSql(), db);
                 LpnSearchQueryDt.Load(_command.ExecuteReader());
+                UIConstants.ExpireDate = DateTime.Today.AddDays(10);
+
+              //  UIConstants.ExpireDate = Convert.ToDateTime(Convert.ToDateTime(LpnSearchQueryDt.Rows[0]["expiryDate"]).AddDays(10).ToString("MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture));
+                // UIConstants.ManufacturingDate = Convert.ToDateTime(Convert.ToDateTime(LpnSearchQueryDt.Rows[0]["manufacturingOn"]).AddDays(10).ToString("MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture));
+                UIConstants.ManufacturingDate = DateTime.Today.AddDays(-10);
+                UIConstants.ConsumePriorityDate = DateTime.Today;
+                //UIConstants.ConsumePriorityDate = Convert.ToDateTime(Convert.ToDateTime(LpnSearchQueryDt.Rows[0]["consumePriorityDate"]).AddDays(10).ToString("MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture));
+                UIConstants.ConsumePriority = LpnSearchQueryDt.Rows[0]["consumeCasePriority"].ToString() + "1";
+                UIConstants.ConsumeSequence = LpnSearchQueryDt.Rows[0]["consumeSequence"].ToString() + "1";
+                UIConstants.EstWt = Convert.ToDecimal(LpnSearchQueryDt.Rows[0]["estimateWeight"].ToString()) + 1;
+                UIConstants.ActlWt = Convert.ToDecimal(LpnSearchQueryDt.Rows[0]["actualWeight"].ToString()) + 1;
+                UIConstants.Volume = Convert.ToDecimal(LpnSearchQueryDt.Rows[0]["volume"].ToString()) + 1;
+                UIConstants.SpclInstCode1 = LpnSearchQueryDt.Rows[0]["specialInstructionCode1"].ToString() + "1";
+                UIConstants.SpclInstCode2 = LpnSearchQueryDt.Rows[0]["specialInstructionCode2"].ToString() + "1";
+                UIConstants.SpclInstCode3 = LpnSearchQueryDt.Rows[0]["specialInstructionCode3"].ToString() + "1";
+                UIConstants.SpclInstCode4 = LpnSearchQueryDt.Rows[0]["specialInstructionCode4"].ToString() + "1";
+                UIConstants.SpclInstCode5 = LpnSearchQueryDt.Rows[0]["specialInstructionCode5"].ToString() + "1";
+
+                _command = new OracleCommand(LpnQueries.FetchLpnNbrFromShpmtNbrUpdated(), db);
+                tempDt.Load(_command.ExecuteReader());
+                UIConstants.ShipmentNbr = tempDt.Rows[0]["orig_shpmt_nbr"].ToString() ;
+                UIConstants.DcOrderNbr = tempDt.Rows[0]["dc_ord_nbr"].ToString() ;
+                UIConstants.PoNumber = tempDt.Rows[0]["po_nbr"].ToString() ;
+                tempDt.Clear();
+                tempDt.Columns.Clear();
 
                 _command = new OracleCommand(LpnQueries.FetchCaseCommentsDtSql(), db);
                 LpnCommentsQueryDt.Load(_command.ExecuteReader());
+                UIConstants.CommentSequenceNumber = Convert.ToInt16(LpnCommentsQueryDt.Rows[0]["CommentSequenceNumber"].ToString());
 
                 _command = new OracleCommand(LpnQueries.FetchHistoryGridDtSql(), db);
                 LpnHistoryQueryDt.Load(_command.ExecuteReader());
 
                 _command = new OracleCommand(LpnQueries.FetchCaseLockDtSql(), db);
                 LpnLockUnlockQueryDt.Load(_command.ExecuteReader());
+
+                _command = new OracleCommand(LpnQueries.FetchItemsDtSql(), db);
+                tempDt.Load(_command.ExecuteReader());
+                UIConstants.CutNumber = tempDt.Rows[0]["cutNumber"].ToString() + "1";
+                UIConstants.AssortNumber = tempDt.Rows[0]["assortmentNumber"].ToString() + "1";
+                tempDt.Clear();
+                tempDt.Columns.Clear();
 
                 _command = new OracleCommand(LpnQueries.FetchSlotAisle, db);
                 tempDt.Load(_command.ExecuteReader());
@@ -299,17 +338,17 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
         {
             lpnMultipleUnlockDto1 = new LpnMultipleUnlockDto()
             {
-                LpnNumber = UIConstants.LpnNumber,
-                WorkStationId = UIConstants.WorkStation,
-                LockCount=Convert.ToInt32(UIConstants.LockCount)
-                
-            };
-
-            lpnMultipleUnlockDto2= new LpnMultipleUnlockDto()
-            {
-                LpnNumber = UIConstants.LpnNumber2,
+                LpnNumber = UIConstants.LpnNbrForLockUnlock,
                 WorkStationId = UIConstants.WorkStation,
                 LockCount = Convert.ToInt32(UIConstants.LockCount)
+
+            };
+
+            lpnMultipleUnlockDto2 = new LpnMultipleUnlockDto()
+            {
+                LpnNumber = UIConstants.LpnNbrForLockUnlock1,
+                WorkStationId = UIConstants.WorkStation,
+                LockCount = Convert.ToInt32(UIConstants.LockCount1)
             };
         }
         public void CreateInputDtoForMultiLockApi()
@@ -318,7 +357,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             caseLockCommentDto = new CaseLockCommentDto()
             {
                 WorkStationId = UIConstants.WorkStation,
-                LpnIds = new List<string>() { UIConstants.LpnNumber, UIConstants.LpnNumber2 },
+                LpnIds = new List<string>() { UIConstants.LpnNbrForLockUnlock, UIConstants.LpnNbrForLockUnlock1 },
                 Comments = new CaseCommentDto()
                 {
                     CommentCode = UIConstants.CommentCode,
@@ -331,11 +370,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             };
 
         }
-        public void CreateInputDtoForMultiCommentsApi() 
+        public void CreateInputDtoForMultiCommentsApi()
         {
             caseCommentDto = new CaseCommentDto()
             {
-                CaseNumber = UIConstants.LpnNumber,
+                CaseNumber = UIConstants.LpnNbrForLockUnlock,
                 CommentCode = UIConstants.CommentCode,
                 CommentText = UIConstants.Message,
                 CommentType = UIConstants.CommentCode,
@@ -344,7 +383,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             };
             caseCommentDto2 = new CaseCommentDto()
             {
-                CaseNumber = UIConstants.LpnNumber2,
+                CaseNumber = UIConstants.LpnNbrForLockUnlock1,
                 CommentCode = UIConstants.CommentCode,
                 CommentText = UIConstants.Message,
                 CommentType = UIConstants.CommentCode,
@@ -378,11 +417,27 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             var request = CallPostApi();
             request.AddJsonBody(new List<CaseCommentDto>() { caseCommentDto, caseCommentDto2 });
             var response = ExecuteRequest(url, request);
-            VerifyOkResultAndStoreBearerToken(response);
+            VerifyCreatedResultAndStoreBearerToken(response);
         }
         public void VerifyCommentsIsInsertedinDb()
         {
+            using (var db = new OracleConnection())
+            {
+                db.ConnectionString = ConfigurationManager.ConnectionStrings["SfcRbacContextModel"].ToString();
+                db.Open();
+
+                var _command = new OracleCommand(LpnQueries.FetchCaseCommentsDtSql(), db);
+                var tempdt = new DataTable();
+                tempdt.Load(_command.ExecuteReader());
+                Assert.AreEqual(UIConstants.CommentCode, tempdt.Rows[0][0]);
+                Assert.AreEqual(UIConstants.SystemCodeCommentType, tempdt.Rows[0][1]);
+                Assert.AreEqual(UIConstants.CommentCode, tempdt.Rows[0][2]);
+                Assert.AreEqual(UIConstants.SystemCodeCommentCode, tempdt.Rows[0][3]);
+                Assert.AreEqual(UIConstants.Message, tempdt.Rows[0][4]);
+            }
         }
+
+
 
         public void CallLpnEditCommentsApi(string url)
         {
@@ -394,10 +449,30 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
 
         public void VerifyCommentsIsUpdatedInDb()
         {
+            using (var db = new OracleConnection())
+            {
+                db.ConnectionString = ConfigurationManager.ConnectionStrings["SfcRbacContextModel"].ToString();
+                db.Open();
+
+                var _command = new OracleCommand(LpnQueries.FetchCaseCommentsDtSql(), db);
+                var tempdt = new DataTable();
+                tempdt.Load(_command.ExecuteReader());
+                Assert.AreEqual(UIConstants.CommentCode, tempdt.Rows[0][0]);
+                Assert.AreEqual(UIConstants.SystemCodeCommentType, tempdt.Rows[0][1]);
+                Assert.AreEqual(UIConstants.CommentCode, tempdt.Rows[0][2]);
+                Assert.AreEqual(UIConstants.SystemCodeCommentCode, tempdt.Rows[0][3]);
+                Assert.AreEqual(UIConstants.Message, tempdt.Rows[0][4]);
+                Assert.AreEqual(UIConstants.CommentSequenceNumber, tempdt.Rows[0][5]);
+
+            }
         }
 
         public void CallLpnDeleteCommentsApi(string url)
         {
+            var request = CallDeleteApi();
+            request.AddJsonBody(lpnUpdate);
+            var response = ExecuteRequest(url, request);
+            VerifyOkResultAndStoreBearerToken(response);
         }
 
         public void VerifyCommentsIsDeletedInDb()
@@ -413,6 +488,32 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
 
         public void VerifyUpdateFieldsAreUpdatedInDb()
         {
+            using (var db = new OracleConnection())
+            {
+                db.ConnectionString = ConfigurationManager.ConnectionStrings["SfcRbacContextModel"].ToString();
+                db.Open();
+
+                var _command = new OracleCommand(LpnQueries.FetchUpdateDtSql(), db);
+                var tempdt = new DataTable();
+                tempdt.Load(_command.ExecuteReader());
+                Assert.AreEqual(UIConstants.PoNumber, tempdt.Rows[0][0]);
+                Assert.AreEqual(UIConstants.ShipmentNbr, tempdt.Rows[0][1]);
+                Assert.AreEqual(UIConstants.DcOrderNbr, tempdt.Rows[0][2]);
+                Assert.AreEqual(UIConstants.ConsumePriority, tempdt.Rows[0][3]);
+                Assert.AreEqual(UIConstants.ConsumePriorityDate, tempdt.Rows[0][4]);
+                Assert.AreEqual(UIConstants.ConsumeSequence, tempdt.Rows[0][5]);
+                Assert.AreEqual(UIConstants.ManufacturingDate, tempdt.Rows[0][6]);
+                Assert.AreEqual(UIConstants.ExpireDate, tempdt.Rows[0][7]);
+                Assert.AreEqual(UIConstants.Volume, tempdt.Rows[0][8]);
+                Assert.AreEqual(UIConstants.EstWt, tempdt.Rows[0][9]);
+                Assert.AreEqual(UIConstants.ActlWt, tempdt.Rows[0][10]);
+                Assert.AreEqual(UIConstants.SpclInstCode1, tempdt.Rows[0][11]);
+                Assert.AreEqual(UIConstants.SpclInstCode2, tempdt.Rows[0][12]);
+                Assert.AreEqual(UIConstants.SpclInstCode3, tempdt.Rows[0][13]);
+                Assert.AreEqual(UIConstants.SpclInstCode4, tempdt.Rows[0][14]);
+                Assert.AreEqual(UIConstants.SpclInstCode5, tempdt.Rows[0][15]);
+
+            }
         }
         public void CallLpnItemsApi(string url)
         {
@@ -424,21 +525,87 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
 
         public void VerifyItemFieldsAreUpdatedInDb()
         {
+            using (var db = new OracleConnection())
+            {
+                db.ConnectionString = ConfigurationManager.ConnectionStrings["SfcRbacContextModel"].ToString();
+                db.Open();
+
+                var _command = new OracleCommand(LpnQueries.FetchItemsDtSql(), db);
+                var tempdt = new DataTable();
+                tempdt.Load(_command.ExecuteReader());
+                Assert.AreEqual(UIConstants.ItemNumber, tempdt.Rows[0][0]);
+                Assert.AreEqual(UIConstants.CutNumber, tempdt.Rows[0][1]);
+                Assert.AreEqual(UIConstants.AssortNumber, tempdt.Rows[0][3]);
+            }
         }
-       
+
 
         public void VerifyLocksAreDeletedinDb()
         {
+            using (var db = new OracleConnection())
+            {
+                db.ConnectionString = ConfigurationManager.ConnectionStrings["SfcRbacContextModel"].ToString();
+                db.Open();
+                var _command = new OracleCommand(LpnQueries.FetchMultiLockDtSql(), db);
+                Assert.IsNull(_command.ExecuteScalar().ToString());
+            }
         }
-     
+
 
         public void VerifyLocksAreAddedInDb()
         {
         }
-        
 
-        public void VerifyMultiCommentsAreAddedInDb()
+        public void VerifyCorbaResultFromDbFor(string btnName)
         {
+            string sql = "";
+            switch (btnName)
+            {
+                case "MultiUnlock":
+                    {
+                        sql = "select * from pb2_corba_dtl where id in (select max(ph.id) from pb2_corba_hdr ph inner join pb2_corba_dtl pd on ph.id= pd.id where func_name like '%" + FuncName.MultiUnLock + "' and parm_name='caseNbr' and parm_value='" + UIConstants.LpnNbrForLockUnlock + "' and crt_date like sysdate) and parm_name='return'";
+                        break;
+                    }
+                case "MultiLock":
+                    {
+                        sql = "select * from pb2_corba_dtl where id in (select max(ph.id) from pb2_corba_hdr ph inner join pb2_corba_dtl pd on ph.id= pd.id where func_name like '%" + FuncName.MultiLock + "' and parm_name='caseNbr' and parm_value='" + UIConstants.LpnNbrForLockUnlock + "' and crt_date like sysdate) and parm_name='return'";
+                        break;
+                    }
+                case "Items":
+                    {
+                        sql = "select * from pb2_corba_dtl where id in (select max(ph.id) from pb2_corba_hdr ph inner join pb2_corba_dtl pd on ph.id= pd.id where func_name like '%" + FuncName.Items + "' and parm_name='caseNbr' and parm_value='" + UIConstants.LpnNumberForItems + "' and crt_date like sysdate) and parm_name='return'";
+                        break;
+                    }
+            }
+        }
+
+            public void VerifyMultiCommentsAreAddedInDb()
+        {
+            using (var db = new OracleConnection())
+            {
+                db.ConnectionString = ConfigurationManager.ConnectionStrings["SfcRbacContextModel"].ToString();
+                db.Open();
+
+                var _command = new OracleCommand(LpnQueries.FetchMultiCaseCommentsDtSql(), db);
+                var tempdt = new DataTable();
+                tempdt.Load(_command.ExecuteReader());
+                Assert.AreEqual(UIConstants.LpnNbrForLockUnlock, tempdt.Rows[0][0]);
+                Assert.AreEqual(UIConstants.CommentCode, tempdt.Rows[0][1]);
+                Assert.AreEqual(UIConstants.SystemCodeCommentType, tempdt.Rows[0][2]);
+                Assert.AreEqual(UIConstants.CommentCode, tempdt.Rows[0][3]);
+                Assert.AreEqual(UIConstants.SystemCodeCommentCode, tempdt.Rows[0][4]);
+                Assert.AreEqual(UIConstants.Message, tempdt.Rows[0][5]);
+                Assert.AreEqual(UIConstants.CommentSequenceNumber, tempdt.Rows[0][6]);
+                Assert.AreEqual(UIConstants.LpnNbrForLockUnlock1, tempdt.Rows[1][0]);
+                Assert.AreEqual(UIConstants.CommentCode, tempdt.Rows[1][1]);
+                Assert.AreEqual(UIConstants.SystemCodeCommentType, tempdt.Rows[1][2]);
+                Assert.AreEqual(UIConstants.CommentCode, tempdt.Rows[1][3]);
+                Assert.AreEqual(UIConstants.SystemCodeCommentCode, tempdt.Rows[1][4]);
+                Assert.AreEqual(UIConstants.Message, tempdt.Rows[1][5]);
+                Assert.AreEqual(UIConstants.CommentSequenceNumber, tempdt.Rows[1][6]);
+
+            }
+
         }
         public void CallLpnMultiEditApi(string url)
         {
@@ -450,13 +617,31 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
 
         public void VerifyMultiEditAreAddedInDb()
         {
+            using (var db = new OracleConnection())
+            {
+                db.ConnectionString = ConfigurationManager.ConnectionStrings["SfcRbacContextModel"].ToString();
+                db.Open();
+
+                var _command = new OracleCommand(LpnQueries.FetchMultiEditDtSql(), db);
+                var tempdt = new DataTable();
+                tempdt.Load(_command.ExecuteReader());
+                Assert.AreEqual(UIConstants.LpnNbrForLockUnlock, tempdt.Rows[0][0]);
+                Assert.AreEqual(UIConstants.ConsumePriority, tempdt.Rows[0][1]);
+                Assert.AreEqual(UIConstants.ManufacturingDate, tempdt.Rows[0][2]);
+                Assert.AreEqual(UIConstants.ExpireDate, tempdt.Rows[0][3]);
+                Assert.AreEqual(UIConstants.LpnNbrForLockUnlock1, tempdt.Rows[1][0]);
+                Assert.AreEqual(UIConstants.ConsumePriority, tempdt.Rows[1][1]);
+                Assert.AreEqual(UIConstants.ManufacturingDate, tempdt.Rows[1][2]);
+                Assert.AreEqual(UIConstants.ExpireDate, tempdt.Rows[1][3]);
+
+            }
         }
 
         public void VerifyOutputTotalReordsAgainstDbCount(string count)
         {
             VerifyOutputTotalReordsAgainstDbCount(count, TotalRecords.ToString());
         }
-        public void CreateInputDtoForEditCommentApi() 
+        public void CreateInputDtoForEditCommentApi()
         {
             UIConstants.Message = Guid.NewGuid().ToString("n").Substring(0, 10);
             caseCommentDto = new CaseCommentDto()
@@ -466,17 +651,18 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
                 CommentText = UIConstants.Message,
                 CommentType = UIConstants.CommentCode,
                 SystemCodeCommentCode = UIConstants.SystemCodeCommentCode,
-                SystemCodeCommentType = UIConstants.SystemCodeCommentType
+                SystemCodeCommentType = UIConstants.SystemCodeCommentType,
+                CommentSequenceNumber = UIConstants.CommentSequenceNumber
             };
         }
-        public void CreateInputDtoForEditItemApi() 
+        public void CreateInputDtoForEditItemApi()
         {
             lpnCaseDetailsUpdate = new LpnDetailsUpdateDto()
             {
                 CaseNumber = UIConstants.LpnNumber,
                 CutNumber = UIConstants.CutNumber,
                 AssortmentNumber = UIConstants.AssortNumber,
-                SkuId=UIConstants.ItemNumber
+                SkuId = UIConstants.ItemNumber
             };
         }
         public void CreateInputDtoForMultiEditApi()
@@ -488,35 +674,35 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
                 ConsumePriority = UIConstants.ConsumePriority
             };
         }
-        public void CreateInputDtoForLpnUpdateApi() 
+        public void CreateInputDtoForLpnUpdateApi()
         {
             lpnUpdate = new LpnHeaderUpdateDto()
             {
-                ReceivedShipmentNumber=UIConstants.ShipmentNbr,
+                ReceivedShipmentNumber = UIConstants.ShipmentNbr,
                 ExpireDate = UIConstants.ExpireDate,
                 ManufacturingDate = UIConstants.ManufacturingDate,
                 ConsumeCasePriority = UIConstants.ConsumePriority,
                 ConsumePriorityDate = UIConstants.ConsumePriorityDate,
                 ConsumeSequence = UIConstants.ConsumeSequence,
                 CaseNumber = UIConstants.LpnNumber,
-                EstimatedWeight=UIConstants.EstWt,
-                ActualWeight=UIConstants.ActlWt,
-                DistributionCenterOrderNumber=UIConstants.DcOrderNbr,
-                PoNumber=UIConstants.PoNumber,
-                Volume=UIConstants.Volume,
-                VendorId=UIConstants.VendorId,
-                SpecialInstructionCode1=UIConstants.SpclInstCode1,
+                EstimatedWeight = UIConstants.EstWt,
+                ActualWeight = UIConstants.ActlWt,
+                DistributionCenterOrderNumber = UIConstants.DcOrderNbr,
+                PoNumber = UIConstants.PoNumber,
+                Volume = UIConstants.Volume,
+                VendorId = UIConstants.VendorId,
+                SpecialInstructionCode1 = UIConstants.SpclInstCode1,
                 SpecialInstructionCode2 = UIConstants.SpclInstCode2,
                 SpecialInstructionCode3 = UIConstants.SpclInstCode3,
                 SpecialInstructionCode4 = UIConstants.SpclInstCode4,
                 SpecialInstructionCode5 = UIConstants.SpclInstCode5,
-                ValidShipmentNumber=true
+                ValidShipmentNumber = true
 
             };
         }
 
         public void VerifyLpnDetailsOutputAgainstDbOutput()
         {
-        }       
+        }
     }
 }

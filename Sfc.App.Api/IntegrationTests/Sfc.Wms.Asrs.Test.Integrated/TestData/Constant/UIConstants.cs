@@ -145,7 +145,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData.Constant
         // http://qa.api.wms.shamrockfoods.com/api/advanced-shipment-notices/12335721/sku/1061561 
         public static string ReceivingQvDetailsUrl = "/quality-verifications";
         public static string LockCount;
-        public static string LpnNumber2;
 
         public static DateTime? ManufacturingDate;
         public static DateTime? ExpireDate;
@@ -158,13 +157,16 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData.Constant
         public static string SpclInstCode5 { get; internal set; }
         public static decimal Volume { get; internal set; }
         public static string DcOrderNbr { get; internal set; }
-        public static string VendorId { get; internal set; }
+        public const string VendorId = "0011133";
         public static string SpclInstCode1 { get; internal set; }
         public static decimal ActlWt { get; internal set; }
         public static decimal EstWt { get; internal set; }
         public static string ConsumeSequence { get; internal set; }
         public static string AssortNumber { get; internal set; }
         public static string CutNumber { get; internal set; }
+        public static string LpnNbrForLockUnlock1 { get; internal set; }
+        public static string LockCount1 { get; internal set; }
+        public static int CommentSequenceNumber { get; internal set; }
         // http://qa.api.wms.shamrockfoods.com/api/advanced-shipment-notices/12335721/quality-verifications
 
     }
@@ -172,5 +174,9 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData.Constant
     {            
         public const string PrintShipment= "printShipmentPB";
         public const string VerifyShipment = "verifyShipmentPB";
+        public const string MultiUnLock = "unlockPB";
+        public const string MultiLock = "lockPB";
+        public const string Items = "updateCaseDtl";
+
     }
 }

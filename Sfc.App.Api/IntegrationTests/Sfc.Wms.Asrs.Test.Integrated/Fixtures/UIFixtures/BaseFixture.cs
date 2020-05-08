@@ -72,6 +72,15 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             return request;
         }
 
+        public IRestRequest CallDeleteApi()
+        {
+            var request = new RestRequest(Method.DELETE);
+            request.AddHeader("content-type", Content.ContentType);
+            request.AddHeader("Authorization", UIConstants.BearerToken);
+            request.RequestFormat = DataFormat.Json;
+            return request;
+        }
+
         public IRestRequest CallPostApi()
         {          
             var request = new RestRequest(Method.POST);

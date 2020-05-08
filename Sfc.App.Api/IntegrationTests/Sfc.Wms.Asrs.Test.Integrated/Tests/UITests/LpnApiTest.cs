@@ -155,7 +155,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         public void LpnAddCommentsApi()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("AddComments"))
-            .And(x=>x.CreateInputDtoForAddCommentsApi())
+            .And(x => x.CreateInputDtoForAddCommentsApi())
             .When(x => x.CallLpnAddCommentsApi(UIConstants.LpnAddCommentsUrl))
             .And(x => x.VerifyCommentsIsInsertedinDb())
             .BDDfy("Test Case ID : ");
@@ -197,6 +197,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
             .And(x => x.CreateInputDtoForEditItemApi())
             .When(x => x.CallLpnItemsApi(UIConstants.LpnItemsUrl))
             .And(x => x.VerifyItemFieldsAreUpdatedInDb())
+            .Then(x => x.VerifyCorbaResultFromDbFor("Items"))
             .BDDfy("Test Case ID : ");
         }
         [TestMethod()]
@@ -207,6 +208,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
             .And(x => x.CreateInputDtoForMultiUnlockApi())
             .When(x => x.CallLpnMultiUnlockApi(UIConstants.LpnMultiUnlockUrl))
             .And(x => x.VerifyLocksAreDeletedinDb())
+            .Then(x => x.VerifyCorbaResultFromDbFor("MultiUnlock"))
             .BDDfy("Test Case ID : ");
         }
         [TestMethod()]
@@ -217,6 +219,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
             .And(x => x.CreateInputDtoForMultiLockApi())
             .When(x => x.CallLpnMultiLockApi(UIConstants.LpnMultiLockUrl))
             .And(x => x.VerifyLocksAreAddedInDb())
+            .Then(x => x.VerifyCorbaResultFromDbFor("MultiLock"))
             .BDDfy("Test Case ID : ");
         }
         [TestMethod()]
