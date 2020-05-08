@@ -36,13 +36,15 @@ namespace Sfc.Wms.App.Api
                 var registrations = (from type in assemblyInfo.GetExportedTypes()
                                      where type.IsClass && !type.IsAbstract && !type.IsInterface
                                            && type.Namespace != null && type.Namespace.StartsWith("Sfc")
+                                           && type.FullName != null 
                                             && !type.FullName.Contains(nameof(MonitoringInterceptorUoW))
-                                     from service in type.GetInterfaces()
+                                     from service in type.GetInterfaces() where !service.FullName.Contains(typeof(ISfcService<>).Name)
                                      select new { service, implementation = type }).ToList();
 
                 foreach (var reg in registrations)
                 {
-                    if (reg.implementation.Namespace?.Contains(".App.UoW") == true)
+                    if (reg.service.FullName?.StartsWith("Sfc.") == true
+                        && reg.implementation.Namespace?.Contains(".App.UoW") == true)
                     {
                         if (reg.service.IsGenericTypeDefinition)
                             container.Register(reg.service.GetGenericTypeDefinition(),
