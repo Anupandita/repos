@@ -234,8 +234,17 @@
     <Reference Include="Sfc.Wms.Configuration.MessageLogger.Contracts, Version=4.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.MessageLogger.Contracts.4.1.0\lib\net472\Sfc.Wms.Configuration.MessageLogger.Contracts.dll</HintPath>
     </Reference>
+    <Reference Include="Sfc.Wms.Configuration.MessageLogger.Contracts.UoW, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Configuration.MessageLogger.Contracts.UoW.1.2.0\lib\net472\Sfc.Wms.Configuration.MessageLogger.Contracts.UoW.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Configuration.MessageLogger.Domain, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Configuration.MessageLogger.Domain.1.2.0\lib\net472\Sfc.Wms.Configuration.MessageLogger.Domain.dll</HintPath>
+    </Reference>
     <Reference Include="Sfc.Wms.Configuration.MessageLogger.Repository, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.MessageLogger.Repository.5.0.0\lib\net472\Sfc.Wms.Configuration.MessageLogger.Repository.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Configuration.MessageLogger.UoW, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Configuration.MessageLogger.UoW.1.2.0\lib\net472\Sfc.Wms.Configuration.MessageLogger.UoW.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Configuration.MessageMaster.Contracts, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Configuration.MessageMaster.Contracts.1.1.0\lib\net472\Sfc.Wms.Configuration.MessageMaster.Contracts.dll</HintPath>
@@ -458,6 +467,9 @@
     </Reference>
     <Reference Include="Sfc.Wms.Framework.MessageLogger.App, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.MessageLogger.App.1.1.1\lib\net472\Sfc.Wms.Framework.MessageLogger.App.dll</HintPath>
+    </Reference>
+    <Reference Include="Sfc.Wms.Framework.MessageLogger.App.UoW, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Configuration.MessageLogger.App.UoW.1.2.0\lib\net472\Sfc.Wms.Framework.MessageLogger.App.UoW.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Framework.MessageMaster.App, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.MessageMaster.App.1.1.0\lib\net472\Sfc.Wms.Framework.MessageMaster.App.dll</HintPath>

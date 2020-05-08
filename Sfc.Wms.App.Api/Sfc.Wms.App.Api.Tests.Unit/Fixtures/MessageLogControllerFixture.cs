@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Results;
-using DataGenerator;
+﻿using DataGenerator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.App.Api.Controllers;
-using Sfc.Wms.Configuration.MessageLogger.Contracts.Dtos;
-using Sfc.Wms.Configuration.MessageLogger.Contracts.Interfaces;
+using Sfc.Wms.Configuration.MessageLogger.Contracts.UoW.Dtos;
+using Sfc.Wms.Configuration.MessageLogger.Contracts.UoW.Interfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Results;
 
 namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 {
@@ -30,7 +30,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             logs = Generator.Default.List<MessageLogDto>(2);
 
             _messageLogService.Setup(el =>
-                    el.BatchInsertAsync(It.IsAny<IEnumerable<MessageLogDto>>(), It.IsAny<bool>()))
+                    el.InsertRangeAsync(It.IsAny<IEnumerable<MessageLogDto>>()))
                 .Returns(Task.FromResult(new BaseResult { ResultType = ResultTypes.Created }));
         }
 
@@ -38,7 +38,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         {
             logs = null;
             _messageLogService.Setup(el =>
-                    el.BatchInsertAsync(It.IsAny<IEnumerable<MessageLogDto>>(), It.IsAny<bool>()))
+                    el.InsertRangeAsync(It.IsAny<IEnumerable<MessageLogDto>>()))
                 .Returns(Task.FromResult(new BaseResult { ResultType = ResultTypes.BadRequest }));
         }
 
@@ -57,7 +57,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void TheReturnedOkResponse()
         {
-            _messageLogService.Verify(el => el.BatchInsertAsync(It.IsAny<IEnumerable<MessageLogDto>>(), It.IsAny<bool>()));
+            _messageLogService.Verify(el => el.InsertRangeAsync(It.IsAny<IEnumerable<MessageLogDto>>()));
             Assert.IsNotNull(testResponse);
             var result = testResponse.Result as OkNegotiatedContentResult<BaseResult>;
             Assert.IsNotNull(result);
