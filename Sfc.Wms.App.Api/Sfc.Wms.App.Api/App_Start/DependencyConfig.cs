@@ -105,9 +105,6 @@ namespace Sfc.Wms.App.Api
                                     select new { service, implementation = type };
                 foreach (var reg in registrations)
                 {
-                    if (reg.service.FullName == "Sfc.Wms.Foundation.Edm")
-                    { }
-
                     if (reg.service.FullName != null && reg.implementation.FullName != null
                                                      && reg.service.FullName.StartsWith("Sfc")
                                                      && !reg.implementation.FullName.Contains(

@@ -260,6 +260,10 @@
       <Project>{d64223b7-5eab-4408-9d8c-759d757f49f3}</Project>
       <Name>Sfc.Wms.App.Api</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Sfc.Wms.App.App\Sfc.Wms.App.App\Sfc.Wms.App.App.csproj">
+      <Project>{cef84cdb-b74e-49f8-9eec-ec688ec33980}</Project>
+      <Name>Sfc.Wms.App.App</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
