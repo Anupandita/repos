@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Sfc.Core.OnPrem.Result;
+using Sfc.Wms.Configuration.MessageMaster.Contracts.UoW.Dtos;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Sfc.Core.OnPrem.Result;
-using Sfc.Wms.Configuration.MessageMaster.Contracts.Dtos;
 
 namespace Sfc.Wms.App.Api.Nuget.Interfaces
 {

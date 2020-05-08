@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Results;
-using DataGenerator;
+﻿using DataGenerator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.App.Api.Controllers;
-using Sfc.Wms.Configuration.MessageMaster.Contracts.Dtos;
-using Sfc.Wms.Configuration.MessageMaster.Contracts.Interfaces;
+using Sfc.Wms.Configuration.MessageMaster.Contracts.UoW.Dtos;
+using Sfc.Wms.Configuration.MessageMaster.Contracts.UoW.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Results;
 
 namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 {
@@ -29,11 +30,14 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         protected void InputParametersForMessageDetailsRetrieval()
         {
             _mock.Setup(el =>
-                    el.GetMessageDetailsAsync(It.IsAny<Expression<Func<MessageMasterDto,bool>>>()))
-                .Returns(Task.FromResult(new BaseResult<IEnumerable<MessageDetailDto>> { ResultType = ResultTypes.Ok,
-                    Payload =Generator.Default.List<MessageDetailDto>() }));
+                    el.GetMessageDetailsAsync(It.IsAny<Expression<Func<MessageMasterDto, bool>>>()))
+                .Returns(Task.FromResult(new BaseResult<List<MessageDetailDto>>
+                {
+                    ResultType = ResultTypes.Ok,
+                    Payload = Generator.Default.List<MessageDetailDto>(2).ToList()
+                }));
         }
-        
+
         protected void GetOperationInvoked()
         {
             testResponse = _messageMasterController.GetUiSpecificMessageDetails();
@@ -43,7 +47,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         {
             _mock.Verify(el => el.GetMessageDetailsAsync(It.IsAny<Expression<Func<MessageMasterDto, bool>>>()));
             Assert.IsNotNull(testResponse);
-            var result = testResponse.Result as OkNegotiatedContentResult<BaseResult<IEnumerable<MessageDetailDto>>>;
+            var result = testResponse.Result as OkNegotiatedContentResult<BaseResult<List<MessageDetailDto>>>;
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Content);
             Assert.IsNotNull(result.Content.Payload);

@@ -462,6 +462,9 @@
     <Reference Include="Sfc.Wms.Framework.MessageMaster.App, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.MessageMaster.App.1.1.0\lib\net472\Sfc.Wms.Framework.MessageMaster.App.dll</HintPath>
     </Reference>
+    <Reference Include="Sfc.Wms.Framework.MessageMaster.App.UoW, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.MessageMaster.App.UoW.5.0.0\lib\net472\Sfc.Wms.Framework.MessageMaster.App.UoW.dll</HintPath>
+    </Reference>
     <Reference Include="Sfc.Wms.Framework.MessageQueue.App, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.MessageQueue.App.2.2.0\lib\net472\Sfc.Wms.Framework.MessageQueue.App.dll</HintPath>
     </Reference>

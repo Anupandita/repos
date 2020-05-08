@@ -2,7 +2,7 @@
 using Sfc.Core.RestResponse;
 using Sfc.Wms.App.Api.Contracts.Constants;
 using Sfc.Wms.App.Api.Nuget.Interfaces;
-using Sfc.Wms.Configuration.MessageMaster.Contracts.Dtos;
+using Sfc.Wms.Configuration.MessageMaster.Contracts.UoW.Dtos;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -34,5 +34,5 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
     }
-    
+
 }

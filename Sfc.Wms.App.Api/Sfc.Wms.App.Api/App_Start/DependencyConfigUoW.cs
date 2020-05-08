@@ -6,13 +6,12 @@ using Sfc.Wms.Data.Domain.Interfaces;
 using Sfc.Wms.Data.UoW;
 using Sfc.Wms.Framework.Interceptor.App.interceptors;
 using Sfc.Wms.Framework.MessageLogger.App.Services;
-using Sfc.Wms.Framework.MessageMaster.App.Services;
+using Sfc.Wms.Framework.MessageMaster.App.UoW.Services;
 using SimpleInjector;
 using System;
 using System.Configuration;
 using System.Data.Common;
 using System.Linq;
-using System.Linq.Dynamic;
 using System.Runtime.Caching;
 
 namespace Sfc.Wms.App.Api
