@@ -10,6 +10,7 @@ using Sfc.Wms.App.App.AutoMapper;
 using Sfc.Wms.Configuration.VendorMasters.Contracts.Dtos;
 using Sfc.Wms.Data.Context;
 using Sfc.Wms.Data.Entities;
+using Sfc.Wms.Foundation.Edm.Repository.Context;
 using Sfc.Wms.Foundation.InboundLpn.Contracts.Dtos;
 using Sfc.Wms.Foundation.Location.Contracts.Dtos;
 using Sfc.Wms.Framework.Corba.App.AutoMapper;
@@ -74,6 +75,7 @@ namespace Sfc.Wms.App.Api
                      cfg.CreateMap<LpnParameterDto, PageOptions>(MemberList.None).ReverseMap();
                      cfg.CreateMap<PageOptions, LpnSearchResultsDto>(MemberList.None).ReverseMap();
                      cfg.CreateMap<LocationHeaderDto, ContactLocationDto>(MemberList.None);
+                     
                  }));
 #if DEBUG
                  mapper.DefaultContext.ConfigurationProvider.AssertConfigurationIsValid();
@@ -82,6 +84,8 @@ namespace Sfc.Wms.App.Api
              });
 
             container.Register(() => new ShamrockContext(ConfigurationManager.ConnectionStrings["SfcOracleDbContext"].ConnectionString),
+                Lifestyle.Scoped);
+            container.Register(() => new MediaDbContext(ConfigurationManager.ConnectionStrings["MediaDbContext"].ConnectionString),
                 Lifestyle.Scoped);
             container.Register(() => ConfigurationManager.AppSettings["db:encryptionKey"].ToSecureString(), Lifestyle.Singleton);
             container.Register<ISfcCache>(() => new SfcInMemoryCache(MemoryCache.Default), Lifestyle.Scoped);
