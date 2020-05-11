@@ -13,7 +13,6 @@ using System.Configuration;
 using System.Data.Common;
 using System.Linq;
 using System.Runtime.Caching;
-using Sfc.Wms.Framework.Interceptor.App.UoW.InterceptorServices;
 
 namespace Sfc.Wms.App.Api
 {
@@ -37,13 +36,15 @@ namespace Sfc.Wms.App.Api
                 var registrations = (from type in assemblyInfo.GetExportedTypes()
                                      where type.IsClass && !type.IsAbstract && !type.IsInterface
                                            && type.Namespace != null && type.Namespace.StartsWith("Sfc")
-                                     && !type.FullName.Contains(nameof(MonitoringInterceptorUoW))
-                                     from service in type.GetInterfaces()
+                                           && type.FullName != null 
+                                            && !type.FullName.Contains(nameof(MonitoringInterceptorUoW))
+                                     from service in type.GetInterfaces() where !service.FullName.Contains(typeof(ISfcService<>).Name)
                                      select new { service, implementation = type }).ToList();
 
                 foreach (var reg in registrations)
                 {
-                    if (reg.implementation.Namespace?.Contains(".App.UoW") == true)
+                    if (reg.service.FullName?.StartsWith("Sfc.") == true
+                        && reg.implementation.Namespace?.Contains(".App.UoW") == true)
                     {
                         if (reg.service.IsGenericTypeDefinition)
                             container.Register(reg.service.GetGenericTypeDefinition(),
@@ -54,9 +55,9 @@ namespace Sfc.Wms.App.Api
 
                     if (reg.service.FullName?.Contains(".Contracts.UoW") != true ||
                         reg.implementation.FullName == null ||
-                        //reg.implementation.FullName.Contains(nameof(MessageDetailService)) ||
-                        //reg.implementation.FullName.Contains(nameof(MessageMasterService)) ||
-                        //reg.implementation.FullName.Contains(nameof(MessageLogService)) ||
+                        reg.implementation.FullName.Contains(nameof(MessageDetailService)) ||
+                        reg.implementation.FullName.Contains(nameof(MessageMasterService)) ||
+                        reg.implementation.FullName.Contains(nameof(MessageLogService)) ||
                         reg.implementation.FullName.Contains("Aop")) continue;
 
                     if (reg.implementation.IsGenericTypeDefinition)
@@ -66,6 +67,7 @@ namespace Sfc.Wms.App.Api
                         container.InterceptWith<MonitoringInterceptorUoW>(type => type == reg.service);
                 }
             }
+
         }
     }
 }
