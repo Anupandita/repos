@@ -336,7 +336,7 @@
     <Reference Include="Sfc.Wms.Data.Domain, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Data.Domain.2.1.0\lib\net472\Sfc.Wms.Data.Domain.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Data.UoW, Version=12.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Sfc.Wms.Data.UoW">
       <HintPath>..\packages\Sfc.Wms.Data.UoW.12.0.0\lib\net472\Sfc.Wms.Data.UoW.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Foundation.AllocationInventory.Contracts, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
