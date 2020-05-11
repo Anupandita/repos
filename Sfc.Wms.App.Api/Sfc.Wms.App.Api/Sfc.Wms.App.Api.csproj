@@ -336,7 +336,7 @@
     <Reference Include="Sfc.Wms.Data.Domain, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Data.Domain.2.1.0\lib\net472\Sfc.Wms.Data.Domain.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Data.UoW, Version=12.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Sfc.Wms.Data.UoW">
       <HintPath>..\packages\Sfc.Wms.Data.UoW.12.0.0\lib\net472\Sfc.Wms.Data.UoW.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Foundation.AllocationInventory.Contracts, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -459,6 +459,9 @@
     <Reference Include="Sfc.Wms.Framework.Interceptor.App, Version=3.10.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.Interceptor.App.3.10.1\lib\net472\Sfc.Wms.Framework.Interceptor.App.dll</HintPath>
     </Reference>
+    <Reference Include="Sfc.Wms.Framework.Interceptor.App.UoW, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Framework.Interceptor.App.UoW.1.2.0\lib\net472\Sfc.Wms.Framework.Interceptor.App.UoW.dll</HintPath>
+    </Reference>
     <Reference Include="Sfc.Wms.Framework.ItemMasters.App, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.ItemMasters.App.1.2.0\lib\net472\Sfc.Wms.Framework.ItemMasters.App.dll</HintPath>
     </Reference>
@@ -468,8 +471,8 @@
     <Reference Include="Sfc.Wms.Framework.MessageLogger.App, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.MessageLogger.App.1.1.1\lib\net472\Sfc.Wms.Framework.MessageLogger.App.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Framework.MessageLogger.App.UoW, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Configuration.MessageLogger.App.UoW.1.2.0\lib\net472\Sfc.Wms.Framework.MessageLogger.App.UoW.dll</HintPath>
+    <Reference Include="Sfc.Wms.Framework.MessageLogger.App.UoW, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Configuration.MessageLogger.App.UoW.1.2.1\lib\net472\Sfc.Wms.Framework.MessageLogger.App.UoW.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Framework.MessageMaster.App, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Framework.MessageMaster.App.1.1.0\lib\net472\Sfc.Wms.Framework.MessageMaster.App.dll</HintPath>
@@ -767,12 +770,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Wms.Framework\Sfc.Wms.Framework.Interceptor.App.UoW\Sfc.Wms.Framework.Interceptor.App.UoW\Sfc.Wms.Framework.Interceptor.App.UoW.csproj">
-      <Project>{23c10c68-bf5e-416d-ac05-ea5fc8e499a2}</Project>
-      <Name>Sfc.Wms.Framework.Interceptor.App.UoW</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

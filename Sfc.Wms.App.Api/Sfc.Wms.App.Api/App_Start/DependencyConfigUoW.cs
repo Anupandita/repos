@@ -5,14 +5,14 @@ using Sfc.Wms.Data.Domain;
 using Sfc.Wms.Data.Domain.Interfaces;
 using Sfc.Wms.Data.UoW;
 using Sfc.Wms.Framework.Interceptor.App.UoW.interceptors;
-using Sfc.Wms.Framework.MessageLogger.App.UoW.Services;
-using Sfc.Wms.Framework.MessageMaster.App.UoW.Services;
 using SimpleInjector;
 using System;
 using System.Configuration;
 using System.Data.Common;
 using System.Linq;
 using System.Runtime.Caching;
+using Sfc.Wms.Framework.MessageLogger.App.UoW.Services;
+using Sfc.Wms.Framework.MessageMaster.App.UoW.Services;
 
 namespace Sfc.Wms.App.Api
 {
@@ -36,9 +36,10 @@ namespace Sfc.Wms.App.Api
                 var registrations = (from type in assemblyInfo.GetExportedTypes()
                                      where type.IsClass && !type.IsAbstract && !type.IsInterface
                                            && type.Namespace != null && type.Namespace.StartsWith("Sfc")
-                                           && type.FullName != null 
+                                           && type.FullName != null
                                             && !type.FullName.Contains(nameof(MonitoringInterceptorUoW))
-                                     from service in type.GetInterfaces() where !service.FullName.Contains(typeof(ISfcService<>).Name)
+                                     from service in type.GetInterfaces()
+                                     where !service.FullName.Contains(typeof(ISfcService<>).Name)
                                      select new { service, implementation = type }).ToList();
 
                 foreach (var reg in registrations)
@@ -67,7 +68,6 @@ namespace Sfc.Wms.App.Api
                         container.InterceptWith<MonitoringInterceptorUoW>(type => type == reg.service);
                 }
             }
-
         }
     }
 }
