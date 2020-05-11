@@ -35,8 +35,6 @@ namespace Sfc.Wms.App.Api.Controllers
             else
                 httpResponseMessage = new HttpResponseMessage((HttpStatusCode)response.ResultType)
                 {
-                    Content = new StringContent($"Result={response.ResultType};  Sku={response.Payload.Sku}"),
-                    ReasonPhrase = string.Join<ValidationMessage>(" | ", response.ValidationMessages.ToArray()),
                     RequestMessage = new HttpRequestMessage
                     {
                         RequestUri = Request.RequestUri,
