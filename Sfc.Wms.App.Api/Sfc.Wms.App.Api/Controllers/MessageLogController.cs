@@ -25,7 +25,8 @@ namespace Sfc.Wms.App.Api.Controllers
         [ResponseType(typeof(BaseResult))]
         public async Task<IHttpActionResult> BatchInsertAsync(IEnumerable<MessageLogDto> messageLogDtos)
         {
-            var response = await _messageLogService.InsertRangeAsync(messageLogDtos);
+            var response = await _messageLogService.InsertRangeAsync(messageLogDtos)
+                .ConfigureAwait(false);
             return ResponseHandler(response);
         }
     }
