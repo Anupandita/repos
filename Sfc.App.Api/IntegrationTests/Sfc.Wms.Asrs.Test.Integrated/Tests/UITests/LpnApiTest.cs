@@ -197,7 +197,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
             .And(x => x.CreateInputDtoForEditItemApi())
             .When(x => x.CallLpnItemsApi(UIConstants.LpnItemsUrl))
             .And(x => x.VerifyItemFieldsAreUpdatedInDb())
-            .Then(x => x.VerifyCorbaResultFromDbFor("Items"))
             .BDDfy("Test Case ID : ");
         }
         [TestMethod()]

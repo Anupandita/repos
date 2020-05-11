@@ -17,14 +17,16 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData.Constant
         public const string SearchInputPageSize = "attributeSearchInputDto.pageSize=";
         public const string SearchInputSortOptions = "attributeSearchInputDto.sortOptions=";
         public const string DateTimeFormat = "mm-dd-yy hh24:mi:ss";
+        public const string DateTimeFormat2 = "dd-mm-yyyy hh24:mi:ss";
         public const string FormatDateTime = "mm/dd/yyyy hh24:mi:ss";
         public const string EnterDateTimeFormat = "MM/dd/yyyy";
         public const string VolumeDecimalFormat = "99990.0000";
         public const string DecimalFormat = "99990.00";
         public const string HeightFormat = "99990.09";
-        public const string CommentCode = "LOT";
-        public const string SystemCodeCommentCode = "Lot Data";
-        public const string SystemCodeCommentType = "Lot Tracking";
+        public static string CommentCode;
+        public static string CommentType;
+        public static string SystemCodeCommentCode;
+        public static string SystemCodeCommentType;
         public static string ItemNumber;
         public static string CartonNbr;
         public static string PoNumber;
@@ -42,7 +44,6 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData.Constant
         public const string LpnFromStatus = "45";
         public static string AdjacentLocation;
         public static string LpnNbrForLockUnlock;
-        public static string LpnNumberForItems;
         public static string LpnNumberForHistory;
         public static string BearerToken;
         public static string ItemDescription;
