@@ -768,6 +768,12 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Wms.Framework\Sfc.Wms.Framework.Interceptor.App.UoW\Sfc.Wms.Framework.Interceptor.App.UoW\Sfc.Wms.Framework.Interceptor.App.UoW.csproj">
+      <Project>{23c10c68-bf5e-416d-ac05-ea5fc8e499a2}</Project>
+      <Name>Sfc.Wms.Framework.Interceptor.App.UoW</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
