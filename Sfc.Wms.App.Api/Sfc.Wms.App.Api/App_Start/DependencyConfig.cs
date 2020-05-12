@@ -4,6 +4,7 @@ using Sfc.Core.Aop.WebApi.Interface;
 using Sfc.Core.Aop.WebApi.Logging;
 using Sfc.Core.Cache.Contracts;
 using Sfc.Core.Cache.InMemory;
+using Sfc.Core.OnPrem.AutoMapping.Initialize;
 using Sfc.Core.OnPrem.Pagination;
 using Sfc.Core.OnPrem.Security.Contracts.Extensions;
 using Sfc.Wms.App.App.AutoMapper;
@@ -56,6 +57,7 @@ namespace Sfc.Wms.App.Api
              {
                  var mapper = new Mapper(new MapperConfiguration(cfg =>
                  {
+                     cfg.Advanced.AllowAdditiveTypeMapCreation = true;
                      cfg.AddExpressionMapping();
                      SfcRbacMapper.CreateMaps(cfg);
                      PrinterValuesMapper.CreateMaps(cfg);
@@ -75,13 +77,19 @@ namespace Sfc.Wms.App.Api
                      cfg.CreateMap<LpnParameterDto, PageOptions>(MemberList.None).ReverseMap();
                      cfg.CreateMap<PageOptions, LpnSearchResultsDto>(MemberList.None).ReverseMap();
                      cfg.CreateMap<LocationHeaderDto, ContactLocationDto>(MemberList.None);
-                     
+
+                     var assemblyList = AppDomain.CurrentDomain.GetAssemblies().Where(p => !p.IsDynamic && p.FullName.StartsWith("Sfc.")).ToList();
+
+                     cfg.AddMaps(assemblyList);
+                     AutoProfilerConfigurator
+                         .LoadMapsFromAssemblies(cfg, assemblyList);
                  }));
 #if DEBUG
                  mapper.DefaultContext.ConfigurationProvider.AssertConfigurationIsValid();
 #endif
                  return mapper;
              });
+            DependencyConfigUoW.RegisterTypes(container);
 
             container.Register(() => new ShamrockContext(ConfigurationManager.ConnectionStrings["SfcOracleDbContext"].ConnectionString),
                 Lifestyle.Scoped);
@@ -100,7 +108,7 @@ namespace Sfc.Wms.App.Api
             {
                 var registrations = from type in assemblyInfo.GetExportedTypes()
                                     where type.Namespace != null && type.Namespace.StartsWith("Sfc") && type.IsClass
-                                          && !type.IsAbstract && !type.IsInterface
+                                          && !type.IsAbstract && !type.IsInterface && type.FullName?.Contains("UoW") != true
                                     from service in type.GetInterfaces()
                                     select new { service, implementation = type };
                 foreach (var reg in registrations)
@@ -115,6 +123,7 @@ namespace Sfc.Wms.App.Api
                                                      && !reg.service.FullName.Contains(nameof(SfcLoggerSerilogs)))
                     {
                         container.Register(reg.service, reg.implementation, Lifestyle.Scoped);
+
                         if (reg.service.FullName.Contains(".Contracts") && !reg.implementation.FullName.Contains(nameof(MessageDetailService)) &&
                             !reg.implementation.FullName.Contains(nameof(MessageMasterService)) &&
                             !reg.implementation.FullName.Contains(nameof(MessageLogService)) &&
@@ -122,6 +131,7 @@ namespace Sfc.Wms.App.Api
                         {
                             container.InterceptWith<MonitoringInterceptor>(type => type == reg.service);
                         }
+
                     }
                     else if (reg.implementation.IsGenericTypeDefinition)
                     {

@@ -1,8 +1,8 @@
 ﻿using Moq;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.App.Api.Controllers;
-using Sfc.Wms.Foundation.Corba.Contracts.Dtos;
-using Sfc.Wms.Foundation.Corba.Contracts.Interfaces;
+using Sfc.Wms.Foundation.Corba.Contracts.UoW.Dtos;
+using Sfc.Wms.Foundation.Corba.Contracts.UoW.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -13,8 +13,8 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 {
     public class CorbaControllerFixture
     {
-        protected readonly Mock<ICorbaService> _mock;
-        protected readonly CorbaController _corbaController;
+        private  readonly Mock<ICorbaService> _mock;
+        private  readonly CorbaController _corbaController;
         private IHttpActionResult testResult;
 
         protected CorbaControllerFixture()

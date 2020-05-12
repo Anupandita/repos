@@ -1,6 +1,7 @@
 ﻿// ReSharper disable InconsistentNaming
 
 
+
 namespace Sfc.Wms.App.Api.Contracts.Constants
 {
     public static class Routes
@@ -10,6 +11,9 @@ namespace Sfc.Wms.App.Api.Contracts.Constants
             public const string ShipmentNumber = "shipment_nbr";
             public const string SkuId = "skuId";
             public const string WHSE = "whse";
+
+            public const string ByShipmentNumber = "{shipmentNumber}";
+            public const string BySkuId = "{skuId}";
         }
 
         public static class Paths
@@ -26,7 +30,10 @@ namespace Sfc.Wms.App.Api.Contracts.Constants
             public const string DrillASNDetails = "drill-asn-details";
             public const string DrillDownItemAttribute = "{itemId}";
             public const string Find = "find";
-            public const string FindByShipmentDetails = "find?shipmtNumber={shipmtNumber}&statusFrom={statusFrom}&statusTo={statusTo}&poNumber={poNumber}&vendorName={vendorName}&shippedDate={shippedDate}&expectedDate={expectedDate}&scheduledDate={scheduledDate}";
+
+            public const string FindByShipmentDetails =
+                "find?shipmtNumber={shipmtNumber}&statusFrom={statusFrom}&statusTo={statusTo}&poNumber={poNumber}&vendorName={vendorName}&shippedDate={shippedDate}&expectedDate={expectedDate}&scheduledDate={scheduledDate}";
+
             public const string FromSortation = "from-sortation";
             public const string GetStatusCodes = "GetStatusCodes";
             public const string GridGroupTypes = "grid_grp_types=";
@@ -94,6 +101,22 @@ namespace Sfc.Wms.App.Api.Contracts.Constants
             public const string CaseUnlock = "case-unlock";
             public const string RefreshToken = "refresh-token";
             public const string UiSpecificMessages = "ui-messages";
+
+
+            public const string Skus = "skus";
+            public const string AdvanceShipmentNotices = "advanced-shipment-notices";
+            public const string QualityVerifications = "quality-verifications";
+            public const string Receipt = "receipts";
+            public const string GetAsnDetails = AdvanceShipmentNotices + QueryParamSeperator + Params.ByShipmentNumber;
+            public const string UpdateAsnDetails = AdvanceShipmentNotices + QueryParamSeperator + Params.ByShipmentNumber;
+            public const string GetAsnLotTrackingDetails = AdvanceShipmentNotices + QueryParamSeperator + Params.ByShipmentNumber
+                                                           + QueryParamSeperator + Skus + QueryParamSeperator
+                                                           + Params.BySkuId;
+            public const string GetQualityVerifications = AdvanceShipmentNotices + QueryParamSeperator + Params.ByShipmentNumber
+                                                          + QueryParamSeperator + QualityVerifications;
+
+            public const string UpdateQualityVerifications = AdvanceShipmentNotices + QueryParamSeperator + Params.ByShipmentNumber
+                                                             + QueryParamSeperator + QualityVerifications;
             public const string ImageUrlsParams = "{sku}/{gtin?}";
         }
 
@@ -141,6 +164,8 @@ namespace Sfc.Wms.App.Api.Contracts.Constants
             public const string WorkAreaMaster = "work-area-master";
             public const string MessageLogger = "api/message-logs";
             public const string MessageMaster = "api/message-masters";
+
+            public const string Api = "api";
             public const string ImageUrls = "api/image-urls";
         }
     }

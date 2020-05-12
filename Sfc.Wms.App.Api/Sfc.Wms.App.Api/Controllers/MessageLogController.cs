@@ -1,8 +1,8 @@
 ﻿using Sfc.Core.BaseApiController;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.App.Api.Contracts.Constants;
-using Sfc.Wms.Configuration.MessageLogger.Contracts.Dtos;
-using Sfc.Wms.Configuration.MessageLogger.Contracts.Interfaces;
+using Sfc.Wms.Configuration.MessageLogger.Contracts.UoW.Dtos;
+using Sfc.Wms.Configuration.MessageLogger.Contracts.UoW.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -25,7 +25,8 @@ namespace Sfc.Wms.App.Api.Controllers
         [ResponseType(typeof(BaseResult))]
         public async Task<IHttpActionResult> BatchInsertAsync(IEnumerable<MessageLogDto> messageLogDtos)
         {
-            var response = await _messageLogService.BatchInsertAsync(messageLogDtos);
+            var response = await _messageLogService.InsertRangeAsync(messageLogDtos)
+                .ConfigureAwait(false);
             return ResponseHandler(response);
         }
     }

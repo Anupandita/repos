@@ -2,7 +2,6 @@
 using Moq;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.App.Api.Controllers;
-using Sfc.Wms.Interfaces.Asrs.Contracts.Dtos;
 using Sfc.Wms.Interfaces.Asrs.Contracts.Interfaces;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -14,12 +13,14 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
     {
         private readonly SkuMaintenanceController _skmtController;
         private readonly Mock<IWmsToEmsMessageProcessorService> _messageTypeService;
+        private readonly Mock<IWmsToEmsParallelProcessService> _wmsToEmsParallelProcessService;
         private Task<IHttpActionResult> _testResult;
 
         protected SkmtFixture()
         {
             _messageTypeService = new Mock<IWmsToEmsMessageProcessorService>(MockBehavior.Default);
-            _skmtController = new SkuMaintenanceController(_messageTypeService.Object);
+            _wmsToEmsParallelProcessService = new Mock<IWmsToEmsParallelProcessService>(MockBehavior.Default);
+            _skmtController = new SkuMaintenanceController(_messageTypeService.Object, _wmsToEmsParallelProcessService.Object);
         }
 
         protected void ValidSkmtMessage()

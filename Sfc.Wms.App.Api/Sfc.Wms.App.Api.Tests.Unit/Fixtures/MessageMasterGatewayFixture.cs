@@ -1,20 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Net;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Results;
-using DataGenerator;
+﻿using DataGenerator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Newtonsoft.Json;
 using RestSharp;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Core.RestResponse;
-using Sfc.Wms.App.Api.Controllers;
 using Sfc.Wms.App.Api.Nuget.Gateways;
 using Sfc.Wms.App.Api.Nuget.Interfaces;
-using Sfc.Wms.Configuration.MessageLogger.Contracts.Interfaces;
-using Sfc.Wms.Configuration.MessageMaster.Contracts.Dtos;
+using Sfc.Wms.Configuration.MessageMaster.Contracts.UoW.Dtos;
+using System.Collections.Generic;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 {
@@ -49,7 +45,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         protected void InputForUiSpecificMessageDetails()
         {
             var result = new BaseResult<IEnumerable<MessageDetailDto>>
-                { ResultType = ResultTypes.Ok, Payload = Generator.Default.List<MessageDetailDto>(10) };
+            { ResultType = ResultTypes.Ok, Payload = Generator.Default.List<MessageDetailDto>(10) };
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 

@@ -17,6 +17,7 @@ namespace Sfc.Wms.App.Api
                 .EnableSwagger(c =>
                 {
                     c.SingleApiVersion("v1", "Wms.App.Api");
+                    c.UseFullTypeNameInSchemaIds();
                 })
                 .EnableSwaggerUi(c =>
                 {
