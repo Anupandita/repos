@@ -32,11 +32,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             GetDataBeforeCallingApiForActionCodeDeAllocate();
         }
 
+        protected void TestCancelledCartonDataForActionCodeCancel()
+        {
+            GetCancelledCartonDataBeforeCallingApiForActionCodeCancel();
+        }
         protected void TestDataForActionCodeCancel()
         {
             GetDataBeforeCallingApiForActionCodeCancel();
         }
-
         protected void ReadDataAfterApiForActionCodeAllocated()
         {
             GetDataAfterTriggerOrstCase1();
@@ -248,7 +251,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             Assert.AreEqual(Constants.CartonStatusAllocated, CartonHdrCanceled.StatusCode.ToString());
         }
-
+        protected void VerifyCartonStatusHasNotUpdatedToAllocatedOrWaitingForActionCodeCancel()
+        {
+            Assert.AreEqual(Constants.CartonStatusForCancelled.ToString(), CartonHdrCanceled.StatusCode.ToString());
+        }
         protected void ValidateForOrmtCountHasReducedForActionCodeCancel()
         {
             Assert.AreEqual(PickLcnExtCase4BeforeApi.ActiveOrmtCount - 1, PickLcnExtCase4.ActiveOrmtCount);

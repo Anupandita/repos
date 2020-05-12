@@ -42,6 +42,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
                 _command = new OracleCommand(ReceiptInquiryQueries.FetchQvShipmentNbrSql, db);
                 UIConstants.QvShipmentNbr = _command.ExecuteScalar().ToString();
 
+                _command = new OracleCommand(ReceiptInquiryQueries.FetchVerifyReceiptShpmtNbr, db);
+                UIConstants.VerifyReceiptShipmentNbr = _command.ExecuteScalar().ToString();
+                
+
                 _command = new OracleCommand(ReceiptInquiryQueries.FetchAsnNbrSql, db);
                 DataTable tempDt = new DataTable();
                 tempDt.Load(_command.ExecuteReader());
@@ -67,7 +71,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
                 _command = new OracleCommand(ReceiptInquiryQueries.FetchUnAnsQvShipmentNbrSql, db);
                 tempDt.Load(_command.ExecuteReader());
                 UIConstants.UnAnsQvShipmentNbr = tempDt.Rows[0][0].ToString();
-                UIConstants.QuesAnswerId= tempDt.Rows[0][0].ToString();
+                UIConstants.QuesAnswerId= tempDt.Rows[0][1].ToString();
 
                 _command = new OracleCommand(ReceiptInquiryQueries.FetchMainPageGridDtSql(), db);
                 ReceivingSearchQueryDt.Load(_command.ExecuteReader());
@@ -95,31 +99,34 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             switch (criteria)
             {
                 case "PoNumber":
-                    UIConstants.ReceivingSearchUrl = UIConstants.ReceivingSearchUrl + "poNumber=" + UIConstants.PoNumber;
+                    UIConstants.ReceivingSearchUrl = ConfigurationManager.AppSettings["BaseUrl"] + UIConstants.ReceivingSearch + "poNumber=" + UIConstants.PoNumber;
                     return;
                 case "ShipmentNumber":
-                    UIConstants.ReceivingSearchUrl = UIConstants.ReceivingSearchUrl + "shipmentNumber=" + UIConstants.ShipmentNbr;
+                    UIConstants.ReceivingSearchUrl = ConfigurationManager.AppSettings["BaseUrl"] + UIConstants.ReceivingSearch + "shipmentNumber=" + UIConstants.ShipmentNbr;
                     return;
                 case "VendorName":
-                    UIConstants.ReceivingSearchUrl = UIConstants.ReceivingSearchUrl+"vendorName="+UIConstants.VendorName;
+                    UIConstants.ReceivingSearchUrl = ConfigurationManager.AppSettings["BaseUrl"] + UIConstants.ReceivingSearch + "vendorName="+UIConstants.VendorName;
                     return;
                 case "StatusRange":
-                    UIConstants.ReceivingSearchUrl = UIConstants.ReceivingSearchUrl+ "statusFrom="+UIConstants.FromStatus+"&statusTo="+UIConstants.ToStatus;
+                    UIConstants.ReceivingSearchUrl = ConfigurationManager.AppSettings["BaseUrl"] + UIConstants.ReceivingSearch + "statusFrom="+UIConstants.FromStatus+"&statusTo="+UIConstants.ToStatus;
                     return;
                 case "VerifiedDateRange":
-                    UIConstants.ReceivingSearchUrl = UIConstants.ReceivingSearchUrl+"verifiedFrom=" + UIConstants.VerifiedFrom+"&verifiedTo=" + UIConstants.VerifiedTo;
+                    UIConstants.ReceivingSearchUrl = ConfigurationManager.AppSettings["BaseUrl"] + UIConstants.ReceivingSearch + "verifiedFrom=" + UIConstants.VerifiedFrom+"&verifiedTo=" + UIConstants.VerifiedTo;
                     break;              
                 case "Details":
-                    UIConstants.ReceivingDetailsUrl = UIConstants.ReceivingSearchUrl + UIConstants.ShipmentNbr;
+                    UIConstants.ReceivingDetailsUrl = ConfigurationManager.AppSettings["BaseUrl"] +UIConstants.ReceivingDetails+ UIConstants.ShipmentNbr;
+                    return;
+                case "Verify Receipt":
+                    UIConstants.ReceivingDetailsUrl = ConfigurationManager.AppSettings["BaseUrl"] + UIConstants.ReceivingDetails + UIConstants.VerifyReceiptShipmentNbr;
                     return;
                 case "DetailsDrilldown":
-                    UIConstants.ReceivingDetailsDrilldownUrl = UIConstants.ReceivingSearchUrl + UIConstants.ShipmentNbr+ UIConstants.ReceivingDetailsDrilldownUrl+UIConstants.ItemNumber;
+                    UIConstants.ReceivingDetailsDrilldownUrl = ConfigurationManager.AppSettings["BaseUrl"] + UIConstants.ReceivingDetails + UIConstants.ShipmentNbr+ UIConstants.ReceivingDetailsDrilldown+UIConstants.ItemNumber;
                     return;
                 case "QvDetails":
-                    UIConstants.ReceivingQvDetailsUrl = UIConstants.ReceivingSearchUrl + UIConstants.QvShipmentNbr+ UIConstants.ReceivingQvDetailsUrl; 
+                    UIConstants.ReceivingQvDetailsUrl = ConfigurationManager.AppSettings["BaseUrl"] + UIConstants.ReceivingDetails + UIConstants.QvShipmentNbr+ UIConstants.ReceivingQvDetails; 
                     return;
                 case "UpdateQvDetails":
-                    UIConstants.ReceivingQvDetailsUrl = UIConstants.ReceivingSearchUrl + UIConstants.UnAnsQvShipmentNbr + UIConstants.ReceivingQvDetailsUrl;
+                    UIConstants.ReceivingQvDetailsUrl = ConfigurationManager.AppSettings["BaseUrl"] + UIConstants.ReceivingDetails + UIConstants.UnAnsQvShipmentNbr + UIConstants.ReceivingQvDetails;
                     return;
             }
         }
@@ -147,7 +154,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             var response = CallGetApi(url);
             VerifyOkResultAndStoreBearerToken(response);
             var payload = JsonConvert.DeserializeObject<BaseResult<List<AsnDetailDto>>>(response.Content).Payload;
-            ReceivingDetailsQueryDt = ToDataTable(payload);
+            ReceivingDetailsResultDt = ToDataTable(payload);
 
         }
         public void CallReceivingDetailsDrilldownApi(string url)
@@ -155,7 +162,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             var response = CallGetApi(url);
             VerifyOkResultAndStoreBearerToken(response);
             var payload = JsonConvert.DeserializeObject<BaseResult<List<AsnLotTrackingDto>>>(response.Content).Payload;
-            ReceivingDetailsDrilldownQueryDt = ToDataTable(payload);
+            ReceivingDetailsDrilldownResultDt = ToDataTable(payload);
 
         }     
         public void VerifyOutputForReceivingDetailsInApiOutput() 
@@ -169,7 +176,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
         }
         public void CallReceivingUpdateQvDetailsApi(string url)
         {
-            var request = CallPostApi();
+            var request = CallPutApi();
             request.AddJsonBody(answerTextDto);
             var response = ExecuteRequest(url, request);
             VerifyOkResultAndStoreBearerToken(response);
@@ -179,7 +186,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             var response = CallGetApi(url);
             VerifyOkResultAndStoreBearerToken(response);
             var payload = JsonConvert.DeserializeObject<BaseResult<List<QvDetailsDto>>>(response.Content).Payload;
-            ReceivingQVDetailsQueryDt = ToDataTable(payload);
+            ReceivingQVDetailsResultDt = ToDataTable(payload);
         }
         public void VerifyOutputForQvDetailsInApiOutput()
         {
@@ -200,10 +207,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
                 db.ConnectionString = ConfigurationManager.ConnectionStrings["SfcRbacContextModel"].ToString();
                 db.Open();
                 var _command = new OracleCommand(ReceiptInquiryQueries.VerifyAnswerUpdatedSql(), db);
-                Assert.IsNotNull(_command.ExecuteScalar().ToString());               
+                Assert.IsNotNull(_command.ExecuteScalar().ToString());
             }
-        }
 
+        }
         public void CreateInputDtoFor(string btnName) 
         {
             switch (btnName)
@@ -213,8 +220,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
                         updateAsnDto = new UpdateAsnDto()
                         {
                             Action = "verify-receipt",
-                            WorkStationId = UIConstants.WorkStation,
-                                   
+                            WorkStationId = UIConstants.WorkStation,                                 
                             
                         }; 
                             break;
@@ -246,7 +252,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
         public void CallReceivingCorbaApi(string url) 
         {
             var request = CallPutApi();
-            request.AddJsonBody(answerTextDto);
+            request.AddJsonBody(updateAsnDto);
             var response = ExecuteRequest(url, request);
             VerifyOkResultAndStoreBearerToken(response);
         }
@@ -257,17 +263,17 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             {
                 case "Verify Receipt": 
                     { 
-                        sql = "select * from pb2_corba_dtl where id in (select max(ph.id) from pb2_corba_hdr ph inner join pb2_corba_dtl pd on ph.id= pd.id where func_name like '%" + FuncName.VerifyShipment + "' and parm_name='shipment' and parm_value='" + UIConstants.ShipmentNbr + "' and crt_date like sysdate) and parm_name='return'";
+                        sql = "select parm_value from pb2_corba_dtl where id in (select max(ph.id) from pb2_corba_hdr ph inner join pb2_corba_dtl pd on ph.id= pd.id where func_name like '%" + FuncName.VerifyShipment + "' and parm_name='shipment' and parm_value='" + UIConstants.VerifyReceiptShipmentNbr + "' and crt_date like sysdate) and parm_name='return'";
                         break;
                     }
                 case "Multi Item": 
                     { 
-                        sql = "select * from pb2_corba_dtl where id in (select id from pb2_corba_dtl where id in (select max(ph.id) from pb2_corba_hdr ph inner join pb2_corba_dtl pd on ph.id= pd.id where func_name like '%printShipmentPB' and parm_name='shipment' and parm_value='12376487' and crt_date like sysdate-1) and parm_name='mode' and parm_value='P') and parm_name ='return'"; 
+                        sql = "select parm_value from pb2_corba_dtl where id in (select id from pb2_corba_dtl where id in (select max(ph.id) from pb2_corba_hdr ph inner join pb2_corba_dtl pd on ph.id= pd.id where func_name like '%printShipmentPB' and parm_name='shipment' and parm_value='" + UIConstants.ShipmentNbr + "' and crt_date like sysdate) and parm_name='mode' and parm_value='P') and parm_name ='return'"; 
                         break;
                     }
                 case "NLL": 
                     {
-                        sql = "select * from pb2_corba_dtl where id in (select id from pb2_corba_dtl where id in (select max(ph.id) from pb2_corba_hdr ph inner join pb2_corba_dtl pd on ph.id= pd.id where func_name like '%printShipmentPB' and parm_name='shipment' and parm_value='12376487' and crt_date like sysdate-1) and parm_name='mode' and parm_value='R') and parm_name ='return'"; 
+                        sql = "select parm_value from pb2_corba_dtl where id in (select id from pb2_corba_dtl where id in (select max(ph.id) from pb2_corba_hdr ph inner join pb2_corba_dtl pd on ph.id= pd.id where func_name like '%printShipmentPB' and parm_name='shipment' and parm_value='" + UIConstants.ShipmentNbr + "' and crt_date like sysdate) and parm_name='mode' and parm_value='R') and parm_name ='return'"; 
                         break;
                     }
             }

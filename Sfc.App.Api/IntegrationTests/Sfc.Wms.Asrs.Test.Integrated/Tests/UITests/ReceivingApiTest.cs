@@ -112,7 +112,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         [TestCategory("UI_FUNCTIONAL")]
         public void VerifyReceiptButtonCall()
         {
-            this.Given(x => x.CreateUrlAndInputParamForApiUsing("Details"))
+            this.Given(x => x.CreateUrlAndInputParamForApiUsing("Verify Receipt"))
             .And(x => x.CreateInputDtoFor("Verify Receipt"))
             .When(x => x.CallReceivingCorbaApi(UIConstants.ReceivingDetailsUrl))
             .Then(x => x.VerifyCorbaResultFromDbFor("Verify Receipt"))

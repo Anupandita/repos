@@ -75,7 +75,21 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void OrstMessageTest4ForActionCodeCancel()
+        public void OrstMessageTest4ForActionCodeCancelForCancelledCarton()
+        {
+            this.Given(x => x.TestCancelledCartonDataForActionCodeCancel())
+                //.And(x => x.ValidMsgKeyMsgProcessorAndOrstUrlIs(MsgKeyForCanceled.MsgKey, EmsToWmsCanceled.Process,OrstUrl))
+                //.When(x => x.OrstApiIsCalledCreatedIsReturned())
+                .Then(x => x.ReadDataAfterApiForActionCodeCancel())
+                .And(x => x.VerifyCartonStatusHasNotUpdatedToAllocatedOrWaitingForActionCodeCancel())
+                .And(x => x.ValidateForOrmtCountHasReducedForActionCodeCancel())
+                .BDDfy("Test Case Id:134869 -Dematic : ORST : Test Message when Action Code = Cancel");
+        }
+
+
+        [TestMethod()]
+        [TestCategory("FUNCTIONAL")]
+        public void OrstMessageTest4ForActionCodeCancelForReleasedCarton()
         {
             this.Given(x => x.TestDataForActionCodeCancel())
                 //.And(x => x.ValidMsgKeyMsgProcessorAndOrstUrlIs(MsgKeyForCanceled.MsgKey, EmsToWmsCanceled.Process,OrstUrl))

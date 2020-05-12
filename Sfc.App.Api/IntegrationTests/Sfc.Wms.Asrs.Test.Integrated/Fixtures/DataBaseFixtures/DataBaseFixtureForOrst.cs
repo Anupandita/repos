@@ -144,7 +144,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             using (var db = GetOracleConnection())
             {
                 db.Open();
-                Complete = GetCartonDetailsForInsertingOrstMessage(db, Constants.CartonStatusForInPacking, Constants.PktStatusForInPacking,false);
+                Complete = GetCartonDetailsForInsertingOrstMessage(db, Constants.CartonStatusForInPacking, Constants.PktStatusForInPacking,true);
                 Assert.IsNotNull(Complete.MessageJson, "No Data Available");
                 OrmtCase2 = JsonConvert.DeserializeObject<OrmtDto>(Complete.MessageJson);              
                 CartonDtlCase2BeforeApi = GetCartonDetails(db, Complete.OrderId);
@@ -172,7 +172,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void GetDataBeforeCallingApiForActionCodeCancel()
+        public void GetCancelledCartonDataBeforeCallingApiForActionCodeCancel()
         {
             using (var db = GetOracleConnection())
             {
@@ -182,8 +182,21 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 OrmtCase4 = JsonConvert.DeserializeObject<OrmtDto>(Canceled.MessageJson);
                 PickLcnExtCase4BeforeApi = GetPickLocnDtlExt(db, OrmtCase4.Sku, PickLcnCase4BeforeApi.LocationId);
                 OrstMessageCreatedForCancelledStatus(db);
+                EmsToWmsCanceled = GetEmsToWmsData(db, MsgKeyForCanceled.MsgKey);                
+            }
+        }
+
+        public void GetDataBeforeCallingApiForActionCodeCancel()
+        {
+            using (var db = GetOracleConnection())
+            {
+                db.Open();
+                Canceled = GetCartonDetailsForInsertingOrstMessage(db, Constants.CartonStatusForReleased, Constants.PktStatusForInPacking, true);
+                Assert.IsNotNull(Canceled.MessageJson, "No Data Available");
+                OrmtCase4 = JsonConvert.DeserializeObject<OrmtDto>(Canceled.MessageJson);
+                PickLcnExtCase4BeforeApi = GetPickLocnDtlExt(db, OrmtCase4.Sku, PickLcnCase4BeforeApi.LocationId);
+                OrstMessageCreatedForCancelledStatus(db);
                 EmsToWmsCanceled = GetEmsToWmsData(db, MsgKeyForCanceled.MsgKey);
-                
             }
         }
 
@@ -307,7 +320,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 Sku = skuId,
                 Owner = owner,
                 UnitOfMeasure = UnitOfMeasures.Each,
-                ParentContainerId = Constants.MasterPackId,
+               // ParentContainerId = Constants.MasterPackId,
                 QuantityOrdered = qty,
                 QuantityDelivered = Constants.QuantityDelivered,
                 DestinationLocationId = destinationLocnId,

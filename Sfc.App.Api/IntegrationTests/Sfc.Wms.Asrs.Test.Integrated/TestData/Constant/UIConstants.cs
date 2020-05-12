@@ -23,6 +23,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData.Constant
         public const string VolumeDecimalFormat = "99990.0000";
         public const string DecimalFormat = "99990.00";
         public const string HeightFormat = "99990.09";
+        public const string ApiDecimalFormat = "99990.0";
         public static string CommentCode;
         public static string CommentType;
         public static string SystemCodeCommentCode;
@@ -136,15 +137,20 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData.Constant
         public const string SearchInputFromDate = "lpnParamDto.statusFrom=";
         public const string SearchInputToDate = "&lpnParamDto.statusTo=";
         public const string SearchInputLpnNumber = "lpnParamDto.lpnNumber=";
-        public static string ReceivingSearchUrl = ConfigurationManager.AppSettings["BaseUrl"] + "receipts?";
+        public static string ReceivingSearchUrl;
+        public const string ReceivingSearch = "receipts?";
 
         // http://qa.api.wms.shamrockfoods.com/api/receipts?statusFrom=10&statusTo=50&totalRows=0&pageNo=1&rowsPerPage=50
    
-        public static string ReceivingDetailsUrl = ConfigurationManager.AppSettings["BaseUrl"] + "advanced-shipment-notices/";
+        public const string ReceivingDetails = "advanced-shipment-notices/";
+        public static string ReceivingDetailsUrl;
+
        // http://qa.api.wms.shamrockfoods.com/api/advanced-shipment-notices/12335721
-        public static string ReceivingDetailsDrilldownUrl = "/sku/";
+        public const string ReceivingDetailsDrilldown = "/skus/";
+        public static string ReceivingDetailsDrilldownUrl;
         // http://qa.api.wms.shamrockfoods.com/api/advanced-shipment-notices/12335721/sku/1061561 
-        public static string ReceivingQvDetailsUrl = "/quality-verifications";
+        public const string ReceivingQvDetails = "/quality-verifications";
+        public static string ReceivingQvDetailsUrl;
         public static string LockCount;
 
         public static DateTime? ManufacturingDate;
@@ -169,6 +175,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData.Constant
         public static string LockCount1 { get; internal set; }
         public static int CommentSequenceNumber { get; internal set; }
         public static string SkuId { get; internal set; }
+        public static string VerifyReceiptShipmentNbr { get; internal set; }
         // http://qa.api.wms.shamrockfoods.com/api/advanced-shipment-notices/12335721/quality-verifications
 
     }
