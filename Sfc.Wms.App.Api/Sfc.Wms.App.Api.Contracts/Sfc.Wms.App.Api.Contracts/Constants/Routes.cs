@@ -117,7 +117,8 @@ namespace Sfc.Wms.App.Api.Contracts.Constants
 
             public const string UpdateQualityVerifications = AdvanceShipmentNotices + QueryParamSeperator + Params.ByShipmentNumber
                                                              + QueryParamSeperator + QualityVerifications;
-            }
+            public const string ImageUrlsParams = "{sku}/{gtin?}";
+        }
 
         public static class Prefixes
         {
@@ -165,6 +166,7 @@ namespace Sfc.Wms.App.Api.Contracts.Constants
             public const string MessageMaster = "api/message-masters";
 
             public const string Api = "api";
+            public const string ImageUrls = "api/image-urls";
         }
     }
 }
