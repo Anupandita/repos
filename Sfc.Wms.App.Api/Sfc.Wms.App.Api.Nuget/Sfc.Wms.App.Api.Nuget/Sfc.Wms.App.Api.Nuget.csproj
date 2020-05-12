@@ -23,7 +23,7 @@
     <PackageReference Include="Sfc.Wms.Configuration.MessageLogger.Contracts.UoW" Version="1.2.0" />
     <PackageReference Include="Sfc.Wms.Configuration.MessageMaster.Contracts.UoW" Version="5.1.0" />
     <PackageReference Include="Sfc.Wms.Configuration.SystemCode.Contracts" Version="[3.0.0,4.0)" />
-    <PackageReference Include="Sfc.Wms.Configuration.UserMaster.Contracts" Version="[1.1.1,2.0)" />
+    <PackageReference Include="Sfc.Wms.Configuration.UserMaster.Contracts" Version="[1.1.0,2.0)" />
     <PackageReference Include="Sfc.Wms.Foundation.Corba.Contracts.UoW" Version="[1.0.1,2.0)" />
     <PackageReference Include="Sfc.Wms.Foundation.InboundLpn.Contracts" Version="[5.11.0,6.0)" />
     <PackageReference Include="Sfc.Wms.Foundation.Receiving.Contracts.UoW" Version="[1.1.1,2.0)" />
