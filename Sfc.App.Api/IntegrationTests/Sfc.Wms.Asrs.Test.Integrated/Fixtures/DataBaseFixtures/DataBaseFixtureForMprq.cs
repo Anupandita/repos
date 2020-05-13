@@ -28,7 +28,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected new string Query = "";
         protected  Entities.NextUpCounter NextUpCounter= new Entities.NextUpCounter();
 
-        public void GetDataBeforeTrigger()
+        protected void GetDataBeforeTrigger()
         {
             using (var db = GetOracleConnection())
             {
@@ -80,7 +80,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         }
 
 
-        public void GetDataAfterTrigger()
+        protected void GetDataAfterTrigger()
         {
             using (var db = GetOracleConnection())
             {

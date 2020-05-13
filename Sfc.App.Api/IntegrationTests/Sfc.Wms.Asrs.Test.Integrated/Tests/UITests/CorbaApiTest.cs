@@ -17,14 +17,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
     {
 
         [TestInitialize]
-        public void AValidTestData()
+        protected void AValidTestData()
         {
             LoginToFetchToken();
         }
 
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void CorbaApiTesting()
+        protected void CorbaApiTesting()
         {
             this.Given(x=>x.CreateCorbaInputParamAndUrl(UIConstants.Single,UIConstants.CorbaFunctionName))
             .Then(x => x.CallCorbaApi(UIConstants.CorbaUrl))

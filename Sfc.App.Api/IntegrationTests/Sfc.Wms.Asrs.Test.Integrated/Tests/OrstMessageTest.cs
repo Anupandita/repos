@@ -27,7 +27,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
     {
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void OrstMessageTest1ForActionCodeAllocated()
+        protected void OrstMessageTest1ForActionCodeAllocated()
         {
             this.Given(x=>x.InitializeTestData())
              //.And(x => x.ValidMsgKeyMsgProcessorAndOrstUrlIs(MsgKeyForAllocated.MsgKey, EmsToWmsAllocated.Process,OrstUrl))
@@ -42,7 +42,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
        
-        public void OrstMessageTest2ForActionCodeCompleted()
+        protected void OrstMessageTest2ForActionCodeCompleted()
         {
             this.Given(x => x.TestDataForActionCodeComplete())
                 //.And(x => x.ValidMsgKeyMsgProcessorAndOrstUrlIs(MsgKeyForCompleted.MsgKey, EmsToWmsCompleted.Process,OrstUrl))
@@ -63,7 +63,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void OrstMessageTest3ForActionCodeDeAllocate()
+        protected void OrstMessageTest3ForActionCodeDeAllocate()
         {
             this.Given(x=>x.TestDataForActionCodeDeAllocate())
                 //.And(x => x.ValidMsgKeyMsgProcessorAndOrstUrlIs(MsgKeyForDeallocated.MsgKey, EmsToWmsDeallocated.Process,OrstUrl))
@@ -75,7 +75,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void OrstMessageTest4ForActionCodeCancelForCancelledCarton()
+        protected void OrstMessageTest4ForActionCodeCancelForCancelledCarton()
         {
             this.Given(x => x.TestCancelledCartonDataForActionCodeCancel())
                 //.And(x => x.ValidMsgKeyMsgProcessorAndOrstUrlIs(MsgKeyForCanceled.MsgKey, EmsToWmsCanceled.Process,OrstUrl))
@@ -89,7 +89,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void OrstMessageTest4ForActionCodeCancelForReleasedCarton()
+        protected void OrstMessageTest4ForActionCodeCancelForReleasedCarton()
         {
             this.Given(x => x.TestDataForActionCodeCancel())
                 //.And(x => x.ValidMsgKeyMsgProcessorAndOrstUrlIs(MsgKeyForCanceled.MsgKey, EmsToWmsCanceled.Process,OrstUrl))
@@ -102,7 +102,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void OrstMessageTest5ForActionCodeCompleteWhenBitCodeIsEnabled()
+        protected void OrstMessageTest5ForActionCodeCompleteWhenBitCodeIsEnabled()
         {
             this.Given(x => x.ReadDataBeforeCallingApiForActionCodeCompleteWithBitsEnabled())                
                 //.And(x => x.ValidMsgKeyMsgProcessorAndOrstUrlIs(MsgKeysForCase5.MsgKey, EmsToWmsCompleted.Process,OrstUrl))
@@ -117,7 +117,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void OrstMessageTest6ForActionCodeCompleteWhenPickTicketSeqNbrIsSmallerThan1()
+        protected void OrstMessageTest6ForActionCodeCompleteWhenPickTicketSeqNbrIsSmallerThan1()
         {
             this.Given(x => x.ReadDataBeforeApiForNegativeCaseWherePickTicketSeqNumberIsLessThan1())            
                 //.And(x => x.ValidMsgKeyMsgProcessorAndOrstUrlIs(MsgKeyForCompleted.MsgKey, EmsToWmsCompleted.Process,OrstUrl))

@@ -20,7 +20,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected SkmtDto Skmt = new SkmtDto();
         public string Uom;
 
-        public void GetDataBeforeTriggerSkmt()
+        protected void GetDataBeforeTriggerSkmt()
         {
             using (var db = GetOracleConnection())
             {
@@ -31,7 +31,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void GetDataBeforeTriggerSkmtParent()
+        protected void GetDataBeforeTriggerSkmtParent()
         {
             using (var db = GetOracleConnection())
             {
@@ -42,7 +42,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
             }
         }
-        public void GetDataBeforeTriggerSkmtChildSku()
+        protected void GetDataBeforeTriggerSkmtChildSku()
         {
             using (var db = GetOracleConnection())
             {

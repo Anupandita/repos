@@ -43,7 +43,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             GetDataBeforeTriggerForComtIvmt();
         }
         
-        public void AValidNewComtMessageRecordWhereCaseNumberAndSkuIs(string currentCaseNbr,string skuId)
+        protected void AValidNewComtMessageRecordWhereCaseNumberAndSkuIs(string currentCaseNbr,string skuId)
         {
             ComtParameters = new ComtParams
             {
@@ -56,7 +56,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 SourceLpn = currentCaseNbr
             };
         }
-        public void AValidNewIvmtMessageRecordWhereCaseNumberAndSkuIs(string currentCaseNbr, string skuId)
+        protected void AValidNewIvmtMessageRecordWhereCaseNumberAndSkuIs(string currentCaseNbr, string skuId)
         {
             IvmtParameters = new IvmtParam
             {
@@ -69,7 +69,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 SourceLpn = currentCaseNbr
             };
         }
-        public void AValidNewCaseReturnedRecordWhereCaseNumberAndSkuIdIs(string currentCaseNbr,string skuId)
+        protected void AValidNewCaseReturnedRecordWhereCaseNumberAndSkuIdIs(string currentCaseNbr,string skuId)
         {
             ComtParameters = new ComtParams
             {
@@ -101,7 +101,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected void IvmtApiIsCalledCreatedIsReturnedWithValidUrlIs(string url)
         {
             Result = IvmtResult(url);
-            Assert.AreEqual(ResultType.Created, Result.ResultType.ToString());
+            Assert.AreEqual(ResultTypes.Created, Result.ResultType.ToString());
         }
         protected void GetDataFromDataBaseForSingleSkuScenarios()
         {
@@ -142,7 +142,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected void ComtApiIsCalledCreatedIsReturnedWithValidUrlIs(string url)
         {
             Result = ComtIvmtResult(url);
-            Assert.AreEqual(ResultType.Created, Result.ResultType.ToString());
+            Assert.AreEqual(ResultTypes.Created, Result.ResultType.ToString());
         }
 
         protected void ComtApiIsCalledForNotEnoughInventoryInCaseAndUrlIs(string url)

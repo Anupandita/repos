@@ -15,11 +15,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
         DataTable SysCodeDt = new DataTable();
         DataTable SysCodeApiDt = new DataTable();
 
-        public void CreateSysCodeApiUrl()
+        protected void CreateSysCodeApiUrl()
         {
             UIConstants.SysCodeUrl = UIConstants.SysCodeUrl + UIConstants.SysCodeInputRecType + UIConstants.RecType + "&" + UIConstants.SysCodeInputCodeType + UIConstants.CodeType + "&" + UIConstants.SysCodeInputSort + UIConstants.Sort;
         }
-        public void GetSysCodeRecordsFromDbForRecTypeCodeType(string recType, string codeType)
+        protected void GetSysCodeRecordsFromDbForRecTypeCodeType(string recType, string codeType)
         {
             using (var db = new OracleConnection())
             {
@@ -30,14 +30,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             }
         }
 
-        public void CallSysCodeApi(string url)
+        protected void CallSysCodeApi(string url)
         {
             var response = CallGetApi(url);
             VerifyOkResultAndStoreBearerToken(response);
             var payload = JsonConvert.DeserializeObject<BaseResult<List<SysCodeDto>>>(response.Content).Payload;
             SysCodeApiDt = ToDataTable(payload);
         }
-        public void VerifySysCodeApiOutputAgainstDbOutput()
+        protected void VerifySysCodeApiOutputAgainstDbOutput()
         {
             VerifyApiOutputAgainstDbOutput(SysCodeDt, SysCodeApiDt);
         }

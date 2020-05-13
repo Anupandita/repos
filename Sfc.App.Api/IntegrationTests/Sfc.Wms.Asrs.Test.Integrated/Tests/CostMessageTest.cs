@@ -20,14 +20,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
     public class CostMessageTest : CostMessageFixture
     {        
         [TestInitialize]
-        public void TestData()
+        protected void TestData()
         {
             TestInitialize();           
         }
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void VerifyForValidCostMessageScenarios()
+        protected void VerifyForValidCostMessageScenarios()
         {
             this.Given(x => x.TestInitializeForValidMessage())              
                 //.And(x => x.ValidCostUrlMsgKeyAndProcessorIs(CostUrl,CostData.MsgKey, DefaultPossibleValue.MessageProcessor))
@@ -40,7 +40,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         }
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void VerifyForInvalidMessageKey()
+        protected void VerifyForInvalidMessageKey()
         {
             this.Given(x =>x.TestInitializeForInvalidCase())
                 //.And(x => x.ValidCostUrlMsgKeyAndProcessorIs(CostUrl,Constants.InvalidMsgKey, DefaultPossibleValue.MessageProcessor))
@@ -51,7 +51,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void VerifyForErrorLogNoCaseFound()
+        protected void VerifyForErrorLogNoCaseFound()
         {
                 this.Given(x => x.TestInitializeForInvalidCase())
                //.And(x => x.ValidCostUrlMsgKeyAndProcessorIs(CostUrl,CostData.InvalidKey,DefaultPossibleValue.MessageProcessor))
@@ -62,7 +62,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void VerifyForErrorNotEnoughInventory()
+        protected void VerifyForErrorNotEnoughInventory()
         {
                 this.Given(x => x.TestInitializeForTransInvnDoesNotExist())             
                //.And(x => x.ValidCostUrlMsgKeyAndProcessorIs(CostUrl,CostDataForTransInvnNotExist.MsgKey,DefaultPossibleValue.MessageProcessor))
@@ -73,7 +73,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void VerifyForErrorPickLocationNotFound()
+        protected void VerifyForErrorPickLocationNotFound()
         {
                 this.Given(x => x.TestInitializeForPickLocnDoesNotExist())            
                //.And(x => x.ValidCostUrlMsgKeyAndProcessorIs(CostUrl,CostDataForPickLocnNotExist.MsgKey,DefaultPossibleValue.MessageProcessor))

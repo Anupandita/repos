@@ -26,7 +26,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
         protected DataTable CorbaOutputDt = new DataTable();
         AnswerTextDto answerTextDto;
         UpdateAsnDto updateAsnDto;
-        public void PickAnIReceivingTestDataFromDb()
+        protected void PickAnIReceivingTestDataFromDb()
         {
             using (var db = new OracleConnection())
             {
@@ -94,7 +94,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
 
             }
         }
-        public void CreateUrlAndInputParamForApiUsing(string criteria)
+        protected void CreateUrlAndInputParamForApiUsing(string criteria)
         {
             switch (criteria)
             {
@@ -131,7 +131,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             }
         }
 
-        public void CallReceivingSearchApiWithInputs(string url)
+        protected void CallReceivingSearchApiWithInputs(string url)
         {
             var response=CallGetApi(url);
             VerifyOkResultAndStoreBearerToken(response);
@@ -139,17 +139,17 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             ReceivingSearchResultDt = ToDataTable(payload.ReceivingDetailsDtos);
             TotalRecords = payload.TotalRecords;
         }
-        public void VerifyReceivingSearchOutputAgainstDbOutput() 
+        protected void VerifyReceivingSearchOutputAgainstDbOutput() 
         {
             VerifyApiOutputAgainstDbOutput(ReceivingSearchQueryDt, ReceivingSearchResultDt);                      
         }
 
-        public void VerifyOutputTotalReordsAgainstDbCount(string count)
+        protected void VerifyOutputTotalReordsAgainstDbCount(string count)
         {
             VerifyOutputTotalReordsAgainstDbCount(count, TotalRecords.ToString());
         }
 
-         public void CallReceivingDetailsApi(string url)
+         protected void CallReceivingDetailsApi(string url)
         {
             var response = CallGetApi(url);
             VerifyOkResultAndStoreBearerToken(response);
@@ -157,7 +157,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             ReceivingDetailsResultDt = ToDataTable(payload);
 
         }
-        public void CallReceivingDetailsDrilldownApi(string url)
+        protected void CallReceivingDetailsDrilldownApi(string url)
         {
             var response = CallGetApi(url);
             VerifyOkResultAndStoreBearerToken(response);
@@ -165,34 +165,34 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             ReceivingDetailsDrilldownResultDt = ToDataTable(payload);
 
         }     
-        public void VerifyOutputForReceivingDetailsInApiOutput() 
+        protected void VerifyOutputForReceivingDetailsInApiOutput() 
         {
             VerifyApiOutputAgainstDbOutput(ReceivingDetailsQueryDt, ReceivingDetailsResultDt);
         }
-        public void VerifyOutputForReceivingDetailsDrilldownInApiOutput()
+        protected void VerifyOutputForReceivingDetailsDrilldownInApiOutput()
         {
             VerifyApiOutputAgainstDbOutput(ReceivingDetailsDrilldownQueryDt, ReceivingDetailsDrilldownResultDt);
                
         }
-        public void CallReceivingUpdateQvDetailsApi(string url)
+        protected void CallReceivingUpdateQvDetailsApi(string url)
         {
             var request = CallPutApi();
             request.AddJsonBody(answerTextDto);
             var response = ExecuteRequest(url, request);
             VerifyOkResultAndStoreBearerToken(response);
         }
-        public void CallReceivingQvDetailsApi(string url)
+        protected void CallReceivingQvDetailsApi(string url)
         {
             var response = CallGetApi(url);
             VerifyOkResultAndStoreBearerToken(response);
             var payload = JsonConvert.DeserializeObject<BaseResult<List<QvDetailsDto>>>(response.Content).Payload;
             ReceivingQVDetailsResultDt = ToDataTable(payload);
         }
-        public void VerifyOutputForQvDetailsInApiOutput()
+        protected void VerifyOutputForQvDetailsInApiOutput()
         {
             VerifyApiOutputAgainstDbOutput(ReceivingQVDetailsQueryDt, ReceivingQVDetailsResultDt);
         }
-        public void CreateAnswerInput()
+        protected void CreateAnswerInput()
         {
             answerTextDto = new AnswerTextDto()
             {
@@ -200,7 +200,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
                 QuestionAnswerId = UIConstants.QuesAnswerId,
             };
         }
-        public void VerifyQVDetailsUpdatedInDb()
+        protected void VerifyQVDetailsUpdatedInDb()
         {
             using (var db = new OracleConnection())
             {
@@ -211,7 +211,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             }
 
         }
-        public void CreateInputDtoFor(string btnName) 
+        protected void CreateInputDtoFor(string btnName) 
         {
             switch (btnName)
             {
@@ -249,14 +249,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
                     }
             }
         }
-        public void CallReceivingCorbaApi(string url) 
+        protected void CallReceivingCorbaApi(string url) 
         {
             var request = CallPutApi();
             request.AddJsonBody(updateAsnDto);
             var response = ExecuteRequest(url, request);
             VerifyOkResultAndStoreBearerToken(response);
         }
-        public void VerifyCorbaResultFromDbFor(string btnName) 
+        protected void VerifyCorbaResultFromDbFor(string btnName) 
         {
             string sql="";
             switch (btnName)

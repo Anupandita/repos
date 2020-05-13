@@ -152,30 +152,31 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData.Constant
         public const string ReceivingQvDetails = "/quality-verifications";
         public static string ReceivingQvDetailsUrl;
         public static string LockCount;
-
+        public const string UserName = "PSI"; 
+        public const string Password = "WOLF";
         public static DateTime? ManufacturingDate;
         public static DateTime? ExpireDate;
         public static string ConsumePriority;
 
-        public static DateTime? ConsumePriorityDate { get; internal set; }
-        public static string SpclInstCode2 { get; internal set; }
-        public static string SpclInstCode4 { get; internal set; }
-        public static string SpclInstCode3 { get; internal set; }
-        public static string SpclInstCode5 { get; internal set; }
-        public static decimal Volume { get; internal set; }
-        public static string DcOrderNbr { get; internal set; }
+        public static DateTime? ConsumePriorityDate;
+        public static string SpclInstCode2;
+        public static string SpclInstCode4;
+        public static string SpclInstCode3;
+        public static string SpclInstCode5;
+        public static decimal Volume;
+        public static string DcOrderNbr;
         public const string VendorId = "0011133";
-        public static string SpclInstCode1 { get; internal set; }
-        public static decimal ActlWt { get; internal set; }
-        public static decimal EstWt { get; internal set; }
-        public static string ConsumeSequence { get; internal set; }
-        public static string AssortNumber { get; internal set; }
-        public static string CutNumber { get; internal set; }
-        public static string LpnNbrForLockUnlock1 { get; internal set; }
-        public static string LockCount1 { get; internal set; }
-        public static int CommentSequenceNumber { get; internal set; }
-        public static string SkuId { get; internal set; }
-        public static string VerifyReceiptShipmentNbr { get; internal set; }
+        public static string SpclInstCode1;
+        public static decimal ActlWt;
+        public static decimal EstWt;
+        public static string ConsumeSequence;
+        public static string AssortNumber;
+        public static string CutNumber;
+        public static string LpnNbrForLockUnlock1;
+        public static string LockCount1;
+        public static int CommentSequenceNumber;
+        public static string SkuId;
+        public static string VerifyReceiptShipmentNbr;
         // http://qa.api.wms.shamrockfoods.com/api/advanced-shipment-notices/12335721/quality-verifications
 
     }

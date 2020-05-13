@@ -18,7 +18,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
     public class ItemAttributeApiTest: ItemAttributeFixture
     {
         [TestInitialize]
-        public void AValidTestData()
+        protected void AValidTestData()
         {          
             LoginToFetchToken();
             PickAnItemTestDataFromDb();
@@ -26,7 +26,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
 
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void ItemAttributeSearchApi_SearchWithItemNbr() 
+        protected void ItemAttributeSearchApi_SearchWithItemNbr() 
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("Item"))
             .When(x => x.CallItemAttributeSearchApiWithInputs(UIConstants.ItemAttributeSearchUrl))
@@ -35,7 +35,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void ItemAttributeSearchApi_SearchWithItemDescription()
+        protected void ItemAttributeSearchApi_SearchWithItemDescription()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("ItemDescription"))
             .When(x => x.CallItemAttributeSearchApiWithInputs(UIConstants.ItemAttributeSearchUrl))
@@ -44,7 +44,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void ItemAttributeSearchApi_SearchWithVendorItemNbr()
+        protected void ItemAttributeSearchApi_SearchWithVendorItemNbr()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("VendorItemNumber"))
             .When(x => x.CallItemAttributeSearchApiWithInputs(UIConstants.ItemAttributeSearchUrl))
@@ -53,7 +53,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void ItemAttributeSearchApi_SearchWithTempZone()
+        protected void ItemAttributeSearchApi_SearchWithTempZone()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("TempZone"))
             .When(x => x.CallItemAttributeSearchApiWithInputs(UIConstants.ItemAttributeSearchUrl))
@@ -62,7 +62,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void ItemAttributeDrilldownApi()
+        protected void ItemAttributeDrilldownApi()
         {
             this.Given(x=>x.CreateUrlAndInputParamForApiUsing("ItemDetails"))
             .When(x => x.CallItemAttributeDetailsApi(UIConstants.ItemAttributeDetailsUrl))

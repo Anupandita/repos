@@ -16,7 +16,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
         MessageLogDto messageLogDto;
         protected DataTable MessageLoggerDt = new DataTable();
        
-        public void CreateInputDtoForMessageLoggerApi()
+        protected void CreateInputDtoForMessageLoggerApi()
         {
             UIConstants.Message= Guid.NewGuid().ToString("n").Substring(0, 8);
             UIConstants.LogDate = System.DateTime.Today;
@@ -39,7 +39,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
 
         }
 
-        public void CallMessageLoggerApiWithUrl(string url)
+        protected void CallMessageLoggerApiWithUrl(string url)
         {            
             var request = CallPostApi();           
             request.AddJsonBody(new List<MessageLogDto> { messageLogDto });
@@ -47,7 +47,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             VerifyCreatedResultAndStoreBearerToken(response);
         }
 
-        public void VerifyLogInsteredInMessageLogTableInDb()
+        protected void VerifyLogInsteredInMessageLogTableInDb()
         {
             using (var db = new OracleConnection())
             {

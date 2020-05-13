@@ -20,14 +20,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
     public class OrmtNegativeCases :OrmtMessageFixture
     {
         [TestInitialize]
-        public void AValidTestData()
+        protected void AValidTestData()
         {
             InitializeTestDataForNegativeCases();
         }
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void ValidateForMessageWhereActiveOrmtCountNotFound()
+        protected void ValidateForMessageWhereActiveOrmtCountNotFound()
         {          
             this.Given(x=>x.ValidOrmtUrlCartonNumberAndActioncodeIs(OrmtUrl, ActiveOrmtCountNotFound.CartonNbr, OrmtActionCode.AddRelease))
                 .When(x=>x.OrmtApiIsCalledForNotEnoughInventory())
@@ -37,7 +37,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void ValidateForOrmtMessageWherePickLocnNotFound()
+        protected void ValidateForOrmtMessageWherePickLocnNotFound()
         {           
            this.Given(x => x.ValidOrmtUrlCartonNumberAndActioncodeIs(OrmtUrl, PickLocnNotFound.CartonNbr, OrmtActionCode.AddRelease))
                .When(x => x.OrmtApiIsCalledForPickLocationNotFound())
@@ -47,7 +47,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void ValidateForOrmtMessageWhereActiveLocnNotFound()
+        protected void ValidateForOrmtMessageWhereActiveLocnNotFound()
         {         
            this.Given(x => x.ValidOrmtUrlCartonNumberAndActioncodeIs(OrmtUrl, ActiveLocnNotFound.CartonNbr, OrmtActionCode.AddRelease))
                .When(x => x.OrmtApiIsCalledForActiveLocationNotFound())
@@ -57,7 +57,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void ValidateForOrmtMessageWhereCartonNumberIsInvalid()
+        protected void ValidateForOrmtMessageWhereCartonNumberIsInvalid()
         {
            this.Given(x => x.ValidOrmtUrlCartonNumberAndActioncodeIs(OrmtUrl, CancelOrder.CartonNbr,OrmtActionCode.AddRelease))
                .When(x => x.OrmtApiIsCalledForInvalidCartonNumber())
@@ -67,7 +67,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void ValidateForOrmtMessageWhereActionCodeIsInvalid()
+        protected void ValidateForOrmtMessageWhereActionCodeIsInvalid()
         {          
            this.Given(x => x.ValidOrmtUrlCartonNumberAndActioncodeIs(OrmtUrl, PrintCarton.CartonNbr, Constants.InvalidOrmtActionCode))
                .When(x => x.OrmtApiIsCalledForInvalidActionCode())

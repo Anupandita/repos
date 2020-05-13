@@ -18,7 +18,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
     {
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void OrmtWaveRelease()
+        protected void OrmtWaveRelease()
         {
             this.Given(x => x.InitializeTestDataForWaveRelease())
                  .And(x => x.ValidOrmtWaveUrlAndWaveNumberIs(OrmtUrl, OrderList[0].WaveNbr))

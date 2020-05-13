@@ -17,7 +17,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
     public class ComtAndIvmtTest : ComtIvmtMessageFixture
     {     
         [TestInitialize]
-        public void AValidTestData()
+        protected void AValidTestData()
         {
             InitializeTestData();           
         }
@@ -25,7 +25,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
 
-        public void ComtAndIvmtMessageTestScenarios() 
+        protected void ComtAndIvmtMessageTestScenarios() 
         {
             this.Given(x => x.AValidNewComtMessageRecordWhereCaseNumberAndSkuIs(SingleSkuCase.CaseNumber, SingleSkuCase.SkuId))
                 .When(x => x.ComtApiIsCalledCreatedIsReturnedWithValidUrlIs(ComtUrl))
@@ -44,7 +44,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void ComtAndIvmtTestForMultiSkuScenarios()
+        protected void ComtAndIvmtTestForMultiSkuScenarios()
         {
             this.Given(x => x.AValidNewComtMessageRecordWhereCaseNumberAndSkuIs(CaseHdrMultiSku.CaseNumber, CaseHdrMultiSku.SingleSkuId))
               .When(x => x.ComtApiIsCalledCreatedIsReturnedWithValidUrlIs(ComtUrl))
@@ -58,7 +58,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void ComtIvmtMessageTestCaseForNoEnoughInventoryInCase()
+        protected void ComtIvmtMessageTestCaseForNoEnoughInventoryInCase()
         {
             this.Given(x => x.AValidNewComtMessageRecordWhereCaseNumberAndSkuIs(NotEnoughInvCase.CaseNumber, null))
                 .When(x => x.ComtApiIsCalledForNotEnoughInventoryInCaseAndUrlIs(ComtUrl))

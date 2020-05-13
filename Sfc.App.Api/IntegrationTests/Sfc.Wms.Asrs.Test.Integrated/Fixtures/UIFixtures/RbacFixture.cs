@@ -3,6 +3,7 @@ using Oracle.ManagedDataAccess.Client;
 using RestSharp;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Core.OnPrem.Security.Contracts.Dtos;
+using Sfc.Wms.Api.Asrs.Test.Integrated.TestData.Constant;
 using System.Configuration;
 using System.Data;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
         DataTable PreferencesApiDt = new DataTable();
         DataTable PrintersApiDt = new DataTable();
 
-        public void FetchDataFromDb()
+        protected void FetchDataFromDb()
         {
             using (var db = new OracleConnection())
             {
@@ -51,15 +52,15 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
           
             }
 }
-        public void CreateLoginDtoUsingCredentials()
+        protected void CreateLoginDtoUsingCredentials()
         {
             loginCredentials = new LoginCredentials()
             {
-                UserName = "PSI",
-                Password = "WOLF"
+                UserName = UIConstants.UserName,
+                Password = UIConstants.Password
             };
         }
-        public void CallLoginApi(string url) 
+        protected void CallLoginApi(string url) 
         {
             var request = CallPostApi();
             request.AddJsonBody(loginCredentials);
@@ -71,19 +72,19 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             PrintersApiDt = ToDataTable(payload.PrinterList.ToList());
             PreferencesApiDt = ToDataTable(payload.Preferences);
         }
-        public void VerifyMenusListAgainstDb()
+        protected void VerifyMenusListAgainstDb()
         {
             VerifyApiOutputAgainstDbOutput(MenusDt, MenusApiDt);
         }
-        public void VerifyPermissionsListAgainstDb()
+        protected void VerifyPermissionsListAgainstDb()
         {
             VerifyApiOutputAgainstDbOutput(PermissionsDt, PermissionsApiDt);
         }
-        public void VerifyPrintersListAgainstDb()
+        protected void VerifyPrintersListAgainstDb()
         {
             VerifyApiOutputAgainstDbOutput(PrintersDt, PrintersApiDt);
         }
-        public void VerifyPreferencesListAgainstDb()
+        protected void VerifyPreferencesListAgainstDb()
         {
             VerifyApiOutputAgainstDbOutput(PreferencesDt, PreferencesApiDt);
         }

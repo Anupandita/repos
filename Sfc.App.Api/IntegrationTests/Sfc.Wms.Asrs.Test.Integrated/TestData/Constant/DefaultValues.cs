@@ -20,11 +20,4 @@
         public const string InvalidSku = "0909";        
     }
 
-    public class ResultType
-    {
-        public const string Created = "Created";
-        public const string NotFound = "NotFound";
-        public const string NotFounds = "NotFound";
-        public const string Ok = "Ok";
-    }
 }

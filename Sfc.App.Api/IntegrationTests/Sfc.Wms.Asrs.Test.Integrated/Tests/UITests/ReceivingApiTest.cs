@@ -18,7 +18,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
     public class ReceivingApiTest: ReceivingFixture
     {
         [TestInitialize]
-        public void AValidTestData()
+        protected void AValidTestData()
         {
             LoginToFetchToken();
             PickAnIReceivingTestDataFromDb();
@@ -26,7 +26,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
 
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void ReceivingSearchApi_SearchWithPoNbr()
+        protected void ReceivingSearchApi_SearchWithPoNbr()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("PoNumber"))
             .When(x => x.CallReceivingSearchApiWithInputs(UIConstants.ReceivingSearchUrl))
@@ -35,7 +35,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void ReceivingSearchApi_SearchWithIShipmentNbr()
+        protected void ReceivingSearchApi_SearchWithIShipmentNbr()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("ShipmentNumber"))
             .When(x => x.CallReceivingSearchApiWithInputs(UIConstants.ReceivingSearchUrl))
@@ -44,7 +44,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void ReceivingSearchApi_SearchWithVendorName()
+        protected void ReceivingSearchApi_SearchWithVendorName()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("VendorName"))
             .When(x => x.CallReceivingSearchApiWithInputs(UIConstants.ReceivingSearchUrl))
@@ -53,7 +53,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void ReceivingSearchApi_SearchWithStatusRange()
+        protected void ReceivingSearchApi_SearchWithStatusRange()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("StatusRange"))
             .When(x => x.CallReceivingSearchApiWithInputs(UIConstants.ReceivingSearchUrl))
@@ -62,7 +62,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void ReceivingSearchApi_SearchWithVerifiedDateRange()
+        protected void ReceivingSearchApi_SearchWithVerifiedDateRange()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("VerifiedDateRange"))
             .When(x => x.CallReceivingSearchApiWithInputs(UIConstants.ReceivingSearchUrl))
@@ -72,7 +72,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
 
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void ReceivingDetailsApi()
+        protected void ReceivingDetailsApi()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("Details"))
             .When(x => x.CallReceivingDetailsApi(UIConstants.ReceivingDetailsUrl))
@@ -81,7 +81,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void ReceivingDetailsDrilldownApi()
+        protected void ReceivingDetailsDrilldownApi()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("DetailsDrilldown"))
             .When(x => x.CallReceivingDetailsDrilldownApi(UIConstants.ReceivingDetailsDrilldownUrl))
@@ -90,7 +90,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void ReceivingQvDetailsApi()
+        protected void ReceivingQvDetailsApi()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("QvDetails"))
             .When(x => x.CallReceivingQvDetailsApi(UIConstants.ReceivingQvDetailsUrl))
@@ -99,7 +99,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void ReceivingQvDetailsUpdateApi()
+        protected void ReceivingQvDetailsUpdateApi()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("UpdateQvDetails"))
             .And(x=>x.CreateAnswerInput())
@@ -110,7 +110,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
 
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void VerifyReceiptButtonCall()
+        protected void VerifyReceiptButtonCall()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("Verify Receipt"))
             .And(x => x.CreateInputDtoFor("Verify Receipt"))
@@ -120,7 +120,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void MultiItemButtonCall()
+        protected void MultiItemButtonCall()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("Details"))
             .And(x => x.CreateInputDtoFor("Multi Item"))
@@ -130,7 +130,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void NllButtonCall()
+        protected void NllButtonCall()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("Details"))
             .And(x => x.CreateInputDtoFor("NLL"))

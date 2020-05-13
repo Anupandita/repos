@@ -45,7 +45,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected void SynrApiIsCalledCreatedIsReturnedWithValidUrlAndSyncIdIs(string url, long syncId)
         {
             Result = SynrResult(url);
-            Assert.AreEqual(ResultType.Created, Result.ResultType.ToString());
+            Assert.AreEqual(ResultTypes.Created, Result.ResultType.ToString());
         }
 
         protected void GetDataFromDataBaseForSynrScenarios()
@@ -93,7 +93,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         }
 
 
-        public void SyncTestInitialize()
+        protected void SyncTestInitialize()
         {
             SyncGetValidData();
         }
@@ -111,7 +111,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected void SyncApiIsCalledWithValidMsgKey()
         {
             var result = SyncResult();
-            Assert.AreEqual(ResultType.Created, result.ResultType.ToString());
+            Assert.AreEqual(ResultTypes.Created, result.ResultType.ToString());
         }
 
         protected BaseResult SyncResult()

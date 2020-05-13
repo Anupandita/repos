@@ -48,7 +48,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected Data.Entities.SwmSyndData WmsSyndData = new Data.Entities.SwmSyndData();
 
 
-        public void GetDataBeforeTriggerSynr()
+        protected void GetDataBeforeTriggerSynr()
         {
             using (var db = GetOracleConnection())
             {
@@ -77,7 +77,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return pickLocnDtlReader;
         }
 
-        public void GetDataAfterTrigger()
+        protected void GetDataAfterTrigger()
         {
             using (var db = GetOracleConnection())
             {
@@ -100,7 +100,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         }
 
-        public void SyndMessageForSameSkuWithQuantities()
+        protected void SyndMessageForSameSkuWithQuantities()
         {
             using (var db = GetOracleConnection())
             {
@@ -128,7 +128,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
             return pickLocnDtl;
         }
-        public void InsertSyndMessageForSameSkuWithQuantities(OracleConnection db, string skuid, string synchronizationId)
+        protected void InsertSyndMessageForSameSkuWithQuantities(OracleConnection db, string skuid, string synchronizationId)
         {
             var syndmsg = CreateSyndMessageForSameSkuWithQty(synchronizationId, skuid);
             EmsToWmsParameters = new EmsToWmsDto
@@ -165,7 +165,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return testResult.Payload;
         }
 
-        public void GetDataAfterTriggerForQtyDifference()
+        protected void GetDataAfterTriggerForQtyDifference()
         {
             using (var db = GetOracleConnection())
             {
@@ -229,7 +229,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
 
 
-        public void SyncGetValidData()
+        protected void SyncGetValidData()
         {
             using (var db = GetOracleConnection())
             {
@@ -278,7 +278,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return pldsnap;
         }
 
-        public void GetDataBeforeTriggerSync()
+        protected void GetDataBeforeTriggerSync()
         {
             using (var db = GetOracleConnection())
             {
@@ -314,7 +314,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return testResult.Payload;
         }
 
-        public void GetDataAfterTriggerSync()
+        protected void GetDataAfterTriggerSync()
         {
             using (var db = GetOracleConnection())
             {

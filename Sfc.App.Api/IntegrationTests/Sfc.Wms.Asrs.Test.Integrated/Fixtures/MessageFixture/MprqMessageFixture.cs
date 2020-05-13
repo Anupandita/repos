@@ -46,7 +46,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected void MprqApiIsCalledWithValidMsgKey()
         {
             var result = MprqResult();
-            Assert.AreEqual(ResultType.Created, result.ResultType.ToString());
+            Assert.AreEqual(ResultTypes.Created, result.ResultType.ToString());
         }
         protected void GetValidDataAfterTrigger()
         {

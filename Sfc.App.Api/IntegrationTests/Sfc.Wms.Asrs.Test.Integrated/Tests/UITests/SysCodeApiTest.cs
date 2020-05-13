@@ -17,7 +17,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
     {
 
         [TestInitialize]
-        public void AValidTestData()
+        protected void AValidTestData()
         {
             LoginToFetchToken();
             GetSysCodeRecordsFromDbForRecTypeCodeType(UIConstants.RecType,UIConstants.CodeType);
@@ -25,7 +25,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
 
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void SysCodeApiTesting()
+        protected void SysCodeApiTesting()
         {
             this.Given(x=>x.CreateSysCodeApiUrl())
              .When(x => x.CallSysCodeApi(UIConstants.SysCodeUrl))

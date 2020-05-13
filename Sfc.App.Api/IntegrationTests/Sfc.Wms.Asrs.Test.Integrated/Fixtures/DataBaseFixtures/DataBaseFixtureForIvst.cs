@@ -65,7 +65,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected List<Pb2CorbaHdrDtl> pb = new List<Pb2CorbaHdrDtl>();
       
         
-        public void InsertIvstMessageUnexpectedOverageWhenCaseHeaderStatusCodeIsLessthan90AndCaseDtlActlQtyIsGreaterThanZero()
+        protected void InsertIvstMessageUnexpectedOverageWhenCaseHeaderStatusCodeIsLessthan90AndCaseDtlActlQtyIsGreaterThanZero()
         {
             using (var db = GetOracleConnection())
             {
@@ -79,7 +79,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void
+        protected void
             IvstMessageUnexpectedOverageWhenCaseHeaderStatusCodeIsLessThanOrEqualTo90AndCaseDtlActlQtyIsEqualToZero()
         {
             using (var db = GetOracleConnection())
@@ -96,7 +96,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         }
 
 
-        public void InsertIvstMessagetUnexpectedFunctionForstatus96AndNegativeTiAlreadyExists()
+        protected void InsertIvstMessagetUnexpectedFunctionForstatus96AndNegativeTiAlreadyExists()
         {
             using (var db = GetOracleConnection())
             {
@@ -111,7 +111,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void InsertIvstMessagetUnexpectedFunctionForstatus96AndNegativeTiNotExists()
+        protected void InsertIvstMessagetUnexpectedFunctionForstatus96AndNegativeTiNotExists()
         {
             using (var db = GetOracleConnection())
             {
@@ -126,7 +126,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void InsertIvstMessageForInventoryShortageInboundPalletIsY()
+        protected void InsertIvstMessageForInventoryShortageInboundPalletIsY()
         {
             using (var db = GetOracleConnection())
             {
@@ -140,7 +140,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void InsertIvstMessageForInventoryShortageInboundPalletIsN()
+        protected void InsertIvstMessageForInventoryShortageInboundPalletIsN()
         {
             using (var db = GetOracleConnection())
             {
@@ -161,7 +161,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void InsertIvstMessageForInventoryShortageOutBoundAndPickLocnDtlQtyIsGreaterThanZeroButLesserThanIvstQty()
+        protected void InsertIvstMessageForInventoryShortageOutBoundAndPickLocnDtlQtyIsGreaterThanZeroButLesserThanIvstQty()
         {
             using (var db = GetOracleConnection())
             {
@@ -183,7 +183,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void InsertIvstMessageForInventoryShortageOutBoundAndPickLocnDtlQtyIsGreaterThanZeroButLesserThanIvstQtyForNegativePickDoesNotExists()
+        protected void InsertIvstMessageForInventoryShortageOutBoundAndPickLocnDtlQtyIsGreaterThanZeroButLesserThanIvstQtyForNegativePickDoesNotExists()
         {
             using (var db = GetOracleConnection())
             {
@@ -205,7 +205,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }       
 
-        public void InsertIvstMessageForInventoryShortageOutBoundAndPickLocnQtyLesserThanOrEqualToZero()
+        protected void InsertIvstMessageForInventoryShortageOutBoundAndPickLocnQtyLesserThanOrEqualToZero()
        {
            using (var db = GetOracleConnection())
            {
@@ -227,7 +227,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
            }
        }
 
-        public void InsertIvstMessageForMixedOrIncorrectInventory(String actionCode)
+        protected void InsertIvstMessageForMixedOrIncorrectInventory(String actionCode)
         {
             using (var db = GetOracleConnection())
             {
@@ -248,7 +248,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void InsertIvstMessageForNoExceptionScenario()
+        protected void InsertIvstMessageForNoExceptionScenario()
         {
             using (var db = GetOracleConnection())
             {
@@ -269,7 +269,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void InsertIvstMessageDamageForInboundPalletIsN()
+        protected void InsertIvstMessageDamageForInboundPalletIsN()
         {
             using (var db = GetOracleConnection())
             {
@@ -291,7 +291,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void InsertIvstMessageDamageForInboundPalletIsY()
+        protected void InsertIvstMessageDamageForInboundPalletIsY()
         {
             using (var db = GetOracleConnection())
             {
@@ -307,7 +307,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void InsertIvstMessageDamageForInboundPalletIsYScenario3()
+        protected void InsertIvstMessageDamageForInboundPalletIsYScenario3()
         {
             using (var db = GetOracleConnection())
             {
@@ -322,7 +322,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void InsertIvstMessageWrongSkuFunction()
+        protected void InsertIvstMessageWrongSkuFunction()
         {
             using (var db = GetOracleConnection())
             {
@@ -337,7 +337,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void InsertIvstMessageForWrongSkuInboundPalletIsN()
+        protected void InsertIvstMessageForWrongSkuInboundPalletIsN()
         {
             using (var db = GetOracleConnection())
             {
@@ -354,7 +354,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void InsertIvstMessageForCycleCountWithAdjustmentPlus()
+        protected void InsertIvstMessageForCycleCountWithAdjustmentPlus()
         {
             using (var db = GetOracleConnection())
             {
@@ -375,7 +375,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void IvstMessageForCcAdjustmentMinusWherePickLocnDtlActlQtyIsGreaterThanIvstQty()
+        protected void IvstMessageForCcAdjustmentMinusWherePickLocnDtlActlQtyIsGreaterThanIvstQty()
         {
             using (var db = GetOracleConnection())
             {
@@ -396,7 +396,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void IvstMessageForCcAdjustmentMinusWherePickLocnDtlActlQtyIsGreaterThanZeroButLessThanIvstQty()
+        protected void IvstMessageForCcAdjustmentMinusWherePickLocnDtlActlQtyIsGreaterThanZeroButLessThanIvstQty()
         {
             using (var db = GetOracleConnection())
             {
@@ -419,7 +419,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void
+        protected void
             IvstMessageForCcAdjustMentMinusWherePickLocnDtlActlQtyIsGreaterThanZeroButLessThanIvstQtyAndNegativeTiDoesNotExists()
         {
             using (var db = GetOracleConnection())
@@ -442,7 +442,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void IvstMessageForCcAdjustmentMinusWherePickLocnQtyIsLessThanOrEqualToZeroAndLessThanIvstQuantity()
+        protected void IvstMessageForCcAdjustmentMinusWherePickLocnQtyIsLessThanOrEqualToZeroAndLessThanIvstQuantity()
         {
             using (var db = GetOracleConnection())
             {
@@ -486,7 +486,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return ivstDataDto;
         }
 
-        public void InsertingUnexpectedOverage(OracleConnection db, string actionCode, string exception, string inboundPallet,string quantity)
+        protected void InsertingUnexpectedOverage(OracleConnection db, string actionCode, string exception, string inboundPallet,string quantity)
         {
             Command = new OracleCommand(Query, db);
             var ivstmsg = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, quantity, actionCode, exception,inboundPallet);
@@ -499,7 +499,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             };            
         }
 
-        public void  InsertingInventoryShortage(OracleConnection db, string actionCode, string exception, string inboundPallet)
+        protected void  InsertingInventoryShortage(OracleConnection db, string actionCode, string exception, string inboundPallet)
         {
             Command = new OracleCommand(Query, db);
             var ivstmsg = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, "1", actionCode, exception, inboundPallet);
@@ -511,7 +511,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 MessageText = ivstmsg
             };       
         }
-        public void InsertingDamageForInboundPalletY(OracleConnection db, string actionCode, string exception, string inboundPallet, string quantity)
+        protected void InsertingDamageForInboundPalletY(OracleConnection db, string actionCode, string exception, string inboundPallet, string quantity)
         {
            
             var ivstmsg = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId, quantity, actionCode, exception, inboundPallet);
@@ -524,7 +524,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             };           
         }
 
-        public void InsertingWrongSku(OracleConnection db, string actionCode, string exception, string inboundPallet)
+        protected void InsertingWrongSku(OracleConnection db, string actionCode, string exception, string inboundPallet)
         {
             Command = new OracleCommand(Query, db);
             var ivstmsg = CreateIvstMessage(IvstData.CaseNumber, IvstData.SkuId,"1" , actionCode, exception, inboundPallet);
@@ -563,7 +563,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return testResult.Payload;
         }
 
-        public void GetDataAfterTrigger(long key)
+        protected void GetDataAfterTrigger(long key)
         {
             using (var db = GetOracleConnection())
             {
@@ -609,7 +609,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return pixtran;
         }
 
-        public void DeleteTheRecordForTransInvnTypeIs10(OracleConnection db,string skuId)
+        protected void DeleteTheRecordForTransInvnTypeIs10(OracleConnection db,string skuId)
         {
            Transaction = db.BeginTransaction();           
            Query = $"Delete trans_invn where sku_id = '{skuId}' and trans_invn_type = '10'";
@@ -618,7 +618,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
            Transaction.Commit();
         }
 
-        public void UpdatetheRecordForStatus96Tobellow90(OracleConnection db,string caseNbr)
+        protected void UpdatetheRecordForStatus96Tobellow90(OracleConnection db,string caseNbr)
         {
             Transaction = db.BeginTransaction();           
             Query = $"update case_hdr set stat_code = 80  where case_nbr = '{caseNbr}'";
@@ -626,7 +626,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Command.ExecuteNonQuery();
             Transaction.Commit();
         }
-        public void UpdatetheQuantity(OracleConnection db)
+        protected void UpdatetheQuantity(OracleConnection db)
         {
             Transaction = db.BeginTransaction();
             Query = $"update pick_locn_dtl set actl_invn_qty = 999 where sku_id = '2346701'";

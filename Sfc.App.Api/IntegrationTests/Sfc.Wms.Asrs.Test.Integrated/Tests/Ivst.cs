@@ -23,7 +23,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]       
-        public void Ivst3UnexpectedOverageExceptionTestScenariosForInboundPalletIsY() //105,121
+        protected void Ivst3UnexpectedOverageExceptionTestScenariosForInboundPalletIsY() //105,121
         {
             this.Given(x => x.TestDataForUnexpectedOverageExceptionScenario1())
             //.And(x => x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl,IvstData.Key,EmsToWmsParameters.Process))
@@ -37,7 +37,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]      
-        public void Ivst3UnexpectedOverageExceptionTestScenariosForInboundPalletIsYScenario2() //106, 122
+        protected void Ivst3UnexpectedOverageExceptionTestScenariosForInboundPalletIsYScenario2() //106, 122
         {
             this.Given(x => x.TestDataForUnexpectedOverageExceptionScenario2())
             //.And(x => x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl, IvstData.Key, EmsToWmsParameters.Process))
@@ -51,7 +51,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]      
-        public void Ivst3UnexpectedOverageExceptionTestScenariosForInboundPalletIsYScenario3()
+        protected void Ivst3UnexpectedOverageExceptionTestScenariosForInboundPalletIsYScenario3()
         {
             this.Given(x => x.TestDataForUnexpectedOverageExceptionScenario3())
             //.And(x => x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl, IvstData.Key, EmsToWmsParameters.Process))
@@ -65,7 +65,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]       
-        public void Ivst3UnexpectedOverageExceptionTestScenariosForInboundPalletIsYScenario4() //123
+        protected void Ivst3UnexpectedOverageExceptionTestScenariosForInboundPalletIsYScenario4() //123
         {
             this.Given(x => x.TestDataForUnexpectedOverageExceptionScenario4())
             //.And(x => x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl, IvstData.Key, EmsToWmsParameters.Process))
@@ -79,7 +79,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]        
-        public void Ivst4InventoryShortageExceptionTestScenariosForInboundPalletIsY() //124
+        protected void Ivst4InventoryShortageExceptionTestScenariosForInboundPalletIsY() //124
         {
             this.Given(x => x.TestDataForInventoryException())
             //.And(x => x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl, InvShortageInbound.Key, EmsToWmsParametersInventoryShortage.Process))
@@ -93,7 +93,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]      
-        public void Ivst5InventoryShortageExceptionTestScenariosForInboundPalletIsN() //125
+        protected void Ivst5InventoryShortageExceptionTestScenariosForInboundPalletIsN() //125
         {
             this.Given(x => x.TestDataForInventoryShortageInboundPalletIsN())
             //.And(x => x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl, InvShortageOutbound.Key, EmsToWmsParametersInventoryShortage.Process))
@@ -107,7 +107,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]       
-        public void Ivst5InventoryShortageExceptionTestScenariosForInboundPalletIsNScenario3() //126 
+        protected void Ivst5InventoryShortageExceptionTestScenariosForInboundPalletIsNScenario3() //126 
         {
             this.Given(x => x.TestDataForInventoryShortageScenario3())
             //.And(x => x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl, InvShortageOutbound.Key, EmsToWmsParametersInventoryShortage.Process))
@@ -122,7 +122,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]     
-        public void Ivst5InventoryShortageExceptionTestScenariosForInboundPalletIsNScenario4() 
+        protected void Ivst5InventoryShortageExceptionTestScenariosForInboundPalletIsNScenario4() 
         {
             this.Given(x => x.TestDataForInventoryShortageScenario4())
             //.And(x => x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl, InvShortageOutbound.Key, EmsToWmsParametersInventoryShortage.Process))
@@ -137,7 +137,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]      
-        public void Ivst5InventoryShortageExceptionTestScenariosForInboundPalletIsNScenario5() //127
+        protected void Ivst5InventoryShortageExceptionTestScenariosForInboundPalletIsNScenario5() //127
         {
             this.Given(x => x.TestDataForInventoryShortageScenario5())
             //.And(x => x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl, InvShortageOutbound.Key, EmsToWmsParametersInventoryShortage.Process))
@@ -150,7 +150,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]    
-        public void Ivst6DamageExceptionTestScenariosForInboundPalletIsY()
+        protected void Ivst6DamageExceptionTestScenariosForInboundPalletIsY()
         {
             this.Given(x => x.TestDataForDamageException())
             //.And(x => x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl, DamageInbound.Key, EmsToWmsParametersDamage.Process))
@@ -169,7 +169,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
       
-        public void Ivst7DamageExceptionTestScenariosForInboundPalletIsN() //129
+        protected void Ivst7DamageExceptionTestScenariosForInboundPalletIsN() //129
         {
             this.Given(x =>x.TestDataForDamageInboundPalletIsN())
                 //.And(x =>x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl,DamageOutbound.Key, EmsToWmsParametersDamage.Process))
@@ -187,7 +187,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]        
-        public void Ivst7DamageExceptionTestScenariosForInboundPalletIsNScenario3() //130
+        protected void Ivst7DamageExceptionTestScenariosForInboundPalletIsNScenario3() //130
         {
             this.Given(x => x.TestDataForDamageScenario3())
                 //.And(x => x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl, DamageOutbound.Key, EmsToWmsParametersDamage.Process))
@@ -206,7 +206,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
        
-        public void Ivst8WrongSkuMessageTestScenariosForInboundPalletIsY() //95
+        protected void Ivst8WrongSkuMessageTestScenariosForInboundPalletIsY() //95
         {
             this.Given(x => x.TestDataForWrongSkuException())
             //.And(x => x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl,WrongSku.Key,EmsToWmsParametersWrongSku.Process))
@@ -224,7 +224,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
      
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]     
-        public void Ivst1CycleCountTestScenariosForAdjustmentPlus() //96
+        protected void Ivst1CycleCountTestScenariosForAdjustmentPlus() //96
         {
             this.Given(x => x.TestDataForCycleCountAdjustmentPlus())
             //.And(x => x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl, CycleCountAdjustmentPlus.Key,EmsToWmsParametersCycleCount.Process))
@@ -238,7 +238,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]       
-        public void Ivst2CycleCountTestScenariosForAdjustmentMinus() //97,133
+        protected void Ivst2CycleCountTestScenariosForAdjustmentMinus() //97,133
         {
             this.Given(x => x.TestDataForCycleCountAdjustmentMinus())
             //.And(x => x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl,CycleCountAdjustmentMinus.Key, EmsToWmsParametersCycleCount.Process))
@@ -252,7 +252,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]       
-        public void Ivst10MixedInventoryTestScenariosForAdjustmentMinus() //98
+        protected void Ivst10MixedInventoryTestScenariosForAdjustmentMinus() //98
         {
             this.Given(x => x.TestDataForMixedInventory())
                 //.And(x => x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl, MixedOutbound.Key, EmsToWmsParametersMixedInventory.Process))
@@ -265,7 +265,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void IvstTestForActionCodeAdjustment() //98
+        protected void IvstTestForActionCodeAdjustment() //98
         {
             this.Given(x => x.TestDataForActionCodeAdjustment())
                 //.And(x => x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl, MixedOutbound.Key, EmsToWmsParametersMixedInventory.Process))
@@ -278,7 +278,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]        
-        public void Ivst11NoExceptionTestScenariosForAdjustmentPlus() //99
+        protected void Ivst11NoExceptionTestScenariosForAdjustmentPlus() //99
         {
             this.Given(x => x.TestDataForNoException())
                 //.And(x => x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl, NoExceptionInBound.Key, EmsToWmsParametersNoException.Process))
@@ -291,7 +291,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]     
-        public void Ivst12CycleCountForActionCodeAdjustMentMinusScenario3()
+        protected void Ivst12CycleCountForActionCodeAdjustMentMinusScenario3()
         {
             this.Given(x => x.TestDataForCcAdjustmentMinusScenario3())
                 //.And(x => x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl, CycleCountAdjustmentMinus.Key, EmsToWmsParametersCycleCount.Process))
@@ -305,7 +305,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void Ivst12CycleCountForActionCodeAdjustMentMinusScenario4() //100
+        protected void Ivst12CycleCountForActionCodeAdjustMentMinusScenario4() //100
         {
             this.Given(x => x.TestDataForAdjustmentMinusScenario4())
                 //.And(x => x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl, CycleCountAdjustmentMinus.Key, EmsToWmsParametersCycleCount.Process))
@@ -319,7 +319,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void Ivst12CycleCountForActionCodeAdjustMentMinusScenario5() //101
+        protected void Ivst12CycleCountForActionCodeAdjustMentMinusScenario5() //101
         {
             this.Given(x => x.TestDataForAdjustmentMinusScenario5())
                 //.And(x => x.ValidIvstUrlMsgKeyAndMsgProcessorIs(IvstUrl, CycleCountAdjustmentMinus.Key, EmsToWmsParametersCycleCount.Process))

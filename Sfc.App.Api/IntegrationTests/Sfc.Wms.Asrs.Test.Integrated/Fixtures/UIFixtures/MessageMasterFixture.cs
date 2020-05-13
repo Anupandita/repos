@@ -14,7 +14,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
 
         DataTable MsgMasterDt = new DataTable();
         DataTable MsgMasterApiDt = new DataTable();
-        public void GetMessageMasterRecordsRelatedToUIFromDb()         
+        protected void GetMessageMasterRecordsRelatedToUIFromDb()         
         {
             using (var db = new OracleConnection())
             {
@@ -25,14 +25,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             }
             }
 
-        public void CallMessageMasterApi(string url)
+        protected void CallMessageMasterApi(string url)
         {
             var response = CallGetApi(url);
             VerifyOkResultAndStoreBearerToken(response);
             var payload = JsonConvert.DeserializeObject<BaseResult<List<MessageDetailDto>>>(response.Content).Payload;
             MsgMasterApiDt = ToDataTable(payload);
         }
-       public void  VerifyMessageMasterApiOutputAgainstDbOutput()
+       protected void  VerifyMessageMasterApiOutputAgainstDbOutput()
         {
             VerifyApiOutputAgainstDbOutput(MsgMasterDt,MsgMasterApiDt); 
         }

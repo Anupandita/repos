@@ -49,7 +49,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         public Int32  ForeCastCountBeforeApi;
         public Int32 ForeCastCountAfterApi;
            
-        public void GetDataBeforeTriggerOrmtForPrintingOfCartons()
+        protected void GetDataBeforeTriggerOrmtForPrintingOfCartons()
         {
             OracleConnection db;
             using (db = GetOracleConnection())
@@ -64,7 +64,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }    
 
-       public void GetValidDataBeforeTriggerOrmtForPrintingOfCartonsThroughWaveNumber()
+       protected void GetValidDataBeforeTriggerOrmtForPrintingOfCartonsThroughWaveNumber()
        {
             OracleConnection db;
             using (db = GetOracleConnection())
@@ -98,7 +98,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return pickLocnDtlExt;
         }
 
-        public void GetDataBeforeTriggerOrmtForCancellationOfOrders()
+        protected void GetDataBeforeTriggerOrmtForCancellationOfOrders()
         {
             OracleConnection db;
             using (db = GetOracleConnection())
@@ -113,7 +113,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         }
         
      
-        public void GetDataBeforeCallingApiForEpickOfOrders()
+        protected void GetDataBeforeCallingApiForEpickOfOrders()
         {
             OracleConnection db;
             using (db = GetOracleConnection())
@@ -127,7 +127,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void GetDataBeforeCallingApiForOnProcessCostMessage()
+        protected void GetDataBeforeCallingApiForOnProcessCostMessage()
         {
             OracleConnection db;
             using (db = GetOracleConnection())
@@ -138,7 +138,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void GetDataAfterCallingOrmtApiForAddRelease()
+        protected void GetDataAfterCallingOrmtApiForAddRelease()
         {
             OracleConnection db;
             using (db = GetOracleConnection())
@@ -156,7 +156,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
     
-        public void GetDataAfterCallingOrmtApiAfterWaveRelease()
+        protected void GetDataAfterCallingOrmtApiAfterWaveRelease()
         {
             OracleConnection db;
             using (db = GetOracleConnection())
@@ -185,7 +185,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
    
-        public void GetDataAfterCallingApiForCancellationOfOrders()
+        protected void GetDataAfterCallingApiForCancellationOfOrders()
         {
             OracleConnection db;
             using (db = GetOracleConnection())
@@ -200,7 +200,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void GetDataAfterCallingApiForEPickOrders()
+        protected void GetDataAfterCallingApiForEPickOrders()
         {
             OracleConnection db;
             using (db = GetOracleConnection())
@@ -215,7 +215,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void GetDataAfterCallingApiForOnProcessCost()
+        protected void GetDataAfterCallingApiForOnProcessCost()
         {
             OracleConnection db;
             using (db = GetOracleConnection())
@@ -229,7 +229,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void GetDataForNegativeCases()
+        protected void GetDataForNegativeCases()
         {
             OracleConnection db;
             using (db = GetOracleConnection())
@@ -297,7 +297,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         }
 
        
-        public void UpdatePickTicketStatusCodeTo12(OracleConnection db, int pktStatCode, string pktCtrlNbr)
+        protected void UpdatePickTicketStatusCodeTo12(OracleConnection db, int pktStatCode, string pktCtrlNbr)
         {
             Transaction = db.BeginTransaction();
             var updateQuery = OrmtQueries.UpdatePickStatCode;

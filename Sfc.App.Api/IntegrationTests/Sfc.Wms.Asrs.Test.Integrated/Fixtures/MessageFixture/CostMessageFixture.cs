@@ -72,7 +72,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected void CostApiIsCalledWithValidMsgKey()
         {
             var result = CostResult();
-            Assert.AreEqual(ResultType.Created, result.ResultType.ToString());
+            Assert.AreEqual(ResultTypes.Created, result.ResultType.ToString());
         }
         protected void CostApiIsCalledForInvalidMessageKey()
         {
@@ -127,7 +127,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         }
         protected void ValidateResultForInvalidMessageKey()
         {
-            Assert.AreEqual(ResultType.NotFound, Negativecase1.ResultType.ToString());
+            Assert.AreEqual(ResultTypes.NotFound, Negativecase1.ResultType.ToString());
             Assert.AreEqual(Constants.ValidationCount, Negativecase1.ValidationMessages.Count);
             
             

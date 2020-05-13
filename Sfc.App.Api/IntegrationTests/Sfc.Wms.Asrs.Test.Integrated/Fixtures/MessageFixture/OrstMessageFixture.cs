@@ -101,7 +101,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         {
             var result = OrstResult();
             Debug.Print(result.ResultType.ToString());
-            //Assert.AreEqual(ResultType.Created, result.ResultType.ToString());
+            //Assert.AreEqual(ResultTypes.Created, result.ResultType.ToString());
         }
 
         protected void OrstApiIsCalledForNegativeCase()

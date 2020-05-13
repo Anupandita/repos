@@ -105,14 +105,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected void OrmtApiIsCalledCreatedIsReturned()
         {
             Result = OrmtResult();
-            Assert.AreEqual(ResultType.Created, Result.ResultType.ToString());
+            Assert.AreEqual(ResultTypes.Created, Result.ResultType.ToString());
         }
 
         protected void OrmtApiIsCalledCreatedIsReturnedForWaveRelease()
         {
             var response = ApiIsCalled(WaveUrl);
             var result = JsonConvert.DeserializeObject<BaseResult>(response.Content);
-            Assert.AreEqual(ResultType.Created, result.ResultType.ToString());
+            Assert.AreEqual(ResultTypes.Created, result.ResultType.ToString());
         }
         protected void OrmtApiIsCalledForNotEnoughInventory()
         {

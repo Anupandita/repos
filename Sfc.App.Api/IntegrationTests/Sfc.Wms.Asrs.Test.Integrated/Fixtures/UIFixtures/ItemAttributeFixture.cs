@@ -19,7 +19,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
         protected DataTable VendorDt = new DataTable();
         protected DataTable ActiveLocnDt = new DataTable();
         ItemAttributeDetailsDto itemAttributeDetailsDto;
-        public void PickAnItemTestDataFromDb()
+        protected void PickAnItemTestDataFromDb()
         {
             using (var db = new OracleConnection())
             {
@@ -56,7 +56,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
 
             }
         }
-        public void CreateUrlAndInputParamForApiUsing(string criteria)
+        protected void CreateUrlAndInputParamForApiUsing(string criteria)
         {
             switch (criteria)
             {
@@ -78,7 +78,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             }
         }
 
-        public void CallItemAttributeSearchApiWithInputs(string url)
+        protected void CallItemAttributeSearchApiWithInputs(string url)
         {
             var response=CallGetApi(url);
             VerifyOkResultAndStoreBearerToken(response);
@@ -86,35 +86,35 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             ItemAttributeSearchResultDt = ToDataTable(payload.ItemAttributeDetailsDtos);
             TotalRecords = payload.TotalRecords;
         }
-        public void VerifyItemSearchOutputAgainstDbOutput() 
+        protected void VerifyItemSearchOutputAgainstDbOutput() 
         {
             VerifyApiOutputAgainstDbOutput(ItemAttributeSearchQueryDt, ItemAttributeSearchResultDt);          
             
         }
 
-        public void VerifyItemDescriptionInApiOutput()
+        protected void VerifyItemDescriptionInApiOutput()
         {
             Assert.AreEqual(UIConstants.ItemDescription,ItemAttributeSearchResultDt.Rows[0]["Description"].ToString()); ;
         }
 
-        public void VerifyOutputTotalReordsAgainstDbCount(string count)
+        protected void VerifyOutputTotalReordsAgainstDbCount(string count)
         {
             VerifyOutputTotalReordsAgainstDbCount(count, TotalRecords.ToString());
         }
 
-        public void  CallItemAttributeDetailsApi(string url) 
+        protected void  CallItemAttributeDetailsApi(string url) 
         {
             var response = CallGetApi(url);
             VerifyOkResultAndStoreBearerToken(response);
             itemAttributeDetailsDto = JsonConvert.DeserializeObject<BaseResult<ItemAttributeDetailsDto>>(response.Content).Payload;
            
         }
-        public void VerifyOutputForActiveLocationsListInOutput() 
+        protected void VerifyOutputForActiveLocationsListInOutput() 
         {
             foreach (DataRow dr in ActiveLocnDt.Rows)
                 Assert.IsTrue(itemAttributeDetailsDto.ActiveLocations.Contains(dr[0].ToString()));
         }
-        public void VerifyOutputForVendorsListInOutput() 
+        protected void VerifyOutputForVendorsListInOutput() 
         {
             foreach (DataRow dr in VendorDt.Rows)
                 Assert.IsTrue(itemAttributeDetailsDto.VendorNames.Contains(dr[0].ToString()));            

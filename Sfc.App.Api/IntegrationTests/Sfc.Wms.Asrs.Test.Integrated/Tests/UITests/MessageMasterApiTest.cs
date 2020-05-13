@@ -17,7 +17,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
     {
 
         [TestInitialize]
-        public void AValidTestData()
+        protected void AValidTestData()
         {
             LoginToFetchToken();
             GetMessageMasterRecordsRelatedToUIFromDb();
@@ -25,7 +25,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
 
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void MessageMasterApiTesting()
+        protected void MessageMasterApiTesting()
         {
             this.Given(x => x.CallMessageMasterApi(UIConstants.MessageMasterUrl))
             .Then(x => x.VerifyMessageMasterApiOutputAgainstDbOutput())

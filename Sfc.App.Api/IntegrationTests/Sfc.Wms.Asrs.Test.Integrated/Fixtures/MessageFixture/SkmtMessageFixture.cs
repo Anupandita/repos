@@ -56,13 +56,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         protected void SkmtApiIsCalledCreatedIsReturned()
         {
             Result = SkmtResult();
-            Assert.AreEqual(ResultType.Created, Result.ResultType.ToString());
+            Assert.AreEqual(ResultTypes.Created, Result.ResultType.ToString());
         }
 
         protected void SkmtApiIsCalledCreatedForNegativeCases()
         {
             Result = SkmtResult();
-            Assert.AreEqual(ResultType.NotFounds, Result.ResultType.ToString());
+            Assert.AreEqual(ResultTypes.NotFounds, Result.ResultType.ToString());
         }
         protected void SkmtApiIsCalledForInvalidSkuId()
         {
@@ -110,7 +110,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         protected void ValidateResultForInvalidSkuId()
         {
-            Assert.AreEqual(ResultType.NotFounds, Negativecase.ResultType.ToString());
+            Assert.AreEqual(ResultTypes.NotFounds, Negativecase.ResultType.ToString());
             Assert.AreEqual(1, Negativecase.ValidationMessages.Count);
             Assert.AreEqual(ValidationMessage.ItemMasters, Negativecase.ValidationMessages[0].FieldName);
         }

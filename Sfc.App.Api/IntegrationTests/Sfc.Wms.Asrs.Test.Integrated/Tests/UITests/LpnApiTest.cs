@@ -18,7 +18,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
     public class LpnApiTest: LpnFixture
     {
         [TestInitialize]
-        public void AValidTestData()
+        protected void AValidTestData()
         {          
             LoginToFetchToken();
             PickAnLpnTestDataFromDb();
@@ -26,7 +26,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
 
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void LpnSearchApi_SearchWithLpnNbr() 
+        protected void LpnSearchApi_SearchWithLpnNbr() 
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("LpnNumber"))
             .When(x => x.CallLpnSearchApiWithInputs(UIConstants.LpnSearchUrl))
@@ -35,7 +35,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void LpnSearchApi_SearchWithItemNumber()
+        protected void LpnSearchApi_SearchWithItemNumber()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("ItemNumber"))
           .When(x => x.CallLpnSearchApiWithInputs(UIConstants.LpnSearchUrl))
@@ -44,7 +44,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void LpnSearchApi_SearchWithPalletIdNbr()
+        protected void LpnSearchApi_SearchWithPalletIdNbr()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("PalletIdNumber"))
             .When(x => x.CallLpnSearchApiWithInputs(UIConstants.LpnSearchUrl))
@@ -53,7 +53,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void LpnSearchApi_SearchWithZone()
+        protected void LpnSearchApi_SearchWithZone()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("Zone"))
             .When(x => x.CallLpnSearchApiWithInputs(UIConstants.LpnSearchUrl))
@@ -62,7 +62,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void LpnSearchApi_SearchWithAisle()
+        protected void LpnSearchApi_SearchWithAisle()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("Aisle"))
             .When(x => x.CallLpnSearchApiWithInputs(UIConstants.LpnSearchUrl))
@@ -71,7 +71,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void LpnSearchApi_SearchWithSlot()
+        protected void LpnSearchApi_SearchWithSlot()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("Slot"))
             .When(x => x.CallLpnSearchApiWithInputs(UIConstants.LpnSearchUrl))
@@ -80,7 +80,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void LpnSearchApi_SearchWithLevel()
+        protected void LpnSearchApi_SearchWithLevel()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("Level"))
             .When(x => x.CallLpnSearchApiWithInputs(UIConstants.LpnSearchUrl))
@@ -89,7 +89,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void LpnSearchApi_SearchWithCreatedDate()
+        protected void LpnSearchApi_SearchWithCreatedDate()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("CreatedDate"))
             .When(x => x.CallLpnSearchApiWithInputs(UIConstants.LpnSearchUrl))
@@ -98,7 +98,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void LpnSearchApi_SearchWithStatus()
+        protected void LpnSearchApi_SearchWithStatus()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("Status"))
             .When(x => x.CallLpnSearchApiWithInputs(UIConstants.LpnSearchUrl))
@@ -107,7 +107,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void LpnCommentsApi()
+        protected void LpnCommentsApi()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("Comments"))
             .When(x => x.CallLpnCommentsApiWithInputs(UIConstants.LpnCommentsUrl))
@@ -116,7 +116,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void LpnHistoryApi()
+        protected void LpnHistoryApi()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("History"))
             .When(x => x.CallLpnHistoryApiWithInputs(UIConstants.LpnHistoryUrl))
@@ -125,7 +125,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void LpnLockUnlockApi()
+        protected void LpnLockUnlockApi()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("LockUnlock"))
             .When(x => x.CallLpnLockUnlockApiWithInputs(UIConstants.LpnLockUnlockUrl))
@@ -134,7 +134,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void LpnCaseUnlockApi()
+        protected void LpnCaseUnlockApi()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("CaseUnlock"))
             .When(x => x.CallLpnCaseUnlockApiWithInputs(UIConstants.LpnCaseUnlockUrl))
@@ -143,7 +143,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void LpnDetailsApi()
+        protected void LpnDetailsApi()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("Details"))
             .When(x => x.CallLpnDetailsApi(UIConstants.LpnDetailsUrl))
@@ -152,7 +152,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void LpnAddCommentsApi()
+        protected void LpnAddCommentsApi()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("AddComments"))
             .And(x => x.CreateInputDtoForAddCommentsApi())
@@ -162,7 +162,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void LpnEditCommentsApi()
+        protected void LpnEditCommentsApi()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("EditComments"))
             .And(x => x.CreateInputDtoForEditCommentApi())
@@ -172,7 +172,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void LpnDeleteCommentsApi()
+        protected void LpnDeleteCommentsApi()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("DeleteComments"))
             .When(x => x.CallLpnDeleteCommentsApi(UIConstants.LpnDeleteCommentsUrl))
@@ -181,7 +181,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void LpnUpdateApi()
+        protected void LpnUpdateApi()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("Update"))
             .And(x => x.CreateInputDtoForLpnUpdateApi())
@@ -191,7 +191,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void LpnEditItemsApi()
+        protected void LpnEditItemsApi()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("Items"))
             .And(x => x.CreateInputDtoForEditItemApi())
@@ -201,7 +201,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void LpnMultiUnlockApi()
+        protected void LpnMultiUnlockApi()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("MultiUnlock"))
             .And(x => x.CreateInputDtoForMultiUnlockApi())
@@ -212,7 +212,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void LpnMultiLockApi()
+        protected void LpnMultiLockApi()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("MultiLock"))
             .And(x => x.CreateInputDtoForMultiLockApi())
@@ -223,7 +223,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void LpnMultiCommentsApi()
+        protected void LpnMultiCommentsApi()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("MultiComments"))
             .And(x => x.CreateInputDtoForMultiCommentsApi())
@@ -233,7 +233,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void LpnMultiEditApi()
+        protected void LpnMultiEditApi()
         {
             this.Given(x => x.CreateUrlAndInputParamForApiUsing("MultiEdit"))
             .And(x => x.CreateInputDtoForMultiEditApi())

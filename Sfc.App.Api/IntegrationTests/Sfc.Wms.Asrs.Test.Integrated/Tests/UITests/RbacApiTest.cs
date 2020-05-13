@@ -17,7 +17,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
     {        
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void RbacApiTesting()
+        protected void RbacApiTesting()
         {
             this.Given(x => x.CreateLoginDtoUsingCredentials())
             .And(x=>x.FetchDataFromDb())

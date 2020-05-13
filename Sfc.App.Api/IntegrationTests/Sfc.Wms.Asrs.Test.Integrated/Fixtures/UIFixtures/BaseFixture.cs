@@ -24,7 +24,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             };
         }
 
-        public void LoginToFetchToken()
+        protected void LoginToFetchToken()
         {
             CreateLoginDto();
             var request = CallPostApi();
@@ -89,10 +89,10 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             request.RequestFormat = DataFormat.Json;
             return request;
         }
-        public void VerifyOkResultAndStoreBearerToken(IRestResponse response)
+        protected void VerifyOkResultAndStoreBearerToken(IRestResponse response)
         {
             var result = JsonConvert.DeserializeObject<BaseResult>(response.Content);
-            Assert.AreEqual(ResultType.Ok, result.ResultType.ToString());
+            Assert.AreEqual(ResultTypes.Ok, result.ResultType.ToString());
             UIConstants.BearerToken = response.Headers[1].Value.ToString();
 
         }
@@ -102,18 +102,18 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             var response = client.Execute(request);
             return response;
         }
-        public void VerifyCreatedResultAndStoreBearerToken(IRestResponse response)
+        protected void VerifyCreatedResultAndStoreBearerToken(IRestResponse response)
         {             
             var result = JsonConvert.DeserializeObject<BaseResult>(response.Content);
-            Assert.AreEqual(ResultType.Created, result.ResultType.ToString());
+            Assert.AreEqual(ResultTypes.Created, result.ResultType.ToString());
             UIConstants.BearerToken = response.Headers[1].Value.ToString();            
 
         }
-        public void VerifyOutputTotalReordsAgainstDbCount(string count,string totalrecords)
+        protected void VerifyOutputTotalReordsAgainstDbCount(string count,string totalrecords)
         {
             Assert.AreEqual(count, totalrecords);
         }
-        public void VerifyApiOutputAgainstDbOutput(DataTable queryDt, DataTable ApiDt)
+        protected void VerifyApiOutputAgainstDbOutput(DataTable queryDt, DataTable ApiDt)
         {
             Assert.AreEqual(queryDt.Rows.Count, ApiDt.Rows.Count,"Api and Db count donot match");
             var i = -1;

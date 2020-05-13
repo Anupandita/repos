@@ -17,14 +17,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
     {
 
         [TestInitialize]
-        public void AValidTestData()
+        protected void AValidTestData()
         {
             LoginToFetchToken();
         }
 
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void UserMasterApiTesting()
+        protected void UserMasterApiTesting()
         {
             this.Given(x => x.FetchUserPreferenceIdIfAnyFromDb())
             .And(x=>x.CreateUserMasterDto())

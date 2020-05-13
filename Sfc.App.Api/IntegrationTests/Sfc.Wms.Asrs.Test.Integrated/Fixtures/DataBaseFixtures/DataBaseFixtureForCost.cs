@@ -53,7 +53,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return costDataDto;
         }
 
-        public void GetValidData()
+        protected void GetValidData()
         {
             using (var db = GetOracleConnection())
             {
@@ -63,7 +63,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void GetDataBeforeTrigger()
+        protected void GetDataBeforeTrigger()
         {
             using (var db = GetOracleConnection())
             {
@@ -85,7 +85,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void BuildAndInsertCostMessage(IvmtDto ivmtDto)
+        protected void BuildAndInsertCostMessage(IvmtDto ivmtDto)
         {
             using (var db = GetOracleConnection())
             {
@@ -135,7 +135,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return testResult.Payload;
         }
 
-        public void InsertCostMessageForPickLocnDoesNotExist()
+        protected void InsertCostMessageForPickLocnDoesNotExist()
         {
             using (var db = GetOracleConnection())
             {
@@ -144,7 +144,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void InsertCostMessageForInValidCase()
+        protected void InsertCostMessageForInValidCase()
         {
             using (var db = GetOracleConnection())
             {
@@ -153,7 +153,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void InsertCostMessageForTransInvnDoesNotExist()
+        protected void InsertCostMessageForTransInvnDoesNotExist()
         {
             using (var db = GetOracleConnection())
             {
@@ -162,7 +162,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void InvalidCaseData(OracleConnection db)
+        protected void InvalidCaseData(OracleConnection db)
         {
             Command = new OracleCommand(SqlStatements, db);
             var costmsg = CreateCostMessage(DefaultValues.InvalidCase, CostData.SkuId, CostData.Qty, CostData.LocnId);
@@ -177,7 +177,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             CostData.InvalidKey = InsertEmsToWms(db, emsToWms);
         }
 
-        public void TransInvnDoesNotExistData(OracleConnection db)
+        protected void TransInvnDoesNotExistData(OracleConnection db)
         {
             CostDataForTransInvnNotExist = FetchCaseNumberWithoutTransInventry(db);
             var costmsg = CreateCostMessage(CostDataForTransInvnNotExist.CaseNumber, CostDataForTransInvnNotExist.SkuId, CostDataForTransInvnNotExist.Qty, CostDataForTransInvnNotExist.LocnId);
@@ -211,7 +211,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return costTransData;
         }
 
-        public void PickLocnDoesNotExistData(OracleConnection db)
+        protected void PickLocnDoesNotExistData(OracleConnection db)
         {
             CostDataForPickLocnNotExist = FetchPickLocnDoesNotExistData(db);
             var pickLnInvnNotExistMsg = CreateCostMessage(CostDataForPickLocnNotExist.CaseNumber, CostDataForPickLocnNotExist.SkuId, CostDataForPickLocnNotExist.Qty, CostData.LocnId);
@@ -244,7 +244,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return costTransData;
         }
 
-        public void GetDataAfterTrigger()
+        protected void GetDataAfterTrigger()
         {
             using (var db = GetOracleConnection())
             {

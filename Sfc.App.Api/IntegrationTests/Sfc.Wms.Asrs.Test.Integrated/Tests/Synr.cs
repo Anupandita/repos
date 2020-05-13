@@ -22,7 +22,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
     {
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void Test1SynrMessageTestScenarios()
+        protected void Test1SynrMessageTestScenarios()
         {
             this.Given(x => x.TestInitializeForValidMessage())
                 .When(x => x.SynrApiIsCalledCreatedIsReturnedWithValidUrlAndSyncIdIs(SynrUrl, Nextupcnt + 1))
@@ -35,7 +35,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void Test2SyndMessageTestScenarios()
+        protected void Test2SyndMessageTestScenarios()
         {
             this.Given(x => x.TestInitialize())
                 .And(x => x.ValidateForSyndMessagesInsertedIntoSwmToMheTableAndSyndDataTableWithAppropiateValues())
@@ -44,7 +44,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void Test3SyncMessageTestScenarios()
+        protected void Test3SyncMessageTestScenarios()
         {
             this.Given(x => x.SyncTestInitialize())
                 .And(x => x.SyncTestInitializeForValidMessage())

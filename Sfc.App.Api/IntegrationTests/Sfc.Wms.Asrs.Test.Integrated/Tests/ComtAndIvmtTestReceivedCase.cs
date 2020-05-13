@@ -16,14 +16,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
     public class ComtAndIvmtTestReceivedCase:ComtIvmtMessageFixture
     {
         [TestInitialize]
-        public void AValidTestData()
+        protected void AValidTestData()
         {
             InitializeReceivedCaseTestData();
         }
       
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void ComtAndIvmtMessageForReceivedCasesFromReturnsTestScenarios()
+        protected void ComtAndIvmtMessageForReceivedCasesFromReturnsTestScenarios()
         {
             this.Given(x => x.AValidNewCaseReturnedRecordWhereCaseNumberAndSkuIdIs(SingleSkuCase.CaseNumber,SingleSkuCase.SkuId))
                 .When(x => x.ComtApiIsCalledCreatedIsReturnedWithValidUrlIs(ComtUrl))

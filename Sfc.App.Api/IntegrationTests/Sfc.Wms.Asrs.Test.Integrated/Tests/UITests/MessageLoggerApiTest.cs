@@ -16,14 +16,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests.UITests
    public class MessageLoggerApiTest : MessageLoggerFixture
     {
         [TestInitialize]
-        public void AValidTestData()
+        protected void AValidTestData()
         {
             LoginToFetchToken();
             
         }
         [TestMethod()]
         [TestCategory("UI_FUNCTIONAL")]
-        public void MessageLoggerApi()
+        protected void MessageLoggerApi()
         {
             this.Given(x => x.CreateInputDtoForMessageLoggerApi())
                 .When(x => x.CallMessageLoggerApiWithUrl(UIConstants.MessageLoggerUrl))

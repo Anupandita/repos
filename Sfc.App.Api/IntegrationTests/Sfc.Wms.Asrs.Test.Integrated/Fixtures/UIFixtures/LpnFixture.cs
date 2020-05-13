@@ -41,7 +41,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
       
       
 
-        public void PickAnLpnTestDataFromDb()
+        protected void PickAnLpnTestDataFromDb()
         {
             using (var db = new OracleConnection())
             {
@@ -166,7 +166,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
 
             }
         }
-        public void CreateUrlAndInputParamForApiUsing(string criteria)
+        protected void CreateUrlAndInputParamForApiUsing(string criteria)
         {
             switch (criteria)
             {
@@ -242,7 +242,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             }
         }
         string displayLocation = "";
-        public void CallLpnSearchApiWithInputs(string url)
+        protected void CallLpnSearchApiWithInputs(string url)
         {
             var response = CallGetApi(url);
             VerifyOkResultAndStoreBearerToken(response);
@@ -252,29 +252,29 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             displayLocation = LpnSearchResultDt.Rows[0]["DisplayLocation"].ToString();
         }
 
-        public void VerifyDisplayLocationForZone()
+        protected void VerifyDisplayLocationForZone()
         {
             Assert.AreEqual(UIConstants.Zone, displayLocation.Substring(0, 2));
         }
-        public void VerifyDisplayLocationForAisle()
+        protected void VerifyDisplayLocationForAisle()
         {
             Assert.AreEqual(UIConstants.Aisle, displayLocation.Substring(2, 2));
         }
-        public void VerifyDisplayLocationForSlot()
+        protected void VerifyDisplayLocationForSlot()
         {
             Assert.AreEqual(UIConstants.Slot, displayLocation.Substring(4, 3));
         }
-        public void VerifyDisplayLocationForLevel()
+        protected void VerifyDisplayLocationForLevel()
         {
             Assert.AreEqual(UIConstants.Level, displayLocation.Substring(7, 2));
         }
-        public void VerifyLpnSearchOutputAgainstDbOutput()
+        protected void VerifyLpnSearchOutputAgainstDbOutput()
         {
             VerifyApiOutputAgainstDbOutput(LpnSearchQueryDt, LpnSearchResultDt);
 
         }
 
-        public void CallLpnCommentsApiWithInputs(string url)
+        protected void CallLpnCommentsApiWithInputs(string url)
         {
             var response = CallGetApi(url);
             VerifyOkResultAndStoreBearerToken(response);
@@ -282,12 +282,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             LpnCommentsResultDt = ToDataTable(payload);
         }
 
-        public void VerifyLpnCommentsOutputAgainstDbOutput()
+        protected void VerifyLpnCommentsOutputAgainstDbOutput()
         {
             VerifyApiOutputAgainstDbOutput(LpnCommentsQueryDt, LpnCommentsResultDt);
 
         }
-        public void CallLpnHistoryApiWithInputs(string url)
+        protected void CallLpnHistoryApiWithInputs(string url)
         {
             var response = CallGetApi(url);
             VerifyOkResultAndStoreBearerToken(response);
@@ -295,12 +295,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             LpnHistoryResultDt = ToDataTable(payload);
         }
 
-        public void VerifyLpnHistoryOutputAgainstDbOutput()
+        protected void VerifyLpnHistoryOutputAgainstDbOutput()
         {
             VerifyApiOutputAgainstDbOutput(LpnHistoryQueryDt, LpnHistoryResultDt);
 
         }
-        public void CallLpnLockUnlockApiWithInputs(string url)
+        protected void CallLpnLockUnlockApiWithInputs(string url)
         {
             var response = CallGetApi(url);
             VerifyOkResultAndStoreBearerToken(response);
@@ -308,12 +308,12 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             LpnLockUnlockResultDt = ToDataTable(payload);
         }
 
-        public void VerifyLpnLockUnlockOutputAgainstDbOutput()
+        protected void VerifyLpnLockUnlockOutputAgainstDbOutput()
         {
             VerifyApiOutputAgainstDbOutput(LpnLockUnlockQueryDt, LpnLockUnlockResultDt);
         }
 
-        public void CallLpnCaseUnlockApiWithInputs(string url)
+        protected void CallLpnCaseUnlockApiWithInputs(string url)
         {
             var response = CallGetApi(url);
             VerifyOkResultAndStoreBearerToken(response);
@@ -322,7 +322,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
 
         }
 
-        public void VerifyLpnCaseUnlockOutputAgainstDbOutput()
+        protected void VerifyLpnCaseUnlockOutputAgainstDbOutput()
         {
             Assert.AreEqual(LpnLockUnlockQueryDt.Rows.Count, LpnCaseUnlockResultDt.Rows.Count, "Api and Db count donot match");
             var i = -1;
@@ -334,7 +334,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             }
         }
 
-        public void CreateInputDtoForAddCommentsApi()
+        protected void CreateInputDtoForAddCommentsApi()
         {
             UIConstants.Message = Guid.NewGuid().ToString("n").Substring(0, 8);
             caseCommentDto = new CaseCommentDto()
@@ -348,7 +348,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             };
 
         }
-        public void CallLpnDetailsApi(string url)
+        protected void CallLpnDetailsApi(string url)
         {
             var response = CallGetApi(url);
             VerifyOkResultAndStoreBearerToken(response);
@@ -356,7 +356,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             LpnDetailsResultDt = ToDataTable(payload.CaseDetailDtos);
             VendorResultDt = ToDataTable(payload.VendorDtos);
         }
-        public void CreateInputDtoForMultiUnlockApi()
+        protected void CreateInputDtoForMultiUnlockApi()
         {
             lpnMultipleUnlockDto1 = new LpnMultipleUnlockDto()
             {
@@ -373,7 +373,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
                 LockCount = Convert.ToInt32(UIConstants.LockCount1)
             };
         }
-        public void CreateInputDtoForMultiLockApi()
+        protected void CreateInputDtoForMultiLockApi()
         {
             UIConstants.Message = Guid.NewGuid().ToString("n").Substring(0, 8);
             caseLockCommentDto = new CaseLockCommentDto()
@@ -392,7 +392,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             };
 
         }
-        public void CreateInputDtoForMultiCommentsApi()
+        protected void CreateInputDtoForMultiCommentsApi()
         {
             UIConstants.Message = Guid.NewGuid().ToString("n").Substring(0, 8);
             caseCommentDto = new CaseCommentDto()
@@ -414,35 +414,35 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
                 SystemCodeCommentType = UIConstants.SystemCodeCommentType
             };
         }
-        public void CallLpnAddCommentsApi(string url)
+        protected void CallLpnAddCommentsApi(string url)
         {
             var request = CallPostApi();
             request.AddJsonBody(caseCommentDto);
             var response = ExecuteRequest(url, request);
             VerifyCreatedResultAndStoreBearerToken(response);
         }
-        public void CallLpnMultiUnlockApi(string url)
+        protected void CallLpnMultiUnlockApi(string url)
         {
             var request = CallPostApi();
             request.AddJsonBody(new List<LpnMultipleUnlockDto> { lpnMultipleUnlockDto1, lpnMultipleUnlockDto2 });
             var response = ExecuteRequest(url, request);
             VerifyOkResultAndStoreBearerToken(response);
         }
-        public void CallLpnMultiLockApi(string url)
+        protected void CallLpnMultiLockApi(string url)
         {
             var request = CallPostApi();
             request.AddJsonBody(caseLockCommentDto);
             var response = ExecuteRequest(url, request);
             VerifyOkResultAndStoreBearerToken(response);
         }
-        public void CallLpnMultiCommentsApi(string url)
+        protected void CallLpnMultiCommentsApi(string url)
         {
             var request = CallPostApi();
             request.AddJsonBody(new List<CaseCommentDto>() { caseCommentDto, caseCommentDto2 });
             var response = ExecuteRequest(url, request);
             VerifyCreatedResultAndStoreBearerToken(response);
         }
-        public void VerifyCommentsIsInsertedinDb()
+        protected void VerifyCommentsIsInsertedinDb()
         {
             using (var db = new OracleConnection())
             {
@@ -457,7 +457,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
 
 
 
-        public void CallLpnEditCommentsApi(string url)
+        protected void CallLpnEditCommentsApi(string url)
         {
             var request = CallPutApi();
             request.AddJsonBody(caseCommentDto);
@@ -465,7 +465,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             VerifyOkResultAndStoreBearerToken(response);
         }
 
-        public void VerifyCommentsIsUpdatedInDb()
+        protected void VerifyCommentsIsUpdatedInDb()
         {
             using (var db = new OracleConnection())
             {
@@ -478,7 +478,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             }
         }
 
-        public void CallLpnDeleteCommentsApi(string url)
+        protected void CallLpnDeleteCommentsApi(string url)
         {
             var request = CallDeleteApi();
             request.AddJsonBody(caseCommentDto);
@@ -486,7 +486,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             VerifyOkResultAndStoreBearerToken(response);
         }
 
-        public void VerifyCommentsIsDeletedInDb()
+        protected void VerifyCommentsIsDeletedInDb()
         {
             using (var db = new OracleConnection())
             {
@@ -498,7 +498,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
 
             }
         }
-        public void CallLpnUpdateApi(string url)
+        protected void CallLpnUpdateApi(string url)
         {
             var request = CallPutApi();
             request.AddJsonBody(lpnUpdate);
@@ -506,7 +506,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             VerifyOkResultAndStoreBearerToken(response);
         }
 
-        public void VerifyUpdateFieldsAreUpdatedInDb()
+        protected void VerifyUpdateFieldsAreUpdatedInDb()
         {
             using (var db = new OracleConnection())
             {
@@ -535,7 +535,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
 
             }
         }
-        public void CallLpnItemsApi(string url)
+        protected void CallLpnItemsApi(string url)
         {
             var request = CallPutApi();
             request.AddJsonBody(lpnCaseDetailsUpdate);
@@ -543,7 +543,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             VerifyOkResultAndStoreBearerToken(response);
         }
 
-        public void VerifyItemFieldsAreUpdatedInDb()
+        protected void VerifyItemFieldsAreUpdatedInDb()
         {
             using (var db = new OracleConnection())
             {
@@ -559,7 +559,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
         }
 
 
-        public void VerifyLocksAreDeletedinDb()
+        protected void VerifyLocksAreDeletedinDb()
         {
             using (var db = new OracleConnection())
             {
@@ -571,11 +571,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
         }
 
 
-        public void VerifyLocksAreAddedInDb()
+        protected void VerifyLocksAreAddedInDb()
         {
         }
 
-        public void VerifyCorbaResultFromDbFor(string btnName)
+        protected void VerifyCorbaResultFromDbFor(string btnName)
         {
             string sql = "";
             switch (btnName)
@@ -594,7 +594,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             }
         }
 
-            public void VerifyMultiCommentsAreAddedInDb()
+            protected void VerifyMultiCommentsAreAddedInDb()
         {
             using (var db = new OracleConnection())
             {
@@ -617,7 +617,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             }
 
         }
-        public void CallLpnMultiEditApi(string url)
+        protected void CallLpnMultiEditApi(string url)
         {
             var request = CallPutApi();
             request.AddJsonBody(lpnBatchUpdateDto);
@@ -625,7 +625,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             VerifyOkResultAndStoreBearerToken(response);
         }
 
-        public void VerifyMultiEditAreAddedInDb()
+        protected void VerifyMultiEditAreAddedInDb()
         {
             using (var db = new OracleConnection())
             {
@@ -645,11 +645,11 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             }
         }
 
-        public void VerifyOutputTotalReordsAgainstDbCount(string count)
+        protected void VerifyOutputTotalReordsAgainstDbCount(string count)
         {
             VerifyOutputTotalReordsAgainstDbCount(count, TotalRecords.ToString());
         }
-        public void CreateInputDtoForEditCommentApi()
+        protected void CreateInputDtoForEditCommentApi()
         {
             UIConstants.Message = Guid.NewGuid().ToString("n").Substring(0, 10);
             caseCommentDto = new CaseCommentDto()
@@ -663,7 +663,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
                 CommentSequenceNumber = UIConstants.CommentSequenceNumber
             };
         }
-        public void CreateInputDtoForEditItemApi()
+        protected void CreateInputDtoForEditItemApi()
         {
             lpnCaseDetailsUpdate = new LpnDetailsUpdateDto()
             {
@@ -673,7 +673,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
                 SkuId = UIConstants.SkuId
             };
         }
-        public void CreateInputDtoForMultiEditApi()
+        protected void CreateInputDtoForMultiEditApi()
         {
             lpnBatchUpdateDto = new LpnBatchUpdateDto()
             {
@@ -683,7 +683,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
                 ConsumePriority = UIConstants.ConsumePriority
             };
         }
-        public void CreateInputDtoForLpnUpdateApi()
+        protected void CreateInputDtoForLpnUpdateApi()
         {
             lpnUpdate = new LpnHeaderUpdateDto()
             {
@@ -711,7 +711,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             };
         }
 
-        public void VerifyLpnDetailsOutputAgainstDbOutput()
+        protected void VerifyLpnDetailsOutputAgainstDbOutput()
         {
             VerifyApiOutputAgainstDbOutput(LpnDetailsQueryDt, LpnDetailsResultDt);
             VerifyApiOutputAgainstDbOutput(VendorQueryDt, VendorResultDt);

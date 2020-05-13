@@ -61,7 +61,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             _canParseMessage = new MessageHeaderParser();
         }
 
-        public void GetDataBeforeTriggerComt()
+        protected void GetDataBeforeTriggerComt()
         {
             using (var db = GetOracleConnection())
             {
@@ -87,7 +87,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
       
 
-        public void GetDataBeforeTriggerForComtIvmt()
+        protected void GetDataBeforeTriggerForComtIvmt()
         {
             using (var db = GetOracleConnection())
             {
@@ -105,7 +105,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void GetDataBeforeTriggerforReceivedCaseComt()
+        protected void GetDataBeforeTriggerforReceivedCaseComt()
         {
             using (var db = GetOracleConnection())
             {
@@ -126,7 +126,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void GetDataBeforeTriggerForStatCode30()
+        protected void GetDataBeforeTriggerForStatCode30()
         {
             using (var db = GetOracleConnection())
             {
@@ -256,7 +256,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return caseDtl;
         }
 
-        public void MultiSkuData(OracleConnection db)
+        protected void MultiSkuData(OracleConnection db)
         {
             CaseHdrMultiSku = TriggerOnCaseHeader(db,1);
             CaseDtoList = GetCaseDtlData(db, CaseHdrMultiSku.CaseNumber);
@@ -282,7 +282,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return TrnList;
         }
        
-        public void GetDataAfterTriggerOfComtForSingleSku()
+        protected void GetDataAfterTriggerOfComtForSingleSku()
         {
             using (var db = GetOracleConnection())
             {
@@ -307,7 +307,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
 
 
-        public void GetDataAfterTriggerOfComtForReceivedCaseSingleSku()
+        protected void GetDataAfterTriggerOfComtForReceivedCaseSingleSku()
         {
             using (var db = GetOracleConnection())
             {
@@ -327,7 +327,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void GetDataAfterTriggerOfIvmtForSingleSku()
+        protected void GetDataAfterTriggerOfIvmtForSingleSku()
         {
             using (var db = GetOracleConnection())
             {
@@ -376,7 +376,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return task;
         }       
 
-        public void GetDataAfterTriggerForMultiSkuAndValidateData()
+        protected void GetDataAfterTriggerForMultiSkuAndValidateData()
         {     
             using (var db = GetOracleConnection())
             {
@@ -437,7 +437,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             BaseResult<MessageHeaderDto> testResult = _canParseMessage.ParseMessage(transactionCode, sourceTextMsg);       
             return testResult;
         }
-        public void VerifyComtMessageWasInsertedIntoSwmToMhe(ComtDto comt, SwmToMheDto swmToMhe,string caseNbr)
+        protected void VerifyComtMessageWasInsertedIntoSwmToMhe(ComtDto comt, SwmToMheDto swmToMhe,string caseNbr)
         {
             Assert.AreEqual(DefaultValues.Status, SwmToMheComt.SourceMessageStatus);
             Assert.AreEqual(Constants.ReasonCode, SwmToMheComt.SourceMessageResponseCode);
@@ -450,7 +450,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(Constants.MessageStatus, SwmToMheComt.MessageStatus);
             Assert.AreEqual(CurrentLocationId, comt.CurrentLocationId);
         }
-        public void VerifyComtMessageWasInsertedIntoWmsToEms(WmsToEmsDto wte1)
+        protected void VerifyComtMessageWasInsertedIntoWmsToEms(WmsToEmsDto wte1)
         {
             Assert.AreEqual(SwmToMheComt.SourceMessageProcess, wte1.Process);
             Assert.AreEqual(SwmToMheComt.SourceMessageKey,wte1.MessageKey);
@@ -462,7 +462,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             Assert.AreEqual(Convert.ToInt16(SwmToMheComt.SourceMessageResponseCode), wte1.ResponseCode);
         }
 
-        public void VerifyIvmtMessageWasInsertedIntoSwmToMhe(IvmtDto ivmt,CaseViewDto caseDtl)
+        protected void VerifyIvmtMessageWasInsertedIntoSwmToMhe(IvmtDto ivmt,CaseViewDto caseDtl)
         {
             Assert.AreEqual(DefaultValues.Status, SwmToMheIvmt.SourceMessageStatus);  
             Assert.AreEqual(TransactionCode.Ivmt, ivmt.TransactionCode);
@@ -486,29 +486,29 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
           
         }
 
-        public void VerifyIvmtMessageWasInsertedIntoWmsToEms(WmsToEmsDto wmsToEms)
+        protected void VerifyIvmtMessageWasInsertedIntoWmsToEms(WmsToEmsDto wmsToEms)
         {
             Assert.AreEqual(SwmToMheIvmt.SourceMessageStatus, wmsToEms.Status);
             Assert.AreEqual(TransactionCode.Ivmt, wmsToEms.Transaction);
             Assert.AreEqual(Convert.ToInt16(SwmToMheIvmt.SourceMessageResponseCode), wmsToEms.ResponseCode);
         }
-        public void VerifyQuantityIsIncreasedIntoTransInvn(TransitionalInventoryDto trnInvnAfterApi, TransitionalInventoryDto trnInvnBeforeApi)
+        protected void VerifyQuantityIsIncreasedIntoTransInvn(TransitionalInventoryDto trnInvnAfterApi, TransitionalInventoryDto trnInvnBeforeApi)
         {
             Assert.AreEqual(TransInvnBeforeTrigger.ActualInventoryUnits + Convert.ToDecimal(Ivmt.Quantity), TransInvnAfterTrigger.ActualInventoryUnits);
             Assert.AreEqual((UnitWeight * Convert.ToDecimal(Ivmt.Quantity)) + SingleSkuCase.ActualWeight, Convert.ToDecimal(CaseDtlAfterApi.ActualWeight));
         }
-        public void VerifyQuantityisReducedIntoCaseDetailForMultiSku()
+        protected void VerifyQuantityisReducedIntoCaseDetailForMultiSku()
         {
             for (var j = 0; j < CaseList.Count; j++)
             {
                 Assert.AreEqual(0, CaseList[j].TotalAllocQty);
             }
         }
-        public void VerifyStatusIsUpdatedIntoCaseHeader(int caseHdrstatcode)
+        protected void VerifyStatusIsUpdatedIntoCaseHeader(int caseHdrstatcode)
         {
             Assert.AreEqual(DefaultValues.CaseHdrStatCode, caseHdrstatcode);
         }
-        public void VerifyStatusIsUpdatedIntoTaskHeader(int statcode)
+        protected void VerifyStatusIsUpdatedIntoTaskHeader(int statcode)
         {
             try
             {

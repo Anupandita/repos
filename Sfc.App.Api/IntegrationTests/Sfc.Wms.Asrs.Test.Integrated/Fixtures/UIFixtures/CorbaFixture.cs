@@ -25,7 +25,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
             };
            
         }
-        public void CallCorbaApi(string corbaUrl)
+        protected void CallCorbaApi(string corbaUrl)
         {
             var request = CallPostApi();
             request.AddJsonBody(corbaDto);

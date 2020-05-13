@@ -56,7 +56,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
 
 
-        public void GetDataBeforeTriggerSynr()
+        protected void GetDataBeforeTriggerSynr()
         {
             using (var db = GetOracleConnection())
             {
@@ -87,7 +87,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return pickLocnDtlReader;
         }
 
-        public void GetDataAfterTrigger()
+        protected void GetDataAfterTrigger()
         {
             using (var db = GetOracleConnection())
             {
@@ -113,7 +113,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return pldsnapshotReader;
         }
 
-        public void GetValidData()
+        protected void GetValidData()
         {
             using (var db = GetOracleConnection())
             {
@@ -146,7 +146,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return pldsnap;
         }
 
-        public void ValidateForSyndMessagesInsertedIntoSwmToMheTableAndSyndDataTableWithAppropiateValues()
+        protected void ValidateForSyndMessagesInsertedIntoSwmToMheTableAndSyndDataTableWithAppropiateValues()
         {
             using (var db = GetOracleConnection())
             {
@@ -249,7 +249,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         }
 
-        public void SyncGetValidData()
+        protected void SyncGetValidData()
         {
             using (var db = GetOracleConnection())
             {
@@ -262,7 +262,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
 
         }
 
-        public void GetDataBeforeTriggerSync()
+        protected void GetDataBeforeTriggerSync()
         {
             using (var db = GetOracleConnection())
             {
@@ -298,7 +298,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return testResult.Payload;
         }
 
-        public void GetDataAfterTriggerSync()
+        protected void GetDataAfterTriggerSync()
         {
             using (var db = GetOracleConnection())
             {

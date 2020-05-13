@@ -17,7 +17,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
     {
         PreferencesDto preferencesDto;
         IRestResponse response;
-        public void FetchUserPreferenceIdIfAnyFromDb()
+        protected void FetchUserPreferenceIdIfAnyFromDb()
         {
             using (var db = new OracleConnection())
             {
@@ -31,7 +31,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
 
             }
          }
-        public void CreateUserMasterDto()
+        protected void CreateUserMasterDto()
         {
             preferencesDto = new PreferencesDto()
             {
@@ -42,14 +42,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
                 UnconstrainedValue = UIConstants.UnconstrainedValue
             };
         }
-        public void CallUserMasterApi(string url)
+        protected void CallUserMasterApi(string url)
         {
             var request = CallPostApi();
             request.AddJsonBody(new List<PreferencesDto> { preferencesDto });
             response = ExecuteRequest(url, request);
             VerifyOkResultAndStoreBearerToken(response);
         }
-       public void  VerifyUserMasterApiOutputAgainstDbOutput(int Id)
+       protected void  VerifyUserMasterApiOutputAgainstDbOutput(int Id)
         {
             var payload = JsonConvert.DeserializeObject<BaseResult<List<PreferencesDto>>>(response.Content).Payload;
             var Dt = ToDataTable(payload);          

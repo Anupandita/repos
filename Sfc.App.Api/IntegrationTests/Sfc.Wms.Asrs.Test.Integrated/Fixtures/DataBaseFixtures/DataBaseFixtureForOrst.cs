@@ -125,7 +125,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 return orstTestData;
         }
 
-        public void GetDataBeforeTriggerOrst()
+        protected void GetDataBeforeTriggerOrst()
         {
             using (var db = GetOracleConnection())
             {
@@ -139,7 +139,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void GetDataBeforeCallingApiForActionCodeComplete()
+        protected void GetDataBeforeCallingApiForActionCodeComplete()
         {
             using (var db = GetOracleConnection())
             {
@@ -159,7 +159,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void GetDataBeforeCallingApiForActionCodeDeAllocate()
+        protected void GetDataBeforeCallingApiForActionCodeDeAllocate()
         {
             using (var db = GetOracleConnection())
             {
@@ -172,7 +172,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void GetCancelledCartonDataBeforeCallingApiForActionCodeCancel()
+        protected void GetCancelledCartonDataBeforeCallingApiForActionCodeCancel()
         {
             using (var db = GetOracleConnection())
             {
@@ -186,7 +186,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void GetDataBeforeCallingApiForActionCodeCancel()
+        protected void GetDataBeforeCallingApiForActionCodeCancel()
         {
             using (var db = GetOracleConnection())
             {
@@ -200,7 +200,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void GetDataAfterTriggerOrstCase1()
+        protected void GetDataAfterTriggerOrstCase1()
         {
             using (var db = GetOracleConnection())
             {
@@ -212,7 +212,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void GetDataAfterTriggerOrstCase2()
+        protected void GetDataAfterTriggerOrstCase2()
         {
             using (var db = GetOracleConnection())
             {
@@ -244,7 +244,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void GetDataAfterTriggerOrstCase3()
+        protected void GetDataAfterTriggerOrstCase3()
         {
             using (var db = GetOracleConnection())
             {
@@ -254,7 +254,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void GetDataAfterTriggerOrstCase4()
+        protected void GetDataAfterTriggerOrstCase4()
         {
             using (var db = GetOracleConnection())
             {
@@ -267,7 +267,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void GetDataBeforeApiForActionCodeCompletedWithBitsEnabled()
+        protected void GetDataBeforeApiForActionCodeCompletedWithBitsEnabled()
         {
             using (var db = GetOracleConnection())
             {
@@ -285,7 +285,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             }
         }
 
-        public void GetDataBeforeApiForActionCodeCompleteWithPickTicketSeqNumberLessThan1()
+        protected void GetDataBeforeApiForActionCodeCompleteWithPickTicketSeqNumberLessThan1()
         {
             using (var db = GetOracleConnection())
             {
@@ -295,7 +295,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
                 OrstMessageCreatedForCompletedStatus(db);
             }
         }
-        public void GetDataAfterApiForActionCodeCompleteWithBitsEnabled()
+        protected void GetDataAfterApiForActionCodeCompleteWithBitsEnabled()
         {
             using (var db = GetOracleConnection())
             {
@@ -336,7 +336,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             return testResult.Payload;
         }
 
-        public void OrstMessageCreatedForAllocatedStatus(OracleConnection db)
+        protected void OrstMessageCreatedForAllocatedStatus(OracleConnection db)
         {
             var orstmsg = CreateOrstMessage(OrstActionCode.Allocated,Allocated.OrderId,Allocated.SkuId, OrmtCase1.Quantity, OrmtCase1.WaveId,Constants.OrderReasonCodeMap, OrmtCase1.Owner,null,Allocated.DestLocnId);
             var emsToWms = new EmsToWmsDto
@@ -350,7 +350,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             MsgKeyForAllocated.MsgKey = InsertEmsToWms(db, emsToWms);
         }
 
-        public void OrstMessageCreatedForCompletedStatus(OracleConnection db)
+        protected void OrstMessageCreatedForCompletedStatus(OracleConnection db)
         {
             var orstmsg = CreateOrstMessage(OrstActionCode.Complete, Complete.OrderId, Complete.SkuId, OrmtCase2.Quantity, OrmtCase2.WaveId,Constants.OrderReasonCodeMap,OrmtCase2.Owner,null,Complete.DestLocnId);
             var emsToWms = new EmsToWmsDto
@@ -364,7 +364,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             MsgKeyForCompleted.MsgKey = InsertEmsToWms(db, emsToWms);
             }
 
-        public void OrstMessageCreatedForCompletedStatusWithBitsEnabled(OracleConnection db)
+        protected void OrstMessageCreatedForCompletedStatusWithBitsEnabled(OracleConnection db)
         {
             var orstmsg = CreateOrstMessage(OrstActionCode.Complete, Complete.OrderId, Complete.SkuId, OrmtCase2.Quantity, OrmtCase2.WaveId, Constants.OrderRsnCodeBitsEnabled, OrmtCase2.Owner, Constants.SampleCurrentLocnId, Complete.DestLocnId);
             var emsToWms = new EmsToWmsDto
@@ -379,7 +379,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
         }
 
 
-        public void OrstMessageCreatedForDeallocateStatus(OracleConnection db)
+        protected void OrstMessageCreatedForDeallocateStatus(OracleConnection db)
         {
             var orstmsg = CreateOrstMessage(OrstActionCode.Deallocate, Deallocate.OrderId, Deallocate.SkuId, OrmtCase3.Quantity, OrmtCase3.WaveId,"05",null,null,Deallocate.DestLocnId);
             var emsToWms = new EmsToWmsDto
@@ -393,7 +393,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures
             MsgKeyForDeallocated.MsgKey = InsertEmsToWms(db, emsToWms);
         }
 
-        public void OrstMessageCreatedForCancelledStatus(OracleConnection db)
+        protected void OrstMessageCreatedForCancelledStatus(OracleConnection db)
         {
             var orstmsg = CreateOrstMessage(OrstActionCode.Canceled, Canceled.OrderId, Canceled.SkuId, OrmtCase4.Quantity, OrmtCase4.WaveId,"06",null,null,Canceled.DestLocnId);
             var emsToWms = new EmsToWmsDto
