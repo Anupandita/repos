@@ -26,7 +26,7 @@ namespace Sfc.Wms.App.Api.Controllers
             _answerService = answerService;
         }
 
-        [HttpGet, Route(Routes.Paths.Receipt)]
+        [HttpGet, Route(Routes.Paths.AdvanceShipmentNotices)]
         [ResponseType(typeof(BaseResult<SearchResultDto>))]
         public async Task<IHttpActionResult> SearchAsync([FromUri]ReceiptInquiryDto receiptInquiryDto)
         {

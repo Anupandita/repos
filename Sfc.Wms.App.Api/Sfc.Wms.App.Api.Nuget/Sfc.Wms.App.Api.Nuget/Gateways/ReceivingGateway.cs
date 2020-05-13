@@ -30,7 +30,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
-                var request = GetRequest($"{_endPoint}/{Routes.Paths.Receipt}", receiptInquiryDto, token, Authorization);
+                var request = GetRequest($"{_endPoint}/{Routes.Paths.AdvanceShipmentNotices}", receiptInquiryDto, token, Authorization);
                 var response = await _restCsharpClient.ExecuteTaskAsync<BaseResult<SearchResultDto>>(request)
                     .ConfigureAwait(false);
                 return _responseBuilder.GetBaseResult<SearchResultDto>(response);
