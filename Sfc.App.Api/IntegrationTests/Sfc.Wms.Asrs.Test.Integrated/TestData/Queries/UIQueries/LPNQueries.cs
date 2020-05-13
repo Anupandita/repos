@@ -42,7 +42,7 @@ namespace FunctionalTestProject.SQLQueries
         }
         public static string FetchLpnNbrFromShpmtNbrUpdated()
         {
-            return $@"select  po_nbr,orig_shpmt_nbr,dc_ord_nbr from case_hdr where po_nbr is not null and orig_shpmt_nbr is not null and dc_ord_nbr is not null and stat_code <='45' ORDER BY dbms_random.value";
+            return $@"select  po_nbr,orig_shpmt_nbr,dc_ord_nbr from case_hdr where po_nbr is not null and orig_shpmt_nbr is not null and dc_ord_nbr is not null and stat_code ='30' ORDER BY dbms_random.value";
         }
         public static string FetchGetLpnCount()
         {

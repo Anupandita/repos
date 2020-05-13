@@ -8,7 +8,7 @@ namespace FunctionalTestProject.SQLQueries
         public const string FetchPoNbrSql = "select distinct ad.po_nbr from asn_hdr ah inner join asn_dtl ad on ah.shpmt_nbr=ad.shpmt_nbr inner join asn_lot_trkg_tbl al on ad.shpmt_nbr=al.shpmt_nbr ORDER BY dbms_random.value";
         public const string FetchAsnNbrSql = "Select * from(select distinct ah.SHPMT_NBR,count(*) from asn_hdr ah inner join asn_dtl ad on ah.shpmt_nbr=ad.shpmt_nbr inner join asn_lot_trkg_tbl al on ad.shpmt_nbr=al.shpmt_nbr " +
             "group by ah.shpmt_nbr ORDER BY dbms_random.value) where rownum=1";
-        public const string FetchVerifyReceiptShpmtNbr = "select shpmt_nbr from asn_hdr where stat_code>=30 and stat_code<=85";
+        public const string FetchVerifyReceiptShpmtNbr = "select shpmt_nbr from asn_hdr where stat_code>='30' and stat_code<='85'";
         public const string FetchVendorName = "select * from (Select vendor_name,count(*) from(select distinct vendor_name,ad.shpmt_nbr,count(vendor_name) from asn_dtl ad inner join vendor_master vm on vm.vendor_id=ad.vendor_id group by vendor_name,ad.shpmt_nbr  ORDER BY dbms_random.value) group by vendor_name ORDER BY dbms_random.value) where rownum=1";
         public static string FetchVerfDateSql = "Select * from(select to_char(verf_date_time-10,'MM/dd/yyyy'),to_char(verf_date_time+10,'MM/dd/yyyy') from asn_hdr where verf_date_time is not null ORDER BY dbms_random.value) where rownum=1";
 

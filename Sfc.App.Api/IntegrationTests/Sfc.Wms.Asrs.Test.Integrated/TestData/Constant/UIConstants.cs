@@ -138,7 +138,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.TestData.Constant
         public const string SearchInputToDate = "&lpnParamDto.statusTo=";
         public const string SearchInputLpnNumber = "lpnParamDto.lpnNumber=";
         public static string ReceivingSearchUrl;
-        public const string ReceivingSearch = "receipts?";
+        public const string ReceivingSearch = "advanced-shipment-notices?";
 
         // http://qa.api.wms.shamrockfoods.com/api/receipts?statusFrom=10&statusTo=50&totalRows=0&pageNo=1&rowsPerPage=50
    

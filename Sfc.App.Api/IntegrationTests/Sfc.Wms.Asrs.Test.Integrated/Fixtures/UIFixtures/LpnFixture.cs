@@ -687,7 +687,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
         {
             lpnUpdate = new LpnHeaderUpdateDto()
             {
-               // ReceivedShipmentNumber = UIConstants.ShipmentNbr,
+                ReceivedShipmentNumber = UIConstants.ShipmentNbr,
                 ExpireDate = UIConstants.ExpireDate.SetAzureDbDateTimeKindToUtc(),
                 ManufacturingDate = UIConstants.ManufacturingDate.SetAzureDbDateTimeKindToUtc(),
                 ConsumeCasePriority = UIConstants.ConsumePriority,
@@ -696,8 +696,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Fixtures.UIFixtures
                 CaseNumber = UIConstants.LpnNumber,
                 EstimatedWeight = UIConstants.EstWt,
                 ActualWeight = UIConstants.ActlWt,
-                // DistributionCenterOrderNumber = UIConstants.DcOrderNbr,
-                // PoNumber = UIConstants.PoNumber,
+                DistributionCenterOrderNumber = UIConstants.DcOrderNbr,
+                PoNumber = UIConstants.PoNumber,
                 Volume = UIConstants.Volume,
                 VendorId = UIConstants.VendorId,
                 SpecialInstructionCode1 = UIConstants.SpclInstCode1,
