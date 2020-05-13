@@ -16,14 +16,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
     public class SkmtChildSku : SkmtMessageFixture
     {
         [TestInitialize]
-        public void AValidTestData()
+        protected void AValidTestData()
         {
             InitializeTestDataChild();
         }
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void SkmtMessageTestFor1ChildSkuAddScenarios()
+        protected void SkmtMessageTestFor1ChildSkuAddScenarios()
         {
             this.Given(x => x.ValidSkuActioncodeAndSkmtUrlIs(ChildSku.SkuId, SkmtActionCode.Add,SkmtUrl))
                 .When(x => x.SkmtApiIsCalledCreatedIsReturned())
@@ -36,7 +36,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void SkmtMessageTestFor2ChildSkuUpdateScenarios()
+        protected void SkmtMessageTestFor2ChildSkuUpdateScenarios()
         {
             this.Given(x => x.ValidSkuActioncodeAndSkmtUrlIs(ChildSku.SkuId, SkmtActionCode.Update, SkmtUrl))
                 .When(x => x.SkmtApiIsCalledCreatedIsReturned())
@@ -49,7 +49,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void SkmtMessageTestFor3ChildSkuDeleteScenarios()
+        protected void SkmtMessageTestFor3ChildSkuDeleteScenarios()
         {
             this.Given(x => x.ValidSkuActioncodeAndSkmtUrlIs(ChildSku.SkuId, SkmtActionCode.Delete, SkmtUrl))
                 .When(x => x.SkmtApiIsCalledCreatedIsReturned())

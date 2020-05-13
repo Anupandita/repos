@@ -18,14 +18,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
     public class Ivmt:ComtIvmtMessageFixture
     {
         [TestInitialize]
-        public void AValidTestData()
+        protected void AValidTestData()
         {
             InitializeTestData();
         }
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void IvmtMessageTestScenarios()
+        protected void IvmtMessageTestScenarios()
         {           
                this.Given(x => x.AValidNewIvmtMessageRecordWhereCaseNumberAndSkuIs(SingleSkuCase.CaseNumber,SingleSkuCase.SkuId))
                .When(x => x.IvmtApiIsCalledCreatedIsReturnedWithValidUrlIs(IvmtUrl))

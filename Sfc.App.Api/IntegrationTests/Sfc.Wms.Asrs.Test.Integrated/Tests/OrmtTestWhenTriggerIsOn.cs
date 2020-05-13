@@ -19,7 +19,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         //[TestMethod()]
         //[TestCategory("FUNCTIONAL")]
         //[DataRow(1)]
-        //public void AOrmtTest1VerifyForOrmtMessageWithActionCodeAddRelease(int count)
+        //protected void AOrmtTest1VerifyForOrmtMessageWithActionCodeAddRelease(int count)
         //{
         ////    this.Given(x => x.InitializeTestDataForPrintingOfCartons())
         ////    .And(x => x.ValidOrmtUrlCartonNumberAndActioncodeIs(Url, PrintCarton.CartonNbr, OrmtActionCode.AddRelease)) 
@@ -33,7 +33,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         ////}
         //[TestMethod()]
         //[TestCategory("FUNCTIONAL")]
-        //public void BOrmtTest2VerifyForOrmtMessageWithActionCodeCancel()
+        //protected void BOrmtTest2VerifyForOrmtMessageWithActionCodeCancel()
         //{
         //    this.Given(x => x.InitializeTestDataForCancelOfCarton())
         //   .And(x => x.ValidOrmtUrlCartonNumberAndActioncodeIs(OrmtUrl, CancelOrder.CartonNbr, OrmtActionCode.Cancel))          
@@ -46,7 +46,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         //[TestMethod()]
         //[TestCategory("FUNCTIONAL")]
-        //public void COrmtTest3VerifyForOrmtMessageWithActionCodeEPick()
+        //protected void COrmtTest3VerifyForOrmtMessageWithActionCodeEPick()
         //{
         //    this.Given(x => x.InitializeTestDataForEpickOfCarton())
         //   .And(x => x.ValidOrmtUrlCartonNumberAndActioncodeIs(OrmtUrl, EPick.CartonNbr, OrmtActionCode.AddRelease))        
