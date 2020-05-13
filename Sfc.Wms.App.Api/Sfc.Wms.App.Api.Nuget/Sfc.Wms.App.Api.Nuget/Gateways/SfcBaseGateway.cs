@@ -17,12 +17,10 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
         private readonly NewtonsoftJsonSerializer _newtonsoftJsonSerializer;
         private readonly TimeSpan _pauseBetweenFailures;
         private readonly int _webRequestTimeoutInSecs;
-        protected string ServiceBaseUrl;
         protected string ServiceUrl;
 
         protected SfcBaseGateway(IRestClient restClient)
         {
-            ServiceBaseUrl = ConfigurationManager.AppSettings["BaseUrl"];
             ServiceUrl = ConfigurationManager.AppSettings["ServiceUrl"];
 
             if (!int.TryParse(ConfigurationManager.AppSettings["MaxRetryAttempts"], out _maxRetryAttempts))
@@ -73,14 +71,15 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             return request;
         }
 
-        protected RestRequest PostRequest<TEntity>(string resource, TEntity body, string token) where TEntity : class
+        protected RestRequest PostRequest<TEntity>(string resource, TEntity body, string token = null) where TEntity : class
         {
             var request = new RestRequest(resource, Method.POST)
             {
                 RequestFormat = DataFormat.Json,
                 JsonSerializer = _newtonsoftJsonSerializer
             };
-            request.AddHeader(Constants.Token, token);
+            if (!string.IsNullOrWhiteSpace(token))
+                request.AddHeader(Constants.Token, token);
             request.AddJsonBody(body);
             request.Timeout = _webRequestTimeoutInSecs * 1000;
             return request;

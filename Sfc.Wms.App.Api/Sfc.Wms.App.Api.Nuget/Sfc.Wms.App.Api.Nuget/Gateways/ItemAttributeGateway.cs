@@ -1,4 +1,5 @@
-﻿using Sfc.Core.OnPrem.Result;
+﻿using RestSharp;
+using Sfc.Core.OnPrem.Result;
 using Sfc.Core.RestResponse;
 using Sfc.Wms.App.Api.Contracts.Constants;
 using Sfc.Wms.App.Api.Nuget.Interfaces;
@@ -12,11 +13,11 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
     {
         private readonly string _endPoint;
         private readonly IResponseBuilder _responseBuilder;
-        private readonly IRestCsharpClient _restCsharpClient;
+        private readonly IRestClient _restCsharpClient;
         private const string Authorization = "Authorization";
 
 
-        public ItemAttributeGateway(IResponseBuilder responseBuilders, IRestCsharpClient restClient) : base(restClient)
+        public ItemAttributeGateway(IResponseBuilder responseBuilders, IRestClient restClient) : base(restClient)
         {
             _endPoint = Routes.Prefixes.ItemAttribute;
             _responseBuilder = responseBuilders;

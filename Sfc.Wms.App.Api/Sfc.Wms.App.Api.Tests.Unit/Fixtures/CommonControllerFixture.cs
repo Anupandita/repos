@@ -1,4 +1,8 @@
-﻿using DataGenerator;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Results;
+using DataGenerator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Sfc.Core.OnPrem.Pagination;
@@ -7,10 +11,6 @@ using Sfc.Wms.App.Api.Contracts.Dto;
 using Sfc.Wms.App.Api.Controllers;
 using Sfc.Wms.Configuration.SystemCode.Contracts.Dtos;
 using Sfc.Wms.Configuration.SystemCode.Contracts.Interfaces;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Results;
 
 namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 {
@@ -31,7 +31,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         {
             systemCodeInputDto = Generator.Default.Single<SystemCodeInputDto>();
             var result = new BaseResult<IEnumerable<SysCodeDto>>
-            { ResultType = ResultTypes.Ok, Payload = Generator.Default.List<SysCodeDto>(10) };
+                {ResultType = ResultTypes.Ok, Payload = Generator.Default.List<SysCodeDto>(10)};
 
             _systemCodeService.Setup(el =>
                     el.GetSystemCodeAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(),
@@ -42,7 +42,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         protected void InValidInputParametersToGetSystemCodes()
         {
             systemCodeInputDto = Generator.Default.Single<SystemCodeInputDto>();
-            var result = new BaseResult<IEnumerable<SysCodeDto>> { ResultType = ResultTypes.BadRequest };
+            var result = new BaseResult<IEnumerable<SysCodeDto>> {ResultType = ResultTypes.BadRequest};
 
             _systemCodeService.Setup(el =>
                     el.GetSystemCodeAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(),
@@ -65,13 +65,13 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void TheGetSystemCodesOperationReturnedOkResponse()
         {
-            _systemCodeService.Verify(el => el.GetSystemCodeAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(),
+            _systemCodeService.Verify(el => el.GetSystemCodeAsync(It.IsAny<string>(), It.IsAny<string>(),
+                It.IsAny<string>(),
                 It.IsAny<SortOption>()));
             Assert.IsNotNull(testResponse);
             var result = testResponse.Result as OkNegotiatedContentResult<BaseResult<IEnumerable<SysCodeDto>>>;
             Assert.IsNotNull(result);
             Assert.AreEqual(ResultTypes.Ok, result.Content.ResultType);
         }
-
     }
 }

@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Sfc.Core.OnPrem.Result;
+﻿using Sfc.Core.OnPrem.Result;
 using Sfc.Core.RestResponse;
 using Sfc.Wms.App.Api.Contracts.Constants;
-using Sfc.Wms.App.Api.Contracts.Entities;
 using Sfc.Wms.App.Api.Nuget.Interfaces;
 using Sfc.Wms.Foundation.InboundLpn.Contracts.Dtos;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using RestSharp;
 
 namespace Sfc.Wms.App.Api.Nuget.Gateways
 {
@@ -14,10 +14,10 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
     {
         private readonly string _endPoint;
         private readonly IResponseBuilder _responseBuilder;
-        private readonly IRestCsharpClient _restCsharpClient;
+        private readonly IRestClient _restCsharpClient;
         private const string Authorization = "Authorization";
 
-        public LpnGateway(IResponseBuilder responseBuilders, IRestCsharpClient restClient) : base(restClient)
+        public LpnGateway(IResponseBuilder responseBuilders, IRestClient restClient) : base(restClient)
         {
             _endPoint = Routes.Prefixes.Lpn;
             _responseBuilder = responseBuilders;
@@ -30,7 +30,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
-                var resource = $"{_endPoint}/{Routes.Paths.LpnCommentsAdd}/{caseNumber}/{commentSequenceNumber}";
+                var resource = $"{_endPoint}/{Routes.Paths.LpnComments}/{caseNumber}/{commentSequenceNumber}";
                 var request = DeleteRequest(resource, token, Authorization);
                 var response = await _restCsharpClient.ExecuteTaskAsync<BaseResult>(request).ConfigureAwait(false);
 
@@ -43,7 +43,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
-                var resource = $"{_endPoint}/{Routes.Paths.LpnCommentsAdd}/{lpnId}";
+                var resource = $"{_endPoint}/{Routes.Paths.LpnComments}/{lpnId}";
                 var request = GetRequest(token, resource, Authorization);
                 var response = await _restCsharpClient.ExecuteTaskAsync<BaseResult<List<CaseCommentDto>>>(request)
                     .ConfigureAwait(false);
@@ -104,29 +104,13 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             }).ConfigureAwait(false);
         }
 
-        //TODO:  Needs to be validated at the time of aisle implementation
-        public async Task<BaseResult<AisleTransactionDto>> InsertLpnAisleTransAsync(
-            LpnAisleTransModel lpnAisleTransModel,
-            string token)
-        {
-            var retryPolicy = Proxy();
-            return await retryPolicy.ExecuteAsync(async () =>
-            {
-                var resourceUrl = $"{_endPoint}/{Routes.Paths.LpnAisleTrans}";
-                var request = PostRequest(resourceUrl, lpnAisleTransModel, token, Authorization);
-                var response = await _restCsharpClient.ExecuteTaskAsync<BaseResult<AisleTransactionDto>>(request)
-                    .ConfigureAwait(false);
-                return _responseBuilder.GetBaseResult<AisleTransactionDto>(response);
-            }).ConfigureAwait(false);
-        }
-
         public async Task<BaseResult<CaseCommentDto>> InsertLpnCommentsAsync(CaseCommentDto caseCommentDto,
             string token)
         {
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
-                var resource = $"{_endPoint}/{Routes.Paths.LpnCommentsAdd}";
+                var resource = $"{_endPoint}/{Routes.Paths.LpnComments}";
                 var request = PostRequest(resource, caseCommentDto, token, Authorization);
                 var response = await _restCsharpClient.ExecuteTaskAsync<BaseResult<CaseCommentDto>>(request)
                     .ConfigureAwait(false);
@@ -155,7 +139,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
             var retryPolicy = Proxy();
             return await retryPolicy.ExecuteAsync(async () =>
             {
-                var resource = $"{_endPoint}/{Routes.Paths.LpnCommentsAdd}";
+                var resource = $"{_endPoint}/{Routes.Paths.LpnComments}";
                 var request = PutRequest(resource, caseCommentDto, token, Authorization);
                 var response = await _restCsharpClient.ExecuteTaskAsync<BaseResult>(request).ConfigureAwait(false);
 

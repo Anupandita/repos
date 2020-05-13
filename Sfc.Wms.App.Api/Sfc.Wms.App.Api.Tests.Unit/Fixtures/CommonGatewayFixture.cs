@@ -1,4 +1,7 @@
-﻿using DataGenerator;
+﻿using System.Collections.Generic;
+using System.Net;
+using System.Threading.Tasks;
+using DataGenerator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Newtonsoft.Json;
@@ -8,23 +11,19 @@ using Sfc.Core.RestResponse;
 using Sfc.Wms.App.Api.Contracts.Dto;
 using Sfc.Wms.App.Api.Nuget.Gateways;
 using Sfc.Wms.Configuration.SystemCode.Contracts.Dtos;
-using System.Collections.Generic;
-using System.Net;
-using System.Threading.Tasks;
-using Sfc.Wms.App.Api.Nuget.Interfaces;
 
 namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 {
     public class CommonGatewayFixture
     {
         private readonly CommonGateway _commonGateway;
-        private readonly Mock<IRestCsharpClient> _restClient;
+        private readonly Mock<IRestClient> _restClient;
         private SystemCodeInputDto systemCodeInputDto;
         private BaseResult<IEnumerable<SysCodeDto>> testBaseResult;
 
         protected CommonGatewayFixture()
         {
-            _restClient = new Mock<IRestCsharpClient>();
+            _restClient = new Mock<IRestClient>();
             _commonGateway = new CommonGateway(new ResponseBuilder(), _restClient.Object);
         }
 
@@ -48,14 +47,14 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         {
             systemCodeInputDto = Generator.Default.Single<SystemCodeInputDto>();
             var result = new BaseResult<IEnumerable<SysCodeDto>>
-            { ResultType = ResultTypes.Ok, Payload = Generator.Default.List<SysCodeDto>(10) };
+                {ResultType = ResultTypes.Ok, Payload = Generator.Default.List<SysCodeDto>(10)};
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
         protected void InValidInputParametersToGetCodeIds()
         {
             systemCodeInputDto = Generator.Default.Single<SystemCodeInputDto>();
-            var result = new BaseResult<IEnumerable<SysCodeDto>> { ResultType = ResultTypes.BadRequest };
+            var result = new BaseResult<IEnumerable<SysCodeDto>> {ResultType = ResultTypes.BadRequest};
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 

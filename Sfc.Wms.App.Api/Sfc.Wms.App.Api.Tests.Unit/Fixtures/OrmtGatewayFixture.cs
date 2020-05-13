@@ -38,19 +38,20 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void InvalidInputData()
         {
-            var result = new BaseResult { ResultType = ResultTypes.NotFound };
+            var result = new BaseResult {ResultType = ResultTypes.NotFound};
             GetRestResponse1(result, HttpStatusCode.NotFound, ResponseStatus.Completed);
         }
 
         protected void ValidInputData()
         {
-            var result = new BaseResult { ResultType = ResultTypes.Created };
+            var result = new BaseResult {ResultType = ResultTypes.Created};
             GetRestResponse1(result, HttpStatusCode.Created, ResponseStatus.Completed);
         }
 
         protected void CreateOrmtByCartonNumberMessageBuilderInvoked()
         {
-            manipulationTestResult = _ormtGateway.CreateOrmtMessageByCartonNumberAsync(It.IsAny<string>(), It.IsAny<string>()).Result;
+            manipulationTestResult = _ormtGateway
+                .CreateOrmtMessageByCartonNumberAsync(It.IsAny<string>(), It.IsAny<string>()).Result;
         }
 
         protected void CreateOrmtByWaveNumberMessageBuilderInvoked()

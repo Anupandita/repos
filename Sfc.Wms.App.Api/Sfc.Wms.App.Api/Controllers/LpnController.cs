@@ -31,7 +31,7 @@ namespace Sfc.Wms.App.Api.Controllers
         }
 
         [HttpPost]
-        [Route(Routes.Paths.LpnCommentsAdd)]
+        [Route(Routes.Paths.LpnComments)]
         [ResponseType(typeof(BaseResult<CaseCommentDto>))]
         public async Task<IHttpActionResult> AddLpnCommentAsync(CaseCommentDto caseCommentDto)
         {
@@ -70,7 +70,7 @@ namespace Sfc.Wms.App.Api.Controllers
         }
 
         [HttpGet]
-        [Route(Routes.Paths.LpnComments, Name = nameof(CaseCommentDto))]
+        [Route(Routes.Paths.GetLpnComments, Name = nameof(CaseCommentDto))]
         [ResponseType(typeof(BaseResult<List<CaseCommentDto>>))]
         public async Task<IHttpActionResult> GetLpnCommentsAsync(string lpnId)
         {
@@ -133,7 +133,7 @@ namespace Sfc.Wms.App.Api.Controllers
         }
 
         [HttpPut]
-        [Route(Routes.Paths.LpnCommentsAdd)]
+        [Route(Routes.Paths.LpnComments)]
         [ResponseType(typeof(BaseResult))]
         public async Task<IHttpActionResult> UpdateLpnCommentAsync(CaseCommentDto caseCommentDto)
         {

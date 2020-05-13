@@ -25,7 +25,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void ValidIvmtMessage()
         {
-            var response = new BaseResult()
+            var response = new BaseResult
             {
                 ResultType = ResultTypes.Created
             };
@@ -36,7 +36,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void InvalidIvmtMessage()
         {
-            var response = new BaseResult()
+            var response = new BaseResult
             {
                 ResultType = ResultTypes.BadRequest
             };

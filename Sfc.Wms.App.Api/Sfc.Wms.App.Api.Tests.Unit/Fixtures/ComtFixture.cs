@@ -25,7 +25,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void ValidComtMessage()
         {
-            var response = new BaseResult()
+            var response = new BaseResult
             {
                 ResultType = ResultTypes.Created
             };
@@ -36,7 +36,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void InvalidComtMessage()
         {
-            var response = new BaseResult()
+            var response = new BaseResult
             {
                 ResultType = ResultTypes.BadRequest
             };

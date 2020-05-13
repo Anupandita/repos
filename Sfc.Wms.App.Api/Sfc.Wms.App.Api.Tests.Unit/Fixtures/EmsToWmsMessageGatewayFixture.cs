@@ -38,13 +38,13 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void InvalidInputData()
         {
-            var result = new BaseResult { ResultType = ResultTypes.BadRequest };
+            var result = new BaseResult {ResultType = ResultTypes.BadRequest};
             GetRestResponse1(result, HttpStatusCode.BadRequest, ResponseStatus.Completed);
         }
 
         protected void ValidInputData()
         {
-            var result = new BaseResult { ResultType = ResultTypes.Created };
+            var result = new BaseResult {ResultType = ResultTypes.Created};
             GetRestResponse1(result, HttpStatusCode.Created, ResponseStatus.Completed);
         }
 

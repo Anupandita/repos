@@ -6,16 +6,14 @@
     <Authors>Shamrock Foods (SOWL)</Authors>
     <Company>Shamrock Foods Company</Company>
     <Product>Wms.App</Product>
-    <PackageReleaseNotes>Updated to remove errant BaseResult defined here.</PackageReleaseNotes>
+    <PackageReleaseNotes>Removed unused entities and dto's.</PackageReleaseNotes>
     <Configurations>Debug;Release;QA;UAT;PROD</Configurations>
     <PackageId>Sfc.Wms.App.Api.Contracts</PackageId>
     <Copyright>2019</Copyright>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Restsharp" Version="106.6.10" />
-    <PackageReference Include="Sfc.Core.ListManagement.Contracts" Version="[1.0,2.0)" />
+    <PackageReference Include="Sfc.Core.OnPrem.Pagination" Version="2.13.4" />
     <PackageReference Include="Sfc.Core.OnPrem.Result" Version="[2.5.1,3.0)" />
-    <PackageReference Include="Sfc.Core.OnPrem.Security.Contracts" Version="[2.2.0,3.0)" />
-    <PackageReference Include="Sfc.Wms.Foundation.InboundLpn.Contracts" Version="[5.11.0,6.0)" />
   </ItemGroup> 
 </Project>

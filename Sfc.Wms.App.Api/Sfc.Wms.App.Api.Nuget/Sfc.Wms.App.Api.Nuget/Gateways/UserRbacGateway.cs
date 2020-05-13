@@ -1,11 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
-using RestSharp;
+﻿using RestSharp;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Core.OnPrem.Security.Contracts.Dtos;
 using Sfc.Core.RestResponse;
 using Sfc.Wms.App.Api.Contracts.Constants;
 using Sfc.Wms.App.Api.Nuget.Interfaces;
+using System.Threading.Tasks;
 
 namespace Sfc.Wms.App.Api.Nuget.Gateways
 {
@@ -13,11 +12,11 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
     {
         private readonly IResponseBuilder _responseBuilder;
         private readonly string _endPoint;
-        private readonly IRestCsharpClient _restCsharpClient;
+        private readonly IRestClient _restCsharpClient;
         private readonly string Authorization = "Authorization";
 
 
-        public UserRbacGateway(IRestCsharpClient restClient, IResponseBuilder responseBuilder) : base(restClient)
+        public UserRbacGateway(IRestClient restClient, IResponseBuilder responseBuilder) : base(restClient)
         {
             _responseBuilder = responseBuilder;
             _endPoint = Routes.Prefixes.User;
@@ -25,7 +24,7 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
 
         }
 
-       public async Task<BaseResult> RefreshAuthTokenAsync(string token)
+        public async Task<BaseResult> RefreshAuthTokenAsync(string token)
         {
             const string url = Routes.Paths.RefreshToken;
             var retryPolicy = Proxy();
@@ -40,8 +39,8 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
 
         public async Task<BaseResult<UserInfoDto>> SignInAsync(LoginCredentials loginCredentials)
         {
-            var request = new RestRequest(Routes.Paths.UserLogin, Method.POST);
-            request.AddJsonBody(loginCredentials);
+            var resource = $"{_endPoint}/{Routes.Paths.UserLogin}";
+            var request = PostRequest(resource, loginCredentials);
             var result = await _restCsharpClient
                 .ExecuteTaskAsync<BaseResult<UserInfoDto>>(request)
                 .ConfigureAwait(false);

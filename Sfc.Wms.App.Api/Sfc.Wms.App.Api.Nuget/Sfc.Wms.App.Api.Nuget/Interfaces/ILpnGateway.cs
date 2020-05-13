@@ -1,5 +1,4 @@
 ﻿using Sfc.Core.OnPrem.Result;
-using Sfc.Wms.App.Api.Contracts.Entities;
 using Sfc.Wms.Foundation.InboundLpn.Contracts.Dtos;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -17,9 +16,6 @@ namespace Sfc.Wms.App.Api.Nuget.Interfaces
         Task<BaseResult<List<LpnHistoryDto>>> GetLpnHistoryByLpnIdAndWhseAsync(string lpnId, string whse, string token);
 
         Task<BaseResult<List<CaseLockUnlockDto>>> GetLpnLockUnlockByLpnIdAsync(string lpnId, string token);
-
-        //TODO:  Needs to be validated at the time of aisle implementation
-        Task<BaseResult<AisleTransactionDto>> InsertLpnAisleTransAsync(LpnAisleTransModel lpnAisleTransModel, string token);
 
         Task<BaseResult> UpdateLpnHeaderAsync(LpnHeaderUpdateDto lpnDetailsUpdateModel, string token);
 

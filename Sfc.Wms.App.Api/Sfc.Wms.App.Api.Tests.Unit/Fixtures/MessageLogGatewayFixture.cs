@@ -1,4 +1,7 @@
-﻿using DataGenerator;
+﻿using System.Collections.Generic;
+using System.Net;
+using System.Threading.Tasks;
+using DataGenerator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Newtonsoft.Json;
@@ -8,25 +11,23 @@ using Sfc.Core.RestResponse;
 using Sfc.Wms.App.Api.Nuget.Gateways;
 using Sfc.Wms.App.Api.Nuget.Interfaces;
 using Sfc.Wms.Configuration.MessageLogger.Contracts.UoW.Dtos;
-using System.Collections.Generic;
-using System.Net;
-using System.Threading.Tasks;
 
 namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 {
     public class MessageLogGatewayFixture
     {
         private readonly IMessageLoggerGateway _messageLogController;
+        private readonly Mock<IRestClient> _restClient;
         private IEnumerable<MessageLogDto> logs;
         private BaseResult testResponse;
-        private readonly Mock<IRestCsharpClient> _restClient;
 
 
         protected MessageLogGatewayFixture()
         {
-            _restClient = new Mock<IRestCsharpClient>();
+            _restClient = new Mock<IRestClient>();
             _messageLogController = new MessageLoggerGateway(new ResponseBuilder(), _restClient.Object);
         }
+
         private void GetRestResponse<T>(T entity, HttpStatusCode statusCode, ResponseStatus responseStatus)
             where T : new()
         {
@@ -46,14 +47,14 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         protected void InputParametersForBatchInsertion()
         {
             logs = Generator.Default.List<MessageLogDto>(2);
-            var result = new BaseResult { ResultType = ResultTypes.Created };
+            var result = new BaseResult {ResultType = ResultTypes.Created};
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
         protected void EmptyOrNullInputForInsertion()
         {
             logs = null;
-            var result = new BaseResult { ResultType = ResultTypes.BadRequest };
+            var result = new BaseResult {ResultType = ResultTypes.BadRequest};
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
@@ -75,6 +76,5 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             Assert.IsNotNull(testResponse);
             Assert.AreEqual(ResultTypes.Created, testResponse.ResultType);
         }
-
     }
 }

@@ -1,18 +1,18 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Results;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.App.Api.Controllers;
 using Sfc.Wms.Interfaces.Asrs.Contracts.Interfaces;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Results;
 
 namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 {
     public abstract class OrmtFixture
     {
-        private readonly OrderMaintenanceController _ormtController;
         private readonly Mock<IWmsToEmsMessageProcessorService> _messageTypeService;
+        private readonly OrderMaintenanceController _ormtController;
         private Task<IHttpActionResult> _testResult;
         private BaseResult mockResponse;
 
@@ -24,7 +24,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void ValidInput()
         {
-            mockResponse = new BaseResult()
+            mockResponse = new BaseResult
             {
                 ResultType = ResultTypes.Created
             };
@@ -32,7 +32,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void InvalidInput()
         {
-            mockResponse = new BaseResult()
+            mockResponse = new BaseResult
             {
                 ResultType = ResultTypes.NotFound
             };
@@ -40,7 +40,8 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         private void MockGetOrmtMessageByCartonNumber()
         {
-            _messageTypeService.Setup(el => el.GetOrmtMessageByCartonNumberAsync(It.IsAny<string>(), It.IsAny<string>()))
+            _messageTypeService
+                .Setup(el => el.GetOrmtMessageByCartonNumberAsync(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(Task.FromResult(mockResponse));
         }
 

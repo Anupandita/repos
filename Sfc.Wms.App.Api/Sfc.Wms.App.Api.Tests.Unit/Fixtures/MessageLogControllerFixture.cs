@@ -1,14 +1,14 @@
-﻿using DataGenerator;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Results;
+using DataGenerator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.App.Api.Controllers;
 using Sfc.Wms.Configuration.MessageLogger.Contracts.UoW.Dtos;
 using Sfc.Wms.Configuration.MessageLogger.Contracts.UoW.Interfaces;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Results;
 
 namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 {
@@ -31,7 +31,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
             _messageLogService.Setup(el =>
                     el.InsertRangeAsync(It.IsAny<IEnumerable<MessageLogDto>>()))
-                .Returns(Task.FromResult(new BaseResult { ResultType = ResultTypes.Created }));
+                .Returns(Task.FromResult(new BaseResult {ResultType = ResultTypes.Created}));
         }
 
         protected void EmptyOrNullInputForInsertion()
@@ -39,7 +39,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             logs = null;
             _messageLogService.Setup(el =>
                     el.InsertRangeAsync(It.IsAny<IEnumerable<MessageLogDto>>()))
-                .Returns(Task.FromResult(new BaseResult { ResultType = ResultTypes.BadRequest }));
+                .Returns(Task.FromResult(new BaseResult {ResultType = ResultTypes.BadRequest}));
         }
 
         protected void BatchInsertionOperationInvoked()
@@ -63,6 +63,5 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             Assert.IsNotNull(result);
             Assert.AreEqual(ResultTypes.Created, result.Content.ResultType);
         }
-
     }
 }

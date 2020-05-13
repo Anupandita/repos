@@ -16,21 +16,20 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 {
     public class ReceivingGatewayFixture
     {
-        private readonly Mock<IRestCsharpClient> _restClient;
-        private ReceiptInquiryDto receiptInquiryDto;
-        private AnswerTextDto answerTextDto;
-        private UpdateAsnDto updateAsnDto;
-        private BaseResult<SearchResultDto> searchResult;
-        private BaseResult<ShipmentDetailsDto> shipmentDetails;
-        private BaseResult<IEnumerable<AsnLotTrackingDto>> lotTrackingDetails;
-        private BaseResult updateResult;
-        private BaseResult<IEnumerable<QvDetailsDto>> qvDetails;
-        private BaseResult<IEnumerable<AsnDrillDownDetailsDto>> asnDetails;
         private readonly IReceivingGateway _receivingGateway;
+        private readonly Mock<IRestClient> _restClient;
+        private readonly AnswerTextDto answerTextDto;
+        private BaseResult<IEnumerable<AsnDrillDownDetailsDto>> asnDetails;
+        private BaseResult<IEnumerable<AsnLotTrackingDto>> lotTrackingDetails;
+        private BaseResult<IEnumerable<QvDetailsDto>> qvDetails;
+        private readonly ReceiptInquiryDto receiptInquiryDto;
+        private BaseResult<SearchResultDto> searchResult;
+        private readonly UpdateAsnDto updateAsnDto;
+        private BaseResult updateResult;
 
         protected ReceivingGatewayFixture()
         {
-            _restClient = new Mock<IRestCsharpClient>();
+            _restClient = new Mock<IRestClient>();
             answerTextDto = Generator.Default.Single<AnswerTextDto>();
             receiptInquiryDto = Generator.Default.Single<ReceiptInquiryDto>();
             updateAsnDto = Generator.Default.Single<UpdateAsnDto>();
@@ -59,6 +58,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             { ResultType = ResultTypes.Ok, Payload = Generator.Default.Single<SearchResultDto>() };
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
+
         protected void EmptyOrNullSearchParameters()
         {
             var result = new BaseResult<SearchResultDto> { ResultType = ResultTypes.BadRequest };
@@ -106,7 +106,8 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void UpdateAnswerTextOperationInvoked()
         {
-            updateResult = _receivingGateway.UpdateQualityVerificationsAsync(answerTextDto,It.IsAny<string>(), It.IsAny<string>()).Result;
+            updateResult = _receivingGateway
+                .UpdateQualityVerificationsAsync(answerTextDto, It.IsAny<string>(), It.IsAny<string>()).Result;
         }
 
         protected void UpdateAnswerTextReturnedOkAsResponseStatus()
@@ -265,7 +266,8 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void FetchQvDetailsOperationInvoked()
         {
-            qvDetails = _receivingGateway.GetQualityVerificationsDetailsAsync(It.IsAny<string>(), It.IsAny<string>()).Result;
+            qvDetails = _receivingGateway.GetQualityVerificationsDetailsAsync(It.IsAny<string>(), It.IsAny<string>())
+                .Result;
         }
 
         protected void FetchQvDetailsReturnedOkAsResponseStatus()
@@ -313,7 +315,8 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void UpdateAsnDetailsOperationInvoked()
         {
-            updateResult = _receivingGateway.UpdateAdvanceShipmentNoticesDetailsAsync(updateAsnDto, It.IsAny<string>(), It.IsAny<string>()).Result;
+            updateResult = _receivingGateway
+                .UpdateAdvanceShipmentNoticesDetailsAsync(updateAsnDto, It.IsAny<string>(), It.IsAny<string>()).Result;
         }
 
         protected void UpdateAsnDetailsReturnedOkAsResponseStatus()

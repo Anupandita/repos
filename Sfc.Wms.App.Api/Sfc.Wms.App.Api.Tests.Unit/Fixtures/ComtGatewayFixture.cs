@@ -1,13 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Net;
+using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Newtonsoft.Json;
 using RestSharp;
 using Sfc.Core.OnPrem.Result;
+using Sfc.Core.RestResponse;
 using Sfc.Wms.App.Api.Nuget.Gateways;
 using Sfc.Wms.Interfaces.Asrs.Contracts.Dtos;
-using System.Net;
-using System.Threading.Tasks;
-using Sfc.Core.RestResponse;
 
 namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 {
@@ -39,13 +39,13 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void InvalidInputData()
         {
-            var result = new BaseResult { ResultType = ResultTypes.BadRequest };
+            var result = new BaseResult {ResultType = ResultTypes.BadRequest};
             GetRestResponse1(result, HttpStatusCode.BadRequest, ResponseStatus.Completed);
         }
 
         protected void ValidInputData()
         {
-            var result = new BaseResult { ResultType = ResultTypes.Created };
+            var result = new BaseResult {ResultType = ResultTypes.Created};
             GetRestResponse1(result, HttpStatusCode.Created, ResponseStatus.Completed);
         }
 

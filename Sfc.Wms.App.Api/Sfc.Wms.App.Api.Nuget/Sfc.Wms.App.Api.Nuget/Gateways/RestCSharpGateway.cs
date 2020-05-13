@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RestSharp;
-using Sfc.Wms.App.Api.Nuget.Interfaces;
+﻿using RestSharp;
 
 namespace Sfc.Wms.App.Api.Nuget.Gateways
 {
-    public class RestCSharpGateway:RestClient,IRestCsharpClient
+    public class RestCSharpGateway : RestClient
     {
-        public RestCSharpGateway(string baseUrl):base(baseUrl)
+        public RestCSharpGateway(string baseUrl) : base(baseUrl)
         {
 
         }
