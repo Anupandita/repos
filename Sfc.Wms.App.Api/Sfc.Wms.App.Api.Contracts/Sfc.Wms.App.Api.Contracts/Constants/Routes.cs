@@ -106,7 +106,6 @@ namespace Sfc.Wms.App.Api.Contracts.Constants
             public const string Skus = "skus";
             public const string AdvanceShipmentNotices = "advanced-shipment-notices";
             public const string QualityVerifications = "quality-verifications";
-            public const string Receipt = "receipts";
             public const string GetAsnDetails = AdvanceShipmentNotices + QueryParamSeperator + Params.ByShipmentNumber;
             public const string UpdateAsnDetails = AdvanceShipmentNotices + QueryParamSeperator + Params.ByShipmentNumber;
             public const string GetAsnLotTrackingDetails = AdvanceShipmentNotices + QueryParamSeperator + Params.ByShipmentNumber
