@@ -171,8 +171,8 @@
     <Reference Include="Sfc.Core.OnPrem.ParallelAndSequentialProcessing, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Core.OnPrem.ParallelAndSequentialProcessing.1.2.1\lib\net472\Sfc.Core.OnPrem.ParallelAndSequentialProcessing.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Core.OnPrem.ParserAndTranslator, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Core.OnPrem.ParserAndTranslator.2.0.0\lib\net472\Sfc.Core.OnPrem.ParserAndTranslator.dll</HintPath>
+    <Reference Include="Sfc.Core.OnPrem.ParserAndTranslator, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Core.OnPrem.ParserAndTranslator.2.0.2\lib\net472\Sfc.Core.OnPrem.ParserAndTranslator.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Core.OnPrem.Result, Version=2.5.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Core.OnPrem.Result.2.5.1\lib\net472\Sfc.Core.OnPrem.Result.dll</HintPath>
@@ -544,8 +544,8 @@
     <Reference Include="Sfc.Wms.Inbound.TransitionalInventory.App, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Inbound.TransitionalInventory.App.1.2.0\lib\net472\Sfc.Wms.Inbound.TransitionalInventory.App.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Interfaces.Asrs.App, Version=3.36.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Interfaces.Asrs.App.3.36.0\lib\net472\Sfc.Wms.Interfaces.Asrs.App.dll</HintPath>
+    <Reference Include="Sfc.Wms.Interfaces.Asrs.App, Version=3.36.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Interfaces.Asrs.App.3.36.2\lib\net472\Sfc.Wms.Interfaces.Asrs.App.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Interfaces.Asrs.Contracts, Version=2.6.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Interfaces.Asrs.Contracts.2.6.0\lib\net472\Sfc.Wms.Interfaces.Asrs.Contracts.dll</HintPath>
@@ -574,8 +574,8 @@
     <Reference Include="Sfc.Wms.Interfaces.Parser, Version=2.9.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Interfaces.Parser.2.9.0\lib\net472\Sfc.Wms.Interfaces.Parser.dll</HintPath>
     </Reference>
-    <Reference Include="Sfc.Wms.Interfaces.ParserAndTranslator.Contracts, Version=2.12.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.2.12.1\lib\net472\Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.dll</HintPath>
+    <Reference Include="Sfc.Wms.Interfaces.ParserAndTranslator.Contracts, Version=2.12.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.2.12.3\lib\net472\Sfc.Wms.Interfaces.ParserAndTranslator.Contracts.dll</HintPath>
     </Reference>
     <Reference Include="Sfc.Wms.Interfaces.Translator, Version=3.8.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sfc.Wms.Interfaces.Translator.3.8.1\lib\net472\Sfc.Wms.Interfaces.Translator.dll</HintPath>
