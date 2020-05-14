@@ -1,18 +1,18 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Results;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.App.Api.Controllers;
 using Sfc.Wms.Interfaces.Asrs.Contracts.Interfaces;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Results;
 
 namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 {
     public abstract class SkmtFixture
     {
-        private readonly SkuMaintenanceController _skmtController;
         private readonly Mock<IWmsToEmsMessageProcessorService> _messageTypeService;
+        private readonly SkuMaintenanceController _skmtController;
         private readonly Mock<IWmsToEmsParallelProcessService> _wmsToEmsParallelProcessService;
         private Task<IHttpActionResult> _testResult;
 
@@ -20,12 +20,13 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         {
             _messageTypeService = new Mock<IWmsToEmsMessageProcessorService>(MockBehavior.Default);
             _wmsToEmsParallelProcessService = new Mock<IWmsToEmsParallelProcessService>(MockBehavior.Default);
-            _skmtController = new SkuMaintenanceController(_messageTypeService.Object, _wmsToEmsParallelProcessService.Object);
+            _skmtController =
+                new SkuMaintenanceController(_messageTypeService.Object, _wmsToEmsParallelProcessService.Object);
         }
 
         protected void ValidSkmtMessage()
         {
-            var response = new BaseResult()
+            var response = new BaseResult
             {
                 ResultType = ResultTypes.Created
             };
@@ -36,7 +37,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void InvalidSkmtMessage()
         {
-            var response = new BaseResult()
+            var response = new BaseResult
             {
                 ResultType = ResultTypes.BadRequest
             };

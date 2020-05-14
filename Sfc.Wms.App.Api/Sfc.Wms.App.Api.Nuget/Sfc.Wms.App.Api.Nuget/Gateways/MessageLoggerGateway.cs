@@ -5,6 +5,7 @@ using Sfc.Wms.App.Api.Nuget.Interfaces;
 using Sfc.Wms.Configuration.MessageLogger.Contracts.UoW.Dtos;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using RestSharp;
 
 namespace Sfc.Wms.App.Api.Nuget.Gateways
 {
@@ -12,9 +13,9 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
     {
         private readonly string _endPoint;
         private readonly IResponseBuilder _responseBuilder;
-        private readonly IRestCsharpClient _restCsharpClient;
+        private readonly IRestClient _restCsharpClient;
 
-        public MessageLoggerGateway(IResponseBuilder responseBuilders, IRestCsharpClient restClient) : base(restClient)
+        public MessageLoggerGateway(IResponseBuilder responseBuilders, IRestClient restClient) : base(restClient)
         {
             _endPoint = Routes.Prefixes.MessageLogger;
             _responseBuilder = responseBuilders;

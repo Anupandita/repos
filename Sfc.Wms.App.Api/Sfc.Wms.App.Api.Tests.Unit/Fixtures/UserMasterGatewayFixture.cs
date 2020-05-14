@@ -1,29 +1,28 @@
-﻿using DataGenerator;
+﻿using System.Collections.Generic;
+using System.Net;
+using System.Threading.Tasks;
+using DataGenerator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Newtonsoft.Json;
 using RestSharp;
 using Sfc.Core.OnPrem.Result;
+using Sfc.Core.OnPrem.Security.Contracts.Dtos;
 using Sfc.Core.RestResponse;
 using Sfc.Wms.App.Api.Nuget.Gateways;
-using System.Net;
-using System.Threading.Tasks;
-using Sfc.Core.OnPrem.Security.Contracts.Dtos;
-using System.Collections.Generic;
-using Sfc.Wms.App.Api.Nuget.Interfaces;
 
 namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 {
     public abstract class UserMasterGatewayFixture
     {
-        private readonly UserMasterGateway _userMasterGateway;
-        private readonly Mock<IRestCsharpClient> _restClient;
         private readonly IEnumerable<PreferencesDto> _preferencesDto;
+        private readonly Mock<IRestClient> _restClient;
+        private readonly UserMasterGateway _userMasterGateway;
         private BaseResult manipulationTestResult;
 
         protected UserMasterGatewayFixture()
         {
-            _restClient = new Mock<IRestCsharpClient>();
+            _restClient = new Mock<IRestClient>();
             _preferencesDto = Generator.Default.List<PreferencesDto>();
             _userMasterGateway = new UserMasterGateway(new ResponseBuilder(), _restClient.Object);
         }
@@ -66,7 +65,8 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void UpdateUserPreferencesInvoked()
         {
-            manipulationTestResult = _userMasterGateway.UpdateUserPreferences(_preferencesDto, It.IsAny<string>()).Result;
+            manipulationTestResult =
+                _userMasterGateway.UpdateUserPreferences(_preferencesDto, It.IsAny<string>()).Result;
         }
 
         protected void UpdateUserPreferencesReturnedOkResponse()
@@ -84,6 +84,5 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         }
 
         #endregion Update User Preferences
-
     }
 }

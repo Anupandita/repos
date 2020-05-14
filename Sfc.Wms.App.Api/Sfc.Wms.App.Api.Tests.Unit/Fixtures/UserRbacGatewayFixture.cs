@@ -10,13 +10,12 @@ using Sfc.Core.OnPrem.Result;
 using Sfc.Core.OnPrem.Security.Contracts.Dtos;
 using Sfc.Core.RestResponse;
 using Sfc.Wms.App.Api.Nuget.Gateways;
-using Sfc.Wms.App.Api.Nuget.Interfaces;
 
 namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 {
     public class UserRbacGatewayFixture
     {
-        private readonly Mock<IRestCsharpClient> _mockRestClient;
+        private readonly Mock<IRestClient> _mockRestClient;
         private readonly UserRbacGateway _userRbacGateway;
         private LoginCredentials loginCredentials;
         private BaseResult<UserInfoDto> signInResponse;
@@ -24,7 +23,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected UserRbacGatewayFixture()
         {
-            _mockRestClient = new Mock<IRestCsharpClient>(MockBehavior.Default);
+            _mockRestClient = new Mock<IRestClient>(MockBehavior.Default);
             var reponseBuilder = new ResponseBuilder();
             _userRbacGateway = new UserRbacGateway(_mockRestClient.Object, reponseBuilder);
         }

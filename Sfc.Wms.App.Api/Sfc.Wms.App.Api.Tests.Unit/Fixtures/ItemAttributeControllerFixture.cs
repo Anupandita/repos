@@ -15,57 +15,17 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
     {
         private readonly ItemAttributeController _attributeController;
         private readonly Mock<IItemAttributeService> _mockedAttributeService;
-        private ItemAttributeSearchInputDto searchInputDto;
         private string itemId;
+        private ItemAttributeSearchInputDto searchInputDto;
         private IHttpActionResult testResult;
+
         protected ItemAttributeControllerFixture()
         {
-            _mockedAttributeService=new Mock<IItemAttributeService>(MockBehavior.Default);
-            _attributeController=new ItemAttributeController(_mockedAttributeService.Object);
+            _mockedAttributeService = new Mock<IItemAttributeService>(MockBehavior.Default);
+            _attributeController = new ItemAttributeController(_mockedAttributeService.Object);
             searchInputDto = Generator.Default.Single<ItemAttributeSearchInputDto>();
             itemId = searchInputDto.ItemId;
         }
-
-        #region Mock
-
-        private void MockAttributeSearch(ResultTypes resultType)
-        {
-            var response = new BaseResult<ItemAttributeSearchResultDto>
-            {
-                ResultType = resultType,
-                Payload = resultType==ResultTypes.Ok?Generator.Default.Single<ItemAttributeSearchResultDto>():null
-            };
-            _mockedAttributeService.Setup(el =>
-                    el.AttributeSearchAsync(It.IsAny<ItemAttributeSearchInputDto>()))
-                .Returns(Task.FromResult(response));
-        }
-
-        private void MockAttributeDrillDown(ResultTypes resultType)
-        {
-            var response = new BaseResult<ItemAttributeDetailsDto>
-            {
-                ResultType = resultType,
-                Payload = resultType == ResultTypes.Ok ? Generator.Default.Single<ItemAttributeDetailsDto>() : null
-            };
-            _mockedAttributeService.Setup(el =>
-                    el.AttributeDrillDownAsync(It.IsAny<string>()))
-                .Returns(Task.FromResult(response));
-        }
-
-        #endregion
-
-        #region Verify
-
-        private void VerifyAttributeSearch() =>
-            _mockedAttributeService.Verify(el =>
-                el.AttributeSearchAsync(It.IsAny<ItemAttributeSearchInputDto>()));
-
-
-        private void VerifyAttributeDrillDown() =>
-            _mockedAttributeService.Verify(el =>
-                el.AttributeDrillDownAsync(It.IsAny<string>()));
-
-        #endregion
 
         protected void EmptyOrInvalidInputForAttributeSearch()
         {
@@ -90,7 +50,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             var result = testResult as OkNegotiatedContentResult<BaseResult<ItemAttributeSearchResultDto>>;
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Content);
-            Assert.AreEqual(ResultTypes.Ok,result.Content.ResultType);
+            Assert.AreEqual(ResultTypes.Ok, result.Content.ResultType);
         }
 
         protected void AttributeSearchReturnedBadRequestAsResponse()
@@ -102,7 +62,6 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             Assert.IsNotNull(result.Content);
             Assert.AreEqual(ResultTypes.BadRequest, result.Content.ResultType);
         }
-
 
 
         protected void EmptyOrInvalidInputForAttributeDrillDown()
@@ -155,5 +114,50 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             Assert.IsNotNull(result.Content);
             Assert.AreEqual(ResultTypes.NotFound, result.Content.ResultType);
         }
+
+        #region Mock
+
+        private void MockAttributeSearch(ResultTypes resultType)
+        {
+            var response = new BaseResult<ItemAttributeSearchResultDto>
+            {
+                ResultType = resultType,
+                Payload = resultType == ResultTypes.Ok ? Generator.Default.Single<ItemAttributeSearchResultDto>() : null
+            };
+            _mockedAttributeService.Setup(el =>
+                    el.AttributeSearchAsync(It.IsAny<ItemAttributeSearchInputDto>()))
+                .Returns(Task.FromResult(response));
+        }
+
+        private void MockAttributeDrillDown(ResultTypes resultType)
+        {
+            var response = new BaseResult<ItemAttributeDetailsDto>
+            {
+                ResultType = resultType,
+                Payload = resultType == ResultTypes.Ok ? Generator.Default.Single<ItemAttributeDetailsDto>() : null
+            };
+            _mockedAttributeService.Setup(el =>
+                    el.AttributeDrillDownAsync(It.IsAny<string>()))
+                .Returns(Task.FromResult(response));
+        }
+
+        #endregion
+
+        #region Verify
+
+        private void VerifyAttributeSearch()
+        {
+            _mockedAttributeService.Verify(el =>
+                el.AttributeSearchAsync(It.IsAny<ItemAttributeSearchInputDto>()));
+        }
+
+
+        private void VerifyAttributeDrillDown()
+        {
+            _mockedAttributeService.Verify(el =>
+                el.AttributeDrillDownAsync(It.IsAny<string>()));
+        }
+
+        #endregion
     }
 }

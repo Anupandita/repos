@@ -1,4 +1,7 @@
-﻿using DataGenerator;
+﻿using System.Collections.Generic;
+using System.Net;
+using System.Threading.Tasks;
+using DataGenerator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Newtonsoft.Json;
@@ -6,26 +9,21 @@ using RestSharp;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Core.RestResponse;
 using Sfc.Wms.App.Api.Nuget.Gateways;
-using Sfc.Wms.App.Api.Nuget.Interfaces;
 using Sfc.Wms.Foundation.Corba.Contracts.UoW.Dtos;
-using System.Collections.Generic;
-using System.Net;
-using System.Threading.Tasks;
 
 namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 {
     public class CorbaGatewayFixture
     {
         private readonly CorbaGateway _corbaGateway;
-        private readonly Mock<IRestCsharpClient> _restClient;
-        private BaseResult singleCorbaResult;
+        private readonly Mock<IRestClient> _restClient;
         private BaseResult<CorbaResponseDto> batchCorbaResult;
+        private BaseResult singleCorbaResult;
 
-        public CorbaGatewayFixture()
+        protected CorbaGatewayFixture()
         {
-            _restClient = new Mock<IRestCsharpClient>();
+            _restClient = new Mock<IRestClient>();
             _corbaGateway = new CorbaGateway(new ResponseBuilder(), _restClient.Object);
-
         }
 
         private void GetRestResponse<T>(T entity, HttpStatusCode statusCode, ResponseStatus responseStatus)
@@ -46,19 +44,19 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void ValidInputForSingleCorba()
         {
-            var result = new BaseResult { ResultType = ResultTypes.Ok };
+            var result = new BaseResult {ResultType = ResultTypes.Ok};
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
         protected void InValidInputForSingleCorba()
         {
-            var result = new BaseResult { ResultType = ResultTypes.ExpectationFailed };
+            var result = new BaseResult {ResultType = ResultTypes.ExpectationFailed};
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
         protected void EmptyOrBadInputForSingleCorba()
         {
-            var result = new BaseResult { ResultType = ResultTypes.BadRequest };
+            var result = new BaseResult {ResultType = ResultTypes.BadRequest};
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
@@ -92,19 +90,20 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void ValidInputForBatchCorba()
         {
-            var result = new BaseResult<CorbaResponseDto> { ResultType = ResultTypes.Ok, Payload = Generator.Default.Single<CorbaResponseDto>() };
+            var result = new BaseResult<CorbaResponseDto>
+                {ResultType = ResultTypes.Ok, Payload = Generator.Default.Single<CorbaResponseDto>()};
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
         protected void InValidInputForBatchCorba()
         {
-            var result = new BaseResult<CorbaResponseDto> { ResultType = ResultTypes.ExpectationFailed };
+            var result = new BaseResult<CorbaResponseDto> {ResultType = ResultTypes.ExpectationFailed};
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
         protected void EmptyOrBadInputForBatchCorba()
         {
-            var result = new BaseResult<CorbaResponseDto> { ResultType = ResultTypes.BadRequest };
+            var result = new BaseResult<CorbaResponseDto> {ResultType = ResultTypes.BadRequest};
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 

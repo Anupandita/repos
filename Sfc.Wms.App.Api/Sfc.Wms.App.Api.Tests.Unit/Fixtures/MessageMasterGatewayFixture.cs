@@ -1,4 +1,7 @@
-﻿using DataGenerator;
+﻿using System.Collections.Generic;
+using System.Net;
+using System.Threading.Tasks;
+using DataGenerator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Newtonsoft.Json;
@@ -8,21 +11,18 @@ using Sfc.Core.RestResponse;
 using Sfc.Wms.App.Api.Nuget.Gateways;
 using Sfc.Wms.App.Api.Nuget.Interfaces;
 using Sfc.Wms.Configuration.MessageMaster.Contracts.UoW.Dtos;
-using System.Collections.Generic;
-using System.Net;
-using System.Threading.Tasks;
 
 namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 {
     public class MessageMasterGatewayFixture
     {
         private readonly IMessageMasterGateway _messageMasterGateway;
-        private readonly Mock<IRestCsharpClient> _restClient;
+        private readonly Mock<IRestClient> _restClient;
         private BaseResult<IEnumerable<MessageDetailDto>> messageDetails;
 
         protected MessageMasterGatewayFixture()
         {
-            _restClient = new Mock<IRestCsharpClient>();
+            _restClient = new Mock<IRestClient>();
             _messageMasterGateway = new MessageMasterGateway(new ResponseBuilder(), _restClient.Object);
         }
 
@@ -45,13 +45,13 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         protected void InputForUiSpecificMessageDetails()
         {
             var result = new BaseResult<IEnumerable<MessageDetailDto>>
-            { ResultType = ResultTypes.Ok, Payload = Generator.Default.List<MessageDetailDto>(10) };
+                {ResultType = ResultTypes.Ok, Payload = Generator.Default.List<MessageDetailDto>(10)};
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
         protected void InputForWhichNoRecordsExists()
         {
-            var result = new BaseResult<IEnumerable<MessageDetailDto>> { ResultType = ResultTypes.BadRequest };
+            var result = new BaseResult<IEnumerable<MessageDetailDto>> {ResultType = ResultTypes.BadRequest};
             GetRestResponse(result, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 

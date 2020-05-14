@@ -1,30 +1,30 @@
-﻿using DataGenerator;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Results;
+using DataGenerator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.App.Api.Controllers;
 using Sfc.Wms.Foundation.Receiving.Contracts.UoW.Dtos;
 using Sfc.Wms.Foundation.Receiving.Contracts.UoW.Interfaces;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Results;
 
 namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 {
     public class ReceivingControllerFixture
     {
-        private readonly ReceivingController _receivingController;
-        private readonly Mock<IInboundReceivingService> _receivingService;
         private readonly Mock<IQuestionAnswerService> _answerService;
         private readonly Mock<IAsnLotTrackingService> _lotService;
-        private ReceiptInquiryDto receiptInquiryDto;
+        private readonly ReceivingController _receivingController;
+        private readonly Mock<IInboundReceivingService> _receivingService;
         private AnswerTextDto answerTextDto;
-        private UpdateAsnDto updateAsnDto;
+        private ReceiptInquiryDto receiptInquiryDto;
         private string shipmentNumber;
         private string skuId;
         private Task<IHttpActionResult> testResponse;
+        private UpdateAsnDto updateAsnDto;
 
         protected ReceivingControllerFixture()
         {
@@ -329,15 +329,17 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         private void MockUpdateAsn(ResultTypes resultType)
         {
-            var result = new BaseResult { ResultType = resultType };
+            var result = new BaseResult {ResultType = resultType};
 
-            _receivingService.Setup(el => el.UpdateAdvanceShipmentNoticesDetailsAsync(It.IsAny<UpdateAsnDto>(), It.IsAny<string>()))
+            _receivingService.Setup(el =>
+                    el.UpdateAdvanceShipmentNoticesDetailsAsync(It.IsAny<UpdateAsnDto>(), It.IsAny<string>()))
                 .Returns(Task.FromResult(result));
         }
 
         private void VerifyUpdateAsn()
         {
-            _receivingService.Verify(el => el.UpdateAdvanceShipmentNoticesDetailsAsync(It.IsAny<UpdateAsnDto>(), It.IsAny<string>()));
+            _receivingService.Verify(el =>
+                el.UpdateAdvanceShipmentNoticesDetailsAsync(It.IsAny<UpdateAsnDto>(), It.IsAny<string>()));
         }
 
         protected void InputToUpdateAsn()

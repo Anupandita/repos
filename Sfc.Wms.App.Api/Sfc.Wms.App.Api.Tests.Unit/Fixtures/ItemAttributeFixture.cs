@@ -8,23 +8,22 @@ using RestSharp;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Core.RestResponse;
 using Sfc.Wms.App.Api.Nuget.Gateways;
-using Sfc.Wms.App.Api.Nuget.Interfaces;
 using Sfc.Wms.Configuration.ItemMasters.Contracts.Dtos;
 
 namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 {
     public class ItemAttributeFixture
     {
-        private readonly Mock<IRestCsharpClient> _restClient;
         private readonly ItemAttributeGateway _attributeGateway;
-        private ItemAttributeSearchInputDto searchInputDto;
-        private string itemId;
-        private BaseResult<ItemAttributeSearchResultDto> searchResult;
+        private readonly Mock<IRestClient> _restClient;
         private BaseResult<ItemAttributeDetailsDto> attributeDetailsResult;
+        private readonly string itemId;
+        private readonly ItemAttributeSearchInputDto searchInputDto;
+        private BaseResult<ItemAttributeSearchResultDto> searchResult;
 
         protected ItemAttributeFixture()
         {
-            _restClient = new Mock<IRestCsharpClient>();
+            _restClient = new Mock<IRestClient>();
             _attributeGateway = new ItemAttributeGateway(new ResponseBuilder(), _restClient.Object);
             searchInputDto = Generator.Default.Single<ItemAttributeSearchInputDto>();
             itemId = searchInputDto.ItemId;
@@ -48,7 +47,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void EmptyOrInvalidInputForSearch()
         {
-            var response = new BaseResult<ItemAttributeSearchResultDto> { ResultType = ResultTypes.BadRequest };
+            var response = new BaseResult<ItemAttributeSearchResultDto> {ResultType = ResultTypes.BadRequest};
             GetRestResponse(response, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
@@ -60,7 +59,6 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
                 Payload = Generator.Default.Single<ItemAttributeSearchResultDto>()
             };
             GetRestResponse(response, HttpStatusCode.OK, ResponseStatus.Completed);
-
         }
 
         protected void AttributeSearchOperationInvoked()
@@ -83,10 +81,9 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         }
 
 
-
         protected void EmptyOrInvalidInputForAttributeDrillDown()
         {
-            var response = new BaseResult<ItemAttributeDetailsDto> { ResultType = ResultTypes.BadRequest };
+            var response = new BaseResult<ItemAttributeDetailsDto> {ResultType = ResultTypes.BadRequest};
             GetRestResponse(response, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
@@ -102,7 +99,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void ValidInputDataForAttributeDrillDownForWhichNoRecordExists()
         {
-            var response = new BaseResult<ItemAttributeDetailsDto> { ResultType = ResultTypes.NotFound };
+            var response = new BaseResult<ItemAttributeDetailsDto> {ResultType = ResultTypes.NotFound};
             GetRestResponse(response, HttpStatusCode.OK, ResponseStatus.Completed);
         }
 
@@ -132,6 +129,5 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             Assert.IsNotNull(attributeDetailsResult);
             Assert.AreEqual(ResultTypes.NotFound, attributeDetailsResult.ResultType);
         }
-
     }
 }

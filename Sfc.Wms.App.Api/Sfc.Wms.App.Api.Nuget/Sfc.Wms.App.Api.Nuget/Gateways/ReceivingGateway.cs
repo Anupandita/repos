@@ -6,6 +6,7 @@ using Sfc.Wms.Foundation.Receiving.Contracts.UoW.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using RestSharp;
 
 namespace Sfc.Wms.App.Api.Nuget.Gateways
 {
@@ -14,10 +15,10 @@ namespace Sfc.Wms.App.Api.Nuget.Gateways
 
         private readonly string _endPoint;
         private readonly IResponseBuilder _responseBuilder;
-        private readonly IRestCsharpClient _restCsharpClient;
+        private readonly IRestClient _restCsharpClient;
         private const string Authorization = "Authorization";
 
-        public ReceivingGateway(IResponseBuilder responseBuilders, IRestCsharpClient restClient) : base(restClient)
+        public ReceivingGateway(IResponseBuilder responseBuilders, IRestClient restClient) : base(restClient)
         {
             _endPoint = Routes.Prefixes.Api;
             _responseBuilder = responseBuilders;

@@ -1,20 +1,20 @@
-﻿using Moq;
-using Sfc.Core.OnPrem.Result;
-using Sfc.Wms.App.Api.Controllers;
-using Sfc.Wms.Foundation.Corba.Contracts.UoW.Dtos;
-using Sfc.Wms.Foundation.Corba.Contracts.UoW.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Results;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using Sfc.Core.OnPrem.Result;
+using Sfc.Wms.App.Api.Controllers;
+using Sfc.Wms.Foundation.Corba.Contracts.UoW.Dtos;
+using Sfc.Wms.Foundation.Corba.Contracts.UoW.Interfaces;
 
 namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 {
     public class CorbaControllerFixture
     {
-        private  readonly Mock<ICorbaService> _mock;
-        private  readonly CorbaController _corbaController;
+        private readonly CorbaController _corbaController;
+        private readonly Mock<ICorbaService> _mock;
         private IHttpActionResult testResult;
 
         protected CorbaControllerFixture()
@@ -77,7 +77,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             VerifySingleCorba();
             var result = testResult as OkNegotiatedContentResult<BaseResult>;
             Assert.IsNotNull(result);
-            Assert.AreEqual(ResultTypes.Ok,result.Content.ResultType);
+            Assert.AreEqual(ResultTypes.Ok, result.Content.ResultType);
         }
 
         protected void SingleCorbaInvocationReturnedExceptionAsResponse()
@@ -87,6 +87,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             Assert.IsNotNull(result);
             Assert.AreEqual(ResultTypes.ExpectationFailed, result.Content.ResultType);
         }
+
         protected void ValidInputParametersForBatchCorba()
         {
             MockBatchCorba();
@@ -110,7 +111,6 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             Assert.IsNotNull(result);
             Assert.AreEqual(ResultTypes.Ok, result.Content.ResultType);
             Assert.IsNotNull(result.Content.Payload);
-
         }
 
         protected void BatchCorbaInvocationReturnedExceptionAsResponse()

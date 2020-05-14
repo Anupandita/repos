@@ -1,38 +1,38 @@
-﻿using DataGenerator;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Results;
+using DataGenerator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.App.Api.Controllers;
 using Sfc.Wms.Foundation.InboundLpn.Contracts.Dtos;
 using Sfc.Wms.Foundation.InboundLpn.Contracts.Interfaces;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Results;
 
 namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 {
     public abstract class LpnControllerFixture
     {
         private readonly CaseCommentDto _addLpnCommentRequest;
-        private readonly CaseCommentDto _updateLpnCommentRequest;
+        private readonly CaseLockCommentDto _caseLockCommentDto;
         private readonly LpnController _lpnController;
+        private readonly List<LpnMultipleUnlockDto> _lpnMultipleUnlockDtos;
         private readonly LpnParameterDto _lpnSearchRequest;
-        private IEnumerable<CaseCommentDto> caseCommentDtos;
-        private LpnBatchUpdateDto lpnBatchUpdateDto;
         private readonly Mock<ICaseCommentService> _mockCaseCommentService;
         private readonly Mock<ICaseDetailService> _mockCaseDetailService;
+        private readonly Mock<ICaseHeaderService> _mockCaseHeaderService;
         private readonly Mock<ICaseLockService> _mockCaseLockService;
         private readonly Mock<ILpnService> _mockLpnService;
-        private readonly Mock<ICaseHeaderService> _mockCaseHeaderService;
         private readonly LpnDetailsUpdateDto _updateLpnCaseDetailsRequest;
+        private readonly CaseCommentDto _updateLpnCommentRequest;
         private readonly LpnHeaderUpdateDto _updateLpnHeaderUpdateDto;
-        private readonly CaseLockCommentDto _caseLockCommentDto;
-        private readonly List<LpnMultipleUnlockDto> _lpnMultipleUnlockDtos;
         private Task<IHttpActionResult> _testResponse;
+        private IEnumerable<CaseCommentDto> caseCommentDtos;
         private int commentSequenceNumber;
+        private LpnBatchUpdateDto lpnBatchUpdateDto;
+        private readonly IEnumerable<string> lpnIds;
         private string warehouse, lpnNumber, faceLocationId;
-        private IEnumerable<string> lpnIds;
 
         protected LpnControllerFixture()
         {
@@ -56,7 +56,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             warehouse = "008";
             faceLocationId = "A07E06706N";
             commentSequenceNumber = 204;
-            var lpnNumbers = new List<string>() { "00100283000828329862,00100283000694052673,00100283009301204498" };
+            var lpnNumbers = new List<string> {"00100283000828329862,00100283000694052673,00100283009301204498"};
             lpnIds = lpnNumbers;
             lpnBatchUpdateDto = Generator.Default.Single<LpnBatchUpdateDto>();
             caseCommentDtos = Generator.Default.List<CaseCommentDto>(2);
@@ -264,12 +264,15 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
                 ResultType = resultType,
                 Payload = resultType == ResultTypes.Ok ? Generator.Default.Single<LpnMultipleUnlockResultDto>() : null
             };
-            _mockCaseCommentService.Setup(el => el.AddCaseLockCommentWithBatchCorbaAsync(It.IsAny<CaseLockCommentDto>())).Returns(Task.FromResult(response));
+            _mockCaseCommentService
+                .Setup(el => el.AddCaseLockCommentWithBatchCorbaAsync(It.IsAny<CaseLockCommentDto>()))
+                .Returns(Task.FromResult(response));
         }
 
         private void VerifyAddCaseLockComment()
         {
-            _mockCaseCommentService.Verify(el => el.AddCaseLockCommentWithBatchCorbaAsync(It.IsAny<CaseLockCommentDto>()));
+            _mockCaseCommentService.Verify(el =>
+                el.AddCaseLockCommentWithBatchCorbaAsync(It.IsAny<CaseLockCommentDto>()));
         }
 
         private void MockUnlockCommentWithBatchCorba(ResultTypes resultType)
@@ -279,12 +282,15 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
                 ResultType = resultType,
                 Payload = resultType == ResultTypes.Ok ? Generator.Default.Single<LpnMultipleUnlockResultDto>() : null
             };
-            _mockCaseCommentService.Setup(el => el.UnlockCommentWithBatchCorbaAsync(It.IsAny<List<LpnMultipleUnlockDto>>())).Returns(Task.FromResult(response));
+            _mockCaseCommentService
+                .Setup(el => el.UnlockCommentWithBatchCorbaAsync(It.IsAny<List<LpnMultipleUnlockDto>>()))
+                .Returns(Task.FromResult(response));
         }
 
         private void VerifyUnlockCommentWithBatchCorba()
         {
-            _mockCaseCommentService.Verify(el => el.UnlockCommentWithBatchCorbaAsync(It.IsAny<List<LpnMultipleUnlockDto>>()));
+            _mockCaseCommentService.Verify(el =>
+                el.UnlockCommentWithBatchCorbaAsync(It.IsAny<List<LpnMultipleUnlockDto>>()));
         }
 
         #endregion Mock
@@ -924,11 +930,13 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         private void MockLpnBatchUpdate(ResultTypes resultTypes)
         {
             _mockCaseHeaderService.Setup(el => el.LpnBatchUpdateAsync(It.IsAny<LpnBatchUpdateDto>(), It.IsAny<bool>()))
-                .Returns(Task.FromResult(new BaseResult { ResultType = resultTypes }));
+                .Returns(Task.FromResult(new BaseResult {ResultType = resultTypes}));
         }
+
         private void VerifyLpnBatchUpdate()
         {
-            _mockCaseHeaderService.Verify(el => el.LpnBatchUpdateAsync(It.IsAny<LpnBatchUpdateDto>(), It.IsAny<bool>()));
+            _mockCaseHeaderService.Verify(el =>
+                el.LpnBatchUpdateAsync(It.IsAny<LpnBatchUpdateDto>(), It.IsAny<bool>()));
         }
 
         protected void EmptyOrNullInputForLpnBatchUpdate()
@@ -951,6 +959,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         {
             _testResponse = _lpnController.MultipleLpnUpdateAsync(lpnBatchUpdateDto);
         }
+
         protected void LpnBatchUpdateReturnedOkAsResponseStatus()
         {
             VerifyLpnBatchUpdate();
@@ -977,6 +986,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             Assert.IsNotNull(result);
             Assert.AreEqual(ResultTypes.BadRequest, result.Content.ResultType);
         }
+
         #endregion
 
         #region Batch Case comments insertion
@@ -984,8 +994,9 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         private void MockBatchCommentsInsertion(ResultTypes resultTypes)
         {
             _mockCaseCommentService.Setup(el => el.BatchInsertAsync(It.IsAny<IEnumerable<CaseCommentDto>>()))
-                .Returns(Task.FromResult(new BaseResult { ResultType = resultTypes }));
+                .Returns(Task.FromResult(new BaseResult {ResultType = resultTypes}));
         }
+
         private void VerifyBatchCommentsInsertion()
         {
             _mockCaseCommentService.Verify(el => el.BatchInsertAsync(It.IsAny<IEnumerable<CaseCommentDto>>()));
@@ -1011,6 +1022,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
         {
             _testResponse = _lpnController.MultipleLpnCommentsAddAsync(caseCommentDtos);
         }
+
         protected void BatchCommentsInsertionReturnedCreatedAsResponseStatus()
         {
             VerifyBatchCommentsInsertion();
@@ -1037,6 +1049,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
             Assert.IsNotNull(result);
             Assert.AreEqual(ResultTypes.BadRequest, result.Content.ResultType);
         }
+
         #endregion
     }
 }

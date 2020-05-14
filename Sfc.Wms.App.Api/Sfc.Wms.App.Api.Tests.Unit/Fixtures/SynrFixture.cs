@@ -1,19 +1,18 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Results;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Sfc.Core.OnPrem.Result;
 using Sfc.Wms.App.Api.Controllers;
-using Sfc.Wms.Interfaces.Asrs.Contracts.Dtos;
 using Sfc.Wms.Interfaces.Asrs.Contracts.Interfaces;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Results;
 
 namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 {
     public abstract class SynrFixture
     {
-        private readonly SynchronizationRequestController _synchronizationRequestController;
         private readonly Mock<IWmsToEmsMessageProcessorService> _messageTypeService;
+        private readonly SynchronizationRequestController _synchronizationRequestController;
         private Task<IHttpActionResult> _testResult;
 
         protected SynrFixture()
@@ -24,7 +23,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void ValidSynchronizationRequestMessage()
         {
-            var response = new BaseResult()
+            var response = new BaseResult
             {
                 ResultType = ResultTypes.Created
             };
@@ -35,7 +34,7 @@ namespace Sfc.Wms.App.Api.Tests.Unit.Fixtures
 
         protected void InvalidSynchronizationRequestMessage()
         {
-            var response = new BaseResult()
+            var response = new BaseResult
             {
                 ResultType = ResultTypes.BadRequest
             };
