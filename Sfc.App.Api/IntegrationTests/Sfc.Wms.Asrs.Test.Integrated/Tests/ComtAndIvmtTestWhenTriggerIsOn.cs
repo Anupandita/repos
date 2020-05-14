@@ -21,7 +21,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         //[TestMethod()]
         //[TestCategory("FUNCTIONAL")]
 
-        //public void TestForReceivedCasesFromVendorsWhenTriggerIsOn()
+        //protected void TestForReceivedCasesFromVendorsWhenTriggerIsOn()
         //{
         //    this.Given(x => x.InitializeTestDataForComtWhenTriggerIsOn())
         //        .And(x => x.AValidNewComtMessageRecordWhereCaseNumberAndSkuIs(SingleSkuCase.CaseNumber, SingleSkuCase.SkuId))
@@ -39,7 +39,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         //[TestMethod()]
         //[TestCategory("FUNCTIONAL")]
-        //public void TestForReceivedCasesFromReturnsWhenTriggerIsOn()
+        //protected void TestForReceivedCasesFromReturnsWhenTriggerIsOn()
         //{
         //    this.Given(x =>x.InitializeTestDataForStatCode30WhenTriggerIsOn())
         //        .And(x =>x.AValidNewComtMessageRecordWhereCaseNumberAndSkuIs(SingleSkuCase.CaseNumber, SingleSkuCase.SkuId))

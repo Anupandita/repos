@@ -20,7 +20,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
         [DataRow(2)]
-        public void AOrmtTest1VerifyForOrmtMessageWithActionCodeAddRelease(int count)
+        protected void AOrmtTest1VerifyForOrmtMessageWithActionCodeAddRelease(int count)
         {
             this.Given(x => x.InitializeTestDataForPrintingOfCartons())            
             .And(x => x.ValidOrmtUrlCartonNumberAndActioncodeIs(Url,PrintCarton.CartonNbr, OrmtActionCode.AddRelease))
@@ -36,7 +36,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void BOrmtTest2VerifyForOrmtMessageWithActionCodeCancel()
+        protected void BOrmtTest2VerifyForOrmtMessageWithActionCodeCancel()
         {
             this.Given(x => x.InitializeTestDataForCancelOfCarton())           
            .And(x => x.ValidOrmtUrlCartonNumberAndActioncodeIs(OrmtUrl,CancelOrder.CartonNbr, OrmtActionCode.Cancel))
@@ -44,13 +44,13 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
            .And(x => x.ReadDataAfterApiForCancelOfCarton())
            .Then(x => x.VerifyOrmtMessageWasInsertedInToSwmToMheForCancelOrders())
            .And(x => x.VerifyOrmtMessageWasInsertedInToWmsToEmsForCancelOrder())
-           .And(x => x.VerifyForOrmtCountInPickLocnDtlExt())
+           .And(x =>x.VerifyForStatusInSwmEligiblrOrmtCartonsForCancelMessage())
            .BDDfy("Test Case Id:132757 -Dematic - ORMT - Cancel - Call the ormt api and validate for all functionalities in  wmstoems,swm_to_mhe,carton_hdr,pick_locn_dtl_ext  tables");
         }
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void COrmtTest3VerifyForOrmtMessageWithActionCodeEPick()
+        protected void COrmtTest3VerifyForOrmtMessageWithActionCodeEPick()
         {
             this.Given(x=>x.InitializeTestDataForEpickOfCarton())           
            .And(x => x.ValidOrmtUrlCartonNumberAndActioncodeIs(OrmtUrl, EPick.CartonNbr, OrmtActionCode.AddRelease))
@@ -63,19 +63,19 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
            .BDDfy("Test Case Id:132758 -Dematic - ORMT - EPick -Call the ormt api and validate for all functionalities in  wmstoems,swm_to_mhe,carton_hdr,pick_locn_dtl_ext  tables");
         }
 
-        [TestMethod()]
-        [TestCategory("FUNCTIONAL")]
-        public void DVerifyForOrmtOnProcesscostMessage()
-        {
-            //this.Given(x => x.InitializeTestDataForOnProcessCostMessage())                
-            //    .And(x => x.ValidOrmtUrlCartonNumberAndActioncodeIs(OrmtUrl, OnProCost.CartonNbr,OrmtActionCode.AddRelease))
-            //    .When(x => x.OrmtApiIsCalledCreatedIsReturned())
-            //    .And(x => x.ReadDataAfterApiForOnprocessCostOfCarton())
-            //    .Then(x => x.VerifyOrmtMessageWasInsertedInToSwmToMheForOnProcessCost())
-            //    .And(x => x.VerifyOrmtMessageWasInsertedInToWmsToEmsForOnProcessCostOfOrder())
-            //    .And(x => x.VerifyForOrmtCountInPickLocnDtlExt())
-            //    .And(x => x.VerifyForStatusCodeinCartonHdrForAddRelease())
-            //    .BDDfy("Test Case Id:142388 - Dematic - ORMT - On Processing COST Message  -Validate Sku from Cost,statuscode");
-        }
+        //[TestMethod()]
+        //[TestCategory("FUNCTIONAL")]
+        //protected void DVerifyForOrmtOnProcesscostMessage()
+        //{
+        //    this.Given(x => x.InitializeTestDataForOnProcessCostMessage())
+        //        .And(x => x.ValidOrmtUrlCartonNumberAndActioncodeIs(OrmtUrl, OnProCost.CartonNbr, OrmtActionCode.AddRelease))
+        //        .When(x => x.OrmtApiIsCalledCreatedIsReturned())
+        //        .And(x => x.ReadDataAfterApiForOnprocessCostOfCarton())
+        //        .Then(x => x.VerifyOrmtMessageWasInsertedInToSwmToMheForOnProcessCost())
+        //        .And(x => x.VerifyOrmtMessageWasInsertedInToWmsToEmsForOnProcessCostOfOrder())
+        //        .And(x => x.VerifyForOrmtCountInPickLocnDtlExt())
+        //        .And(x => x.VerifyForStatusCodeinCartonHdrForAddRelease())
+        //        .BDDfy("Test Case Id:142388 - Dematic - ORMT - On Processing COST Message  -Validate Sku from Cost,statuscode");
+        //}
     }
-}
+    }

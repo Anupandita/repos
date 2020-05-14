@@ -24,7 +24,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
     {
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void Test1SynrMessageTestForQtyDifferenceScenarios()
+        protected void Test1SynrMessageTestForQtyDifferenceScenarios()
         {
             this.Given(x => x.TestInitializeForValidMessage())
                .When(x => x.SynrApiIsCalledCreatedIsReturnedWithValidUrlAndSyncIdIs(SynrUrl, Nextupcnt + 1))
@@ -37,7 +37,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void Test2SyndMessageTesForQtyDifferencetScenarios()
+        protected void Test2SyndMessageTesForQtyDifferencetScenarios()
         {
             this.Given(x => x.TestInitialize())
                 .And(x => x.ValidateForSyndMessagesInsertedIntoSwmToMheTableAndSyndDataTableWithAppropiateValues())
@@ -45,7 +45,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         }
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void Test3SyncMessageTestForQtyDifferenceScenarios()
+        protected void Test3SyncMessageTestForQtyDifferenceScenarios()
         {
             this.Given(x => x.SyncTestInitialize())
                 .And(x => x.SyncTestInitializeForValidMessage())

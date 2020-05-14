@@ -16,14 +16,14 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
     public class ComtAndIvmtTestReceivedCase:ComtIvmtMessageFixture
     {
         [TestInitialize]
-        public void AValidTestData()
+        protected void AValidTestData()
         {
             InitializeReceivedCaseTestData();
         }
       
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void ComtAndIvmtMessageForReceivedCasesFromReturnsTestScenarios()
+        protected void ComtAndIvmtMessageForReceivedCasesFromReturnsTestScenarios()
         {
             this.Given(x => x.AValidNewCaseReturnedRecordWhereCaseNumberAndSkuIdIs(SingleSkuCase.CaseNumber,SingleSkuCase.SkuId))
                 .When(x => x.ComtApiIsCalledCreatedIsReturnedWithValidUrlIs(ComtUrl))
@@ -34,6 +34,8 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                 .And(x => x.VerifyActualQuantityIsReducedInToCaseDtl())
                 .And(x => x.VerifyStatusIsUpdatedIntoCaseHeader())
                 .And(x => x.VerifyStatusIsUpdatedIntoTaskHeader())
+                .And(x =>x.VerifyQtyShouldBeIncreasedInPickLocnTableForToBeFilledQtyField())
+               // .And(x =>x.VerifyWeightAndVolumeIsReducedInResrvLocnHdrTable())
                 .BDDfy("Test Case ID: 142101 -Dematic - IVMT :  For received cases from returns, Call the Comt Api and Verify all its functionalities");
         }
     }

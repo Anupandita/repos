@@ -17,7 +17,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
         [Priority(1)]
-        public void SkmtMessageTestNegativeScenarios()
+        protected void SkmtMessageTestNegativeScenarios()
         {
             this.Given(x => x.ValidSkuActioncodeAndSkmtUrlIs(DefaultValues.InvalidSku, SkmtActionCode.Add,SkmtUrl))
                 .When(x => x.SkmtApiIsCalledCreatedForNegativeCases())

@@ -17,7 +17,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
     public class ComtAndIvmtTest : ComtIvmtMessageFixture
     {     
         [TestInitialize]
-        public void AValidTestData()
+        protected void AValidTestData()
         {
             InitializeTestData();           
         }
@@ -25,7 +25,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
 
-        public void ComtAndIvmtMessageTestScenarios() 
+        protected void ComtAndIvmtMessageTestScenarios() 
         {
             this.Given(x => x.AValidNewComtMessageRecordWhereCaseNumberAndSkuIs(SingleSkuCase.CaseNumber, SingleSkuCase.SkuId))
                 .When(x => x.ComtApiIsCalledCreatedIsReturnedWithValidUrlIs(ComtUrl))
@@ -37,27 +37,28 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
                 .And(x => x.VerifyTheQuantityIsIncreasedInToTransInventory())
                 .And(x => x.VerifyQuantityisReducedIntoCaseDetail())
                 .And(x => x.VerifyStatusIsUpdatedIntoCaseHeader())
-                .And(x => x.VerifyStatusIsUpdatedIntoTaskHeader())             
+                .And(x => x.VerifyStatusIsUpdatedIntoTaskHeader())   
+                .And(x=>x.VerifyWeightAndVolumeIsReducedInResrvLocnHdrTable())
                 .BDDfy("Test Case ID : 120959 -Dematic - COMT,IVMT : Single Sku Case-Case received from Vendor, Call the Comt Api and Verify all its functionalities");
         }
 
-        //[TestMethod()]
-        //[TestCategory("FUNCTIONAL")]
-        //public void ComtAndIvmtTestForMultiSkuScenarios()
-        //{
-        //      this.Given(x => x.AValidNewComtMessageRecordWhereCaseNumberAndSkuIs(CaseHdrMultiSku.CaseNumber, CaseHdrMultiSku.SkuId))
-        //        .When(x => x.ComtApiIsCalledCreatedIsReturnedWithValidUrlIs(ComtUrl))
-        //        .Then(x => x.GetDataAndValidateForIvmtMessageHasInsertedIntoBothTables())
-        //        .And(x => x.VerifyComtMessageWasInsertedIntoSwmToMheForMultiSku())
-        //        .And(x => x.VerifyComtMessageWasInsertedIntoWmsToEmsForMultiSku())
-        //        .And(x => x.VerifyQuantityisReducedIntoCaseDetailTable())
-        //        .And(x => x.VerifyStatusIsUpdatedIntoCaseHeaderTable())
-        //        .BDDfy("Test Case ID : 133225 -Dematic - COMT,IVMT : Multi Sku Case-Case received from Vendor ,Call the comt api Verify all its functionalities");
-        //}
+        [TestMethod()]
+        [TestCategory("FUNCTIONAL")]
+        protected void ComtAndIvmtTestForMultiSkuScenarios()
+        {
+            this.Given(x => x.AValidNewComtMessageRecordWhereCaseNumberAndSkuIs(CaseHdrMultiSku.CaseNumber, CaseHdrMultiSku.SingleSkuId))
+              .When(x => x.ComtApiIsCalledCreatedIsReturnedWithValidUrlIs(ComtUrl))
+              .Then(x => x.GetDataAndValidateForIvmtMessageHasInsertedIntoBothTables())
+              .And(x => x.VerifyComtMessageWasInsertedIntoSwmToMheForMultiSku())
+              .And(x => x.VerifyComtMessageWasInsertedIntoWmsToEmsForMultiSku())
+              .And(x => x.VerifyQuantityisReducedIntoCaseDetailTable())
+              .And(x => x.VerifyStatusIsUpdatedIntoCaseHeaderTable())
+              .BDDfy("Test Case ID : 133225 -Dematic - COMT,IVMT : Multi Sku Case-Case received from Vendor ,Call the comt api Verify all its functionalities");
+        }
 
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void ComtIvmtMessageTestCaseForNoEnoughInventoryInCase()
+        protected void ComtIvmtMessageTestCaseForNoEnoughInventoryInCase()
         {
             this.Given(x => x.AValidNewComtMessageRecordWhereCaseNumberAndSkuIs(NotEnoughInvCase.CaseNumber, null))
                 .When(x => x.ComtApiIsCalledForNotEnoughInventoryInCaseAndUrlIs(ComtUrl))

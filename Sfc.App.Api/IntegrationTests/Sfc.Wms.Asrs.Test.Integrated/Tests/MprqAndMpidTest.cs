@@ -17,7 +17,7 @@ namespace Sfc.Wms.Api.Asrs.Test.Integrated.Tests
     {
         [TestMethod()]
         [TestCategory("FUNCTIONAL")]
-        public void VerifyForValidMprqAndMpidMessageScenarios()
+        protected void VerifyForValidMprqAndMpidMessageScenarios()
         {
             this.Given(x => x.TestInitializeForValidMessage())      
                 .And(x=> x.AValidMprqUrl(MprqUrl, MprqData.MsgKey, DefaultPossibleValue.MessageProcessor))
